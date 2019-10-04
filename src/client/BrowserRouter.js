@@ -6,7 +6,8 @@ import { HelmetProvider } from 'react-helmet-async';
 import ReactModal from 'react-modal';
 import App from '../shared/App';
 import store from '../shared/store';
-import ApolloProvider from '../shared/ApolloProvider';
+import IntlProvider from '../shared/i18n/IntlProvider';
+import ApolloProvider from './ApolloProvider';
 
 ReactModal.setAppElement('#app');
 
@@ -15,9 +16,11 @@ class MyRouter extends Component {
         return (
             <ApolloProvider>
                 <Router>
-                    <HelmetProvider>
-                        <App />
-                    </HelmetProvider>
+                    <IntlProvider>
+                        <HelmetProvider>
+                            <App />
+                        </HelmetProvider>
+                    </IntlProvider>
                 </Router>
             </ApolloProvider>
         );

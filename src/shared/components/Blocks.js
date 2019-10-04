@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 import React from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import Arrow from 'react-ionicons/lib/MdArrowRoundForward';
@@ -362,15 +364,15 @@ export const SecondaryButton = styled.button`
     ${secondaryButtonStyle}
 `;
 
-export const PrimaryButton = styled.button.attrs(({ loading, ...props }) => props)`
+export const PrimaryButton = styled.button.attrs(({ loading, invert, ...props }) => props)`
     ${ButtonTextStyle}
-    color: #FFFFFF;
-    background: #31daff;
+    color: ${({ invert }) => (invert ? '#31daff' : '#fff')};
+    background:  ${({ invert }) => (invert ? '#fff' : '#31daff')}; 
     opacity: ${({ loading }) => (loading ? 0.5 : 1)};
     pointer-events: ${({ loading }) => (loading ? 'none' : 'auto')};
     :hover {
-        color: #ffffff;
-        background-color: #00d1ff;
+        color: ${({ invert }) => (invert ? '#31daff' : '#fff')};
+        background-color: ${({ invert }) => (invert ? '#fff' : '#00d1ff')};
     }
     ${({ disabled }) => (disabled ? 'opacity: 0.5;' : '')}
 `;

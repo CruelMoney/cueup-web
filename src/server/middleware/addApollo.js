@@ -4,7 +4,7 @@ import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import fetch from 'node-fetch';
-import resolvers from '../../shared/actions/resolvers';
+import StateResolvers, { defaultAppState } from 'localState/resolvers';
 
 const addApollo = (_req, res, next) => {
     const headers = {
@@ -25,12 +25,34 @@ const addApollo = (_req, res, next) => {
     });
 
     const link = ApolloLink.from([errorLink, httpLink]);
+    const cache = new InMemoryCache();
+
+    // Helper function to get data from the cache
+    const getState = (query) => {
+        return cache.readQuery({ query }).state;
+    };
+
+    // Helper function to write data back to the cache
+    const writeState = (state) => {
+        return cache.writeData({ data: { state } });
+    };
+
+    // initial apollo local state
+    const initState = () => {
+        const state = {
+            appState: defaultAppState,
+            __typename: 'State',
+        };
+
+        writeState(state);
+    };
+    initState();
 
     const apolloClient = new ApolloClient({
         ssrMode: true,
         link,
-        cache: new InMemoryCache(),
-        resolvers,
+        cache,
+        resolvers: StateResolvers(getState, writeState),
     });
 
     res.locals.apolloClient = apolloClient;

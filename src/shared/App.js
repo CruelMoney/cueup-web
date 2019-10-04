@@ -1,11 +1,8 @@
 /* eslint-disable import/first */
 import React, { memo, useState, useEffect, useCallback } from 'react';
-import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import ReactPixel from 'react-facebook-pixel';
-
-import { getActiveLanguage, getTranslate, setActiveLanguage } from 'react-localize-redux';
 
 import { init as analytics } from './utils/analytics/autotrack';
 import { Environment } from './constants/constants';
@@ -26,44 +23,15 @@ import defaultImageDa from './assets/images/default_da.png';
 import Blog from './routes/Blog';
 import ErrorHandling from './components/common/ErrorPage';
 import Navigation from './components/Navigation';
-import { getTranslatedURL } from './utils/HelperFunctions';
 import ResetPassword from './routes/ResetPassword';
 import { MobileMenuContext } from './components/MobileMenu';
 import BottomPlayer from './routes/User/routes/Sounds/BottomPlayer';
 import './css/style.css';
 
-let redirected = false;
-
-const compareRoutes = (r1 = [], r2 = [], key = 'route') => {
-    return r1.every((v, idx) => r2[idx] && v[key] === r2[idx][key]);
-};
-
-const App = (props) => {
-    const { location, translate, activeLanguage, setActiveLanguage } = props;
-
-    const setLanguage = useCallback(setActiveLanguage, []);
-
-    const savedLanguage = typeof localStorage !== 'undefined' ? localStorage.language : false;
-
-    const url = location.pathname;
-    const urlLocale = url.split('/')[1] === 'dk' ? 'da' : 'en';
-    const language = savedLanguage || urlLocale;
-    let redirect = false;
-
-    // Update language and url if user has different language saved
-    if (!!savedLanguage && savedLanguage !== urlLocale) {
-        const redirectUrl = getTranslatedURL(url, translate('code.' + activeLanguage), translate);
-
-        redirect = redirectUrl + location.search;
-    }
-
+const App = () => {
     const [state, setState] = useState({
         mobileLinks: [],
     });
-
-    useEffect(() => {
-        setLanguage(language);
-    }, [language, setLanguage]);
 
     useEffect(() => {
         // Setup custom analytics
@@ -111,28 +79,28 @@ const App = (props) => {
         [setState]
     );
 
-    if (!!redirect && location.pathname !== redirect && !redirected) {
-        redirected = true;
-        return <Redirect to={redirect} />;
-    }
+    // if (!!redirect && location.pathname !== redirect && !redirected) {
+    //     redirected = true;
+    //     return <Redirect to={redirect} />;
+    // }
 
-    const thumb =
-        Environment.CALLBACK_DOMAIN + (activeLanguage === 'da' ? defaultImageDa : defaultImage);
-    const title = translate('Book DJs with ease') + ' | Cueup';
-    const description = translate('site-description');
-    const urlArr = url.split('/');
-    let cssLocation = urlArr[1] === 'dk' ? urlArr[2] : urlArr[1];
-    cssLocation = `location_${cssLocation || ''}`;
-    const pageURL = Environment.CALLBACK_DOMAIN + location.pathname;
-    const altLangURL =
-        Environment.CALLBACK_DOMAIN +
-        getTranslatedURL(url, translate('code.' + activeLanguage), translate);
+    // const thumb =
+    //     Environment.CALLBACK_DOMAIN + defaultImage;
+    // const title = translate('Book DJs with ease') + ' | Cueup';
+    // const description = translate('site-description');
+    // const urlArr = url.split('/');
+    // let cssLocation = urlArr[1] === 'dk' ? urlArr[2] : urlArr[1];
+    // cssLocation = `location_${cssLocation || ''}`;
+    // const pageURL = Environment.CALLBACK_DOMAIN + location.pathname;
+    // const altLangURL =
+    //     Environment.CALLBACK_DOMAIN +
+    //     getTranslatedURL(url, translate('code.' + activeLanguage), translate);
 
     return (
         <ErrorHandling>
-            <div className={cssLocation}>
+            <div>
                 <Helmet>
-                    <link
+                    {/* <link
                         rel="alternate"
                         href={altLangURL}
                         hrefLang={translate('hreflang.' + activeLanguage)}
@@ -158,7 +126,7 @@ const App = (props) => {
                     <meta name="twitter:title" content={title} />
                     <meta name="twitter:description" content={description} />
                     <meta name="twitter:image" content={thumb} />
-                    <meta name="twitter:url" content={pageURL} />
+                    <meta name="twitter:url" content={pageURL} /> */}
                 </Helmet>
                 <MobileMenuContext.Provider
                     value={{
@@ -168,7 +136,7 @@ const App = (props) => {
                         label: state.mobileLabel,
                     }}
                 >
-                    <RouteWrapper translate={translate} cssLocation={cssLocation} />
+                    <RouteWrapper />
                 </MobileMenuContext.Provider>
                 <div id="popup-container" />
             </div>
@@ -176,30 +144,24 @@ const App = (props) => {
     );
 };
 
-const RouteWrapper = memo(({ translate, cssLocation }) => {
+const RouteWrapper = () => {
     return (
         <>
             <Navigation />
-            <div id="content" className={cssLocation}>
+            <div id="content">
                 <Switch>
-                    <Route exact path={[translate('routes./'), '/verifyEmail']} component={Home} />
-                    <Route path={translate('routes./about')} component={About} />
-                    <Route path={[translate('routes./user/:permalink')]} component={User} />
-                    <Route path={translate('routes./how-it-works')} component={HowItWorks} />
-                    <Route path={translate('routes./signup')} component={Signup} />
-                    <Route path={translate('routes./faq')} component={Faq} />
-                    <Route path={translate('routes./terms')} component={Terms} />
-                    <Route
-                        path={translate('routes./event') + '/:id/:hash'}
-                        component={CueupEvent}
-                    />
-                    <Route path={translate('routes./gig') + '/:id'} component={Gig} />
-                    <Route
-                        path={translate('routes./book-dj') + '/:country/:city?'}
-                        component={LocationLanding}
-                    />
-                    <Route path={translate('routes./blog')} component={Blog} />
-                    <Route path={translate('routes./reset-password')} component={ResetPassword} />
+                    <Route exact path={['/', '/verifyEmail']} component={Home} />
+                    <Route path={'/about'} component={About} />
+                    <Route path={'/user/:permalink'} component={User} />
+                    <Route path={'/how-it-works'} component={HowItWorks} />
+                    <Route path={'/signup'} component={Signup} />
+                    <Route path={'/faq'} component={Faq} />
+                    <Route path={'/terms'} component={Terms} />
+                    <Route path={'/event/:id/:hash'} component={CueupEvent} />
+                    <Route path={'/gig/:id'} component={Gig} />
+                    <Route path={'/book-dj/:country/:city?'} component={LocationLanding} />
+                    <Route path={'/blog'} component={Blog} />
+                    <Route path={'/reset-password'} component={ResetPassword} />
 
                     <Route component={NotFound} />
                 </Switch>
@@ -208,28 +170,10 @@ const RouteWrapper = memo(({ translate, cssLocation }) => {
             </div>
         </>
     );
-});
-
-const mapStateToProps = (state, ownprops) => {
-    return {
-        loggedIn: state.login.status.signedIn,
-        profile: state.login.profile,
-        activeLanguage: getActiveLanguage(state.locale).code,
-        translate: getTranslate(state.locale),
-    };
 };
 
-function mapDispatchToProps(dispatch, ownprops) {
-    return {
-        setActiveLanguage: (code) => {
-            dispatch(setActiveLanguage(code));
-        },
-    };
-}
+const compareRoutes = (r1 = [], r2 = [], key = 'route') => {
+    return r1.every((v, idx) => r2[idx] && v[key] === r2[idx][key]);
+};
 
-export default withRouter(
-    connect(
-        mapStateToProps,
-        mapDispatchToProps
-    )(memo(App))
-);
+export default App;

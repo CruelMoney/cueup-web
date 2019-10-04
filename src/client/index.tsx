@@ -27,4 +27,10 @@ if (rootElement && rootElement.hasChildNodes()) {
     render(<Router />, rootElement);
 }
 
+if (process.env.NODE_ENV === 'development') {
+    if (module.hot) {
+        module.hot.accept();
+    }
+}
+
 // registerServiceWorker();

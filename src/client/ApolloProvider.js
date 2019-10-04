@@ -6,11 +6,13 @@ import { onError } from 'apollo-link-error';
 import { ApolloLink } from 'apollo-link';
 import { setContext } from 'apollo-link-context';
 import { createUploadLink } from 'apollo-upload-client';
-import { Environment } from './constants/constants';
-import resolvers from './actions/resolvers';
-import { authService } from './utils/AuthService';
-import introspectionQueryResultData from './fragmentTypes.json';
-import customFetch from './utils/uploadProgress';
+import { Environment } from '../shared/constants/constants';
+import { authService } from '../shared/utils/AuthService';
+import introspectionQueryResultData from '../shared/fragmentTypes.json';
+import customFetch from '../shared/utils/uploadProgress';
+
+import StateResolvers, { defaultAppState } from '../shared/localState/resolvers';
+import typeDefs from '../shared/localState/typeDefs';
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
     introspectionQueryResultData,
@@ -27,7 +29,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward, re
         let headers = {};
         for (const err of graphQLErrors) {
             // handle errors differently based on its error code
-            switch (err.extensions.code) {
+            switch (err?.extensions?.code) {
                 case 'UNAUTHENTICATED':
                     // old token might have expired, lets remove it and try again
                     authService.logout();
@@ -91,18 +93,40 @@ const uploadLink = createUploadLink({
 
 const link = ApolloLink.from([errorLink, authFlowLink, uploadLink]);
 
-const client = new ApolloClient({
-    cache,
-    link,
-    connectToDevTools: true,
-    resolvers,
-});
-
 const reset = async () => {
     token = null;
     authService.logout();
     await client.resetStore();
 };
+
+// Helper function to get data from the cache
+const getState = (query) => {
+    return cache.readQuery({ query }).state;
+};
+
+// Helper function to write data back to the cache
+const writeState = (state) => {
+    return cache.writeData({ data: { state } });
+};
+
+// initial apollo local state
+const initState = () => {
+    const state = {
+        appState: defaultAppState,
+        __typename: 'State',
+    };
+
+    writeState(state);
+};
+initState();
+
+const client = new ApolloClient({
+    cache,
+    link,
+    connectToDevTools: true,
+    resolvers: StateResolvers(getState, writeState),
+    typeDefs,
+});
 
 class APIProvider extends Component {
     constructor(props) {
