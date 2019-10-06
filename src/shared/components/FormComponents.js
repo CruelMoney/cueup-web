@@ -114,7 +114,7 @@ const DeleteFileButton = styled.button`
     font-weight: 600;
 `;
 
-const FormattedText = ({ defaultValue, save, ...props }) => {
+const FormattedText = ({ defaultValue, ...props }) => {
     const prefix = 'https://cueup.io/user/';
 
     const [value, setValue] = useState(defaultValue);
@@ -134,7 +134,6 @@ const FormattedText = ({ defaultValue, save, ...props }) => {
             {...props}
             type="text"
             onChange={(e) => updateVal(e.target.value)}
-            onBlur={(e) => save(value)}
             value={prefix + value}
         />
     );
@@ -147,7 +146,7 @@ const InputType = React.forwardRef(
     ) => {
         switch (type) {
             case 'text-area':
-                return <TextArea {...props} ref={ref} type={type} error={!!error} onBlur={save} />;
+                return <TextArea {...props} ref={ref} type={type} error={!!error} />;
             case 'select':
                 return (
                     <Select {...props} error={!!error} onChange={save} ref={ref}>
@@ -193,7 +192,6 @@ const InputType = React.forwardRef(
                         ref={ref}
                         type={type}
                         error={!!error}
-                        onBlur={save}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter' && blurOnEnter) {
                                 e.target.blur();
@@ -217,6 +215,7 @@ const Input = React.forwardRef(
             validation,
             onChange,
             registerValidation,
+            onBlur,
             unregisterValidation = () => {},
             ...props
         },
@@ -251,6 +250,11 @@ const Input = React.forwardRef(
 
         const change = (e) => onChange && onChange(e.target.value);
 
+        const handleBlur = (e) => {
+            save(e);
+            onBlur && onBlur();
+        };
+
         return (
             <LabelComponent>
                 {label}
@@ -261,6 +265,7 @@ const Input = React.forwardRef(
                     warning={warning}
                     onChange={change}
                     ref={ref}
+                    onBlur={handleBlur}
                     {...props}
                 />
                 {error && <p className="error">{error}</p>}

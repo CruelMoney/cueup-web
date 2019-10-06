@@ -29,7 +29,9 @@
     "test": "node scripts/test.js --env=jsdom",
     "test:update": "yarn-or-npm test --updateSnapshot",
     "transpile": "yarn-or-npm babel -d build/transpiled ./src --extensions .es6,.js,.es,.jsx,.mjs,.ts,.tsx --ignore **/*.d.ts",
-    "tsc": "tsc --noEmit"
+    "tsc": "tsc --noEmit",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.2",
@@ -131,6 +133,7 @@
     "semver": "6.3.0",
     "smoothscroll-polyfill": "^0.4.4",
     "socket.io-client": "^2.1.1",
+    "storybook": "^5.1.11",
     "styled-components": "^4.3.2",
     "url-polyfill": "^1.1.7",
     "wnumb": "^1.0.4"
@@ -151,6 +154,11 @@
     "@babel/register": "^7.4.4",
     "@loadable/babel-plugin": "^5.10.3",
     "@loadable/webpack-plugin": "^5.7.1",
+    "@storybook/addon-actions": "^5.2.1",
+    "@storybook/addon-centered": "^5.2.1",
+    "@storybook/addon-links": "^5.2.1",
+    "@storybook/addons": "^5.2.1",
+    "@storybook/react": "^5.2.1",
     "@svgr/webpack": "^4.3.1",
     "@testing-library/react": "^9.1.3",
     "@types/body-parser": "^1.17.1",
