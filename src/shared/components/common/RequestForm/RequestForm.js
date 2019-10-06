@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import moment from 'moment-timezone';
 import { useMutation } from 'react-apollo';
 import styled from 'styled-components';
-import { PrimaryButton, Card, CardShadow, Col } from 'components/Blocks';
+import { Card, CardShadow, Col } from 'components/Blocks';
 import { useForm } from 'components/FormComponents';
+import { BodySmall } from 'components/Text';
 import Popup from '../Popup';
 import Login from '../Login';
 import addTranslate from '../../../components/higher-order/addTranslate';
@@ -17,8 +18,8 @@ import { CREATE_EVENT } from './gql';
 import Step3 from './Step3';
 import Step4 from './Step4';
 
-const MainForm = ({ translate, onSubmit }) => {
-    const [activeStep, setActiveStep] = useState(2);
+const MainForm = ({ translate }) => {
+    const [activeStep, setActiveStep] = useState(1);
     const [showPopup, setShowPopup] = useState(false);
     const [mutate, { loading, error }] = useMutation(CREATE_EVENT);
 
@@ -132,6 +133,13 @@ const MainForm = ({ translate, onSubmit }) => {
                     </RequestCard>
                     <CardShadow />
                 </Wrapper>
+                {activeStep === 4 && (
+                    <Wrapper>
+                        <BodySmall style={{ textAlign: 'center' }} className="terms_link">
+                            {translate('terms-message-event')}
+                        </BodySmall>
+                    </Wrapper>
+                )}
             </div>
         </div>
     );
@@ -143,7 +151,7 @@ const Wrapper = styled(Col)`
     max-width: 600px;
     box-sizing: border-box;
     .error,
-    .errors {
+    .errors p {
         font-size: 14px;
     }
 `;

@@ -1,254 +1,225 @@
 {
-	"currency": ["Currency", "Valuta"],
-	"book-dj": ["Book DJ", "Book DJ"],
-	"become-dj": ["Become DJ", "Bliv DJ"],
-	"get-offers": ["Get offers", "Få tilbud"],
-	"how-it-works": ["How it works", "Sådan virker det"],
-	"are-you-a-dj": ["Are you a DJ?", "Er du DJ?"],
-	"are-you-a-dj-in-:location": [
-		"Are you a DJ in ${ location }?",
-		"Er du DJ i ${ location }?"
-	],
-	"apply-to-become-dj": ["Apply to become DJ", "Ansøg om at blive DJ"],
-	"apply-to-become-dj-or-see-how-it-works": [
-		"Apply to become DJ or see how it works.",
-		"Ansøg om at blive DJ eller se hvordan det virker."
-	],
-	"language": ["Language", "Sprog"],
-	"language-and-currency": ["Language & Currency", "Sprog & Valuta"],
-	"company": ["Company", "Selskab"],
-	"about": ["About", "Om"],
-	"resources": ["Resources", "Resurser"],
-	"contact": ["Contact", "Kontakt"],
-	"privacy-and-terms": ["Privacy & terms", "Betingelser"],
-	"top-locations": ["Top locations", "Top placeringer"],
-	"copenhagen": ["Copenhagen", "København"],
-	"denmark": ["Denmark", "Danmark"],
-	"back": ["Back", "Tilbage"],
-	"continue": ["Continue", "Fortsæt"],
-	"Genres": ["Genres", "Musikgenrer"],
-	"About you": ["About you", "Om dig"],
-	"terms-message": [
-		"By clicking join you agree to our <a target='_blank' href='/terms/agreements'>terms and conditions</a>.",
-		"Ved at trykke på bliv medlem accepterer du automatisk vores <a target='_blank' href='/terms/agreements'>betingelser</a>."
-	],
-	"unknown-error": ["Something went wrong.", "Noget gik galt."],
-	"Welcome": ["Welcome", "Velkommen"],
-	"speakers": ["Speakers", "Højtalere"],
-	"lights": ["Lights", "Lys"],
-	"hours": ["Hours", "Timer"],
-	"Join": ["Join", "Bliv medlem"],
-	"over": ["Over", "Over"],
-	"around": ["Around", "Omkring"],
-	"required-fields-error": [
-		"Please fill out all required fields",
-		"Ufyld venligst alle "
-	],
-	"optional": ["Optional", "Valgfri"],
-	"first-last": ["First Last", "Fornavn Efternavn"],
-	"Your name": ["Your name", "Dit navn"],
-	"Name": ["Name", "Navn"],
-	"city": ["City", "By"],
-	"arrange-event": ["Arrange event", "Arranger event"],
-	"log-out": ["Log out", "Log ud"],
-	"login": ["Login", "Log ind"],
-	"reset-password-msg": [
-		"We've just sent you an email to reset your password.",
-		"Vi har sendt dig en email til at nulstille dit password."
-	],
-	"please-enter-email": ["Please enter email.", "Indtast email."],
-	"Your email": ["Your email", "Din email"],
-	"Phone number": ["Phone number", "Telefonnummer"],
-	"Your phone number": ["Your phone number", "Dit telefonnummer"],
-	"Location": ["Location", "Område"],
-	"or": ["Or", "Eller"],
-	"forgot": ["Forgot", "Glemt"],
-	"close": ["Close", "Luk"],
-	"change-image": ["Change image", "Luk"],
-	"experience": ["Experience", "Erfaring"],
-	"experience-description": [
-		"How many gigs you have played using Cueup. This is shared on your public profile.",
-		"Hvor mange gigs du har spillet gennem Cueup. Dette bliver delt på din offentlige profil."
-	],
-	"experience-description-public": [
-		"How many gigs this DJ has played using Cueup.",
-		"Hvor mange gigs denne DJ har spillet gennem Cueup."
-	],
-	"earned": ["Earned", "Fortjeneste"],
-	"earned-description": [
-		"How much money you have earned. This is NOT shared on your public profile.",
-		"Hvor meget du har tjent gennem Cueup. Dette bliver IKKE delt på din offentlige profil."
-	],
-	"rating": ["Rating", "Bedømmelse"],
-	"no-reviews-yet": ["No reviews yet", "Ingen anmeldelser endnu"],
-	"upcoming": ["Upcoming", "Kommende"],
-	"finished": ["Finished", "Afsluttede"],
-	"cueup-points-description": [
-		"Cueup points can be used to remove the fee on gigs, thus increasing the payout.",
-		"Cueup point kan bruges til at fjerne gebyrer fra gigs og dermed øge fortjenesten."
-	],
-	"profile": ["Profile", "Profil"],
-	"reviews": ["Reviews", "Anmeldelser"],
-	"preferences": ["Preferences", "Indstillinger"],
-	"not-found-title": ["404 Not found", "404 Ikke fundet"],
-	"not-found-description": [
-		"<span>Sorry, the page you visited could not be found.<br/>Try to spin up another page.</span>",
-		"<span>Undskyld, siden kunne ikke findes.<br/>Prøv at indlæs en anden side.</span>"
-	],
-	"reset-password-title": ["Create new password", "Opret nyt kodeord"],
-	"reset-password-description": ["Create new password", "Opret nyt kodeord"],
-	"ready-to-get-started": [
-		"Ready to get started?",
-		"Klar til at komme i gang?"
-	],
-	"arrange-event-or-become-dj": [
-		"Arrange an event, or apply to become a DJ.",
-		"Arranger et event, eller ansøg om at blive DJ."
-	],
-	"subscribe": ["Subscribe", "Følg"],
-	"Wonder how it works?": [
-		"Wonder how it works?",
-		"Vil du vide hvordan det virker?"
-	],
-	"See how it works, or arrange an event.": [
-		"See how it works, or arrange an event.",
-		"Se hvordan det virker, eller arranger et event."
-	],
-	"City not found": ["City not found", "Kunne ikke finde byen"],
-	"No new notifications.": [
-		"No new notifications.",
-		"Ingen nye notifikationer."
-	],
-	"Change image": ["Change image", "Skift billede"],
-	"start": ["Start", "Start"],
-	"end": ["End", "Slut"],
-	"Request features": ["Request features", "Efterspørg features"],
-	"See offer example": ["See offer example", "Se eksempel på tilbud"],
-	"No gigs": ["No gigs", "Ingen gigs"],
-	"no-gigs-description": [
-		"You will get a notification when new gigs are available.",
-		"Du vil modtage besked når du modater nye gigs."
-	],
-	"Login to see your gigs": [
-		"Login to see your gigs.",
-		"Log ind for at se dine gigs."
-	],
-	"Make offer within": ["Make offer within", "Afgiv tilbud inden"],
-	"month": ["month", "måned"],
-	"weeks": ["weeks", "uger"],
-	"week": ["week", "uge"],
-	"days": ["days", "dage"],
-	"day": ["days", "dag"],
-	"hour": ["hour", "time"],
-	"minutes": ["minutes", "minutter"],
-	"minute": ["minute", "minut"],
-	"seconds": ["seconds", "sekunder"],
-	"second": ["second", "sekund"],
-	"payout": {
-		"country-not-found": [
-			"Country could not be found.",
-			"Landet kunne ikke findes."
-		],
-		"description": [
-			"All information is encrypted. We are using IBAN numbers to allow deals between countries. That way you can play gigs in foreign contries if you're traveling.",
-			"Alt information er krypteret. Vi bruger IBAN-nummer for at kunne tilbyde gigs i udlandet."
-		],
-		"address-description": [
-			"Enter the address of the person or business that the bank account is associated with.",
-			"Indtast adressen på den person eller forretning som bankkontoen er forbundet med."
-		],
-		"IBAN-number": ["IBAN-number", "IBAN-nummer"],
-		"IBAN-description": [
-			"Your IBAN number can typically be found on your online bank, the banks mobile app or on your bank account statement.",
-			"Dit IBAN-nummer kan typisk findes i netbank, i bankens app eller på din kontooversigt."
-		],
-		"routing-number": ["Routing number", "Routing nummer"],
-		"account-number": ["Account number", "Kontonummer"],
-		"terms": [
-			"By clicking save, you agree to our <a target='_blank' rel='noopener noreferrer' href='/terms/agreements'>terms and conditions</a>, and stripes <a target='_blank' rel='noopener noreferrer' href='https://stripe.com/dk/connect-account/legal'>connect account agreement.</a>",
-			"Ved at trykke gem, accepterer du vores <a target='_blank' rel='noopener noreferrer' href='/dk/betingelser/aftale'>betingelser</a>, og stripes <a target='_blank' rel='noopener noreferrer' href='https://stripe.com/dk/connect-account/legal'>connect account agreement.</a>"
-		],
-		"location": ["Location", "Område"],
-		"account-name": ["Account holder name", "Kontoindehaverens navn"],
-		"account-phone": ["Account holder phone", "Telefonnummer"]
-	},
-	"other": ["Other", "Andet"],
-	"europe": ["Europe", "Europa"],
-	"country": ["Country", "Land"],
-	"postal-code": ["Postal code", "Postnummer"],
-	"save": ["Save", "Gem"],
-	"address": ["Address", "Adresse"],
-	"Edit settings": ["Edit settings", "Skift indstillinger"],
-	"Delete profile": ["Delete profile", "Slet profil"],
-	"Currency": ["Currency", "Valuta"],
-	"Email notifications": ["Email notifications", "Email notifikationer"],
-	"Cancelation policy": ["Cancelation policy", "Aflysningspolitik"],
-	"Refund percentage": ["Refund percentage", "Tilbagebetalt procentdel"],
-	"Standby": ["Standby", "Standby"],
-	"Unavailable": ["Unavailable", "Utilgængelig"],
-	"Available": ["Available", "Tilgængelig"],
-	"Profile URL": ["Profile URL", "Profil URL"],
-	"Request email": ["Request email", "Anmod om email"],
-	"Email verification": ["Email verification", "Email verifikation"],
-	"Share profile on facebook": [
-		"Share profile on facebook",
-		"Del profil på facebook"
-	],
-	"See public profile": ["See public profile", "Se offentlig profil"],
-	"Refer organizers": ["Refer organizers", "Henvis organisator"],
-	"Refer DJs": ["Refer DJs", "Henvis DJs"],
-	"Bio": ["Biography", "Biografi"],
-	"empty-page-message": [
-		"Looks like there's nothing here.",
-		"Ser ud til at der ikke findes noget her."
-	],
-	"No relevant DJ could be found": [
-		"No relevant DJ could be found",
-		"Ingen DJs kunne findes"
-	],
-	"The event is cancelled": ["The event is cancelled", "Eventet er aflyst"],
-	"Waiting on DJ's to make offers": [
-		"Waiting on DJ's to make offers",
-		"Venter på tilbud fra DJs"
-	],
-	"There's an offer": ["There's an offer", "Der er et tilbud"],
-	"The event is confirmed and payed": [
-		"The event is confirmed and payed",
-		"Eventet er bekræftet og betalt"
-	],
-	"The event is finished": ["The event is finished", "Eventet er afsluttet"],
-	"Save changes": ["Save changes", "Gem ændringer"],
-	"Confirm": ["Confirm", "Bekræft"],
-	"Send message": ["Send message", "Send besked"],
-	"Message": ["Message", "Besked"],
-	"Contact us": ["Contact us", "Kontakt os"],
-	"Organizer": ["Organizer", "Arrangør"],
-	"Terms & Privacy": ["Terms & Privacy", "Betingelser"],
-	"site-description": [
-		"Cueup is an online platform connecting DJs and event organizers - the easiest way for you to book a great DJ for your event.  Just tell us about your event, and within 1 day you will receive non-binding offers from DJs near you.",
-		"Cueup er en online platform der forbinder DJs og eventarrangører - den nemmeste måde at booke en fremragende DJ til dit event. Du skal blot fortælle os om dit event, og inden for 1 dag vil du modtage ikke-bindende tilbud fra lokale DJs."
-	],
-	"Book DJs with ease": ["Book DJs with ease", "Book DJs uden bekymringer"],
-	"hreflang": {
-		"en": ["da-DK", "da-DK"],
-		"da": ["x-default", "x-default"]
-	},
-	"code": {
-		"da": ["en", "en"],
-		"en": ["da", "da"]
-	},
-	"Service fee": ["Service fee", "Servicegebyr"],
-	"Remember to pay using Cueup": [
-		"Remember to pay using Cueup",
-		"Husk at betale med Cueup"
-	],
-	"removed-facebook": [
-		"To protect our users privacy, we have removed facebook as a login option. If you previously logged in using facebook, create a new password by clicking FORGOT.",
-		"For at beskytte vores brugeres data, har vi fjernet facebook som login. Hvis du tidligere har brugt facebook som login, kan du oprette et nyt kodeord ved at trykke på GLEMT."
-	],
-	"gettingPayment": ["Loading payment", "Henter betaling"],
-	"payment-succes-message": [
-		"Your payment has been received, and you will receive a receipt on email.",
-		"Din betaling er modtaget, og du vil få en kvittering på din email."
-	]
+  "currency": ["Currency", "Valuta"],
+  "book-dj": ["Book DJ", "Book DJ"],
+  "become-dj": ["Become DJ", "Bliv DJ"],
+  "get-offers": ["Get offers", "Få tilbud"],
+  "how-it-works": ["How it works", "Sådan virker det"],
+  "are-you-a-dj": ["Are you a DJ?", "Er du DJ?"],
+  "are-you-a-dj-in-:location": ["Are you a DJ in ${ location }?", "Er du DJ i ${ location }?"],
+  "apply-to-become-dj": ["Apply to become DJ", "Ansøg om at blive DJ"],
+  "apply-to-become-dj-or-see-how-it-works": [
+    "Apply to become DJ or see how it works.",
+    "Ansøg om at blive DJ eller se hvordan det virker."
+  ],
+  "language": ["Language", "Sprog"],
+  "language-and-currency": ["Language & Currency", "Sprog & Valuta"],
+  "company": ["Company", "Selskab"],
+  "about": ["About", "Om"],
+  "resources": ["Resources", "Resurser"],
+  "contact": ["Contact", "Kontakt"],
+  "privacy-and-terms": ["Privacy & terms", "Betingelser"],
+  "top-locations": ["Top locations", "Top placeringer"],
+  "copenhagen": ["Copenhagen", "København"],
+  "denmark": ["Denmark", "Danmark"],
+  "back": ["Back", "Tilbage"],
+  "continue": ["Continue", "Fortsæt"],
+  "Genres": ["Genres", "Musikgenrer"],
+  "About you": ["About you", "Om dig"],
+  "terms-message": [
+    "By clicking join you agree to our <a target='_blank' href='/terms/agreements'>terms and conditions</a>.",
+    "Ved at trykke på bliv medlem accepterer du automatisk vores <a target='_blank' href='/terms/agreements'>betingelser</a>."
+  ],
+  "terms-message-event": [
+    "By clicking get offers you agree to our <a target='_blank' href='/terms/agreements'>terms and conditions</a>.",
+    "Ved at trykke på få tilbud accepterer du automatisk vores <a target='_blank' href='/terms/agreements'>betingelser</a>."
+  ],
+  "unknown-error": ["Something went wrong.", "Noget gik galt."],
+  "Welcome": ["Welcome", "Velkommen"],
+  "speakers": ["Speakers", "Højtalere"],
+  "lights": ["Lights", "Lys"],
+  "hours": ["Hours", "Timer"],
+  "Join": ["Join", "Bliv medlem"],
+  "over": ["Over", "Over"],
+  "around": ["Around", "Omkring"],
+  "required-fields-error": ["Please fill out all required fields", "Ufyld venligst alle "],
+  "optional": ["Optional", "Valgfri"],
+  "first-last": ["First Last", "Fornavn Efternavn"],
+  "Your name": ["Your name", "Dit navn"],
+  "Name": ["Name", "Navn"],
+  "city": ["City", "By"],
+  "arrange-event": ["Arrange event", "Arranger event"],
+  "log-out": ["Log out", "Log ud"],
+  "login": ["Login", "Log ind"],
+  "reset-password-msg": [
+    "We've just sent you an email to reset your password.",
+    "Vi har sendt dig en email til at nulstille dit password."
+  ],
+  "please-enter-email": ["Please enter email.", "Indtast email."],
+  "Your email": ["Your email", "Din email"],
+  "Phone number": ["Phone number", "Telefonnummer"],
+  "Your phone number": ["Your phone number", "Dit telefonnummer"],
+  "Location": ["Location", "Område"],
+  "or": ["Or", "Eller"],
+  "forgot": ["Forgot", "Glemt"],
+  "close": ["Close", "Luk"],
+  "change-image": ["Change image", "Luk"],
+  "experience": ["Experience", "Erfaring"],
+  "experience-description": [
+    "How many gigs you have played using Cueup. This is shared on your public profile.",
+    "Hvor mange gigs du har spillet gennem Cueup. Dette bliver delt på din offentlige profil."
+  ],
+  "experience-description-public": [
+    "How many gigs this DJ has played using Cueup.",
+    "Hvor mange gigs denne DJ har spillet gennem Cueup."
+  ],
+  "earned": ["Earned", "Fortjeneste"],
+  "earned-description": [
+    "How much money you have earned. This is NOT shared on your public profile.",
+    "Hvor meget du har tjent gennem Cueup. Dette bliver IKKE delt på din offentlige profil."
+  ],
+  "rating": ["Rating", "Bedømmelse"],
+  "no-reviews-yet": ["No reviews yet", "Ingen anmeldelser endnu"],
+  "upcoming": ["Upcoming", "Kommende"],
+  "finished": ["Finished", "Afsluttede"],
+  "cueup-points-description": [
+    "Cueup points can be used to remove the fee on gigs, thus increasing the payout.",
+    "Cueup point kan bruges til at fjerne gebyrer fra gigs og dermed øge fortjenesten."
+  ],
+  "profile": ["Profile", "Profil"],
+  "reviews": ["Reviews", "Anmeldelser"],
+  "preferences": ["Preferences", "Indstillinger"],
+  "not-found-title": ["404 Not found", "404 Ikke fundet"],
+  "not-found-description": [
+    "<span>Sorry, the page you visited could not be found.<br/>Try to spin up another page.</span>",
+    "<span>Undskyld, siden kunne ikke findes.<br/>Prøv at indlæs en anden side.</span>"
+  ],
+  "reset-password-title": ["Create new password", "Opret nyt kodeord"],
+  "reset-password-description": ["Create new password", "Opret nyt kodeord"],
+  "ready-to-get-started": ["Ready to get started?", "Klar til at komme i gang?"],
+  "arrange-event-or-become-dj": [
+    "Arrange an event, or apply to become a DJ.",
+    "Arranger et event, eller ansøg om at blive DJ."
+  ],
+  "subscribe": ["Subscribe", "Følg"],
+  "Wonder how it works?": ["Wonder how it works?", "Vil du vide hvordan det virker?"],
+  "See how it works, or arrange an event.": [
+    "See how it works, or arrange an event.",
+    "Se hvordan det virker, eller arranger et event."
+  ],
+  "City not found": ["City not found", "Kunne ikke finde byen"],
+  "No new notifications.": ["No new notifications.", "Ingen nye notifikationer."],
+  "Change image": ["Change image", "Skift billede"],
+  "start": ["Start", "Start"],
+  "end": ["End", "Slut"],
+  "Request features": ["Request features", "Efterspørg features"],
+  "See offer example": ["See offer example", "Se eksempel på tilbud"],
+  "No gigs": ["No gigs", "Ingen gigs"],
+  "no-gigs-description": [
+    "You will get a notification when new gigs are available.",
+    "Du vil modtage besked når du modater nye gigs."
+  ],
+  "Login to see your gigs": ["Login to see your gigs.", "Log ind for at se dine gigs."],
+  "Make offer within": ["Make offer within", "Afgiv tilbud inden"],
+  "month": ["month", "måned"],
+  "weeks": ["weeks", "uger"],
+  "week": ["week", "uge"],
+  "days": ["days", "dage"],
+  "day": ["days", "dag"],
+  "hour": ["hour", "time"],
+  "minutes": ["minutes", "minutter"],
+  "minute": ["minute", "minut"],
+  "seconds": ["seconds", "sekunder"],
+  "second": ["second", "sekund"],
+  "payout": {
+    "country-not-found": ["Country could not be found.", "Landet kunne ikke findes."],
+    "description": [
+      "All information is encrypted. We are using IBAN numbers to allow deals between countries. That way you can play gigs in foreign contries if you're traveling.",
+      "Alt information er krypteret. Vi bruger IBAN-nummer for at kunne tilbyde gigs i udlandet."
+    ],
+    "address-description": [
+      "Enter the address of the person or business that the bank account is associated with.",
+      "Indtast adressen på den person eller forretning som bankkontoen er forbundet med."
+    ],
+    "IBAN-number": ["IBAN-number", "IBAN-nummer"],
+    "IBAN-description": [
+      "Your IBAN number can typically be found on your online bank, the banks mobile app or on your bank account statement.",
+      "Dit IBAN-nummer kan typisk findes i netbank, i bankens app eller på din kontooversigt."
+    ],
+    "routing-number": ["Routing number", "Routing nummer"],
+    "account-number": ["Account number", "Kontonummer"],
+    "terms": [
+      "By clicking save, you agree to our <a target='_blank' rel='noopener noreferrer' href='/terms/agreements'>terms and conditions</a>, and stripes <a target='_blank' rel='noopener noreferrer' href='https://stripe.com/dk/connect-account/legal'>connect account agreement.</a>",
+      "Ved at trykke gem, accepterer du vores <a target='_blank' rel='noopener noreferrer' href='/dk/betingelser/aftale'>betingelser</a>, og stripes <a target='_blank' rel='noopener noreferrer' href='https://stripe.com/dk/connect-account/legal'>connect account agreement.</a>"
+    ],
+    "location": ["Location", "Område"],
+    "account-name": ["Account holder name", "Kontoindehaverens navn"],
+    "account-phone": ["Account holder phone", "Telefonnummer"]
+  },
+  "other": ["Other", "Andet"],
+  "europe": ["Europe", "Europa"],
+  "country": ["Country", "Land"],
+  "postal-code": ["Postal code", "Postnummer"],
+  "save": ["Save", "Gem"],
+  "address": ["Address", "Adresse"],
+  "Edit settings": ["Edit settings", "Skift indstillinger"],
+  "Delete profile": ["Delete profile", "Slet profil"],
+  "Currency": ["Currency", "Valuta"],
+  "Email notifications": ["Email notifications", "Email notifikationer"],
+  "Cancelation policy": ["Cancelation policy", "Aflysningspolitik"],
+  "Refund percentage": ["Refund percentage", "Tilbagebetalt procentdel"],
+  "Standby": ["Standby", "Standby"],
+  "Unavailable": ["Unavailable", "Utilgængelig"],
+  "Available": ["Available", "Tilgængelig"],
+  "Profile URL": ["Profile URL", "Profil URL"],
+  "Request email": ["Request email", "Anmod om email"],
+  "Email verification": ["Email verification", "Email verifikation"],
+  "Share profile on facebook": ["Share profile on facebook", "Del profil på facebook"],
+  "See public profile": ["See public profile", "Se offentlig profil"],
+  "Refer organizers": ["Refer organizers", "Henvis organisator"],
+  "Refer DJs": ["Refer DJs", "Henvis DJs"],
+  "Bio": ["Biography", "Biografi"],
+  "empty-page-message": [
+    "Looks like there's nothing here.",
+    "Ser ud til at der ikke findes noget her."
+  ],
+  "No relevant DJ could be found": ["No relevant DJ could be found", "Ingen DJs kunne findes"],
+  "The event is cancelled": ["The event is cancelled", "Eventet er aflyst"],
+  "Waiting on DJ's to make offers": ["Waiting on DJ's to make offers", "Venter på tilbud fra DJs"],
+  "There's an offer": ["There's an offer", "Der er et tilbud"],
+  "The event is confirmed and payed": [
+    "The event is confirmed and payed",
+    "Eventet er bekræftet og betalt"
+  ],
+  "The event is finished": ["The event is finished", "Eventet er afsluttet"],
+  "Save changes": ["Save changes", "Gem ændringer"],
+  "Confirm": ["Confirm", "Bekræft"],
+  "Send message": ["Send message", "Send besked"],
+  "Message": ["Message", "Besked"],
+  "Contact us": ["Contact us", "Kontakt os"],
+  "Organizer": ["Organizer", "Arrangør"],
+  "Terms & Privacy": ["Terms & Privacy", "Betingelser"],
+  "site-description": [
+    "Cueup is an online platform connecting DJs and event organizers - the easiest way for you to book a great DJ for your event.  Just tell us about your event, and within 1 day you will receive non-binding offers from DJs near you.",
+    "Cueup er en online platform der forbinder DJs og eventarrangører - den nemmeste måde at booke en fremragende DJ til dit event. Du skal blot fortælle os om dit event, og inden for 1 dag vil du modtage ikke-bindende tilbud fra lokale DJs."
+  ],
+  "Book DJs with ease": ["Book DJs with ease", "Book DJs uden bekymringer"],
+  "hreflang": {
+    "en": ["da-DK", "da-DK"],
+    "da": ["x-default", "x-default"]
+  },
+  "code": {
+    "da": ["en", "en"],
+    "en": ["da", "da"]
+  },
+  "Service fee": ["Service fee", "Servicegebyr"],
+  "Remember to pay using Cueup": ["Remember to pay using Cueup", "Husk at betale med Cueup"],
+  "removed-facebook": [
+    "To protect our users privacy, we have removed facebook as a login option. If you previously logged in using facebook, create a new password by clicking FORGOT.",
+    "For at beskytte vores brugeres data, har vi fjernet facebook som login. Hvis du tidligere har brugt facebook som login, kan du oprette et nyt kodeord ved at trykke på GLEMT."
+  ],
+  "gettingPayment": ["Loading payment", "Henter betaling"],
+  "payment-succes-message": [
+    "Your payment has been received, and you will receive a receipt on email.",
+    "Din betaling er modtaget, og du vil få en kvittering på din email."
+  ]
 }

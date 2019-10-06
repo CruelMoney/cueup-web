@@ -1,29 +1,43 @@
 import React, { Component } from 'react';
-import LoadingPlaceholder from '../../../components/common/LoadingPlaceholder';
+import styled from 'styled-components';
+import { Col, Card, CardShadow } from 'components/Blocks';
+import LoadingPlaceholder, {
+    LoadingPlaceholder2,
+} from '../../../components/common/LoadingPlaceholder';
 
 class LoadingForm extends Component {
     render() {
         return (
             <div className="request-form">
                 <div className="request-columns">
-                    <div className="row center">
-                        <div className="col-md-6">
-                            <div className="card">
-                                <LoadingPlaceholder />
-                                <LoadingPlaceholder />
-                            </div>
-                        </div>
-                    </div>
+                    <Wrapper>
+                        <LoadingCard>
+                            <LoadingPlaceholder2 />
+                            <LoadingPlaceholder2 />
+                        </LoadingCard>
+                        <CardShadow />
+                    </Wrapper>
                 </div>
             </div>
         );
     }
 }
 
-export default ({ isLoading, error, pastDelay }) => {
-    // Handle the loading state
-    if (isLoading) {
-        return <LoadingForm />;
+const LoadingCard = styled(Card)`
+    flex-direction: column;
+    padding: 24px;
+    height: 369px;
+    box-sizing: border-box;
+    > div {
+        margin-bottom: 24px;
     }
-    return null;
-};
+`;
+const Wrapper = styled(Col)`
+    position: relative;
+    margin: auto;
+    max-width: 600px;
+    box-sizing: border-box;
+    margin-top: 70px;
+`;
+
+export default LoadingForm;
