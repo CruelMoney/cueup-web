@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import moment from 'moment-timezone';
-import { Mutation, useMutation } from 'react-apollo';
+import { useMutation } from 'react-apollo';
 import styled from 'styled-components';
 import { PrimaryButton, Card, CardShadow, Col } from 'components/Blocks';
 import { useForm } from 'components/FormComponents';
-import DjCard from 'routes/Event/components/blocks/DJCard';
 import Popup from '../Popup';
 import Login from '../Login';
 import addTranslate from '../../../components/higher-order/addTranslate';
@@ -15,6 +14,8 @@ import Step1 from './Step1';
 import Step2 from './Step2';
 
 import { CREATE_EVENT } from './gql';
+import Step3 from './Step3';
+import Step4 from './Step4';
 
 const MainForm = ({ translate, onSubmit }) => {
     const [activeStep, setActiveStep] = useState(2);
@@ -41,6 +42,7 @@ const MainForm = ({ translate, onSubmit }) => {
 
     const next = (data) => {
         const errors = runValidations();
+        console.log({ errors });
         if (errors.length === 0) {
             handleChange(data);
             setActiveStep((s) => s + 1);
@@ -94,23 +96,39 @@ const MainForm = ({ translate, onSubmit }) => {
                             />
                         )}
 
-                        {/* 
-                                // <PrimaryButton name="request_djs_button" onClick={mutate} glow>
-                                //     <div style={{ width: '150px' }}>{translate('get-offers')}</div>
-                                // </PrimaryButton>
+                        {activeStep === 3 && (
+                            <Step3
+                                form={form}
+                                handleChange={handleChange}
+                                runValidations={runValidations}
+                                registerValidation={registerValidation}
+                                unregisterValidation={unregisterValidation}
+                                next={next}
+                                back={back}
+                            />
+                        )}
 
-                                // <ErrorMessageApollo
-                                //     center
-                                //     error={error}
-                                //     onFoundCode={(code) => {
-                                //         if (code === 'UNAUTHENTICATED') {
-                                //             showPopup(true);
-                                //         }
-                                //     }}
-                                // />
-                                // <p style={{ textAlign: 'center' }} className="terms_link">
-                                //     {translate('terms-message')}
-                                // </p> */}
+                        {activeStep === 4 && (
+                            <Step4
+                                form={form}
+                                handleChange={handleChange}
+                                runValidations={runValidations}
+                                registerValidation={registerValidation}
+                                unregisterValidation={unregisterValidation}
+                                next={next}
+                                back={back}
+                            />
+                        )}
+
+                        <ErrorMessageApollo
+                            center
+                            error={error}
+                            onFoundCode={(code) => {
+                                if (code === 'UNAUTHENTICATED') {
+                                    showPopup(true);
+                                }
+                            }}
+                        />
                     </RequestCard>
                     <CardShadow />
                 </Wrapper>
@@ -124,6 +142,10 @@ const Wrapper = styled(Col)`
     margin: auto;
     max-width: 600px;
     box-sizing: border-box;
+    .error,
+    .errors {
+        font-size: 14px;
+    }
 `;
 
 const RequestCard = styled(Card)`

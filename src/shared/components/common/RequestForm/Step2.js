@@ -18,26 +18,21 @@ const Step2 = ({
     registerValidation,
     unregisterValidation,
 }) => {
-    const [showGenres, setShowGenres] = useState(false);
-    const ref = useRef();
-
     const { error, runValidation } = useValidation({
         registerValidation: registerValidation('genres'),
         unregisterValidation: unregisterValidation('genres'),
         validation: (genres) => {
             return !genres || genres.length === 0 ? 'Please select genres' : null;
         },
-        ref,
     });
 
     const handleGenreSelection = (letCueupDecide) => {
-        setShowGenres(!letCueupDecide);
         if (letCueupDecide) {
             const defaultGenres = ['top 40', 'local', "80's", 'disco', 'remixes'];
             runValidation(defaultGenres);
-            handleChange({ genres: defaultGenres });
+            handleChange({ genres: defaultGenres, letCueupDecide: true });
         } else {
-            handleChange({ genres: [] });
+            handleChange({ genres: [], letCueupDecide: false });
         }
     };
 
@@ -52,6 +47,7 @@ const Step2 = ({
                     validation={(v) => (v ? null : 'Please write a name')}
                     registerValidation={registerValidation('name')}
                     unregisterValidation={unregisterValidation('name')}
+                    defaultValue={form.name}
                 />
             </section>
             <section>
@@ -64,27 +60,30 @@ const Step2 = ({
                         onClick={(speakers) => handleChange({ speakers })}
                         label={translate('speakers')}
                         rounded
+                        active={form.speakers}
                     />
 
                     <ToggleButton
                         onClick={(lights) => handleChange({ lights })}
                         label={translate('lights')}
                         rounded
+                        active={form.lights}
                     />
                 </Row>
             </section>
             <section>
-                <Label>{translate('request-form.step-2.event-genres')}</Label>
+                <Label>{translate('request-form.step-2.event-genres')} </Label>
                 <BodySmall style={{ marginBottom: '10px' }}>
                     {translate('request-form.step-2.event-genres-description')}
                 </BodySmall>
                 <GenreChooser
-                    letCueupDecide={handleGenreSelection}
+                    letCueupDecide={form.letCueupDecide}
+                    setLetcueupDecide={handleGenreSelection}
                     chooseLabel={translate('request-form.choose-genres')}
                     cueupDecideLabel={translate('request-form.let-cueup-decide')}
                     name="genres"
                 />
-                {showGenres ? (
+                {!form.letCueupDecide ? (
                     <ToggleButtonHandler
                         name="genres"
                         onChange={(genres) => {
@@ -95,8 +94,9 @@ const Step2 = ({
                         columns={4}
                     />
                 ) : null}
-
-                <ErrorMessageApollo error={error} ref={ref} />
+                <Label>
+                    <ErrorMessageApollo error={error} />
+                </Label>
             </section>
             <Row right style={{ marginTop: '12px' }}>
                 <TeritaryButton type="button" className="back-button" onClick={back}>

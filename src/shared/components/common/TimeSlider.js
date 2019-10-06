@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import wNumb from 'wnumb';
 import moment from 'moment-timezone';
 import Slider from './Slider';
-import { FormContext } from './Form-v2';
 
 const TimeSlider = ({
     onChange,
@@ -15,7 +14,6 @@ const TimeSlider = ({
     disabled,
 }) => {
     const [values, setValues] = useState([21 * 60, 27 * 60]);
-    const { updateValue } = useContext(FormContext);
 
     useEffect(() => {
         if (startTime && endTime) {
@@ -34,13 +32,6 @@ const TimeSlider = ({
             onChange(values);
         }
     };
-
-    useEffect(() => {
-        if (updateValue) {
-            updateValue('startMinute', values[0]);
-            updateValue('endMinute', values[1]);
-        }
-    }, [updateValue, values]);
 
     const getValues = (values) => {
         return {

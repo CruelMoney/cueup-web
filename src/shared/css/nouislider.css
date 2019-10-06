@@ -93,8 +93,6 @@
     border: 1px solid #d3d3d3;
     border-radius: 4px;
 }
-.noUi-target.noUi-connect {
-}
 
 /* Handles and cursors;
  */
@@ -109,8 +107,6 @@
     border: 1px solid #d9d9d9;
     border-radius: 15px;
     cursor: default;
-}
-.noUi-active {
 }
 
 /* Disabled state;
@@ -193,4 +189,28 @@ Custom css here
 }
 .rc-slider-rail {
     background-color: #e9ecf0;
+}
+
+.rc-slider {
+    background-color: inherit;
+    border-color: inherit;
+    border-radius: 6px;
+    box-sizing: border-box;
+    display: flex;
+    height: 0 !important;
+    margin: 5px 0px;
+    padding: 0 !important;
+    position: relative;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    visibility: visible;
+    width: 100%;
+}
+.rc-slider-track {
+    background-color: inherit !important;
+}
+.rc-slider-handle {
+    border-color: inherit !important;
+    height: 24px !important;
+    margin-top: -11px !important;
+    width: 24px !important;
 }

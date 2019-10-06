@@ -1,100 +1,94 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import wNumb from 'wnumb';
-import Button from '../Button-v2';
-import Form from '../Form-v2';
+import addTranslate from 'components/higher-order/addTranslate';
+import { TeritaryButton, PrimaryButton, Row } from 'components/Blocks';
+import { Input, Label } from 'components/FormComponents';
+import { BodySmall } from 'components/Text';
 import Slider from '../Slider';
 import TimeSlider from '../TimeSlider';
-import TextBox from '../TextBox';
 
-export default class Step3 extends PureComponent {
-    state = { guests: 50 };
+const Step3 = ({
+    translate,
+    form,
+    next,
+    back,
+    handleChange,
+    registerValidation,
+    unregisterValidation,
+}) => {
+    return (
+        <form>
+            <h3>{translate('request-form.step-3.header')}</h3>
+            <section>
+                <Label style={{ marginBottom: '12px', display: 'block' }}>
+                    {translate('request-form.step-3.music-duration')}
+                </Label>
+                <TimeSlider
+                    hoursLabel={translate('hours')}
+                    startLabel={translate('start')}
+                    endLabel={translate('end')}
+                    date={form.date}
+                    onChange={([startMinute, endMinute]) => {
+                        handleChange({ startMinute });
+                        handleChange({ endMinute });
+                    }}
+                />
+            </section>
 
-    validationChecker = null;
-
-    next = () => {
-        if (this.validationChecker(true)) {
-            this.props.next();
-        }
-    };
-
-    render() {
-        const { translate } = this.props;
-
-        return (
-            <Form
-                registerCheckForm={(checker) => {
-                    this.validationChecker = checker;
-                    this.props.formValidCheckers.push(checker);
-                }}
-                // formValidCallback={(name)=>this.props.updateProgress(name,true)}
-                // formInvalidCallback={(name)=>this.props.updateProgress(name,false)}
-                name="requestForm-step-3"
-            >
-                <h3>{translate('request-form.step-3.header')}</h3>
-                <section>
-                    <label>{translate('request-form.step-3.music-duration')}</label>
-                    <TimeSlider
-                        hoursLabel={translate('hours')}
-                        startLabel={translate('start')}
-                        endLabel={translate('end')}
-                        date={this.props.date}
-                    />
-                </section>
-
-                <section>
-                    <label>{translate('request-form.step-3.guests')}</label>
-                    <div>
-                        <Slider
-                            name="guests"
-                            range={{
-                                'min': 1,
-                                '50%': 100,
-                                '80%': 500,
-                                'max': 1000,
-                            }}
-                            step={1}
-                            connect="lower"
-                            value={[50]}
-                            onChange={(values) => {
-                                this.setState({
-                                    guests: values[0],
-                                });
-                            }}
-                            format={wNumb({
-                                decimals: 0,
-                            })}
-                        />
-                    </div>
-                    <p style={{ marginTop: '15px' }}>
-                        {translate('request-form.step-3.guests-description', {
-                            prefix:
-                                this.state.guests === 1000
-                                    ? translate('over')
-                                    : translate('around'),
-                            amount: this.state.guests,
+            <section>
+                <Label style={{ marginBottom: '12px', display: 'block' }}>
+                    {translate('request-form.step-3.guests')}
+                </Label>
+                <div>
+                    <Slider
+                        name="guests"
+                        range={{
+                            'min': 1,
+                            '50%': 100,
+                            '80%': 500,
+                            'max': 1000,
+                        }}
+                        step={1}
+                        connect="lower"
+                        value={[100]}
+                        onChange={([guests]) => handleChange({ guests })}
+                        format={wNumb({
+                            decimals: 0,
                         })}
-                    </p>
-                </section>
-                <section>
-                    <label htmlFor="description">
-                        {translate('request-form.step-3.event-description')}
-                    </label>
-                    <TextBox
-                        height="110px"
-                        placeholder={translate('request-form.step-3.event-description-description')}
-                        name="description"
-                        validate={['required']}
                     />
-                </section>
-                <div style={{ position: 'relative' }}>
-                    <span className="back-button" onClick={this.props.back}>
-                        {translate('back')}
-                    </span>
-                    <Button type="submit" onClick={this.next}>
-                        {translate('continue')}
-                    </Button>
                 </div>
-            </Form>
-        );
-    }
-}
+                <BodySmall style={{ marginTop: '15px' }}>
+                    {translate('request-form.step-3.guests-description', {
+                        prefix: form.guests === 1000 ? translate('over') : translate('around'),
+                        amount: form.guests,
+                    })}
+                </BodySmall>
+            </section>
+            <section>
+                <Input
+                    type="text-area"
+                    style={{
+                        height: '120px',
+                    }}
+                    label={translate('request-form.step-3.event-description')}
+                    placeholder={translate('request-form.step-3.event-description-description')}
+                    name="description"
+                    onSave={(description) => handleChange({ description })}
+                    validation={(v) => (v ? null : 'Please write a description')}
+                    registerValidation={registerValidation('description')}
+                    unregisterValidation={unregisterValidation('description')}
+                />
+            </section>
+            <Row right style={{ marginTop: '12px' }}>
+                <TeritaryButton type="button" className="back-button" onClick={back}>
+                    {translate('back')}
+                </TeritaryButton>
+                <PrimaryButton type="button" onClick={next}>
+                    {translate('continue')}
+                </PrimaryButton>
+            </Row>
+        </form>
+    );
+};
+
+export default addTranslate(Step3);
