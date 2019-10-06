@@ -6,7 +6,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import ReactModal from 'react-modal';
 import App from '../shared/App';
 import store from '../shared/store';
-import IntlProvider from '../shared/i18n/IntlProvider';
+import IntlProvider from './IntlProvider';
 import ApolloProvider from './ApolloProvider';
 
 ReactModal.setAppElement('#app');

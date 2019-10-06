@@ -3,6 +3,7 @@ import React, { memo, useState, useEffect, useCallback } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import ReactPixel from 'react-facebook-pixel';
+import { useTranslation } from 'react-i18next';
 
 import { init as analytics } from './utils/analytics/autotrack';
 import { Environment } from './constants/constants';
@@ -145,13 +146,15 @@ const App = () => {
 };
 
 const RouteWrapper = () => {
+    const { t } = useTranslation();
+
     return (
         <>
             <Navigation />
             <div id="content">
                 <Switch>
                     <Route exact path={['/', '/verifyEmail']} component={Home} />
-                    <Route path={'/about'} component={About} />
+                    <Route path={t('/route.about')} component={About} />
                     <Route path={'/user/:permalink'} component={User} />
                     <Route path={'/how-it-works'} component={HowItWorks} />
                     <Route path={'/signup'} component={Signup} />

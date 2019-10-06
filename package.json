@@ -74,6 +74,7 @@
     "history": "^4.9.0",
     "howler": "^2.1.2",
     "i18next": "^17.0.18",
+    "i18next-express-middleware": "^1.8.2",
     "i18next-xhr-backend": "^3.0.0",
     "identity-obj-proxy": "3.0.0",
     "immer": "^3.2.0",
