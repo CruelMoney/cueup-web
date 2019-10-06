@@ -15,6 +15,7 @@ import { ME } from './gql';
 import addTranslate from './higher-order/addTranslate';
 import Popup from './common/Popup';
 import InstagramConnect from './InstagramConnect';
+import { TitleClean } from './Text';
 
 const Menu = ({ translate, history, location }) => {
     const [loginExpanded, setLoginExpanded] = useState(false);
@@ -88,6 +89,7 @@ const Menu = ({ translate, history, location }) => {
                                                     showing={loginExpanded}
                                                     onClickOutside={() => setLoginExpanded(false)}
                                                 >
+                                                    <TitleClean center>Login</TitleClean>
                                                     <Login
                                                         onLogin={() => setLoginExpanded(false)}
                                                         user={user}

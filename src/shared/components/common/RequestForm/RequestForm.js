@@ -4,9 +4,8 @@ import { useMutation } from 'react-apollo';
 import styled from 'styled-components';
 import { Card, CardShadow, Col } from 'components/Blocks';
 import { useForm } from 'components/FormComponents';
-import { BodySmall } from 'components/Text';
+import { BodySmall, Body, TitleClean } from 'components/Text';
 import { useCreateEvent } from 'actions/EventActions';
-import Popup from '../Popup';
 import Login from '../Login';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import ErrorMessageApollo from '../ErrorMessageApollo';
@@ -20,7 +19,7 @@ import Step5 from './Step5';
 
 const MainForm = ({ translate }) => {
     const [activeStep, setActiveStep] = useState(1);
-    const [showPopup, setShowPopup] = useState(false);
+    const [showLogin, setShowLogin] = useState(false);
 
     const [form, setForm] = useState({
         date: moment(),
@@ -61,21 +60,23 @@ const MainForm = ({ translate }) => {
 
     return (
         <div className="request-form">
-            <Popup width="380px" showing={showPopup} onClickOutside={() => setShowPopup(false)}>
-                <div>
-                    <p style={{ marginBottom: '20px' }}>
-                        {translate('request-form.email-exists-message')}
-                    </p>
-                    <Login redirect={false} onLogin={() => setShowPopup(false)} />
-                </div>
-            </Popup>
             <div className="request-columns">
                 <Wrapper style={{ padding: 0 }}>
                     <Progress setProgress={setProgress} currentStep={activeStep - 1} />
                 </Wrapper>
                 <Wrapper>
                     <RequestCard>
-                        {activeStep === 1 && (
+                        {showLogin && (
+                            <>
+                                <TitleClean center>Login</TitleClean>
+                                <BodySmall>
+                                    {translate('request-form.email-exists-message')}
+                                </BodySmall>
+                                <Login redirect={false} onLogin={() => setShowLogin(false)} />
+                            </>
+                        )}
+
+                        {!showLogin && activeStep === 1 && (
                             <Step1
                                 form={form}
                                 handleChange={handleChange}
@@ -85,7 +86,7 @@ const MainForm = ({ translate }) => {
                                 next={next}
                             />
                         )}
-                        {activeStep === 2 && (
+                        {!showLogin && activeStep === 2 && (
                             <Step2
                                 form={form}
                                 handleChange={handleChange}
@@ -97,7 +98,7 @@ const MainForm = ({ translate }) => {
                             />
                         )}
 
-                        {activeStep === 3 && (
+                        {!showLogin && activeStep === 3 && (
                             <Step3
                                 form={form}
                                 handleChange={handleChange}
@@ -109,7 +110,7 @@ const MainForm = ({ translate }) => {
                             />
                         )}
 
-                        {activeStep === 4 && (
+                        {!showLogin && activeStep === 4 && (
                             <Step4
                                 form={form}
                                 handleChange={handleChange}
@@ -122,7 +123,7 @@ const MainForm = ({ translate }) => {
                             />
                         )}
 
-                        {activeStep === 5 && (
+                        {!showLogin && activeStep === 5 && (
                             <Step5
                                 form={form}
                                 handleChange={handleChange}
@@ -139,7 +140,7 @@ const MainForm = ({ translate }) => {
                             error={error}
                             onFoundCode={(code) => {
                                 if (code === 'UNAUTHENTICATED') {
-                                    showPopup(true);
+                                    setShowLogin(true);
                                 }
                             }}
                         />

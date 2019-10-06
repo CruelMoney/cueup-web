@@ -730,10 +730,11 @@ input[type='file'] + label * {
     font-size: 14px;
     margin-top: 10px;
 }
-.login .text-field {
+.login label {
+    display: block;
     margin-top: 20px;
 }
-.login .text-field:last-child {
+.login label:last-child {
     margin-bottom: 20px;
 }
 .login button:first-child {
@@ -2346,7 +2347,6 @@ p.error {
 .request-form p {
     color: #8998aa;
     margin: 0;
-    margin-top: 6px;
 }
 .request-form h3 {
     font-size: 20px;

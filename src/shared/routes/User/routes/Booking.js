@@ -13,7 +13,7 @@ import { Row, Container, Col, GradientBg } from '../../../components/Blocks';
 import Sidebar, { SidebarContent, CTAButton } from '../../../components/Sidebar';
 import ScrollToTop from '../../../components/common/ScrollToTop';
 import { LoadingPlaceholder2 } from '../../../components/common/LoadingPlaceholder';
-import { SmallHeader } from '../../../components/Text';
+import { SmallHeader, TitleClean } from '../../../components/Text';
 import RiderOptions from '../../../components/RiderOptions';
 import TimeSlider from '../../../components/common/TimeSlider';
 import Slider from '../../../components/common/Slider';
@@ -78,6 +78,7 @@ const Booking = ({ user, loading, translate }) => {
 
             <Popup width="380px" showing={loginPopup} onClickOutside={() => setloginPopup(false)}>
                 <div>
+                    <TitleClean center>Login</TitleClean>
                     <p style={{ marginBottom: '20px' }}>
                         {translate('request-form.email-exists-message')}
                     </p>

@@ -1,8 +1,7 @@
 {
   "request-form": {
     "email-exists-message": [
-      "It looks like there's already an account using that email. Please login to continue.<br/> If you don't have a login yet, press the forgot button to create a password. <br/> Then come back here to login and create the event.",
-      "It looks like there's already an account using that email. Please login to continue.<br/> If you don't have a login yet, press the forgot button to create a password. <br/> Then come back here to login and create the event."
+      "It looks like there's already an account using that email. Please login or use a different email to continue.<br/>"
     ],
     "succes-message": [
       "Thanks for using our service. We'll send you an email with confirmation of the event.",

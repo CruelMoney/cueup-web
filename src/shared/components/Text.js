@@ -58,6 +58,12 @@ export const TitleClean = styled.h3`
     color: #122b48;
     text-align: left;
     margin-bottom: 24px;
+    ${({ center }) =>
+        center &&
+        css`
+            text-align: center;
+            margin: auto;
+        `}
 `;
 
 export const Body = styled.p`

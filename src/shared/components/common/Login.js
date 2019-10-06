@@ -5,6 +5,7 @@ import emailValidator from 'email-validator';
 import { withRouter } from 'react-router-dom';
 import { Mutation, Query } from 'react-apollo';
 import addTranslate from 'components/higher-order/addTranslate';
+import { SecondaryButton, SmartButton, Row, RowWrap } from 'components/Blocks';
 import { LOGIN, REQUEST_PASSWORD_RESET, ME } from '../gql';
 import * as c from '../../constants/constants';
 import { authService } from '../../utils/AuthService';
@@ -138,13 +139,35 @@ class Login extends PureComponent {
                                                 }}
                                             />
                                         </div>
-                                        <div>
-                                            <Button
+                                        <RowWrap right>
+                                            <Mutation mutation={REQUEST_PASSWORD_RESET}>
+                                                {(forgot, { loading: loadingForgot }) => {
+                                                    return (
+                                                        <>
+                                                            <SmartButton
+                                                                type="button"
+                                                                level="tertiary"
+                                                                name="forgot_password"
+                                                                onClick={this.onRequestChangePassword(
+                                                                    forgot
+                                                                )}
+                                                                loading={loadingForgot}
+                                                            >
+                                                                {translate('forgot') + '?'}
+                                                            </SmartButton>
+                                                            {this.state.message ? (
+                                                                <p>{this.state.message}</p>
+                                                            ) : null}
+                                                        </>
+                                                    );
+                                                }}
+                                            </Mutation>
+                                            <SmartButton
                                                 glow
                                                 active={this.isValid()}
                                                 disabled={!this.isValid()}
                                                 type={'submit'}
-                                                isLoading={isLoading}
+                                                loading={isLoading}
                                                 name="email_login"
                                                 onClick={(_) => {
                                                     this.setState({ isLoading: true });
@@ -152,8 +175,8 @@ class Login extends PureComponent {
                                                 }}
                                             >
                                                 {translate('login')}
-                                            </Button>
-                                        </div>
+                                            </SmartButton>
+                                        </RowWrap>
                                         <ErrorMessageApollo
                                             email={this.state.email}
                                             error={error}
@@ -162,21 +185,7 @@ class Login extends PureComponent {
                                 );
                             }}
                         </Mutation>
-                        <Mutation mutation={REQUEST_PASSWORD_RESET}>
-                            {(mutate) => {
-                                return (
-                                    <Form name="forgot_password">
-                                        <SubmitButton
-                                            name="forgot_password"
-                                            onClick={this.onRequestChangePassword(mutate)}
-                                        >
-                                            {translate('forgot') + '?'}
-                                        </SubmitButton>
-                                        {this.state.message ? <p>{this.state.message}</p> : null}
-                                    </Form>
-                                );
-                            }}
-                        </Mutation>
+
                         <p
                             style={{
                                 fontSize: '12px',

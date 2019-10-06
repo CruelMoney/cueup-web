@@ -21,7 +21,7 @@ import { SimpleSharing } from '../../components/common/Sharing-v2.js';
 import { LoadingPlaceholder2 } from '../../components/common/LoadingPlaceholder';
 
 import GracefullImage from '../../components/GracefullImage';
-import { SmallHeader } from '../../components/Text';
+import { SmallHeader, TitleClean } from '../../components/Text';
 import { ME } from '../../components/gql.js';
 import SavingIndicator from '../../components/SavingIndicator.js';
 import useLogActivity, { ACTIVITY_TYPES } from '../../components/hooks/useLogActivity.js';
@@ -224,6 +224,7 @@ const LoginPopup = ({ translate }) => {
     return (
         <Popup showing={shwowing} width={'400px'} onClickOutside={() => setShwowing(false)}>
             <>
+                <TitleClean center>Login</TitleClean>
                 <p>{translate('Login to see your gigs')}</p>
                 <Login
                     redirect={false}
