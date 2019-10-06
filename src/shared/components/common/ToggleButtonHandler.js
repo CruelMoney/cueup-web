@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
-import connectToForm from '../higher-order/connectToForm';
 import ToggleButton from './ToggleButton';
 import ToggleButtonInput from './ToggleButtonInput';
 
 class ToggleButtonHandler extends Component {
+    static defaultProps = {
+        rounded: true,
+        columns: 3,
+        potentialValues: [],
+        value: [],
+        errorAbove: false,
+        required: true,
+        errors: [],
+    };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -22,15 +31,6 @@ class ToggleButtonHandler extends Component {
             });
     };
 
-    static defaultProps = {
-        rounded: true,
-        columns: 3,
-        potentialValues: [],
-        value: [],
-        errorAbove: false,
-        required: true,
-    };
-
     spliceHelper(list, index) {
         list.splice(index, 1);
         return list;
@@ -43,21 +43,21 @@ class ToggleButtonHandler extends Component {
     updateContext = () => {
         const concatList = [
             ...new Set([
-                ...this.state.addedGenres.map((g) => g.toLowerCase()).filter((g) => !!g.trim()),
+                ...this.state.addedGenres.filter((g) => !!g.trim()).map((g) => g.toLowerCase()),
                 ...this.state.selectedValues.map((g) => g.toLowerCase()),
             ]),
         ];
 
-        this.props.onChange(concatList);
+        this.props.onChange && this.props.onChange(concatList);
     };
 
-    handleButtonPress = (value) => {
+    handleButtonPress = (genre) => (value) => {
         const toggledButtons = this.state.selectedValues;
-        const valueIndex = toggledButtons.indexOf(value);
+        const valueIndex = toggledButtons.indexOf(genre);
 
         const newList =
             valueIndex === -1
-                ? [...toggledButtons, value]
+                ? [...toggledButtons, genre]
                 : this.spliceHelper(toggledButtons, valueIndex);
 
         this.setState(
@@ -129,7 +129,7 @@ class ToggleButtonHandler extends Component {
                             label={name}
                             active={this.state.selectedValues.includes(name)}
                             disabled={this.props.disabled}
-                            onClick={this.handleButtonPress}
+                            onClick={this.handleButtonPress(genre)}
                         />
                     </td>
                 );
@@ -197,6 +197,6 @@ class ToggleButtonHandler extends Component {
     }
 }
 
-export default connectToForm(ToggleButtonHandler);
+export default ToggleButtonHandler;
 
 export { ToggleButtonHandler };

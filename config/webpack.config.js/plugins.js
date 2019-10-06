@@ -34,6 +34,7 @@ const client = [
     new webpack.DefinePlugin({
         __SERVER__: 'false',
         __BROWSER__: 'true',
+        __DEV__: process.env.NODE_ENV === 'development',
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new ManifestPlugin({
@@ -45,6 +46,7 @@ const server = [
     new webpack.DefinePlugin({
         __SERVER__: 'true',
         __BROWSER__: 'false',
+        __DEV__: process.env.NODE_ENV === 'development',
     }),
     // We should make sure to have our locales in shared/i18n/locales ready at build time.
     // They are then copied into the server build folder so they can be accessed via

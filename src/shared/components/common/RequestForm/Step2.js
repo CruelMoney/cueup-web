@@ -1,92 +1,94 @@
-import React, { PureComponent } from 'react';
-import { SecondaryButton, TeritaryButton } from 'components/Blocks';
-import { Input } from 'components/FormComponents';
+import React, { useState } from 'react';
+import { SecondaryButton, TeritaryButton, Row, PrimaryButton } from 'components/Blocks';
+import { Input, Label } from 'components/FormComponents';
+import addTranslate from 'components/higher-order/addTranslate';
+import { BodySmall } from 'components/Text';
 import ToggleButtonHandler from '../ToggleButtonHandler';
 import c from '../../../constants/constants';
-import RiderOptions from '../RiderOptions2';
+import RiderOptions from '../../RiderOptions';
+import ToggleButton from '../ToggleButton';
 import GenreChooser from './GenreChooser';
 
-export default class Step2 extends PureComponent {
-    state = {
-        showGenres: false,
-    };
-    validationChecker = null;
+const Step2 = ({
+    translate,
+    form,
+    next,
+    back,
+    handleChange,
+    registerValidation,
+    unregisterValidation,
+    runValidations,
+}) => {
+    const [showGenres, setShowGenres] = useState(false);
 
-    next = () => {
-        if (this.validationChecker(true)) {
-            this.props.next();
+    const handleGenreSelection = (letCueupDecide) => {
+        setShowGenres(!letCueupDecide);
+        if (letCueupDecide) {
+            handleChange({ genres: ['top 40', 'local', "80's", 'disco', 'remixes'] });
         }
     };
 
-    handleGenreSelection = (letCueupDecide) => {
-        this.setState({
-            showGenres: !letCueupDecide,
-        });
-    };
+    return (
+        <form name="requestForm-step-2">
+            <h3>{translate('request-form.step-2.header')}</h3>
+            <section>
+                <Input
+                    label={translate('request-form.step-2.event-name')}
+                    name="name"
+                    validate={['required']}
+                />
+                <BodySmall>{translate('request-form.step-2.event-name-description')}</BodySmall>
+            </section>
+            <section>
+                <Label>{translate('request-form.step-2.event-rider')}</Label>
+                <BodySmall style={{ marginBottom: '10px' }}>
+                    {translate('request-form.step-2.event-rider-description')}
+                </BodySmall>
+                <Row between>
+                    <ToggleButton
+                        onClick={(speakers) => handleChange({ speakers })}
+                        label={translate('speakers')}
+                        rounded
+                    />
 
-    render() {
-        const { translate } = this.props;
-        const { showGenres } = this.state;
-        return (
-            <form
-                registerCheckForm={(checker) => {
-                    this.validationChecker = checker;
-                    this.props.formValidCheckers.push(checker);
-                }}
-                //  formValidCallback={(name)=>this.props.updateProgress(name,true)}
-                // formInvalidCallback={(name)=>this.props.updateProgress(name,false)}
-                name="requestForm-step-2"
-            >
-                <h3>{translate('request-form.step-2.header')}</h3>
-                <section>
-                    <label htmlFor="name">{translate('request-form.step-2.event-name')}</label>
-                    <Input name="name" validate={['required']} />
-                    <p>{translate('request-form.step-2.event-name-description')}</p>
-                </section>
-                <section>
-                    <label>{translate('request-form.step-2.event-rider')}</label>
-                    <p style={{ marginBottom: '10px' }}>
-                        {translate('request-form.step-2.event-rider-description')}
-                    </p>
-                    <RiderOptions
-                        speakersLabel={translate('speakers')}
-                        lightsLabel={translate('lights')}
-                        name="rider"
+                    <ToggleButton
+                        onClick={(speakers) => handleChange({ speakers })}
+                        label={translate('lights')}
+                        rounded
                     />
-                </section>
-                <section>
-                    <label>{translate('request-form.step-2.event-genres')}</label>
-                    <p style={{ marginBottom: '10px' }}>
-                        {translate('request-form.step-2.event-genres-description')}
-                    </p>
-                    <GenreChooser
-                        letCueupDecide={this.handleGenreSelection}
+                </Row>
+            </section>
+            <section>
+                <Label>{translate('request-form.step-2.event-genres')}</Label>
+                <BodySmall style={{ marginBottom: '10px' }}>
+                    {translate('request-form.step-2.event-genres-description')}
+                </BodySmall>
+                <GenreChooser
+                    letCueupDecide={handleGenreSelection}
+                    validate={['required']}
+                    chooseLabel={translate('request-form.choose-genres')}
+                    cueupDecideLabel={translate('request-form.let-cueup-decide')}
+                    name="genres"
+                />
+                {showGenres ? (
+                    <ToggleButtonHandler
                         validate={['required']}
-                        chooseLabel={translate('request-form.choose-genres')}
-                        cueupDecideLabel={translate('request-form.let-cueup-decide')}
-                        cueupDecideDescription={translate(
-                            'request-form.let-cueup-decide-description'
-                        )}
                         name="genres"
+                        potentialValues={c.GENRES}
+                        columns={4}
                     />
-                    {showGenres ? (
-                        <ToggleButtonHandler
-                            validate={['required']}
-                            name="genres"
-                            potentialValues={c.GENRES}
-                            columns={4}
-                        />
-                    ) : null}
-                </section>
-                <div style={{ position: 'relative' }}>
-                    <TeritaryButton className="back-button" onClick={this.props.back}>
-                        {translate('back')}
-                    </TeritaryButton>
-                    <SecondaryButton type="submit" onClick={this.next}>
-                        {translate('continue')}
-                    </SecondaryButton>
-                </div>
-            </form>
-        );
-    }
-}
+                ) : null}
+            </section>
+            <Row right style={{ marginTop: '12px' }}>
+                <TeritaryButton type="button" className="back-button" onClick={back}>
+                    {translate('back')}
+                </TeritaryButton>
+                <PrimaryButton type="submit" onClick={next}>
+                    {translate('continue')}
+                </PrimaryButton>
+            </Row>
+        </form>
+    );
+};
+
+export default addTranslate(Step2);

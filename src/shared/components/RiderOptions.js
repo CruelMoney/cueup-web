@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Checkbox } from '../../../components/FormComponents';
-import { Col } from '../../../components/Blocks';
+import { Checkbox } from './FormComponents';
+import { Col } from './Blocks';
 
 const CheckBoxRow = ({ label, onChange }) => {
     return (
@@ -12,10 +12,10 @@ const CheckBoxRow = ({ label, onChange }) => {
 
 const rows = {
     speakers: {
-        label: 'Yes, the dj has to bring speakers',
+        label: 'The dj has to bring speakers',
     },
     lights: {
-        label: 'Yes, the dj has to bring lights',
+        label: 'The dj has to bring lights',
     },
 };
 
@@ -32,7 +32,7 @@ const RiderOptions = ({ onSave }) => {
     };
 
     return (
-        <Col style={{ width: '100%', marginRight: '36px', marginBottom: '30px' }}>
+        <Col style={{ width: '100%' }}>
             {Object.entries(rows).map(([key, { label }]) => {
                 return <CheckBoxRow key={key} label={label} onChange={onChange(key)} />;
             })}

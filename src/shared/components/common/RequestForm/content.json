@@ -1,94 +1,82 @@
 {
-	"request-form": {
-		"email-exists-message": [
-			"It looks like there's already an account using that email. Please login to continue.<br/> If you don't have a login yet, press the forgot button to create a password. <br/> Then come back here to login and create the event.",
-			"It looks like there's already an account using that email. Please login to continue.<br/> If you don't have a login yet, press the forgot button to create a password. <br/> Then come back here to login and create the event."
-		],
-		"succes-message": [
-			"Thank you for using our service. We will send you an email with confirmation of the event.",
-			"Tak for at du bruger vores service. Vi sender dig en mail med en bekræftelse på dit event."
-		],
-		"no-djs-message": [
-			"Sorry we don't have any DJs available.",
-			"Desværre, vi har ingen ledige DJs."
-		],
-		"choose-genres": ["Choose", "Vælg"],
-		"let-cueup-decide": ["Let Cueup decide", "Lad Cueup vælge"],
-		"let-cueup-decide-description": [
-			"Let us choose suitable music genres based on your other selections and event description.",
-			"Lad os vælge passende musikgenrer baseret på dine andre valg og event beskrivelse."
-		],
-		"step-1": {
-			"header": ["Check if we have DJs available", "Se om vi har ledige DJs"],
-			"event-location": ["Event city", "Event by"],
-			"event-location-description": [
-				"In what city is the event?",
-				"Hvor afholdes begivenheden?"
-			],
-			"event-date": ["Event date", "Event dato"],
-			"event-date-description": [
-				"Select date of event.",
-				"Vælg dato for begivenheden."
-			]
-		},
-		"step-2": {
-			"header": [
-				"Great, we have DJs available. <span>We need a bit of information to make offers.</span>",
-				"Vi har ledige DJs! <span>For at give tilbud har vi brug for lidt mere information.</span>"
-			],
-			"event-name": ["Event name", "Event navn"],
-			"event-name-description": [
-				"Please choose a descriptive name.",
-				"Vælg venligst at beskrivende navn."
-			],
-			"event-rider": ["Speakers and light", "Lyd og lys"],
-			"event-rider-description": [
-				"Do you need speakers and lights for the event?",
-				"Har du brug for højtalere og lys til begivenheden?"
-			],
-			"event-genres": ["Music genres and style", "Musikgenrer og stil"],
-			"event-genres-description": [
-				"What kind of music do you need?",
-				"Hvilken slags musik ønsker du?"
-			]
-		},
-		"step-3": {
-			"header": [
-				"Thanks! <span>Please tell us a bit more.</span>",
-				"Tak! <span>Fortæl os en smule mere.</span>"
-			],
-			"music-duration": ["Music duration", "Musik varighed"],
-			"guests": ["Guests", "Gæster"],
-			"guests-description": [
-				"${ prefix } <span>${ amount } people</span> attending the event.",
-				"${ prefix } <span>${ amount } gæster</span> til begivenheden."
-			],
-			"event-description": ["Description", "Beskrivelse"],
-			"event-description-description": [
-				"What is the budget? \nWhat is the age of the guests? \nWhat kind of venue is it? \nDo you have any special requirements? \n",
-				"Hvor stort er budgettet? \nHvad er alderen på gæsterne? \nHvilken slags lokation er det? \nHar du nogle specielle krav? \n"
-			]
-		},
-		"step-4": {
-			"header": [
-				"Great! We're finding DJs now. <span>How can we get back to you?</span>",
-				"Vi finder DJs nu. <span>Hvordan kan vi kontakte dig?</span>"
-			],
-			"contact-name": ["Contact name", "Kontaktnavn"],
-			"contact-name-description": [
-				"Your first and last name.",
-				"Dit fornavn og efternavn."
-			],
-			"contact-phone": ["Phone number", "Telefonnummer"],
-			"contact-phone-description": [
-				"Your phone number is only shared with qualified DJs.",
-				"Dit telefonnummer bliver kun delt med kvalificerede DJs."
-			],
-			"contact-email": ["Contact email", "Kontakt email"],
-			"contact-email-description": [
-				"Your email is only shared with qualified DJs.",
-				"Din email bliver kun delt med kvalificerede DJs."
-			]
-		}
-	}
+  "request-form": {
+    "email-exists-message": [
+      "It looks like there's already an account using that email. Please login to continue.<br/> If you don't have a login yet, press the forgot button to create a password. <br/> Then come back here to login and create the event.",
+      "It looks like there's already an account using that email. Please login to continue.<br/> If you don't have a login yet, press the forgot button to create a password. <br/> Then come back here to login and create the event."
+    ],
+    "succes-message": [
+      "Thank you for using our service. We will send you an email with confirmation of the event.",
+      "Tak for at du bruger vores service. Vi sender dig en mail med en bekræftelse på dit event."
+    ],
+    "no-djs-message": [
+      "Sorry, we don't have any DJs available.",
+      "Desværre, vi har ingen ledige DJs."
+    ],
+    "choose-genres": ["Choose", "Vælg"],
+    "let-cueup-decide": ["Let Cueup decide", "Lad Cueup vælge"],
+
+    "step-1": {
+      "header": ["Check if we have DJs available", "Se om vi har ledige DJs"],
+      "event-location": ["Event city", "Event by"],
+      "event-location-description": ["In what city is the event?", "Hvor afholdes begivenheden?"],
+      "event-date": ["Event date", "Event dato"],
+      "event-date-description": ["Select date of event.", "Vælg dato for begivenheden."]
+    },
+    "step-2": {
+      "header": [
+        "Great, we have DJs available. <span>We need a bit of information to make offers.</span>",
+        "Vi har ledige DJs! <span>For at give tilbud har vi brug for lidt mere information.</span>"
+      ],
+      "event-name": ["Event name", "Event navn"],
+      "event-name-description": [
+        "Please choose a descriptive name.",
+        "Vælg venligst at beskrivende navn."
+      ],
+      "event-rider": ["Speakers and light", "Lyd og lys"],
+      "event-rider-description": [
+        "Do you need speakers and lights for the event?",
+        "Har du brug for højtalere og lys til begivenheden?"
+      ],
+      "event-genres": ["Music genres and style", "Musikgenrer og stil"],
+      "event-genres-description": [
+        "Choose what kind of music do you need, or let us choose suitable music genres based on your other selections and event description.",
+        "Vælg hvilkent slags musik ønsker du, eller Lad os vælge passende musikgenrer baseret på dine andre valg og event beskrivelse."
+      ]
+    },
+    "step-3": {
+      "header": [
+        "Thanks! <span>Please tell us a bit more.</span>",
+        "Tak! <span>Fortæl os en smule mere.</span>"
+      ],
+      "music-duration": ["Music duration", "Musik varighed"],
+      "guests": ["Guests", "Gæster"],
+      "guests-description": [
+        "${ prefix } <span>${ amount } people</span> attending the event.",
+        "${ prefix } <span>${ amount } gæster</span> til begivenheden."
+      ],
+      "event-description": ["Description", "Beskrivelse"],
+      "event-description-description": [
+        "What is the budget? \nWhat is the age of the guests? \nWhat kind of venue is it? \nDo you have any special requirements? \n",
+        "Hvor stort er budgettet? \nHvad er alderen på gæsterne? \nHvilken slags lokation er det? \nHar du nogle specielle krav? \n"
+      ]
+    },
+    "step-4": {
+      "header": [
+        "Great! We're finding DJs now. <span>How can we get back to you?</span>",
+        "Vi finder DJs nu. <span>Hvordan kan vi kontakte dig?</span>"
+      ],
+      "contact-name": ["Contact name", "Kontaktnavn"],
+      "contact-name-description": ["Your first and last name.", "Dit fornavn og efternavn."],
+      "contact-phone": ["Phone number", "Telefonnummer"],
+      "contact-phone-description": [
+        "Your phone number is only shared with qualified DJs.",
+        "Dit telefonnummer bliver kun delt med kvalificerede DJs."
+      ],
+      "contact-email": ["Contact email", "Kontakt email"],
+      "contact-email-description": [
+        "Your email is only shared with qualified DJs.",
+        "Din email bliver kun delt med kvalificerede DJs."
+      ]
+    }
+  }
 }

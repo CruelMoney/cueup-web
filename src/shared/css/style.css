@@ -2075,8 +2075,8 @@ table {
     width: 100%;
 }
 .toggle-options button {
-    background-color: white;
     border-width: 1px;
+    max-width: 100%;
     padding: 10px 3px;
 }
 .toggle-options.glued button {
@@ -2345,9 +2345,6 @@ p.error {
 
 .request-form p {
     color: #8998aa;
-    font-family: 'AvenirNext-Regular', sans-serif;
-    font-size: 14px;
-    line-height: 19px;
     margin: 0;
     margin-top: 6px;
 }
@@ -2452,6 +2449,7 @@ header .info-boxes {
     font-size: 22px;
     font-weight: bold;
     line-height: 48px;
+    margin: 0;
     position: relative;
     text-align: center;
     z-index: 1;

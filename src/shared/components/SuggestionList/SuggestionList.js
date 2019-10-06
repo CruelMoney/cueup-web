@@ -3,8 +3,17 @@ import styled from 'styled-components';
 import { Input } from '../FormComponents';
 import { inputStyle } from '../Blocks';
 
-const SuggestionList = ({ suggestions = [], value, onChange, onBlur, onFocus, ...props }) => {
-    const [internalValue, setInternalValue] = useState(value || '');
+const SuggestionList = ({
+    suggestions = [],
+    value,
+    defaultValue,
+    onChange,
+    onBlur,
+    onFocus,
+    noShadow,
+    ...props
+}) => {
+    const [internalValue, setInternalValue] = useState(value || defaultValue);
     const [focused, setFocused] = useState(false);
     const [suggestionCursor, setSuggestionCursor] = useState(-1);
 
@@ -58,7 +67,7 @@ const SuggestionList = ({ suggestions = [], value, onChange, onBlur, onFocus, ..
                 {...props}
             />
             {focused && suggestions.length > 0 && (
-                <List>
+                <List noShadow={noShadow}>
                     {suggestions.map((s, idx) => (
                         <Suggestion
                             key={idx}
@@ -93,7 +102,7 @@ const List = styled.ul`
     padding: 0;
     padding-top: 95px;
     background: white;
-    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: ${({ noShadow }) => (noShadow ? 'none' : '0px 1px 4px 0px rgba(0, 0, 0, 0.3)')};
     border-radius: 4px;
 `;
 

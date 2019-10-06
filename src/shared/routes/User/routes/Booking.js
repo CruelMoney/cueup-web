@@ -13,7 +13,7 @@ import Sidebar, { SidebarContent, CTAButton } from '../../../components/Sidebar'
 import ScrollToTop from '../../../components/common/ScrollToTop';
 import { LoadingPlaceholder2 } from '../../../components/common/LoadingPlaceholder';
 import { SmallHeader } from '../../../components/Text';
-import RiderOptions from '../components/RiderOptions';
+import RiderOptions from '../../../components/RiderOptions';
 import TimeSlider from '../../../components/common/TimeSlider';
 import Slider from '../../../components/common/Slider';
 import { CREATE_EVENT } from '../../../components/common/RequestForm/gql';
@@ -230,12 +230,15 @@ const EventForm = ({
                         style={{ marginTop: '15px', display: 'block' }}
                     >{`${form.guestsCount} people`}</span>
                 </Label>
-                <RiderOptions
-                    onSave={({ speakers, lights }) => {
-                        setValue('speakers')(speakers);
-                        setValue('lights')(lights);
-                    }}
-                />
+
+                <div style={{ marginRight: '36px', marginBottom: '30px' }}>
+                    <RiderOptions
+                        onSave={({ speakers, lights }) => {
+                            setValue('speakers')(speakers);
+                            setValue('lights')(lights);
+                        }}
+                    />
+                </div>
 
                 <Input
                     type="text-area"

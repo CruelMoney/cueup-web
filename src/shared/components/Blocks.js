@@ -53,7 +53,7 @@ export const Row = styled.div`
     align-items: ${({ middle }) => (middle ? 'center' : 'flex-start')};
     > button,
     > a {
-        margin-left: 6px;
+        margin-left: 9px;
         &:first-child {
             margin-left: 0;
         }
@@ -273,6 +273,13 @@ const ButtonTextStyle = css`
     text-overflow: ellipsis;
     max-width: 200px;
     position: relative;
+    ${({ flex }) =>
+        flex &&
+        css`
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        `}
 `;
 
 const inputButtonStyle = css`
@@ -341,7 +348,7 @@ export const TeritaryButton = styled.button`
 
 export const secondaryButtonStyle = css`
     ${ButtonTextStyle}
-    background: #E9ECF0;
+    background: ${({ muted }) => (muted ? '#f6f8f9' : '#E9ECF0')};
     margin-bottom: 0;
     :hover {
         ${({ disabled, warning }) =>

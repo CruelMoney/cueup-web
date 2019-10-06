@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import useScript from '@charlietango/use-script';
 import SuggestionList from '../SuggestionList';
-import { Body } from '../Text';
 
 function toTitleCase(str) {
     return str.replace(/\w\S*/g, (txt) => {
@@ -9,7 +8,7 @@ function toTitleCase(str) {
     });
 }
 
-const LocationSelector = ({ onChange, placeholder, ...props }) => {
+const LocationSelector = ({ placeholder, ...props }) => {
     const [dataSource, setDataSource] = useState([]);
     const locationService = useRef();
 
@@ -24,7 +23,7 @@ const LocationSelector = ({ onChange, placeholder, ...props }) => {
     }, [loaded]);
 
     if (!loaded) {
-        return <Body>Loading...</Body>;
+        return <SuggestionList {...props} disabled placeholder="loading" />;
     }
 
     const updateSuggestions = (predictions, status) => {
@@ -41,7 +40,6 @@ const LocationSelector = ({ onChange, placeholder, ...props }) => {
 
     const onChangeHandler = (v) => {
         const value = toTitleCase(v);
-        onChange && onChange(value);
 
         if (value && value.trim()) {
             locationService.current.getPlacePredictions(

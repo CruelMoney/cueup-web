@@ -1,5 +1,8 @@
 import ReactPixel from 'react-facebook-pixel';
-import converter from '../utils/AdapterDTO';
+import * as Sentry from '@sentry/browser';
+import { useMutation } from 'react-apollo';
+import { useState } from 'react';
+import { CHECK_DJ_AVAILABILITY } from 'components/common/RequestForm/gql';
 import GeoCoder from '../utils/GeoCoder';
 import * as tracker from '../utils/analytics/autotrack';
 
@@ -57,34 +60,43 @@ export function postEvent(event, mutate, callback) {
     };
 }
 
-export const checkDjAvailability = (form, mutate, callback) => {
-    return function(dispatch) {
-        tracker.trackCheckAvailability();
-        ReactPixel.track('Search');
-        getLocation(form.location)
-            .then(async (geoResult) => {
-                const event = converter.cueupEvent.toDTO(form);
-                const geoData = {
-                    location: {
-                        latitude: geoResult.position.lat,
-                        longitude: geoResult.position.lng,
-                        name: event.location,
-                    },
-                    timeZoneId: geoResult.timeZoneId,
-                };
-                const variables = {
-                    ...event,
-                    location: geoData.location,
-                };
+export const useCheckDjAvailability = ({ location, date }) => {
+    const [error, setError] = useState();
+    const [mutate, { loading, error: apolloError }] = useMutation(CHECK_DJ_AVAILABILITY);
 
+    const check = async () => {
+        try {
+            if (!__DEV__) {
                 try {
-                    const { data = {}, error } = await mutate({ variables });
-
-                    callback(error, data.djsAvailable, geoData);
+                    tracker.trackCheckAvailability();
+                    ReactPixel.track('Search');
                 } catch (error) {
-                    callback(error);
+                    Sentry.captureException(error);
                 }
-            })
-            .catch((errMessage) => callback(errMessage));
+            }
+
+            const geoResult = await getLocation(location);
+
+            const geoData = {
+                location: {
+                    latitude: geoResult.position.lat,
+                    longitude: geoResult.position.lng,
+                    name: location,
+                },
+                timeZoneId: geoResult.timeZoneId,
+            };
+            const variables = {
+                date,
+                location: geoData.location,
+            };
+
+            const { data = {} } = await mutate({ variables });
+            return { result: data.djsAvailable, timeZoneId: geoResult.timeZoneId };
+        } catch (err) {
+            Sentry.captureException(err);
+            setError(err.message);
+        }
     };
+
+    return [check, { loading, error: error || apolloError }];
 };
