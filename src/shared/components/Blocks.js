@@ -604,3 +604,23 @@ export const InfoPill = styled.span`
         position: relative;
     }
 `;
+
+export const Card = styled.div`
+    display: flex;
+    overflow: hidden;
+    flex-direction: row;
+    border-radius: 4px;
+    flex-wrap: wrap;
+    background: #fff;
+    z-index: 1;
+    flex: 1;
+`;
+
+export const CardShadow = styled.div`
+    box-shadow: 0 2px 30px 0 rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    bottom: 10px;
+    right: 10px;
+`;

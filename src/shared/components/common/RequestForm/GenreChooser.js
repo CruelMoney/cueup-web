@@ -1,6 +1,5 @@
 import React from 'react';
 import ToggleButton from '../ToggleButton';
-import InfoPopup from '../InfoPopup';
 
 class GenreChooser extends React.Component {
     state = {

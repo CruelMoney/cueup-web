@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import moment from 'moment-timezone';
 import { Mutation, useMutation } from 'react-apollo';
-import { PrimaryButton } from 'components/Blocks';
+import styled from 'styled-components';
+import { PrimaryButton, Card, CardShadow, Col } from 'components/Blocks';
 import { useForm } from 'components/FormComponents';
+import DjCard from 'routes/Event/components/blocks/DJCard';
 import Popup from '../Popup';
 import Login from '../Login';
 import addTranslate from '../../../components/higher-order/addTranslate';
@@ -65,33 +67,34 @@ const MainForm = ({ translate, onSubmit }) => {
                 </div>
             </Popup>
             <div className="request-columns">
-                <div className="row center">
-                    <div className="col-md-6">
-                        <Progress setProgress={setProgress} currentStep={activeStep - 1} />
-                        <div className="card">
-                            {activeStep === 1 && (
-                                <Step1
-                                    form={form}
-                                    handleChange={handleChange}
-                                    runValidations={runValidations}
-                                    registerValidation={registerValidation}
-                                    unregisterValidation={unregisterValidation}
-                                    next={next}
-                                />
-                            )}
-                            {activeStep === 2 && (
-                                <Step2
-                                    form={form}
-                                    handleChange={handleChange}
-                                    runValidations={runValidations}
-                                    registerValidation={registerValidation}
-                                    unregisterValidation={unregisterValidation}
-                                    next={next}
-                                    back={back}
-                                />
-                            )}
+                <Wrapper style={{ padding: 0 }}>
+                    <Progress setProgress={setProgress} currentStep={activeStep - 1} />
+                </Wrapper>
+                <Wrapper>
+                    <RequestCard>
+                        {activeStep === 1 && (
+                            <Step1
+                                form={form}
+                                handleChange={handleChange}
+                                runValidations={runValidations}
+                                registerValidation={registerValidation}
+                                unregisterValidation={unregisterValidation}
+                                next={next}
+                            />
+                        )}
+                        {activeStep === 2 && (
+                            <Step2
+                                form={form}
+                                handleChange={handleChange}
+                                runValidations={runValidations}
+                                registerValidation={registerValidation}
+                                unregisterValidation={unregisterValidation}
+                                next={next}
+                                back={back}
+                            />
+                        )}
 
-                            {/* 
+                        {/* 
                                 // <PrimaryButton name="request_djs_button" onClick={mutate} glow>
                                 //     <div style={{ width: '150px' }}>{translate('get-offers')}</div>
                                 // </PrimaryButton>
@@ -108,12 +111,26 @@ const MainForm = ({ translate, onSubmit }) => {
                                 // <p style={{ textAlign: 'center' }} className="terms_link">
                                 //     {translate('terms-message')}
                                 // </p> */}
-                        </div>
-                    </div>
-                </div>
+                    </RequestCard>
+                    <CardShadow />
+                </Wrapper>
             </div>
         </div>
     );
 };
+
+const Wrapper = styled(Col)`
+    position: relative;
+    margin: auto;
+    max-width: 600px;
+    box-sizing: border-box;
+`;
+
+const RequestCard = styled(Card)`
+    padding: 24px 30px;
+    form {
+        width: 100%;
+    }
+`;
 
 export default addTranslate(MainForm, content);

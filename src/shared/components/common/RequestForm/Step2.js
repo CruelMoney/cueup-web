@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { SecondaryButton, TeritaryButton, Row, PrimaryButton } from 'components/Blocks';
-import { Input, Label } from 'components/FormComponents';
+import React, { useState, useRef } from 'react';
+import { TeritaryButton, Row, PrimaryButton } from 'components/Blocks';
+import { Input, Label, useValidation } from 'components/FormComponents';
 import addTranslate from 'components/higher-order/addTranslate';
 import { BodySmall } from 'components/Text';
 import ToggleButtonHandler from '../ToggleButtonHandler';
 import c from '../../../constants/constants';
-import RiderOptions from '../../RiderOptions';
 import ToggleButton from '../ToggleButton';
+import ErrorMessageApollo from '../ErrorMessageApollo';
 import GenreChooser from './GenreChooser';
 
 const Step2 = ({
@@ -17,14 +17,27 @@ const Step2 = ({
     handleChange,
     registerValidation,
     unregisterValidation,
-    runValidations,
 }) => {
     const [showGenres, setShowGenres] = useState(false);
+    const ref = useRef();
+
+    const { error, runValidation } = useValidation({
+        registerValidation: registerValidation('genres'),
+        unregisterValidation: unregisterValidation('genres'),
+        validation: (genres) => {
+            return !genres || genres.length === 0 ? 'Please select genres' : null;
+        },
+        ref,
+    });
 
     const handleGenreSelection = (letCueupDecide) => {
         setShowGenres(!letCueupDecide);
         if (letCueupDecide) {
-            handleChange({ genres: ['top 40', 'local', "80's", 'disco', 'remixes'] });
+            const defaultGenres = ['top 40', 'local', "80's", 'disco', 'remixes'];
+            runValidation(defaultGenres);
+            handleChange({ genres: defaultGenres });
+        } else {
+            handleChange({ genres: [] });
         }
     };
 
@@ -32,12 +45,14 @@ const Step2 = ({
         <form name="requestForm-step-2">
             <h3>{translate('request-form.step-2.header')}</h3>
             <section>
-                <Input
-                    label={translate('request-form.step-2.event-name')}
-                    name="name"
-                    validate={['required']}
-                />
+                <Label>{translate('request-form.step-2.event-name')}</Label>
                 <BodySmall>{translate('request-form.step-2.event-name-description')}</BodySmall>
+                <Input
+                    onSave={(name) => handleChange({ name })}
+                    validation={(v) => (v ? null : 'Please write a name')}
+                    registerValidation={registerValidation('name')}
+                    unregisterValidation={unregisterValidation('name')}
+                />
             </section>
             <section>
                 <Label>{translate('request-form.step-2.event-rider')}</Label>
@@ -52,7 +67,7 @@ const Step2 = ({
                     />
 
                     <ToggleButton
-                        onClick={(speakers) => handleChange({ speakers })}
+                        onClick={(lights) => handleChange({ lights })}
                         label={translate('lights')}
                         rounded
                     />
@@ -65,25 +80,29 @@ const Step2 = ({
                 </BodySmall>
                 <GenreChooser
                     letCueupDecide={handleGenreSelection}
-                    validate={['required']}
                     chooseLabel={translate('request-form.choose-genres')}
                     cueupDecideLabel={translate('request-form.let-cueup-decide')}
                     name="genres"
                 />
                 {showGenres ? (
                     <ToggleButtonHandler
-                        validate={['required']}
                         name="genres"
+                        onChange={(genres) => {
+                            handleChange({ genres });
+                            runValidation(genres);
+                        }}
                         potentialValues={c.GENRES}
                         columns={4}
                     />
                 ) : null}
+
+                <ErrorMessageApollo error={error} ref={ref} />
             </section>
             <Row right style={{ marginTop: '12px' }}>
                 <TeritaryButton type="button" className="back-button" onClick={back}>
                     {translate('back')}
                 </TeritaryButton>
-                <PrimaryButton type="submit" onClick={next}>
+                <PrimaryButton type="button" onClick={next}>
                     {translate('continue')}
                 </PrimaryButton>
             </Row>
