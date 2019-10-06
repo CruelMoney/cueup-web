@@ -2,7 +2,6 @@ import React from 'react';
 
 type Props = {
     children: any;
-    myCss: string[];
     helmetContext: any;
     scripts: string[];
     state: string;
@@ -14,7 +13,6 @@ type Props = {
 
 const HTML = ({
     children,
-    myCss = [],
     styleTags = [],
     scriptTags = [],
     scripts = [],
@@ -35,9 +33,6 @@ const HTML = ({
             {helmet.meta.toComponent()}
             {helmet.link.toComponent()}
             {helmet.script.toComponent()}
-            {myCss.filter(Boolean).map((href) => (
-                <link key={href} rel="stylesheet" href={href} />
-            ))}
             {styleTags.filter(Boolean).map((tag) => tag)}
             <script
                 // eslint-disable-next-line react/no-danger

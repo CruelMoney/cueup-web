@@ -47,18 +47,18 @@ const serverRenderer = () => async (req, res) => {
     sheet.seal();
 
     const state = res.locals.store.getState();
-    const css = [res.locals.assetPath('bundle.css'), res.locals.assetPath('vendor.css')];
 
     const scriptTags = res.locals.chunkExtractor.getScriptElements();
+    const linkTags = res.locals.chunkExtractor.getLinkElements();
+    const cssTags = res.locals.chunkExtractor.getStyleElements();
 
     const html = renderToString(
         <Html
             helmetContext={helmetContext}
             state={JSON.stringify(state).replace(/</g, '\\u003c')}
             apolloState={JSON.stringify(apolloState).replace(/</g, '\\u003c')}
-            myCss={css}
-            styleTags={styleTags}
-            scriptTags={scriptTags}
+            styleTags={[...styleTags, ...cssTags]}
+            scriptTags={[...scriptTags, ...linkTags]}
         >
             {content}
         </Html>

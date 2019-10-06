@@ -17,6 +17,13 @@ const config = {
     performance: {
         hints: false,
     },
+    optimization: {
+        ...baseConfig.optimization,
+        splitChunks: {
+            chunks: 'all',
+            name: true,
+        },
+    },
 };
 
 module.exports = config;

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import moment from 'moment-timezone';
 import { Mutation } from 'react-apollo';
-import { SecondaryButton, Row } from '../../Blocks';
+import { SecondaryButton, Row, SmartButton } from '../../Blocks';
 import { Input } from '../../FormComponents';
 import LocationSelector from '../LocationSelectorSimple';
 import Popup from '../Popup';
@@ -98,10 +98,10 @@ class Step1 extends PureComponent {
                                 />
                             </Popup>
                             <form
-                                registerCheckForm={(checker) => {
-                                    this.validationChecker = checker;
-                                    this.props.formValidCheckers.push(checker);
-                                }}
+                                // registerCheckForm={(checker) => {
+                                //     this.validationChecker = checker;
+                                //     this.props.formValidCheckers.push(checker);
+                                // }}
                                 //formValidCallback={(name)=>this.props.updateProgress(name,true)}
                                 //formInvalidCallback={(name)=>this.props.updateProgress(name,false)}
                                 name="requestForm-step-1"
@@ -130,14 +130,13 @@ class Step1 extends PureComponent {
                                 <section
                                     className="cursor-pointer"
                                     onClick={() => {
-                                        console.log('show');
                                         this.setState({ showLogin: false, showPopup: true });
                                     }}
                                 >
-                                    <label>{translate('request-form.step-1.event-date')}</label>
                                     <Input
                                         type="text"
                                         name="date"
+                                        label={translate('request-form.step-1.event-date')}
                                         disabled
                                         onClick={() => {
                                             this.setState({ showLogin: false, showPopup: true });
@@ -147,13 +146,13 @@ class Step1 extends PureComponent {
                                     <p>{translate('request-form.step-1.event-date-description')}</p>
                                 </section>
                                 <Row right>
-                                    <SecondaryButton
+                                    <SmartButton
                                         type="submit"
                                         isLoading={this.state.loading}
                                         onClick={this.next(mutate)}
                                     >
                                         {translate('continue')}
-                                    </SecondaryButton>
+                                    </SmartButton>
                                 </Row>
                             </form>
 

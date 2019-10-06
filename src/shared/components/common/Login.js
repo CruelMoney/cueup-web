@@ -1,11 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import emailValidator from 'email-validator';
 
 import { withRouter } from 'react-router-dom';
-import { getTranslate } from 'react-localize-redux';
 import { Mutation, Query } from 'react-apollo';
+import addTranslate from 'components/higher-order/addTranslate';
 import { LOGIN, REQUEST_PASSWORD_RESET, ME } from '../gql';
 import * as c from '../../constants/constants';
 import { authService } from '../../utils/AuthService';
@@ -17,28 +16,18 @@ import SubmitButton from './SubmitButton';
 
 class Login extends PureComponent {
     displayName = 'Login';
-    color = '#31DAFF';
-
-    getChildContext() {
-        return {
-            color: this.color,
-        };
-    }
 
     static defaultProps = {
         redirect: true,
     };
 
-    state = {
-        email: '',
-        password: '',
-        isValid: false,
-        isLoading: false,
-    };
-
     constructor(props) {
         super(props);
         this.state = {
+            email: '',
+            password: '',
+            isValid: false,
+            isLoading: false,
             error: props.error,
             message: '',
         };
@@ -208,12 +197,6 @@ Login.childContextTypes = {
     color: PropTypes.string,
 };
 
-const getPropsFromState = (state) => {
-    return {
-        translate: getTranslate(state.locale),
-    };
-};
-
-const SmartLogin = withRouter(connect(getPropsFromState)(Login));
+const SmartLogin = withRouter(addTranslate(Login));
 
 export default (props) => <SmartLogin {...props} />;
