@@ -1,5 +1,6 @@
-const { client: loaders } = require('./loaders');
+const { storybook: loaders } = require('./loaders');
 const { client: plugins } = require('./plugins');
+const resolvers = require('./resolvers');
 
 module.exports = async ({ config, mode }) => {
     config.plugins = [...config.plugins, ...plugins];
@@ -12,6 +13,8 @@ module.exports = async ({ config, mode }) => {
         use: [{ loader: 'babel-loader' }],
         exclude: /node_modules/,
     });
+
+    config.resolve = resolvers;
 
     return config;
 };

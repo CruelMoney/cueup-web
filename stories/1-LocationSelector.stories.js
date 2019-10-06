@@ -1,7 +1,6 @@
 import React from 'react';
 
 import LocationSelectorSimple from '../src/shared/components/common/LocationSelectorSimple';
-import { Label } from '../src/shared/components/FormComponents';
 
 export default {
     title: 'LocationSelector',

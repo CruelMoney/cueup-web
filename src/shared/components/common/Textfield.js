@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Input } from 'components/FormComponents';
+import { Input } from '../FormComponents';
 import connectToForm from '../higher-order/connectToForm';
 
 class MyTextField extends Component {

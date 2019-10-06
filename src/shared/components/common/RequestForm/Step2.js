@@ -1,18 +1,17 @@
 import React, { PureComponent } from 'react';
-import Button from '../Button-v2';
+import { SecondaryButton, TeritaryButton } from 'components/Blocks';
+import { Input } from 'components/FormComponents';
 import ToggleButtonHandler from '../ToggleButtonHandler';
-import Form from '../Form-v2';
 import c from '../../../constants/constants';
-import Textfield from '../Textfield';
 import RiderOptions from '../RiderOptions2';
 import GenreChooser from './GenreChooser';
 
 export default class Step2 extends PureComponent {
-    validationChecker = null;
-
     state = {
         showGenres: false,
     };
+    validationChecker = null;
+
     next = () => {
         if (this.validationChecker(true)) {
             this.props.next();
@@ -29,7 +28,7 @@ export default class Step2 extends PureComponent {
         const { translate } = this.props;
         const { showGenres } = this.state;
         return (
-            <Form
+            <form
                 registerCheckForm={(checker) => {
                     this.validationChecker = checker;
                     this.props.formValidCheckers.push(checker);
@@ -41,7 +40,7 @@ export default class Step2 extends PureComponent {
                 <h3>{translate('request-form.step-2.header')}</h3>
                 <section>
                     <label htmlFor="name">{translate('request-form.step-2.event-name')}</label>
-                    <Textfield name="name" validate={['required']} />
+                    <Input name="name" validate={['required']} />
                     <p>{translate('request-form.step-2.event-name-description')}</p>
                 </section>
                 <section>
@@ -80,14 +79,14 @@ export default class Step2 extends PureComponent {
                     ) : null}
                 </section>
                 <div style={{ position: 'relative' }}>
-                    <span className="back-button" onClick={this.props.back}>
+                    <TeritaryButton className="back-button" onClick={this.props.back}>
                         {translate('back')}
-                    </span>
-                    <Button type="submit" onClick={this.next}>
+                    </TeritaryButton>
+                    <SecondaryButton type="submit" onClick={this.next}>
                         {translate('continue')}
-                    </Button>
+                    </SecondaryButton>
                 </div>
-            </Form>
+            </form>
         );
     }
 }

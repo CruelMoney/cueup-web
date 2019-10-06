@@ -1,20 +1,16 @@
 import React, { PureComponent } from 'react';
 import moment from 'moment-timezone';
-import { connect } from 'react-redux';
 import { Mutation } from 'react-apollo';
-import Form from '../Form-v2';
+import { PrimaryButton } from 'components/Blocks';
 import Popup from '../Popup';
 import Login from '../Login';
-import SubmitButton from '../SubmitButton';
-import * as eventActions from '../../../actions/EventActions';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import ErrorMessageApollo from '../ErrorMessageApollo';
 import Progress from './ProgressSubmit';
 import content from './content.json';
 import Step1 from './Step1';
 import Step2 from './Step2';
-import Step3 from './Step3';
-import Step4 from './Step4';
+
 import { CREATE_EVENT } from './gql';
 
 const MainForm = class extends PureComponent {
@@ -190,14 +186,14 @@ const MainForm = class extends PureComponent {
                                                         : 'show')
                                                 }
                                             >
-                                                <Step3
+                                                {/* <Step3
                                                     translate={translate}
                                                     form={this.props.form}
                                                     date={this.state.date}
                                                     next={() => this.setState({ activeStep: 4 })}
                                                     back={() => this.setState({ activeStep: 2 })}
                                                     formValidCheckers={this.formValidCheckers}
-                                                />
+                                                /> */}
                                             </div>
                                             <div
                                                 className={
@@ -207,7 +203,7 @@ const MainForm = class extends PureComponent {
                                                         : 'show')
                                                 }
                                             >
-                                                <Step4
+                                                {/* <Step4
                                                     translate={translate}
                                                     form={this.props.form}
                                                     isLoggedIn={this.props.isLoggedIn}
@@ -215,8 +211,8 @@ const MainForm = class extends PureComponent {
                                                     back={() => this.setState({ activeStep: 3 })}
                                                     submit={this.submit}
                                                     formValidCheckers={this.formValidCheckers}
-                                                />
-                                                <Form
+                                                /> */}
+                                                <form
                                                     noError
                                                     customIsFormValid={() => {
                                                         const result = this.formValidCheckers.reduce(
@@ -245,8 +241,7 @@ const MainForm = class extends PureComponent {
                                                             {translate('back')}
                                                         </span>
 
-                                                        <SubmitButton
-                                                            active
+                                                        <PrimaryButton
                                                             name="request_djs_button"
                                                             onClick={this.onSubmit(mutate)}
                                                             glow
@@ -254,7 +249,7 @@ const MainForm = class extends PureComponent {
                                                             <div style={{ width: '150px' }}>
                                                                 {translate('get-offers')}
                                                             </div>
-                                                        </SubmitButton>
+                                                        </PrimaryButton>
                                                     </div>
                                                     <ErrorMessageApollo
                                                         center
@@ -274,7 +269,7 @@ const MainForm = class extends PureComponent {
                                                     >
                                                         {translate('terms-message')}
                                                     </p>
-                                                </Form>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -288,29 +283,4 @@ const MainForm = class extends PureComponent {
     }
 };
 
-function mapStateToProps(state, ownProps) {
-    return {
-        form: Object.assign(
-            {},
-            state.forms['requestForm-step-1'] ? state.forms['requestForm-step-1'].values : {},
-            state.forms['requestForm-step-2'] ? state.forms['requestForm-step-2'].values : {},
-            state.forms['requestForm-step-3'] ? state.forms['requestForm-step-3'].values : {},
-            state.forms['requestForm-step-4'] ? state.forms['requestForm-step-4'].values : {}
-        ),
-    };
-}
-
-function mapDispatchToProps(dispatch, ownProps) {
-    return {
-        onSubmit: (form, mutate, callback) => {
-            dispatch(eventActions.postEvent(form, mutate, callback));
-        },
-    };
-}
-
-const smartForm = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(MainForm);
-
-export default addTranslate(smartForm, content);
+export default addTranslate(MainForm, content);

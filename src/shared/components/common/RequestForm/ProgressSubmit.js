@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import dot from '../../../assets/dot.svg';
 
 export default class Index extends PureComponent {
-    KUTE = null;
-
     static contextTypes = {
         color: PropTypes.string,
         isFormValid: PropTypes.func,
@@ -32,6 +30,15 @@ export default class Index extends PureComponent {
                 });
             });
     }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (!this.state.isMounted) {
+            return;
+        }
+
+        this.updateSteps(prevProps, prevState);
+    }
+    KUTE = null;
 
     updateSteps = (prevProps, prevState) => {
         const step = this.props.currentStep;
@@ -63,15 +70,6 @@ export default class Index extends PureComponent {
             }
         }
     };
-
-    componentDidUpdate(prevProps, prevState) {
-        if (!this.state.isMounted) {
-            return;
-        }
-
-        this.updateSteps(prevProps, prevState);
-    }
-
     render() {
         // var className = finished ? "done progrezz" : "progrezz"
         const className = 'progrezz';

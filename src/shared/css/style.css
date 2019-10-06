@@ -4,7 +4,7 @@
 
 body {
     color: #32325d;
-    font-family: AvenirNext-Regular, sans-serif;
+    font-family: 'AvenirNext-Regular', sans-serif;
     -webkit-font-smoothing: antialiased;
     margin: 0;
     overflow-y: auto;
@@ -640,7 +640,7 @@ form a {
     content: counter(item) ' → ';
     counter-increment: item;
     display: inline-block;
-    font-family: AvenirNext-Medium, sans-serif;
+    font-family: 'AvenirNext-Medium', sans-serif;
     font-size: 14px;
     font-weight: bold !important;
     margin-left: -2.5em;
@@ -1651,7 +1651,7 @@ button {
 }
 
 .offer-card h4 {
-    font-family: AvenirNext-Regular, sans-serif;
+    font-family: 'AvenirNext-Regular', sans-serif;
     font-size: 18px;
     line-height: 15px;
     margin-top: 6px;
@@ -2256,7 +2256,7 @@ p.error {
 .terms .subtitle {
     border-bottom: 1px solid #f6f9fc;
     color: #8998aa;
-    font-family: AvenirNext-Regular, sans-serif;
+    font-family: 'AvenirNext-Regular', sans-serif;
     font-size: 18px;
     line-height: 26px;
     padding-bottom: 15px;
@@ -2325,15 +2325,6 @@ p.error {
     }
 }
 
-.request-form label {
-    color: #4a4a4a;
-    font-family: AvenirNext-Medium, sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22px;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-}
 .request-form section {
     margin-bottom: 15px;
     margin-top: 15px;
@@ -2345,7 +2336,7 @@ p.error {
 
 .request-form .toggle-button-handler .button,
 .request-form .toggle-options .button {
-    font-family: AvenirNext-Medium, sans-serif;
+    font-family: 'AvenirNext-Medium', sans-serif;
     font-size: 14px;
     height: 33px;
     line-height: 14px;
@@ -2354,10 +2345,11 @@ p.error {
 
 .request-form p {
     color: #8998aa;
-    font-family: AvenirNext-Regular, sans-serif;
+    font-family: 'AvenirNext-Regular', sans-serif;
     font-size: 14px;
     line-height: 19px;
     margin: 0;
+    margin-top: 6px;
 }
 .request-form h3 {
     font-size: 20px;

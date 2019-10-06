@@ -1,14 +1,11 @@
 import React, { PureComponent } from 'react';
 import moment from 'moment-timezone';
 import { Mutation } from 'react-apollo';
-import { connect } from 'react-redux';
-import Button from '../Button-v2';
-import { TexfieldDisconnected } from '../Textfield';
+import { SecondaryButton, Row } from '../../Blocks';
+import { Input } from '../../FormComponents';
 import LocationSelector from '../LocationSelectorSimple';
-import Form from '../Form-v2';
 import Popup from '../Popup';
 import DatePicker from '../Datepicker';
-import * as eventActions from '../../../actions/EventActions';
 import { CHECK_DJ_AVAILABILITY } from './gql';
 
 class Step1 extends PureComponent {
@@ -100,7 +97,7 @@ class Step1 extends PureComponent {
                                     handleChange={this.DateChanged}
                                 />
                             </Popup>
-                            <Form
+                            <form
                                 registerCheckForm={(checker) => {
                                     this.validationChecker = checker;
                                     this.props.formValidCheckers.push(checker);
@@ -112,12 +109,10 @@ class Step1 extends PureComponent {
                                 <h3 className="center">
                                     {translate('request-form.step-1.header')}
                                 </h3>
-                                <section>
-                                    <label htmlFor="location">
-                                        {translate('request-form.step-1.event-location')}
-                                    </label>
+                                <section style={{ position: 'relative', zIndex: 5 }}>
                                     <LocationSelector
                                         name="location"
+                                        label={translate('request-form.step-1.event-location')}
                                         placeholder={translate('city')}
                                         validate={['required']}
                                         value={
@@ -140,26 +135,27 @@ class Step1 extends PureComponent {
                                     }}
                                 >
                                     <label>{translate('request-form.step-1.event-date')}</label>
-                                    <TexfieldDisconnected
+                                    <Input
+                                        type="text"
                                         name="date"
                                         disabled
                                         onClick={() => {
-                                            console.log('show');
                                             this.setState({ showLogin: false, showPopup: true });
                                         }}
                                         value={eventDateString}
                                     />
                                     <p>{translate('request-form.step-1.event-date-description')}</p>
                                 </section>
-
-                                <Button
-                                    type="submit"
-                                    isLoading={this.state.loading}
-                                    onClick={this.next(mutate)}
-                                >
-                                    {translate('continue')}
-                                </Button>
-                            </Form>
+                                <Row right>
+                                    <SecondaryButton
+                                        type="submit"
+                                        isLoading={this.state.loading}
+                                        onClick={this.next(mutate)}
+                                    >
+                                        {translate('continue')}
+                                    </SecondaryButton>
+                                </Row>
+                            </form>
 
                             <p
                                 style={{ marginTop: '5px' }}
@@ -179,21 +175,4 @@ class Step1 extends PureComponent {
     }
 }
 
-function mapStateToProps(state, ownProps) {
-    return {
-        initialCity: ownProps.initialCity || state.session.city,
-    };
-}
-
-function mapDispatchToProps(dispatch, ownProps) {
-    return {
-        checkDjAvailability: (form, mutate, callback) => {
-            dispatch(eventActions.checkDjAvailability(form, mutate, callback));
-        },
-    };
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Step1);
+export default Step1;

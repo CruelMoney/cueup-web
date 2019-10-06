@@ -165,6 +165,12 @@ const client = [
         ],
     },
 ];
+
+const storybook = [
+    {
+        oneOf: [babelLoader, urlLoaderClient, fileLoaderClient],
+    },
+];
 const server = [
     {
         oneOf: [
@@ -180,4 +186,5 @@ const server = [
 module.exports = {
     client,
     server,
+    storybook,
 };
