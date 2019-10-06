@@ -73,7 +73,7 @@ export default class Index extends PureComponent {
     render() {
         // var className = finished ? "done progrezz" : "progrezz"
         const className = 'progrezz';
-
+        const { currentStep } = this.props;
         const dotBg = 'url(' + dot + ')';
         return (
             <div className="event-submit-wrapper">
@@ -81,7 +81,7 @@ export default class Index extends PureComponent {
                     <div
                         suppressHydrationWarning={true}
                         style={{
-                            opacity: this.props.currentStep === 0 ? 0 : 1,
+                            opacity: currentStep > 0 && currentStep < 4 ? 1 : 0,
                             backgroundImage: dotBg,
                             backgroundRepeat: 'repeat-x',
                             backgroundPosition: '50%',
@@ -90,7 +90,7 @@ export default class Index extends PureComponent {
                     >
                         <div
                             onClick={() => this.props.setProgress(1)}
-                            className={this.props.currentStep >= 1 ? ' step done' : ' step'}
+                            className={currentStep >= 1 ? ' step done' : ' step'}
                         >
                             <p>
                                 {/*{this.props.currentStep > 1 ? <img className="checkmark" src={checkmark} alt="checkmark"/> : 1}*/}
@@ -119,10 +119,10 @@ export default class Index extends PureComponent {
 
                         <div
                             onClick={() => this.props.setProgress(2)}
-                            className={this.props.currentStep >= 2 ? 'done step' : ' step'}
+                            className={currentStep >= 2 ? 'done step' : ' step'}
                         >
                             <p>
-                                {/*{this.props.currentStep > 2 ? <img className="checkmark" src={checkmark} alt="checkmark"/> : 2}*/}
+                                {/*{currentStep > 2 ? <img className="checkmark" src={checkmark} alt="checkmark"/> : 2}*/}
                                 2
                             </p>
                             <svg
@@ -148,10 +148,10 @@ export default class Index extends PureComponent {
 
                         <div
                             onClick={() => this.props.setProgress(3)}
-                            className={this.props.currentStep >= 3 ? 'step done' : ' step'}
+                            className={currentStep >= 3 ? 'step done' : ' step'}
                         >
                             <p>
-                                {/*{this.props.currentStep > 3 ? <img className="checkmark" src={checkmark} alt="checkmark"/> : 3}*/}
+                                {/*{currentStep > 3 ? <img className="checkmark" src={checkmark} alt="checkmark"/> : 3}*/}
                                 3
                             </p>
                             <svg

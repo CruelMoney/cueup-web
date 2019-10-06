@@ -17,9 +17,10 @@ import Step2 from './Step2';
 import { CREATE_EVENT } from './gql';
 import Step3 from './Step3';
 import Step4 from './Step4';
+import Step5 from './Step5';
 
 const MainForm = ({ translate }) => {
-    const [activeStep, setActiveStep] = useState(1);
+    const [activeStep, setActiveStep] = useState(5);
     const [showPopup, setShowPopup] = useState(false);
     const [mutate, { loading, error }] = useMutation(CREATE_EVENT);
 
@@ -111,6 +112,18 @@ const MainForm = ({ translate }) => {
 
                         {activeStep === 4 && (
                             <Step4
+                                form={form}
+                                handleChange={handleChange}
+                                runValidations={runValidations}
+                                registerValidation={registerValidation}
+                                unregisterValidation={unregisterValidation}
+                                next={next}
+                                back={back}
+                            />
+                        )}
+
+                        {activeStep === 5 && (
+                            <Step5
                                 form={form}
                                 handleChange={handleChange}
                                 runValidations={runValidations}

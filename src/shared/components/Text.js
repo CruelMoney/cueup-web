@@ -67,6 +67,11 @@ export const Body = styled.p`
     line-height: 27px;
     letter-spacing: 0;
     ${({ opacity }) => opacity && `opacity: ${opacity};`}
+    ${({ center }) =>
+        center &&
+        css`
+            text-align: center;
+        `}
 `;
 export const BodyBold = styled(Body)`
     font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;

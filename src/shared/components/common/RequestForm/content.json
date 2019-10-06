@@ -5,7 +5,7 @@
       "It looks like there's already an account using that email. Please login to continue.<br/> If you don't have a login yet, press the forgot button to create a password. <br/> Then come back here to login and create the event."
     ],
     "succes-message": [
-      "Thank you for using our service. We will send you an email with confirmation of the event.",
+      "Thanks for using our service. We'll send you an email with confirmation of the event.",
       "Tak for at du bruger vores service. Vi sender dig en mail med en bekræftelse på dit event."
     ],
     "no-djs-message": [
@@ -77,6 +77,9 @@
         "Your email is only shared with qualified DJs.",
         "Din email bliver kun delt med kvalificerede DJs."
       ]
+    },
+    "step-5": {
+      "header": ["Check your email", "Tjek din email"]
     }
   }
 }
