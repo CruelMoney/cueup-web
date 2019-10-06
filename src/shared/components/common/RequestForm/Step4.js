@@ -13,6 +13,7 @@ const Step4 = ({
     handleChange,
     registerValidation,
     unregisterValidation,
+    loading,
 }) => {
     return (
         <div>
@@ -80,7 +81,7 @@ const Step4 = ({
                     <TeritaryButton type="button" className="back-button" onClick={back}>
                         {translate('back')}
                     </TeritaryButton>
-                    <PrimaryButton type="button" onClick={next}>
+                    <PrimaryButton type="button" onClick={next} loading={loading}>
                         {translate('get-offers')}
                     </PrimaryButton>
                 </Row>

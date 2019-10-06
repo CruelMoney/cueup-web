@@ -1,19 +1,8 @@
 import React from 'react';
-import emailValidator from 'email-validator';
-import { Row, TeritaryButton, PrimaryButton } from 'components/Blocks';
-import { BodySmall, Body } from 'components/Text';
-import { Input } from 'components/FormComponents';
 import addTranslate from 'components/higher-order/addTranslate';
+import { Body } from 'components/Text';
 
-const Step5 = ({
-    translate,
-    form,
-    next,
-    back,
-    handleChange,
-    registerValidation,
-    unregisterValidation,
-}) => {
+const Step5 = ({ translate }) => {
     return (
         <div>
             <h3>{translate('request-form.step-5.header')}</h3>

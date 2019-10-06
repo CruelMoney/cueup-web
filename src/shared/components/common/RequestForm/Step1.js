@@ -44,7 +44,7 @@ const Step1 = ({
                 next({
                     ...form,
                     date: newMoment,
-                    timezone: timeZoneId,
+                    timeZoneId,
                 });
 
                 //not available

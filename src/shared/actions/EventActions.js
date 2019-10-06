@@ -2,7 +2,7 @@ import ReactPixel from 'react-facebook-pixel';
 import * as Sentry from '@sentry/browser';
 import { useMutation } from 'react-apollo';
 import { useState } from 'react';
-import { CHECK_DJ_AVAILABILITY } from 'components/common/RequestForm/gql';
+import { CHECK_DJ_AVAILABILITY, CREATE_EVENT } from 'components/common/RequestForm/gql';
 import GeoCoder from '../utils/GeoCoder';
 import * as tracker from '../utils/analytics/autotrack';
 
@@ -99,4 +99,27 @@ export const useCheckDjAvailability = ({ location, date }) => {
     };
 
     return [check, { loading, error: error || apolloError }];
+};
+
+export const useCreateEvent = (theEvent) => {
+    const [mutate, { loading, error }] = useMutation(CREATE_EVENT);
+
+    const doMutate = async (variables) => {
+        try {
+            await mutate({
+                variables: {
+                    ...theEvent,
+                    ...variables,
+                },
+            });
+            if (__DEV__) {
+                tracker.trackEventPosted();
+                ReactPixel.track('Lead');
+            }
+        } catch (error) {
+            Sentry.captureException(error);
+        }
+    };
+
+    return [doMutate, { loading, error }];
 };

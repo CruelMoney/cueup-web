@@ -6,6 +6,7 @@ import wNumb from 'wnumb';
 import { Mutation } from 'react-apollo';
 import * as Sentry from '@sentry/browser';
 import ReactPixel from 'react-facebook-pixel';
+import { useCreateEvent } from 'actions/EventActions';
 import { SettingsSection, Input, Label, useForm } from '../../../components/FormComponents';
 import DatePickerPopup from '../../../components/DatePicker';
 import { Row, Container, Col, GradientBg } from '../../../components/Blocks';
@@ -16,7 +17,6 @@ import { SmallHeader } from '../../../components/Text';
 import RiderOptions from '../../../components/RiderOptions';
 import TimeSlider from '../../../components/common/TimeSlider';
 import Slider from '../../../components/common/Slider';
-import { CREATE_EVENT } from '../../../components/common/RequestForm/gql';
 import Popup from '../../../components/common/Popup';
 import Login from '../../../components/common/Login';
 import ErrorMessageApollo from '../../../components/common/ErrorMessageApollo';
@@ -38,7 +38,7 @@ const Booking = ({ user, loading, translate }) => {
 
     const setValue = (key) => (val) => setForm((f) => ({ ...f, [key]: val }));
 
-    const requestBooking = (mutate) => async () => {
+    const requestBooking = (create) => async () => {
         const refs = runValidations();
         if (refs[0] && refs[0].current) {
             window.scrollTo({
@@ -53,22 +53,18 @@ const Booking = ({ user, loading, translate }) => {
                 lng: user.playingLocation.longitude,
             });
 
-            await mutate({
-                variables: {
-                    ...form,
-                    timeZoneId,
-                    djId: user.id,
-                    genres: user.genres,
-                    location: {
-                        latitude: user.playingLocation.latitude,
-                        longitude: user.playingLocation.longitude,
-                        name: user.playingLocation.name,
-                    },
+            await create({
+                ...form,
+                timeZoneId,
+                djId: user.id,
+                genres: user.genres,
+                location: {
+                    latitude: user.playingLocation.latitude,
+                    longitude: user.playingLocation.longitude,
+                    name: user.playingLocation.name,
                 },
             });
             setEventCreated(true);
-            tracker.trackEventPosted();
-            ReactPixel.track('Lead');
         } catch (error) {
             Sentry.captureException(error);
         }
@@ -312,55 +308,49 @@ const EventForm = ({
 );
 
 const BookingSidebar = ({ loading, values, requestBooking, showLogin, ...props }) => {
+    const [create, { loading: createLoading, error }] = useCreateEvent();
+
     return (
-        <Mutation mutation={CREATE_EVENT}>
-            {(mutate, { error, loading: createLoading }) => (
-                <>
-                    <Sidebar
-                        showCTAShadow
-                        stickyTop={'0px'}
-                        enableSharing={false}
-                        childrenBelow={
-                            <ErrorMessageApollo
-                                error={error}
-                                style={{ marginTop: '30px' }}
-                                onFoundCode={(code) => {
-                                    if (code === 'UNAUTHENTICATED') {
-                                        showLogin();
-                                    }
-                                }}
-                            />
-                        }
-                    >
-                        <SidebarContent>
-                            {loading ? (
-                                <LoadingPlaceholder2 />
-                            ) : (
-                                <Content values={values} {...props} />
-                            )}
-                        </SidebarContent>
+        <>
+            <Sidebar
+                showCTAShadow
+                stickyTop={'0px'}
+                enableSharing={false}
+                childrenBelow={
+                    <ErrorMessageApollo
+                        error={error}
+                        style={{ marginTop: '30px' }}
+                        onFoundCode={(code) => {
+                            if (code === 'UNAUTHENTICATED') {
+                                showLogin();
+                            }
+                        }}
+                    />
+                }
+            >
+                <SidebarContent>
+                    {loading ? <LoadingPlaceholder2 /> : <Content values={values} {...props} />}
+                </SidebarContent>
 
-                        <CTAButton
-                            disabled={createLoading}
-                            loading={createLoading}
-                            onClick={requestBooking(mutate)}
-                        >
-                            BOOK NOW
-                        </CTAButton>
-                    </Sidebar>
+                <CTAButton
+                    disabled={createLoading}
+                    loading={createLoading}
+                    onClick={requestBooking(create)}
+                >
+                    BOOK NOW
+                </CTAButton>
+            </Sidebar>
 
-                    <MobileBookingButton>
-                        <CTAButton
-                            disabled={createLoading}
-                            loading={createLoading}
-                            onClick={requestBooking(mutate)}
-                        >
-                            BOOK NOW
-                        </CTAButton>
-                    </MobileBookingButton>
-                </>
-            )}
-        </Mutation>
+            <MobileBookingButton>
+                <CTAButton
+                    disabled={createLoading}
+                    loading={createLoading}
+                    onClick={requestBooking(create)}
+                >
+                    BOOK NOW
+                </CTAButton>
+            </MobileBookingButton>
+        </>
     );
 };
 

@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Card, CardShadow, Col } from 'components/Blocks';
 import { useForm } from 'components/FormComponents';
 import { BodySmall } from 'components/Text';
+import { useCreateEvent } from 'actions/EventActions';
 import Popup from '../Popup';
 import Login from '../Login';
 import addTranslate from '../../../components/higher-order/addTranslate';
@@ -13,38 +14,35 @@ import Progress from './ProgressSubmit';
 import content from './content.json';
 import Step1 from './Step1';
 import Step2 from './Step2';
-
-import { CREATE_EVENT } from './gql';
 import Step3 from './Step3';
 import Step4 from './Step4';
 import Step5 from './Step5';
 
 const MainForm = ({ translate }) => {
-    const [activeStep, setActiveStep] = useState(5);
+    const [activeStep, setActiveStep] = useState(1);
     const [showPopup, setShowPopup] = useState(false);
-    const [mutate, { loading, error }] = useMutation(CREATE_EVENT);
 
     const [form, setForm] = useState({
         date: moment(),
     });
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);
 
-    const formToEvent = (form) => {
-        return {
-            ...form,
-            guestsCount: form.guests[0],
-            timeZone: form.timeZoneId,
-        };
+    const [mutate, { loading, error }] = useCreateEvent(form);
+
+    const createEvent = async () => {
+        const errors = runValidations();
+        if (errors.length === 0) {
+            await mutate();
+            setActiveStep((s) => s + 1);
+        }
     };
 
     const handleChange = (data) => {
-        console.log({ data });
         setForm((f) => ({ ...f, ...data }));
     };
 
     const next = (data) => {
         const errors = runValidations();
-        console.log({ errors });
         if (errors.length === 0) {
             handleChange(data);
             setActiveStep((s) => s + 1);
@@ -60,6 +58,7 @@ const MainForm = ({ translate }) => {
             setActiveStep(step);
         }
     };
+
     return (
         <div className="request-form">
             <Popup width="380px" showing={showPopup} onClickOutside={() => setShowPopup(false)}>
@@ -117,8 +116,9 @@ const MainForm = ({ translate }) => {
                                 runValidations={runValidations}
                                 registerValidation={registerValidation}
                                 unregisterValidation={unregisterValidation}
-                                next={next}
+                                next={createEvent}
                                 back={back}
+                                loading={loading}
                             />
                         )}
 

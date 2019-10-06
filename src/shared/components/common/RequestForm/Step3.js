@@ -51,8 +51,8 @@ const Step3 = ({
                         }}
                         step={1}
                         connect="lower"
-                        value={[form.guests || 100]}
-                        onChange={([guests]) => handleChange({ guests })}
+                        value={[form.guestsCount || 100]}
+                        onChange={([guestsCount]) => handleChange({ guestsCount })}
                         format={wNumb({
                             decimals: 0,
                         })}
