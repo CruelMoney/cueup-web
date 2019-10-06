@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SecondaryButton } from 'components/Blocks';
-import Checkmark from 'assets/Checkmark';
+import Checkmark from '../../assets/Checkmark';
 
 const ToggleButton = ({ label, labelToggled, onClick, disabled, active, ...props }) => {
     const [internalToggled, setToggled] = useState(active);

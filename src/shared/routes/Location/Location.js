@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import { Redirect } from 'react-router';
 import { Helmet } from 'react-helmet-async';
+import { PrimaryButton } from 'components/Blocks';
 import Footer from '../../components/common/Footer';
-import Button from '../../components/common/Button-v2';
 import MoneyIcon from '../../components/graphics/Money';
 import NoteIcon from '../../components/graphics/Note';
 import Map from '../../components/common/Map';
@@ -110,11 +110,11 @@ const Location = (props) => {
                                         <p key="paragraph">{siteDescription}</p>
 
                                         <div style={{ float: 'left', marginTop: '20px' }}>
-                                            <Button active onClick={handleButtonClick}>
+                                            <PrimaryButton active onClick={handleButtonClick}>
                                                 <div style={{ width: '150px', color: themeColor }}>
                                                     {translate('get-offers')}
                                                 </div>
-                                            </Button>
+                                            </PrimaryButton>
                                         </div>
                                     </div>
                                 </div>

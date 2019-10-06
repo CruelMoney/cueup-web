@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { PrimaryButton } from 'components/Blocks';
 import Footer from '../../../components/common/Footer';
-import Button from '../../../components/common/Button-v2';
 import padlock from '../../../assets/padlock.svg';
 import note from '../../../assets/note.svg';
 import RequestForm from '../../../components/common/RequestForm';
@@ -47,7 +47,7 @@ class Home extends Component {
                                 <p key="paragraph">{translate('home.introduction')}</p>
 
                                 <div style={{ float: 'left', marginTop: '20px' }}>
-                                    <Button
+                                    <PrimaryButton
                                         color="white"
                                         className="white elevated"
                                         onClick={this.handleButtonClick}
@@ -55,7 +55,7 @@ class Home extends Component {
                                         <div style={{ width: '150px', color: this.themeColor }}>
                                             {translate('get-offers')}
                                         </div>
-                                    </Button>
+                                    </PrimaryButton>
                                 </div>
                             </div>
                             <div className="col-md-8 dj-cards-wrapper">
