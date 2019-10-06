@@ -5,8 +5,8 @@ import { inputStyle } from '../Blocks';
 
 const SuggestionList = ({ suggestions = [], value, onChange, onBlur, onFocus, ...props }) => {
     const [internalValue, setInternalValue] = useState(value || '');
-
     const [focused, setFocused] = useState(false);
+    const [suggestionCursor, setSuggestionCursor] = useState(-1);
 
     const handleChange = (v) => {
         setInternalValue(v);
@@ -23,20 +23,49 @@ const SuggestionList = ({ suggestions = [], value, onChange, onBlur, onFocus, ..
         onFocus && onFocus();
     };
 
+    const handleKeyPress = (e) => {
+        e = e || window.event;
+
+        const keyCode = e.keyCode || e.which;
+        const arrowDown = keyCode == '40';
+        const arrowUp = keyCode == '38';
+        const isEnter = keyCode == '13';
+
+        if (isEnter) {
+            e.preventDefault();
+            handleChange(suggestions[suggestionCursor]);
+            setFocused(false);
+            return false;
+        }
+
+        if (arrowDown || arrowUp) {
+            const max = suggestions.length - 1;
+            e.preventDefault();
+            setSuggestionCursor((i) => Math.max(0, Math.min(max, i + (arrowDown ? 1 : -1))));
+            return false;
+        }
+    };
+
     return (
-        <Wrapper>
+        <Wrapper onKeyDown={handleKeyPress}>
             <Input
                 type="text"
                 value={internalValue}
                 onChange={handleChange}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
+                blurOnEnter={false}
                 {...props}
             />
             {focused && suggestions.length > 0 && (
                 <List>
                     {suggestions.map((s, idx) => (
-                        <Suggestion key={idx} onMouseDown={() => handleChange(s)}>
+                        <Suggestion
+                            key={idx}
+                            active={suggestionCursor === idx}
+                            onMouseEnter={() => setSuggestionCursor(idx)}
+                            onMouseDown={() => handleChange(s)}
+                        >
                             {s}
                         </Suggestion>
                     ))}
@@ -70,7 +99,6 @@ const List = styled.ul`
 
 const Suggestion = styled.li`
     ${inputStyle};
-    background: transparent;
     display: flex;
     align-items: center;
     padding: 9px 21px;
@@ -79,10 +107,7 @@ const Suggestion = styled.li`
     height: auto;
     width: 100%;
     box-sizing: border-box;
-    &:hover,
-    &:focus {
-        background-color: #f6f8f9;
-    }
+    background-color: ${({ active }) => (active ? ' #f6f8f9' : 'transparent')};
 `;
 
 export default SuggestionList;
