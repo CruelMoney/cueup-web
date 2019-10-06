@@ -28,6 +28,7 @@ const Step3 = ({
                     startLabel={translate('start')}
                     endLabel={translate('end')}
                     date={form.date}
+                    initialValues={form.startMinute && [form.startMinute, form.endMinute]}
                     onChange={([startMinute, endMinute]) => {
                         handleChange({ startMinute });
                         handleChange({ endMinute });
@@ -50,7 +51,7 @@ const Step3 = ({
                         }}
                         step={1}
                         connect="lower"
-                        value={[100]}
+                        value={[form.guests || 100]}
                         onChange={([guests]) => handleChange({ guests })}
                         format={wNumb({
                             decimals: 0,
@@ -70,6 +71,7 @@ const Step3 = ({
                     style={{
                         height: '120px',
                     }}
+                    defaultValue={form.description}
                     label={translate('request-form.step-3.event-description')}
                     placeholder={translate('request-form.step-3.event-description-description')}
                     name="description"

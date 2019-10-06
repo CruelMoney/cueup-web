@@ -83,13 +83,14 @@ const Step2 = ({
                     cueupDecideLabel={translate('request-form.let-cueup-decide')}
                     name="genres"
                 />
-                {!form.letCueupDecide ? (
+                {form.letCueupDecide === false ? (
                     <ToggleButtonHandler
                         name="genres"
                         onChange={(genres) => {
                             handleChange({ genres });
                             runValidation(genres);
                         }}
+                        value={form.genres}
                         potentialValues={c.GENRES}
                         columns={4}
                     />

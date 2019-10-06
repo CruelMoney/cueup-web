@@ -1,4 +1,5 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
+import emailValidator from 'email-validator';
 import { Row, TeritaryButton, PrimaryButton } from 'components/Blocks';
 import { BodySmall } from 'components/Text';
 import { Input } from 'components/FormComponents';
@@ -22,7 +23,22 @@ const Step4 = ({
                         label={translate('request-form.step-4.contact-name')}
                         name="contactName"
                         placeholder={translate('first-last')}
-                        validate={['required', 'lastName']}
+                        type="text"
+                        autoComplete="name"
+                        defaultValue={form.contactName}
+                        validation={(v) => {
+                            if (!v) {
+                                return 'Please enter name';
+                            }
+                            const [firstName, ...lastName] = v.split(' ');
+                            if (!firstName || !lastName.some((s) => !!s.trim())) {
+                                return 'Please enter both first and last name';
+                            }
+                        }}
+                        required
+                        onSave={(contactName) => handleChange({ contactName })}
+                        registerValidation={registerValidation('contactName')}
+                        unregisterValidation={unregisterValidation('contactName')}
                     />
                     <BodySmall>
                         {translate('request-form.step-4.contact-name-description')}
@@ -35,7 +51,7 @@ const Step4 = ({
                         label={translate('request-form.step-4.contact-phone')}
                         placeholder={translate('optional')}
                         name="contactPhone"
-                        validate={[]}
+                        defaultValue={form.contactPhone}
                     />
                     <BodySmall>
                         {translate('request-form.step-4.contact-phone-description')}
@@ -48,7 +64,13 @@ const Step4 = ({
                         label={translate('request-form.step-4.contact-email')}
                         autoComplete="email"
                         placeholder="Email"
-                        validate={['required', 'email']}
+                        defaultValue={form.contactEmail}
+                        validation={(v) =>
+                            emailValidator.validate(v) ? null : 'Not a valid email'
+                        }
+                        onSave={(contactEmail) => handleChange({ contactEmail })}
+                        registerValidation={registerValidation('contactEmail')}
+                        unregisterValidation={unregisterValidation('contactEmail')}
                     />
                     <BodySmall>
                         {translate('request-form.step-4.contact-email-description')}
@@ -63,9 +85,6 @@ const Step4 = ({
                     </PrimaryButton>
                 </Row>
             </form>
-            <BodySmall style={{ textAlign: 'center' }} className="terms_link">
-                {translate('terms-message')}
-            </BodySmall>
         </div>
     );
 };

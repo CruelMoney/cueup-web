@@ -12,8 +12,9 @@ const TimeSlider = ({
     endLabel,
     color,
     disabled,
+    initialValues = [21 * 60, 27 * 60],
 }) => {
-    const [values, setValues] = useState([21 * 60, 27 * 60]);
+    const [values, setValues] = useState(initialValues);
 
     useEffect(() => {
         if (startTime && endTime) {

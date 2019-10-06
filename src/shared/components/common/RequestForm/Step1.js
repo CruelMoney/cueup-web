@@ -66,6 +66,7 @@ const Step1 = ({
                     <section style={{ position: 'relative', zIndex: 5 }}>
                         <LocationSelector
                             noShadow
+                            forceHeight
                             name="location"
                             label={translate('request-form.step-1.event-location')}
                             placeholder={translate('city')}

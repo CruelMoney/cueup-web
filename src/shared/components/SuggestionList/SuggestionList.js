@@ -11,6 +11,7 @@ const SuggestionList = ({
     onBlur,
     onFocus,
     noShadow,
+    forceHeight,
     ...props
 }) => {
     const [internalValue, setInternalValue] = useState(value || defaultValue);
@@ -67,7 +68,7 @@ const SuggestionList = ({
                 {...props}
             />
             {focused && suggestions.length > 0 && (
-                <List noShadow={noShadow}>
+                <List noShadow={noShadow} forceHeight={forceHeight}>
                     {suggestions.map((s, idx) => (
                         <Suggestion
                             key={idx}
@@ -103,6 +104,7 @@ const List = styled.ul`
     padding-top: 95px;
     background: white;
     box-shadow: ${({ noShadow }) => (noShadow ? 'none' : '0px 1px 4px 0px rgba(0, 0, 0, 0.3)')};
+    height: ${({ forceHeight }) => (forceHeight ? '400px' : 'auto')};
     border-radius: 4px;
 `;
 
