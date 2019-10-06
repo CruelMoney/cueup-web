@@ -371,13 +371,13 @@ export const SecondaryButton = styled.button`
 
 export const PrimaryButton = styled.button.attrs(({ loading, ...props }) => props)`
     ${ButtonTextStyle}
-    color: #FFFFFF;
-    background: #31daff;
+    color: ${({ invert }) => (invert ? '#31daff' : '#fff')};
+    background:  ${({ invert }) => (invert ? '#fff' : '#31daff')}; 
     opacity: ${({ loading }) => (loading ? 0.5 : 1)};
     pointer-events: ${({ loading }) => (loading ? 'none' : 'auto')};
     :hover {
-        color: #ffffff;
-        background-color: #00d1ff;
+        color: ${({ invert }) => (invert ? '#31daff' : '#fff')};
+        background-color: ${({ invert }) => (invert ? '#fff' : '#00d1ff')};
     }
     ${({ disabled }) => (disabled ? 'opacity: 0.5;' : '')}
 `;

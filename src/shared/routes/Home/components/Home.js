@@ -47,14 +47,8 @@ class Home extends Component {
                                 <p key="paragraph">{translate('home.introduction')}</p>
 
                                 <div style={{ float: 'left', marginTop: '20px' }}>
-                                    <PrimaryButton
-                                        color="white"
-                                        className="white elevated"
-                                        onClick={this.handleButtonClick}
-                                    >
-                                        <div style={{ width: '150px', color: this.themeColor }}>
-                                            {translate('get-offers')}
-                                        </div>
+                                    <PrimaryButton invert onClick={this.handleButtonClick}>
+                                        {translate('get-offers')}
                                     </PrimaryButton>
                                 </div>
                             </div>

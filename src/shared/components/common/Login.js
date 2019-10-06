@@ -11,9 +11,6 @@ import * as c from '../../constants/constants';
 import { authService } from '../../utils/AuthService';
 import { Input } from '../FormComponents';
 import ErrorMessageApollo, { getErrorMessage } from './ErrorMessageApollo';
-import Button from './Button-v2';
-import Form from './Form-v2';
-import SubmitButton from './SubmitButton';
 
 class Login extends PureComponent {
     displayName = 'Login';
