@@ -249,9 +249,13 @@ const Input = React.forwardRef(
             }
         };
 
-        const change = (e) => onChange && onChange(e.target.value);
+        const change = (e) => {
+            e.persist();
+            onChange && onChange(e.target.value);
+        };
 
         const handleBlur = (e) => {
+            e.persist();
             save(e);
             onBlur && onBlur();
         };
@@ -370,7 +374,6 @@ export const useValidation = ({ validation, registerValidation, unregisterValida
 
 export const useForm = (form) => {
     const validations = useRef({});
-
     const registerValidation = (key) => (fun) => {
         validations.current = {
             ...validations.current,
@@ -383,6 +386,8 @@ export const useForm = (form) => {
     };
 
     const runValidations = () => {
+        console.log({ validations });
+
         return Object.entries(validations.current)
             .reduce((refs, [key, fun]) => [...refs, fun(form[key])], [])
             .filter((r) => !!r);

@@ -20,23 +20,32 @@ const MainForm = ({ translate, initialCity }) => {
     const [activeStep, setActiveStep] = useState(1);
     const [showLogin, setShowLogin] = useState(false);
 
+    // defaults
     const [form, setForm] = useState({
         date: moment(),
         locationName: initialCity,
+        startMinute: 21 * 60,
+        endMinute: 27 * 60,
+        guestsCount: 100,
     });
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);
-
-    const [mutate, { loading, error }] = useCreateEvent(form);
+    const [error, setError] = useState();
+    const [mutate, { loading }] = useCreateEvent(form);
 
     const createEvent = async () => {
         const errors = runValidations();
         if (errors.length === 0) {
-            await mutate();
-            setActiveStep((s) => s + 1);
+            const { error } = await mutate();
+            if (!error) {
+                setActiveStep((s) => s + 1);
+            } else {
+                setError(error);
+            }
         }
     };
 
     const handleChange = (data) => {
+        setError(null);
         setForm((f) => ({ ...f, ...data }));
     };
 
@@ -72,7 +81,12 @@ const MainForm = ({ translate, initialCity }) => {
                                 <BodySmall>
                                     {translate('request-form.email-exists-message')}
                                 </BodySmall>
-                                <Login redirect={false} onLogin={() => setShowLogin(false)} />
+                                <Login
+                                    redirect={false}
+                                    onLogin={() => {
+                                        setShowLogin(false);
+                                    }}
+                                />
                                 <Hr margin />
                                 <LinkButton onClick={() => setShowLogin(false)}>Back</LinkButton>
                             </>
@@ -143,6 +157,7 @@ const MainForm = ({ translate, initialCity }) => {
                             onFoundCode={(code) => {
                                 if (code === 'UNAUTHENTICATED') {
                                     setShowLogin(true);
+                                    setError(null);
                                 }
                             }}
                         />

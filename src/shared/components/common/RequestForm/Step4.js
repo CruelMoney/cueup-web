@@ -1,6 +1,6 @@
 import React from 'react';
 import emailValidator from 'email-validator';
-import { Row, TeritaryButton, PrimaryButton } from 'components/Blocks';
+import { Row, TeritaryButton, PrimaryButton, SmartButton } from 'components/Blocks';
 import { BodySmall } from 'components/Text';
 import { Input } from 'components/FormComponents';
 import addTranslate from 'components/higher-order/addTranslate';
@@ -16,9 +16,14 @@ const Step4 = ({
     unregisterValidation,
     loading,
 }) => {
+    const submit = (e) => {
+        e.preventDefault();
+        next();
+    };
+
     return (
         <div>
-            <form>
+            <form onSubmit={submit}>
                 <h3>{translate('request-form.step-4.header')}</h3>
                 <RequestSection>
                     <Input
@@ -37,7 +42,6 @@ const Step4 = ({
                                 return 'Please enter both first and last name';
                             }
                         }}
-                        required
                         onSave={(contactName) => handleChange({ contactName })}
                         registerValidation={registerValidation('contactName')}
                         unregisterValidation={unregisterValidation('contactName')}
@@ -82,9 +86,9 @@ const Step4 = ({
                     <TeritaryButton type="button" className="back-button" onClick={back}>
                         {translate('back')}
                     </TeritaryButton>
-                    <PrimaryButton type="button" onClick={next} loading={loading}>
+                    <SmartButton type="submit" loading={loading}>
                         {translate('get-offers')}
-                    </PrimaryButton>
+                    </SmartButton>
                 </Row>
             </form>
         </div>

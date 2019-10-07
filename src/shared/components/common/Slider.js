@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import RCSlider, { Range } from 'rc-slider';
-import connectToForm from '../higher-order/connectToForm';
 import 'rc-slider/assets/index.css';
 
 /**
@@ -18,10 +17,6 @@ class Slider extends Component {
         format: PropTypes.object,
     };
 
-    defaultValue = 0;
-    nonLinear = false;
-    parsedRange = [];
-
     constructor(props) {
         super(props);
         // Range should be an object consisting of at least min & max
@@ -32,6 +27,9 @@ class Slider extends Component {
             this.nonLinear = true;
         }
     }
+    defaultValue = 0;
+    nonLinear = false;
+    parsedRange = [];
 
     parseRange = (range) => {
         const newRange = [];
@@ -110,7 +108,7 @@ class Slider extends Component {
     };
 
     render() {
-        const color = this.props.color || this.context.color;
+        const color = this.props.color || '#25F4D2';
         return (
             <div
                 style={{
@@ -148,4 +146,4 @@ Slider.contextTypes = {
     color: PropTypes.string,
 };
 
-export default connectToForm(Slider);
+export default Slider;

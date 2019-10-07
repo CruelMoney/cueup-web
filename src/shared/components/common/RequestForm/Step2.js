@@ -104,7 +104,7 @@ const Step2 = ({
                 <TeritaryButton type="button" className="back-button" onClick={back}>
                     {translate('back')}
                 </TeritaryButton>
-                <PrimaryButton type="button" onClick={next}>
+                <PrimaryButton type="button" onClick={() => next()}>
                     {translate('continue')}
                 </PrimaryButton>
             </Row>

@@ -51,6 +51,10 @@ export default class Index extends PureComponent {
             morphPrecision: 1,
         };
 
+        if (step > 3) {
+            return;
+        }
+
         if (step !== lastStep) {
             if (lastStep > 0) {
                 this.KUTE.fromTo(

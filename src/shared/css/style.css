@@ -482,6 +482,8 @@ footer .social a {
     font-family: 'SourceSansPro-Bold', sans-serif;
 }
 footer h4 {
+    font-size: 14px;
+    font-weight: 600;
     line-height: 30px;
 }
 footer a:hover,
@@ -2420,8 +2422,12 @@ header .info-boxes {
 }
 .progrezz .step {
     background: white;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
     cursor: pointer;
-    height: 50px;
+    height: 70px;
+    margin-bottom: -20px;
+    overflow: hidden;
     pointer-events: all;
     position: relative;
     width: 50px;

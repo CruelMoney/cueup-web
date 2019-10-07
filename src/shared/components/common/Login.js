@@ -25,7 +25,6 @@ class Login extends PureComponent {
             email: '',
             password: '',
             isValid: false,
-            isLoading: false,
             error: props.error,
             message: '',
         };
@@ -74,30 +73,30 @@ class Login extends PureComponent {
     };
 
     render() {
-        const { isLoading } = this.state;
         const { translate, onLogin } = this.props;
 
         return (
             <Query query={ME}>
-                {({ refetch }) => (
+                {({ refetch, loading: loadingMe }) => (
                     <div className="login">
                         <Mutation
                             mutation={LOGIN}
                             variables={this.state}
                             onError={(error) => {
                                 console.log({ error });
-                                this.setState({ isLoading: false });
                             }}
-                            onCompleted={async ({ signIn: { token } }) => {
+                            onCompleted={async (data) => {
+                                const {
+                                    signIn: { token },
+                                } = data;
                                 if (token) {
                                     authService.setSession(token);
                                     await refetch();
                                     onLogin && (await onLogin());
                                 }
-                                this.setState({ isLoading: false });
                             }}
                         >
-                            {(mutate, { error }) => {
+                            {(mutate, { error, loading }) => {
                                 return (
                                     <form onSubmit={(_) => mutate()}>
                                         <div>
@@ -142,10 +141,9 @@ class Login extends PureComponent {
                                                 active={this.isValid()}
                                                 disabled={!this.isValid()}
                                                 type={'submit'}
-                                                loading={isLoading}
+                                                loading={loading || loadingMe}
                                                 name="email_login"
                                                 onClick={(_) => {
-                                                    this.setState({ isLoading: true });
                                                     mutate();
                                                 }}
                                             >
@@ -198,10 +196,6 @@ class Login extends PureComponent {
         );
     }
 }
-
-Login.childContextTypes = {
-    color: PropTypes.string,
-};
 
 const SmartLogin = withRouter(addTranslate(Login));
 

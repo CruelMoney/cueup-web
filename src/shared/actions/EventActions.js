@@ -89,15 +89,11 @@ export const useCheckDjAvailability = ({ locationName, date }) => {
                 date,
                 location: geoData.location,
             };
-            console.log({ variables });
 
             const { data = {} } = await mutate({ variables });
             return {
                 result: data.djsAvailable,
-                data: {
-                    timeZoneId: geoResult.timeZoneId,
-                    location,
-                },
+                data: geoData,
             };
         } catch (err) {
             Sentry.captureException(err);
@@ -111,22 +107,29 @@ export const useCheckDjAvailability = ({ locationName, date }) => {
 export const useCreateEvent = (theEvent) => {
     const [mutate, { loading, error }] = useMutation(CREATE_EVENT);
 
+    let innerError;
+
     const doMutate = async (variables) => {
+        console.log('doMutate');
+
         try {
-            await mutate({
+            if (!__DEV__) {
+                tracker.trackEventPosted();
+                ReactPixel.track('Lead');
+            }
+            return await mutate({
                 variables: {
                     ...theEvent,
                     ...variables,
                 },
             });
-            if (__DEV__) {
-                tracker.trackEventPosted();
-                ReactPixel.track('Lead');
-            }
         } catch (error) {
+            console.log({ error });
+            innerError = error;
             Sentry.captureException(error);
+            return { error };
         }
     };
 
-    return [doMutate, { loading, error }];
+    return [doMutate, { loading, error: error || innerError }];
 };
