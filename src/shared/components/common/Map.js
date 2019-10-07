@@ -14,15 +14,6 @@ import connectToForm from '../higher-order/connectToForm';
  * https://facebook.github.io/react/blog/2015/09/10/react-v0.14-rc1.html#stateless-function-components
  */
 class SimpleMap extends Component {
-    circle = null;
-
-    marker = {
-        position: { lat: 56, lng: 10 },
-        radius: 250000,
-        key: 'Denmark',
-        defaultAnimation: 2,
-    };
-
     constructor(props) {
         super(props);
         const short = !!this.props.value.lat;
@@ -47,6 +38,15 @@ class SimpleMap extends Component {
             radius: props.radius,
         };
     }
+
+    marker = {
+        position: { lat: 56, lng: 10 },
+        radius: 250000,
+        key: 'Denmark',
+        defaultAnimation: 2,
+    };
+
+    circle = null;
 
     handleRadiusChange = (circle) => {
         const radius = Math.min(circle.getRadius(), 1000000);
@@ -159,7 +159,7 @@ class SimpleMap extends Component {
                         key={Date.now()}
                         ref={(c) => (this.circle = c)}
                         defaultOptions={{
-                            fillColor: this.props.color || this.context.color,
+                            fillColor: this.props.color || this.context.color || '#25F4D2',
                             strokeWeight: 0,
                             suppressUndo: true,
                         }}
@@ -183,7 +183,7 @@ SimpleMap.contextTypes = {
 const SmartMap = connectToForm(withGoogleMap(SimpleMap));
 
 const Wrapper = (props) => {
-    return <div style={{ height: props.height || '500px' }}>{props.children}</div>;
+    return <div style={{ height: props.height }}>{props.children}</div>;
 };
 
 const MapLoader = (props) => {
@@ -193,14 +193,14 @@ const MapLoader = (props) => {
 
     if (!loaded) {
         return (
-            <Wrapper>
-                <div style={{ height: '100%' }} />{' '}
+            <Wrapper style={{ height: props.height || '500px' }}>
+                <div style={{ height: '100%' }} />
             </Wrapper>
         );
     }
 
     return (
-        <Wrapper>
+        <Wrapper style={{ height: props.height || '500px' }}>
             <SmartMap
                 {...props}
                 mapElement={<div style={{ height: '100%' }} />}

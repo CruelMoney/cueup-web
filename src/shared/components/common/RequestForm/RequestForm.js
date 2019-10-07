@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import moment from 'moment-timezone';
-import { useMutation } from 'react-apollo';
 import styled from 'styled-components';
-import { Card, CardShadow, Col } from 'components/Blocks';
+import { Card, CardShadow, Col, TeritaryButton, Hr, LinkButton } from 'components/Blocks';
 import { useForm } from 'components/FormComponents';
-import { BodySmall, Body, TitleClean } from 'components/Text';
+import { BodySmall, TitleClean } from 'components/Text';
 import { useCreateEvent } from 'actions/EventActions';
 import Login from '../Login';
 import addTranslate from '../../../components/higher-order/addTranslate';
@@ -17,12 +16,13 @@ import Step3 from './Step3';
 import Step4 from './Step4';
 import Step5 from './Step5';
 
-const MainForm = ({ translate }) => {
+const MainForm = ({ translate, initialCity }) => {
     const [activeStep, setActiveStep] = useState(1);
     const [showLogin, setShowLogin] = useState(false);
 
     const [form, setForm] = useState({
         date: moment(),
+        locationName: initialCity,
     });
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);
 
@@ -73,6 +73,8 @@ const MainForm = ({ translate }) => {
                                     {translate('request-form.email-exists-message')}
                                 </BodySmall>
                                 <Login redirect={false} onLogin={() => setShowLogin(false)} />
+                                <Hr margin />
+                                <LinkButton onClick={() => setShowLogin(false)}>Back</LinkButton>
                             </>
                         )}
 
@@ -149,7 +151,10 @@ const MainForm = ({ translate }) => {
                 </Wrapper>
                 {activeStep === 4 && (
                     <Wrapper>
-                        <BodySmall style={{ textAlign: 'center' }} className="terms_link">
+                        <BodySmall
+                            style={{ textAlign: 'center', marginTop: '12px' }}
+                            className="terms_link"
+                        >
                             {translate('terms-message-event')}
                         </BodySmall>
                     </Wrapper>
@@ -174,6 +179,18 @@ const RequestCard = styled(Card)`
     padding: 24px 30px;
     form {
         width: 100%;
+    }
+`;
+
+export const RequestSection = styled.section`
+    margin-bottom: 15px;
+    margin-top: 15px;
+    width: 100%;
+    &:first-child {
+        margin-top: 0px;
+    }
+    > ${BodySmall} {
+        margin-top: 6px;
     }
 `;
 

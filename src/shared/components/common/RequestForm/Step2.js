@@ -8,6 +8,7 @@ import c from '../../../constants/constants';
 import ToggleButton from '../ToggleButton';
 import ErrorMessageApollo from '../ErrorMessageApollo';
 import GenreChooser from './GenreChooser';
+import { RequestSection } from './RequestForm';
 
 const Step2 = ({
     translate,
@@ -39,7 +40,7 @@ const Step2 = ({
     return (
         <form name="requestForm-step-2">
             <h3>{translate('request-form.step-2.header')}</h3>
-            <section>
+            <RequestSection>
                 <Label>{translate('request-form.step-2.event-name')}</Label>
                 <BodySmall>{translate('request-form.step-2.event-name-description')}</BodySmall>
                 <Input
@@ -49,8 +50,8 @@ const Step2 = ({
                     unregisterValidation={unregisterValidation('name')}
                     defaultValue={form.name}
                 />
-            </section>
-            <section>
+            </RequestSection>
+            <RequestSection>
                 <Label>{translate('request-form.step-2.event-rider')}</Label>
                 <BodySmall style={{ marginBottom: '10px' }}>
                     {translate('request-form.step-2.event-rider-description')}
@@ -70,8 +71,8 @@ const Step2 = ({
                         active={form.lights}
                     />
                 </Row>
-            </section>
-            <section>
+            </RequestSection>
+            <RequestSection>
                 <Label>{translate('request-form.step-2.event-genres')} </Label>
                 <BodySmall style={{ marginBottom: '10px' }}>
                     {translate('request-form.step-2.event-genres-description')}
@@ -98,7 +99,7 @@ const Step2 = ({
                 <Label>
                     <ErrorMessageApollo error={error} />
                 </Label>
-            </section>
+            </RequestSection>
             <Row right style={{ marginTop: '12px' }}>
                 <TeritaryButton type="button" className="back-button" onClick={back}>
                     {translate('back')}

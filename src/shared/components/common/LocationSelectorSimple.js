@@ -45,7 +45,7 @@ const LocationSelector = ({ placeholder, ...props }) => {
             locationService.current.getPlacePredictions(
                 {
                     input: value,
-                    types: ['(cities)'],
+                    //  types: ['(regions)'],
                     componentRestrictions: { country: ['dk', 'id', 'us'] },
                 },
                 updateSuggestions

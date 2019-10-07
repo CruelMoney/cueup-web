@@ -136,7 +136,21 @@ class Login extends PureComponent {
                                                 }}
                                             />
                                         </div>
-                                        <RowWrap right>
+                                        <RowWrap right fullWidth>
+                                            <SmartButton
+                                                glow
+                                                active={this.isValid()}
+                                                disabled={!this.isValid()}
+                                                type={'submit'}
+                                                loading={isLoading}
+                                                name="email_login"
+                                                onClick={(_) => {
+                                                    this.setState({ isLoading: true });
+                                                    mutate();
+                                                }}
+                                            >
+                                                {translate('login')}
+                                            </SmartButton>
                                             <Mutation mutation={REQUEST_PASSWORD_RESET}>
                                                 {(forgot, { loading: loadingForgot }) => {
                                                     return (
@@ -159,20 +173,6 @@ class Login extends PureComponent {
                                                     );
                                                 }}
                                             </Mutation>
-                                            <SmartButton
-                                                glow
-                                                active={this.isValid()}
-                                                disabled={!this.isValid()}
-                                                type={'submit'}
-                                                loading={isLoading}
-                                                name="email_login"
-                                                onClick={(_) => {
-                                                    this.setState({ isLoading: true });
-                                                    mutate();
-                                                }}
-                                            >
-                                                {translate('login')}
-                                            </SmartButton>
                                         </RowWrap>
                                         <ErrorMessageApollo
                                             email={this.state.email}

@@ -8,6 +8,7 @@ import { Input, useForm } from '../../FormComponents';
 import LocationSelector from '../LocationSelectorSimple';
 import DatePicker from '../Datepicker';
 import ErrorMessageApollo from '../ErrorMessageApollo';
+import { RequestSection } from './RequestForm';
 
 const Step1 = ({
     translate,
@@ -33,8 +34,12 @@ const Step1 = ({
         const errors = runValidations();
 
         if (errors.length === 0) {
-            const { result, timeZoneId } = await check({ ...form, date: form.date.toDate() });
+            const { result, data } = await check({
+                ...form,
+                date: form.date.toDate(),
+            });
             if (result === true) {
+                const { timeZoneId, location } = data;
                 const newMoment = moment.tz(
                     form.date.format('YYYY-MM-DDTHH:mm:ss'),
                     'YYYY-MM-DDTHH:mm:ss',
@@ -45,6 +50,7 @@ const Step1 = ({
                     ...form,
                     date: newMoment,
                     timeZoneId,
+                    location,
                 });
 
                 //not available
@@ -63,24 +69,26 @@ const Step1 = ({
                 <DatePicker dark initialDate={form.date} handleChange={dateChanged} />
             ) : (
                 <div>
-                    <section style={{ position: 'relative', zIndex: 5 }}>
+                    <RequestSection style={{ position: 'relative', zIndex: 5 }}>
                         <LocationSelector
                             noShadow
                             forceHeight
-                            name="location"
+                            name="locationName"
                             label={translate('request-form.step-1.event-location')}
-                            placeholder={translate('city')}
-                            onSave={(location) => handleChange({ location })}
+                            placeholder={translate(
+                                'request-form.step-1.event-location-placeholder'
+                            )}
+                            onSave={(locationName) => handleChange({ locationName })}
                             validation={(v) => (v ? null : 'Please select a location')}
-                            registerValidation={registerValidation('location')}
-                            unregisterValidation={unregisterValidation('location')}
-                            defaultValue={form.location}
+                            registerValidation={registerValidation('locationName')}
+                            unregisterValidation={unregisterValidation('locationName')}
+                            defaultValue={form.locationName}
                         />
                         <BodySmall>
                             {translate('request-form.step-1.event-location-description')}
                         </BodySmall>
-                    </section>
-                    <section
+                    </RequestSection>
+                    <RequestSection
                         className="cursor-pointer"
                         onClick={() => {
                             setShowDatePickter(true);
@@ -102,7 +110,7 @@ const Step1 = ({
                         <BodySmall>
                             {translate('request-form.step-1.event-date-description')}
                         </BodySmall>
-                    </section>
+                    </RequestSection>
                     <Row right>
                         {error && <ErrorMessageApollo error={error} />}
                         {message && (

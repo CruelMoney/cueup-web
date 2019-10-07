@@ -6,6 +6,7 @@ import { Input, Label } from 'components/FormComponents';
 import { BodySmall } from 'components/Text';
 import Slider from '../Slider';
 import TimeSlider from '../TimeSlider';
+import { RequestSection } from './RequestForm';
 
 const Step3 = ({
     translate,
@@ -19,7 +20,7 @@ const Step3 = ({
     return (
         <form>
             <h3>{translate('request-form.step-3.header')}</h3>
-            <section>
+            <RequestSection>
                 <Label style={{ marginBottom: '12px', display: 'block' }}>
                     {translate('request-form.step-3.music-duration')}
                 </Label>
@@ -34,9 +35,9 @@ const Step3 = ({
                         handleChange({ endMinute });
                     }}
                 />
-            </section>
+            </RequestSection>
 
-            <section>
+            <RequestSection>
                 <Label style={{ marginBottom: '12px', display: 'block' }}>
                     {translate('request-form.step-3.guests')}
                 </Label>
@@ -64,8 +65,8 @@ const Step3 = ({
                         amount: form.guests,
                     })}
                 </BodySmall>
-            </section>
-            <section>
+            </RequestSection>
+            <RequestSection>
                 <Input
                     type="text-area"
                     style={{
@@ -80,7 +81,7 @@ const Step3 = ({
                     registerValidation={registerValidation('description')}
                     unregisterValidation={unregisterValidation('description')}
                 />
-            </section>
+            </RequestSection>
             <Row right style={{ marginTop: '12px' }}>
                 <TeritaryButton type="button" className="back-button" onClick={back}>
                     {translate('back')}

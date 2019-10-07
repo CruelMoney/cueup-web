@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import { Redirect } from 'react-router';
 import { Helmet } from 'react-helmet-async';
-import { PrimaryButton } from 'components/Blocks';
+import styled from 'styled-components';
+import { PrimaryButton, Row } from 'components/Blocks';
 import Footer from '../../components/common/Footer';
 import MoneyIcon from '../../components/graphics/Money';
 import NoteIcon from '../../components/graphics/Note';
@@ -78,7 +79,7 @@ const Location = (props) => {
             <div className="span-wrapper">
                 <header
                     style={{
-                        // height: isMobile ? "700px" : "600px",
+                        height: isMobile ? '700px' : '600px',
                         backgroundColor: '#ebebeb',
                     }}
                 >
@@ -87,10 +88,10 @@ const Location = (props) => {
                         noCircle={!city || location.noCircle}
                         hideRoads={true}
                         radius={radius}
-                        // defaultCenter={{
-                        //   lat: coordinates.lat + (isMobile ? 0 : 0.05),
-                        //   lng: coordinates.lng - (isMobile ? 0 : !!city ? 0.5 : 2)
-                        // }}
+                        defaultCenter={{
+                            lat: coordinates.lat + (isMobile ? 0 : 0.05),
+                            lng: coordinates.lng - (isMobile ? 0 : city ? 0.5 : 2),
+                        }}
                         height={isMobile ? 700 : 600}
                         value={coordinates}
                         editable={false}
@@ -133,11 +134,13 @@ const Location = (props) => {
                 </header>
 
                 <div className="container">
-                    <div ref={requestForm} />
-                    <AsyncRequestForm initialCity={title} />
+                    <FormRow center>
+                        <div ref={requestForm} />
+                        <AsyncRequestForm initialCity={title} />
+                    </FormRow>
                 </div>
 
-                <img src={citySvg} />
+                <img id="city-illustration" src={citySvg} />
             </div>
 
             <FloatingDJs {...translate(['copenhagen', 'denmark'])} location={title} />
@@ -188,5 +191,12 @@ const Location = (props) => {
         </div>
     );
 };
+
+const FormRow = styled(Row)`
+    padding-left: 200px;
+    @media only screen and (max-width: 768px) {
+        padding-left: 0px;
+    }
+`;
 
 export default addTranslate(Location, content);

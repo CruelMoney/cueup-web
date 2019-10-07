@@ -84,7 +84,7 @@
 }
 
 .locations-page h1 {
-    font-family: 'SourceSansPro-Regular';
+    font-weight: 600;
 }
 .locations-page h1 b {
     display: block;

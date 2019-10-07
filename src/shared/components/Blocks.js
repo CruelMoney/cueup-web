@@ -7,6 +7,12 @@ import GracefullImage from './GracefullImage';
 export const Hr = styled.hr`
     border-bottom: 1px solid #e9ecf0;
     margin: 0;
+    width: 100%;
+    ${({ margin }) =>
+        margin &&
+        css`
+            margin: 24px 0;
+        `}
 `;
 
 export const MarginBottom = styled.div`
@@ -58,6 +64,15 @@ export const Row = styled.div`
             margin-left: 0;
         }
     }
+    ${({ fullWidth }) =>
+        fullWidth &&
+        css`
+            > button,
+            > a {
+                margin: 0;
+                max-width: 100%;
+            }
+        `}
 `;
 
 export const RowWrap = styled(Row)`
@@ -382,7 +397,7 @@ export const PrimaryButton = styled.button.attrs(({ loading, ...props }) => prop
     ${({ disabled }) => (disabled ? 'opacity: 0.5;' : '')}
 `;
 
-export const AddButton = styled(TeritaryButton)`
+export const LinkButton = styled(TeritaryButton)`
     padding: 0;
     min-width: 0;
     /* width: auto; */
@@ -392,6 +407,8 @@ export const AddButton = styled(TeritaryButton)`
     height: 18px;
     background: transparent !important;
 `;
+
+export const AddButton = LinkButton;
 
 const rotate = keyframes`
   from {

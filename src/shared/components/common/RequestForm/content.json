@@ -16,10 +16,14 @@
 
     "step-1": {
       "header": ["Check if we have DJs available", "Se om vi har ledige DJs"],
-      "event-location": ["Event city", "Event by"],
-      "event-location-description": ["In what city is the event?", "Hvor afholdes begivenheden?"],
+      "event-location": ["Event location", "Event lokation"],
+      "event-location-description": [
+        "Venue name or city where the event is happening.",
+        "Navnet på stedet eller byen hvor begivenheden afholdes."
+      ],
+      "event-location-placeholder": ["Venue or city", "Sted eller by"],
       "event-date": ["Event date", "Event dato"],
-      "event-date-description": ["Select date of event.", "Vælg dato for begivenheden."]
+      "event-date-description": ["Start date of the event.", "Startdato for begivenheden."]
     },
     "step-2": {
       "header": [

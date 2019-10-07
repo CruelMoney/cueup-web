@@ -89,7 +89,7 @@ const Menu = ({ translate, history, location }) => {
                                                     showing={loginExpanded}
                                                     onClickOutside={() => setLoginExpanded(false)}
                                                 >
-                                                    <TitleClean center>Login</TitleClean>
+                                                    <TitleClean>Login</TitleClean>
                                                     <Login
                                                         onLogin={() => setLoginExpanded(false)}
                                                         user={user}

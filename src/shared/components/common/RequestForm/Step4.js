@@ -4,6 +4,7 @@ import { Row, TeritaryButton, PrimaryButton } from 'components/Blocks';
 import { BodySmall } from 'components/Text';
 import { Input } from 'components/FormComponents';
 import addTranslate from 'components/higher-order/addTranslate';
+import { RequestSection } from './RequestForm';
 
 const Step4 = ({
     translate,
@@ -19,7 +20,7 @@ const Step4 = ({
         <div>
             <form>
                 <h3>{translate('request-form.step-4.header')}</h3>
-                <section>
+                <RequestSection>
                     <Input
                         label={translate('request-form.step-4.contact-name')}
                         name="contactName"
@@ -44,9 +45,9 @@ const Step4 = ({
                     <BodySmall>
                         {translate('request-form.step-4.contact-name-description')}
                     </BodySmall>
-                </section>
+                </RequestSection>
 
-                <section>
+                <RequestSection>
                     <Input
                         type="tel"
                         label={translate('request-form.step-4.contact-phone')}
@@ -57,8 +58,8 @@ const Step4 = ({
                     <BodySmall>
                         {translate('request-form.step-4.contact-phone-description')}
                     </BodySmall>
-                </section>
-                <section>
+                </RequestSection>
+                <RequestSection>
                     <Input
                         type="email"
                         name="contactEmail"
@@ -76,7 +77,7 @@ const Step4 = ({
                     <BodySmall>
                         {translate('request-form.step-4.contact-email-description')}
                     </BodySmall>
-                </section>
+                </RequestSection>
                 <Row right style={{ marginTop: '12px' }}>
                     <TeritaryButton type="button" className="back-button" onClick={back}>
                         {translate('back')}

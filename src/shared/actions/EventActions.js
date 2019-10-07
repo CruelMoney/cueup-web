@@ -60,7 +60,7 @@ export function postEvent(event, mutate, callback) {
     };
 }
 
-export const useCheckDjAvailability = ({ location, date }) => {
+export const useCheckDjAvailability = ({ locationName, date }) => {
     const [error, setError] = useState();
     const [mutate, { loading, error: apolloError }] = useMutation(CHECK_DJ_AVAILABILITY);
 
@@ -75,13 +75,13 @@ export const useCheckDjAvailability = ({ location, date }) => {
                 }
             }
 
-            const geoResult = await getLocation(location);
+            const geoResult = await getLocation(locationName);
 
             const geoData = {
                 location: {
                     latitude: geoResult.position.lat,
                     longitude: geoResult.position.lng,
-                    name: location,
+                    name: locationName,
                 },
                 timeZoneId: geoResult.timeZoneId,
             };
@@ -89,9 +89,16 @@ export const useCheckDjAvailability = ({ location, date }) => {
                 date,
                 location: geoData.location,
             };
+            console.log({ variables });
 
             const { data = {} } = await mutate({ variables });
-            return { result: data.djsAvailable, timeZoneId: geoResult.timeZoneId };
+            return {
+                result: data.djsAvailable,
+                data: {
+                    timeZoneId: geoResult.timeZoneId,
+                    location,
+                },
+            };
         } catch (err) {
             Sentry.captureException(err);
             setError(err.message);

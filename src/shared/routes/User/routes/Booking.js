@@ -3,9 +3,7 @@ import emailValidator from 'email-validator';
 import styled from 'styled-components';
 import moment from 'moment-timezone';
 import wNumb from 'wnumb';
-import { Mutation } from 'react-apollo';
 import * as Sentry from '@sentry/browser';
-import ReactPixel from 'react-facebook-pixel';
 import { useCreateEvent } from 'actions/EventActions';
 import { SettingsSection, Input, Label, useForm } from '../../../components/FormComponents';
 import DatePickerPopup from '../../../components/DatePicker';
@@ -21,7 +19,6 @@ import Popup from '../../../components/common/Popup';
 import Login from '../../../components/common/Login';
 import ErrorMessageApollo from '../../../components/common/ErrorMessageApollo';
 import GeoCoder from '../../../utils/GeoCoder';
-import * as tracker from '../../../utils/analytics/autotrack';
 import { MobileBookingButton } from '../components/Common';
 
 const Booking = ({ user, loading, translate }) => {

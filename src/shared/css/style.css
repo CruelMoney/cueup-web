@@ -37,6 +37,8 @@ h3,
 h4,
 h5,
 h6 {
+    font-family: 'AvenirNext-Regular', sans-serif;
+    line-height: 1.2em;
     margin: 0;
 }
 h4 svg {
@@ -48,18 +50,15 @@ h4 path {
 }
 
 h1 {
-    font-family: 'SourceSansPro-Semibold', sans-serif;
     font-size: 42px;
     margin-bottom: 15px;
 }
 h2 {
-    font-family: 'SourceSansPro-Semibold', sans-serif;
     font-size: 22px;
     line-height: 30px;
 }
 
 h4 {
-    font-family: 'SourceSansPro-Semibold', sans-serif;
     font-size: 15px;
     letter-spacing: 0.025em;
     margin: 0 0 5px;
@@ -86,7 +85,7 @@ a:hover {
     text-decoration: none;
 }
 input {
-    font-family: AvenirNext-Regular !important;
+    font-family: 'AvenirNext-Regular', sans-serif !important;
     font-weight: normal;
 }
 label {
@@ -813,7 +812,6 @@ input[type='file'] + label * {
 }
 
 .Header-title {
-    font-family: 'SourceSansPro-Regular', sans-serif;
     margin: 0;
     margin-top: -1em;
     padding: 0em 0 1.5em;
@@ -821,7 +819,7 @@ input[type='file'] + label * {
 }
 .Header-title span {
     display: block;
-    font-family: 'SourceSansPro-Light', sans-serif;
+    font-weight: 500;
 }
 
 .first-card {
@@ -1089,11 +1087,7 @@ input[type='file'] + label * {
     line-height: 35px;
     margin-bottom: 5px;
 }
-.user-location h2 {
-    font-family: 'SourceSansPro-Regular', sans-serif;
-    font-size: 28px;
-    letter-spacing: normal;
-}
+
 .header-divider {
     border-bottom: 2px white solid;
 
@@ -2285,8 +2279,6 @@ p.error {
 }
 
 .location_ header h1 {
-    font-size: 50px;
-    line-height: 70px;
     width: 150%;
 }
 .location_ header p {
@@ -2324,15 +2316,6 @@ p.error {
         position: absolute;
         top: 20px;
     }
-}
-
-.request-form section {
-    margin-bottom: 15px;
-    margin-top: 15px;
-    width: 100%;
-}
-.request-form section:first-child {
-    margin-top: 0px;
 }
 
 .request-form .toggle-button-handler .button,
