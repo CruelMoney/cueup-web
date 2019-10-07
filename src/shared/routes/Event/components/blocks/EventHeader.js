@@ -4,25 +4,26 @@ import Navigation from '../../../../components/SubNavigation';
 import { Container, FullWidthCol, Row, Col, GradientBg } from '../../../../components/Blocks';
 import { HeaderTitle, BodyBold } from '../../../../components/Text';
 
-const routes = [
-    { route: 'overview', label: 'overview', active: true },
-    { route: 'requirements', label: 'requirements', active: true },
-    { route: 'review', label: 'review', active: true },
-];
+const getRoutes = (event, pathname) =>
+    [
+        { route: 'overview', label: 'overview', active: true },
+        { route: 'requirements', label: 'requirements', active: true },
+        { route: 'review', label: 'review', active: true },
+    ].map((r) => ({ ...r, route: pathname + '/' + r.route }));
 
 const StyledGradientBg = styled(GradientBg)`
     height: 300px;
     top: -252px;
 `;
 
-const Header = ({ theEvent, loading }) => {
+const Header = ({ theEvent, loading, pathname }) => {
     return (
         <StyledGradientBg>
             <Container>
                 <Row className="wrapper">
                     <FullWidthCol>
                         {loading ? null : <Content theEvent={theEvent} />}
-                        <Navigation routes={routes} mobileLabel="Event" />
+                        <Navigation routes={getRoutes(theEvent, pathname)} mobileLabel="Event" />
                     </FullWidthCol>
                 </Row>
             </Container>

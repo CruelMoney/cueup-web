@@ -17,7 +17,7 @@ import { eventStates } from '../../../../constants/constants';
 
 const required = (msg) => (val) => (!val ? msg : null);
 
-const Requirements = React.forwardRef(({ theEvent, translate, history }, ref) => {
+const Requirements = React.forwardRef(({ theEvent, translate, history, pathname }, ref) => {
     const [update, { loading }] = useMutation(UPDATE_EVENT);
     const [cancelationPopup, setCancelationPopup] = useState();
 
@@ -183,9 +183,9 @@ const Requirements = React.forwardRef(({ theEvent, translate, history }, ref) =>
                     type="button"
                     label="Export all data"
                     buttonText="export"
-                    onClick={(_) =>
-                        window.alert("We'll send you an email when your data is ready.")
-                    }
+                    onClick={(_) => {
+                        window.alert("We'll send you an email when your data is ready.");
+                    }}
                 />
             </SettingsSection>
 
@@ -198,7 +198,7 @@ const Requirements = React.forwardRef(({ theEvent, translate, history }, ref) =>
                     <CancelationPopup
                         onCancelled={() => {
                             setCancelationPopup(false);
-                            history.push('overview');
+                            history.push(pathname + '/overview');
                         }}
                         theEvent={theEvent}
                         hide={() => setCancelationPopup(false)}

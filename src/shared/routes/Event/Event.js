@@ -128,7 +128,7 @@ const Content = React.memo((props) => {
         <div>
             <ScrollToTop animate top={280} />
 
-            <EventHeader theEvent={theEvent} loading={loading} />
+            <EventHeader theEvent={theEvent} loading={loading} pathname={match.url} />
 
             <Container>
                 <ContainerRow>
@@ -174,7 +174,9 @@ const TransitionComponent = ({ style, item, match, eventProps, registerHeight })
                 />
                 <Route
                     path={match.path + '/requirements'}
-                    render={(props) => <Requirements {...props} {...eventProps} />}
+                    render={(props) => (
+                        <Requirements {...props} {...eventProps} pathname={match.url} />
+                    )}
                 />
                 <Route
                     path={match.path + '/review'}

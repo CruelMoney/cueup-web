@@ -26,6 +26,8 @@ const Booking = ({ user, loading, translate }) => {
 
     const [form, setForm] = useState({
         guestsCount: 80,
+        startMinute: 21 * 60,
+        endMinute: 27 * 60,
         speakers: false,
         lights: false,
     });

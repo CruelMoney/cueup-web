@@ -114,8 +114,6 @@ export const useCreateEvent = (theEvent) => {
     let innerError;
 
     const doMutate = async (variables) => {
-        console.log('doMutate');
-
         try {
             if (!__DEV__) {
                 tracker.trackEventPosted();
