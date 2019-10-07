@@ -12,6 +12,7 @@ const SuggestionList = ({
     onFocus,
     noShadow,
     forceHeight,
+    disableInput,
     ...props
 }) => {
     const [internalValue, setInternalValue] = useState(value || defaultValue);
@@ -61,7 +62,7 @@ const SuggestionList = ({
             <Input
                 type="text"
                 value={internalValue}
-                onChange={handleChange}
+                onChange={!disableInput && handleChange}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 blurOnEnter={false}

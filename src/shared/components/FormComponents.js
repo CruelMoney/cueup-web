@@ -114,7 +114,7 @@ const DeleteFileButton = styled.button`
     font-weight: 600;
 `;
 
-const FormattedText = ({ defaultValue, ...props }) => {
+const FormattedText = ({ defaultValue, save, ...props }) => {
     const prefix = 'https://cueup.io/user/';
 
     const [value, setValue] = useState(defaultValue);
@@ -134,6 +134,7 @@ const FormattedText = ({ defaultValue, ...props }) => {
             {...props}
             type="text"
             onChange={(e) => updateVal(e.target.value)}
+            onBlur={() => save(value)}
             value={prefix + value}
         />
     );
