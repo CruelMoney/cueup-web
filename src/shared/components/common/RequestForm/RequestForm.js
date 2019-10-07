@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import moment from 'moment-timezone';
 import styled from 'styled-components';
 import { Card, CardShadow, Col, TeritaryButton, Hr, LinkButton } from 'components/Blocks';
-import { useForm } from 'components/FormComponents';
+import { useForm, LabelHalf, InputRow } from 'components/FormComponents';
 import { BodySmall, TitleClean } from 'components/Text';
 import { useCreateEvent } from 'actions/EventActions';
 import Login from '../Login';
@@ -51,6 +51,7 @@ const MainForm = ({ translate, initialCity }) => {
 
     const next = (data) => {
         const errors = runValidations();
+        console.log({ errors });
         if (errors.length === 0) {
             handleChange(data);
             setActiveStep((s) => s + 1);
@@ -201,11 +202,17 @@ export const RequestSection = styled.section`
     margin-bottom: 15px;
     margin-top: 15px;
     width: 100%;
-    &:first-child {
-        margin-top: 0px;
-    }
     > ${BodySmall} {
         margin-top: 6px;
+    }
+    ${InputRow} {
+        margin-right: -10px;
+    }
+    ${LabelHalf} {
+        margin-bottom: 0;
+        margin-right: 10px;
+        min-width: calc(50% - 10px);
+        width: calc(50% - 10px);
     }
 `;
 

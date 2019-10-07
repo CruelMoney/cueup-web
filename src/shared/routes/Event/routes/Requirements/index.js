@@ -210,7 +210,7 @@ const Requirements = React.forwardRef(({ theEvent, translate, history }, ref) =>
 });
 
 const CancelationPopup = ({ theEvent, hide, onCancelled }) => {
-    const [reason, setReason] = useState(null);
+    const [reason, setReason] = useState();
     const [mutate, { loading: cancelling }] = useMutation(CANCEL_EVENT, {
         variables: {
             reason,

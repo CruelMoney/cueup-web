@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import moment from 'moment-timezone';
 import { useCheckDjAvailability } from 'actions/EventActions';
 import addTranslate from 'components/higher-order/addTranslate';
@@ -21,7 +21,6 @@ const Step1 = ({
 }) => {
     const [showDatePickter, setShowDatePickter] = useState(false);
     const [message, setMessage] = useState();
-
     const [check, { loading, error }] = useCheckDjAvailability(form);
 
     const dateChanged = (date) => {

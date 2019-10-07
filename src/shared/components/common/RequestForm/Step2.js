@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { TeritaryButton, Row, PrimaryButton } from 'components/Blocks';
-import { Input, Label, useValidation } from 'components/FormComponents';
+import { TeritaryButton, Row, PrimaryButton, RowWrap } from 'components/Blocks';
+import { Input, Label, useValidation, LabelHalf, InputRow } from 'components/FormComponents';
 import addTranslate from 'components/higher-order/addTranslate';
 import { BodySmall } from 'components/Text';
 import ToggleButtonHandler from '../ToggleButtonHandler';
@@ -19,12 +19,15 @@ const Step2 = ({
     registerValidation,
     unregisterValidation,
 }) => {
+    const genreErrorRef = useRef();
+
     const { error, runValidation } = useValidation({
         registerValidation: registerValidation('genres'),
         unregisterValidation: unregisterValidation('genres'),
         validation: (genres) => {
             return !genres || genres.length === 0 ? 'Please select genres' : null;
         },
+        ref: genreErrorRef,
     });
 
     const handleGenreSelection = (letCueupDecide) => {
@@ -52,25 +55,28 @@ const Step2 = ({
                 />
             </RequestSection>
             <RequestSection>
-                <Label>{translate('request-form.step-2.event-rider')}</Label>
-                <BodySmall style={{ marginBottom: '10px' }}>
-                    {translate('request-form.step-2.event-rider-description')}
-                </BodySmall>
-                <Row between>
-                    <ToggleButton
-                        onClick={(speakers) => handleChange({ speakers })}
-                        label={translate('speakers')}
-                        rounded
-                        active={form.speakers}
-                    />
-
-                    <ToggleButton
-                        onClick={(lights) => handleChange({ lights })}
-                        label={translate('lights')}
-                        rounded
-                        active={form.lights}
-                    />
-                </Row>
+                <InputRow>
+                    <LabelHalf>
+                        {translate('speakers')}
+                        <ToggleButton
+                            onClick={(speakers) => handleChange({ speakers })}
+                            rounded
+                            active={form.speakers}
+                            label={translate('Not required')}
+                            labelToggled={translate('Required')}
+                        />
+                    </LabelHalf>
+                    <LabelHalf>
+                        {translate('lights')}
+                        <ToggleButton
+                            rounded
+                            onClick={(lights) => handleChange({ lights })}
+                            label={translate('Not required')}
+                            labelToggled={translate('Required')}
+                            active={form.lights}
+                        />
+                    </LabelHalf>
+                </InputRow>
             </RequestSection>
             <RequestSection>
                 <Label>{translate('request-form.step-2.event-genres')} </Label>
@@ -96,7 +102,7 @@ const Step2 = ({
                         columns={4}
                     />
                 ) : null}
-                <Label>
+                <Label ref={genreErrorRef}>
                     <ErrorMessageApollo error={error} />
                 </Label>
             </RequestSection>
