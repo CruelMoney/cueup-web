@@ -62,10 +62,12 @@ export function postEvent(event, mutate, callback) {
 
 export const useCheckDjAvailability = ({ locationName, date }) => {
     const [error, setError] = useState();
-    const [mutate, { loading, error: apolloError }] = useMutation(CHECK_DJ_AVAILABILITY);
+    const [loading, setLoading] = useState(false);
+    const [mutate, { error: apolloError }] = useMutation(CHECK_DJ_AVAILABILITY);
 
     const check = async () => {
         try {
+            setLoading(true);
             if (!__DEV__) {
                 try {
                     tracker.trackCheckAvailability();
@@ -98,6 +100,8 @@ export const useCheckDjAvailability = ({ locationName, date }) => {
         } catch (err) {
             Sentry.captureException(err);
             setError(err.message);
+        } finally {
+            setLoading(false);
         }
     };
 

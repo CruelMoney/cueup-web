@@ -19,7 +19,7 @@ const required = (msg) => (val) => (!val ? msg : null);
 
 const Requirements = React.forwardRef(({ theEvent, translate, history }, ref) => {
     const [update, { loading }] = useMutation(UPDATE_EVENT);
-    const [cancelationPopup, setCancelationPopup] = useState(false);
+    const [cancelationPopup, setCancelationPopup] = useState();
 
     if (!theEvent) {
         return null;

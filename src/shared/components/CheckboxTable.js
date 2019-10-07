@@ -7,7 +7,7 @@ const TableRow = styled(Row)`
     height: 42px;
     align-items: center;
     p {
-        margin-bottom: 0;
+        margin: 0;
     }
     > *:first-child {
         flex: 1;

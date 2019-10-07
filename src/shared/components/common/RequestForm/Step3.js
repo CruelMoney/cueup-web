@@ -61,8 +61,8 @@ const Step3 = ({
                 </div>
                 <BodySmall style={{ marginTop: '15px' }}>
                     {translate('request-form.step-3.guests-description', {
-                        prefix: form.guests === 1000 ? translate('over') : translate('around'),
-                        amount: form.guests,
+                        prefix: form.guestsCount === 1000 ? translate('over') : translate('around'),
+                        amount: form.guestsCount,
                     })}
                 </BodySmall>
             </RequestSection>
