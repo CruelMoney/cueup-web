@@ -72,6 +72,7 @@ p {
     -moz-font-smoothing: antialiased !important;
     letter-spacing: 0.41px;
     line-height: 28px;
+    margin: 0;
     text-rendering: optimizelegibility !important;
 }
 a {
