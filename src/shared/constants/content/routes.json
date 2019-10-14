@@ -13,53 +13,26 @@
     "/blog": ["/blog", "/dk/blog"],
     "/signup": ["/signup", "/dk/tilmeld"],
     "/book-dj": ["/book-dj", "/dk/book-dj"],
-    "/book-dj/denmark": ["/book-dj/denmark", "/dk/book-dj/danmark"],
-    "/book-dj/denmark/copenhagen": [
-      "/book-dj/denmark/copenhagen",
-      "/dk/book-dj/danmark/koebenhavn"
-    ],
-    "/book-dj/denmark/aarhus": [
-      "/book-dj/denmark/aarhus",
-      "/dk/book-dj/danmark/aarhus"
-    ],
-    "/book-dj/denmark/odense": [
-      "/book-dj/denmark/odense",
-      "/dk/book-dj/danmark/odense"
-    ],
+    "/locations": ["/locations", "/dk/locations"],
     "/how-it-works": ["/how-it-works", "/dk/saadan-virker-det"],
     "/user": ["/user", "/dk/user"],
     "/user/signup": ["/user/signup", "/dk/user/tilmeld"],
     "/user/:permalink": ["/user/:permalink", "/dk/user/:permalink"],
     "/user/:username": ["/user/${ username }", "/dk/user/${ username }"],
-    "/user/:username/profile": [
-      "/user/${ username }/profile",
-      "/dk/user/${ username }/profile"
-    ],
+    "/user/:username/profile": ["/user/${ username }/profile", "/dk/user/${ username }/profile"],
     "/user/:username/reviews": [
       "/user/${ username }/reviews",
       "/dk/user/${ username }/anmeldelser"
     ],
-    "/user/:username/gigs": [
-      "/user/${ username }/gigs",
-      "/dk/user/${ username }/gigs"
-    ],
-    "/user/:username/book": [
-      "/user/${ username }/book",
-      "/dk/user/${ username }/book"
-    ],
-    "/user/:username/events": [
-      "/user/${ username }/events",
-      "/dk/user/${ username }/events"
-    ],
+    "/user/:username/gigs": ["/user/${ username }/gigs", "/dk/user/${ username }/gigs"],
+    "/user/:username/book": ["/user/${ username }/book", "/dk/user/${ username }/book"],
+    "/user/:username/events": ["/user/${ username }/events", "/dk/user/${ username }/events"],
     "/user/:username/preferences": [
       "/user/${ username }/preferences",
       "/dk/user/${ username }/indstillinger"
     ],
     "/event/:id/:hash": ["/event/:id/:hash", "/dk/event/:id/:hash"],
-    "/event/:id/:hash/info": [
-      "/event/${ id }/${ hash }/info",
-      "/dk/event/${ id }/${ hash }/info"
-    ],
+    "/event/:id/:hash/info": ["/event/${ id }/${ hash }/info", "/dk/event/${ id }/${ hash }/info"],
     "/event/:id/:hash/overview": [
       "/event/${ id }/${ hash }/overview",
       "/dk/event/${ id }/${ hash }/overview"
@@ -72,10 +45,7 @@
       "/event/${ id }/${ hash }/review",
       "/dk/event/${ id }/${ hash }/review"
     ],
-    "/event/:id/:hash/user": [
-      "/event/${ id }/${ hash }/user",
-      "/dk/event/${ id }/${ hash }/user"
-    ],
+    "/event/:id/:hash/user": ["/event/${ id }/${ hash }/user", "/dk/event/${ id }/${ hash }/user"],
     "/gig/:id": ["/gig/:id", "/dk/gig/:id"],
     "/gig/:id/info": ["/gig/:id/info", "/dk/gig/:id/info"],
     "/gig/:id/review": ["/gig/:id/review", "/dk/gig/:id/review"],

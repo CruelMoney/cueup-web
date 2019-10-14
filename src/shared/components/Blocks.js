@@ -54,8 +54,16 @@ export const ShowBelow = styled.div`
 export const Row = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: ${({ center, right, between }) =>
-        center ? 'center' : right ? 'flex-end' : between ? 'space-between' : 'flex-start'};
+    justify-content: ${({ center, right, between, around }) =>
+        center
+            ? 'center'
+            : right
+            ? 'flex-end'
+            : between
+            ? 'space-between'
+            : around
+            ? 'space-around'
+            : 'flex-start'};
     align-items: ${({ middle }) => (middle ? 'center' : 'flex-start')};
     > button,
     > a {

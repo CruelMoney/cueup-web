@@ -160,25 +160,23 @@ class footer extends Component {
                             </ul>
                         </div>
                         <div>
-                            <h4>{translate('top-locations')}</h4>
+                            <Link to={translate('routes./book-dj')}>
+                                <h4>{translate('top-locations')}</h4>
+                            </Link>
                             <ul>
                                 {/* <li>
                   <Link to={translate("/">Worldwide</Link>
                 </li> */}
                                 <li>
-                                    <Link to={translate('routes./book-dj/denmark/copenhagen')}>
+                                    <Link to={'/book-dj/denmark/copenhagen'}>
                                         {translate('copenhagen')}
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to={translate('routes./book-dj/denmark/aarhus')}>
-                                        Århus
-                                    </Link>
+                                    <Link to={'/book-dj/denmark/aarhus'}>Århus</Link>
                                 </li>
                                 <li>
-                                    <Link to={translate('routes./book-dj/denmark/odense')}>
-                                        Odense
-                                    </Link>
+                                    <Link to={'/book-dj/denmark/odense'}>Odense</Link>
                                 </li>
                                 {this.props.currentLanguage === 'en' && (
                                     <li>

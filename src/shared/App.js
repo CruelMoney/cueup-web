@@ -19,7 +19,7 @@ import Signup from './routes/Signup';
 import User from './routes/User';
 import Faq from './routes/Faq';
 import Terms from './routes/Terms';
-import LocationLanding from './routes/Location';
+import LocationLanding, { LazyLocationsOverview } from './routes/Location';
 import NotFound from './routes/NotFound';
 import defaultImage from './assets/images/default.png';
 import defaultImageDa from './assets/images/default_da.png';
@@ -198,6 +198,7 @@ const RouteWrapper = memo(({ translate, cssLocation }) => {
                         path={translate('routes./book-dj') + '/:country/:city?'}
                         component={LocationLanding}
                     />
+                    <Route path={translate('routes./book-dj')} component={LazyLocationsOverview} />
                     <Route path={translate('routes./blog')} component={Blog} />
                     <Route path={translate('routes./reset-password')} component={ResetPassword} />
 
