@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { IbanElement } from 'react-stripe-elements';
-import { Label } from '../../FormComponents';
 import './index.css';
+import styled from 'styled-components';
+import { inputStyle } from 'components/Blocks';
+import { InputLabel } from '../../FormComponents';
 
 const IbanField = ({ onChange, label, children, onReady }) => {
     const [errors, setErrors] = useState([]);
@@ -15,43 +17,50 @@ const IbanField = ({ onChange, label, children, onReady }) => {
     };
 
     return (
-        <Label>
+        <InputLabel>
             {label}
-            <IbanElement
-                supportedCountries={['SEPA']}
-                placeholderCountry={'DK'}
-                style={{
-                    base: {
-                        'color': '#32325d',
-                        'fontFamily': '"AvenirNext-Regular", Helvetica, sans-serif',
-                        'fontSmoothing': 'antialiased',
-                        'fontSize': '14px',
-                        '::placeholder': {
-                            color: '#BBBBBB',
+
+            <Wrapper>
+                <IbanElement
+                    supportedCountries={['SEPA']}
+                    placeholderCountry={'DK'}
+                    style={{
+                        base: {
+                            'color': '#32325d',
+                            'fontFamily': '"AvenirNext-Regular", Helvetica, sans-serif',
+                            'fontSmoothing': 'antialiased',
+                            'fontSize': '18px',
+                            'lineHeight': '40px',
+                            '::placeholder': {
+                                color: '#BBBBBB',
+                            },
                         },
-                    },
-                    invalid: {
-                        color: '#f44336',
-                        iconColor: '#f44336',
-                    },
-                }}
-                // onBlur={this.onBlur}
-                // onFocus={(_) =>
-                //     this.setState({
-                //         focused: true,
-                //     })
-                // }
-                classes={{
-                    focus: 'focused',
-                    empty: 'empty',
-                    invalid: 'invalid',
-                }}
-                onChange={onChangeHandler}
-                onReady={onReady}
-            />
-            {children}
-        </Label>
+                        invalid: {
+                            color: '#f44336',
+                            iconColor: '#f44336',
+                        },
+                    }}
+                    // onBlur={this.onBlur}
+                    // onFocus={(_) =>
+                    //     this.setState({
+                    //         focused: true,
+                    //     })
+                    // }
+                    classes={{
+                        focus: 'focused',
+                        empty: 'empty',
+                        invalid: 'invalid',
+                    }}
+                    onChange={onChangeHandler}
+                    onReady={console.log}
+                />
+            </Wrapper>
+        </InputLabel>
     );
 };
 
+const Wrapper = styled.div`
+    ${inputStyle}
+    padding-left: 9px;
+`;
 export default IbanField;

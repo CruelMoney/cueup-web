@@ -4,7 +4,7 @@ import { getTranslate, getActiveLanguage } from 'react-localize-redux';
 import { Elements, StripeProvider, injectStripe } from 'react-stripe-elements';
 import { Query, Mutation } from 'react-apollo';
 import { Title, BodySmall } from 'components/Text';
-import { Input, InputRow } from 'components/FormComponents';
+import { Input, InputRow, Label } from 'components/FormComponents';
 import CurrencySelector from 'components/CurrencySelector';
 import { SmartButton } from 'components/Blocks';
 import { Environment } from '../../constants/constants';
@@ -152,25 +152,13 @@ const MainForm = ({ user, bankAccount, translate }) => {
         <InputRow style={{ marginTop: '24px' }}>
             <CountrySelector
                 noShadow
+                forceHeight
                 defaultValue={bankAccountParsed.countryCode}
                 label={translate('country')}
                 name="country"
                 validate={['required']}
                 placeholder={translate('country')}
                 onChange={setCountry}
-                forceHeight
-            />
-
-            <CurrencySelector
-                noShadow
-                key={country}
-                label={translate('currency')}
-                name="currency"
-                validate={['required']}
-                value={inIndonesia ? 'IDR' : bankAccountParsed.currency}
-                disabled={inIndonesia}
-                placeholder={inIndonesia ? undefined : translate('currency')}
-                forceHeight
             />
 
             <Input
@@ -212,6 +200,17 @@ const MainForm = ({ user, bankAccount, translate }) => {
                 </>
             ) : (
                 <>
+                    <CurrencySelector
+                        noShadow
+                        forceHeight={200}
+                        key={country}
+                        label={translate('currency')}
+                        name="currency"
+                        validate={['required']}
+                        value={inIndonesia ? 'IDR' : bankAccountParsed.currency}
+                        disabled={inIndonesia}
+                        placeholder={inIndonesia ? undefined : translate('currency')}
+                    />
                     <IbanField
                         label={translate('payout.IBAN-number')}
                         onChange={setBankName}
@@ -220,7 +219,7 @@ const MainForm = ({ user, bankAccount, translate }) => {
                     />
 
                     {typeof bankName === 'string' && (
-                        <Input disabled label={translate('Bank')} value={bankName} />
+                        <Label style={{ marginTop: '-20px' }}>{bankName}</Label>
                     )}
                 </>
             )}

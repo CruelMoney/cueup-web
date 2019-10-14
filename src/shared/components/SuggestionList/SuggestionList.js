@@ -14,6 +14,8 @@ const SuggestionList = ({
     noShadow,
     forceHeight,
     disableInput,
+    half,
+    style,
     ...props
 }) => {
     const getDefaultValue = (v) => {
@@ -75,8 +77,22 @@ const SuggestionList = ({
         displayValue = displayValue.label;
     }
 
+    // hide caret
+    if (disableInput) {
+        style = {
+            ...style,
+            color: 'transparent',
+            cursor: 'pointer',
+            textShadow: '0 0 0 black',
+        };
+    }
+
     return (
-        <Wrapper active={focused} onKeyDown={handleKeyPress} className="suggestionList">
+        <Wrapper
+            active={focused}
+            onKeyDown={handleKeyPress}
+            className={'suggestionList' + (half ? ' half' : '')}
+        >
             <Input
                 type="text"
                 value={displayValue}
@@ -84,6 +100,7 @@ const SuggestionList = ({
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 blurOnEnter={false}
+                style={style}
                 {...props}
             />
             {focused && suggestions.length > 0 && (

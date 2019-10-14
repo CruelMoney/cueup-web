@@ -70,7 +70,8 @@ export const InputRow = styled(Row)`
         margin-right: 36px;
         align-self: flex-start;
     }
-    ${LabelHalf} {
+    ${LabelHalf},
+    .half {
         margin-right: 36px;
         min-width: calc(50% - 36px);
         width: calc(50% - 36px);
