@@ -11,7 +11,7 @@ const CountrySelector = ({ ...props }) => {
 
 export default CountrySelector;
 
-export const BankSelector = ({ initialValue, placeholder, ...props }) => {
+export const BankSelector = ({ placeholder, ...props }) => {
     return (
         <Query query={AVAILABLE_BANKS} variables={{ countryCode: 'ID' }} ssr={false}>
             {({ loading, data }) => {
@@ -26,7 +26,6 @@ export const BankSelector = ({ initialValue, placeholder, ...props }) => {
                 return (
                     <SearchableSuggestionList
                         {...props}
-                        defaultValue={initialValue}
                         suggestions={options}
                         disabled={loading}
                         placeholder={loading ? 'Loading' : placeholder}

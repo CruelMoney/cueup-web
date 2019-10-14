@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import moment from 'moment-timezone';
 import { useCheckDjAvailability } from 'actions/EventActions';
 import addTranslate from 'components/higher-order/addTranslate';
 import { BodySmall } from 'components/Text';
 import { Row, SmartButton } from '../../Blocks';
-import { Input, useForm } from '../../FormComponents';
+import { Input } from '../../FormComponents';
 import LocationSelector from '../LocationSelectorSimple';
 import DatePicker from '../Datepicker';
 import ErrorMessageApollo from '../ErrorMessageApollo';

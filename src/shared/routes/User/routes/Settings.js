@@ -361,8 +361,14 @@ const PayoutPopup = ({ user, hasPayout }) => {
                 label="Payout information"
                 buttonText={'update'}
             />
-            <Popup showing={showing} onClickOutside={(_) => setShowing(false)} width={'450px'}>
-                <PayoutForm color={'#31daff'} isUpdate={hasPayout} user={user} />
+            <Popup showing={showing} onClickOutside={(_) => setShowing(false)} width={'500px'}>
+                <PayoutForm
+                    color={'#31daff'}
+                    isUpdate={hasPayout}
+                    user={user}
+                    onCancel={() => setShowing(false)}
+                    onSubmitted={() => setShowing(false)}
+                />
             </Popup>
         </>
     );
