@@ -32,21 +32,25 @@ const Star = ({ active, size, onHover, ...props }) => {
     );
 };
 
-const Rating = ({ onChange, size, style, ...props }) => {
+const Rating = ({ onChange, disabled, size = 'normal', style, ...props }) => {
     const [original, setOriginal] = useState(props.rating || 0);
     const [rating, setRating] = useState(props.rating || 0);
 
     const onClick = (idx) => {
-        setOriginal(idx + 1);
-        setRating(idx + 1);
-        onChange && onChange(idx + 1);
+        if (!disabled) {
+            setOriginal(idx + 1);
+            setRating(idx + 1);
+            onChange && onChange(idx + 1);
+        }
     };
 
     const onHover = (idx) => (hovering) => {
-        if (hovering) {
-            setRating(idx + 1);
-        } else {
-            setRating(original);
+        if (!disabled) {
+            if (hovering) {
+                setRating(idx + 1);
+            } else {
+                setRating(original);
+            }
         }
     };
 
@@ -61,7 +65,7 @@ const Rating = ({ onChange, size, style, ...props }) => {
     ));
 
     return (
-        <div className="rating" style={style}>
+        <div className={'rating' + disabled ? ' disabled ' : ''} style={style}>
             {stars}
         </div>
     );

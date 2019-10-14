@@ -1559,17 +1559,15 @@ svg {
     display: flex;
 }
 .ratingStar {
-    padding-left: 3px;
-    padding-right: 3px;
+    padding-left: 1px;
+    padding-right: 1px;
 }
-.rating .ratingStar:first-child {
-    padding-left: 0px;
-}
+
 .ratingStar {
     transition: transform 0.1s ease;
 }
 
-.ratingStar.active:active {
+.rating:not(.disabled) .ratingStar.active:active {
     transform: translateX(0px) translateY(0px) scale(1.4);
 }
 
