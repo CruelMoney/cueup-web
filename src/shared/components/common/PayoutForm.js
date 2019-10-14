@@ -3,21 +3,17 @@ import { connect } from 'react-redux';
 import { getTranslate, getActiveLanguage } from 'react-localize-redux';
 import { Elements, StripeProvider, injectStripe } from 'react-stripe-elements';
 import { Query, Mutation } from 'react-apollo';
-import { Title, Body } from 'components/Text';
+import { Title, BodySmall } from 'components/Text';
 import { Input, InputRow } from 'components/FormComponents';
+import CurrencySelector from 'components/CurrencySelector';
+import { SmartButton } from 'components/Blocks';
 import { Environment } from '../../constants/constants';
 import { USER_BANK_ACCOUNT, UPDATE_USER_PAYOUT } from '../gql';
-import Form from './Form-v2';
-import SubmitButton from './SubmitButton';
-import InfoPopup from './InfoPopup';
 import IbanField from './IbanField';
-import CountrySelector, {
-    ConnectedCurrencySelector,
-    ConnectedBankSelector,
-} from './CountrySelector';
+import CountrySelector, { BankSelector } from './CountrySelector';
 import { LoadingIndicator } from './LoadingPlaceholder';
 import { getErrorMessage } from './ErrorMessageApollo';
-import PhoneInput from './PhoneInput';
+import { PhoneInputNew } from './PhoneInput';
 
 const getStripeData = async ({ country, stripe, name, currency }) => {
     const tokenData = {
@@ -75,17 +71,9 @@ const PayoutForm = ({ user, isUpdate, translate, stripe }) => {
         <div className="payout-form">
             <Mutation mutation={UPDATE_USER_PAYOUT}>
                 {(mutate) => (
-                    <Form
-                        formValidCallback={() => {
-                            setValidity(true);
-                        }}
-                        formInvalidCallback={() => {
-                            setValidity(false);
-                        }}
-                        name="payout-form"
-                    >
+                    <form>
                         <Title>{translate('Payout')}</Title>
-                        <Body>{translate('payout.description')}</Body>
+                        <BodySmall>{translate('payout.description')}</BodySmall>
 
                         <Query query={USER_BANK_ACCOUNT} ssr={false}>
                             {({ data, loading }) => {
@@ -98,7 +86,11 @@ const PayoutForm = ({ user, isUpdate, translate, stripe }) => {
                                 }
 
                                 if (!data || !data.me) {
-                                    return null;
+                                    data = {
+                                        me: {
+                                            userMetadata: { bankAccount: {} },
+                                        },
+                                    };
                                 }
 
                                 const {
@@ -116,17 +108,16 @@ const PayoutForm = ({ user, isUpdate, translate, stripe }) => {
                                         />
                                         <div className="row  center">
                                             <div className="col-xs-6">
-                                                <SubmitButton
-                                                    glow
+                                                <SmartButton
+                                                    loading={loading}
                                                     type="submit"
-                                                    active={valid}
+                                                    disabled={!valid}
                                                     onClick={submit(mutate)}
-                                                    name="save_payout_info"
                                                 >
                                                     {isUpdate
                                                         ? translate('update')
                                                         : translate('save')}
-                                                </SubmitButton>
+                                                </SmartButton>
                                             </div>
                                         </div>
 
@@ -141,7 +132,7 @@ const PayoutForm = ({ user, isUpdate, translate, stripe }) => {
                                 );
                             }}
                         </Query>
-                    </Form>
+                    </form>
                 )}
             </Mutation>
         </div>
@@ -149,19 +140,41 @@ const PayoutForm = ({ user, isUpdate, translate, stripe }) => {
 };
 
 const MainForm = ({ user, bankAccount, translate }) => {
-    const {
-        userMetadata: { phone, firstName, lastName },
-    } = user;
+    const { userMetadata } = user;
+    const { phone, firstName, lastName } = userMetadata || {};
     const initialName = `${firstName} ${lastName}`;
     const bankAccountParsed = bankAccount || {};
     const [country, setCountry] = useState(bankAccountParsed.countryCode);
     const [bankName, setBankName] = useState(null);
 
     const inIndonesia = country === 'ID';
-
     return (
-        <InputRow>
+        <InputRow style={{ marginTop: '24px' }}>
+            <CountrySelector
+                noShadow
+                defaultValue={bankAccountParsed.countryCode}
+                label={translate('country')}
+                name="country"
+                validate={['required']}
+                placeholder={translate('country')}
+                onChange={setCountry}
+                forceHeight
+            />
+
+            <CurrencySelector
+                noShadow
+                key={country}
+                label={translate('currency')}
+                name="currency"
+                validate={['required']}
+                value={inIndonesia ? 'IDR' : bankAccountParsed.currency}
+                disabled={inIndonesia}
+                placeholder={inIndonesia ? undefined : translate('currency')}
+                forceHeight
+            />
+
             <Input
+                half
                 label={translate('payout.account-name')}
                 value={bankAccountParsed.accountHolderName || initialName}
                 name="name"
@@ -170,33 +183,24 @@ const MainForm = ({ user, bankAccount, translate }) => {
                 placeholder={translate('Full name')}
             />
 
-            <PhoneInput
+            <PhoneInputNew
+                half
                 label={translate('payout.account-phone')}
                 value={phone}
                 name="phone"
                 validate={['required']}
                 placeholder={translate('Phone')}
             />
-            <CountrySelector
-                value={bankAccountParsed.countryCode}
-                label={translate('country')}
-                name="country"
-                validate={['required']}
-                placeholder={translate('country')}
-                onChange={setCountry}
-            />
 
-            <ConnectedCurrencySelector
-                key={country}
-                label={translate('currency')}
-                name="currency"
-                validate={['required']}
-                value={inIndonesia ? 'IDR' : bankAccountParsed.currency}
-                disabled={inIndonesia}
-                placeholder={inIndonesia ? undefined : translate('currency')}
-            />
             {inIndonesia ? (
                 <>
+                    <BankSelector
+                        noShadow
+                        label={translate('Bank')}
+                        value={bankAccountParsed.bankCode}
+                        placeholder={'Bank name'}
+                        forceHeight={200}
+                    />
                     <Input
                         label={translate('payout.account-number')}
                         name="bankAccountNumber"
@@ -204,14 +208,6 @@ const MainForm = ({ user, bankAccount, translate }) => {
                         type="tel"
                         fullWidth={false}
                         placeholder={'000000000'}
-                    />
-
-                    <ConnectedBankSelector
-                        label={translate('Bank')}
-                        value={bankAccountParsed.bankCode}
-                        name="bankCode"
-                        validate={['required']}
-                        placeholder={' '}
                     />
                 </>
             ) : (
@@ -221,9 +217,7 @@ const MainForm = ({ user, bankAccount, translate }) => {
                         onChange={setBankName}
                         name="iban"
                         validate={['required']}
-                    >
-                        <InfoPopup info={translate('payout.IBAN-description')} />
-                    </IbanField>
+                    />
 
                     {typeof bankName === 'string' && (
                         <Input disabled label={translate('Bank')} value={bankName} />
@@ -263,3 +257,5 @@ function mapStateToProps(state, ownprops) {
 }
 
 export default connect(mapStateToProps)(StripeWrapper);
+
+export const DisconnectedPayoutForm = StripeWrapper;

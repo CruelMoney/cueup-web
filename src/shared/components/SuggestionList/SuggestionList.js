@@ -1,10 +1,11 @@
+import { isBoolean } from 'util';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Input } from '../FormComponents';
 import { inputStyle } from '../Blocks';
 
 const SuggestionList = ({
-    suggestions = [],
+    suggestions = [], // can be either strings or {label, value}
     value,
     defaultValue,
     onChange,
@@ -15,13 +16,24 @@ const SuggestionList = ({
     disableInput,
     ...props
 }) => {
-    const [internalValue, setInternalValue] = useState(value || defaultValue);
+    const getDefaultValue = (v) => {
+        if (!suggestions || !suggestions.length) {
+            return v;
+        }
+        if (!suggestions[0].value) {
+            return v;
+        }
+        return suggestions.find((s) => s.value === v);
+    };
+
+    const [internalValue, setInternalValue] = useState(getDefaultValue(value || defaultValue));
     const [focused, setFocused] = useState(false);
     const [suggestionCursor, setSuggestionCursor] = useState(-1);
 
-    const handleChange = (v) => {
+    const handleChange = (v, wasSelected) => {
         setInternalValue(v);
-        onChange && onChange(v);
+        const selection = v ? v.value || v : null;
+        onChange && onChange(selection, wasSelected);
     };
 
     const handleBlur = () => {
@@ -44,7 +56,7 @@ const SuggestionList = ({
 
         if (isEnter) {
             e.preventDefault();
-            handleChange(suggestions[suggestionCursor]);
+            handleChange(suggestions[suggestionCursor], true);
             setFocused(false);
             return false;
         }
@@ -57,11 +69,17 @@ const SuggestionList = ({
         }
     };
 
+    let displayValue = internalValue;
+
+    if (displayValue && displayValue.label) {
+        displayValue = displayValue.label;
+    }
+
     return (
-        <Wrapper onKeyDown={handleKeyPress}>
+        <Wrapper active={focused} onKeyDown={handleKeyPress} className="suggestionList">
             <Input
                 type="text"
-                value={internalValue}
+                value={displayValue}
                 onChange={!disableInput && handleChange}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
@@ -75,9 +93,9 @@ const SuggestionList = ({
                             key={idx}
                             active={suggestionCursor === idx}
                             onMouseEnter={() => setSuggestionCursor(idx)}
-                            onMouseDown={() => handleChange(s)}
+                            onMouseDown={() => handleChange(s, true)}
                         >
-                            {s}
+                            {s.label || s}
                         </Suggestion>
                     ))}
                 </List>
@@ -86,8 +104,45 @@ const SuggestionList = ({
     );
 };
 
+export const SearchableSuggestionList = ({ suggestions, onBlur, onChange, ...props }) => {
+    const [filter, setFilter] = useState();
+
+    if (filter) {
+        const lowered = filter.toLowerCase();
+        suggestions = suggestions.filter((s) => {
+            if (s.label) {
+                return s.label.toLowerCase().includes(lowered);
+            }
+            return s.toLowerCase().includes(lowered);
+        });
+    }
+
+    const changeHandler = (value, wasSelected) => {
+        setFilter(value);
+        if (wasSelected) {
+            onChange && onChange(value);
+        }
+    };
+
+    const blurHandler = () => {
+        setFilter(null);
+        onBlur && onBlur();
+    };
+
+    return (
+        <SuggestionList
+            {...props}
+            onChange={changeHandler}
+            suggestions={suggestions}
+            onBlur={blurHandler}
+        />
+    );
+};
+
 const Wrapper = styled.div`
     position: relative;
+    z-index: ${({ active }) => (active ? 2 : 1)};
+
     label,
     input {
         position: relative;
@@ -102,11 +157,13 @@ const List = styled.ul`
     right: -12px;
     margin: 0;
     padding: 0;
-    padding-top: 95px;
     background: white;
+    overflow-y: scroll;
     box-shadow: ${({ noShadow }) => (noShadow ? 'none' : '0px 1px 4px 0px rgba(0, 0, 0, 0.3)')};
-    height: ${({ forceHeight }) => (forceHeight ? '400px' : 'auto')};
+    height: ${({ forceHeight }) =>
+        forceHeight ? (isBoolean(forceHeight) ? '400px' : forceHeight + 'px') : 'auto'};
     border-radius: 4px;
+    ${({ forceHeight }) => (forceHeight ? 'margin-top' : 'padding-top')}: 95px;
 `;
 
 const Suggestion = styled.li`

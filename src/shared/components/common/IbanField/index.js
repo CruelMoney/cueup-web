@@ -1,16 +1,12 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { IbanElement } from 'react-stripe-elements';
-import connectToForm from '../../higher-order/connectToForm';
+import { Label } from '../../FormComponents';
 import './index.css';
 
-class IbanField extends Component {
-    state = {
-        error: '',
-        focused: false,
-    };
+const IbanField = ({ onChange, label, children, onReady }) => {
+    const [errors, setErrors] = useState([]);
 
-    onChange = (event) => {
-        const { setErrors, onChange } = this.props;
+    const onChangeHandler = (event) => {
         if (event.error) {
             setErrors([event.error.message]);
         } else {
@@ -18,73 +14,44 @@ class IbanField extends Component {
         }
     };
 
-    onBlur = (event) => {
-        this.setState({
-            focused: false,
-        });
-    };
+    return (
+        <Label>
+            {label}
+            <IbanElement
+                supportedCountries={['SEPA']}
+                placeholderCountry={'DK'}
+                style={{
+                    base: {
+                        'color': '#32325d',
+                        'fontFamily': '"AvenirNext-Regular", Helvetica, sans-serif',
+                        'fontSmoothing': 'antialiased',
+                        'fontSize': '14px',
+                        '::placeholder': {
+                            color: '#BBBBBB',
+                        },
+                    },
+                    invalid: {
+                        color: '#f44336',
+                        iconColor: '#f44336',
+                    },
+                }}
+                // onBlur={this.onBlur}
+                // onFocus={(_) =>
+                //     this.setState({
+                //         focused: true,
+                //     })
+                // }
+                classes={{
+                    focus: 'focused',
+                    empty: 'empty',
+                    invalid: 'invalid',
+                }}
+                onChange={onChangeHandler}
+                onReady={onReady}
+            />
+            {children}
+        </Label>
+    );
+};
 
-    render() {
-        const { errors } = this.props;
-        const { focused } = this.state;
-
-        return (
-            <div
-                className={
-                    'iban-wrapper text-field' +
-                    (focused ? ' focused ' : '') +
-                    (!!errors.length > 0 ? ' invalid ' : '')
-                }
-            >
-                <div className="input">
-                    <IbanElement
-                        supportedCountries={['SEPA']}
-                        placeholderCountry={'DK'}
-                        style={{
-                            base: {
-                                'color': '#32325d',
-                                'fontFamily': '"AvenirNext-Regular", Helvetica, sans-serif',
-                                'fontSmoothing': 'antialiased',
-                                'fontSize': '14px',
-                                '::placeholder': {
-                                    color: '#BBBBBB',
-                                },
-                            },
-                            invalid: {
-                                color: '#f44336',
-                                iconColor: '#f44336',
-                            },
-                        }}
-                        onBlur={this.onBlur}
-                        onFocus={(_) =>
-                            this.setState({
-                                focused: true,
-                            })
-                        }
-                        classes={{
-                            focus: 'focused',
-                            empty: 'empty',
-                            invalid: 'invalid',
-                        }}
-                        onChange={this.onChange}
-                        onReady={this.props.onReady}
-                    />
-                    {this.props.children}
-                </div>
-                <div className="underline">
-                    <hr />
-                    <hr className="animate" />
-                </div>
-                <div className="errors">
-                    {errors.map((error, i) => (
-                        <p className="error" key={i}>
-                            {error}
-                        </p>
-                    ))}
-                </div>
-            </div>
-        );
-    }
-}
-
-export default connectToForm(IbanField);
+export default IbanField;

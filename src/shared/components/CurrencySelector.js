@@ -1,6 +1,5 @@
 import React from 'react';
 import constants from '../constants/constants';
-import { Input } from './FormComponents';
 import SuggestionList from './SuggestionList';
 
 const CurrencySelector = ({ initialValue, ...props }) => {

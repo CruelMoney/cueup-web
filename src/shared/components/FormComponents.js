@@ -60,16 +60,21 @@ const LeftCol = styled(Col)`
 export const InputRow = styled(Row)`
     flex-wrap: wrap;
     margin-right: -36px;
+    .suggestionList {
+        min-width: calc(100% - 36px);
+        margin-right: 36px;
+        align-self: flex-start;
+    }
     ${InputLabel} {
         min-width: calc(100% - 36px);
         margin-right: 36px;
-        align-self: flex-end;
+        align-self: flex-start;
     }
     ${LabelHalf} {
         margin-right: 36px;
         min-width: calc(50% - 36px);
         width: calc(50% - 36px);
-        align-self: flex-end;
+        align-self: flex-start;
     }
 `;
 
