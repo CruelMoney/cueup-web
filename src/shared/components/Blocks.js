@@ -226,14 +226,13 @@ export const inputStyle = css`
         }
         return '#f6f8f9';
     }};
-    border-radius: 4px;
+    border-radius: 0.222em;
     border: none;
     outline: none;
-    font-family: 'AvenirNext-Regular', Arial, Helvetica, sans-serif;
-    font-size: 18px;
+    font-size: 1em;
     color: #122b48;
-    text-indent: 9px;
-    height: 40px;
+    text-indent: 0.5em;
+    height: 2.222em;
     -webkit-appearance: none;
     width: 100%;
     display: block;
@@ -243,6 +242,13 @@ export const inputStyle = css`
         const color = error ? '#D0021B' : '#FFC800';
         return show ? `inset 0 0 0 2px ${color}` : 'none';
     }};
+
+    ${({ big }) =>
+        big &&
+        `
+        font-size: 1.5em;
+    `}
+
     ::placeholder,
     ::-webkit-input-placeholder {
         color: #98a4b3;

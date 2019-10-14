@@ -4,7 +4,7 @@
 
 body {
     color: #32325d;
-    font-family: 'AvenirNext-Regular', sans-serif;
+    font-family: 'AvenirNext-Regular', Camphor, Open Sans, Segoe UI, sans-serif;
     -webkit-font-smoothing: antialiased;
     margin: 0;
     overflow-y: auto;
@@ -37,7 +37,6 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'AvenirNext-Regular', sans-serif;
     line-height: 1.2em;
     margin: 0;
 }
@@ -65,7 +64,6 @@ h4 {
     text-transform: uppercase;
 }
 p {
-    font-family: 'SourceSansPro-Regular', sans-serif;
     font-size: 17px;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased !important;
@@ -86,7 +84,6 @@ a:hover {
     text-decoration: none;
 }
 input {
-    font-family: 'AvenirNext-Regular', sans-serif !important;
     font-weight: normal;
 }
 label {
@@ -232,7 +229,6 @@ body.pre-header-content .navigation {
 }
 
 .mobileMenu .menu li {
-    font-family: 'SourceSansPro-Semibold', sans-serif;
     font-size: 20px;
     -webkit-margin-after: 0;
     -webkit-margin-before: 0;
@@ -348,7 +344,8 @@ body.pre-header-content .navigation {
     color: #ffffff;
     cursor: pointer;
     /* Login: */
-    font-family: 'SourceSansPro-Semibold', sans-serif;
+    font-family: 'AvenirNext-DemiBold', sans-serif;
+
     font-size: 17px;
     height: 30px;
     letter-spacing: 0.3px;
@@ -455,7 +452,6 @@ li .link-look {
 
 .copyright {
     color: #cfd7df;
-    font-family: 'SourceSansPro-Regular', sans-serif;
 }
 
 .footer-columns {
@@ -474,13 +470,12 @@ footer .link-look,
 footer .dropdown-selector-wrapper {
     color: #8998aa;
     fill: #8998aa;
-    font-family: 'SourceSansPro-Regular', sans-serif;
     font-size: 15px;
     letter-spacing: 0.75px;
     margin: auto;
 }
 footer .social a {
-    font-family: 'SourceSansPro-Bold', sans-serif;
+    font-family: 'AvenirNext-DemiBold', sans-serif;
 }
 footer h4 {
     font-size: 14px;
@@ -542,7 +537,7 @@ footer .social svg {
 }
 #preFooter .action-title {
     color: #32325d;
-    font-family: 'SourceSansPro-Regular', sans-serif;
+    font-family: 'AvenirNext-Medium', sans-serif;
     font-size: 30px;
     letter-spacing: 0.91px;
     margin: 0.75em 0;
@@ -1037,6 +1032,9 @@ input[type='file'] + label * {
 }
 #profile-picture-upload label {
     color: white;
+    display: flex;
+    justify-content: center;
+    margin: 0;
 }
 
 .picture-upload-component label span {
@@ -1285,7 +1283,7 @@ input[type='file'] + label * {
 
 .userNavigation a {
     color: #ffffff;
-    font-family: 'SourceSansPro-Semibold', sans-serif;
+    font-family: 'AvenirNext-DemiBold', sans-serif;
     font-size: 22px;
     line-height: 33px;
     text-transform: capitalize;
@@ -1647,7 +1645,6 @@ button {
 }
 
 .offer-card h4 {
-    font-family: 'AvenirNext-Regular', sans-serif;
     font-size: 18px;
     line-height: 15px;
     margin-top: 6px;
@@ -1912,7 +1909,7 @@ button.active .info-popup {
     display: inline-block;
     fill: #bbbbbb;
     /* Text */
-    font-family: 'SourceSansPro-Semibold', sans-serif;
+    font-family: 'AvenirNext-DemiBold', sans-serif;
     font-size: 16px;
     height: 40px;
     justify-content: center;
@@ -1921,7 +1918,7 @@ button.active .info-popup {
     padding: 10px 10px;
     position: relative;
     text-overflow: ellipsis;
-    text-transform: uppercase;
+    text-transform: capitalize;
     transition: all 0.1s ease-in-out;
     visibility: visible;
     white-space: nowrap;
@@ -2146,7 +2143,7 @@ table {
 .circle {
     border-radius: 100%;
     color: white;
-    font-family: 'SourceSansPro-Semibold', sans-serif;
+    font-family: 'AvenirNext-DemiBold', sans-serif;
     font-size: 30px;
     height: 60px;
     line-height: 60px;
@@ -2204,7 +2201,6 @@ table {
 }
 
 .signup h2 {
-    font-family: 'SourceSansPro-Regular', sans-serif;
     font-size: 30px;
     margin-bottom: 10px;
     margin-top: 3px;
@@ -2213,6 +2209,11 @@ table {
     color: #8998aa;
     position: relative;
     z-index: 1;
+}
+.signup li label,
+.signup li .toggle-button-handler {
+    display: block;
+    margin-top: 16px;
 }
 .errors {
     margin-bottom: 10px;
@@ -2252,14 +2253,12 @@ p.error {
 .terms .subtitle {
     border-bottom: 1px solid #f6f9fc;
     color: #8998aa;
-    font-family: 'AvenirNext-Regular', sans-serif;
     font-size: 18px;
     line-height: 26px;
     padding-bottom: 15px;
 }
 .terms h2 {
     color: #32325d;
-    font-family: 'SourceSansPro-Regular', sans-serif;
     font-size: 28px;
 }
 .terms section {
@@ -2878,6 +2877,7 @@ header .dj-card h4 {
 .dj-card p,
 header .dj-card p {
     -webkit-box-orient: vertical;
+    color: #4d6480;
     display: block; /* Fallback for non-webkit */
     display: -webkit-box;
     font-size: 12px;
@@ -2945,7 +2945,6 @@ header .dj-card p {
     border-width: 1px;
 }
 .location_faq .card h4 {
-    font-family: 'SourceSansPro-Regular', sans-serif;
     font-size: 20px;
     margin: 13px 0px !important;
     text-transform: none;
@@ -3032,101 +3031,6 @@ header .dj-card p {
     left: -10000vw;
     position: absolute;
     width: 100vw;
-}
-
-.preview-card {
-    align-items: center;
-    background-image: linear-gradient(135deg, rgb(49, 255, 245) 14%, rgb(0, 209, 255) 94%);
-    border-radius: 6px;
-    color: white;
-    display: flex;
-    fill: white;
-    flex-direction: column;
-    height: 250px;
-    justify-content: space-around;
-    overflow: hidden;
-    padding: 10px 0;
-    width: 477px;
-}
-.preview-card.large {
-    border-radius: 0;
-    height: 747px;
-    padding: 30px 0;
-    width: 1428px;
-}
-.preview-card.large .logo {
-    height: 130px;
-    width: 287px;
-}
-.preview-card .icon {
-    height: 16px;
-    width: 10px;
-}
-.preview-card.large .icon {
-    height: 40px;
-    width: 31px;
-}
-.preview-card.large button {
-    width: 130px;
-}
-.preview-card.large button {
-    border-radius: 20px !important;
-    font-size: 72px;
-    height: 144px;
-    width: 420px;
-}
-.preview-card h1 {
-    font-family: 'SourceSansPro-Bold', Camphor, Open Sans, Segoe UI, sans-serif;
-    font-size: 22px;
-    margin-bottom: 5px;
-}
-.preview-card.large h1 {
-    font-family: 'SourceSansPro-Bold', sans-serif;
-    font-size: 72px;
-}
-.preview-card p {
-    font-family: Camphor, Open Sans, Segoe UI, sans-serif;
-    line-height: 15px !important;
-    text-align: left;
-}
-.preview-card.large p {
-    font-family: 'SourceSansPro-Bold', sans-serif;
-    font-size: 51px !important;
-    line-height: 60px !important;
-    margin-bottom: 30px;
-    text-align: left !important;
-}
-.preview-card .profile-text {
-    align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: left;
-}
-.preview-card.large .profile-text {
-    padding-right: 100px;
-}
-.preview-card .profile-text svg {
-    bottom: -3px;
-    margin-right: 5px;
-    position: relative;
-}
-.preview-card.large .profile-text svg {
-    margin-right: 20px;
-}
-.preview-card .profile-image {
-    background-size: cover;
-    border-radius: 50%;
-    height: 120px;
-    margin: auto;
-    width: 120px;
-}
-.preview-card.large .profile-image {
-    height: 333px;
-    width: 333px;
-}
-.preview-card .info {
-    width: 100%;
 }
 
 .previewer button {
@@ -3309,7 +3213,6 @@ ol.breadcrumbs a {
     width: 600px;
 }
 .reminder-popup h2 {
-    font-family: 'SourceSansPro-Bold', sans-serif;
     margin: auto;
     margin-bottom: 1em;
 
@@ -3743,6 +3646,7 @@ ol.breadcrumbs a {
     .signup form li:before {
         margin-left: 0;
     }
+
     .fixed {
         position: initial;
         top: initial;

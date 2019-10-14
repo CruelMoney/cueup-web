@@ -17,7 +17,6 @@ import { Title, Body } from './Text';
 import Checkbox from './Checkbox';
 
 const Label = styled.label`
-    font-family: 'AvenirNext-Regular', Arial, Helvetica, sans-serif;
     font-size: 18px;
     color: #4d6480;
     font-weight: 300;
@@ -310,7 +309,6 @@ const ButtonText = styled.span`
 `;
 
 const Value = styled.p`
-    font-family: 'AvenirNext-Regular', Arial, Helvetica, sans-serif;
     font-size: 18px;
     color: #122b48;
 `;

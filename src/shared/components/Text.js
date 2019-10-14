@@ -67,7 +67,6 @@ export const TitleClean = styled.h3`
 `;
 
 export const Body = styled.p`
-    font-family: 'AvenirNext-Regular', Arial, Helvetica, sans-serif;
     font-size: 18px;
     color: ${({ white }) => (white ? '#fff' : '#4d6480')};
     line-height: 27px;
@@ -85,7 +84,6 @@ export const BodyBold = styled(Body)`
 `;
 
 export const BodySmall = styled.p`
-    font-family: 'AvenirNext-Regular', Arial, Helvetica, sans-serif;
     font-size: 15px;
     color: #4d6480;
     line-height: 22.5px;
@@ -104,7 +102,6 @@ export const InlineLink = styled.a`
 `;
 
 export const Citation = styled.blockquote`
-    font-family: 'AvenirNext-Regular', Arial, Helvetica, sans-serif;
     font-size: 18px;
     color: #98a4b3;
     padding: 0;

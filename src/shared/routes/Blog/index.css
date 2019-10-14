@@ -1,6 +1,3 @@
-.blog {
-}
-
 .blog header.title {
     color: #32325d;
     margin: auto;
@@ -122,7 +119,6 @@ button.subscribe-newsletter {
 }
 
 .post-content {
-    font-family: SourceSansPro-Regular;
     font-size: 2.2rem;
     line-height: 1.6em;
     margin: 0 auto;
