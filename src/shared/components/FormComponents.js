@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Checkmark from '../assets/Checkmark';
 import {
     Row,
@@ -21,6 +21,7 @@ const Label = styled.label`
     font-size: 18px;
     color: #4d6480;
     font-weight: 300;
+    display: inline-block;
     .error {
         margin-bottom: 0;
     }
@@ -59,24 +60,55 @@ const LeftCol = styled(Col)`
 
 export const InputRow = styled(Row)`
     flex-wrap: wrap;
-    margin-right: -36px;
-    .suggestionList {
-        min-width: calc(100% - 36px);
-        margin-right: 36px;
-        align-self: flex-start;
-    }
-    ${InputLabel} {
-        min-width: calc(100% - 36px);
-        margin-right: 36px;
-        align-self: flex-start;
-    }
-    ${LabelHalf},
-    .half {
-        margin-right: 36px;
-        min-width: calc(50% - 36px);
-        width: calc(50% - 36px);
-        align-self: flex-start;
-    }
+    ${({ small }) =>
+        small
+            ? css`
+                  margin-right: -16px;
+                  .suggestionList {
+                      min-width: calc(100% - 16px);
+                      margin-right: 16px;
+                      align-self: flex-start;
+                      margin-bottom: 12px;
+                      label {
+                          margin-bottom: 0;
+                      }
+                  }
+                  ${InputLabel} {
+                      min-width: calc(100% - 16px);
+                      margin-right: 16px;
+                      align-self: flex-start;
+                      margin-bottom: 12px;
+                  }
+                  ${LabelHalf},
+                  .half {
+                      margin-right: 16px;
+                      min-width: calc(50% - 16px);
+                      width: calc(50% - 16px);
+                      align-self: flex-start;
+                      margin-bottom: 12px;
+                  }
+              `
+            : css`
+                  margin-right: -36px;
+                  .suggestionList {
+                      min-width: calc(100% - 36px);
+                      margin-right: 36px;
+                      align-self: flex-start;
+                      height: 56px;
+                  }
+                  ${InputLabel} {
+                      min-width: calc(100% - 36px);
+                      margin-right: 36px;
+                      align-self: flex-start;
+                  }
+                  ${LabelHalf},
+                  .half {
+                      margin-right: 36px;
+                      min-width: calc(50% - 36px);
+                      width: calc(50% - 36px);
+                      align-self: flex-start;
+                  }
+              `}
 `;
 
 const RightCol = styled(InputRow)`
@@ -224,6 +256,7 @@ const Input = React.forwardRef(
             registerValidation,
             onBlur,
             unregisterValidation = () => {},
+            errorOutside,
             ...props
         },
         fRef
@@ -265,22 +298,26 @@ const Input = React.forwardRef(
             onBlur && onBlur();
         };
 
+        const displayError = propsError || error;
+
         return (
-            <LabelComponent>
-                {label}
-                <InputType
-                    type={type}
-                    save={save}
-                    error={error || propsError}
-                    warning={warning}
-                    onChange={change}
-                    ref={ref}
-                    onBlur={handleBlur}
-                    {...props}
-                />
-                {error && <p className="error">{error}</p>}
-                {propsError && <p className="error">{propsError}</p>}
-            </LabelComponent>
+            <>
+                <LabelComponent>
+                    {label}
+                    <InputType
+                        type={type}
+                        save={save}
+                        error={error || propsError}
+                        warning={warning}
+                        onChange={change}
+                        ref={ref}
+                        onBlur={handleBlur}
+                        {...props}
+                    />
+                    {!errorOutside && displayError && <p className="error">{displayError}</p>}
+                </LabelComponent>
+                {errorOutside && displayError && <p className="error">{displayError}</p>}
+            </>
         );
     }
 );

@@ -94,6 +94,7 @@ const SuggestionList = ({
             className={'suggestionList' + (half ? ' half' : '')}
         >
             <Input
+                errorOutside
                 type="text"
                 value={displayValue}
                 onChange={!disableInput && handleChange}
@@ -104,7 +105,11 @@ const SuggestionList = ({
                 {...props}
             />
             {focused && suggestions.length > 0 && (
-                <List noShadow={noShadow} forceHeight={forceHeight}>
+                <List
+                    noShadow={noShadow}
+                    forceHeight={forceHeight}
+                    topOffset={props.label ? 95 : 60}
+                >
                     {suggestions.map((s, idx) => (
                         <Suggestion
                             key={idx}
@@ -159,11 +164,14 @@ export const SearchableSuggestionList = ({ suggestions, onBlur, onChange, ...pro
 const Wrapper = styled.div`
     position: relative;
     z-index: ${({ active }) => (active ? 2 : 1)};
-
+    display: block;
     label,
     input {
         position: relative;
         z-index: 1;
+        width: 100%;
+        min-width: 100%;
+        margin-right: 0;
     }
 `;
 
@@ -172,6 +180,7 @@ const List = styled.ul`
     top: -12px;
     left: -12px;
     right: -12px;
+    font-size: 18px;
     margin: 0;
     padding: 0;
     background: white;
@@ -180,7 +189,8 @@ const List = styled.ul`
     height: ${({ forceHeight }) =>
         forceHeight ? (isBoolean(forceHeight) ? '400px' : forceHeight + 'px') : 'auto'};
     border-radius: 4px;
-    ${({ forceHeight }) => (forceHeight ? 'margin-top' : 'padding-top')}: 95px;
+    ${({ forceHeight }) => (forceHeight ? 'margin-top' : 'padding-top')}: ${({ topOffset }) =>
+        topOffset}px;
 `;
 
 const Suggestion = styled.li`

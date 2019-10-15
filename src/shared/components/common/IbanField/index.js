@@ -32,7 +32,7 @@ const IbanField = ({ onChange, label, children, onReady }) => {
                             'fontSize': '18px',
                             'lineHeight': '40px',
                             '::placeholder': {
-                                color: '#BBBBBB',
+                                color: '#98a4b3',
                             },
                         },
                         invalid: {

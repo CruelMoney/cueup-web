@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getTranslate, getActiveLanguage } from 'react-localize-redux';
 import { Query, useMutation } from 'react-apollo';
 import ReactPixel from 'react-facebook-pixel';
-import { LoadingIndicator } from 'components/Blocks';
+import { LoadingIndicator, Row } from 'components/Blocks';
 import { REQUEST_PAYMENT_INTENT, PAYMENT_CONFIRMED } from '../../routes/Event/gql';
 import * as tracker from '../../utils/analytics/autotrack';
 import { changeCurrency } from '../../actions/SessionActions';
@@ -114,7 +114,9 @@ const PayForm = ({
                                     text={translate('event.offer.payment-info')}
                                 />
                                 {loading ? (
-                                    <LoadingIndicator label={translate('gettingPayment')} />
+                                    <Row center>
+                                        <LoadingIndicator label={translate('gettingPayment')} />
+                                    </Row>
                                 ) : (
                                     PayForms[requestPaymentIntent.paymentProvider]
                                 )}

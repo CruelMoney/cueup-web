@@ -81,7 +81,6 @@ const Menu = ({ translate, history, location }) => {
                                                     showing={loginExpanded}
                                                     onClickOutside={() => setLoginExpanded(false)}
                                                 >
-                                                    <TitleClean>Login</TitleClean>
                                                     <Login
                                                         onLogin={() => setLoginExpanded(false)}
                                                         user={user}

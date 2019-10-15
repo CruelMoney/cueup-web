@@ -1310,15 +1310,10 @@ input[type='file'] + label * {
 .pay-form {
     border-radius: 6px;
     display: flex;
-    max-width: 800px;
+    max-width: 900px;
     overflow: hidden;
     width: auto;
-    p.error {
-        font-size: 1em;
-        line-height: 1.5em;
-        position: absolute;
-        top: -0.9em;
-    }
+
     .text-element-wrapper {
         margin-bottom: 2em;
     }
@@ -1329,7 +1324,7 @@ input[type='file'] + label * {
         padding: 2em;
     }
     .left {
-        flex: 1.5;
+        flex: 1.75;
     }
     .right {
         background-color: #edf2f7;
@@ -1622,9 +1617,6 @@ button {
         border-bottom: 1px solid rgb(224, 224, 224);
         padding-bottom: 0.2em;
         padding-top: 0.3em;
-    }
-    p.error {
-        top: 2.1em;
     }
 }
 

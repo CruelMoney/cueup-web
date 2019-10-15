@@ -9,39 +9,47 @@ import {
 } from 'react-stripe-elements';
 import { getTranslate } from 'react-localize-redux';
 import { connect } from 'react-redux';
-import { Input } from 'components/FormComponents';
+import styled from 'styled-components';
+import { Input, InputRow, LabelHalf, Label } from 'components/FormComponents';
+import { validators, useForm } from 'components/hooks/useForm';
+import { inputStyle, SmartButton } from 'components/Blocks';
 import { Environment } from '../../constants/constants';
 import CountrySelector from './CountrySelector';
+import ErrorMessageApollo from './ErrorMessageApollo';
 
-class StripeForm extends PureComponent {
-    constructor(props) {
-        super(props);
+const StripeForm = ({ translate, stripe, paymentIntent, onPaymentConfirmed }) => {
+    const cardElement = useRef();
+    const [error, setError] = useState();
+    const [loading, setLoading] = useState(false);
 
-        this.state = {
-            valid: false,
-            error: null,
-        };
+    const { getInputProps, form, runValidations } = useForm();
 
-        this.cardElement = React.createRef();
-    }
+    const confirmPayment = async (e) => {
+        e.preventDefault();
+        const errors = runValidations();
+        if (errors?.length) {
+            return;
+        }
 
-    confirmPayment = async (form, cb) => {
-        const { card_email, card_name, card_country } = form.values;
+        setLoading(true);
+
+        const { card_email, card_name, card_country } = form;
 
         try {
-            await this.handlePayment({
+            await handlePayment({
                 email: card_email,
                 name: card_name,
                 country: card_country,
             });
-            cb();
+            return false;
         } catch (error) {
-            cb(error.message || 'Something went wrong');
+            setError(error);
+        } finally {
+            setLoading(false);
         }
     };
 
-    handlePayment = async ({ email, name, country }) => {
-        const { stripe, paymentIntent, onPaymentConfirmed } = this.props;
+    const handlePayment = async ({ email, name, country }) => {
         const { token } = paymentIntent;
         const PAYMENT_INTENT_CLIENT_SECRET = token.token;
 
@@ -60,7 +68,7 @@ class StripeForm extends PureComponent {
             };
             const result = await stripe.handleCardPayment(
                 PAYMENT_INTENT_CLIENT_SECRET,
-                this.cardElement.current,
+                cardElement.current,
                 options
             );
             const { error, paymentIntent } = result;
@@ -74,57 +82,49 @@ class StripeForm extends PureComponent {
         }
     };
 
-    render() {
-        const { loading } = this.state;
-        const { translate } = this.props;
-        return (
-            <form
-                formValidCallback={() => this.setState({ valid: true })}
-                formInvalidCallback={() => this.setState({ valid: false })}
-                name="pay-form"
-            >
+    return (
+        <form name="pay-form" onSubmit={confirmPayment}>
+            <PaymentRow small>
+                <CountrySelector
+                    noShadow
+                    forceHeight={250}
+                    {...getInputProps('card_country')}
+                    validation={[validators.required]}
+                    placeholder={translate('country')}
+                />
+
                 <Input
-                    name="card_email"
+                    half
                     type="email"
-                    validate={['required', 'email']}
+                    {...getInputProps('card_email')}
+                    validation={[validators.required, validators.email]}
                     placeholder={translate('Billing email')}
                 />
-                <div className="row">
-                    <div className="col-xs-6">
-                        <Input
-                            name="card_name"
-                            type="text"
-                            validate={['required', 'lastName']}
-                            placeholder={translate('Cardholder name')}
-                        />
-                    </div>
-                    <div className="col-xs-6">
-                        <CountrySelector
-                            name="card_country"
-                            validate={['required']}
-                            placeholder={translate('country')}
-                        />
-                    </div>
-                </div>
 
-                <ConnectedCard validate={['required']} refForward={this.cardElement} />
+                <Input
+                    half
+                    type="text"
+                    {...getInputProps('card_name')}
+                    validation={[validators.required, validators.lastName]}
+                    placeholder={translate('Cardholder name')}
+                />
 
-                <div style={{ marginTop: '24px' }}>
-                    <SmartButton
-                        glow
-                        disabled={!this.state.valid}
-                        loading={loading}
-                        rounded={true}
-                        name={'confirm_payment'}
-                        onClick={this.confirmPayment}
-                    >
-                        {translate('Confirm & pay')}
-                    </SmartButton>
-                </div>
-            </form>
-        );
-    }
-}
+                <ConnectedCard
+                    {...getInputProps('card_token')}
+                    validation={[validators.required]}
+                    refForward={cardElement}
+                />
+            </PaymentRow>
+
+            <div style={{ marginTop: '24px' }}>
+                <SmartButton type="submit" loading={loading}>
+                    {translate('Confirm & Pay')}
+                </SmartButton>
+                <ErrorMessageApollo error={error} />
+            </div>
+        </form>
+    );
+};
 
 const PaymentRequestButtonWrapper = ({ paymentIntent, stripe, onPaymentConfirmed }) => {
     const { offer } = paymentIntent;
@@ -212,7 +212,7 @@ const PaymentRequestButtonWrapper = ({ paymentIntent, stripe, onPaymentConfirmed
     );
 };
 
-const SmartButton = injectStripe(PaymentRequestButtonWrapper);
+const PaymentRequestBtn = injectStripe(PaymentRequestButtonWrapper);
 
 const SmartForm = injectStripe(StripeForm);
 
@@ -222,7 +222,7 @@ class StripeFormWrapper extends PureComponent {
             <StripeProvider apiKey={Environment.STRIPE_PUBLIC_KEY}>
                 <>
                     <Elements>
-                        <SmartButton {...this.props} />
+                        <PaymentRequestBtn {...this.props} />
                     </Elements>
                     <Elements>
                         <SmartForm {...this.props} />
@@ -240,38 +240,48 @@ function mapStateToProps(state, ownprops) {
     };
 }
 
-const ConnectedCard = ({ refForward, onChange }) => {
+const ConnectedCard = ({ refForward, onSave }) => {
     return (
-        <div className="stripe-card">
-            <CardElement
-                style={{
-                    base: {
-                        'color': '#32325d',
-                        'fontFamily': '"AvenirNext-Regular", Helvetica, sans-serif',
-                        'fontSmoothing': 'antialiased',
-                        'fontSize': '14px',
-                        '::placeholder': {
-                            color: '#BBBBBB',
+        <LabelHalf>
+            <Wrapper>
+                <CardElement
+                    style={{
+                        base: {
+                            'color': '#32325d',
+                            'fontFamily': '"AvenirNext-Regular", Helvetica, sans-serif',
+                            'fontSmoothing': 'antialiased',
+                            'fontSize': '18px',
+                            'lineHeight': '40px',
+                            '::placeholder': {
+                                color: '#98a4b3',
+                            },
                         },
-                    },
-                    invalid: {
-                        color: '#f44336',
-                        iconColor: '#f44336',
-                    },
-                }}
-                onReady={(el) => {
-                    refForward.current = el;
-                }}
-                onChange={({ complete }) => {
-                    if (complete) {
-                        onChange(true);
-                    } else {
-                        onChange(null);
-                    }
-                }}
-            />
-        </div>
+                        invalid: {
+                            color: '#f44336',
+                            iconColor: '#f44336',
+                        },
+                    }}
+                    onReady={(el) => {
+                        refForward.current = el;
+                    }}
+                    onChange={({ complete }) => {
+                        if (complete) {
+                            onSave(true);
+                        } else {
+                            onSave(null);
+                        }
+                    }}
+                />
+            </Wrapper>
+        </LabelHalf>
     );
 };
+
+const PaymentRow = styled(InputRow)``;
+
+const Wrapper = styled.div`
+    ${inputStyle}
+    padding-left: 9px;
+`;
 
 export default connect(mapStateToProps)(StripeFormWrapper);

@@ -101,7 +101,6 @@ const Index = ({ translate, match, location, history }) => {
             />
 
             <Popup width="380px" showing={!me && !loading} onClickOutside={redirectToHome}>
-                <Title largeMargin>Login</Title>
                 <Login redirect={false} onLogin={refetchGig} />
             </Popup>
 

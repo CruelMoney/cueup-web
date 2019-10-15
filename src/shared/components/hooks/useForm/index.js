@@ -81,6 +81,7 @@ export const useForm = (externalForm, initialValues = {}) => {
         onSave: (v) => setValue({ [name]: v }),
         registerValidation: registerValidation(name),
         unregisterValidation: unregisterValidation(name),
+        name,
     });
 
     return {
