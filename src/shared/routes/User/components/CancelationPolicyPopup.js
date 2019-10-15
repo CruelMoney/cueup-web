@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ArrowIcon from 'react-ionicons/lib/MdArrowRoundForward';
-import ToggleOptions from 'components/common/ToggleOptions';
+import SuggestionList from 'components/SuggestionList';
 import { Input, Label } from '../../../components/FormComponents';
 import { Row, TeritaryButton, PrimaryButton } from '../../../components/Blocks';
 import Popup from '../../../components/common/Popup';
@@ -23,47 +23,45 @@ const CancelationPolicyPopup = ({ initialValue, save, translate }) => {
             />
 
             <Popup showing={showing} onClickOutside={(_) => setShowing(false)} width={'520px'}>
-                <Label>{translate('Cancelation policy')}</Label>
-                <PolicyDisplayer
-                    style={{ maxWidth: '350px' }}
-                    cancelationPolicy={cancelationPolicy}
-                    explanationText={`Organizer can cancel any time before ${cancelationPolicy.days} days, and get a 100%
-							refund, minus the service fee.`}
-                />
-
                 <div
                     style={{
-                        marginTop: '24px',
                         marginBottom: '24px',
                     }}
                 >
-                    <ToggleOptions
-                        name="cancelationDays"
-                        glued={true}
+                    <SuggestionList
+                        label={translate('Cancelation policy')}
                         value={cancelationPolicy.days}
+                        noShadow
+                        disableInput
                         onChange={(days) =>
                             setCancelationPolicy((s) => ({
                                 ...s,
                                 days,
                             }))
                         }
-                    >
-                        <button name={1} color="#50E3C2">
-                            1 {translate('day')}
-                        </button>
-                        <button name={2} color="#50E3C2">
-                            2 {translate('days')}
-                        </button>
-                        <button name={7} color="#50E3C2">
-                            1 {translate('week')}
-                        </button>
-                        <button name={14} color="#50E3C2">
-                            2 {translate('weeks')}
-                        </button>
-                        <button name={30} color="#50E3C2">
-                            1 {translate('month')}
-                        </button>
-                    </ToggleOptions>
+                        suggestions={[
+                            {
+                                label: '1 ' + translate('day'),
+                                value: 1,
+                            },
+                            {
+                                label: '2 ' + translate('days'),
+                                value: 2,
+                            },
+                            {
+                                label: '1 ' + translate('week'),
+                                value: 7,
+                            },
+                            {
+                                label: '2 ' + translate('weeks'),
+                                value: 14,
+                            },
+                            {
+                                label: '1 ' + translate('month'),
+                                value: 28,
+                            },
+                        ]}
+                    />
                 </div>
                 <Slider
                     name="refundPercentage"
@@ -78,6 +76,13 @@ const CancelationPolicyPopup = ({ initialValue, save, translate }) => {
                             percentage: values[0],
                         }))
                     }
+                />
+
+                <PolicyDisplayer
+                    style={{ maxWidth: '350px' }}
+                    cancelationPolicy={cancelationPolicy}
+                    explanationText={`Organizer can cancel any time before ${cancelationPolicy.days} days, and get a 100%
+							refund, minus the service fee.`}
                 />
 
                 <Row style={{ marginTop: '15px' }} right>
