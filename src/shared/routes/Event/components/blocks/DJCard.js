@@ -62,7 +62,7 @@ const DjCard = ({ style, idx, gig, translate, theEvent, hasMessage, onOpenChat }
                         <RowWrap>
                             <ColLeft>
                                 <SmallHeader>{name}</SmallHeader>
-                                <BodySmall style={{ wordBreak: 'break-word' }}>
+                                <BodySmall style={{ wordBreak: 'break-word', marginBottom: '9px' }}>
                                     {truncatedBio}
                                 </BodySmall>
                                 <RowWrap>
@@ -217,7 +217,7 @@ const Offer = ({ name, totalPayment, translate, gig, theEvent, initiateBooking }
     );
 };
 
-const PayPopup = ({ showing, close, gig, paymentPossible, theEvent, translate }) => {
+const PayPopup = ({ showing, close, gig, paymentPossible, theEvent }) => {
     return (
         <Popup showing={showing} onClickOutside={close} noPadding>
             <PayForm

@@ -45,7 +45,6 @@ const NotFound = ({ translate }) => {
 
             mutate({
                 variables: { password, token },
-                onCompleted: () => setMsg('Your password has been reset'),
             });
             return false;
         } catch (error) {
@@ -72,7 +71,10 @@ const NotFound = ({ translate }) => {
             <div className="container">
                 <div className="signup fix-top-mobile">
                     <h1 style={{ marginBottom: '32px' }}>{siteTitle}</h1>
-                    <Mutation mutation={RESET_PASSWORD}>
+                    <Mutation
+                        mutation={RESET_PASSWORD}
+                        onCompleted={() => setMsg('Your password has been reset')}
+                    >
                         {(mutate, { loading, error: apolloError }) => {
                             return (
                                 <form name={'reset-password-form'} onSubmit={request(mutate)}>
