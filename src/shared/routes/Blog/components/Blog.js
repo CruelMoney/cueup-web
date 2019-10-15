@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink as Link } from 'react-router-dom';
 import { localize } from 'react-localize-redux';
-import { SmartButton } from 'components/Blocks.js';
+import { SmartButton, Row } from 'components/Blocks.js';
 import { posts } from '../posts.json';
 import Popup from '../../../components/common/Popup';
 import NewsletterSignup from './NewsletterSignup';
@@ -30,15 +30,17 @@ class Blog extends Component {
                 <header className="title">
                     <h1>Blog</h1>
                     <p>{translate('blog.description')}</p>
-                    <SmartButton
-                        color={'#25F4D2'}
-                        active
-                        glow
-                        className="subscribe-newsletter"
-                        onClick={this.showPopup}
-                    >
-                        {translate('subscribe')}
-                    </SmartButton>
+                    <Row center>
+                        <SmartButton
+                            color={'#25F4D2'}
+                            active
+                            glow
+                            className="subscribe-newsletter"
+                            onClick={this.showPopup}
+                        >
+                            {translate('subscribe')}
+                        </SmartButton>
+                    </Row>
                 </header>
                 <main>
                     <div className="container">
