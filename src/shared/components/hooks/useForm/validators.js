@@ -12,10 +12,13 @@ export function lastName(value) {
 }
 
 export const minLength = (len) => (str) => {
-    console.log({ str, len });
     return str && str.length < len ? `Must be ${len} or more characters` : null;
 };
 
 export function email(value) {
     return value && !emailValidator.validate(value) ? 'This email address is invalid' : null;
 }
+
+export const matches = (str) => (str2) => {
+    return str !== str2 ? 'Not equal' : null;
+};

@@ -171,8 +171,10 @@ body.pre-header-content .navigation {
     margin-top: 42px;
 }
 
-.mobileMenu a {
+.mobileMenu a,
+.mobileMenu .link-look {
     color: #31daff;
+    font-family: 'AvenirNext-Medium', sans-serif;
     -webkit-tap-highlight-color: transparent;
     text-decoration: none;
     transition: color 0.1s;

@@ -42,7 +42,13 @@ export const useValidation = ({ validation, registerValidation, unregisterValida
     };
 };
 
-export const useForm = (form) => {
+export const useForm = (externalForm, initialValues = {}) => {
+    const [form, setForm] = useState(initialValues);
+    const setValue = (slice) => setForm((s) => ({ ...s, ...slice }));
+
+    // allow use of external form or internal
+    const state = externalForm || form;
+
     const validations = useRef({});
     const registerValidation = (key) => (fun) => {
         validations.current = {
@@ -57,11 +63,10 @@ export const useForm = (form) => {
 
     const runValidations = (scrollToError) => {
         const refs = Object.entries(validations.current)
-            .reduce((refs, [key, fun]) => [...refs, fun(form[key])], [])
+            .reduce((refs, [key, fun]) => [...refs, fun(state[key])], [])
             .filter((r) => !!r);
 
         if (scrollToError && refs[0]?.current) {
-            console.log(refs[0].current.offsetTop);
             window.scrollTo({
                 behavior: 'smooth',
                 top: refs[0].current.offsetTop,
@@ -71,10 +76,20 @@ export const useForm = (form) => {
         return refs;
     };
 
+    // defining a function that gives the boilerplate for inputFields
+    const getInputProps = (name) => ({
+        onSave: (v) => setValue({ [name]: v }),
+        registerValidation: registerValidation(name),
+        unregisterValidation: unregisterValidation(name),
+    });
+
     return {
         registerValidation,
         unregisterValidation,
         runValidations,
+        form,
+        setValue,
+        getInputProps,
     };
 };
 
