@@ -179,7 +179,7 @@ const AvatarWrapper = styled.div`
     position: relative;
 `;
 
-export const Avatar = ({ size, style, className, ...props }) => (
+export const Avatar = ({ size, style, className, src, ...props }) => (
     <AvatarWrapper
         size={size}
         style={{
@@ -190,6 +190,7 @@ export const Avatar = ({ size, style, className, ...props }) => (
     >
         <GracefullImage
             {...props}
+            src={src}
             style={{
                 objectFit: 'cover',
                 height: avatarSizes[size] || '30px',

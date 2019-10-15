@@ -15,6 +15,7 @@ import Popup from './common/Popup';
 import InstagramConnect from './InstagramConnect';
 import { TitleClean } from './Text';
 import { useLogout } from './hooks/useLogout';
+import { LoadingIndicator } from './Blocks';
 
 const Menu = ({ translate, history, location }) => {
     const [loginExpanded, setLoginExpanded] = useState(false);
@@ -130,7 +131,11 @@ const Menu = ({ translate, history, location }) => {
                                             </li>
                                         ) : null}
 
-                                        {loading ? <li>Loading...</li> : null}
+                                        {loading ? (
+                                            <li>
+                                                <LoadingIndicator />
+                                            </li>
+                                        ) : null}
                                     </ul>
                                 </nav>
                             </div>

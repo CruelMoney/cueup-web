@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getTranslate, getActiveLanguage } from 'react-localize-redux';
 import { Query, useMutation } from 'react-apollo';
 import ReactPixel from 'react-facebook-pixel';
+import { LoadingIndicator } from 'components/Blocks';
 import { REQUEST_PAYMENT_INTENT, PAYMENT_CONFIRMED } from '../../routes/Event/gql';
 import * as tracker from '../../utils/analytics/autotrack';
 import { changeCurrency } from '../../actions/SessionActions';
@@ -13,7 +14,7 @@ import TextWrapper from './TextElement';
 import MoneyTable, { TableItem } from './MoneyTable';
 import StripeFormWrapper from './StripePayForm';
 import XenditPayForm from './XenditPayForm';
-import { LoadingPlaceholder2, LoadingIndicator } from './LoadingPlaceholder';
+import { LoadingPlaceholder2 } from './LoadingPlaceholder';
 import requestFormContent from './RequestForm/content.json';
 import NotifyPayment from './NotifyPayment';
 

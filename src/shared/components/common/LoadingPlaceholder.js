@@ -65,21 +65,6 @@ class LoadingCard extends Component {
     }
 }
 
-const LoadingIndicator = ({ label, color }) => (
-    <div
-        style={{
-            height: '200px',
-            textAlign: 'center',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexDirection: 'column',
-        }}
-    >
-        <p>Loading...</p>
-    </div>
-);
-
-export { LoadingCard, LoadingPlaceholder2, LoadingIndicator };
+export { LoadingCard, LoadingPlaceholder2 };
 
 export default LoadingPlaceholder;

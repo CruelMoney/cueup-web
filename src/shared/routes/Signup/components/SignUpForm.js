@@ -2,13 +2,14 @@ import React, { useState, useRef } from 'react';
 import debounce from 'lodash/debounce';
 import { localize } from 'react-localize-redux';
 import { useMutation } from 'react-apollo';
-import { SmartButton, Row } from 'components/Blocks';
+import { SmartButton, Row, Avatar } from 'components/Blocks';
 import { Input } from 'components/FormComponents';
 import { useForm, validators, useValidation } from 'components/hooks/useForm';
 import RegistrationElement from 'components/common/RegistrationElement';
 import LocationSelector from 'components/common/LocationSelectorSimple';
 import ToggleButtonHandler from 'components/common/ToggleButtonHandler';
-import ErrorMessage from 'components/common/ErrorMessage';
+import ImageUploader from 'components/ImageInput';
+import useImageUpload from 'components/hooks/useImageUpload';
 import NumberedList from '../../../components/common/NumberedList';
 import c from '../../../constants/constants';
 import GeoCoder from '../../../utils/GeoCoder';
@@ -33,6 +34,8 @@ const SignupForm = ({ translate, geoCity, reference }) => {
 
     const setValue = (slice) => setState((s) => ({ ...s, ...slice }));
 
+    const { preview, beginUpload } = useImageUpload();
+
     const signup = async (e) => {
         e.preventDefault();
 
@@ -41,8 +44,8 @@ const SignupForm = ({ translate, geoCity, reference }) => {
         if (errors?.length) {
             return;
         }
-
-        let { name, playingLocation, playingRadius, locationName } = state;
+        let { name } = state;
+        const { playingLocation, playingRadius, locationName } = state;
         name = name.split(' ');
         const lastName = name.pop();
         const firstName = name.join(' ');
@@ -211,7 +214,16 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                     active={true}
                     text={translate('finish-signup.picture')}
                 >
-                    {/* <FileInput validate={['required']} name="picture" /> */}
+                    <ImageUploader
+                        half
+                        buttonText="Upload"
+                        onSave={(profilePicture) =>
+                            setValue({ profilePicture: beginUpload(profilePicture) })
+                        }
+                        validation={[validators.required]}
+                        registerValidation={registerValidation('profilePicture')}
+                        unregisterValidation={unregisterValidation('profilePicture')}
+                    />
                 </RegistrationElement>
 
                 <RegistrationElement
@@ -220,6 +232,7 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                     active={true}
                     text={translate('finish-signup.about')}
                 >
+                    {preview && <Avatar size="extraLarge" src={preview} />}
                     <Input
                         type="text-area"
                         validate={['required']}
