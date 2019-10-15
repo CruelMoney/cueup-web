@@ -115,8 +115,7 @@ const App = (props) => {
         return <Redirect to={redirect} />;
     }
 
-    const thumb =
-        Environment.CALLBACK_DOMAIN + (activeLanguage === 'da' ? defaultImageDa : defaultImage);
+    const thumb = activeLanguage === 'da' ? defaultImageDa : defaultImage;
     const title = translate('Book DJs with ease') + ' | Cueup';
     const description = translate('site-description');
     const urlArr = url.split('/');

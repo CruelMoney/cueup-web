@@ -21,7 +21,10 @@ const useImageUpload = ({ onCompleted } = {}) => {
             });
             setPreview(base64);
 
-            return await mutate({ variables: { file } });
+            const {
+                data: { singleUpload },
+            } = await mutate({ variables: { file } });
+            return singleUpload;
         } catch (error) {
             setError(error);
         } finally {

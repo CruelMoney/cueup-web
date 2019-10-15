@@ -2,8 +2,8 @@ import React, { useState, useRef } from 'react';
 import debounce from 'lodash/debounce';
 import { localize } from 'react-localize-redux';
 import { useMutation } from 'react-apollo';
-import { SmartButton, Row, Avatar } from 'components/Blocks';
-import { Input } from 'components/FormComponents';
+import { SmartButton, Row, Avatar, Col } from 'components/Blocks';
+import { Input, InputRow } from 'components/FormComponents';
 import { useForm, validators, useValidation } from 'components/hooks/useForm';
 import RegistrationElement from 'components/common/RegistrationElement';
 import LocationSelector from 'components/common/LocationSelectorSimple';
@@ -34,10 +34,11 @@ const SignupForm = ({ translate, geoCity, reference }) => {
 
     const setValue = (slice) => setState((s) => ({ ...s, ...slice }));
 
-    const { preview, beginUpload } = useImageUpload();
+    const { preview, beginUpload, error: uploadError } = useImageUpload();
 
     const signup = async (e) => {
         e.preventDefault();
+        console.log({ state });
 
         const errors = runValidations(true);
 
@@ -45,14 +46,18 @@ const SignupForm = ({ translate, geoCity, reference }) => {
             return;
         }
         let { name } = state;
-        const { playingLocation, playingRadius, locationName } = state;
+        const { playingLocation, playingRadius, locationName, profilePicture } = state;
         name = name.split(' ');
         const lastName = name.pop();
         const firstName = name.join(' ');
+
+        const { id: pictureId } = await profilePicture;
+
         const variables = {
             ...state,
             lastName,
             firstName,
+            profilePicture: pictureId,
             playingLocation: {
                 name: locationName,
                 latitude: playingLocation.lat,
@@ -98,6 +103,7 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                         big
                         name="email"
                         placeholder="mail@gmail.com"
+                        autoComplete="email"
                         onSave={(email) => setValue({ email })}
                         validation={[validators.required, validators.email]}
                         registerValidation={registerValidation('email')}
@@ -132,6 +138,7 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                     <Input
                         big
                         name="name"
+                        autoComplete="name"
                         placeholder={translate('first-last')}
                         onSave={(name) => setValue({ name })}
                         validation={[validators.required, validators.lastName]}
@@ -151,6 +158,7 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                         name="phone"
                         type="tel"
                         placeholder="12345678"
+                        autoComplete="tel"
                         onSave={(phone) => setValue({ phone })}
                         validation={[validators.required]}
                         registerValidation={registerValidation('phone')}
@@ -166,8 +174,8 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                 >
                     <LocationSelector
                         big
-                        autocomplete="off"
                         name="playingLocation"
+                        autoComplete="shipping locality"
                         onChange={updateMap}
                         validation={[validators.required]}
                         registerValidation={registerValidation('playingLocation')}
@@ -214,16 +222,32 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                     active={true}
                     text={translate('finish-signup.picture')}
                 >
-                    <ImageUploader
-                        half
-                        buttonText="Upload"
-                        onSave={(profilePicture) =>
-                            setValue({ profilePicture: beginUpload(profilePicture) })
-                        }
-                        validation={[validators.required]}
-                        registerValidation={registerValidation('profilePicture')}
-                        unregisterValidation={unregisterValidation('profilePicture')}
-                    />
+                    <InputRow>
+                        {preview && (
+                            <Avatar
+                                style={{ marginTop: '16px', marginRight: '16px' }}
+                                size="extraLarge"
+                                src={preview}
+                            />
+                        )}
+                        <ImageUploader
+                            half
+                            style={{
+                                maxWidth: '160px',
+                                margin: '0',
+                                minWidth: '0',
+                                alignSelf: 'center',
+                            }}
+                            buttonText={preview ? 'Change' : 'Upload'}
+                            onSave={(profilePicture) =>
+                                setValue({ profilePicture: beginUpload(profilePicture) })
+                            }
+                            validation={[validators.required]}
+                            registerValidation={registerValidation('profilePicture')}
+                            unregisterValidation={unregisterValidation('profilePicture')}
+                        />
+                    </InputRow>
+                    <ErrorMessageApollo error={uploadError} />
                 </RegistrationElement>
 
                 <RegistrationElement
@@ -232,7 +256,6 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                     active={true}
                     text={translate('finish-signup.about')}
                 >
-                    {preview && <Avatar size="extraLarge" src={preview} />}
                     <Input
                         type="text-area"
                         validate={['required']}
@@ -246,20 +269,24 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                 </RegistrationElement>
             </NumberedList>
 
-            <Row center>
-                <SmartButton glow type="submit" loading={loading} name="signup">
-                    <div
-                        style={{
-                            width: '100px',
-                        }}
+            {!state.msg && (
+                <Col middle>
+                    <SmartButton
+                        glow
+                        type="submit"
+                        success={state.msg}
+                        loading={loading}
+                        name="signup"
                     >
-                        {translate('Join')}
-                    </div>
-                </SmartButton>
-            </Row>
-            <ErrorMessageApollo error={error} />
-            <div className="row">
-                <div className="col-xs-12">
+                        <div
+                            style={{
+                                width: '100px',
+                            }}
+                        >
+                            {translate('Join')}
+                        </div>
+                    </SmartButton>
+                    <ErrorMessageApollo error={error} />
                     <p
                         style={{
                             textAlign: 'center',
@@ -269,8 +296,9 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                     >
                         {translate('terms-message')}
                     </p>
-                </div>
-            </div>
+                </Col>
+            )}
+
             {state.msg ? (
                 <div
                     style={{

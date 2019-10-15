@@ -8,7 +8,7 @@ export const ImageCompressor = (
 ) => {
     return new Promise(async (resolve, reject) => {
         const loadJS = require('load-js');
-        await loadJS(['/load-image.all.min.js']);
+        await loadJS(['/load-image.js']);
         const reader = new FileReader();
         reader.onload = (upload) => {
             // if (file.size / 1024 > 5000) {

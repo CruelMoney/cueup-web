@@ -9,16 +9,6 @@ const config = {
         ...baseConfig.optimization,
         minimize: true,
     },
-    plugins: [
-        // copy public folder to build
-        new CopyPlugin([
-            {
-                from: paths.publicDev,
-                to: paths.clientBuild,
-            },
-        ]),
-        ...baseConfig.plugins,
-    ],
     mode: 'production',
     devtool: generateSourceMap ? 'source-map' : false,
 };
