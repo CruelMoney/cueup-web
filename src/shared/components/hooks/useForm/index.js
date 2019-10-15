@@ -1,3 +1,4 @@
+import { isArray } from 'util';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import * as validators from './validators';
 
@@ -5,9 +6,17 @@ export const useValidation = ({ validation, registerValidation, unregisterValida
     const [error, setError] = useState(null);
 
     const runValidation = useCallback(
-        (value, returnRef) => {
+        (value, returnRef = true) => {
             if (validation) {
-                const validationError = validation(value);
+                let validationError = null;
+                // handle if array, return first error
+                if (isArray(validation)) {
+                    validationError = validation.reduce((err, v) => err || v(value), false);
+                } else {
+                    // handle if single function
+                    validationError = validation(value);
+                }
+
                 if (validationError) {
                     setError(validationError);
                     return returnRef ? ref : validationError;
@@ -21,7 +30,7 @@ export const useValidation = ({ validation, registerValidation, unregisterValida
 
     useEffect(() => {
         if (registerValidation) {
-            registerValidation((val) => runValidation(val, true));
+            registerValidation(runValidation);
         }
         if (unregisterValidation) {
             return () => unregisterValidation(runValidation);
@@ -46,12 +55,20 @@ export const useForm = (form) => {
         delete validations.current[key];
     };
 
-    const runValidations = () => {
-        console.log({ validations });
-
-        return Object.entries(validations.current)
+    const runValidations = (scrollToError) => {
+        const refs = Object.entries(validations.current)
             .reduce((refs, [key, fun]) => [...refs, fun(form[key])], [])
             .filter((r) => !!r);
+
+        if (scrollToError && refs[0]?.current) {
+            console.log(refs[0].current.offsetTop);
+            window.scrollTo({
+                behavior: 'smooth',
+                top: refs[0].current.offsetTop,
+            });
+        }
+
+        return refs;
     };
 
     return {

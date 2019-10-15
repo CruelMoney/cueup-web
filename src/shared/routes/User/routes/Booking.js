@@ -39,14 +39,12 @@ const Booking = ({ user, loading, translate }) => {
     const setValue = (key) => (val) => setForm((f) => ({ ...f, [key]: val }));
 
     const requestBooking = (create) => async () => {
-        const refs = runValidations();
-        if (refs[0] && refs[0].current) {
-            window.scrollTo({
-                behavior: 'smooth',
-                top: refs[0].current.offsetTop,
-            });
+        const refs = runValidations(true);
+
+        if (refs.length) {
             return;
         }
+
         try {
             const { timeZoneId } = await GeoCoder.getTimeZone({
                 lat: user.playingLocation.latitude,

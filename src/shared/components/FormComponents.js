@@ -242,7 +242,6 @@ const Input = React.forwardRef(
 
         const save = (e) => {
             const value = e.target ? e.target.value : e;
-
             if (typeof warning === String) {
                 const confirmed = window.confirm(warning);
                 if (!confirmed) {

@@ -1,68 +1,35 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { forwardRef } from 'react';
 
-class RegistrationElement extends Component {
-    displayName = 'RegistrationElement';
+const RegistrationElement = forwardRef(({ label, text, children, active, count }, ref) => {
+    const styles = {
+        base: {
+            marginBottom: '20px',
+            marginTop: '-35px',
+            opacity: active ? '1' : '0.2',
+        },
 
-    static defaultProps = {
-        showOn: [],
-        isFilter: false,
+        label: {
+            display: 'block',
+            marginBottom: '0.5em',
+            fontWeight: '300',
+            fontSize: '30px',
+        },
+
+        paragraph: {
+            fontSize: '14px',
+        },
     };
 
-    getChildContext() {
-        return {
-            updateValue: this.updateValue,
-            isFilter: this.props.isFilter,
-        };
-    }
-
-    updateValue = (name, value) => {
-        if (this.props.isFilter) {
-            this.context.updateFilters(this.props.name, value);
-        }
-        this.context.updateValue(name, value);
-    };
-
-    render() {
-        const styles = {
-            base: {
-                marginBottom: '20px',
-                marginTop: '-35px',
-                opacity: this.props.active ? '1' : '0.2',
-            },
-
-            label: {
-                display: 'block',
-                marginBottom: '0.5em',
-                fontWeight: '300',
-                fontSize: '30px',
-            },
-
-            paragraph: {
-                fontSize: '14px',
-            },
-        };
-
-        return (
-            <div style={styles.base}>
-                <h2>{this.props.label}</h2>
-                <p>
-                    {this.props.text}
-                    {this.props.count}
-                </p>
-                {this.props.children}
-            </div>
-        );
-    }
-}
-
-RegistrationElement.childContextTypes = {
-    updateValue: PropTypes.func,
-    isFilter: PropTypes.bool,
-};
-RegistrationElement.contextTypes = {
-    updateFilters: PropTypes.func,
-    updateValue: PropTypes.func.isRequired,
-};
+    return (
+        <div style={styles.base} ref={ref}>
+            <h2>{label}</h2>
+            <p>
+                {text}
+                {count}
+            </p>
+            {children}
+        </div>
+    );
+});
 
 export default RegistrationElement;

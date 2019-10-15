@@ -1,55 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import debounce from 'lodash/debounce';
 import { localize } from 'react-localize-redux';
 import { useMutation } from 'react-apollo';
 import { SmartButton, Row } from 'components/Blocks';
 import { Input } from 'components/FormComponents';
-import { useForm } from 'components/hooks/useForm';
+import { useForm, validators, useValidation } from 'components/hooks/useForm';
 import RegistrationElement from 'components/common/RegistrationElement';
 import LocationSelector from 'components/common/LocationSelectorSimple';
 import ToggleButtonHandler from 'components/common/ToggleButtonHandler';
+import ErrorMessage from 'components/common/ErrorMessage';
 import NumberedList from '../../../components/common/NumberedList';
 import c from '../../../constants/constants';
 import GeoCoder from '../../../utils/GeoCoder';
 import SimpleMap from '../../../components/common/Map';
 import { CREATE_USER } from '../../../components/gql';
+import ErrorMessageApollo from '../../../components/common/ErrorMessageApollo';
 
 const SignupForm = ({ translate, geoCity, reference }) => {
     const [mutate, { loading, error }] = useMutation(CREATE_USER);
-
-    const [state, setState] = useState({});
+    const genreRef = useRef();
+    const [state, setState] = useState({
+        genres: [],
+    });
     const { registerValidation, unregisterValidation, runValidations } = useForm(state);
+
+    const { error: genreError, runValidation: runGenreValidation } = useValidation({
+        ref: genreRef,
+        validation: validators.required,
+        registerValidation: registerValidation('genres'),
+        unregisterValidation: unregisterValidation('genres'),
+    });
 
     const setValue = (slice) => setState((s) => ({ ...s, ...slice }));
 
     const signup = async (e) => {
         e.preventDefault();
 
-        const errors = runValidations();
+        const errors = runValidations(true);
 
-        if (!errors?.length) {
-            let { name, playingLocation, playingRadius, location } = state;
-            name = name.split(' ');
-            const lastName = name.pop();
-            const firstName = name.join(' ');
-            const variables = {
-                ...state,
-                lastName,
-                firstName,
-                playingLocation: {
-                    name: location,
-                    latitude: playingLocation.lat,
-                    longitude: playingLocation.lng,
-                    radius: playingRadius,
-                },
-                reference: reference,
-                redirectLink: c.Environment.CALLBACK_DOMAIN,
-            };
-            await mutate({ variables });
-            setValue({
-                msg: "Thanks for joining. Please verify your email using the link we've just sent.",
-            });
+        if (errors?.length) {
+            return;
         }
+
+        let { name, playingLocation, playingRadius, locationName } = state;
+        name = name.split(' ');
+        const lastName = name.pop();
+        const firstName = name.join(' ');
+        const variables = {
+            ...state,
+            lastName,
+            firstName,
+            playingLocation: {
+                name: locationName,
+                latitude: playingLocation.lat,
+                longitude: playingLocation.lng,
+                radius: playingRadius,
+            },
+            reference: reference,
+            redirectLink: c.Environment.CALLBACK_DOMAIN,
+        };
+        await mutate({ variables });
+        setValue({
+            msg: "Thanks for joining. Please verify your email using the link we've just sent.",
+        });
     };
 
     const updateMap = debounce((location) => {
@@ -63,7 +76,7 @@ const SignupForm = ({ translate, geoCity, reference }) => {
             } else {
                 setValue({
                     locationName: location,
-                    location: geoResult.position,
+                    playingLocation: geoResult.position,
                 });
             }
         });
@@ -77,13 +90,15 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                     label="Email"
                     active={true}
                     text={translate('signup.form.email')}
-                    hideOn={['FACEBOOK', 'SIGNED_IN']}
                 >
                     <Input
                         big
                         name="email"
-                        validate={['required', 'email']}
                         placeholder="mail@gmail.com"
+                        onSave={(email) => setValue({ email })}
+                        validation={[validators.required, validators.email]}
+                        registerValidation={registerValidation('email')}
+                        unregisterValidation={unregisterValidation('email')}
                     />
                 </RegistrationElement>
 
@@ -92,14 +107,16 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                     label="Password"
                     active={true}
                     text={translate('signup.form.password')}
-                    hideOn={['FACEBOOK', 'SOUNDCLOUD', 'SIGNED_IN']}
                 >
                     <Input
                         big
                         type="password"
                         name="password"
-                        validate={['required', 'minLength']}
                         placeholder="Something super secret"
+                        onSave={(password) => setValue({ password })}
+                        validation={[validators.required, validators.minLength(6)]}
+                        registerValidation={registerValidation('password')}
+                        unregisterValidation={unregisterValidation('password')}
                     />
                 </RegistrationElement>
 
@@ -113,7 +130,10 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                         big
                         name="name"
                         placeholder={translate('first-last')}
-                        validate={['required', 'lastName']}
+                        onSave={(name) => setValue({ name })}
+                        validation={[validators.required, validators.lastName]}
+                        registerValidation={registerValidation('name')}
+                        unregisterValidation={unregisterValidation('name')}
                     />
                 </RegistrationElement>
 
@@ -128,7 +148,10 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                         name="phone"
                         type="tel"
                         placeholder="12345678"
-                        validate={['required']}
+                        onSave={(phone) => setValue({ phone })}
+                        validation={[validators.required]}
+                        registerValidation={registerValidation('phone')}
+                        unregisterValidation={unregisterValidation('phone')}
                     />
                 </RegistrationElement>
 
@@ -141,21 +164,24 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                     <LocationSelector
                         big
                         autocomplete="off"
-                        name="location"
+                        name="playingLocation"
                         onChange={updateMap}
-                        validate={['required']}
-                        value={geoCity !== '' ? geoCity : undefined}
+                        validation={[validators.required]}
+                        registerValidation={registerValidation('playingLocation')}
+                        unregisterValidation={unregisterValidation('playingLocation')}
                     />
 
-                    {state.location ? (
+                    {state.playingLocation ? (
                         <SimpleMap
                             key={state.locationName}
                             radius={25000}
                             name={'playingLocation'}
-                            value={state.location}
+                            value={state.playingLocation}
                             editable={true}
                             radiusName="playingRadius"
                             locationName="playingLocation"
+                            onCoordinatesChange={(playingLocation) => setValue({ playingLocation })}
+                            onRadiusChange={(playingRadius) => setValue({ playingRadius })}
                         />
                     ) : null}
                 </RegistrationElement>
@@ -165,13 +191,18 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                     label={translate('Genres')}
                     active={true}
                     text={translate('finish-signup.genres')}
+                    ref={genreRef}
                 >
                     <ToggleButtonHandler
                         name="genres"
                         potentialValues={c.GENRES}
-                        validate={['required']}
+                        onChange={(genres) => {
+                            setValue({ genres });
+                            runGenreValidation(genres);
+                        }}
                         columns={4}
                     />
+                    <ErrorMessageApollo error={genreError} />
                 </RegistrationElement>
 
                 <RegistrationElement
@@ -194,6 +225,10 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                         validate={['required']}
                         style={{ height: '150px' }}
                         name="bio"
+                        onSave={(bio) => setValue({ bio })}
+                        validation={[validators.required, validators.minLength(100)]}
+                        registerValidation={registerValidation('bio')}
+                        unregisterValidation={unregisterValidation('bio')}
                     />
                 </RegistrationElement>
             </NumberedList>
@@ -209,6 +244,7 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                     </div>
                 </SmartButton>
             </Row>
+            <ErrorMessageApollo error={error} />
             <div className="row">
                 <div className="col-xs-12">
                     <p
