@@ -3064,17 +3064,23 @@ header .dj-card p {
 }
 
 ol.breadcrumbs {
-    font-family: 'Ostrich Sans Inline';
-    font-style: italic;
     font-weight: 600;
-    letter-spacing: 0.1em;
+    font-weight: 700;
     list-style: none;
     margin: 0;
     padding: 0;
+    position: relative;
+    text-transform: capitalize;
+    top: -5px;
 }
 
 ol.breadcrumbs li {
     display: inline-block;
+}
+
+ol.breadcrumbs li:before {
+    content: '➡';
+    position: relative;
 }
 ol.breadcrumbs li > div {
     display: inline-block;
@@ -3084,6 +3090,7 @@ ol.breadcrumbs a {
     font-size: 16px;
     margin: 0 0.5em;
 }
+
 .logo-area {
     align-items: flex-end;
     display: flex;
