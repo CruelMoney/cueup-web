@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import debounce from 'lodash/debounce';
+import LocationSelector from 'components/common/LocationSelectorSimple';
 import { Input } from '../../../components/FormComponents';
 import { Row, TeritaryButton, PrimaryButton } from '../../../components/Blocks';
 import Popup from '../../../components/common/Popup';
-import { LocationSelectorSimple } from '../../../components/common/Form-v2';
 import Map from '../../../components/common/Map';
 import GeoCoder from '../../../utils/GeoCoder';
 
@@ -74,7 +74,7 @@ const LocationPicker = ({ initialLocation, save }) => {
                 buttonText={initialLocation ? initialLocation.name : 'Update location'}
             />
             <Popup showing={showing} onClickOutside={(_) => setShowing(false)} width={'520px'}>
-                <LocationSelectorSimple
+                <LocationSelector
                     big
                     autocomplete="off"
                     name="location"

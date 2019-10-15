@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { PureComponent, useState, useReducer, useEffect, useCallback } from 'react';
 import { getTranslate } from 'react-localize-redux';
 import { connect } from 'react-redux';
@@ -5,13 +6,11 @@ import Card from 'react-credit-card-input';
 import useScript from '@charlietango/use-script';
 import Iframe from 'react-iframe';
 import { withApollo } from 'react-apollo';
-import connectToForm from '../higher-order/connectToForm';
+import { Input } from 'components/FormComponents';
+import { SmartButton } from 'components/Blocks';
 import { PAY_EVENT } from '../gql';
 import Popup from './Popup';
 import CountrySelector from './CountrySelector';
-import SubmitButton from './SubmitButton';
-import Form from './Form-v2';
-import Textfield from './Textfield';
 import { getErrorMessage } from './ErrorMessageApollo';
 
 class XenditForm extends PureComponent {
@@ -118,12 +117,12 @@ class XenditForm extends PureComponent {
                         />
                     </Popup>
                 )}
-                <Form
+                <form
                     formValidCallback={() => this.setState({ valid: true })}
                     formInvalidCallback={() => this.setState({ valid: false })}
                     name="pay-form"
                 >
-                    <Textfield
+                    <Input
                         name="card_email"
                         type="email"
                         validate={['required', 'email']}
@@ -131,7 +130,7 @@ class XenditForm extends PureComponent {
                     />
                     <div className="row">
                         <div className="col-xs-6">
-                            <Textfield
+                            <Input
                                 name="card_name"
                                 type="text"
                                 validate={['required', 'lastName']}
@@ -148,23 +147,24 @@ class XenditForm extends PureComponent {
                     </div>
                     <ConnectedCard name="card" validate={['required']} />
                     <div style={{ marginTop: '24px' }}>
-                        <SubmitButton
+                        <SmartButton
                             glow
-                            active={this.state.valid}
+                            loading={this.state.loading}
+                            disabled={!this.state.valid}
                             rounded={true}
                             name={'confirm_payment'}
                             onClick={this.confirmPayment}
                         >
                             {translate('Confirm & pay')}
-                        </SubmitButton>
+                        </SmartButton>
                     </div>
-                </Form>
+                </form>
             </>
         );
     }
 }
 
-const ConnectedCard = connectToForm(({ refForward, onChange }) => {
+const ConnectedCard = ({ refForward, onChange }) => {
     const [loaded] = useScript('https://js.xendit.co/v1/xendit.min.js');
 
     if (loaded) {
@@ -262,7 +262,7 @@ const ConnectedCard = connectToForm(({ refForward, onChange }) => {
             />
         </div>
     );
-});
+};
 
 function mapStateToProps(state, ownprops) {
     return {

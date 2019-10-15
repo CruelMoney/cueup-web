@@ -14,7 +14,6 @@ import Home from './routes/Home';
 import About from './routes/About';
 import CueupEvent from './routes/Event';
 import Gig from './routes/Gig';
-import HowItWorks from './routes/HowItWorks';
 import Signup from './routes/Signup';
 import User from './routes/User';
 import Faq from './routes/Faq';
@@ -185,7 +184,6 @@ const RouteWrapper = memo(({ translate, cssLocation }) => {
                     <Route exact path={[translate('routes./'), '/verifyEmail']} component={Home} />
                     <Route path={translate('routes./about')} component={About} />
                     <Route path={[translate('routes./user/:permalink')]} component={User} />
-                    <Route path={translate('routes./how-it-works')} component={HowItWorks} />
                     <Route path={translate('routes./signup')} component={Signup} />
                     <Route path={translate('routes./faq')} component={Faq} />
                     <Route path={translate('routes./terms')} component={Terms} />

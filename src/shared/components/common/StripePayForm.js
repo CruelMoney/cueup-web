@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { PureComponent, useState, useEffect, useRef } from 'react';
 import {
     CardElement,
@@ -8,11 +9,8 @@ import {
 } from 'react-stripe-elements';
 import { getTranslate } from 'react-localize-redux';
 import { connect } from 'react-redux';
+import { Input } from 'components/FormComponents';
 import { Environment } from '../../constants/constants';
-import connectToForm from '../higher-order/connectToForm';
-import Textfield from './Textfield';
-import Form from './Form-v2';
-import SubmitButton from './SubmitButton';
 import CountrySelector from './CountrySelector';
 
 class StripeForm extends PureComponent {
@@ -77,14 +75,15 @@ class StripeForm extends PureComponent {
     };
 
     render() {
+        const { loading } = this.state;
         const { translate } = this.props;
         return (
-            <Form
+            <form
                 formValidCallback={() => this.setState({ valid: true })}
                 formInvalidCallback={() => this.setState({ valid: false })}
                 name="pay-form"
             >
-                <Textfield
+                <Input
                     name="card_email"
                     type="email"
                     validate={['required', 'email']}
@@ -92,7 +91,7 @@ class StripeForm extends PureComponent {
                 />
                 <div className="row">
                     <div className="col-xs-6">
-                        <Textfield
+                        <Input
                             name="card_name"
                             type="text"
                             validate={['required', 'lastName']}
@@ -111,17 +110,18 @@ class StripeForm extends PureComponent {
                 <ConnectedCard validate={['required']} refForward={this.cardElement} />
 
                 <div style={{ marginTop: '24px' }}>
-                    <SubmitButton
+                    <SmartButton
                         glow
-                        active={this.state.valid}
+                        disabled={!this.state.valid}
+                        loading={loading}
                         rounded={true}
                         name={'confirm_payment'}
                         onClick={this.confirmPayment}
                     >
                         {translate('Confirm & pay')}
-                    </SubmitButton>
+                    </SmartButton>
                 </div>
-            </Form>
+            </form>
         );
     }
 }
@@ -186,7 +186,7 @@ const PaymentRequestButtonWrapper = ({ paymentIntent, stripe, onPaymentConfirmed
         paymentRequest.current.canMakePayment().then((result) => {
             setCanMakePayment(!!result);
         });
-    }, []); // eslint-disable-line
+    }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
     if (!canMakePayment || !paymentRequest.current) {
         return null;
@@ -240,7 +240,7 @@ function mapStateToProps(state, ownprops) {
     };
 }
 
-const ConnectedCard = connectToForm(({ refForward, onChange }) => {
+const ConnectedCard = ({ refForward, onChange }) => {
     return (
         <div className="stripe-card">
             <CardElement
@@ -272,6 +272,6 @@ const ConnectedCard = connectToForm(({ refForward, onChange }) => {
             />
         </div>
     );
-});
+};
 
 export default connect(mapStateToProps)(StripeFormWrapper);

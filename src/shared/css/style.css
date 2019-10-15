@@ -471,7 +471,6 @@ footer .dropdown-selector-wrapper {
     color: #8998aa;
     fill: #8998aa;
     font-size: 15px;
-    letter-spacing: 0.75px;
     margin: auto;
 }
 footer .social a {
@@ -539,7 +538,6 @@ footer .social svg {
     color: #32325d;
     font-family: 'AvenirNext-Medium', sans-serif;
     font-size: 30px;
-    letter-spacing: 0.91px;
     margin: 0.75em 0;
 }
 #preFooter .action-title span {
@@ -2103,70 +2101,6 @@ table {
     width: 100%;
 }
 
-.how-it-works {
-    align-items: flex-end;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 70px;
-    margin-top: -90px;
-    position: relative;
-}
-
-.how-it-works section {
-    float: right;
-    margin-bottom: 180px;
-    width: 570px;
-}
-.how-it-works section:last-child {
-    margin-bottom: 0px;
-}
-
-.how-it-works section .how-to-title {
-    display: flex;
-    margin-bottom: 15px;
-    margin-left: -30px;
-}
-
-.how-it-works section .how-to-title > h2 {
-    color: #b031ff;
-    margin-left: 80px;
-    width: 194px;
-}
-.how-it-works .circle {
-    background-color: #b031ff;
-    position: absolute;
-}
-
-.location_how-it-works .info-boxes {
-    min-height: 0px;
-}
-.circle {
-    border-radius: 100%;
-    color: white;
-    font-family: 'AvenirNext-DemiBold', sans-serif;
-    font-size: 30px;
-    height: 60px;
-    line-height: 60px;
-    text-align: center;
-    width: 60px;
-}
-
-.how-it-works section:nth-child(2) {
-    width: 540px;
-}
-.how-it-works section:nth-child(3) {
-    width: 510px;
-}
-.how-it-works section:nth-child(4) {
-    width: 470px;
-}
-.how-it-works section:nth-child(5) {
-    width: 440px;
-}
-.how-it-works section > p {
-    width: 100%;
-}
-
 .card {
     background: #ffffff;
     border-radius: 6px;
@@ -2288,9 +2222,7 @@ p.error {
 .request-form-wrapper {
     margin-top: 280px;
 }
-.how-it-works-wrapper {
-    margin-top: 300px;
-}
+
 .request-form {
     margin-bottom: 100px;
 }
@@ -3342,36 +3274,10 @@ ol.breadcrumbs a {
         width: 80%;
     }
 
-    .location_how-it-works #stripes {
-        height: 570px;
-    }
-    .how-it-works-wrapper {
-        margin-top: 210px;
-    }
     .particles-bg {
         width: 55%;
     }
 
-    .how-it-works {
-        height: 2040px;
-        margin-top: -120px;
-    }
-    .how-it-works section {
-        width: 475px;
-    }
-
-    .how-it-works section:nth-child(2) {
-        width: 445px;
-    }
-    .how-it-works section:nth-child(3) {
-        width: 415px;
-    }
-    .how-it-works section:nth-child(4) {
-        width: 375px;
-    }
-    .how-it-works section:nth-child(5) {
-        width: 340px;
-    }
     .terms-content .row,
     .faq-content .row,
     .about-content .row {
@@ -3667,18 +3573,7 @@ ol.breadcrumbs a {
     .particles-bg {
         display: none;
     }
-    .how-it-works {
-        height: 100%;
-        margin-top: 0px;
-    }
-    .how-it-works section {
-        margin-bottom: 50px;
-        padding: 0px 15px;
-        width: 100% !important;
-    }
-    .how-it-works section .how-to-title {
-        margin-left: 0px;
-    }
+
     #preFooter:before {
         top: -30px;
     }
@@ -3745,7 +3640,6 @@ ol.breadcrumbs a {
     .hideMobile {
         display: none !important;
     }
-    .how-it-works-wrapper,
     .request-form-wrapper {
         margin-top: 0;
     }
@@ -3758,10 +3652,6 @@ ol.breadcrumbs a {
         flex-direction: column;
         height: 70px;
         justify-content: flex-end;
-    }
-
-    .location_how-it-works #preFooter:before {
-        top: -730px;
     }
 
     .popup {

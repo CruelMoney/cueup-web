@@ -4,16 +4,17 @@ import { getTranslate, getActiveLanguage } from 'react-localize-redux';
 import { Elements, StripeProvider, injectStripe } from 'react-stripe-elements';
 import { Query, Mutation, useMutation } from 'react-apollo';
 import { Title, BodySmall } from 'components/Text';
-import { Input, InputRow, Label, useForm } from 'components/FormComponents';
+import { Input, InputRow, Label } from 'components/FormComponents';
 import CurrencySelector from 'components/CurrencySelector';
 import { SmartButton, Row, TeritaryButton } from 'components/Blocks';
+import { useForm } from 'components/hooks/useForm';
 import { Environment } from '../../constants/constants';
 import { USER_BANK_ACCOUNT, UPDATE_USER_PAYOUT } from '../gql';
 import IbanField from './IbanField';
 import CountrySelector, { BankSelector } from './CountrySelector';
 import { LoadingIndicator } from './LoadingPlaceholder';
 import ErrorMessageApollo, { getErrorMessage } from './ErrorMessageApollo';
-import { PhoneInputNew } from './PhoneInput';
+import PhoneInput from './PhoneInput';
 
 const getStripeData = async ({ country, stripe, name, currency }) => {
     const tokenData = {
@@ -189,7 +190,7 @@ const MainForm = ({ user, bankAccount, translate, isUpdate, submit, onCancel, lo
                     unregisterValidation={unregisterValidation('name')}
                 />
 
-                <PhoneInputNew
+                <PhoneInput
                     half
                     label={translate('payout.account-phone')}
                     defaultValue={form.phone}

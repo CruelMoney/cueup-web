@@ -26,7 +26,6 @@
       "/book-dj/denmark/odense",
       "/dk/book-dj/danmark/odense"
     ],
-    "/how-it-works": ["/how-it-works", "/dk/saadan-virker-det"],
     "/user": ["/user", "/dk/user"],
     "/user/signup": ["/user/signup", "/dk/user/tilmeld"],
     "/user/:permalink": ["/user/:permalink", "/dk/user/:permalink"],
@@ -88,8 +87,6 @@
     "anmeldelser": ["anmeldelser", "reviews"],
     "preferences": ["indstillinger", "preferences"],
     "indstillinger": ["indstillinger", "preferences"],
-    "how-it-works": ["saadan-virker-det", "how-it-works"],
-    "saadan-virker-det": ["saadan-virker-det", "how-it-works"],
     "about": ["om", "about"],
     "om": ["om", "about"],
     "signup": ["tilmeld", "signup"],

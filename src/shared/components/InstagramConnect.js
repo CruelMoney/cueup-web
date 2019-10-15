@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useConnectInstagram } from '../utils/Hooks';
 import Notification from './common/Notification';
 import ErrorMessageApollo from './common/ErrorMessageApollo';
+import { useConnectInstagram } from './hooks/useConnectInstagram';
 
 const InstagramConnect = () => {
     const [state, setState] = useState({});

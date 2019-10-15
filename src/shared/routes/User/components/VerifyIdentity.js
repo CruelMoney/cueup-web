@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from 'react-apollo';
-import { Input, useForm, InputRow } from '../../../components/FormComponents';
+import { useForm } from 'components/hooks/useForm';
+import { Input, InputRow } from '../../../components/FormComponents';
 import DatePickerPopup from '../../../components/DatePicker';
 import CountrySelector from '../../../components/CountrySelector';
 import ImageUploader from '../../../components/ImageInput';

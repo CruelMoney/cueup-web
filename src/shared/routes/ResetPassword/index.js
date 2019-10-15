@@ -3,27 +3,16 @@ import { localize } from 'react-localize-redux';
 import { Helmet } from 'react-helmet-async';
 import { Mutation } from 'react-apollo';
 import PropTypes from 'prop-types';
+import { SmartButton } from 'components/Blocks';
+import { Input } from 'components/FormComponents';
+import RegistrationElement from 'components/common/RegistrationElement';
 import Footer from '../../components/common/Footer';
 
 import NumberedList from '../../components/common/NumberedList';
-import FormV2, { RegistrationElement, Textfield } from '../../components/common/Form-v2';
-import SubmitButton from '../../components/common/SubmitButton';
 import { getErrorMessage } from '../../components/common/ErrorMessageApollo';
 import { RESET_PASSWORD } from '../../components/gql';
 
 class NotFound extends Component {
-    state = {
-        msg: null,
-    };
-
-    static childContextTypes = {
-        color: PropTypes.string,
-    };
-
-    getChildContext() {
-        return { color: '#31DAFF' };
-    }
-
     componentDidMount() {
         document.body.classList.add('not-found');
     }
@@ -81,12 +70,12 @@ class NotFound extends Component {
                     <div className="signup fix-top-mobile">
                         <h1 style={{ marginBottom: '32px' }}>{siteTitle}</h1>
                         <Mutation mutation={RESET_PASSWORD}>
-                            {(mutate) => {
+                            {(mutate, { loading }) => {
                                 return (
-                                    <FormV2 name={'reset-password-form'}>
+                                    <form name={'reset-password-form'}>
                                         <NumberedList>
                                             <RegistrationElement label="New password" active={true}>
-                                                <Textfield
+                                                <Input
                                                     big
                                                     type="password"
                                                     name="password"
@@ -99,7 +88,7 @@ class NotFound extends Component {
                                                 label="Repeat password"
                                                 active={true}
                                             >
-                                                <Textfield
+                                                <Input
                                                     big
                                                     type="password"
                                                     name="repeatPassword"
@@ -110,17 +99,17 @@ class NotFound extends Component {
                                             </RegistrationElement>
                                         </NumberedList>
 
-                                        <SubmitButton
+                                        <SmartButton
                                             glow
                                             type="submit"
-                                            active={true}
+                                            loading={loading}
                                             name="reset-password"
                                             onClick={this.request(mutate)}
                                         >
                                             <div style={{ minWidth: '100px' }}>
                                                 {translate('Reset')}
                                             </div>
-                                        </SubmitButton>
+                                        </SmartButton>
                                         {this.state.msg ? (
                                             <div
                                                 style={{
@@ -136,7 +125,7 @@ class NotFound extends Component {
                                                 </p>
                                             </div>
                                         ) : null}
-                                    </FormV2>
+                                    </form>
                                 );
                             }}
                         </Mutation>

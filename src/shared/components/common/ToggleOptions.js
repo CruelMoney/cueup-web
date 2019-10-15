@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import connectToForm from '../higher-order/connectToForm';
 
 class ToggleOptions extends Component {
     static propTypes = {
@@ -106,5 +105,5 @@ class ToggleOptions extends Component {
     }
 }
 
-export default connectToForm(ToggleOptions);
+export default ToggleOptions;
 export { ToggleOptions as DisconnectedToggleOptions };

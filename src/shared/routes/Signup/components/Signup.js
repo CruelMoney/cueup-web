@@ -112,7 +112,7 @@ class Signup extends Component {
                 <Footer
                     noSkew
                     color={this.themeColor}
-                    firstTo={translate('routes./how-it-works')}
+                    firstTo={translate('routes./')}
                     secondTo={translate('routes./')}
                     firstLabel={translate('how-it-works')}
                     secondLabel={translate('arrange-event')}

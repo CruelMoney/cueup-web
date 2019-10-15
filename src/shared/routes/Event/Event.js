@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { useTransition, animated } from 'react-spring';
 import { useMeasure } from '@softbind/hook-use-measure';
 import requestFormContent from '../../components/common/RequestForm/content.json';
-import modalContent from '../../components/common/modals/content.json';
 import addTranslate from '../../components/higher-order/addTranslate';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
@@ -68,7 +67,7 @@ const Index = ({ translate, match, location }) => {
 
             <Footer
                 noSkew
-                firstTo={translate('routes./how-it-works')}
+                firstTo={translate('routes./')}
                 secondTo={translate('routes./')}
                 firstLabel={translate('how-it-works')}
                 secondLabel={translate('arrange-event')}
@@ -219,4 +218,4 @@ const AnimationWrapper = styled.div`
     }
 `;
 
-export default addTranslate(Index, [content, requestFormContent, modalContent]);
+export default addTranslate(Index, [content, requestFormContent]);

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Button from './Button-v2';
 
 class LoadingPlaceholder extends Component {
     render() {
@@ -77,8 +76,7 @@ const LoadingIndicator = ({ label, color }) => (
             flexDirection: 'column',
         }}
     >
-        <Button rounded glow active disabled isLoading color={color} />
-        <p style={{ marginTop: '1em' }}>{label}</p>
+        <p>Loading...</p>
     </div>
 );
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Textfield from '../../../components/common/Textfield';
-import Button from '../../../components/common/Button-v2';
+import { Input } from 'components/FormComponents';
+import { SmartButton } from 'components/Blocks';
 
 class NewsletterSignup extends Component {
     state = {
@@ -54,7 +54,7 @@ class NewsletterSignup extends Component {
                         }
                     }}
                 >
-                    <Textfield
+                    <Input
                         id="fieldEmail"
                         name="cm-firdyj-firdyj"
                         type="email"
@@ -62,17 +62,17 @@ class NewsletterSignup extends Component {
                         placeholder="Email"
                     />
                     <div className="button-wrapper">
-                        <Button
+                        <SmartButton
                             active
                             glow
-                            isLoading={loading}
+                            loading={loading}
                             succes={succes}
                             color="rgb(37, 244, 210)"
                             onClick={() => this.submit(false)}
                             type="submit"
                         >
                             Abonner
-                        </Button>
+                        </SmartButton>
                     </div>
                 </form>
             </div>

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import ArrowIcon from 'react-ionicons/lib/MdArrowRoundForward';
+import ToggleOptions from 'components/common/ToggleOptions';
 import { Input, Label } from '../../../components/FormComponents';
 import { Row, TeritaryButton, PrimaryButton } from '../../../components/Blocks';
 import Popup from '../../../components/common/Popup';
-import Button from '../../../components/common/Button-v2';
-import { ToggleOptions } from '../../../components/common/Form-v2';
 import Slider from '../../../components/common/Slider';
 import { Stat, StatUnit, BodySmall } from '../../../components/Text';
 
@@ -49,21 +48,21 @@ const CancelationPolicyPopup = ({ initialValue, save, translate }) => {
                             }))
                         }
                     >
-                        <Button name={1} color="#50E3C2">
+                        <button name={1} color="#50E3C2">
                             1 {translate('day')}
-                        </Button>
-                        <Button name={2} color="#50E3C2">
+                        </button>
+                        <button name={2} color="#50E3C2">
                             2 {translate('days')}
-                        </Button>
-                        <Button name={7} color="#50E3C2">
+                        </button>
+                        <button name={7} color="#50E3C2">
                             1 {translate('week')}
-                        </Button>
-                        <Button name={14} color="#50E3C2">
+                        </button>
+                        <button name={14} color="#50E3C2">
                             2 {translate('weeks')}
-                        </Button>
-                        <Button name={30} color="#50E3C2">
+                        </button>
+                        <button name={30} color="#50E3C2">
                             1 {translate('month')}
-                        </Button>
+                        </button>
                     </ToggleOptions>
                 </div>
                 <Slider

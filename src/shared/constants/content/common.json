@@ -3,7 +3,6 @@
   "book-dj": ["Book DJ", "Book DJ"],
   "become-dj": ["Become DJ", "Bliv DJ"],
   "get-offers": ["Get offers", "Få tilbud"],
-  "how-it-works": ["How it works", "Sådan virker det"],
   "are-you-a-dj": ["Are you a DJ?", "Er du DJ?"],
   "are-you-a-dj-in-:location": ["Are you a DJ in ${ location }?", "Er du DJ i ${ location }?"],
   "apply-to-become-dj": ["Apply to become DJ", "Ansøg om at blive DJ"],

@@ -10,13 +10,11 @@ import { changeCurrency } from '../../actions/SessionActions';
 import addTranslate from '../higher-order/addTranslate';
 import content from '../../routes/Event/content.json';
 import TextWrapper from './TextElement';
-import Button from './Button-v2';
 import MoneyTable, { TableItem } from './MoneyTable';
 import StripeFormWrapper from './StripePayForm';
 import XenditPayForm from './XenditPayForm';
 import { LoadingPlaceholder2, LoadingIndicator } from './LoadingPlaceholder';
 import requestFormContent from './RequestForm/content.json';
-import modalContent from './modals/content.json';
 import NotifyPayment from './NotifyPayment';
 
 const PayForm = ({
@@ -168,7 +166,6 @@ const PayForm = ({
 const ThankYouContent = ({ translate, style }) => {
     return (
         <div className="payment-confirmation" style={style}>
-            <Button succes={true} rounded active glow />
             <h3>{translate('payment-succes-message')}</h3>
         </div>
     );
@@ -194,4 +191,4 @@ const SmartPay = connect(
     mapDispatchToProps
 )(PayForm);
 
-export default addTranslate(SmartPay, [content, requestFormContent, modalContent]);
+export default addTranslate(SmartPay, [content, requestFormContent]);

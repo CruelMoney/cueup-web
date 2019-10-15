@@ -1,18 +1,8 @@
 import { useCallback } from 'react';
-import { useApolloClient, useMutation } from 'react-apollo';
-import { CONNECT_INSTAGRAM, DISCONNECT_INSTAGRAM } from '../routes/User/gql';
-import { Environment } from '../constants/constants';
-import { ME } from '../components/gql';
-import { authService } from './AuthService';
-
-export const useLogout = () => {
-    const client = useApolloClient();
-
-    return async () => {
-        authService.logout();
-        client.writeData({ data: { me: null } });
-    };
-};
+import { useMutation } from 'react-apollo';
+import { CONNECT_INSTAGRAM, DISCONNECT_INSTAGRAM } from '../../routes/User/gql';
+import { Environment } from '../../constants/constants';
+import { ME } from '../gql';
 
 export const useConnectInstagram = () => {
     const [mutate, { loading, ...rest }] = useMutation(CONNECT_INSTAGRAM, {

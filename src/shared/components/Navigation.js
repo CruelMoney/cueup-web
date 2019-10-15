@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Query } from 'react-apollo';
-import { useLogout } from '../utils/Hooks';
 import { notificationService } from '../utils/NotificationService';
 import Navlink from './common/Navlink';
 import UserMenuItem from './common/UserMenuItem';
-import Button from './common/Button-v2';
 import Login from './common/Login';
 import Logo from './common/Logo';
 import MobileMenu from './MobileMenu';
@@ -16,6 +14,7 @@ import addTranslate from './higher-order/addTranslate';
 import Popup from './common/Popup';
 import InstagramConnect from './InstagramConnect';
 import { TitleClean } from './Text';
+import { useLogout } from './hooks/useLogout';
 
 const Menu = ({ translate, history, location }) => {
     const [loginExpanded, setLoginExpanded] = useState(false);
@@ -67,14 +66,6 @@ const Menu = ({ translate, history, location }) => {
                                                 />
                                             </li>
                                         ) : null}
-
-                                        <li>
-                                            <Navlink
-                                                buttonLook={true}
-                                                to={translate('routes./how-it-works')}
-                                                label={translate('how-it-works')}
-                                            />
-                                        </li>
 
                                         {!loggedIn && !loading ? (
                                             <li>
@@ -139,15 +130,7 @@ const Menu = ({ translate, history, location }) => {
                                             </li>
                                         ) : null}
 
-                                        {loading ? (
-                                            <li>
-                                                <Button
-                                                    className="redirect-button"
-                                                    color="#fff"
-                                                    isLoading
-                                                />
-                                            </li>
-                                        ) : null}
+                                        {loading ? <li>Loading...</li> : null}
                                     </ul>
                                 </nav>
                             </div>

@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import Button from './Button-v2';
 
 class ToggleButton extends Component {
+    static defaultProps = {
+        rounded: false,
+        label: 'ToggleButton',
+    };
+
     constructor(props) {
         super(props);
         this.selfRef = React.createRef();
@@ -10,11 +14,6 @@ class ToggleButton extends Component {
             value: '',
         };
     }
-
-    static defaultProps = {
-        rounded: false,
-        label: 'ToggleButton',
-    };
 
     componentDidMount() {
         this.selfRef.current.focus();
@@ -27,13 +26,13 @@ class ToggleButton extends Component {
         });
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
-        if (nextProps.active !== undefined) {
-            this.setState({
-                toggled: nextProps.active,
-            });
-        }
-    }
+    // UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
+    //     if (nextProps.active !== undefined) {
+    //         this.setState({
+    //             toggled: nextProps.active,
+    //         });
+    //     }
+    // }
 
     onChange = (e) => {
         this.setState({ value: e.target.value });
@@ -42,14 +41,14 @@ class ToggleButton extends Component {
 
     render() {
         return (
-            <Button
+            <button
                 {...this.props}
                 className="edit-text-button"
                 active={this.state.toggled}
                 onClick={null}
             >
                 <input onChange={this.onChange} ref={this.selfRef} type="text" />
-            </Button>
+            </button>
         );
     }
 }
