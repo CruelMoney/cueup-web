@@ -1879,23 +1879,6 @@ button.active .info-popup {
     }
 }
 
-.particles-bg {
-    background-image: linear-gradient(0deg, #b031ff 0%, #b031ff 15%, #00d1ff 85%, #32daff 90%);
-    height: 170%;
-    margin-top: -20vw;
-    position: absolute;
-    transform: skewX(5deg) translateX(-30%);
-    width: 65%;
-    z-index: -2;
-}
-
-#particles {
-    margin-left: -60px;
-    margin-top: -70px;
-    position: absolute;
-    z-index: 1;
-}
-
 /*Link button*/
 .button {
     align-items: center;
@@ -3274,10 +3257,6 @@ ol.breadcrumbs a {
         width: 80%;
     }
 
-    .particles-bg {
-        width: 55%;
-    }
-
     .terms-content .row,
     .faq-content .row,
     .about-content .row {
@@ -3556,22 +3535,6 @@ ol.breadcrumbs a {
     .fixed {
         position: initial;
         top: initial;
-    }
-
-    .particles canvas {
-        height: 200px !important;
-        margin-bottom: 75px;
-        width: 70% !important;
-    }
-    .particles > div {
-        display: flex;
-        justify-content: center;
-    }
-    #particles {
-        display: none;
-    }
-    .particles-bg {
-        display: none;
     }
 
     #preFooter:before {
