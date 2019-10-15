@@ -2068,19 +2068,15 @@ table {
     border-spacing: 10px;
     width: 100%;
 }
-.edit-text-button {
-    background: blue;
-}
+
 .edit-text-button input {
     -webkit-appearance: none;
     background: transparent;
     border: none;
     font-size: 16px;
     font-weight: 600;
-    letter-spacing: 0.39px;
     outline: none;
     text-align: center;
-    text-transform: uppercase;
     width: 100%;
 }
 
