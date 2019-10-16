@@ -163,7 +163,7 @@ const MainForm = ({ user, bankAccount, translate, isUpdate, submit, onCancel, lo
                     label={translate('country')}
                     placeholder={translate('country')}
                     onChange={setValue('country')}
-                    validation={(v) => (v ? null : 'Please select a country')}
+                    validation={(v) => (v ? null : 'Please select a country from the list')}
                     registerValidation={registerValidation('country')}
                     unregisterValidation={unregisterValidation('country')}
                 />

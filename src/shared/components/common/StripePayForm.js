@@ -89,7 +89,7 @@ const StripeForm = ({ translate, stripe, paymentIntent, onPaymentConfirmed }) =>
                     noShadow
                     forceHeight={250}
                     {...getInputProps('card_country')}
-                    validation={[validators.required]}
+                    validation={(v) => (!v ? 'Please select a country from the list' : null)}
                     placeholder={translate('country')}
                 />
 
@@ -241,9 +241,10 @@ function mapStateToProps(state, ownprops) {
 }
 
 const ConnectedCard = ({ refForward, onSave }) => {
+    const [error, setError] = useState();
     return (
         <LabelHalf>
-            <Wrapper>
+            <Wrapper error={error}>
                 <CardElement
                     style={{
                         base: {
@@ -264,7 +265,8 @@ const ConnectedCard = ({ refForward, onSave }) => {
                     onReady={(el) => {
                         refForward.current = el;
                     }}
-                    onChange={({ complete }) => {
+                    onChange={({ complete, error }) => {
+                        setError(error?.message);
                         if (complete) {
                             onSave(true);
                         } else {
@@ -273,6 +275,7 @@ const ConnectedCard = ({ refForward, onSave }) => {
                     }}
                 />
             </Wrapper>
+            <p className="error">{error}</p>
         </LabelHalf>
     );
 };

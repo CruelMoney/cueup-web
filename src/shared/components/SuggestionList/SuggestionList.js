@@ -1,5 +1,5 @@
 import { isBoolean } from 'util';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { Input } from '../FormComponents';
 import { inputStyle } from '../Blocks';
@@ -18,6 +18,8 @@ const SuggestionList = ({
     style,
     ...props
 }) => {
+    const inputRef = useRef();
+
     const getDefaultValue = (v) => {
         if (!suggestions || !suggestions.length) {
             return v;
@@ -58,8 +60,9 @@ const SuggestionList = ({
 
         if (isEnter) {
             e.preventDefault();
-            handleChange(suggestions[suggestionCursor], true);
+            handleChange(suggestions[Math.max(suggestionCursor, 0)], true);
             setFocused(false);
+            inputRef.current.blur();
             return false;
         }
 
@@ -94,13 +97,13 @@ const SuggestionList = ({
             className={'suggestionList' + (half ? ' half' : '')}
         >
             <Input
+                ref={inputRef}
                 errorOutside
                 type="text"
                 value={displayValue}
                 onChange={!disableInput && handleChange}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
-                blurOnEnter={false}
                 style={style}
                 {...props}
             />
@@ -126,12 +129,14 @@ const SuggestionList = ({
     );
 };
 
-export const SearchableSuggestionList = ({ suggestions, onBlur, onChange, ...props }) => {
+export const SearchableSuggestionList = ({ suggestions, onBlur, onChange, onSave, ...props }) => {
     const [filter, setFilter] = useState();
+    const [reset, setReset] = useState(false);
+    let filteredSuggestions = suggestions;
 
     if (filter) {
         const lowered = filter.toLowerCase();
-        suggestions = suggestions.filter((s) => {
+        filteredSuggestions = suggestions.filter((s) => {
             if (s.label) {
                 return s.label.toLowerCase().includes(lowered);
             }
@@ -140,22 +145,30 @@ export const SearchableSuggestionList = ({ suggestions, onBlur, onChange, ...pro
     }
 
     const changeHandler = (value, wasSelected) => {
-        setFilter(value);
+        onChange && onChange(value);
         if (wasSelected) {
-            onChange && onChange(value);
+            onSave && onSave(value);
+        } else {
+            setFilter(value);
         }
     };
 
     const blurHandler = () => {
         setFilter(null);
+        // check if exists in list
+        if (!filteredSuggestions.length) {
+            setReset((r) => !r);
+            onSave && onSave(null);
+        }
         onBlur && onBlur();
     };
 
     return (
         <SuggestionList
+            key={reset}
             {...props}
             onChange={changeHandler}
-            suggestions={suggestions}
+            suggestions={filteredSuggestions}
             onBlur={blurHandler}
         />
     );
