@@ -219,11 +219,12 @@ const Suggestion = styled.li`
     ${inputStyle};
     display: flex;
     align-items: center;
-    padding: 9px 21px;
+    padding: 9px 9px;
+    margin: 0 12px;
     cursor: pointer;
     text-indent: 0;
     height: auto;
-    width: 100%;
+    width: calc(100% - 24px);
     box-sizing: border-box;
     background-color: ${({ active }) => (active ? ' #f6f8f9' : 'transparent')};
 `;
