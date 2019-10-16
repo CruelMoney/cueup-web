@@ -13,6 +13,7 @@ const ReadMoreBody = styled(Body)`
     -webkit-user-select: text;
     user-select: text;
     white-space: pre-wrap;
+    margin-bottom: 18px;
 `;
 
 const ReadMoreExpander = ({ content, onTextSelected }) => {

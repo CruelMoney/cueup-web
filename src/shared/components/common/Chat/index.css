@@ -132,7 +132,11 @@
 }
 
 .popup .chat {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     max-width: 90vw;
+    min-height: 500px;
     width: 600px;
 }
 

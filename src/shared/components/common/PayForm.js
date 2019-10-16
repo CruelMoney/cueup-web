@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getTranslate, getActiveLanguage } from 'react-localize-redux';
 import { Query, useMutation } from 'react-apollo';
 import ReactPixel from 'react-facebook-pixel';
+import Checkmark from 'react-ionicons/lib/IosCheckmarkCircle';
 import { LoadingIndicator, Row } from 'components/Blocks';
 import { REQUEST_PAYMENT_INTENT, PAYMENT_CONFIRMED } from '../../routes/Event/gql';
 import * as tracker from '../../utils/analytics/autotrack';
@@ -169,6 +170,7 @@ const PayForm = ({
 const ThankYouContent = ({ translate, style }) => {
     return (
         <div className="payment-confirmation" style={style}>
+            <Checkmark color={'#50E3C2'} fontSize="42px" />
             <h3>{translate('payment-succes-message')}</h3>
         </div>
     );
