@@ -57,6 +57,13 @@ const SuggestionList = ({
         const arrowDown = keyCode == '40';
         const arrowUp = keyCode == '38';
         const isEnter = keyCode == '13';
+        const isTab = keyCode == '9';
+
+        if (isTab) {
+            handleChange(suggestions[Math.max(suggestionCursor, 0)], true);
+            setFocused(false);
+            return false;
+        }
 
         if (isEnter) {
             e.preventDefault();
@@ -153,7 +160,7 @@ export const SearchableSuggestionList = ({ suggestions, onBlur, onChange, onSave
         }
     };
 
-    const blurHandler = () => {
+    const blurHandler = (e) => {
         setFilter(null);
         // check if exists in list
         if (!filteredSuggestions.length) {
@@ -178,6 +185,7 @@ const Wrapper = styled.div`
     position: relative;
     z-index: ${({ active }) => (active ? 2 : 1)};
     display: block;
+    margin-bottom: 30px;
     label,
     input {
         position: relative;
@@ -185,6 +193,7 @@ const Wrapper = styled.div`
         width: 100%;
         min-width: 100%;
         margin-right: 0;
+        margin-bottom: 0;
     }
 `;
 

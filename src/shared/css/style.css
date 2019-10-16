@@ -1352,38 +1352,6 @@ input[type='file'] + label * {
             }
         }
     }
-    .stripe-card {
-        .StripeElement {
-            border-bottom: 1px solid rgb(224, 224, 224);
-            height: 35px;
-            margin-bottom: 3em;
-            padding-top: 0.7em;
-            position: relative;
-            width: 100%;
-        }
-        .StripeElement:after {
-            background-color: rgb(37, 244, 210);
-            bottom: -1px;
-            content: '';
-            height: 2px;
-            position: absolute;
-            transform: scaleX(0);
-            transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1);
-            width: 100%;
-        }
-        .StripeElement--focus:after {
-            transform: none;
-        }
-        .StripeElement--invalid:after {
-            background-color: #f44336;
-            transform: none;
-        }
-        #field-wrapper {
-            label:first-of-type {
-                flex: 1;
-            }
-        }
-    }
     form ~ .errors {
         margin-top: 2em;
     }

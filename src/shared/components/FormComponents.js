@@ -94,7 +94,6 @@ export const InputRow = styled(Row)`
                       min-width: calc(100% - 36px);
                       margin-right: 36px;
                       align-self: flex-start;
-                      height: 56px;
                   }
                   ${InputLabel} {
                       min-width: calc(100% - 36px);
