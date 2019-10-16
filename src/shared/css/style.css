@@ -2166,12 +2166,10 @@ p.error {
 .request-form {
     margin-bottom: 100px;
 }
-.request-form div[class^='col'] {
-    perspective: 2000px;
-}
-.request-form .card {
-    padding: 20px;
-    transform: none;
+
+.request-form label,
+.request-form .suggestionList {
+    margin-bottom: 12px;
 }
 @keyframes show {
     100% {
@@ -2201,7 +2199,6 @@ p.error {
 
 .request-form p {
     color: #8998aa;
-    margin: 0;
 }
 .request-form h3 {
     font-size: 20px;

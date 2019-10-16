@@ -82,10 +82,11 @@ const Step1 = ({
                             registerValidation={registerValidation('locationName')}
                             unregisterValidation={unregisterValidation('locationName')}
                             defaultValue={form.locationName}
-                        />
-                        <BodySmall>
-                            {translate('request-form.step-1.event-location-description')}
-                        </BodySmall>
+                        >
+                            <BodySmall>
+                                {translate('request-form.step-1.event-location-description')}
+                            </BodySmall>
+                        </LocationSelector>
                     </RequestSection>
                     <RequestSection
                         className="cursor-pointer"

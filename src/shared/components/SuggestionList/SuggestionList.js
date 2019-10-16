@@ -16,6 +16,7 @@ const SuggestionList = ({
     disableInput,
     half,
     style,
+    children,
     ...props
 }) => {
     const inputRef = useRef();
@@ -118,7 +119,7 @@ const SuggestionList = ({
                 <List
                     noShadow={noShadow}
                     forceHeight={forceHeight}
-                    topOffset={props.label ? 95 : 60}
+                    topOffset={props.label ? 90 : 60}
                 >
                     {suggestions.map((s, idx) => (
                         <Suggestion
@@ -132,6 +133,7 @@ const SuggestionList = ({
                     ))}
                 </List>
             )}
+            {children}
         </Wrapper>
     );
 };
@@ -194,6 +196,9 @@ const Wrapper = styled.div`
         min-width: 100%;
         margin-right: 0;
         margin-bottom: 0;
+    }
+    > p {
+        margin-top: 6px;
     }
 `;
 

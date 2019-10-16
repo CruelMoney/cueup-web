@@ -45,10 +45,11 @@ const Step4 = ({
                         onSave={(contactName) => handleChange({ contactName })}
                         registerValidation={registerValidation('contactName')}
                         unregisterValidation={unregisterValidation('contactName')}
-                    />
-                    <BodySmall>
-                        {translate('request-form.step-4.contact-name-description')}
-                    </BodySmall>
+                    >
+                        <BodySmall>
+                            {translate('request-form.step-4.contact-name-description')}
+                        </BodySmall>
+                    </Input>
                 </RequestSection>
 
                 <RequestSection>
@@ -58,10 +59,11 @@ const Step4 = ({
                         placeholder={translate('optional')}
                         name="contactPhone"
                         defaultValue={form.contactPhone}
-                    />
-                    <BodySmall>
-                        {translate('request-form.step-4.contact-phone-description')}
-                    </BodySmall>
+                    >
+                        <BodySmall>
+                            {translate('request-form.step-4.contact-phone-description')}
+                        </BodySmall>
+                    </Input>
                 </RequestSection>
                 <RequestSection>
                     <Input
@@ -77,10 +79,11 @@ const Step4 = ({
                         onSave={(contactEmail) => handleChange({ contactEmail })}
                         registerValidation={registerValidation('contactEmail')}
                         unregisterValidation={unregisterValidation('contactEmail')}
-                    />
-                    <BodySmall>
-                        {translate('request-form.step-4.contact-email-description')}
-                    </BodySmall>
+                    >
+                        <BodySmall>
+                            {translate('request-form.step-4.contact-email-description')}
+                        </BodySmall>
+                    </Input>
                 </RequestSection>
                 <Row right style={{ marginTop: '12px' }}>
                     <TeritaryButton type="button" className="back-button" onClick={back}>
