@@ -13,17 +13,17 @@ import { useForm, validators } from 'components/hooks/useForm';
 import { PAY_EVENT } from '../gql';
 import Popup from './Popup';
 import CountrySelector from './CountrySelector';
-import { getErrorMessage } from './ErrorMessageApollo';
+import ErrorMessageApollo, { getErrorMessage } from './ErrorMessageApollo';
 
 const XenditForm = ({ translate, paymentIntent, onPaymentConfirmed, client }) => {
     const [reviewPopup, setReviewPopup] = useState();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState();
-    const { form, setValue, runValidations, getInputProps } = useForm();
+    const { form, runValidations, getInputProps } = useForm();
 
     const [mutate] = useMutation(PAY_EVENT);
 
-    const getCardToken = () => {
+    const startPayment = () => {
         const { card_email, card_name, card_country, card } = form;
         let { expiry, cvc, number } = card;
         expiry = expiry.split('/').map((s) => s.trim());
@@ -41,13 +41,11 @@ const XenditForm = ({ translate, paymentIntent, onPaymentConfirmed, client }) =>
             card_country,
             meta_enabled: true,
         };
-        return new Promise((resolve, reject) => {
-            window.Xendit.card.createToken(cardData, (error, result) => {
-                if (error && error.error_code) {
-                    reject(error.message);
-                }
-                resolve({ ...result, cardData });
-            });
+        window.Xendit.card.createToken(cardData, (error, result) => {
+            if (error && error.error_code) {
+                setError(error.message);
+            }
+            handleVerification({ ...result, cardData });
         });
     };
 
@@ -77,8 +75,7 @@ const XenditForm = ({ translate, paymentIntent, onPaymentConfirmed, client }) =>
         try {
             setError(null);
             setLoading(true);
-            const data = await getCardToken();
-            handleVerification(data);
+            startPayment();
         } catch (error) {
             console.log({ error });
             setError(error.message);
@@ -124,7 +121,7 @@ const XenditForm = ({ translate, paymentIntent, onPaymentConfirmed, client }) =>
                 </Popup>
             )}
             <form name="pay-form" onSubmit={confirmPayment}>
-                <InputRow small>
+                <PaymentRow small>
                     <CountrySelector
                         noShadow
                         forceHeight={250}
@@ -149,7 +146,7 @@ const XenditForm = ({ translate, paymentIntent, onPaymentConfirmed, client }) =>
                     />
 
                     <ConnectedCard {...getInputProps('card')} validation={[validators.required]} />
-                </InputRow>
+                </PaymentRow>
                 <div style={{ marginTop: '24px' }}>
                     <SmartButton
                         type="submit"
@@ -159,11 +156,18 @@ const XenditForm = ({ translate, paymentIntent, onPaymentConfirmed, client }) =>
                     >
                         {translate('Confirm & pay')}
                     </SmartButton>
+                    <ErrorMessageApollo error={error} />
                 </div>
             </form>
         </>
     );
 };
+
+const PaymentRow = styled(InputRow)`
+    > * {
+        margin-bottom: 12px;
+    }
+`;
 
 const ConnectedCard = ({ refForward, onSave }) => {
     const [loaded] = useScript('https://js.xendit.co/v1/xendit.min.js');

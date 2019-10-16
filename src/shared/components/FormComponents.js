@@ -68,7 +68,6 @@ export const InputRow = styled(Row)`
                       min-width: calc(100% - 16px);
                       margin-right: 16px;
                       align-self: flex-start;
-                      margin-bottom: 12px;
                       label {
                           margin-bottom: 0;
                       }
@@ -77,7 +76,6 @@ export const InputRow = styled(Row)`
                       min-width: calc(100% - 16px);
                       margin-right: 16px;
                       align-self: flex-start;
-                      margin-bottom: 12px;
                   }
                   ${LabelHalf},
                   .half {
@@ -85,7 +83,6 @@ export const InputRow = styled(Row)`
                       min-width: calc(50% - 16px);
                       width: calc(50% - 16px);
                       align-self: flex-start;
-                      margin-bottom: 12px;
                   }
               `
             : css`
