@@ -256,6 +256,7 @@ const Input = React.forwardRef(
             onBlur,
             unregisterValidation = () => {},
             errorOutside,
+            children,
             ...props
         },
         fRef
@@ -314,6 +315,7 @@ const Input = React.forwardRef(
                         {...props}
                     />
                     {!errorOutside && displayError && <p className="error">{displayError}</p>}
+                    {children}
                 </LabelComponent>
                 {errorOutside && displayError && <p className="error">{displayError}</p>}
             </>

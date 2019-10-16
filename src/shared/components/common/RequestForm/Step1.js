@@ -105,10 +105,11 @@ const Step1 = ({
                             validation={(v) => (v ? null : 'Please select a date')}
                             registerValidation={registerValidation('date')}
                             unregisterValidation={unregisterValidation('date')}
-                        />
-                        <BodySmall>
-                            {translate('request-form.step-1.event-date-description')}
-                        </BodySmall>
+                        >
+                            <BodySmall>
+                                {translate('request-form.step-1.event-date-description')}
+                            </BodySmall>
+                        </Input>
                     </RequestSection>
                     <Row right>
                         {error && <ErrorMessageApollo error={error} />}
