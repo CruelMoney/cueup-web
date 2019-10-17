@@ -5,6 +5,7 @@ import { getTranslate, getActiveLanguage } from 'react-localize-redux';
 import { Query, useMutation } from 'react-apollo';
 import ReactPixel from 'react-facebook-pixel';
 import Checkmark from 'react-ionicons/lib/IosCheckmarkCircle';
+import styled from 'styled-components';
 import { LoadingIndicator, Row } from 'components/Blocks';
 import { REQUEST_PAYMENT_INTENT, PAYMENT_CONFIRMED } from '../../routes/Event/gql';
 import * as tracker from '../../utils/analytics/autotrack';
@@ -80,7 +81,7 @@ const PayForm = ({
     }
 
     return (
-        <div className="pay-form" ref={div}>
+        <PayFormContainer className="pay-form" ref={div}>
             <Query query={REQUEST_PAYMENT_INTENT} variables={variables} onError={console.log}>
                 {({ data = {}, loading, error }) => {
                     if (error) {
@@ -163,9 +164,14 @@ const PayForm = ({
                     );
                 }}
             </Query>
-        </div>
+        </PayFormContainer>
     );
 };
+
+const PayFormContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+`;
 
 const ThankYouContent = ({ translate, style }) => {
     return (

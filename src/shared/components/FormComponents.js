@@ -63,25 +63,25 @@ export const InputRow = styled(Row)`
     ${({ small }) =>
         small
             ? css`
-                  margin-right: -16px;
+                  margin-right: -15px;
                   .suggestionList {
-                      min-width: calc(100% - 16px);
-                      margin-right: 16px;
+                      min-width: calc(100% - 15px);
+                      margin-right: 15px;
                       align-self: flex-start;
                       label {
                           margin-bottom: 0;
                       }
                   }
                   ${InputLabel} {
-                      min-width: calc(100% - 16px);
-                      margin-right: 16px;
+                      min-width: calc(100% - 15px);
+                      margin-right: 15px;
                       align-self: flex-start;
                   }
                   ${LabelHalf},
                   .half {
-                      margin-right: 16px;
-                      min-width: calc(50% - 16px);
-                      width: calc(50% - 16px);
+                      margin-right: 15px;
+                      min-width: calc(50% - 15px);
+                      width: calc(50% - 15px);
                       align-self: flex-start;
                   }
               `
@@ -105,6 +105,15 @@ export const InputRow = styled(Row)`
                       align-self: flex-start;
                   }
               `}
+    @media only screen and (max-width: 425px) {
+        margin-right: -15px;
+        ${LabelHalf},
+        .half {
+            margin-right: 15px;
+            min-width: calc(100% - 15px);
+            width: calc(100% - 15px);
+        }
+    }
 `;
 
 const RightCol = styled(InputRow)`

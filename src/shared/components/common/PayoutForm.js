@@ -162,7 +162,7 @@ const MainForm = ({ user, bankAccount, translate, isUpdate, submit, onCancel, lo
                     defaultValue={form.country}
                     label={translate('country')}
                     placeholder={translate('country')}
-                    onChange={setValue('country')}
+                    onSave={setValue('country')}
                     validation={(v) => (v ? null : 'Please select a country from the list')}
                     registerValidation={registerValidation('country')}
                     unregisterValidation={unregisterValidation('country')}
@@ -236,6 +236,7 @@ const MainForm = ({ user, bankAccount, translate, isUpdate, submit, onCancel, lo
                             value={inIndonesia ? 'IDR' : null}
                             defaultValue={form.currency}
                             disabled={inIndonesia}
+                            onSave={setValue('currency')}
                             placeholder={inIndonesia ? undefined : translate('currency')}
                             validation={(v) => (v ? null : 'Please select currency')}
                             registerValidation={registerValidation('currency')}

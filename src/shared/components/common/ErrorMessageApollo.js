@@ -39,7 +39,7 @@ const ErrorMessageApollo = ({ style, error, center, email, onFoundCode }) => {
 
     const { graphQLErrors } = error;
 
-    if (graphQLErrors && graphQLErrors.length > 0) {
+    if (graphQLErrors?.length) {
         msgs = [];
         graphQLErrors.forEach((e) => {
             msgs.push(e.message);

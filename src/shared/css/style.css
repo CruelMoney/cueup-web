@@ -1319,6 +1319,7 @@ input[type='file'] + label * {
     .left,
     .right {
         flex: 1;
+        min-width: 300px;
         padding: 2em;
     }
     .left {
@@ -1628,7 +1629,9 @@ button {
 
 .popup,
 .loginDropDown {
+    max-height: 100vh;
     opacity: 0;
+    overflow-y: scroll !important;
     pointer-events: none;
     transform: rotate3d(1, 1, 0, -15deg);
     transform-origin: 100% 0;

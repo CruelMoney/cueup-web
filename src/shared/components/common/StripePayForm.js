@@ -10,7 +10,8 @@ import {
 import { getTranslate } from 'react-localize-redux';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Input, InputRow, LabelHalf, Label } from 'components/FormComponents';
+import * as Sentry from '@sentry/browser';
+import { Input, InputRow, LabelHalf } from 'components/FormComponents';
 import { validators, useForm } from 'components/hooks/useForm';
 import { inputStyle, SmartButton } from 'components/Blocks';
 import { Environment } from '../../constants/constants';
@@ -26,6 +27,8 @@ const StripeForm = ({ translate, stripe, paymentIntent, onPaymentConfirmed }) =>
 
     const confirmPayment = async (e) => {
         e.preventDefault();
+        setError(null);
+
         const errors = runValidations();
         if (errors?.length) {
             return;
@@ -43,7 +46,8 @@ const StripeForm = ({ translate, stripe, paymentIntent, onPaymentConfirmed }) =>
             });
             return false;
         } catch (error) {
-            setError(error);
+            Sentry.captureException(error);
+            setError(error.message);
         } finally {
             setLoading(false);
         }
@@ -133,7 +137,6 @@ const PaymentRequestButtonWrapper = ({ paymentIntent, stripe, onPaymentConfirmed
     const paymentRequest = useRef();
 
     const confirmPaymentRequest = async ({ complete, paymentMethod }) => {
-        console.log('Confirming payment');
         try {
             const { token } = paymentIntent;
             const PAYMENT_INTENT_CLIENT_SECRET = token.token;
@@ -249,7 +252,7 @@ const ConnectedCard = ({ refForward, onSave }) => {
                     style={{
                         base: {
                             'color': '#32325d',
-                            'fontFamily': '"AvenirNext", Helvetica, sans-serif',
+                            'fontFamily': 'Open Sans, Segoe UI, Helvetica, sans-serif',
                             'fontSmoothing': 'antialiased',
                             'fontSize': '18px',
                             'lineHeight': '40px',
@@ -280,7 +283,12 @@ const ConnectedCard = ({ refForward, onSave }) => {
     );
 };
 
-const PaymentRow = styled(InputRow)``;
+const PaymentRow = styled(InputRow)`
+    > * {
+        margin-bottom: 12px;
+        min-width: 200px;
+    }
+`;
 
 const Wrapper = styled.div`
     ${inputStyle}
