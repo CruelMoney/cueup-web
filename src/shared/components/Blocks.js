@@ -237,7 +237,7 @@ export const inputStyle = css`
     -webkit-appearance: none;
     width: 100%;
     display: block;
-    font-weight: 300;
+    font-weight: 400;
     box-shadow: ${({ attention, error }) => {
         const show = attention || error;
         const color = error ? '#D0021B' : '#FFC800';
@@ -306,6 +306,8 @@ const ButtonTextStyle = css`
 
 const inputButtonStyle = css`
     ${inputStyle}
+    font-size: 18px;
+    font-weight: 400;
     text-align: center;
     line-height: 40px !important;
     transition: all 200ms ease;
