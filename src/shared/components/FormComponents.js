@@ -190,7 +190,12 @@ const InputType = React.forwardRef(
     ) => {
         switch (type) {
             case 'text-area':
-                return <TextArea {...props} ref={ref} type={type} error={!!error} />;
+                return (
+                    <>
+                        <TextArea {...props} ref={ref} type={type} error={!!error} />
+                        {children}
+                    </>
+                );
             case 'select':
                 return (
                     <Select {...props} error={!!error} onChange={save} ref={ref}>
@@ -216,32 +221,38 @@ const InputType = React.forwardRef(
 
             case 'formatted-text':
                 return (
-                    <FormattedText
-                        {...props}
-                        ref={ref}
-                        type={type}
-                        error={!!error}
-                        save={save}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter' && blurOnEnter) {
-                                e.target.blur();
-                            }
-                        }}
-                    />
+                    <>
+                        <FormattedText
+                            {...props}
+                            ref={ref}
+                            type={type}
+                            error={!!error}
+                            save={save}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' && blurOnEnter) {
+                                    e.target.blur();
+                                }
+                            }}
+                        />
+                        {children}
+                    </>
                 );
             default:
                 return (
-                    <TextInput
-                        {...props}
-                        ref={ref}
-                        type={type}
-                        error={!!error}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter' && blurOnEnter) {
-                                e.target.blur();
-                            }
-                        }}
-                    />
+                    <>
+                        <TextInput
+                            {...props}
+                            ref={ref}
+                            type={type}
+                            error={!!error}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' && blurOnEnter) {
+                                    e.target.blur();
+                                }
+                            }}
+                        />
+                        {children}
+                    </>
                 );
         }
     }
@@ -262,7 +273,6 @@ const Input = React.forwardRef(
             onBlur,
             unregisterValidation = () => {},
             errorOutside,
-            children,
             ...props
         },
         fRef
@@ -321,7 +331,6 @@ const Input = React.forwardRef(
                         {...props}
                     />
                     {!errorOutside && displayError && <p className="error">{displayError}</p>}
-                    {children}
                 </LabelComponent>
                 {errorOutside && displayError && <p className="error">{displayError}</p>}
             </>

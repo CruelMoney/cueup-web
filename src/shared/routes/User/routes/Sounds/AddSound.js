@@ -171,17 +171,26 @@ const DataForm = ({
         if (refs.length === 0) {
             try {
                 setSubmitting(true);
+
+                const variables = {
+                    id: form.id,
+                    title: form.title,
+                    description: form.description,
+                    tags: form.tags,
+                    file,
+                };
+
                 if (imageUpload) {
                     const {
                         data: { singleUpload },
                     } = await imageUpload;
-                    form.image = singleUpload.id;
+                    variables.image = singleUpload.id;
                 } else {
-                    delete form.image;
+                    delete variables.image;
                 }
 
                 await mutate({
-                    variables: { ...form, file },
+                    variables,
                 });
             } catch (error) {
                 Sentry.captureException(error);
@@ -199,6 +208,7 @@ const DataForm = ({
     );
 
     const { title, tags, description, year, image, imageFile } = form || {};
+
     return (
         <form onSubmit={updateSound}>
             <Title style={{ marginBottom: '39px' }}>Add sound</Title>
@@ -262,7 +272,6 @@ const DataForm = ({
                         Cancel
                     </TeritaryButton>
                     <SmartButton
-                        success={true}
                         level="primary"
                         disabled={submitting || uploading || uploadError}
                         loading={submitting}
