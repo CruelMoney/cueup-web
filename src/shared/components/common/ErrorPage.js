@@ -29,7 +29,10 @@ class ErrorPage extends Component {
                                 <br />
                                 Try reloading the page or go back.
                                 <br />
-                                <SecondaryButton onClick={() => this.props.history.goBack()}>
+                                <SecondaryButton
+                                    style={{ marginTop: '24px' }}
+                                    onClick={() => this.props.history.goBack()}
+                                >
                                     Go back
                                 </SecondaryButton>
                             </span>
