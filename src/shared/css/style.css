@@ -177,7 +177,7 @@ body.pre-header-content .navigation {
 .mobileMenu a,
 .mobileMenu .link-look {
     color: #31daff;
-    font-family: 'AvenirNext', sans-serif;
+    font-weight: 500;
     -webkit-tap-highlight-color: transparent;
     text-decoration: none;
     transition: color 0.1s;
@@ -348,10 +348,9 @@ body.pre-header-content .navigation {
 .main-menu .link-look {
     color: #ffffff;
     cursor: pointer;
-    /* Login: */
-    font-family: 'AvenirNext', sans-serif;
-
     font-size: 17px;
+    /* Login: */
+    font-weight: 600;
     height: 30px;
     letter-spacing: 0.3px;
     line-height: 30px;
@@ -641,7 +640,6 @@ form a {
     content: counter(item) ' → ';
     counter-increment: item;
     display: inline-block;
-    font-family: 'AvenirNext', sans-serif;
     font-size: 14px;
     font-weight: bold !important;
     margin-left: -2.5em;
@@ -683,9 +681,9 @@ input[type='file'] + label {
     align-items: center;
     cursor: pointer;
     display: flex;
-    /* 20px */
-    font-family: 'AvenirNext';
     font-size: 20px;
+    /* 20px */
+    font-weight: 500;
     height: 100%;
     justify-content: center;
     overflow: hidden;
@@ -1283,8 +1281,8 @@ input[type='file'] + label * {
 
 .userNavigation a {
     color: #ffffff;
-    font-family: 'AvenirNext', sans-serif;
     font-size: 22px;
+    font-weight: 600;
     line-height: 33px;
     text-transform: capitalize;
 }
@@ -1852,7 +1850,6 @@ button.active .info-popup {
     display: inline-block;
     fill: #bbbbbb;
     /* Text */
-    font-family: 'AvenirNext', sans-serif;
     font-size: 16px;
     font-weight: 600;
     height: 40px;
@@ -2191,8 +2188,8 @@ p.error {
 
 .request-form .toggle-button-handler .button,
 .request-form .toggle-options .button {
-    font-family: 'AvenirNext', sans-serif;
     font-size: 14px;
+    font-weight: 500;
     height: 33px;
     line-height: 14px;
     text-transform: capitalize;

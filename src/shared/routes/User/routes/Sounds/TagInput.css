@@ -30,8 +30,8 @@
     border-radius: 33px;
     color: #4d6480;
     display: inline-block;
-    font-family: 'AvenirNext', Arial, Helvetica, sans-serif;
     font-size: 9px;
+    font-weight: 700;
     height: 18px;
     letter-spacing: 0.75px;
     line-height: 18px;
@@ -65,8 +65,8 @@
 .ReactTags__suggestions {
     color: #4d6480;
     float: left;
-    font-family: 'AvenirNext', Arial, Helvetica, sans-serif;
     font-size: 9px;
+    font-weight: 700;
 
     height: 18px;
     letter-spacing: 0.75px;

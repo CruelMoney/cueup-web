@@ -187,16 +187,6 @@
     margin-right: 3px;
 }
 
-.chat .reminder {
-    background: #26f4d2;
-    border-radius: 6px 6px 0px 0px;
-    color: white;
-    font-family: 'AvenirNext', sans-serif;
-    font-weight: 600;
-    padding: 0.5em 1em;
-    text-align: right;
-}
-
 .chat .messages-date {
     margin: 9px 0;
     text-align: center;
