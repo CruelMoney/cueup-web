@@ -21,7 +21,7 @@ const TableRow = styled(Row)`
 
 const OtherInput = styled.input`
     ${inputStyle}
-    font-family: "AvenirNext-Regular", Arial, Helvetica, sans-serif;
+    font-family: "AvenirNext", Arial, Helvetica, sans-serif;
     font-size: 18px;
     color: #122b48;
     margin: 0;

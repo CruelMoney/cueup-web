@@ -27,7 +27,7 @@ const IbanField = ({ onChange, label, children, onReady }) => {
                     style={{
                         base: {
                             'color': '#32325d',
-                            'fontFamily': '"AvenirNext-Regular", Helvetica, sans-serif',
+                            'fontFamily': '"AvenirNext", Helvetica, sans-serif',
                             'fontSmoothing': 'antialiased',
                             'fontSize': '18px',
                             'lineHeight': '40px',

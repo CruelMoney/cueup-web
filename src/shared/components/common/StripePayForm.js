@@ -249,7 +249,7 @@ const ConnectedCard = ({ refForward, onSave }) => {
                     style={{
                         base: {
                             'color': '#32325d',
-                            'fontFamily': '"AvenirNext-Regular", Helvetica, sans-serif',
+                            'fontFamily': '"AvenirNext", Helvetica, sans-serif',
                             'fontSmoothing': 'antialiased',
                             'fontSize': '18px',
                             'lineHeight': '40px',

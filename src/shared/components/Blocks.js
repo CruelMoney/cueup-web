@@ -95,7 +95,7 @@ export const Divider = styled.hr`
 `;
 
 const tertiaryStyle = css`
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
+    font-weight: 600;
     font-size: 12px;
     color: #4d6480;
     letter-spacing: 1.04px;
@@ -278,7 +278,7 @@ export const FileInput = styled.input.attrs({ type: 'file' })`
 `;
 
 const ButtonTextStyle = css`
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
+    font-weight: 600;
     font-size: 15px;
     color: #4d6480;
     text-align: center;
@@ -544,7 +544,7 @@ export const SmartButton = ({
 };
 
 export const Pill = styled.span`
-    font-family: 'AvenirNext-Bold', Arial, Helvetica, sans-serif;
+    font-weight: 600;
     font-size: 9px;
     color: #4d6480;
     letter-spacing: 0.75px;
@@ -558,7 +558,6 @@ export const Pill = styled.span`
 `;
 
 export const PillLarge = styled.span`
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
     font-size: 12px;
     background-color: #e9ecf0;
     color: #98a4b3;
@@ -567,6 +566,7 @@ export const PillLarge = styled.span`
     border-radius: 33px;
     text-align: center;
     line-height: 24px;
+    font-weight: 600;
 `;
 
 export const InfoBox = styled.div`
@@ -576,7 +576,7 @@ export const InfoBox = styled.div`
     min-height: ${({ minHeight }) => (minHeight ? 70 : 0)}px;
     width: 8em;
     padding: 1em;
-    font-family: 'AvenirNext-Bold', Arial, Helvetica, sans-serif;
+    font-weight: 700;
     font-size: 13px;
     color: #4d6480;
     text-align: center;
@@ -597,7 +597,6 @@ export const InfoBox = styled.div`
 `;
 
 export const InfoPill = styled.span`
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
     font-weight: 700;
     background: #e9ecf0;
     border-radius: 16px;

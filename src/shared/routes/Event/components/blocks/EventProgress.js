@@ -79,7 +79,6 @@ const Step = styled.div`
     height: 3.3em;
     width: 16.6em;
     line-height: 3.3em;
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
     font-weight: 700;
     font-size: 18px;
     color: ${({ completed }) => (completed ? '#fff' : '#4d6480')};

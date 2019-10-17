@@ -75,7 +75,7 @@ const SimpleSharing = ({ shareUrl, title, style, label = 'Share profile' }) => {
         >
             <p
                 style={{
-                    fontFamily: 'AvenirNext-Bold',
+                    fontFamily: 'AvenirNext',
                     fontSize: '15px',
                     color: '#4D6480',
                     marginBottom: 0,

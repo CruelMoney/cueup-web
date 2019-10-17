@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Query } from 'react-apollo';
 import { useMutation } from '@apollo/react-hooks';
-import { Title, Body, BodySmall } from '../../../components/Text';
+import { Title, Body, BodySmall, BodyBold } from '../../../components/Text';
 import {
     Col,
     Row,
@@ -82,8 +82,7 @@ const RemoveButton = styled(TeritaryButton)`
     right: -50px;
 `;
 
-const VenueLabel = styled.p`
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
+const VenueLabel = styled(BodyBold)`
     font-size: 18px;
     color: #4d6480;
     text-align: left;

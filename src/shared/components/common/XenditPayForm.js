@@ -209,7 +209,7 @@ const ConnectedCard = ({ refForward, onSave }) => {
                     containerClassName={'card-container '}
                     inputStyle={{
                         'color': '#32325d',
-                        'fontFamily': '"AvenirNext-Regular", Helvetica, sans-serif',
+                        'fontFamily': '"AvenirNext", Helvetica, sans-serif',
                         'fontSmoothing': 'antialiased',
                         'fontSize': '18px',
                         'background': 'transparent',

@@ -354,7 +354,7 @@ const BookingSidebar = ({ loading, values, requestBooking, showLogin, ...props }
 };
 
 const SidebarRow = styled(Row)`
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
+    font-family: 'AvenirNext', Arial, Helvetica, sans-serif;
     font-size: 15px;
     color: #98a4b3;
     align-items: center;

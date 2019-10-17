@@ -1,7 +1,6 @@
 .blog header.title {
     color: #32325d;
     margin: auto;
-    max-width: 500px;
     padding-bottom: 0;
     padding-left: 1em;
     padding-right: 1em;
@@ -107,9 +106,6 @@ button.subscribe-newsletter {
     margin-top: 1em;
 }
 
-.blog-post header.title {
-    max-width: 600px;
-}
 .blog-post .img-wrapper {
     border-radius: 6px;
     height: 540px;
@@ -156,7 +152,6 @@ button.subscribe-newsletter {
 }
 .post-content h2 {
     font-size: 3.6rem;
-    font-weight: 300;
     line-height: 1.2em;
     margin: 1em 0 0.5em;
 }
@@ -195,7 +190,6 @@ button.subscribe-newsletter {
 .blog h3 {
     color: #32325d;
     font-size: 35px;
-    font-weight: 600;
     line-height: 1.2em;
     margin-bottom: 0.2em;
 }
@@ -224,7 +218,7 @@ footer.newsletter-signup .card {
     display: flex;
     flex-direction: column;
     margin: auto;
-    max-width: 400px;
+    max-width: 500px;
 }
 
 .newsletter-signup button {

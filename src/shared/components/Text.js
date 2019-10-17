@@ -3,21 +3,21 @@ import styled, { css } from 'styled-components';
 import { Col } from './Blocks';
 
 export const StatUnit = styled.p`
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
     font-size: 15px;
     color: ${({ white }) => (white ? 'rgba(255,255,255,0.6)' : '#98a4b3')};
     letter-spacing: 1px;
     text-transform: uppercase;
     margin-bottom: 0px;
     line-height: 1.2em;
+    font-weight: 600;
 `;
 const StatValue = styled.p`
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
     font-size: 15px;
     color: ${({ white }) => (white ? '#fff' : '#4d6480')};
     letter-spacing: 1px;
     margin-bottom: 0px;
     line-height: 1.2em;
+    font-weight: 600;
 `;
 
 export const Stat = ({ label, value, style, ...props }) => (
@@ -28,14 +28,12 @@ export const Stat = ({ label, value, style, ...props }) => (
 );
 
 export const SmallHeader = styled.h6`
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
     font-size: 15px;
     line-height: 1.5em;
     color: #122b48;
 `;
 
 export const Title = styled.h3`
-    font-family: 'AvenirNext-Bold', Arial, Helvetica, sans-serif;
     font-size: 18px;
     color: #122b48;
     text-align: left;
@@ -53,7 +51,6 @@ export const Title = styled.h3`
 `;
 
 export const TitleClean = styled.h3`
-    font-family: 'AvenirNext-Bold', Arial, Helvetica, sans-serif;
     font-size: 18px;
     color: #122b48;
     text-align: left;
@@ -79,8 +76,7 @@ export const Body = styled.p`
         `}
 `;
 export const BodyBold = styled(Body)`
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
-    font-weight: 700;
+    font-weight: 600;
 `;
 
 export const BodySmall = styled.p`
@@ -90,8 +86,7 @@ export const BodySmall = styled.p`
 `;
 
 export const InlineLink = styled.a`
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
-    font-weight: 700;
+    font-weight: 600;
     color: #50e3c2;
     :hover {
         color: #50e3c299;
@@ -107,11 +102,11 @@ export const Citation = styled.blockquote`
     padding: 0;
     margin: 0;
     border: none;
+    margin-bottom: 24px;
 `;
 
 const smallBoldStyle = css`
-    font-family: ${({ demi }) => (demi ? 'AvenirNext-DemiBold' : 'AvenirNext-Bold')}, Arial,
-        Helvetica, sans-serif;
+    font-weight: ${({ demi }) => (demi ? 600 : 700)};
     font-style: normal;
     font-size: 12px;
     line-height: 1.2em;
@@ -127,20 +122,11 @@ export const Cite = styled.cite`
     text-align: right;
     padding: 0;
     margin: 0;
-    margin-top: 9px;
+    margin-left: 9px;
     border: none;
-    &:before {
-        content: '-';
-        position: relative;
-        color: #50e3c2;
-        margin-right: 6px;
-        font-size: 18px;
-        line-height: 12px;
-    }
 `;
 
 export const HeaderTitle = styled.h1`
-    font-family: 'AvenirNext-Bold', Arial, Helvetica, sans-serif;
     font-size: 36px;
     color: #fff;
     margin-bottom: 0.3em;

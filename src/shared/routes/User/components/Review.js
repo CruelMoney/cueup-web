@@ -151,12 +151,12 @@ const HighlightTooltip = styled.div`
 `;
 
 const AuthorName = styled.cite`
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
+    font-weight: 600;
     font-size: 14px;
     color: #4d6480;
 `;
 const CreatedAtLabel = styled.p`
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
+    font-weight: 600;
     font-size: 14px;
     color: #98a4b3;
 `;

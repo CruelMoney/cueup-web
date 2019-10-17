@@ -18,17 +18,17 @@ export default () => {
                 ))}
             </div>
             <div>
-                {cards.slice(3, 6).map((dj, idx) => (
+                {cards.slice(3, 7).map((dj, idx) => (
                     <DJCard key={`dj-card-${idx}`} dj={dj} />
                 ))}
             </div>
             <div>
-                {cards.slice(6, 9).map((dj, idx) => (
+                {cards.slice(7, 11).map((dj, idx) => (
                     <DJCard key={`dj-card-${idx}`} dj={dj} />
                 ))}
             </div>
             <div>
-                {cards.slice(9, 11).map((dj, idx) => (
+                {cards.slice(11, 13).map((dj, idx) => (
                     <DJCard key={`dj-card-${idx}`} dj={dj} />
                 ))}
             </div>

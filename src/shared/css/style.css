@@ -4,7 +4,7 @@
 
 body {
     color: #32325d;
-    font-family: 'AvenirNext-Regular', Camphor, Open Sans, Segoe UI, sans-serif;
+    font-family: 'AvenirNext', Open Sans, Segoe UI, Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased;
     margin: 0;
     overflow-y: auto;
@@ -63,13 +63,15 @@ h4 {
     margin: 0 0 5px;
     text-transform: uppercase;
 }
+h6 {
+    font-weight: 600;
+}
 p {
-    font-size: 17px;
+    font-size: 18px;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased !important;
     -moz-font-smoothing: antialiased !important;
-    letter-spacing: 0.41px;
-    line-height: 28px;
+    line-height: 1.75em;
     margin: 0;
     text-rendering: optimizelegibility !important;
 }
@@ -134,6 +136,7 @@ span {
 }
 button {
     border: none;
+    font-weight: 600;
     outline: none;
     padding: 0;
 }
@@ -174,7 +177,7 @@ body.pre-header-content .navigation {
 .mobileMenu a,
 .mobileMenu .link-look {
     color: #31daff;
-    font-family: 'AvenirNext-Medium', sans-serif;
+    font-family: 'AvenirNext', sans-serif;
     -webkit-tap-highlight-color: transparent;
     text-decoration: none;
     transition: color 0.1s;
@@ -346,7 +349,7 @@ body.pre-header-content .navigation {
     color: #ffffff;
     cursor: pointer;
     /* Login: */
-    font-family: 'AvenirNext-DemiBold', sans-serif;
+    font-family: 'AvenirNext', sans-serif;
 
     font-size: 17px;
     height: 30px;
@@ -473,10 +476,8 @@ footer .dropdown-selector-wrapper {
     color: #8998aa;
     fill: #8998aa;
     font-size: 15px;
+    font-weight: 400;
     margin: auto;
-}
-footer .social a {
-    font-family: 'AvenirNext-DemiBold', sans-serif;
 }
 footer h4 {
     font-size: 14px;
@@ -489,6 +490,9 @@ footer .dropdown-selector-wrapper:hover {
     color: #32325d !important;
     cursor: pointer;
     fill: #32325d !important;
+}
+footer .social a {
+    font-weight: 600;
 }
 footer .social svg {
     margin-bottom: -1px;
@@ -538,8 +542,8 @@ footer .social svg {
 }
 #preFooter .action-title {
     color: #32325d;
-    font-family: 'AvenirNext-Medium', sans-serif;
     font-size: 30px;
+    font-weight: 500;
     margin: 0.75em 0;
 }
 #preFooter .action-title span {
@@ -637,25 +641,21 @@ form a {
     content: counter(item) ' → ';
     counter-increment: item;
     display: inline-block;
-    font-family: 'AvenirNext-Medium', sans-serif;
+    font-family: 'AvenirNext', sans-serif;
     font-size: 14px;
     font-weight: bold !important;
     margin-left: -2.5em;
 }
 
+nav a {
+    font-weight: 600;
+}
 nav a:hover {
     text-decoration: none;
 }
 
 a:focus {
     text-decoration: none;
-}
-
-nav borderHover a:hover {
-    border-color: black !important;
-    border-radius: 6px;
-    border-style: solid;
-    border-width: 2px !important;
 }
 
 .no-padding {
@@ -684,7 +684,7 @@ input[type='file'] + label {
     cursor: pointer;
     display: flex;
     /* 20px */
-    font-family: 'AvenirNext-Medium';
+    font-family: 'AvenirNext';
     font-size: 20px;
     height: 100%;
     justify-content: center;
@@ -1283,7 +1283,7 @@ input[type='file'] + label * {
 
 .userNavigation a {
     color: #ffffff;
-    font-family: 'AvenirNext-DemiBold', sans-serif;
+    font-family: 'AvenirNext', sans-serif;
     font-size: 22px;
     line-height: 33px;
     text-transform: capitalize;
@@ -1852,8 +1852,9 @@ button.active .info-popup {
     display: inline-block;
     fill: #bbbbbb;
     /* Text */
-    font-family: 'AvenirNext-DemiBold', sans-serif;
+    font-family: 'AvenirNext', sans-serif;
     font-size: 16px;
+    font-weight: 600;
     height: 40px;
     justify-content: center;
     letter-spacing: 0.39px;
@@ -2190,7 +2191,7 @@ p.error {
 
 .request-form .toggle-button-handler .button,
 .request-form .toggle-options .button {
-    font-family: 'AvenirNext-Medium', sans-serif;
+    font-family: 'AvenirNext', sans-serif;
     font-size: 14px;
     height: 33px;
     line-height: 14px;
@@ -3136,6 +3137,7 @@ ol.breadcrumbs a {
 .link-look {
     border: none;
     color: #31daff;
+    font-weight: 600;
     outline: none !important;
     padding: 0;
 }

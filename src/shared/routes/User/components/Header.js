@@ -54,12 +54,12 @@ const getRoutesFromUser = (user, pathname) => {
 
 const ReviewsCount = styled.p`
     opacity: 0.6;
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
     font-size: 15px;
     color: #ffffff;
     display: inline-block;
     margin-left: 9px;
     margin-bottom: 0;
+    font-weight: 600;
     @media only screen and (max-width: 425px) {
         font-size: 12px;
         margin-left: 3px;
