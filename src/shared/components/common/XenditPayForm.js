@@ -1,32 +1,31 @@
-import React, { PureComponent, useState, useReducer, useEffect, useCallback } from 'react';
+/* eslint-disable camelcase */
+import React, { useState, useReducer, useEffect, useCallback } from 'react';
 import { getTranslate } from 'react-localize-redux';
 import { connect } from 'react-redux';
 import Card from 'react-credit-card-input';
 import useScript from '@charlietango/use-script';
 import Iframe from 'react-iframe';
-import { withApollo } from 'react-apollo';
-import connectToForm from '../higher-order/connectToForm';
+import { withApollo, useMutation } from 'react-apollo';
+import styled from 'styled-components';
+import { Input, LabelHalf, InputRow } from 'components/FormComponents';
+import { SmartButton, inputStyle } from 'components/Blocks';
+import { useForm, validators } from 'components/hooks/useForm';
 import { PAY_EVENT } from '../gql';
 import Popup from './Popup';
 import CountrySelector from './CountrySelector';
-import SubmitButton from './SubmitButton';
-import Form from './Form-v2';
-import Textfield from './Textfield';
-import { getErrorMessage } from './ErrorMessageApollo';
+import ErrorMessageApollo, { getErrorMessage } from './ErrorMessageApollo';
 
-class XenditForm extends PureComponent {
-    constructor(props) {
-        super(props);
-        this.state = {
-            valid: false,
-            reviewPopup: false,
-        };
-    }
+const XenditForm = ({ translate, paymentIntent, onPaymentConfirmed, client }) => {
+    const [reviewPopup, setReviewPopup] = useState();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState();
+    const { form, runValidations, getInputProps } = useForm();
 
-    getCardToken = (values, cb) => {
-        const { card_email, card_name, card_country, card } = values;
+    const [mutate] = useMutation(PAY_EVENT);
+
+    const startPayment = () => {
+        const { card_email, card_name, card_country, card } = form;
         let { expiry, cvc, number } = card;
-        const { paymentIntent } = this.props;
         expiry = expiry.split('/').map((s) => s.trim());
 
         const cardData = {
@@ -44,42 +43,48 @@ class XenditForm extends PureComponent {
         };
         window.Xendit.card.createToken(cardData, (error, result) => {
             if (error && error.error_code) {
-                return cb(error.message);
+                setError(error.message);
             }
-            this.onCardTokenized({ ...result, cardData }, cb);
+            handleVerification({ ...result, cardData });
         });
     };
 
-    onCardTokenized = (data, cb) => {
+    const handleVerification = (data) => {
         // SHOW 3d secure popup
         const { payer_authentication_url, status } = data;
         if (status === 'IN_REVIEW') {
-            this.setState({
-                reviewPopup: payer_authentication_url,
-            });
+            setReviewPopup(payer_authentication_url);
             return;
         } else if (status === 'VERIFIED') {
             // submit token to payment on server
-            this.handlePayment(data, cb);
+            handlePayment(data);
         } else {
-            cb('Something went wrong');
+            setError('Something went wrong');
+            setLoading(false);
         }
     };
 
-    confirmPayment = (form, cb) => {
+    const confirmPayment = async (e) => {
+        e.preventDefault();
+
+        const errors = runValidations();
+        if (errors?.length) {
+            return;
+        }
+
         try {
-            this.getCardToken(form.values, cb);
+            setError(null);
+            setLoading(true);
+            startPayment();
         } catch (error) {
             console.log({ error });
-            cb(error.message);
+            setError(error.message);
         }
     };
 
-    handlePayment = async ({ authentication_id, id, cardData }, cb) => {
-        const { paymentIntent, onPaymentConfirmed, client } = this.props;
-
+    const handlePayment = async ({ authentication_id, id, cardData }) => {
         try {
-            await client.mutate({
+            await mutate({
                 variables: {
                     gigId: paymentIntent.gigId,
                     paymentProvider: 'XENDIT',
@@ -91,80 +96,80 @@ class XenditForm extends PureComponent {
                         token: paymentIntent.token.token,
                     },
                 },
-                mutation: PAY_EVENT,
             });
-            cb();
             onPaymentConfirmed();
         } catch (error) {
-            throw cb(getErrorMessage(error));
+            setError(getErrorMessage(error));
+        } finally {
+            setLoading(false);
         }
     };
 
-    render() {
-        const { reviewPopup } = this.state;
-        const { translate } = this.props;
-        return (
-            <>
-                {reviewPopup && (
-                    <Popup showing={!!reviewPopup} onClickOutside={(_) => {}}>
-                        <Iframe
-                            url={reviewPopup}
-                            width="450px"
-                            height="450px"
-                            id="myId"
-                            className="3dsecure-popup"
-                            display="initial"
-                            position="relative"
-                        />
-                    </Popup>
-                )}
-                <Form
-                    formValidCallback={() => this.setState({ valid: true })}
-                    formInvalidCallback={() => this.setState({ valid: false })}
-                    name="pay-form"
-                >
-                    <Textfield
-                        name="card_email"
+    return (
+        <>
+            {reviewPopup && (
+                <Popup showing={!!reviewPopup} onClickOutside={(_) => {}}>
+                    <Iframe
+                        url={reviewPopup}
+                        width="450px"
+                        height="450px"
+                        id="myId"
+                        className="3dsecure-popup"
+                        display="initial"
+                        position="relative"
+                    />
+                </Popup>
+            )}
+            <form name="pay-form" onSubmit={confirmPayment}>
+                <PaymentRow small>
+                    <CountrySelector
+                        noShadow
+                        forceHeight={250}
+                        {...getInputProps('card_country')}
+                        validation={(v) => (!v ? 'Please select a country from the list' : null)}
+                        placeholder={translate('country')}
+                    />
+                    <Input
+                        half
+                        {...getInputProps('card_email')}
                         type="email"
-                        validate={['required', 'email']}
+                        validation={[validators.required, validators.email]}
                         placeholder={translate('Billing email')}
                     />
-                    <div className="row">
-                        <div className="col-xs-6">
-                            <Textfield
-                                name="card_name"
-                                type="text"
-                                validate={['required', 'lastName']}
-                                placeholder={translate('Cardholder name')}
-                            />
-                        </div>
-                        <div className="col-xs-6">
-                            <CountrySelector
-                                name="card_country"
-                                validate={['required']}
-                                placeholder={translate('country')}
-                            />
-                        </div>
-                    </div>
-                    <ConnectedCard name="card" validate={['required']} />
-                    <div style={{ marginTop: '24px' }}>
-                        <SubmitButton
-                            glow
-                            active={this.state.valid}
-                            rounded={true}
-                            name={'confirm_payment'}
-                            onClick={this.confirmPayment}
-                        >
-                            {translate('Confirm & pay')}
-                        </SubmitButton>
-                    </div>
-                </Form>
-            </>
-        );
-    }
-}
 
-const ConnectedCard = connectToForm(({ refForward, onChange }) => {
+                    <Input
+                        half
+                        {...getInputProps('card_name')}
+                        type="text"
+                        validation={[validators.required, validators.lastName]}
+                        placeholder={translate('Cardholder name')}
+                    />
+
+                    <ConnectedCard {...getInputProps('card')} validation={[validators.required]} />
+                </PaymentRow>
+                <div style={{ marginTop: '24px' }}>
+                    <SmartButton
+                        type="submit"
+                        loading={loading}
+                        rounded={true}
+                        name={'confirm_payment'}
+                    >
+                        {translate('Confirm & pay')}
+                    </SmartButton>
+                    <ErrorMessageApollo error={error} />
+                </div>
+            </form>
+        </>
+    );
+};
+
+const PaymentRow = styled(InputRow)`
+    > * {
+        margin-bottom: 12px;
+    }
+`;
+
+const ConnectedCard = ({ refForward, onSave }) => {
     const [loaded] = useScript('https://js.xendit.co/v1/xendit.min.js');
 
     if (loaded) {
@@ -182,11 +187,11 @@ const ConnectedCard = connectToForm(({ refForward, onChange }) => {
         };
     };
 
-    const [hasError, setError] = useState(null);
+    const [error, setError] = useState(null);
     const [isFocus, setFocus] = useState(null);
     const [card, dispatch] = useReducer(cardReducer, {});
 
-    const changeHandler = useCallback(onChange, []);
+    const changeHandler = useCallback(onSave, []);
 
     useEffect(() => {
         const { cvc, expiry, number } = card;
@@ -197,72 +202,84 @@ const ConnectedCard = connectToForm(({ refForward, onChange }) => {
         }
     }, [card, changeHandler]);
 
-    const className = `${hasError ? 'StripeElement--invalid' : ''} ${
-        isFocus ? 'StripeElement--focus' : ''
-    }`;
-
     return (
-        <div className="stripe-card">
-            <Card
-                containerClassName={'StripeElement ' + className}
-                inputStyle={{
-                    'color': '#32325d',
-                    'fontFamily': '"AvenirNext-Regular", Helvetica, sans-serif',
-                    'fontSmoothing': 'antialiased',
-                    'fontSize': '14px',
-                    '::placeholder': {
-                        color: '#BBBBBB',
-                    },
-                }}
-                fieldStyle={{
-                    flex: 1,
-                    border: 'none !important',
-                    padding: 0,
-                }}
-                dangerTextClassName="error"
-                dangerTextStyle={{ top: '2.2em !important' }}
-                cardCVCInputProps={{
-                    onFocus: (e) => setFocus(true),
-                    onBlur: (e) => setFocus(false),
-                    onChange: (e) => {
-                        setError(false);
-                        dispatch({ key: 'cvc', value: e.target.value });
-                    },
-                    onError: (e) => {
-                        dispatch(null);
-                        setError(true);
-                    },
-                }}
-                cardExpiryInputProps={{
-                    onFocus: (e) => setFocus(true),
-                    onBlur: (e) => setFocus(false),
-                    onChange: (e) => {
-                        setError(false);
-                        dispatch({ key: 'expiry', value: e.target.value });
-                    },
-                    onError: (e) => {
-                        dispatch(null);
-                        setError(true);
-                    },
-                }}
-                cardNumberInputProps={{
-                    onFocus: (e) => setFocus(true),
-                    onBlur: (e) => {
-                        setFocus(false);
-                    },
-                    onChange: (e) => {
-                        setError(false);
-                        dispatch({ key: 'number', value: e.target.value });
-                    },
-                    onError: (e) => {
-                        dispatch(null);
-                        setError(true);
-                    },
-                }}
-            />
-        </div>
+        <LabelHalf>
+            <Wrapper error={error}>
+                <Card
+                    containerClassName={'card-container '}
+                    inputStyle={{
+                        'color': '#32325d',
+                        'fontFamily': '"AvenirNext", Helvetica, sans-serif',
+                        'fontSmoothing': 'antialiased',
+                        'fontSize': '18px',
+                        'background': 'transparent',
+                        '::placeholder': {
+                            color: '#98a4b3',
+                        },
+                    }}
+                    fieldStyle={{
+                        flex: 1,
+                        border: 'none !important',
+                        padding: 0,
+                        background: 'transparent',
+                    }}
+                    dangerTextStyle={{ display: 'none' }}
+                    cardCVCInputProps={{
+                        onFocus: (e) => setFocus(true),
+                        onBlur: (e) => setFocus(false),
+                        onChange: (e) => {
+                            setError(false);
+                            dispatch({ key: 'cvc', value: e.target.value });
+                        },
+                        onError: (e) => {
+                            dispatch(null);
+                            setError(e);
+                        },
+                    }}
+                    cardExpiryInputProps={{
+                        onFocus: (e) => setFocus(true),
+                        onBlur: (e) => setFocus(false),
+                        onChange: (e) => {
+                            setError(false);
+                            dispatch({ key: 'expiry', value: e.target.value });
+                        },
+                        onError: (e) => {
+                            dispatch(null);
+                            setError(e);
+                        },
+                    }}
+                    cardNumberInputProps={{
+                        onFocus: (e) => setFocus(true),
+                        onBlur: (e) => {
+                            setFocus(false);
+                        },
+                        onChange: (e) => {
+                            setError(false);
+                            dispatch({ key: 'number', value: e.target.value });
+                        },
+                        onError: (e) => {
+                            dispatch(null);
+                            console.log({ e });
+                            setError(e);
+                        },
+                    }}
+                />
+            </Wrapper>
+            <p className="error">{error}</p>
+        </LabelHalf>
     );
-});
+};
+
+const Wrapper = styled.div`
+    ${inputStyle}
+    padding-left: 9px;
+    .card-container {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+`;
 
 function mapStateToProps(state, ownprops) {
     return {

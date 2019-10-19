@@ -58,6 +58,13 @@ const server = [
             ignore: '*.missing.json',
         },
     ]),
+    // copy public to build
+    new CopyPlugin([
+        {
+            from: paths.publicDev,
+            to: paths.clientBuild,
+        },
+    ]),
 ];
 
 module.exports = {

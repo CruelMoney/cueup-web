@@ -103,7 +103,7 @@ export const Divider = styled.hr`
 `;
 
 const tertiaryStyle = css`
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
+    font-weight: 600;
     font-size: 12px;
     color: #4d6480;
     letter-spacing: 1.04px;
@@ -187,7 +187,7 @@ const AvatarWrapper = styled.div`
     position: relative;
 `;
 
-export const Avatar = ({ size, style, className, ...props }) => (
+export const Avatar = ({ size, style, className, src, ...props }) => (
     <AvatarWrapper
         size={size}
         style={{
@@ -198,6 +198,7 @@ export const Avatar = ({ size, style, className, ...props }) => (
     >
         <GracefullImage
             {...props}
+            src={src}
             style={{
                 objectFit: 'cover',
                 height: avatarSizes[size] || '30px',
@@ -234,23 +235,29 @@ export const inputStyle = css`
         }
         return '#f6f8f9';
     }};
-    border-radius: 4px;
+    border-radius: 0.222em;
     border: none;
     outline: none;
-    font-family: 'AvenirNext-Regular', Arial, Helvetica, sans-serif;
-    font-size: 18px;
+    font-size: 1em;
     color: #122b48;
-    text-indent: 9px;
-    height: 40px;
+    text-indent: 0.5em;
+    height: 2.222em;
     -webkit-appearance: none;
     width: 100%;
     display: block;
-    font-weight: 300;
+    font-weight: 400;
     box-shadow: ${({ attention, error }) => {
         const show = attention || error;
         const color = error ? '#D0021B' : '#FFC800';
         return show ? `inset 0 0 0 2px ${color}` : 'none';
     }};
+
+    ${({ big }) =>
+        big &&
+        `
+        font-size: 1.5em;
+    `}
+
     ::placeholder,
     ::-webkit-input-placeholder {
         color: #98a4b3;
@@ -279,7 +286,7 @@ export const FileInput = styled.input.attrs({ type: 'file' })`
 `;
 
 const ButtonTextStyle = css`
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
+    font-weight: 600;
     font-size: 15px;
     color: #4d6480;
     text-align: center;
@@ -307,6 +314,8 @@ const ButtonTextStyle = css`
 
 const inputButtonStyle = css`
     ${inputStyle}
+    font-size: 18px;
+    font-weight: 400;
     text-align: center;
     line-height: 40px !important;
     transition: all 200ms ease;
@@ -545,7 +554,7 @@ export const SmartButton = ({
 };
 
 export const Pill = styled.span`
-    font-family: 'AvenirNext-Bold', Arial, Helvetica, sans-serif;
+    font-weight: 600;
     font-size: 9px;
     color: #4d6480;
     letter-spacing: 0.75px;
@@ -559,7 +568,6 @@ export const Pill = styled.span`
 `;
 
 export const PillLarge = styled.span`
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
     font-size: 12px;
     background-color: #e9ecf0;
     color: #98a4b3;
@@ -568,6 +576,7 @@ export const PillLarge = styled.span`
     border-radius: 33px;
     text-align: center;
     line-height: 24px;
+    font-weight: 600;
 `;
 
 export const InfoBox = styled.div`
@@ -577,7 +586,7 @@ export const InfoBox = styled.div`
     min-height: ${({ minHeight }) => (minHeight ? 70 : 0)}px;
     width: 8em;
     padding: 1em;
-    font-family: 'AvenirNext-Bold', Arial, Helvetica, sans-serif;
+    font-weight: 700;
     font-size: 13px;
     color: #4d6480;
     text-align: center;
@@ -598,7 +607,6 @@ export const InfoBox = styled.div`
 `;
 
 export const InfoPill = styled.span`
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
     font-weight: 700;
     background: #e9ecf0;
     border-radius: 16px;

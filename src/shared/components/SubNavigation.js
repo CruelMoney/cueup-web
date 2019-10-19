@@ -30,7 +30,7 @@ const StyledLink = styled(({ indicateActive, ...rest }) => <NavLink {...rest} />
     letter-spacing: 0.0666em;
     text-align: left;
     text-transform: uppercase;
-    font-family: 'AvenirNext-Bold', Arial, Helvetica, sans-serif;
+    font-weight: 700;
     opacity: ${({ indicateActive }) => {
         return indicateActive ? 1 : 0.6;
     }};

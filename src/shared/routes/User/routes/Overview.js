@@ -172,11 +172,13 @@ const Review = ({ reviewsCount, highlightedReview }) => {
 
                 <Row middle style={{ marginTop: '36px' }}>
                     <Col style={{ width: '100%' }}>
-                        <QuotationMarkIcon style={{ marginBottom: '9px' }} />
+                        <div style={{ marginBottom: '9px' }}>
+                            <QuotationMarkIcon />
+                            <Cite>{author ? author.userMetadata.firstName : citation}</Cite>
+                        </div>
                         <Citation>
                             {content.length > 130 ? content.slice(0, 127) + '...' : content}
                         </Citation>
-                        <Cite>{author ? author.userMetadata.firstName : citation}</Cite>
                     </Col>
                 </Row>
 

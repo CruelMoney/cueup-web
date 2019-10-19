@@ -75,12 +75,12 @@ export const CertifiedVerified = ({ certified, identityVerified }) => (
 );
 
 export const IconRow = styled(Row)`
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
     font-size: 15px;
     color: #98a4b3;
     align-items: center;
     margin-bottom: 12px;
     display: inline-flex;
+    font-weight: 600;
     svg {
         margin-right: 15px;
     }

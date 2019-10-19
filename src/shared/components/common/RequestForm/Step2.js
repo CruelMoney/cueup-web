@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react';
-import { TeritaryButton, Row, PrimaryButton, RowWrap } from 'components/Blocks';
-import { Input, Label, useValidation, LabelHalf, InputRow } from 'components/FormComponents';
+import React, { useRef } from 'react';
+import { TeritaryButton, Row, PrimaryButton } from 'components/Blocks';
+import { useValidation } from 'components/hooks/useForm';
+import { Input, Label, LabelHalf, InputRow } from 'components/FormComponents';
 import addTranslate from 'components/higher-order/addTranslate';
 import { BodySmall } from 'components/Text';
 import ToggleButtonHandler from '../ToggleButtonHandler';
@@ -44,18 +45,19 @@ const Step2 = ({
         <form name="requestForm-step-2">
             <h3>{translate('request-form.step-2.header')}</h3>
             <RequestSection>
-                <Label>{translate('request-form.step-2.event-name')}</Label>
-                <BodySmall>{translate('request-form.step-2.event-name-description')}</BodySmall>
                 <Input
+                    label={translate('request-form.step-2.event-name')}
                     onSave={(name) => handleChange({ name })}
                     validation={(v) => (v ? null : 'Please write a name')}
                     registerValidation={registerValidation('name')}
                     unregisterValidation={unregisterValidation('name')}
                     defaultValue={form.name}
-                />
+                >
+                    <BodySmall>{translate('request-form.step-2.event-name-description')}</BodySmall>
+                </Input>
             </RequestSection>
             <RequestSection>
-                <InputRow>
+                <InputRow small>
                     <LabelHalf>
                         {translate('speakers')}
                         <ToggleButton

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import moment from 'moment-timezone';
 import 'react-datepicker/dist/react-datepicker.min.css';
-
 import '../../css/calendar.css';
 
 class MyDatePicker extends Component {

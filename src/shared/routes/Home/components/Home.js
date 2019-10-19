@@ -93,8 +93,8 @@ class Home extends Component {
                     bgColor="#FFFFFF"
                     color={this.secondColor}
                     firstTo={translate('routes./signup')}
-                    secondTo={translate('routes./how-it-works')}
-                    firstLabel={translate('become-dj')}
+                    secondTo={translate('routes./')}
+                    firstLabel={translate('apply-to-become-dj')}
                     secondLabel={translate('how-it-works')}
                     title={translate('home.footer.first')}
                     subTitle={translate('home.footer.second')}

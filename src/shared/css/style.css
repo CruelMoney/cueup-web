@@ -4,7 +4,7 @@
 
 body {
     color: #32325d;
-    font-family: 'AvenirNext-Regular', sans-serif;
+    font-family: 'AvenirNext', Open Sans, Segoe UI, Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased;
     margin: 0;
     overflow-y: auto;
@@ -37,7 +37,6 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'AvenirNext-Regular', sans-serif;
     line-height: 1.2em;
     margin: 0;
 }
@@ -64,14 +63,15 @@ h4 {
     margin: 0 0 5px;
     text-transform: uppercase;
 }
+h6 {
+    font-weight: 600;
+}
 p {
-    font-family: 'SourceSansPro-Regular', sans-serif;
-    font-size: 17px;
+    font-size: 18px;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased !important;
     -moz-font-smoothing: antialiased !important;
-    letter-spacing: 0.41px;
-    line-height: 28px;
+    line-height: 1.75em;
     margin: 0;
     text-rendering: optimizelegibility !important;
 }
@@ -86,7 +86,6 @@ a:hover {
     text-decoration: none;
 }
 input {
-    font-family: 'AvenirNext-Regular', sans-serif !important;
     font-weight: normal;
 }
 label {
@@ -137,6 +136,7 @@ span {
 }
 button {
     border: none;
+    font-weight: 600;
     outline: none;
     padding: 0;
 }
@@ -174,8 +174,10 @@ body.pre-header-content .navigation {
     margin-top: 42px;
 }
 
-.mobileMenu a {
+.mobileMenu a,
+.mobileMenu .link-look {
     color: #31daff;
+    font-weight: 500;
     -webkit-tap-highlight-color: transparent;
     text-decoration: none;
     transition: color 0.1s;
@@ -232,7 +234,6 @@ body.pre-header-content .navigation {
 }
 
 .mobileMenu .menu li {
-    font-family: 'SourceSansPro-Semibold', sans-serif;
     font-size: 20px;
     -webkit-margin-after: 0;
     -webkit-margin-before: 0;
@@ -347,9 +348,9 @@ body.pre-header-content .navigation {
 .main-menu .link-look {
     color: #ffffff;
     cursor: pointer;
-    /* Login: */
-    font-family: 'SourceSansPro-Semibold', sans-serif;
     font-size: 17px;
+    /* Login: */
+    font-weight: 600;
     height: 30px;
     letter-spacing: 0.3px;
     line-height: 30px;
@@ -463,7 +464,6 @@ li .link-look {
 
 .copyright {
     color: #cfd7df;
-    font-family: 'SourceSansPro-Regular', sans-serif;
 }
 
 .footer-columns {
@@ -482,13 +482,9 @@ footer .link-look,
 footer .dropdown-selector-wrapper {
     color: #8998aa;
     fill: #8998aa;
-    font-family: 'SourceSansPro-Regular', sans-serif;
     font-size: 15px;
-    letter-spacing: 0.75px;
+    font-weight: 400;
     margin: auto;
-}
-footer .social a {
-    font-family: 'SourceSansPro-Bold', sans-serif;
 }
 footer h4 {
     font-size: 14px;
@@ -501,6 +497,9 @@ footer .dropdown-selector-wrapper:hover {
     color: #32325d !important;
     cursor: pointer;
     fill: #32325d !important;
+}
+footer .social a {
+    font-weight: 600;
 }
 footer .social svg {
     margin-bottom: -1px;
@@ -550,9 +549,8 @@ footer .social svg {
 }
 #preFooter .action-title {
     color: #32325d;
-    font-family: 'SourceSansPro-Regular', sans-serif;
     font-size: 30px;
-    letter-spacing: 0.91px;
+    font-weight: 500;
     margin: 0.75em 0;
 }
 #preFooter .action-title span {
@@ -650,25 +648,20 @@ form a {
     content: counter(item) ' → ';
     counter-increment: item;
     display: inline-block;
-    font-family: 'AvenirNext-Medium', sans-serif;
     font-size: 14px;
     font-weight: bold !important;
     margin-left: -2.5em;
 }
 
+nav a {
+    font-weight: 600;
+}
 nav a:hover {
     text-decoration: none;
 }
 
 a:focus {
     text-decoration: none;
-}
-
-nav borderHover a:hover {
-    border-color: black !important;
-    border-radius: 6px;
-    border-style: solid;
-    border-width: 2px !important;
 }
 
 .no-padding {
@@ -696,9 +689,9 @@ input[type='file'] + label {
     align-items: center;
     cursor: pointer;
     display: flex;
-    /* 20px */
-    font-family: 'AvenirNext-Medium';
     font-size: 20px;
+    /* 20px */
+    font-weight: 500;
     height: 100%;
     justify-content: center;
     overflow: hidden;
@@ -1045,6 +1038,9 @@ input[type='file'] + label * {
 }
 #profile-picture-upload label {
     color: white;
+    display: flex;
+    justify-content: center;
+    margin: 0;
 }
 
 .picture-upload-component label span {
@@ -1293,8 +1289,8 @@ input[type='file'] + label * {
 
 .userNavigation a {
     color: #ffffff;
-    font-family: 'SourceSansPro-Semibold', sans-serif;
     font-size: 22px;
+    font-weight: 600;
     line-height: 33px;
     text-transform: capitalize;
 }
@@ -1320,15 +1316,10 @@ input[type='file'] + label * {
 .pay-form {
     border-radius: 6px;
     display: flex;
-    max-width: 800px;
+    max-width: 900px;
     overflow: hidden;
     width: auto;
-    p.error {
-        font-size: 1em;
-        line-height: 1.5em;
-        position: absolute;
-        top: -0.9em;
-    }
+
     .text-element-wrapper {
         margin-bottom: 2em;
     }
@@ -1336,10 +1327,11 @@ input[type='file'] + label * {
     .left,
     .right {
         flex: 1;
+        min-width: 300px;
         padding: 2em;
     }
     .left {
-        flex: 1.5;
+        flex: 1.75;
     }
     .right {
         background-color: #edf2f7;
@@ -1364,38 +1356,6 @@ input[type='file'] + label * {
             margin: 3em 0;
             .background-masker {
                 background: #edf2f7;
-            }
-        }
-    }
-    .stripe-card {
-        .StripeElement {
-            border-bottom: 1px solid rgb(224, 224, 224);
-            height: 35px;
-            margin-bottom: 3em;
-            padding-top: 0.7em;
-            position: relative;
-            width: 100%;
-        }
-        .StripeElement:after {
-            background-color: rgb(37, 244, 210);
-            bottom: -1px;
-            content: '';
-            height: 2px;
-            position: absolute;
-            transform: scaleX(0);
-            transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1);
-            width: 100%;
-        }
-        .StripeElement--focus:after {
-            transform: none;
-        }
-        .StripeElement--invalid:after {
-            background-color: #f44336;
-            transform: none;
-        }
-        #field-wrapper {
-            label:first-of-type {
-                flex: 1;
             }
         }
     }
@@ -1567,17 +1527,15 @@ svg {
     display: flex;
 }
 .ratingStar {
-    padding-left: 3px;
-    padding-right: 3px;
+    padding-left: 1px;
+    padding-right: 1px;
 }
-.rating .ratingStar:first-child {
-    padding-left: 0px;
-}
+
 .ratingStar {
     transition: transform 0.1s ease;
 }
 
-.ratingStar.active:active {
+.rating:not(.disabled) .ratingStar.active:active {
     transform: translateX(0px) translateY(0px) scale(1.4);
 }
 
@@ -1635,9 +1593,6 @@ button {
         padding-bottom: 0.2em;
         padding-top: 0.3em;
     }
-    p.error {
-        top: 2.1em;
-    }
 }
 
 .offer-card {
@@ -1657,7 +1612,6 @@ button {
 }
 
 .offer-card h4 {
-    font-family: 'AvenirNext-Regular', sans-serif;
     font-size: 18px;
     line-height: 15px;
     margin-top: 6px;
@@ -1683,7 +1637,9 @@ button {
 
 .popup,
 .loginDropDown {
+    max-height: 100vh;
     opacity: 0;
+    overflow-y: scroll !important;
     pointer-events: none;
     transform: rotate3d(1, 1, 0, -15deg);
     transform-origin: 100% 0;
@@ -1894,23 +1850,6 @@ button.active .info-popup {
     }
 }
 
-.particles-bg {
-    background-image: linear-gradient(0deg, #b031ff 0%, #b031ff 15%, #00d1ff 85%, #32daff 90%);
-    height: 170%;
-    margin-top: -20vw;
-    position: absolute;
-    transform: skewX(5deg) translateX(-30%);
-    width: 65%;
-    z-index: -2;
-}
-
-#particles {
-    margin-left: -60px;
-    margin-top: -70px;
-    position: absolute;
-    z-index: 1;
-}
-
 /*Link button*/
 .button {
     align-items: center;
@@ -1922,8 +1861,8 @@ button.active .info-popup {
     display: inline-block;
     fill: #bbbbbb;
     /* Text */
-    font-family: 'SourceSansPro-Semibold', sans-serif;
     font-size: 16px;
+    font-weight: 600;
     height: 40px;
     justify-content: center;
     letter-spacing: 0.39px;
@@ -1931,7 +1870,7 @@ button.active .info-popup {
     padding: 10px 10px;
     position: relative;
     text-overflow: ellipsis;
-    text-transform: uppercase;
+    text-transform: capitalize;
     transition: all 0.1s ease-in-out;
     visibility: visible;
     white-space: nowrap;
@@ -2100,83 +2039,15 @@ table {
     border-spacing: 10px;
     width: 100%;
 }
-.edit-text-button {
-    background: blue;
-}
+
 .edit-text-button input {
     -webkit-appearance: none;
     background: transparent;
     border: none;
     font-size: 16px;
     font-weight: 600;
-    letter-spacing: 0.39px;
     outline: none;
     text-align: center;
-    text-transform: uppercase;
-    width: 100%;
-}
-
-.how-it-works {
-    align-items: flex-end;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 70px;
-    margin-top: -90px;
-    position: relative;
-}
-
-.how-it-works section {
-    float: right;
-    margin-bottom: 180px;
-    width: 570px;
-}
-.how-it-works section:last-child {
-    margin-bottom: 0px;
-}
-
-.how-it-works section .how-to-title {
-    display: flex;
-    margin-bottom: 15px;
-    margin-left: -30px;
-}
-
-.how-it-works section .how-to-title > h2 {
-    color: #b031ff;
-    margin-left: 80px;
-    width: 194px;
-}
-.how-it-works .circle {
-    background-color: #b031ff;
-    position: absolute;
-}
-
-.location_how-it-works .info-boxes {
-    min-height: 0px;
-}
-.circle {
-    border-radius: 100%;
-    color: white;
-    font-family: 'SourceSansPro-Semibold', sans-serif;
-    font-size: 30px;
-    height: 60px;
-    line-height: 60px;
-    text-align: center;
-    width: 60px;
-}
-
-.how-it-works section:nth-child(2) {
-    width: 540px;
-}
-.how-it-works section:nth-child(3) {
-    width: 510px;
-}
-.how-it-works section:nth-child(4) {
-    width: 470px;
-}
-.how-it-works section:nth-child(5) {
-    width: 440px;
-}
-.how-it-works section > p {
     width: 100%;
 }
 
@@ -2209,12 +2080,10 @@ table {
     margin: 0 200px;
     margin-bottom: 80px;
     margin-top: 90px;
-    position: relative;
     z-index: 1;
 }
 
 .signup h2 {
-    font-family: 'SourceSansPro-Regular', sans-serif;
     font-size: 30px;
     margin-bottom: 10px;
     margin-top: 3px;
@@ -2223,6 +2092,11 @@ table {
     color: #8998aa;
     position: relative;
     z-index: 1;
+}
+.signup li label,
+.signup li .toggle-button-handler {
+    display: block;
+    margin-top: 16px;
 }
 .errors {
     margin-bottom: 10px;
@@ -2262,14 +2136,12 @@ p.error {
 .terms .subtitle {
     border-bottom: 1px solid #f6f9fc;
     color: #8998aa;
-    font-family: 'AvenirNext-Regular', sans-serif;
     font-size: 18px;
     line-height: 26px;
     padding-bottom: 15px;
 }
 .terms h2 {
     color: #32325d;
-    font-family: 'SourceSansPro-Regular', sans-serif;
     font-size: 28px;
 }
 .terms section {
@@ -2299,18 +2171,14 @@ p.error {
 .request-form-wrapper {
     margin-top: 280px;
 }
-.how-it-works-wrapper {
-    margin-top: 300px;
-}
+
 .request-form {
     margin-bottom: 100px;
 }
-.request-form div[class^='col'] {
-    perspective: 2000px;
-}
-.request-form .card {
-    padding: 20px;
-    transform: none;
+
+.request-form label,
+.request-form .suggestionList {
+    margin-bottom: 12px;
 }
 @keyframes show {
     100% {
@@ -2331,8 +2199,8 @@ p.error {
 
 .request-form .toggle-button-handler .button,
 .request-form .toggle-options .button {
-    font-family: 'AvenirNext-Medium', sans-serif;
     font-size: 14px;
+    font-weight: 500;
     height: 33px;
     line-height: 14px;
     text-transform: capitalize;
@@ -2340,7 +2208,6 @@ p.error {
 
 .request-form p {
     color: #8998aa;
-    margin: 0;
 }
 .request-form h3 {
     font-size: 20px;
@@ -2768,7 +2635,6 @@ header .info-boxes {
     position: relative;
 }
 .payout-form {
-    max-width: 430px;
     button {
         margin: 1em 0;
     }
@@ -2889,6 +2755,7 @@ header .dj-card h4 {
 .dj-card p,
 header .dj-card p {
     -webkit-box-orient: vertical;
+    color: #4d6480;
     display: block; /* Fallback for non-webkit */
     display: -webkit-box;
     font-size: 12px;
@@ -2956,7 +2823,6 @@ header .dj-card p {
     border-width: 1px;
 }
 .location_faq .card h4 {
-    font-family: 'SourceSansPro-Regular', sans-serif;
     font-size: 20px;
     margin: 13px 0px !important;
     text-transform: none;
@@ -3043,101 +2909,6 @@ header .dj-card p {
     left: -10000vw;
     position: absolute;
     width: 100vw;
-}
-
-.preview-card {
-    align-items: center;
-    background-image: linear-gradient(135deg, rgb(49, 255, 245) 14%, rgb(0, 209, 255) 94%);
-    border-radius: 6px;
-    color: white;
-    display: flex;
-    fill: white;
-    flex-direction: column;
-    height: 250px;
-    justify-content: space-around;
-    overflow: hidden;
-    padding: 10px 0;
-    width: 477px;
-}
-.preview-card.large {
-    border-radius: 0;
-    height: 747px;
-    padding: 30px 0;
-    width: 1428px;
-}
-.preview-card.large .logo {
-    height: 130px;
-    width: 287px;
-}
-.preview-card .icon {
-    height: 16px;
-    width: 10px;
-}
-.preview-card.large .icon {
-    height: 40px;
-    width: 31px;
-}
-.preview-card.large button {
-    width: 130px;
-}
-.preview-card.large button {
-    border-radius: 20px !important;
-    font-size: 72px;
-    height: 144px;
-    width: 420px;
-}
-.preview-card h1 {
-    font-family: 'SourceSansPro-Bold', Camphor, Open Sans, Segoe UI, sans-serif;
-    font-size: 22px;
-    margin-bottom: 5px;
-}
-.preview-card.large h1 {
-    font-family: 'SourceSansPro-Bold', sans-serif;
-    font-size: 72px;
-}
-.preview-card p {
-    font-family: Camphor, Open Sans, Segoe UI, sans-serif;
-    line-height: 15px !important;
-    text-align: left;
-}
-.preview-card.large p {
-    font-family: 'SourceSansPro-Bold', sans-serif;
-    font-size: 51px !important;
-    line-height: 60px !important;
-    margin-bottom: 30px;
-    text-align: left !important;
-}
-.preview-card .profile-text {
-    align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: left;
-}
-.preview-card.large .profile-text {
-    padding-right: 100px;
-}
-.preview-card .profile-text svg {
-    bottom: -3px;
-    margin-right: 5px;
-    position: relative;
-}
-.preview-card.large .profile-text svg {
-    margin-right: 20px;
-}
-.preview-card .profile-image {
-    background-size: cover;
-    border-radius: 50%;
-    height: 120px;
-    margin: auto;
-    width: 120px;
-}
-.preview-card.large .profile-image {
-    height: 333px;
-    width: 333px;
-}
-.preview-card .info {
-    width: 100%;
 }
 
 .previewer button {
@@ -3259,17 +3030,23 @@ header .dj-card p {
 }
 
 ol.breadcrumbs {
-    font-family: 'Ostrich Sans Inline';
-    font-style: italic;
     font-weight: 600;
-    letter-spacing: 0.1em;
+    font-weight: 700;
     list-style: none;
     margin: 0;
     padding: 0;
+    position: relative;
+    text-transform: capitalize;
+    top: -5px;
 }
 
 ol.breadcrumbs li {
     display: inline-block;
+}
+
+ol.breadcrumbs li:before {
+    content: '➡';
+    position: relative;
 }
 ol.breadcrumbs li > div {
     display: inline-block;
@@ -3279,6 +3056,7 @@ ol.breadcrumbs a {
     font-size: 16px;
     margin: 0 0.5em;
 }
+
 .logo-area {
     align-items: flex-end;
     display: flex;
@@ -3320,7 +3098,6 @@ ol.breadcrumbs a {
     width: 600px;
 }
 .reminder-popup h2 {
-    font-family: 'SourceSansPro-Bold', sans-serif;
     margin: auto;
     margin-bottom: 1em;
 
@@ -3368,6 +3145,7 @@ ol.breadcrumbs a {
 .link-look {
     border: none;
     color: #31daff;
+    font-weight: 600;
     outline: none !important;
     padding: 0;
 }
@@ -3450,36 +3228,6 @@ ol.breadcrumbs a {
         width: 80%;
     }
 
-    .location_how-it-works #stripes {
-        height: 570px;
-    }
-    .how-it-works-wrapper {
-        margin-top: 210px;
-    }
-    .particles-bg {
-        width: 55%;
-    }
-
-    .how-it-works {
-        height: 2040px;
-        margin-top: -120px;
-    }
-    .how-it-works section {
-        width: 475px;
-    }
-
-    .how-it-works section:nth-child(2) {
-        width: 445px;
-    }
-    .how-it-works section:nth-child(3) {
-        width: 415px;
-    }
-    .how-it-works section:nth-child(4) {
-        width: 375px;
-    }
-    .how-it-works section:nth-child(5) {
-        width: 340px;
-    }
     .terms-content .row,
     .faq-content .row,
     .about-content .row {
@@ -3754,38 +3502,12 @@ ol.breadcrumbs a {
     .signup form li:before {
         margin-left: 0;
     }
+
     .fixed {
         position: initial;
         top: initial;
     }
 
-    .particles canvas {
-        height: 200px !important;
-        margin-bottom: 75px;
-        width: 70% !important;
-    }
-    .particles > div {
-        display: flex;
-        justify-content: center;
-    }
-    #particles {
-        display: none;
-    }
-    .particles-bg {
-        display: none;
-    }
-    .how-it-works {
-        height: 100%;
-        margin-top: 0px;
-    }
-    .how-it-works section {
-        margin-bottom: 50px;
-        padding: 0px 15px;
-        width: 100% !important;
-    }
-    .how-it-works section .how-to-title {
-        margin-left: 0px;
-    }
     #preFooter:before {
         top: -30px;
     }
@@ -3852,7 +3574,6 @@ ol.breadcrumbs a {
     .hideMobile {
         display: none !important;
     }
-    .how-it-works-wrapper,
     .request-form-wrapper {
         margin-top: 0;
     }
@@ -3865,10 +3586,6 @@ ol.breadcrumbs a {
         flex-direction: column;
         height: 70px;
         justify-content: flex-end;
-    }
-
-    .location_how-it-works #preFooter:before {
-        top: -730px;
     }
 
     .popup {

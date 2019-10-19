@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Checkmark from '../assets/Checkmark';
 import {
     Row,
@@ -15,12 +15,13 @@ import {
 } from './Blocks';
 import { Title, Body } from './Text';
 import Checkbox from './Checkbox';
+import { useValidation } from './hooks/useForm';
 
 const Label = styled.label`
-    font-family: 'AvenirNext-Regular', Arial, Helvetica, sans-serif;
     font-size: 18px;
     color: #4d6480;
     font-weight: 300;
+    display: inline-block;
     .error {
         margin-bottom: 0;
     }
@@ -59,17 +60,59 @@ const LeftCol = styled(Col)`
 
 export const InputRow = styled(Row)`
     flex-wrap: wrap;
-    margin-right: -36px;
-    ${InputLabel} {
-        min-width: calc(100% - 36px);
-        margin-right: 36px;
-        align-self: flex-end;
-    }
-    ${LabelHalf} {
-        margin-right: 36px;
-        min-width: calc(50% - 36px);
-        width: calc(50% - 36px);
-        align-self: flex-end;
+    ${({ small }) =>
+        small
+            ? css`
+                  margin-right: -15px;
+                  .suggestionList {
+                      min-width: calc(100% - 15px);
+                      margin-right: 15px;
+                      align-self: flex-start;
+                      label {
+                          margin-bottom: 0;
+                      }
+                  }
+                  ${InputLabel} {
+                      min-width: calc(100% - 15px);
+                      margin-right: 15px;
+                      align-self: flex-start;
+                  }
+                  ${LabelHalf},
+                  .half {
+                      margin-right: 15px;
+                      min-width: calc(50% - 15px);
+                      width: calc(50% - 15px);
+                      align-self: flex-start;
+                  }
+              `
+            : css`
+                  margin-right: -36px;
+                  .suggestionList {
+                      min-width: calc(100% - 36px);
+                      margin-right: 36px;
+                      align-self: flex-start;
+                  }
+                  ${InputLabel} {
+                      min-width: calc(100% - 36px);
+                      margin-right: 36px;
+                      align-self: flex-start;
+                  }
+                  ${LabelHalf},
+                  .half {
+                      margin-right: 36px;
+                      min-width: calc(50% - 36px);
+                      width: calc(50% - 36px);
+                      align-self: flex-start;
+                  }
+              `}
+    @media only screen and (max-width: 425px) {
+        margin-right: -15px;
+        ${LabelHalf},
+        .half {
+            margin-right: 15px;
+            min-width: calc(100% - 15px);
+            width: calc(100% - 15px);
+        }
     }
 `;
 
@@ -147,7 +190,12 @@ const InputType = React.forwardRef(
     ) => {
         switch (type) {
             case 'text-area':
-                return <TextArea {...props} ref={ref} type={type} error={!!error} />;
+                return (
+                    <>
+                        <TextArea {...props} ref={ref} type={type} error={!!error} />
+                        {children}
+                    </>
+                );
             case 'select':
                 return (
                     <Select {...props} error={!!error} onChange={save} ref={ref}>
@@ -173,32 +221,38 @@ const InputType = React.forwardRef(
 
             case 'formatted-text':
                 return (
-                    <FormattedText
-                        {...props}
-                        ref={ref}
-                        type={type}
-                        error={!!error}
-                        save={save}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter' && blurOnEnter) {
-                                e.target.blur();
-                            }
-                        }}
-                    />
+                    <>
+                        <FormattedText
+                            {...props}
+                            ref={ref}
+                            type={type}
+                            error={!!error}
+                            save={save}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' && blurOnEnter) {
+                                    e.target.blur();
+                                }
+                            }}
+                        />
+                        {children}
+                    </>
                 );
             default:
                 return (
-                    <TextInput
-                        {...props}
-                        ref={ref}
-                        type={type}
-                        error={!!error}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter' && blurOnEnter) {
-                                e.target.blur();
-                            }
-                        }}
-                    />
+                    <>
+                        <TextInput
+                            {...props}
+                            ref={ref}
+                            type={type}
+                            error={!!error}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' && blurOnEnter) {
+                                    e.target.blur();
+                                }
+                            }}
+                        />
+                        {children}
+                    </>
                 );
         }
     }
@@ -218,6 +272,7 @@ const Input = React.forwardRef(
             registerValidation,
             onBlur,
             unregisterValidation = () => {},
+            errorOutside,
             ...props
         },
         fRef
@@ -236,7 +291,6 @@ const Input = React.forwardRef(
 
         const save = (e) => {
             const value = e.target ? e.target.value : e;
-
             if (typeof warning === String) {
                 const confirmed = window.confirm(warning);
                 if (!confirmed) {
@@ -260,22 +314,26 @@ const Input = React.forwardRef(
             onBlur && onBlur();
         };
 
+        const displayError = propsError || error;
+
         return (
-            <LabelComponent>
-                {label}
-                <InputType
-                    type={type}
-                    save={save}
-                    error={error || propsError}
-                    warning={warning}
-                    onChange={change}
-                    ref={ref}
-                    onBlur={handleBlur}
-                    {...props}
-                />
-                {error && <p className="error">{error}</p>}
-                {propsError && <p className="error">{propsError}</p>}
-            </LabelComponent>
+            <>
+                <LabelComponent>
+                    {label}
+                    <InputType
+                        type={type}
+                        save={save}
+                        error={error || propsError}
+                        warning={warning}
+                        onChange={change}
+                        ref={ref}
+                        onBlur={handleBlur}
+                        {...props}
+                    />
+                    {!errorOutside && displayError && <p className="error">{displayError}</p>}
+                </LabelComponent>
+                {errorOutside && displayError && <p className="error">{displayError}</p>}
+            </>
         );
     }
 );
@@ -304,7 +362,6 @@ const ButtonText = styled.span`
 `;
 
 const Value = styled.p`
-    font-family: 'AvenirNext-Regular', Arial, Helvetica, sans-serif;
     font-size: 18px;
     color: #122b48;
 `;
@@ -338,64 +395,4 @@ export {
     DeleteFileButton,
     TextArea,
     Select,
-};
-
-export const useValidation = ({ validation, registerValidation, unregisterValidation, ref }) => {
-    const [error, setError] = useState(null);
-
-    const runValidation = useCallback(
-        (value, returnRef) => {
-            if (validation) {
-                const validationError = validation(value);
-                if (validationError) {
-                    setError(validationError);
-                    return returnRef ? ref : validationError;
-                }
-                setError(null);
-                return null;
-            }
-        },
-        [validation, ref]
-    );
-
-    useEffect(() => {
-        if (registerValidation) {
-            registerValidation((val) => runValidation(val, true));
-        }
-        if (unregisterValidation) {
-            return () => unregisterValidation(runValidation);
-        }
-    }, [validation, registerValidation, unregisterValidation, runValidation]);
-    return {
-        runValidation,
-        error,
-    };
-};
-
-export const useForm = (form) => {
-    const validations = useRef({});
-    const registerValidation = (key) => (fun) => {
-        validations.current = {
-            ...validations.current,
-            [key]: fun,
-        };
-    };
-
-    const unregisterValidation = (key) => (fun) => {
-        delete validations.current[key];
-    };
-
-    const runValidations = () => {
-        console.log({ validations });
-
-        return Object.entries(validations.current)
-            .reduce((refs, [key, fun]) => [...refs, fun(form[key])], [])
-            .filter((r) => !!r);
-    };
-
-    return {
-        registerValidation,
-        unregisterValidation,
-        runValidations,
-    };
 };

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import emailValidator from 'email-validator';
 import { Mutation } from 'react-apollo';
+import { useConnectInstagram } from 'components/hooks/useConnectInstagram';
 import {
     SettingsSection,
     Input,
@@ -18,9 +19,8 @@ import CancelationPolicyPopup from '../components/CancelationPolicyPopup';
 import PayoutForm from '../../../components/common/PayoutForm';
 import Popup from '../../../components/common/Popup';
 import { DELETE_USER } from '../gql';
-import { PhoneInputNew } from '../../../components/common/PhoneInput';
+import PhoneInput from '../../../components/common/PhoneInput';
 import TextAreaPopup from '../../../components/TextAreaPopup';
-import { useConnectInstagram } from '../../../utils/Hooks';
 import VerifyIdentity from '../components/VerifyIdentity';
 import ConnectSoundCloud from '../components/ConnectSoundCloud';
 import CurrencySelector from '../../../components/CurrencySelector';
@@ -142,7 +142,7 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                     onSave={(email) => saveData({ email: email.trim() })}
                     validation={(v) => (emailValidator.validate(v) ? null : 'Not a valid email')}
                 />
-                <PhoneInputNew
+                <PhoneInput
                     half
                     label="Phone"
                     attention={!phone}
@@ -361,8 +361,14 @@ const PayoutPopup = ({ user, hasPayout }) => {
                 label="Payout information"
                 buttonText={'update'}
             />
-            <Popup showing={showing} onClickOutside={(_) => setShowing(false)} width={'450px'}>
-                <PayoutForm color={'#31daff'} isUpdate={hasPayout} user={user} />
+            <Popup showing={showing} onClickOutside={(_) => setShowing(false)} width={'500px'}>
+                <PayoutForm
+                    color={'#31daff'}
+                    isUpdate={hasPayout}
+                    user={user}
+                    onCancel={() => setShowing(false)}
+                    onSubmitted={() => setShowing(false)}
+                />
             </Popup>
         </>
     );

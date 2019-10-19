@@ -30,7 +30,6 @@ class BreadCrumbs extends Component {
                             itemScope
                             itemType="http://schema.org/ListItem"
                         >
-                            <span>>></span>
                             <Navlink
                                 itemScope
                                 itemType="http://schema.org/Thing"

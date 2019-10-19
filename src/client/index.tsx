@@ -3,6 +3,7 @@ import { hydrate, render } from 'react-dom';
 import * as Sentry from '@sentry/browser';
 import { loadableReady } from '@loadable/component';
 import Router from './BrowserRouter';
+import './polyfills';
 
 const production = process.env.NODE_ENV === 'production';
 

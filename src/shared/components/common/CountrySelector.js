@@ -1,108 +1,20 @@
 import React from 'react';
 import { getData } from 'country-list';
 import { Query } from 'react-apollo';
-import connectToForm from '../higher-order/connectToForm';
-import * as c from '../../constants/constants';
+import { SearchableSuggestionList } from 'components/SuggestionList/SuggestionList';
 import { AVAILABLE_BANKS } from '../gql';
-import Options from './Options';
 
-const CountrySelector = ({ errors = [], placeholder, ...props }) => {
-    const onChange = (value) => {
-        props.onChange(value);
-    };
-
-    const errorStyle =
-        errors && errors.length > 0
-            ? {
-                  borderBottomColor: '#f44336',
-                  borderBottomWidth: '2px',
-              }
-            : {};
-
-    return (
-        <div className="country-selector-wrapper text-field">
-            <div className="country-selector" style={errorStyle}>
-                <Options
-                    required
-                    placeholder={placeholder}
-                    options={getData().map(({ name, code }) => ({
-                        label: name,
-                        value: code,
-                    }))}
-                    {...props}
-                    onChange={onChange}
-                />
-            </div>
-            <div className="errors">
-                {errors.map((error, i) => (
-                    <p className="error" key={i}>
-                        {error}
-                    </p>
-                ))}
-            </div>
-        </div>
-    );
+const countries = getData().map(({ code, name }) => ({ label: name, value: code }));
+const CountrySelector = ({ ...props }) => {
+    return <SearchableSuggestionList {...props} suggestions={countries} />;
 };
 
-export default connectToForm(CountrySelector);
+export default CountrySelector;
 
-const CurrencySelector = ({ errors = [], placeholder, ...props }) => {
-    const onChange = (value) => {
-        props.onChange(value);
-    };
-
-    const errorStyle =
-        errors && errors.length > 0
-            ? {
-                  borderBottomColor: '#f44336',
-                  borderBottomWidth: '2px',
-              }
-            : {};
-    return (
-        <div className="country-selector-wrapper text-field">
-            <div className="country-selector" style={errorStyle}>
-                <Options
-                    required
-                    placeholder={placeholder}
-                    options={c.Currencies.map((c) => ({
-                        label: c,
-                        value: c,
-                    }))}
-                    {...props}
-                    onChange={onChange}
-                />
-            </div>
-            <div className="errors">
-                {errors.map((error, i) => (
-                    <p className="error" key={i}>
-                        {error}
-                    </p>
-                ))}
-            </div>
-        </div>
-    );
-};
-
-const BankSelector = ({ errors = [], placeholder, ...props }) => {
-    const onChange = (value) => {
-        props.onChange(value);
-    };
-
-    const errorStyle =
-        errors && errors.length > 0
-            ? {
-                  borderBottomColor: '#f44336',
-                  borderBottomWidth: '2px',
-              }
-            : {};
-
+export const BankSelector = ({ placeholder, ...props }) => {
     return (
         <Query query={AVAILABLE_BANKS} variables={{ countryCode: 'ID' }} ssr={false}>
             {({ loading, data }) => {
-                if (loading) {
-                    return null;
-                }
-
                 let options = [];
                 if (data && data.availableBanks) {
                     options = data.availableBanks.map(({ code, name }) => ({
@@ -112,29 +24,14 @@ const BankSelector = ({ errors = [], placeholder, ...props }) => {
                 }
 
                 return (
-                    <div className="country-selector-wrapper text-field">
-                        <div className="country-selector" style={errorStyle}>
-                            <Options
-                                required
-                                placeholder={placeholder}
-                                options={options}
-                                {...props}
-                                onChange={onChange}
-                            />
-                        </div>
-                        <div className="errors">
-                            {errors.map((error, i) => (
-                                <p className="error" key={i}>
-                                    {error}
-                                </p>
-                            ))}
-                        </div>
-                    </div>
+                    <SearchableSuggestionList
+                        {...props}
+                        suggestions={options}
+                        disabled={loading}
+                        placeholder={loading ? 'Loading' : placeholder}
+                    />
                 );
             }}
         </Query>
     );
 };
-
-export const ConnectedCurrencySelector = connectToForm(CurrencySelector);
-export const ConnectedBankSelector = connectToForm(BankSelector);

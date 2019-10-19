@@ -210,7 +210,7 @@ const OfferForm = ({
                     <SmartButton
                         disabled={!canSubmit}
                         loading={submitLoading}
-                        succes={submitted}
+                        success={submitted}
                         onClick={updateOffer}
                     >
                         {submitted

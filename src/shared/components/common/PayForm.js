@@ -4,19 +4,20 @@ import { connect } from 'react-redux';
 import { getTranslate, getActiveLanguage } from 'react-localize-redux';
 import { Query, useMutation } from 'react-apollo';
 import ReactPixel from 'react-facebook-pixel';
+import Checkmark from 'react-ionicons/lib/IosCheckmarkCircle';
+import styled from 'styled-components';
+import { LoadingIndicator, Row } from 'components/Blocks';
 import { REQUEST_PAYMENT_INTENT, PAYMENT_CONFIRMED } from '../../routes/Event/gql';
 import * as tracker from '../../utils/analytics/autotrack';
 import { changeCurrency } from '../../actions/SessionActions';
 import addTranslate from '../higher-order/addTranslate';
 import content from '../../routes/Event/content.json';
 import TextWrapper from './TextElement';
-import Button from './Button-v2';
 import MoneyTable, { TableItem } from './MoneyTable';
 import StripeFormWrapper from './StripePayForm';
 import XenditPayForm from './XenditPayForm';
-import { LoadingPlaceholder2, LoadingIndicator } from './LoadingPlaceholder';
+import { LoadingPlaceholder2 } from './LoadingPlaceholder';
 import requestFormContent from './RequestForm/content.json';
-import modalContent from './modals/content.json';
 import NotifyPayment from './NotifyPayment';
 
 const PayForm = ({
@@ -80,7 +81,7 @@ const PayForm = ({
     }
 
     return (
-        <div className="pay-form" ref={div}>
+        <PayFormContainer className="pay-form" ref={div}>
             <Query query={REQUEST_PAYMENT_INTENT} variables={variables} onError={console.log}>
                 {({ data = {}, loading, error }) => {
                     if (error) {
@@ -115,7 +116,9 @@ const PayForm = ({
                                     text={translate('event.offer.payment-info')}
                                 />
                                 {loading ? (
-                                    <LoadingIndicator label={translate('gettingPayment')} />
+                                    <Row center>
+                                        <LoadingIndicator label={translate('gettingPayment')} />
+                                    </Row>
                                 ) : (
                                     PayForms[requestPaymentIntent.paymentProvider]
                                 )}
@@ -161,14 +164,19 @@ const PayForm = ({
                     );
                 }}
             </Query>
-        </div>
+        </PayFormContainer>
     );
 };
+
+const PayFormContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+`;
 
 const ThankYouContent = ({ translate, style }) => {
     return (
         <div className="payment-confirmation" style={style}>
-            <Button succes={true} rounded active glow />
+            <Checkmark color={'#50E3C2'} fontSize="42px" />
             <h3>{translate('payment-succes-message')}</h3>
         </div>
     );
@@ -194,4 +202,4 @@ const SmartPay = connect(
     mapDispatchToProps
 )(PayForm);
 
-export default addTranslate(SmartPay, [content, requestFormContent, modalContent]);
+export default addTranslate(SmartPay, [content, requestFormContent]);

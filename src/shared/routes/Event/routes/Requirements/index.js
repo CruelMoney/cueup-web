@@ -8,7 +8,7 @@ import SavingIndicator from '../../../../components/SavingIndicator';
 import TextAreaPopup from '../../../../components/TextAreaPopup';
 import { Body, Title } from '../../../../components/Text';
 import GenreSelector from '../../../../components/GenreSelector';
-import { PhoneInputNew } from '../../../../components/common/PhoneInput';
+import PhoneInput from '../../../../components/common/PhoneInput';
 import Popup from '../../../../components/common/Popup';
 import { EVENT_REFUND, CANCEL_EVENT, UPDATE_EVENT } from '../../gql';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
@@ -150,7 +150,7 @@ const Requirements = React.forwardRef(({ theEvent, translate, history, pathname 
                     onSave={(email) => save('contactEmail')(email.trim())}
                     validation={(v) => (emailValidator.validate(v) ? null : 'Not a valid email')}
                 />
-                <PhoneInputNew
+                <PhoneInput
                     label="Phone"
                     attention={!contactPhone}
                     defaultValue={contactPhone}

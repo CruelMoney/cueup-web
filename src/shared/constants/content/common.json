@@ -3,13 +3,16 @@
   "book-dj": ["Book DJ", "Book DJ"],
   "become-dj": ["Become DJ", "Bliv DJ"],
   "get-offers": ["Get offers", "Få tilbud"],
-  "how-it-works": ["How it works", "Sådan virker det"],
   "are-you-a-dj": ["Are you a DJ?", "Er du DJ?"],
   "are-you-a-dj-in-:location": ["Are you a DJ in ${ location }?", "Er du DJ i ${ location }?"],
   "apply-to-become-dj": ["Apply to become DJ", "Ansøg om at blive DJ"],
   "apply-to-become-dj-or-see-how-it-works": [
     "Apply to become DJ or see how it works.",
     "Ansøg om at blive DJ eller se hvordan det virker."
+  ],
+  "how-it-works":[
+    "How it works",
+    "Hvordan det virker"
   ],
   "language": ["Language", "Sprog"],
   "language-and-currency": ["Language & Currency", "Sprog & Valuta"],
@@ -219,7 +222,7 @@
   ],
   "gettingPayment": ["Loading payment", "Henter betaling"],
   "payment-succes-message": [
-    "Your payment has been received, and you will receive a receipt on email.",
-    "Din betaling er modtaget, og du vil få en kvittering på din email."
+    "The DJ has been booked, and you will receive a receipt on email.",
+    "DJ'en er booket, og du vil få en kvittering på din email."
   ]
 }

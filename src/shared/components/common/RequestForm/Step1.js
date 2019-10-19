@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import moment from 'moment-timezone';
 import { useCheckDjAvailability } from 'actions/EventActions';
 import addTranslate from 'components/higher-order/addTranslate';
 import { BodySmall } from 'components/Text';
 import { Row, SmartButton } from '../../Blocks';
-import { Input, useForm } from '../../FormComponents';
+import { Input } from '../../FormComponents';
 import LocationSelector from '../LocationSelectorSimple';
 import DatePicker from '../Datepicker';
 import ErrorMessageApollo from '../ErrorMessageApollo';
@@ -82,10 +82,11 @@ const Step1 = ({
                             registerValidation={registerValidation('locationName')}
                             unregisterValidation={unregisterValidation('locationName')}
                             defaultValue={form.locationName}
-                        />
-                        <BodySmall>
-                            {translate('request-form.step-1.event-location-description')}
-                        </BodySmall>
+                        >
+                            <BodySmall>
+                                {translate('request-form.step-1.event-location-description')}
+                            </BodySmall>
+                        </LocationSelector>
                     </RequestSection>
                     <RequestSection
                         className="cursor-pointer"
@@ -105,10 +106,11 @@ const Step1 = ({
                             validation={(v) => (v ? null : 'Please select a date')}
                             registerValidation={registerValidation('date')}
                             unregisterValidation={unregisterValidation('date')}
-                        />
-                        <BodySmall>
-                            {translate('request-form.step-1.event-date-description')}
-                        </BodySmall>
+                        >
+                            <BodySmall>
+                                {translate('request-form.step-1.event-date-description')}
+                            </BodySmall>
+                        </Input>
                     </RequestSection>
                     <Row right>
                         {error && <ErrorMessageApollo error={error} />}

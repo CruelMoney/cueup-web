@@ -92,7 +92,7 @@ class Post extends Component {
                                     className="button"
                                     to={'/signup'}
                                 >
-                                    APPLY TO BECOME DJ
+                                    Apply to become dj
                                 </ButtonLink>
                             </div>
                         </div>

@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
-import Textfield from '../../../components/common/Textfield';
-import Button from '../../../components/common/Button-v2';
+import { Input, InputRow } from 'components/FormComponents';
+import { SmartButton, Row, TextInput } from 'components/Blocks';
+import Checkmark from '../../../assets/Checkmark';
 
 class NewsletterSignup extends Component {
     state = {
         loading: false,
     };
 
-    submit = (form) => {
+    submit = (e) => {
+        e.preventDefault();
         this.setState({
             loading: true,
         });
-        const FD = !form ? new FormData(this.form) : new FormData(form);
+        const FD = new FormData(this.form);
 
         fetch('https://cudeup.createsend.com/t/d/s/firdyj/', {
             method: 'POST',
@@ -24,21 +26,22 @@ class NewsletterSignup extends Component {
             .then((response) => {
                 this.setState({
                     loading: false,
-                    succes: true,
+                    success: true,
                 });
             })
             .catch((error) => {
                 console.error('Error:', error);
                 this.setState({
                     loading: false,
-                    succes: false,
+                    success: false,
                 });
             });
+
+        return false;
     };
 
     render() {
-        const { loading, succes } = this.state;
-
+        const { loading, success } = this.state;
         return (
             <div className="newsletter-signup">
                 <h3>Abonner på Cueup blog</h3>
@@ -53,27 +56,40 @@ class NewsletterSignup extends Component {
                             this.form = r;
                         }
                     }}
+                    onSubmit={this.submit}
                 >
-                    <Textfield
-                        id="fieldEmail"
-                        name="cm-firdyj-firdyj"
-                        type="email"
-                        validate={['required', 'email']}
-                        placeholder="Email"
-                    />
-                    <div className="button-wrapper">
-                        <Button
-                            active
-                            glow
-                            isLoading={loading}
-                            succes={succes}
-                            color="rgb(37, 244, 210)"
-                            onClick={() => this.submit(false)}
-                            type="submit"
-                        >
-                            Abonner
-                        </Button>
-                    </div>
+                    <Row
+                        style={{
+                            width: '100%',
+                            marginTop: '16px',
+                        }}
+                    >
+                        <TextInput
+                            required
+                            id="fieldEmail"
+                            name="cm-firdyj-firdyj"
+                            type="email"
+                            placeholder="Email"
+                            style={{ flex: 1, fontSize: '18px' }}
+                        />
+                        <SmartButton loading={loading} success={success} type="submit">
+                            Abonnér
+                            {success && (
+                                <Checkmark
+                                    style={{
+                                        left: '6px',
+                                        width: '15px',
+                                        height: '15px',
+                                        position: 'relative',
+                                        marginRight: '-15px',
+                                        top: '2px',
+                                        marginTop: '-6px',
+                                    }}
+                                    color="white"
+                                />
+                            )}
+                        </SmartButton>
+                    </Row>
                 </form>
             </div>
         );

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withGoogleMap, GoogleMap, Circle } from 'react-google-maps';
 import useScript from '@charlietango/use-script';
-import connectToForm from '../higher-order/connectToForm';
 
 /*
  * This is the modify version of:
@@ -51,9 +50,7 @@ class SimpleMap extends Component {
     handleRadiusChange = (circle) => {
         const radius = Math.min(circle.getRadius(), 1000000);
         this.setState({ radius });
-        if (this.context.updateValue) {
-            this.context.updateValue(this.props.radiusName, radius);
-        }
+
         if (this.props.onRadiusChange) {
             this.props.onRadiusChange(radius);
         }
@@ -65,9 +62,6 @@ class SimpleMap extends Component {
             lng: circle.getCenter().lng(),
         };
 
-        if (this.context.updateValue) {
-            this.context.updateValue(this.props.locationName, data);
-        }
         if (this.props.onCoordinatesChange) {
             this.props.onCoordinatesChange(data);
         }
@@ -159,7 +153,7 @@ class SimpleMap extends Component {
                         key={Date.now()}
                         ref={(c) => (this.circle = c)}
                         defaultOptions={{
-                            fillColor: this.props.color || this.context.color || '#25F4D2',
+                            fillColor: this.props.color || '#25F4D2',
                             strokeWeight: 0,
                             suppressUndo: true,
                         }}
@@ -175,12 +169,7 @@ class SimpleMap extends Component {
     }
 }
 
-SimpleMap.contextTypes = {
-    color: PropTypes.string,
-    updateValue: PropTypes.func,
-    registerReset: PropTypes.func,
-};
-const SmartMap = connectToForm(withGoogleMap(SimpleMap));
+const SmartMap = withGoogleMap(SimpleMap);
 
 const Wrapper = (props) => {
     return <div style={{ height: props.height }}>{props.children}</div>;

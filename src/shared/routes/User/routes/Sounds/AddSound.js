@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useMutation } from 'react-apollo';
 import styled from 'styled-components';
 import * as Sentry from '@sentry/browser';
-import { Input, useForm, InputRow, InputLabel } from '../../../../components/FormComponents';
+import { useForm } from 'components/hooks/useForm';
+import { Input, InputRow, InputLabel } from '../../../../components/FormComponents';
 import { Title, Body, BodySmall, InlineLink } from '../../../../components/Text';
 import {
     Row,
@@ -170,17 +171,26 @@ const DataForm = ({
         if (refs.length === 0) {
             try {
                 setSubmitting(true);
+
+                const variables = {
+                    id: form.id,
+                    title: form.title,
+                    description: form.description,
+                    tags: form.tags,
+                    file,
+                };
+
                 if (imageUpload) {
                     const {
                         data: { singleUpload },
                     } = await imageUpload;
-                    form.image = singleUpload.id;
+                    variables.image = singleUpload.id;
                 } else {
-                    delete form.image;
+                    delete variables.image;
                 }
 
                 await mutate({
-                    variables: { ...form, file },
+                    variables,
                 });
             } catch (error) {
                 Sentry.captureException(error);
@@ -198,6 +208,7 @@ const DataForm = ({
     );
 
     const { title, tags, description, year, image, imageFile } = form || {};
+
     return (
         <form onSubmit={updateSound}>
             <Title style={{ marginBottom: '39px' }}>Add sound</Title>
@@ -261,7 +272,6 @@ const DataForm = ({
                         Cancel
                     </TeritaryButton>
                     <SmartButton
-                        success={true}
                         level="primary"
                         disabled={submitting || uploading || uploadError}
                         loading={submitting}

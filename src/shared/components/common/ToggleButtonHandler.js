@@ -76,6 +76,17 @@ class ToggleButtonHandler extends Component {
 
     inputUpdate = (val, id) => {
         if (!val.trim()) {
+            this.setState((state) => {
+                const addedGenres = state.addedGenres.filter((g, idx) => {
+                    if (idx === id) {
+                        return false;
+                    }
+                    return true;
+                });
+                return {
+                    addedGenres,
+                };
+            }, this.updateContext);
             return;
         }
         this.setState((state) => {
@@ -100,6 +111,7 @@ class ToggleButtonHandler extends Component {
                 return (
                     <td key={genre} data-key={genre}>
                         <ToggleButton
+                            key={this.state.addedGenres.length}
                             color={this.props.color}
                             rounded={this.props.rounded}
                             label={'Add new +'}

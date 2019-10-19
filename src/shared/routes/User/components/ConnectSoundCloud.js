@@ -34,6 +34,7 @@ const ConnectSoundCloud = ({ soundCloudConnected, userId }) => {
                     : 'linear-gradient(0deg, #f83b01, #f57a0f)',
                 minWidth: '250px',
                 color: soundCloudConnected ? undefined : '#fff',
+                fontWeight: soundCloudConnected ? 400 : 500,
             }}
         >
             {soundCloudConnected ? 'Disconnect SoundCloud' : 'Connect SoundCloud'}

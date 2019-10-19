@@ -101,13 +101,12 @@ const Index = ({ translate, match, location, history }) => {
             />
 
             <Popup width="380px" showing={!me && !loading} onClickOutside={redirectToHome}>
-                <Title largeMargin>Login</Title>
                 <Login redirect={false} onLogin={refetchGig} />
             </Popup>
 
             <Footer
                 noSkew
-                firstTo={translate('routes./how-it-works')}
+                firstTo={translate('routes./')}
                 secondTo={translate('routes./')}
                 firstLabel={translate('how-it-works')}
                 secondLabel={translate('arrange-event')}

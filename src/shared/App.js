@@ -14,7 +14,6 @@ import Home from './routes/Home';
 import About from './routes/About';
 import CueupEvent from './routes/Event';
 import Gig from './routes/Gig';
-import HowItWorks from './routes/HowItWorks';
 import Signup from './routes/Signup';
 import User from './routes/User';
 import Faq from './routes/Faq';
@@ -116,8 +115,7 @@ const App = (props) => {
         return <Redirect to={redirect} />;
     }
 
-    const thumb =
-        Environment.CALLBACK_DOMAIN + (activeLanguage === 'da' ? defaultImageDa : defaultImage);
+    const thumb = activeLanguage === 'da' ? defaultImageDa : defaultImage;
     const title = translate('Book DJs with ease') + ' | Cueup';
     const description = translate('site-description');
     const urlArr = url.split('/');
@@ -185,7 +183,6 @@ const RouteWrapper = memo(({ translate, cssLocation }) => {
                     <Route exact path={[translate('routes./'), '/verifyEmail']} component={Home} />
                     <Route path={translate('routes./about')} component={About} />
                     <Route path={[translate('routes./user/:permalink')]} component={User} />
-                    <Route path={translate('routes./how-it-works')} component={HowItWorks} />
                     <Route path={translate('routes./signup')} component={Signup} />
                     <Route path={translate('routes./faq')} component={Faq} />
                     <Route path={translate('routes./terms')} component={Terms} />

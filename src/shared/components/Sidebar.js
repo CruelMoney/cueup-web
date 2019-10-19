@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import React from 'react';
 import styled from 'styled-components';
 import Arrow from 'react-ionicons/lib/MdArrowRoundForward';
@@ -80,7 +81,7 @@ const CTA = styled.button`
     background-color: #31daff;
     border: none;
     outline: none;
-    font-family: 'AvenirNext-Bold', Arial, Helvetica, sans-serif;
+    font-weight: 700;
     font-size: 15px;
     color: #ffffff !important;
     letter-spacing: 1.2px;

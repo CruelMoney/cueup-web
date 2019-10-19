@@ -132,7 +132,11 @@
 }
 
 .popup .chat {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     max-width: 90vw;
+    min-height: 500px;
     width: 600px;
 }
 
@@ -181,16 +185,6 @@
 }
 .message-info svg {
     margin-right: 3px;
-}
-
-.chat .reminder {
-    background: #26f4d2;
-    border-radius: 6px 6px 0px 0px;
-    color: white;
-    font-family: 'AvenirNext-Medium', sans-serif;
-    font-weight: 600;
-    padding: 0.5em 1em;
-    text-align: right;
 }
 
 .chat .messages-date {

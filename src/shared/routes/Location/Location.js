@@ -182,8 +182,8 @@ const Location = (props) => {
                 bgColor="#FFFFFF"
                 color={secondColor}
                 firstTo={translate('routes./signup')}
-                secondTo={translate('routes./how-it-works')}
-                firstLabel={translate('become-dj')}
+                secondTo={translate('routes./')}
+                firstLabel={translate('apply-to-become-dj')}
                 secondLabel={translate('how-it-works')}
                 title={translate('are-you-a-dj-in-:location', { location: title })}
                 subTitle={translate('apply-to-become-dj-or-see-how-it-works')}

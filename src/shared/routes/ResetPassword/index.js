@@ -1,44 +1,39 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { localize } from 'react-localize-redux';
 import { Helmet } from 'react-helmet-async';
 import { Mutation } from 'react-apollo';
-import PropTypes from 'prop-types';
+import { SmartButton } from 'components/Blocks';
+import { Input } from 'components/FormComponents';
+import RegistrationElement from 'components/common/RegistrationElement';
 import Footer from '../../components/common/Footer';
 
 import NumberedList from '../../components/common/NumberedList';
-import FormV2, { RegistrationElement, Textfield } from '../../components/common/Form-v2';
-import SubmitButton from '../../components/common/SubmitButton';
-import { getErrorMessage } from '../../components/common/ErrorMessageApollo';
+import ErrorMessageApollo from '../../components/common/ErrorMessageApollo';
 import { RESET_PASSWORD } from '../../components/gql';
+import { validators, useForm } from '../../components/hooks/useForm';
 
-class NotFound extends Component {
-    state = {
-        msg: null,
-    };
-
-    static childContextTypes = {
-        color: PropTypes.string,
-    };
-
-    getChildContext() {
-        return { color: '#31DAFF' };
-    }
-
-    componentDidMount() {
+const NotFound = ({ translate }) => {
+    useEffect(() => {
         document.body.classList.add('not-found');
-    }
 
-    componentWillUnmount() {
-        document.body.classList.remove('not-found');
-    }
+        return () => {
+            document.body.classList.remove('not-found');
+        };
+    }, []);
 
-    request = (mutate) => async (form, cb) => {
+    const [msg, setMsg] = useState();
+    const [error, setError] = useState();
+    const { runValidations, form, getInputProps } = useForm();
+
+    const request = (mutate) => (e) => {
+        e.preventDefault();
         try {
-            const { password, repeatPassword } = form.values;
-
-            if (password !== repeatPassword) {
-                throw new Error('Passwords not matching');
+            const errors = runValidations(true);
+            if (errors?.length) {
+                return;
             }
+
+            const { password } = form;
 
             const parsedUrl = new URL(window.location.href);
             const token = parsedUrl.searchParams.get('token');
@@ -48,113 +43,111 @@ class NotFound extends Component {
                 throw new Error('Token missing');
             }
 
-            await mutate({ variables: { password, token } });
-            cb(null, true);
-            this.setState({
-                msg: 'Your password has been reset',
+            mutate({
+                variables: { password, token },
             });
+            return false;
         } catch (error) {
             console.log({ error });
-            const message = getErrorMessage(error);
-            cb(message);
+            setError(error);
         }
     };
 
-    render() {
-        const { translate } = this.props;
-        const siteTitle = translate('reset-password-title');
-        const siteDescription = translate('reset-password-description');
+    const siteTitle = translate('reset-password-title');
+    const siteDescription = translate('reset-password-description');
 
-        return (
-            <div className="reset-password-screen">
-                <Helmet>
-                    <title>{siteTitle + ' | Cueup'}</title>
-                    <meta name="description" content={siteDescription} />
+    return (
+        <div className="reset-password-screen">
+            <Helmet>
+                <title>{siteTitle + ' | Cueup'}</title>
+                <meta name="description" content={siteDescription} />
 
-                    <meta property="og:title" content={siteTitle + ' | Cueup'} />
-                    <meta property="og:description" content={siteDescription} />
+                <meta property="og:title" content={siteTitle + ' | Cueup'} />
+                <meta property="og:description" content={siteDescription} />
 
-                    <meta name="twitter:title" content={siteTitle + ' | Cueup'} />
-                    <meta name="twitter:description" content={siteDescription} />
-                </Helmet>
-                <div className="container">
-                    <div className="signup fix-top-mobile">
-                        <h1 style={{ marginBottom: '32px' }}>{siteTitle}</h1>
-                        <Mutation mutation={RESET_PASSWORD}>
-                            {(mutate) => {
-                                return (
-                                    <FormV2 name={'reset-password-form'}>
-                                        <NumberedList>
-                                            <RegistrationElement label="New password" active={true}>
-                                                <Textfield
-                                                    big
-                                                    type="password"
-                                                    name="password"
-                                                    validate={['required']}
-                                                    placeholder="Min. 6 characters"
-                                                    label={translate('Your password')}
-                                                />
-                                            </RegistrationElement>
-                                            <RegistrationElement
-                                                label="Repeat password"
-                                                active={true}
-                                            >
-                                                <Textfield
-                                                    big
-                                                    type="password"
-                                                    name="repeatPassword"
-                                                    validate={['required']}
-                                                    placeholder="Something super secret"
-                                                    label={translate('Repeat password')}
-                                                />
-                                            </RegistrationElement>
-                                        </NumberedList>
+                <meta name="twitter:title" content={siteTitle + ' | Cueup'} />
+                <meta name="twitter:description" content={siteDescription} />
+            </Helmet>
+            <div className="container">
+                <div className="signup fix-top-mobile">
+                    <h1 style={{ marginBottom: '32px' }}>{siteTitle}</h1>
+                    <Mutation
+                        mutation={RESET_PASSWORD}
+                        onCompleted={() => setMsg('Your password has been reset')}
+                    >
+                        {(mutate, { loading, error: apolloError }) => {
+                            return (
+                                <form name={'reset-password-form'} onSubmit={request(mutate)}>
+                                    <NumberedList>
+                                        <RegistrationElement label="New password" active={true}>
+                                            <Input
+                                                {...getInputProps('password')}
+                                                big
+                                                type="password"
+                                                name="password"
+                                                validation={[
+                                                    validators.required,
+                                                    validators.minLength(6),
+                                                ]}
+                                                placeholder="Min. 6 characters"
+                                            />
+                                        </RegistrationElement>
+                                        <RegistrationElement label="Repeat password" active={true}>
+                                            <Input
+                                                {...getInputProps('repeatPassword')}
+                                                big
+                                                type="password"
+                                                name="repeatPassword"
+                                                validation={[
+                                                    validators.required,
+                                                    validators.matches(form.password),
+                                                ]}
+                                                placeholder="Something super secret"
+                                            />
+                                        </RegistrationElement>
+                                    </NumberedList>
 
-                                        <SubmitButton
+                                    {msg ? (
+                                        <p
+                                            style={{
+                                                fontSize: '20px',
+                                                textAlign: 'center',
+                                            }}
+                                        >
+                                            {msg}
+                                        </p>
+                                    ) : (
+                                        <SmartButton
                                             glow
                                             type="submit"
-                                            active={true}
+                                            loading={loading}
                                             name="reset-password"
-                                            onClick={this.request(mutate)}
+                                            onClick={request(mutate)}
                                         >
                                             <div style={{ minWidth: '100px' }}>
                                                 {translate('Reset')}
                                             </div>
-                                        </SubmitButton>
-                                        {this.state.msg ? (
-                                            <div
-                                                style={{
-                                                    textAlign: 'center',
-                                                }}
-                                            >
-                                                <p
-                                                    style={{
-                                                        fontSize: '20px',
-                                                    }}
-                                                >
-                                                    {this.state.msg}
-                                                </p>
-                                            </div>
-                                        ) : null}
-                                    </FormV2>
-                                );
-                            }}
-                        </Mutation>
-                    </div>
+                                        </SmartButton>
+                                    )}
+                                    <ErrorMessageApollo error={error || apolloError} />
+                                </form>
+                            );
+                        }}
+                    </Mutation>
                 </div>
-                <Footer
-                    color={'#31DAFF'}
-                    noSkew={true}
-                    firstTo={translate('routes./')}
-                    secondTo={translate('routes./signup')}
-                    firstLabel={translate('arrange-event')}
-                    secondLabel={translate('become-dj')}
-                    title={translate('ready-to-get-started')}
-                    subTitle={translate('arrange-event-or-become-dj')}
-                />
             </div>
-        );
-    }
-}
+            <Footer
+                color={'#31DAFF'}
+                noSkew={true}
+                firstTo={translate('routes./')}
+                secondTo={translate('routes./signup')}
+                firstLabel={translate('arrange-event')}
+                secondLabel={translate('apply-to-become-dj')}
+                title={translate('ready-to-get-started')}
+                subTitle={translate('arrange-event-or-become-dj')}
+            />
+        </div>
+    );
+};
 
 export default localize(NotFound, 'locale');

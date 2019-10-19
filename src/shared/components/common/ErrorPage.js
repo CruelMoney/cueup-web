@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import * as Sentry from '@sentry/browser';
+import { withRouter } from 'react-router';
+import { SecondaryButton } from 'components/Blocks';
 import EmptyPage from './EmptyPage';
 
-export default class ErrorPage extends Component {
+class ErrorPage extends Component {
     constructor(props) {
         super(props);
         this.state = { hasError: false };
@@ -27,9 +29,12 @@ export default class ErrorPage extends Component {
                                 <br />
                                 Try reloading the page or go back.
                                 <br />
-                                <a style={{ marginTop: '20px' }} className="button" href="/">
-                                    GO BACK
-                                </a>
+                                <SecondaryButton
+                                    style={{ marginTop: '24px' }}
+                                    onClick={() => this.props.history.goBack()}
+                                >
+                                    Go back
+                                </SecondaryButton>
                             </span>
                         }
                     />
@@ -39,3 +44,5 @@ export default class ErrorPage extends Component {
         return this.props.children;
     }
 }
+
+export default withRouter(ErrorPage);

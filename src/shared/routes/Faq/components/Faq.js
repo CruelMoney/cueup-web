@@ -4,14 +4,13 @@ import Footer from '../../../components/common/Footer';
 import ButtonLink from '../../../components/common/ButtonLink';
 
 class Faq extends Component {
-    themeColor = '#25F4D2';
-
     componentDidMount() {
         window.addEventListener('scroll', this.handleScroll);
     }
     componentWillUnmount() {
         window.removeEventListener('scroll', this.handleScroll);
     }
+    themeColor = '#25F4D2';
 
     handleScroll = (event) => {
         const scrollTop = window.pageYOffset;
@@ -55,7 +54,7 @@ class Faq extends Component {
                     firstTo={translate('routes./')}
                     secondTo={translate('routes./signup')}
                     firstLabel={translate('arrange-event')}
-                    secondLabel={translate('become-dj')}
+                    secondLabel={translate('apply-to-become-dj')}
                     title={translate('ready-to-get-started')}
                     subTitle={translate('arrange-event-or-become-dj')}
                 />

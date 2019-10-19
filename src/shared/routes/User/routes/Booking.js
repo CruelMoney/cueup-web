@@ -5,7 +5,8 @@ import moment from 'moment-timezone';
 import wNumb from 'wnumb';
 import * as Sentry from '@sentry/browser';
 import { useCreateEvent } from 'actions/EventActions';
-import { SettingsSection, Input, Label, useForm } from '../../../components/FormComponents';
+import { useForm } from 'components/hooks/useForm';
+import { SettingsSection, Input, Label } from '../../../components/FormComponents';
 import DatePickerPopup from '../../../components/DatePicker';
 import { Row, Container, Col, GradientBg } from '../../../components/Blocks';
 import Sidebar, { SidebarContent, CTAButton } from '../../../components/Sidebar';
@@ -38,14 +39,12 @@ const Booking = ({ user, loading, translate }) => {
     const setValue = (key) => (val) => setForm((f) => ({ ...f, [key]: val }));
 
     const requestBooking = (create) => async () => {
-        const refs = runValidations();
-        if (refs[0] && refs[0].current) {
-            window.scrollTo({
-                behavior: 'smooth',
-                top: refs[0].current.offsetTop,
-            });
+        const refs = runValidations(true);
+
+        if (refs.length) {
             return;
         }
+
         try {
             const { timeZoneId } = await GeoCoder.getTimeZone({
                 lat: user.playingLocation.latitude,
@@ -355,7 +354,7 @@ const BookingSidebar = ({ loading, values, requestBooking, showLogin, ...props }
 };
 
 const SidebarRow = styled(Row)`
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
+    font-weight: 600;
     font-size: 15px;
     color: #98a4b3;
     align-items: center;

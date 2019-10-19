@@ -9,7 +9,6 @@ import moment from 'moment';
 import AddCircle from 'react-ionicons/lib/MdAddCircle';
 import { Helmet } from 'react-helmet-async';
 import requestformContent from '../../components/common/RequestForm/content.json';
-import modalContent from '../../components/common/modals/content.json';
 import addTranslate from '../../components/higher-order/addTranslate';
 import Sidebar, { SidebarContent } from '../../components/Sidebar';
 import Footer from '../../components/common/Footer.js';
@@ -321,7 +320,7 @@ const Index = ({ translate, match, location }) => {
 
                                     <Footer
                                         noSkew
-                                        firstTo={translate('routes./how-it-works')}
+                                        firstTo={translate('routes./')}
                                         secondTo={translate('routes./')}
                                         firstLabel={translate('how-it-works')}
                                         secondLabel={translate('arrange-event')}
@@ -410,4 +409,4 @@ const mergeObjects = (o1, o2) => {
     return o2;
 };
 
-export default addTranslate(Index, [content, requestformContent, modalContent]);
+export default addTranslate(Index, [content, requestformContent]);

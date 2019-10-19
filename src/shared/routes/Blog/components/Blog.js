@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { NavLink as Link } from 'react-router-dom';
 import { localize } from 'react-localize-redux';
+import { SmartButton, Row } from 'components/Blocks.js';
 import { posts } from '../posts.json';
 import Popup from '../../../components/common/Popup';
-import Button from '../../../components/common/Button-v2';
 import NewsletterSignup from './NewsletterSignup';
 
 class Blog extends Component {
@@ -30,15 +30,17 @@ class Blog extends Component {
                 <header className="title">
                     <h1>Blog</h1>
                     <p>{translate('blog.description')}</p>
-                    <Button
-                        color={'#25F4D2'}
-                        active
-                        glow
-                        className="subscribe-newsletter"
-                        onClick={this.showPopup}
-                    >
-                        {translate('subscribe')}
-                    </Button>
+                    <Row center>
+                        <SmartButton
+                            color={'#25F4D2'}
+                            active
+                            glow
+                            className="subscribe-newsletter"
+                            onClick={this.showPopup}
+                        >
+                            {translate('subscribe')}
+                        </SmartButton>
+                    </Row>
                 </header>
                 <main>
                     <div className="container">
@@ -46,7 +48,7 @@ class Blog extends Component {
                             {posts.map((post) => {
                                 const link = `${translate('routes./blog')}/${post.slug}`;
                                 return (
-                                    <article className="post-preview card">
+                                    <article key={post.slug} className="post-preview card">
                                         <div className="img-wrapper">
                                             <Link to={link}>
                                                 <img

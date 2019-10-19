@@ -18,7 +18,11 @@ const Content = ({ gig, theEvent, me, showDecline }) => {
     return (
         <Col>
             <Popup showing={payoutPopup} onClickOutside={() => setPayoutPopup(false)}>
-                <PayoutForm user={me} />
+                <PayoutForm
+                    user={me}
+                    onCancel={() => setPayoutPopup(false)}
+                    onSubmitted={() => setPayoutPopup(false)}
+                />
             </Popup>
             <Title>Make offer</Title>
             <Body>{info}</Body>

@@ -97,15 +97,15 @@ const Sounds = ({ user, location, match, setShowPopup }) => {
             ))}
             {isOwn && (
                 <Row style={{ marginTop: '30px', width: '250px' }}>
-                    <SecondaryButton onClick={() => setShowPopup(true)}>
-                        + Add sound
-                    </SecondaryButton>
                     {!appMetadata.soundCloudConnected && (
                         <ConnectSounCloud
                             userId={user.id}
                             soundCloudConnected={appMetadata.soundCloudConnected}
                         />
                     )}
+                    <SecondaryButton onClick={() => setShowPopup(true)}>
+                        + Add sound
+                    </SecondaryButton>
                 </Row>
             )}
         </div>

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from 'react-apollo';
-import { Input, useForm, InputRow } from '../../../components/FormComponents';
+import { useForm } from 'components/hooks/useForm';
+import CountrySelector from 'components/common/CountrySelector';
+import { Input, InputRow } from '../../../components/FormComponents';
 import DatePickerPopup from '../../../components/DatePicker';
-import CountrySelector from '../../../components/CountrySelector';
 import ImageUploader from '../../../components/ImageInput';
 import { VERIFY_STATUS, REQUEST_VERIFICATION } from '../gql';
 import { LoadingPlaceholder2 } from '../../../components/common/LoadingPlaceholder';
-import { Title, Body } from '../../../components/Text';
+import { Title, Body, BodySmall } from '../../../components/Text';
 import { Row, TeritaryButton, SmartButton } from '../../../components/Blocks';
 import ErrorMessageApollo from '../../../components/common/ErrorMessageApollo';
 
@@ -57,7 +58,63 @@ const VerifyIdentity = ({ initialData, status, details, onCancel }) => {
         <form onSubmit={save}>
             <Title>Verify Identity</Title>
             <Body style={{ marginBottom: '30px' }}>{statusText[status]}</Body>
-            <InputRow>
+            <InputRow small>
+                <CountrySelector
+                    half
+                    noShadow
+                    forceHeight
+                    disabled={formDisabled}
+                    initialValue={countryCode}
+                    label="Country"
+                    placeholder="UK"
+                    onSave={onChange('countryCode')}
+                    validation={(v) => (v ? null : 'Required')}
+                    registerValidation={registerValidation('countryCode')}
+                    unregisterValidation={unregisterValidation('countryCode')}
+                />
+                <Input
+                    half
+                    disabled={formDisabled}
+                    defaultValue={city}
+                    ini
+                    label="City"
+                    placeholder="London"
+                    type="text"
+                    autoComplete="locality"
+                    name="locality"
+                    onSave={onChange('city')}
+                    validation={(v) => (v ? null : 'Required')}
+                    registerValidation={registerValidation('city')}
+                    unregisterValidation={unregisterValidation('city')}
+                />
+                <Input
+                    half
+                    label="Address street"
+                    placeholder="10 Downing Street"
+                    type="text"
+                    autoComplete="street-address"
+                    name="street-address"
+                    onSave={onChange('address')}
+                    defaultValue={address}
+                    disabled={formDisabled}
+                    validation={(v) => (v ? null : 'Required')}
+                    registerValidation={registerValidation('address')}
+                    unregisterValidation={unregisterValidation('address')}
+                />
+                <Input
+                    half
+                    label="Postal code"
+                    placeholder="SW1A 2AA"
+                    type="text"
+                    autoComplete="postal-code"
+                    name="postal-code"
+                    onSave={onChange('postalCode')}
+                    disabled={formDisabled}
+                    defaultValue={postalCode}
+                    validation={(v) => (v ? null : 'Required')}
+                    registerValidation={registerValidation('postalCode')}
+                    unregisterValidation={unregisterValidation('postalCode')}
+                />
                 <Input
                     half
                     label="Full name"
@@ -108,66 +165,14 @@ const VerifyIdentity = ({ initialData, status, details, onCancel }) => {
                 {!inProcess && (
                     <ImageUploader
                         half
-                        label="Photo ID back (not needed for passport)"
+                        label="Photo ID back"
                         buttonText={form.documentBack ? form.documentBack.name : 'select'}
                         disabled={formDisabled}
                         onSave={onChange('documentBack')}
-                    />
+                    >
+                        <BodySmall>not needed for passport</BodySmall>
+                    </ImageUploader>
                 )}
-
-                <Input
-                    half
-                    label="Address street"
-                    placeholder="10 Downing Street"
-                    type="text"
-                    autoComplete="street-address"
-                    name="street-address"
-                    onSave={onChange('address')}
-                    defaultValue={address}
-                    disabled={formDisabled}
-                    validation={(v) => (v ? null : 'Required')}
-                    registerValidation={registerValidation('address')}
-                    unregisterValidation={unregisterValidation('address')}
-                />
-                <Input
-                    half
-                    label="Postal code"
-                    placeholder="SW1A 2AA"
-                    type="text"
-                    autoComplete="postal-code"
-                    name="postal-code"
-                    onSave={onChange('postalCode')}
-                    disabled={formDisabled}
-                    defaultValue={postalCode}
-                    validation={(v) => (v ? null : 'Required')}
-                    registerValidation={registerValidation('postalCode')}
-                    unregisterValidation={unregisterValidation('postalCode')}
-                />
-
-                <Input
-                    half
-                    disabled={formDisabled}
-                    defaultValue={city}
-                    ini
-                    label="City"
-                    placeholder="London"
-                    type="text"
-                    autoComplete="locality"
-                    name="locality"
-                    onSave={onChange('city')}
-                    validation={(v) => (v ? null : 'Required')}
-                    registerValidation={registerValidation('city')}
-                    unregisterValidation={unregisterValidation('city')}
-                />
-                <CountrySelector
-                    half
-                    disabled={formDisabled}
-                    initialValue={countryCode}
-                    onSave={onChange('countryCode')}
-                    validation={(v) => (v ? null : 'Required')}
-                    registerValidation={registerValidation('countryCode')}
-                    unregisterValidation={unregisterValidation('countryCode')}
-                />
             </InputRow>
             {!inProcess && (
                 <Row right>

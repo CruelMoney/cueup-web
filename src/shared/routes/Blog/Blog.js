@@ -34,7 +34,7 @@ class Index extends Component {
                     firstTo={translate('routes./')}
                     secondTo={translate('routes./signup')}
                     firstLabel={translate('arrange-event')}
-                    secondLabel={translate('become-dj')}
+                    secondLabel={translate('apply-to-become-dj')}
                     title={translate('ready-to-get-started')}
                     subTitle={translate('arrange-event-or-become-dj')}
                 />

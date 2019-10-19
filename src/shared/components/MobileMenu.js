@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { getTranslate } from 'react-localize-redux';
 import { Query } from 'react-apollo';
-import { useLogout } from '../utils/Hooks';
 import Navlink from './common/Navlink';
 import Popup from './common/Popup';
 import Login from './common/Login';
 import { ME } from './gql';
 import { TitleClean } from './Text';
+import { useLogout } from './hooks/useLogout';
 
 const initialContext = {
     registerRoutes: (routes) => {},
@@ -144,14 +144,6 @@ const Content = ({
                         </li>
                     ) : null}
 
-                    <li>
-                        <Navlink
-                            onClick={() => setShow(false)}
-                            buttonLook={true}
-                            to="/how-it-works"
-                            label={translate('how-it-works')}
-                        />
-                    </li>
                     {loggedIn ? (
                         <li>
                             <Navlink

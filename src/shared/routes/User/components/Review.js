@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import moment from 'moment';
 import ReactDOM from 'react-dom';
 import { Popper } from 'react-popper';
-import Rating from '../../../components/common/Rating';
+import Rating from '../../../components/common/RatingNew';
 import { HIGHLIGHT_REVIEW } from '../gql';
 import QuotationMarkIcon from '../../../components/graphics/Quotes';
 import { Col, Row, Avatar, ReadMoreText, TeritaryButton } from '../../../components/Blocks';
@@ -62,7 +62,7 @@ const Review = ({
             )}
             <Row middle style={{ marginTop: '36px' }}>
                 <Col style={{ width: '100%' }}>
-                    {rating && <Rating rating={rating} color="#50E3C2" emptyColor={'#50E3C299'} />}
+                    {rating && <Rating rating={rating} disabled />}
                     {isTestimonial && (
                         <Row middle style={{ marginBottom: '9px', marginTop: '2px' }}>
                             <QuotationMarkIcon
@@ -96,7 +96,7 @@ const Review = ({
                         loading={loading}
                         addHighlight={addHighlight}
                     />,
-                    portal
+                    portal.current
                 )}
         </ReviewWrapper>
     );
@@ -151,12 +151,12 @@ const HighlightTooltip = styled.div`
 `;
 
 const AuthorName = styled.cite`
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
+    font-weight: 600;
     font-size: 14px;
     color: #4d6480;
 `;
 const CreatedAtLabel = styled.p`
-    font-family: 'AvenirNext-DemiBold', Arial, Helvetica, sans-serif;
+    font-weight: 600;
     font-size: 14px;
     color: #98a4b3;
 `;

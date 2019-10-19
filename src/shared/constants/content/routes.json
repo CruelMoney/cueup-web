@@ -13,8 +13,19 @@
     "/blog": ["/blog", "/dk/blog"],
     "/signup": ["/signup", "/dk/tilmeld"],
     "/book-dj": ["/book-dj", "/dk/book-dj"],
-    "/locations": ["/locations", "/dk/locations"],
-    "/how-it-works": ["/how-it-works", "/dk/saadan-virker-det"],
+    "/book-dj/denmark": ["/book-dj/denmark", "/dk/book-dj/danmark"],
+    "/book-dj/denmark/copenhagen": [
+      "/book-dj/denmark/copenhagen",
+      "/dk/book-dj/danmark/koebenhavn"
+    ],
+    "/book-dj/denmark/aarhus": [
+      "/book-dj/denmark/aarhus",
+      "/dk/book-dj/danmark/aarhus"
+    ],
+    "/book-dj/denmark/odense": [
+      "/book-dj/denmark/odense",
+      "/dk/book-dj/danmark/odense"
+    ],
     "/user": ["/user", "/dk/user"],
     "/user/signup": ["/user/signup", "/dk/user/tilmeld"],
     "/user/:permalink": ["/user/:permalink", "/dk/user/:permalink"],
@@ -58,8 +69,6 @@
     "anmeldelser": ["anmeldelser", "reviews"],
     "preferences": ["indstillinger", "preferences"],
     "indstillinger": ["indstillinger", "preferences"],
-    "how-it-works": ["saadan-virker-det", "how-it-works"],
-    "saadan-virker-det": ["saadan-virker-det", "how-it-works"],
     "about": ["om", "about"],
     "om": ["om", "about"],
     "signup": ["tilmeld", "signup"],

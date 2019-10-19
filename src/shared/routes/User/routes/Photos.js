@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useQuery, useMutation } from 'react-apollo';
 import RemoveButton from 'react-ionicons/lib/MdRemoveCircle';
 import { useInView } from 'react-intersection-observer';
+import { useConnectInstagram } from 'components/hooks/useConnectInstagram';
 import GracefullImage from '../../../components/GracefullImage';
 import { USER_PHOTOS, ADD_MEDIA, DELETE_MEDIA, UPDATE_PHOTOS_ORDER, USER } from '../gql';
 import EmptyPage from '../../../components/common/EmptyPage';
@@ -13,7 +14,6 @@ import { ImageCompressor } from '../../../utils/ImageCompressor';
 import GracefullVideo from '../../../components/GracefullVideo';
 import ReorderGrid from '../components/ReorderGrid';
 import SavingIndicator from '../../../components/SavingIndicator';
-import { useConnectInstagram } from '../../../utils/Hooks';
 import InstagramLogo from '../../../assets/InstagramLogo';
 import { BodySmall } from '../../../components/Text';
 
