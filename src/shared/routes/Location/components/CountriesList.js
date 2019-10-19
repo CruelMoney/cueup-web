@@ -14,7 +14,7 @@ const CountriesList = ({ countries }) => {
                         {cities.map((city, idx) => (
                             <li key={idx}>
                                 <NavLink to={`/book-dj/${countrySlug}/${city.slug}`}>
-                                    <Body>Book DJ in {city.cityascii}</Body>
+                                    <Body>DJs in {city.cityascii}</Body>
                                 </NavLink>
                             </li>
                         ))}
