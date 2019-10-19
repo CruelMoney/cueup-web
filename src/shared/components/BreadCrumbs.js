@@ -26,7 +26,7 @@ class BreadCrumbs extends Component {
                             itemType="http://schema.org/ListItem"
                         >
                             <Navlink
-                                itemId={`${Environment.CALLBACK_DOMAIN}/${crumbs
+                                itemId={`${Environment.CALLBACK_DOMAIN}${crumbs
                                     .slice(0, idx + endIdx)
                                     .join('/')}`}
                                 itemScope
