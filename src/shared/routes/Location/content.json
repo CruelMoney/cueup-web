@@ -9,7 +9,7 @@
       "Book DJ i <b>${ location }</b>"
     ],
     "description":[
-      "Cueup is the easiest way for you to find a DJ in ${ location }. Just tell us about your event, and within 1 day you will receive non-binding offers from DJs near you.",
+      "Cueup is the easiest way for you to find DJs in ${ location }. Just tell us about your event, and within 1 day you will receive non-binding offers from DJs near you.",
       "Cueup er den nemmeste måde at finde en DJ i ${ location }. Fortæl os om dit event og modtag ikke-bindende tilbud inden for 1 dag fra vores dygtige DJs i nærheden af dig."
     ],
     "sections":{
@@ -19,7 +19,7 @@
           "Musik som du ønsker det"
         ],
         "content": [
-          "With Cueup you can easily rent a DJ in ${ location }. You can tell us exactly what music you want, and we'll have local DJs specialising in that music contacting you within a day. <br/>No matter if you're looking to hire a DJ for a wedding, birthday or an office party, the professional DJs at Cueup will help making your event unforgettable.",
+          "With Cueup you can easily hire a DJ in ${ location }. You can tell us exactly what music you want, and we'll have local DJs specialising in that music contacting you within a day. <br/>No matter if you're looking to hire a DJ for a wedding, birthday or an office party, the professional DJs at Cueup will help making your event unforgettable.",
           "Med Cueup kan du nemt leje en DJ i ${ location }. Du kan fortælle os præcis hvilket musik du ønsker, og vil lokale DJs specialiserede inden for dine ønsker kontakte dig. <br/>Lige meget om du leder efter en DJ til bryllup, fødselsdag eller firmafest, vil de profesionelle DJs hos Cueup hjælpe dig med at gøre din fest uforglemmelig."
         ]
       },
