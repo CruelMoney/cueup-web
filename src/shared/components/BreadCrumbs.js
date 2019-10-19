@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
+import { Environment } from 'constants/constants';
 import Navlink from './common/Navlink';
 
 class BreadCrumbs extends Component {
@@ -9,6 +10,10 @@ class BreadCrumbs extends Component {
         const isLocale = crumbs[1] === 'dk';
         const renderCrumbs = crumbs.slice(isLocale ? 3 : 2, crumbs.length);
         const endIdx = isLocale ? 4 : 3;
+
+        if (!renderCrumbs.length) {
+            return;
+        }
 
         return (
             <ol className="breadcrumbs" itemScope itemType="http://schema.org/BreadcrumbList">
@@ -21,6 +26,9 @@ class BreadCrumbs extends Component {
                             itemType="http://schema.org/ListItem"
                         >
                             <Navlink
+                                itemId={`${Environment.CALLBACK_DOMAIN}/${crumbs
+                                    .slice(0, idx + endIdx)
+                                    .join('/')}`}
                                 itemScope
                                 itemType="http://schema.org/Thing"
                                 itemProp="item"
