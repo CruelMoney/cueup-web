@@ -1,7 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components';
+import useScript from '@charlietango/use-script';
+import GeoCoder from 'utils/GeoCoder';
 import { PrimaryButton, Row } from 'components/Blocks';
 import Footer from '../../components/common/Footer';
 import MoneyIcon from '../../components/graphics/Money';
@@ -12,10 +14,12 @@ import addTranslate from '../../components/higher-order/addTranslate';
 import { Environment } from '../../constants/constants';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import AsyncRequestForm from '../../components/common/RequestForm';
+import defaultImage from '../../assets/images/cities/default.png';
 import FloatingDJs from './components/FloatingCards';
 import content from './content.json';
-import locations from './locations';
 import './index.css';
+import { countries } from './locations';
+import { CitiesList } from './components/CountriesList';
 
 const Location = (props) => {
     const secondColor = '#25F4D2';
@@ -33,25 +37,51 @@ const Location = (props) => {
     const { match, translate } = props;
     const isMobile = false;
     const { city, country } = match.params;
-    const location = city
-        ? locations[country]
-            ? locations[country].cities[city]
-            : null
-        : locations[country];
+    let location = null;
+    let initialCoordinates = null;
+    let title = null;
+    if (city) {
+        location = countries[country]?.cities?.find((c) => c.slug === city);
+        const { lat, ln: lng } = location || {};
+        initialCoordinates = {};
+        initialCoordinates.lat = parseFloat(lat);
+        initialCoordinates.lng = parseFloat(lng);
+        title = location?.cityascii;
+    } else {
+        location = countries[country];
+        title = location?.name;
+    }
+    const [loaded] = useScript(
+        'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
+    );
+    const [coordinates, setCoordinates] = useState(initialCoordinates);
+    useEffect(() => {
+        if (!city && loaded) {
+            GeoCoder.codeAddress(title, ({ position }) => {
+                position && setCoordinates(position);
+            });
+        }
+    }, [city, initialCoordinates, loaded, title]);
+
+    useEffect(() => {
+        if (initialCoordinates && coordinates.lat !== initialCoordinates.lat) {
+            setCoordinates(initialCoordinates);
+        }
+    }, [coordinates, initialCoordinates]);
 
     // Redirect
     if (!location) {
         return <Redirect to={translate('routes./not-found')} />;
     }
 
-    const title = location.name;
-    const radius = location.radius || (city ? 25000 : isMobile ? 200000 : 100000);
-    const { coordinates } = location;
+    const radius = city ? 25000 : isMobile ? 200000 : 100000;
+
     const siteDescription = translate('location.description', {
         location: title,
     });
+
     const siteTitle = translate('location.title', { location: title });
-    const thumb = Environment.CALLBACK_DOMAIN + location.image;
+    const thumb = Environment.CALLBACK_DOMAIN + (location.image || defaultImage);
 
     return (
         <div className="locations-page">
@@ -68,10 +98,9 @@ const Location = (props) => {
                 <meta name="twitter:description" content={siteDescription} />
                 <meta name="twitter:image" content={thumb} />
 
-                <meta
-                    name="geo.position"
-                    content={`${location.coordinates.lat}; ${location.coordinates.lng}`}
-                />
+                {coordinates && (
+                    <meta name="geo.position" content={`${coordinates.lat}; ${coordinates.lng}`} />
+                )}
                 <meta name="geo.placename" content={title} />
                 <meta name="geo.region" content={title} />
             </Helmet>
@@ -83,22 +112,24 @@ const Location = (props) => {
                         backgroundColor: '#ebebeb',
                     }}
                 >
-                    <Map
-                        key={title}
-                        noCircle={!city || location.noCircle}
-                        hideRoads={true}
-                        radius={radius}
-                        defaultCenter={{
-                            lat: coordinates.lat + (isMobile ? 0 : 0.05),
-                            lng: coordinates.lng - (isMobile ? 0 : city ? 0.5 : 2),
-                        }}
-                        height={isMobile ? 700 : 600}
-                        value={coordinates}
-                        editable={false}
-                        themeColor={themeColor}
-                        radiusName="playingRadius"
-                        locationName="playingLocation"
-                    />
+                    {coordinates && (
+                        <Map
+                            key={title}
+                            noCircle={!city || location.noCircle}
+                            hideRoads={true}
+                            radius={radius}
+                            defaultCenter={{
+                                lat: coordinates.lat + (isMobile ? 0 : 0.05),
+                                lng: coordinates.lng - (isMobile ? 0 : city ? 0.5 : 2),
+                            }}
+                            height={isMobile ? 700 : 600}
+                            value={coordinates}
+                            editable={false}
+                            themeColor={themeColor}
+                            radiusName="playingRadius"
+                            locationName="playingLocation"
+                        />
+                    )}
 
                     <article>
                         <div className="container fix-top-mobile">
@@ -136,8 +167,16 @@ const Location = (props) => {
                 <div className="container">
                     <FormRow center>
                         <div ref={requestForm} />
-                        <AsyncRequestForm initialCity={title} />
+                        <AsyncRequestForm initialCity={title} key={title} />
                     </FormRow>
+
+                    {!city && location?.cities?.length > 1 && (
+                        <CitiesList
+                            cities={location.cities}
+                            country={location}
+                            countrySlug={country}
+                        />
+                    )}
                 </div>
 
                 <img id="city-illustration" src={citySvg} />

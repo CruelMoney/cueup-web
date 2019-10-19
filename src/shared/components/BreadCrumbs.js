@@ -2,16 +2,6 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import Navlink from './common/Navlink';
 
-const mapCityName = (name) => {
-    if (name === 'koebenhavn') {
-        return 'København';
-    }
-    if (name === 'aarhus') {
-        return 'Århus';
-    }
-    return name;
-};
-
 class BreadCrumbs extends Component {
     render() {
         const { location } = this.props;
@@ -36,7 +26,7 @@ class BreadCrumbs extends Component {
                                 itemProp="item"
                                 to={`${crumbs.slice(0, idx + endIdx).join('/')}`}
                             >
-                                <span itemProp="name">{mapCityName(crumb)}</span>
+                                <span itemProp="name">{crumb.replace('-', ' ')}</span>
                             </Navlink>
                             <meta itemProp="position" content={idx + 1} />
                         </li>

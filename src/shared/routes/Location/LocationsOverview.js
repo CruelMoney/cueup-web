@@ -1,8 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Redirect } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+import slugify from 'slugify';
 import { PrimaryButton, Row, Col, FullWidthCol } from 'components/Blocks';
+import { TitleClean, Title, Body } from 'components/Text';
 import Footer from '../../components/common/Footer';
 import MoneyIcon from '../../components/graphics/Money';
 import NoteIcon from '../../components/graphics/Note';
@@ -14,8 +17,9 @@ import ScrollToTop from '../../components/common/ScrollToTop';
 import AsyncRequestForm from '../../components/common/RequestForm';
 import FloatingDJs from './components/FloatingCards';
 import content from './content.json';
-import locations from './locations';
 import './index.css';
+import { countries } from './locations';
+import CountriesList from './components/CountriesList';
 
 const Location = (props) => {
     const themeColor = '#31DAFF';
@@ -25,6 +29,10 @@ const Location = (props) => {
     const isMobile = false;
     const title = translate('locationsOverview.title');
     const description = translate('locationsOverview.description');
+
+    // useEffect(() => {
+    //     window.countries = countries;
+    // }, []);
 
     return (
         <div className="locations-page">
@@ -68,7 +76,6 @@ const Location = (props) => {
                                     <h1 key="title">
                                         <b>Locations</b>
                                     </h1>
-                                    <p key="paragraph">{description}</p>
                                 </div>
                             </div>
                         </div>
@@ -76,53 +83,14 @@ const Location = (props) => {
                 </header>
 
                 <div className="container">
-                    <FormRow>
-                        <FullWidthCol
-                            style={{
-                                margin: '60px 0',
-                            }}
-                        >
-                            <Row around>
-                                <Col>
-                                    <ul>
-                                        <li>Copenhagen</li>
-                                        <li>Århus</li>
-                                        <li>Odense</li>
-                                    </ul>
-                                </Col>
-                                <Col>
-                                    <h4>Bali</h4>
-                                    <h4>Dubai</h4>
-                                    <h4>New York City</h4>
-                                    <h4>Los Angeles</h4>
-                                </Col>
-                            </Row>
-                        </FullWidthCol>
-                    </FormRow>
+                    <CountriesList countries={countries} />
                 </div>
 
                 <img id="city-illustration" src={citySvg} />
             </div>
 
-            <div className="info-boxes grey">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-sm-6 col-md-5 col-md-push-1">
-                            <div className="card">
-                                <h2>Clever stuff</h2>
-                            </div>
-                        </div>
-                        <div className="col-sm-6 col-md-5 col-md-push-1">
-                            <div className="card">
-                                <h2>Clever stuff</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <Footer
-                bgColor="#FFFFFF"
+                noSkew
                 color={secondColor}
                 firstTo={translate('routes./signup')}
                 secondTo={translate('routes./how-it-works')}
@@ -134,10 +102,5 @@ const Location = (props) => {
         </div>
     );
 };
-const FormRow = styled(Row)`
-    padding-left: 200px;
-    @media only screen and (max-width: 768px) {
-        padding-left: 0px;
-    }
-`;
+
 export default addTranslate(Location, content);
