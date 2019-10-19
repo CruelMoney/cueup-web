@@ -12,7 +12,7 @@ class BreadCrumbs extends Component {
         const endIdx = isLocale ? 4 : 3;
 
         if (!renderCrumbs.length) {
-            return;
+            return null;
         }
 
         return (
