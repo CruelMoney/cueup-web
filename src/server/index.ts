@@ -9,6 +9,7 @@ import cookieParser from 'cookie-parser';
 import addApollo from 'middleware/addApollo';
 import addLoadableExtractor from 'middleware/addLoadableExtractor';
 import addRedis, { cache } from 'middleware/addRedis';
+import addSitemap from 'middleware/addSitemap';
 import paths from '../../config/paths';
 // import { configureStore } from '../shared/store';
 import errorHandler from './middleware/errorHandler';
@@ -49,6 +50,8 @@ app.use(
 app.use(addApollo);
 app.use(addStore);
 app.use(addLoadableExtractor);
+
+addSitemap(app);
 
 app.use(serverRenderer());
 

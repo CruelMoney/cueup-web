@@ -87,14 +87,14 @@ export const useCheckDjAvailability = ({ locationName, date }) => {
                 },
                 timeZoneId: geoResult.timeZoneId,
             };
-            const variables = {
-                date,
-                location: geoData.location,
-            };
+            // const variables = {
+            //     date,
+            //     location: geoData.location,
+            // };
 
-            const { data = {} } = await mutate({ variables });
+            // const { data = {} } = await mutate({ variables });
             return {
-                result: data.djsAvailable,
+                result: true,
                 data: geoData,
             };
         } catch (err) {
