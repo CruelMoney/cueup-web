@@ -27,6 +27,12 @@ const HTML = ({
                 name="viewport"
                 content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
             />
+            <script
+                async
+                type="text/javascript"
+                src="https://www.google-analytics.com/analytics.js"
+            />
+            <script async type="text/javascript" src="/autotrack.js" />
             <script id="stripe-js" src="https://js.stripe.com/v3/" async />
             {helmet.base.toComponent()}
             {helmet.title.toComponent()}
