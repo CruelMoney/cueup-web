@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { Title, Body, TitleClean } from 'components/Text';
-import { Row, Col } from 'components/Blocks';
+import { Col } from 'components/Blocks';
 
 const CountriesList = ({ countries }) => {
     return (
@@ -62,6 +62,9 @@ const Overview = styled.div`
         margin-bottom: 16px;
         width: 200px;
         margin-right: 16px;
+    }
+    @media only screen and (max-width: 767px) {
+        columns: 1;
     }
 `;
 

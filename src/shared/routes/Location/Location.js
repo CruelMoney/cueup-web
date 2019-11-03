@@ -25,6 +25,11 @@ const Location = (props) => {
     const secondColor = '#25F4D2';
     const themeColor = '#31DAFF';
     const requestForm = useRef();
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        setIsMobile(window.innerWidth < 768);
+    }, []);
 
     const handleButtonClick = () => {
         window.scroll({
@@ -35,7 +40,6 @@ const Location = (props) => {
     };
 
     const { match, translate } = props;
-    const isMobile = false;
     const { city, country } = match.params;
     let location = null;
     let initialCoordinates = null;

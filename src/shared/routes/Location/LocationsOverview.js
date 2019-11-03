@@ -1,21 +1,12 @@
-import React, { useRef, useEffect } from 'react';
-import { Redirect } from 'react-router';
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
-import slugify from 'slugify';
-import { PrimaryButton, Row, Col, FullWidthCol } from 'components/Blocks';
-import { TitleClean, Title, Body } from 'components/Text';
+
 import Footer from '../../components/common/Footer';
-import MoneyIcon from '../../components/graphics/Money';
-import NoteIcon from '../../components/graphics/Note';
+
 import Map from '../../components/common/Map';
 import citySvg from '../../assets/City.svg';
 import addTranslate from '../../components/higher-order/addTranslate';
-import { Environment } from '../../constants/constants';
 import ScrollToTop from '../../components/common/ScrollToTop';
-import AsyncRequestForm from '../../components/common/RequestForm';
-import FloatingDJs from './components/FloatingCards';
 import content from './content.json';
 import './index.css';
 import { countries } from './locations';
