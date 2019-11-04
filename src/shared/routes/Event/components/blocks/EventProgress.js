@@ -22,10 +22,7 @@ const EventProgress = ({ theEvent = {} }) => {
         <Wrapper>
             <ProgressStep label={'Create event'} completed />
             <ProgressStep label={'Get offers from DJs'} completed={accepted} />
-            <ProgressStep
-                label={'Confirm and pay'}
-                completed={theEvent && ['CONFIRMED', 'FINISHED'].includes(theEvent.status)}
-            />
+            <ProgressStep label={'Confirm and pay'} completed={!!theEvent.chosenGig} />
             <ProgressStep label={'Review'} completed={theEvent && theEvent.review} to="review" />
         </Wrapper>
     );
