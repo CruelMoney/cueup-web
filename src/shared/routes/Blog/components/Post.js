@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Disqus from 'disqus-react';
-import { posts } from '../posts.json';
+import posts from '../posts.js';
 import Formatter from '../../../utils/Formatter';
 import Sharing from '../../../components/common/Sharing-v2';
 import ButtonLink from '../../../components/common/ButtonLink';
@@ -78,11 +78,10 @@ class Post extends Component {
                         />
                         <Sharing shareUrl={url} title={post.title} />
                         <div className="signup">
-                            <h3>Bliv DJ hos Cueup</h3>
+                            <h3>Become DJ at Cueup</h3>
                             <p>
-                                Opret en gratis bruger og begynd at blive tilbudt spillejobs. Log
-                                ind med soundcloud, facebook eller din email. Ved tilmelding
-                                accepterer du automatisk vores vilkår og betingelser.
+                                Cueup is one of the easiest ways to evolve your DJ career. Create a
+                                free profile and start getting gigs today.
                             </p>
                             <div className="row center" style={{ margin: '3em 0' }}>
                                 <ButtonLink

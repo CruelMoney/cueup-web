@@ -44,8 +44,8 @@ class NewsletterSignup extends Component {
         const { loading, success } = this.state;
         return (
             <div className="newsletter-signup">
-                <h3>Abonner på Cueup blog</h3>
-                <p>Få de nyeste indlæg leveret direkte til din indboks.</p>
+                <h3>Subscribe to Cueup blog</h3>
+                <p>Get the newest posts delivered straight to your inbox.</p>
                 <form
                     id="subForm"
                     className="js-cm-form"
@@ -73,7 +73,7 @@ class NewsletterSignup extends Component {
                             style={{ flex: 1, fontSize: '18px' }}
                         />
                         <SmartButton loading={loading} success={success} type="submit">
-                            Abonnér
+                            Subscribe
                             {success && (
                                 <Checkmark
                                     style={{

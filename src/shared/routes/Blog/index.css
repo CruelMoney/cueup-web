@@ -26,6 +26,7 @@
     .post-feed > *:nth-child(6n + 1) {
         flex: 1 1 100%;
         flex-direction: row;
+        max-width: 100%;
     }
     .post-feed > *:nth-child(6n + 1) .img-wrapper {
         flex: 1.9;
@@ -39,6 +40,7 @@ article.post-preview {
     flex: 1 1 300px;
     flex-direction: column;
     margin: 0 20px 40px;
+    max-width: 50%;
     min-height: 300px;
     overflow: hidden;
     padding: 0 !important;
@@ -78,15 +80,15 @@ article.post-preview > a:last-child {
 }
 .post-preview .post-card-excerpt {
     color: #32325d;
+    margin-bottom: 9px;
 }
 
 .post-preview footer,
 .blog-post footer,
 .post-preview header {
-    align-items: left;
+    align-items: flex-start;
     border: none;
     padding: 0;
-    text-align: left;
 }
 .post-preview header {
     color: #32325d;
@@ -100,6 +102,7 @@ article.post-preview > a:last-child {
 }
 .post-preview footer p {
     margin: 0;
+    text-align: left;
 }
 
 button.subscribe-newsletter {
