@@ -1,10 +1,11 @@
 const posts = [
     {
         id: 2,
-        title: '7 Tips to Get More DJ Gigs',
+        title: 'How to Stop Missing Out On DJ Gigs',
         slug: 'get-more-dj-gigs',
         content: `
       <p>
+        "Nothing will work unless you do." - Maya Angelou. <br>
         Finding gigs might be hard. You’ve tried many ways, including signing up on Cueup. But why haven’t you gotten more gigs?
         <br>
         <br>
