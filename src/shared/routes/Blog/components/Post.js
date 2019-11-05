@@ -59,10 +59,10 @@ class Post extends Component {
                     </time>
                     {post.author_link ? (
                         <a className="author-link" href={post.author_link}>
-                            Skrevet af {post.author}
+                            Written by {post.author}
                         </a>
                     ) : (
-                        <p>Skrevet af {post.author}</p>
+                        <p>Written by {post.author}</p>
                     )}
 
                     <h1>{post.title}</h1>

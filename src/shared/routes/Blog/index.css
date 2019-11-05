@@ -242,4 +242,14 @@ footer.newsletter-signup .card {
     .popup .blog {
         padding: 1em !important;
     }
+    .blog h1 {
+        font-size: 42px;
+    }
+    .blog h2 {
+        font-size: 30px;
+        line-height: 1.2em;
+    }
+    .post-content > p:first-child {
+        font-size: 1em;
+    }
 }
