@@ -2,7 +2,7 @@ const posts = [
     {
         id: 2,
         title: 'How to Stop Missing Out On DJ Gigs',
-        slug: 'get-more-dj-gigs',
+        slug: 'stop-missing-dj-gigs',
         content: `
       <p>
         "Nothing will work unless you do." - Maya Angelou. <br>
