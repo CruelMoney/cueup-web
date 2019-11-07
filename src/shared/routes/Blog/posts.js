@@ -181,7 +181,7 @@ Here are some tips from us for you to get more paid DJ gigs.
             'Finding gigs might be hard. You’ve tried many ways, including signing up on Cueup. But why haven’t you gotten more gigs?',
         published_date: '2019-11-04T00:00:00.00Z',
         updated_date: '2019-11-04T00:00:00.00Z',
-        author: 'Evi Sarah Simanjuntak',
+        author: 'Evi',
         thumbnail_url: 'https://cdn-images-1.medium.com/max/1600/1*do-JbUbh2dp1Bd1vMD-URw@2x.jpeg',
         thumbnail_alt: 'DJ gig',
         tag: 'DJ Gigs',
