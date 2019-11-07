@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import { countries } from 'routes/Location/locations';
+import posts from 'routes/Blog/posts';
 
 const expressSitemapXml = require('express-sitemap-xml');
 
@@ -22,7 +23,7 @@ const getUserUrls = async () => {
 };
 
 const getBlogUrls = () => {
-    const urls = ['/blog', '/blog/bliv-dj-i-koebenhavn'];
+    const urls = ['/blog', ...posts.map((p) => `/blog/${p.slug}`)];
     return urls;
 };
 
