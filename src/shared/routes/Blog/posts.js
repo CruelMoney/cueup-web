@@ -5,8 +5,8 @@ const posts = [
         slug: 'essential-things-to-know-before-booking-a-dj',
         excerpt:
             'When you want to celebrate the best day of your life and make everyone have a good time, here are some guides for everything you need to know about the process of booking a wedding DJ',
-        published_date: '2019-11-11T00:00:00.00Z',
-        updated_date: '2019-11-11T00:00:00.00Z',
+        published_date: '2019-11-10T00:00:00.00Z',
+        updated_date: '2019-11-10T00:00:00.00Z',
         author: 'Sarah F.S.',
         thumbnail_url:
             'https://images.unsplash.com/photo-1439539698758-ba2680ecadb9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80',
