@@ -77,24 +77,7 @@ class Post extends Component {
                             dangerouslySetInnerHTML={{ __html: post.content }}
                         />
                         <Sharing shareUrl={url} title={post.title} />
-                        <div className="signup">
-                            <h3>Become DJ at Cueup</h3>
-                            <p>
-                                Cueup is one of the easiest ways to evolve your DJ career. Create a
-                                free profile and start getting gigs today.
-                            </p>
-                            <div className="row center" style={{ margin: '3em 0' }}>
-                                <ButtonLink
-                                    active
-                                    glow
-                                    color={'rgb(37, 244, 210)'}
-                                    className="button"
-                                    to={'/signup'}
-                                >
-                                    Apply to become dj
-                                </ButtonLink>
-                            </div>
-                        </div>
+                        <CallToBlock category={post.category} />
                         <hr />
                         <OnlyClientSide>
                             <Disqus.DiscussionEmbed
@@ -113,5 +96,45 @@ class Post extends Component {
         );
     }
 }
+
+const CallToBlock = ({ category }) => {
+    const title = {
+        organizer: 'Find a DJ',
+        dj: 'Become DJ at Cueup',
+    };
+
+    const content = {
+        organizer:
+            "Cueup makes it easier than ever to find a DJ. Enter a details about your event and we'll help you today.",
+        dj:
+            'Cueup is one of the easiest ways to evolve your DJ career. Create a free profile and start getting gigs today.',
+    };
+
+    const link = {
+        dj: '/signup',
+        organizer: '/',
+    };
+    const button = {
+        dj: 'Apply to become dj',
+        organizer: 'Find a DJ',
+    };
+    return (
+        <div className="signup">
+            <h3>{title[category] ?? title.dj}</h3>
+            <p>{content[category] ?? content.dj}</p>
+            <div className="row center" style={{ margin: '3em 0' }}>
+                <ButtonLink
+                    active
+                    glow
+                    color={'rgb(37, 244, 210)'}
+                    className="button"
+                    to={link[category] ?? link.dj}
+                >
+                    {button[category] ?? button.dj}
+                </ButtonLink>
+            </div>
+        </div>
+    );
+};
 
 export default Post;

@@ -18,6 +18,7 @@ module.exports = {
         '@babel/proposal-object-rest-spread',
         '@babel/proposal-class-properties',
         '@babel/plugin-proposal-optional-chaining',
+        '@babel/plugin-proposal-nullish-coalescing-operator',
         '@babel/syntax-dynamic-import',
         'macros',
         'babel-plugin-styled-components',

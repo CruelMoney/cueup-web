@@ -10,6 +10,8 @@
 
 .blog h1 {
     font-size: 62px;
+    margin: auto;
+    max-width: 900px;
 }
 
 .blog main {
@@ -171,13 +173,30 @@ button.subscribe-newsletter {
     display: block;
     left: 50%;
     margin: 1.5em auto;
-    margin-bottom: 3em;
+    margin-bottom: 1.5em;
     max-height: 600px;
     max-width: 1040px;
     max-width: 100vw;
     position: relative;
     top: 0;
     transform: translateX(-50%);
+}
+.blog-post main .post-content figure {
+    margin-bottom: 1.5em;
+}
+.blog-post main .post-content figure img {
+    margin-bottom: 0.5em;
+}
+
+.blog-post main .post-content figcaption {
+    color: #7e8186;
+    font-size: 0.75em;
+    margin-left: auto;
+    text-align: center;
+}
+.blog-post main .post-content figcaption a {
+    color: #7e8186;
+    text-decoration: underline;
 }
 .blog-post .social-signup {
     margin-bottom: 5em;
