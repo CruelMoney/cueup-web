@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useQuery, useMutation } from 'react-apollo';
 import { useForm } from 'components/hooks/useForm';
 import CountrySelector from 'components/common/CountrySelector';
+import PhoneInput from 'components/common/PhoneInput';
 import { Input, InputRow } from '../../../components/FormComponents';
 import DatePickerPopup from '../../../components/DatePicker';
 import ImageUploader from '../../../components/ImageInput';
@@ -19,7 +20,7 @@ const statusText = {
 };
 
 const VerifyIdentity = ({ initialData, status, details, onCancel }) => {
-    const [mutate, { loading: submitting, error }] = useMutation(REQUEST_VERIFICATION);
+    const [mutate, { loading: submitting, error, data }] = useMutation(REQUEST_VERIFICATION);
 
     const [form, setForm] = useState(initialData);
 
@@ -49,7 +50,7 @@ const VerifyIdentity = ({ initialData, status, details, onCancel }) => {
         });
     };
 
-    const { fullName, birthday, address, city, countryCode, postalCode } = form;
+    const { fullName, birthday, address, city, countryCode, postalCode, phone } = form;
 
     const inProcess = ['pending', 'verified'].includes(status);
     const formDisabled = inProcess || submitting;
@@ -60,7 +61,6 @@ const VerifyIdentity = ({ initialData, status, details, onCancel }) => {
             <Body style={{ marginBottom: '30px' }}>{statusText[status]}</Body>
             <InputRow small>
                 <CountrySelector
-                    half
                     noShadow
                     forceHeight
                     disabled={formDisabled}
@@ -149,6 +149,17 @@ const VerifyIdentity = ({ initialData, status, details, onCancel }) => {
                     registerValidation={registerValidation('birthday')}
                     unregisterValidation={unregisterValidation('birthday')}
                 />
+                <PhoneInput
+                    half
+                    label="Phone"
+                    attention={!phone}
+                    defaultValue={phone}
+                    placeholder="+123456789"
+                    type="tel"
+                    autoComplete="tel"
+                    name="phone"
+                    onSave={(phone) => onChange('phone')(phone.trim())}
+                />
                 {!inProcess && (
                     <ImageUploader
                         half
@@ -179,7 +190,12 @@ const VerifyIdentity = ({ initialData, status, details, onCancel }) => {
                     <TeritaryButton type="button" onClick={onCancel}>
                         Cancel
                     </TeritaryButton>
-                    <SmartButton success={true} level="primary" loading={submitting} type="submit">
+                    <SmartButton
+                        success={!!data}
+                        level="primary"
+                        loading={submitting}
+                        type="submit"
+                    >
                         {submitting ? 'Submitting' : 'Submit'}
                     </SmartButton>
                 </Row>

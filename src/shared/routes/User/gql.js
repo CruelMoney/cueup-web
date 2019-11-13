@@ -394,6 +394,7 @@ const VERIFY_STATUS = gql`
                 countryCode
                 postalCode
                 city
+                phone
             }
         }
     }
@@ -412,12 +413,14 @@ const REQUEST_VERIFICATION = gql`
         $documentFront: Upload!
         $documentBack: Upload
         $ssnLast4: Int
+        $phone: String
     ) {
         updateUser(
             id: $id
             firstName: $firstName
             lastName: $lastName
             birthday: $birthday
+            phone: $phone
             requestVerification: {
                 address: $address
                 city: $city
@@ -444,6 +447,7 @@ const REQUEST_VERIFICATION = gql`
                 countryCode
                 postalCode
                 city
+                phone
             }
         }
     }
