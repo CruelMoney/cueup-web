@@ -175,6 +175,13 @@ const Content = React.memo(({ match, ...userProps }) => {
                                     path={match.url + '/settings'}
                                     render={(props) => <Settings {...props} {...userProps} />}
                                 />
+                            ) : !userProps.loading ? (
+                                <Route
+                                    strict
+                                    exact
+                                    path={match.url + '/settings'}
+                                    render={(props) => <LoginPopup {...props} {...userProps} />}
+                                />
                             ) : null}
 
                             {showPrivateRoutes ? (
