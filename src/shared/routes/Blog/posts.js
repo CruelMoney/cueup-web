@@ -2,7 +2,7 @@ const posts = [
     {
         id: 4,
         title: 'How to Throw an Incredible Office Christmas Party',
-        slug: 'how-to-throw-an-christmas-party',
+        slug: 'how-to-throw-a-christmas-party',
         excerpt:
             'It’s the time of the year again — to bring the festive spirit to your office and to thank and celebrate all the hard work for the past year. Yet it ain’t easy to make it exciting, memorable and fun. So here is a guide to make it a big success.',
         published_date: '2019-11-26T00:00:00.00Z',
