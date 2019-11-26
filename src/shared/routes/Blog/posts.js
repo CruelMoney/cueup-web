@@ -1,5 +1,178 @@
 const posts = [
     {
+        id: 4,
+        title: 'How to Throw an Incredible Office Christmas Party',
+        slug: 'how-to-throw-an-christmas-party',
+        excerpt:
+            'It’s the time of the year again — to bring the festive spirit to your office and to thank and celebrate all the hard work for the past year. Yet it ain’t easy to make it exciting, memorable and fun. So here is a guide to make it a big success.',
+        published_date: '2019-11-26T00:00:00.00Z',
+        updated_date: '2019-11-26T00:00:00.00Z',
+        author: 'Sarah F.S.',
+        thumbnail_url: 'https://miro.medium.com/max/11520/0*aD0uuv59GwnoAlAU',
+        thumbnail_alt: 'christmas party decoration',
+        tag: 'christmas party dance party dj event',
+        category: 'organizer',
+        content: `<p>
+        And not end up making it awkward…
+            </p>
+            <p>
+            It’s the time of the year again — to bring the festive spirit to your office and to thank and celebrate all the hard work for the past year. Yet it ain’t easy to make it exciting, memorable and fun. So here is a guide to make it a big success.
+            </p>
+            <h2>
+            1. Pick a Convenient Date
+            </h2>
+            <p>
+            You want everyone to attend the party so don’t pick a weekday for this, or even on a holiday. The best time to do it is on a Friday at office hours. You may consider getting everyone leave early from work on this day so they can get ready for the party. Make sure to secure the date at least a month in advance!
+            </p>
+            <h2>
+            2. Choose a Party Theme
+            </h2>
+            <p>
+            Here’s the part where it will make it more fun. Get a theme where everyone has to dress up accordingly. We suggest making it less formal. It will loosen up all the nerves and remember it’s all about celebration and fun. Here are our favorites themes for an office party:
+            </p>
+            <br>
+            <ul >
+            <li>
+            Santa’s Workshop
+            </li>
+            <li>
+            Nightmare Before Christmas
+            </li>
+            <li>
+            Where’s Wally
+            </li>
+            <li>
+            The Grinch
+            </li>
+            <li>
+            Elf
+            </li>
+            </ul>
+
+
+            <figure ><img
+            
+            role="presentation"
+            src="https://miro.medium.com/max/720/1*gH_CSOWYDw_D-Pi7pIGgvA.jpeg"
+            /><figcaption
+            data-selectable-paragraph=""
+            >
+            Pinterest
+            </figcaption>
+            </figure>
+            <h2>
+            3. Send the Invitation Early
+            </h2>
+            <p>
+            It takes time to create a creative costume, so you want to send the invitation early enough for the employees to prepare. Besides that, everyone could block the date for this party. Announce and send the invitations for the party at least 3 weeks in advance. If possible, include your employee’s partners as well, so everyone will get to know each other better.
+            </p>
+            
+            <h2>4. Level Up The Decoration Game
+            </h2>
+            <p>
+            Go all-in on this! It will create such an amazing Christmas and holiday vibes. You can host the party either in a venue or in your office space (if it’s big enough, why not). Fill up the room with decorations such as Christmas trees, hanging snow decorations, lights, balloons, snowman, fake snow, fake fireplaces, and other sparkles.
+            </p>
+           
+            <h2>5. Room For Everyone
+            </h2>
+            <p>
+            Make sure to include everyone’s diet on the menu. The best way to do this is to make everyone fill an e-questionnaire about their diet. For example, how many people are vegetarian or how many that can’t eat gluten. After getting all the information, it will be easier for you to prepare the food options. Make sure to provide some different meat options as well, just to accommodate everyone.
+            </p>
+            <figure>
+            <img
+            src="https://miro.medium.com/max/6480/0*3btHnZoa59G39D5t"
+            />
+            <figcaption
+            data-selectable-paragraph=""
+            >
+            Photo by
+            <a
+            href="https://unsplash.com/@timmeyer?utm_source=medium&utm_medium=referral"
+            target="_blank"
+            rel="noopener nofollow"
+            >Tim Meyer</a>
+            on
+            <a
+            href="https://unsplash.com?utm_source=medium&amp;utm_medium=referral"
+            target="_blank"
+            rel="noopener nofollow"
+            >Unsplash</a
+            >
+            </figcaption>
+            </figure>
+
+
+      
+            <h2>
+            6. Fun Games & Activities
+            </h2>
+          
+            <p>
+            Find some adult games and activities that are funny. Here are some of our favorites:
+            </p>
+            <br>
+            <ul >
+            <li>
+            Charades
+            </li>
+            <li>
+            Ornament Roll
+            </li>
+            <li>
+            Secret Santa
+            </li>
+            <li>
+            Lucky Draw
+            </li>
+            <li>
+            Photobooth
+            </li>
+            <li>
+            Quizzes
+            </li>
+            <li>
+            Freeze dance
+            </li>
+            
+            </ul>
+
+           
+            <h2>
+            7. Employee Awards
+            </h2>
+            <p>
+            Don’t forget the party is also to appreciate the employees’ hard work. You can make appreciation awards and some funny ones too. For example, The earliest person, the number 1 salesperson, etc., and get some prizes for the best costumes.
+            </p>
+            <figure>
+            <img
+            src="https://miro.medium.com/max/1000/1*aYeVrHh2MHTzMwsM-1hUkw.jpeg"
+            />
+           
+            </figure>
+            <h2>
+            8. Entertainment
+            </h2>
+            <p>
+            Ask your employee if anyone is up to do some features. This will remove some of the weight from your shoulders, and finance is gonna thank you for saving money on the entertainment. This could be, awards, stand up comedy, musical features, etc.
+            </p>
+            <p>
+            Other than that, you should hire a DJ to play Christmas hits for dance time. If you don’t know anyone who is a DJ, you can find some on <a href='https://cueup.io' target='_blank'><strong>www.cueup.io</strong></a>. It’s a platform that connects DJs and event organizers. It’s very easy and you will get offers from DJs around your area.
+            
+            </p>
+            
+<br>
+<br>
+
+<strong>
+That’s pretty much everything for you to make a fun & memorable Christmas party. Don’t hesitate to contact us for more information about Cueup. We wish you have a wonderful Christmas!
+</strong>
+<br>
+<br>
+<strong>-Sarah & Team Cueup</strong>
+
+            `,
+    },
+    {
         id: 3,
         title: '10 Essential Things to Know Before You Book a DJ for Your Wedding',
         slug: 'essential-things-to-know-before-booking-a-dj',
