@@ -123,16 +123,6 @@ const Content = ({
                         </li>
                     ) : null}
 
-                    {!loggedIn ? (
-                        <li>
-                            <Navlink
-                                onClick={() => setShow(false)}
-                                userNavigation={true}
-                                to="/signup"
-                                label={translate('apply-to-become-dj')}
-                            />
-                        </li>
-                    ) : null}
                     {loggedIn ? (
                         <li>
                             <Navlink
