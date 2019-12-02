@@ -18,6 +18,7 @@ const Step1 = ({
     registerValidation,
     unregisterValidation,
     runValidations,
+    countries,
 }) => {
     const [showDatePickter, setShowDatePickter] = useState(false);
     const [message, setMessage] = useState();
@@ -71,6 +72,7 @@ const Step1 = ({
                     <RequestSection style={{ position: 'relative', zIndex: 5 }}>
                         <LocationSelector
                             noShadow
+                            countries={countries}
                             forceHeight
                             name="locationName"
                             label={translate('request-form.step-1.event-location')}

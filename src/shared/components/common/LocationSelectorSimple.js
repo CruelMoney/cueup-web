@@ -8,7 +8,7 @@ function toTitleCase(str) {
     });
 }
 
-const LocationSelector = ({ placeholder, ...props }) => {
+const LocationSelector = ({ placeholder, countries = [], ...props }) => {
     const [dataSource, setDataSource] = useState([]);
     const locationService = useRef();
 
@@ -46,7 +46,7 @@ const LocationSelector = ({ placeholder, ...props }) => {
                 {
                     input: value,
                     //  types: ['(regions)'],
-                    componentRestrictions: { country: ['dk', 'id', 'us'] },
+                    componentRestrictions: { country: countries },
                 },
                 updateSuggestions
             );

@@ -17,7 +17,7 @@ import Step3 from './Step3';
 import Step4 from './Step4';
 import Step5 from './Step5';
 
-const MainForm = ({ translate, initialCity }) => {
+const MainForm = ({ translate, initialCity, countries }) => {
     const [activeStep, setActiveStep] = useState(1);
     const [showLogin, setShowLogin] = useState(false);
 
@@ -102,6 +102,7 @@ const MainForm = ({ translate, initialCity }) => {
                                 registerValidation={registerValidation}
                                 unregisterValidation={unregisterValidation}
                                 next={next}
+                                countries={countries}
                             />
                         )}
                         {!showLogin && activeStep === 2 && (
