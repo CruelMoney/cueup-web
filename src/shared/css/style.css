@@ -1367,7 +1367,8 @@ input[type='file'] + label * {
 
             a {
                 color: rgb(49, 218, 255);
-                font-weight: 700;
+                font-weight: 600;
+                margin-top: 0.5em;
                 &:hover {
                     color: #32325d;
                 }

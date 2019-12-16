@@ -19,7 +19,7 @@ import { Body, BodyBold } from 'components/Text';
 import { PAYOUT_TYPES } from 'constants/constants';
 import { REQUEST_PAYMENT_INTENT, PAYMENT_CONFIRMED } from '../../routes/Event/gql';
 import * as tracker from '../../utils/analytics/autotrack';
-import { changeCurrency } from '../../actions/SessionActions';
+import * as actions from '../../actions/SessionActions';
 import addTranslate from '../higher-order/addTranslate';
 import content from '../../routes/Event/content.json';
 import TextWrapper from './TextElement';
@@ -110,6 +110,7 @@ const PaymentWrapper = (props) => {
         event,
         gig,
         currentLanguage,
+        changeCurrency,
     } = props;
     let { availablePayoutMethods = [] } = gig ?? {};
     const canBePaid = offer.daysUntilPaymentPossible < 1;
@@ -375,13 +376,14 @@ function mapStateToProps(state, ownprops) {
     return {
         translate: getTranslate(state.locale),
         currentLanguage: getActiveLanguage(state.locale).code,
+        currency: state.session.currency,
     };
 }
 
 function mapDispatchToProps(dispatch, ownprops) {
     return {
         changeCurrency: (currency) => {
-            dispatch(changeCurrency(currency));
+            dispatch(actions.changeCurrency(currency));
         },
     };
 }
