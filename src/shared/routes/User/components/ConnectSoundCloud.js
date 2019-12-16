@@ -6,12 +6,12 @@ import { ME } from '../../../components/gql';
 import { USER_SOUNDS } from '../routes/Sounds/gql';
 
 const CONNECT_SOUNDCLOUD = gql`
-    mutation($code: String, $redirectUrl: String) {
+    mutation ConnectSoundCloud($code: String, $redirectUrl: String) {
         connectSoundCloud(code: $code, redirectUrl: $redirectUrl)
     }
 `;
 const DISCONNECT_SOUNDCLOUD = gql`
-    mutation {
+    mutation DisconnectSoundCloud {
         disconnectSoundCloud
     }
 `;

@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const GIG = gql`
-    query($id: ID!, $locale: String) {
+    query GetGig($id: ID!, $locale: String) {
         gig(id: $id) {
             id
             status

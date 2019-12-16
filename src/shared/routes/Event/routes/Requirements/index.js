@@ -165,7 +165,7 @@ const Requirements = React.forwardRef(({ theEvent, translate, history, pathname 
                 id="system"
                 title={'System'}
                 description={
-                    'Cancelling the event will give you a refund as per the DJs cancelation policy.'
+                    "Cancelling the event will give you a refund as per the DJ's cancelation policy."
                 }
             >
                 {isCancable && (

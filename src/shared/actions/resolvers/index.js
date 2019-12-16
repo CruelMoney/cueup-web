@@ -48,4 +48,14 @@ const resolvers = {
     },
 };
 
+export const typeDefs = gql`
+    extend type Mutation {
+        paymentConfirmed(gigId: ID, eventId: ID): Boolean
+    }
+    extend type User {
+        isDj: Boolean
+        isOwn: Boolean
+    }
+`;
+
 export default resolvers;

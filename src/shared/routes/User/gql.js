@@ -101,7 +101,7 @@ const USER = gql`
 `;
 
 const REVIEWS = gql`
-    query User($id: ID!) {
+    query Reviews($id: ID!) {
         user(id: $id) {
             id
             playedVenues
@@ -133,7 +133,7 @@ const REVIEWS = gql`
 `;
 
 const USER_PHOTOS = gql`
-    query User($id: ID!, $pagination: Pagination) {
+    query UserPhotos($id: ID!, $pagination: Pagination) {
         user(id: $id) {
             id
             isOwn @client
@@ -460,7 +460,7 @@ const LOG_ACTIVITY = gql`
 `;
 
 const GIG = gql`
-    query($id: ID!, $hash: String, $currency: Currency) {
+    query GetGig2($id: ID!, $hash: String, $currency: Currency) {
         gig(id: $id, hash: $hash) {
             id
             status

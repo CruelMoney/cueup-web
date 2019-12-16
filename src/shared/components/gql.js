@@ -117,7 +117,7 @@ const RESET_PASSWORD = gql`
 `;
 
 const VERIFY_EMAIL = gql`
-    mutation resetUserPassword($verifyToken: String!) {
+    mutation VerifyEmail($verifyToken: String!) {
         verifyEmail(verifyToken: $verifyToken)
     }
 `;
@@ -129,7 +129,7 @@ const AVAILABLE_BANKS = gql`
 `;
 
 const USER_BANK_ACCOUNT = gql`
-    query Me {
+    query UserBankAccount {
         me {
             id
             userMetadata {
@@ -148,7 +148,7 @@ const USER_BANK_ACCOUNT = gql`
 `;
 
 const UPDATE_USER_PAYOUT = gql`
-    mutation updateUser(
+    mutation updateUserPayout(
         $id: ID!
         $payoutInfo: JSON!
         $paymentProvider: PaymentProvider!
@@ -187,7 +187,7 @@ const UPDATE_USER_PAYOUT = gql`
 `;
 
 const MY_GIGS = gql`
-    query($limit: Int, $page: Int, $currency: Currency, $locale: String) {
+    query MyGigs($limit: Int, $page: Int, $currency: Currency, $locale: String) {
         myGigs(pagination: { limit: $limit, page: $page }) {
             __typename
             edges {

@@ -146,6 +146,10 @@ const EVENT_GIGS = gql`
                         averageRating
                     }
                 }
+                availablePayoutMethods {
+                    payoutType
+                    paymentProvider
+                }
             }
         }
     }
@@ -206,13 +210,13 @@ const REQUEST_PAYMENT_INTENT = gql`
 `;
 
 const PAYMENT_CONFIRMED = gql`
-    mutation($gigId: ID!, $eventId: ID!) {
+    mutation PaymentConfirmed($gigId: ID!, $eventId: ID!) {
         paymentConfirmed(gigId: $gigId, eventId: $eventId) @client
     }
 `;
 
 const DECLINE_DJ = gql`
-    mutation($gigId: ID!, $hash: String!) {
+    mutation DeclineDj($gigId: ID!, $hash: String!) {
         declineDJ(gigId: $gigId, hash: $hash) {
             id
             statusHumanized
@@ -304,7 +308,7 @@ const WRITE_REVIEW = gql`
 `;
 
 const EVENT_REFUND = gql`
-    query Event($id: ID!, $hash: String!, $locale: String, $currency: Currency) {
+    query EventRefund($id: ID!, $hash: String!, $locale: String, $currency: Currency) {
         event(id: $id, hash: $hash) {
             id
             chosenGig {

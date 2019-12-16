@@ -80,7 +80,7 @@ class Events extends PureComponent {
                             return renderLoadingItem();
                         }
 
-                        return data.me.events.edges.map((e, i) => renderEvent(e, i));
+                        return data?.me?.events.edges.map((e, i) => renderEvent(e, i));
                     }}
                 </Query>
             </div>
