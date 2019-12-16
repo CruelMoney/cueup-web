@@ -13,6 +13,7 @@ const ReadMoreBody = styled(Body)`
     -webkit-user-select: text;
     user-select: text;
     white-space: pre-wrap;
+    word-break: break-word;
     margin-bottom: 18px;
 `;
 
