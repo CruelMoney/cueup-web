@@ -256,12 +256,6 @@ export const inputStyle = css`
         return show ? `inset 0 0 0 2px ${color}` : 'none';
     }};
 
-    ${({ big }) =>
-        big &&
-        `
-        font-size: 1.5em;
-    `}
-
     ::placeholder,
     ::-webkit-input-placeholder {
         color: #98a4b3;
@@ -273,6 +267,12 @@ export const inputStyle = css`
     :focus {
         background: #e9ecf0;
     }
+
+    ${({ big }) =>
+        big &&
+        css`
+            font-size: 1.5em;
+        `}
 `;
 
 export const TextInput = styled.input`

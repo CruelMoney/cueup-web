@@ -460,7 +460,7 @@ const LOG_ACTIVITY = gql`
 `;
 
 const GIG = gql`
-    query GetGig2($id: ID!, $hash: String, $currency: Currency) {
+    query GetGig2($id: ID!, $hash: String, $currency: Currency, $locale: String) {
         gig(id: $id, hash: $hash) {
             id
             status
@@ -491,11 +491,52 @@ const GIG = gql`
                 }
             }
             offer {
-                totalPayment(currency: $currency) {
-                    formatted
-                    amount
-                }
+                canBePaid
                 daysUntilPaymentPossible
+                totalPayment(currency: $currency) {
+                    amount
+                    currency
+                    formatted(locale: $locale)
+                }
+                serviceFee(currency: $currency) {
+                    amount
+                    currency
+                    formatted(locale: $locale)
+                }
+                offer(currency: $currency) {
+                    amount
+                    currency
+                    formatted(locale: $locale)
+                }
+                cancelationPolicy {
+                    days
+                    percentage
+                }
+            }
+            dj {
+                id
+                permalink
+                artistName
+                displayName @client
+                picture {
+                    path
+                }
+                email
+                playingLocation {
+                    name
+                }
+                userMetadata {
+                    firstName
+                    phone
+                    bio
+                }
+                appMetadata {
+                    averageRating
+                }
+            }
+            availablePayoutMethods {
+                payoutType
+                paymentProvider
             }
         }
     }

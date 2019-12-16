@@ -40,10 +40,9 @@ const BankPayForm = ({
     paymentConfirmed,
     paymentIntent,
     goBack,
+    canBePaid,
 }) => {
-    const canBePaid = offer.daysUntilPaymentPossible < 1;
-
-    if (!canBePaid) {
+    if (!canBePaid && paymentIntent.paymentProvider === 'STRIPE') {
         return (
             <div style={{ padding: '2em' }}>
                 <NotifyPayment
@@ -112,12 +111,26 @@ const PaymentWrapper = (props) => {
         gig,
         currentLanguage,
     } = props;
-    const { availablePayoutMethods } = gig ?? {};
+    let { availablePayoutMethods = [] } = gig ?? {};
+    const canBePaid = offer.daysUntilPaymentPossible < 1;
     const div = useRef();
     const size = useComponentSize(div);
     const [isPaid, setIsPaid] = useState(false);
     const [requestPaymentIntent, { loading, data }] = useLazyQuery(REQUEST_PAYMENT_INTENT);
-    const [paymentType, setPaymentType] = useState();
+
+    // can be paid direct
+    if (availablePayoutMethods.some((pm) => pm.payoutType === PAYOUT_TYPES.DIRECT) && !canBePaid) {
+        availablePayoutMethods = availablePayoutMethods.filter(
+            (pm) => pm.payoutType === PAYOUT_TYPES.DIRECT
+        );
+    }
+
+    let initialPaymentType;
+    if (availablePayoutMethods.length === 1) {
+        initialPaymentType = availablePayoutMethods[0].payoutType;
+    }
+
+    const [paymentType, setPaymentType] = useState(initialPaymentType);
     const [chosen, setChosen] = useState(PAYOUT_TYPES.BANK);
 
     const [setPaymentConfirmed] = useMutation(PAYMENT_CONFIRMED, {
@@ -137,7 +150,7 @@ const PaymentWrapper = (props) => {
                 },
             });
         }
-    }, [availablePayoutMethods, currentLanguage, id, paymentType, requestPaymentIntent]);
+    }, [currentLanguage, id, paymentType, requestPaymentIntent]);
 
     const paymentConfirmed = () => {
         setPaymentConfirmed();
@@ -177,6 +190,7 @@ const PaymentWrapper = (props) => {
                         paymentIntent={paymentIntent}
                         paymentConfirmed={paymentConfirmed}
                         goBack={() => setPaymentType(null)}
+                        canBePaid={canBePaid}
                     />
                 )}
             </div>

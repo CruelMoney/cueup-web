@@ -21,7 +21,7 @@ const BookingButton = ({ user, gig, event, hash, offer, translate, showPaymentFo
         return (
             <>
                 <CTAButton onClick={() => showPaymentForm(true)}>
-                    BOOK {offer.totalPayment.formatted}
+                    BOOK {offer.offer.formatted}
                 </CTAButton>
             </>
         );
@@ -147,7 +147,7 @@ const Wrapper = (props) => {
             />
             {gig && (
                 <Popup showing={showPopup} onClickOutside={() => setShowPopup(false)} noPadding>
-                    <PayForm id={gig.id} offer={offer} event={event} />
+                    <PayForm id={gig.id} offer={gig.offer} gig={gig} event={event} />
                 </Popup>
             )}
         </>
