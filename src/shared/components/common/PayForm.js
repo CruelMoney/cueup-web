@@ -98,6 +98,7 @@ const PaymentWrapper = (props) => {
     const [isPaid, setIsPaid] = useState(false);
     const [requestPaymentIntent, { loading, data }] = useLazyQuery(REQUEST_PAYMENT_INTENT);
     const [paymentType, setPaymentType] = useState();
+    const [chosen, setChosen] = useState(PAYOUT_TYPES.BANK);
 
     const [setPaymentConfirmed] = useMutation(PAYMENT_CONFIRMED, {
         variables: {
@@ -137,11 +138,18 @@ const PaymentWrapper = (props) => {
     const { recommendedCurrency } = paymentIntent ?? {};
     const showCurrencyChange = currency && recommendedCurrency !== currency;
 
+    const payLater = chosen === PAYOUT_TYPES.DIRECT;
+
     return (
         <PayFormContainer className="pay-form" ref={div}>
             <div className="left">
                 {!paymentIntent ? (
-                    <PaymentMethodSelect {...props} setPaymentType={setPaymentType} />
+                    <PaymentMethodSelect
+                        {...props}
+                        setPaymentType={setPaymentType}
+                        chosen={chosen}
+                        setChosen={setChosen}
+                    />
                 ) : (
                     <BankPayForm
                         {...props}
@@ -173,14 +181,30 @@ const PaymentWrapper = (props) => {
                 )}
 
                 <MoneyTable>
-                    <TableItem label={translate('DJ price')}>{offer.offer.formatted}</TableItem>
+                    <TableItem
+                        payLater={payLater}
+                        label={
+                            payLater ? (
+                                <>
+                                    <span>{translate('Pay later')}</span>
+                                    {translate('DJ price')}
+                                </>
+                            ) : (
+                                translate('DJ price')
+                            )
+                        }
+                    >
+                        {offer.offer.formatted}
+                    </TableItem>
                     <TableItem
                         label={translate('Service fee')}
                         info={<div>{translate('event.offer.fee')}</div>}
                     >
                         {offer.serviceFee.formatted}
                     </TableItem>
-                    <TableItem label="Total">{offer.totalPayment.formatted}</TableItem>
+                    <TableItem label={payLater ? 'Payment now' : 'Total'}>
+                        {payLater ? offer.serviceFee.formatted : offer.totalPayment.formatted}
+                    </TableItem>
                 </MoneyTable>
 
                 <p className="terms_link">{translate('event.offer.terms')}</p>
@@ -190,20 +214,12 @@ const PaymentWrapper = (props) => {
 };
 
 const PaymentMethodSelect = (props) => {
-    const { translate } = props;
-    const [chosen, setChosen] = useState(PAYOUT_TYPES.DIRECT);
+    const { translate, chosen, setChosen } = props;
+
     return (
         <div>
             <TextWrapper label={translate('Pay-method')} showLock={true} />
             <div style={{ marginBottom: '30px' }}>
-                <MethodButton
-                    checked={chosen === PAYOUT_TYPES.DIRECT}
-                    title={'Pay later'}
-                    description={
-                        "The DJ will handle the payment, and you'll only pay the service fee now."
-                    }
-                    onClick={() => setChosen(PAYOUT_TYPES.DIRECT)}
-                />
                 <MethodButton
                     checked={chosen === PAYOUT_TYPES.BANK}
                     title={'Pay now'}
@@ -211,6 +227,14 @@ const PaymentMethodSelect = (props) => {
                         "Cueup will facilitate your payment. You'll pay today after completing the booking."
                     }
                     onClick={() => setChosen(PAYOUT_TYPES.BANK)}
+                />
+                <MethodButton
+                    checked={chosen === PAYOUT_TYPES.DIRECT}
+                    title={'Pay later'}
+                    description={
+                        "The DJ will handle the payment, and you'll only pay the service fee now."
+                    }
+                    onClick={() => setChosen(PAYOUT_TYPES.DIRECT)}
                 />
             </div>
             <Row right>

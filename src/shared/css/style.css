@@ -1306,6 +1306,20 @@ input[type='file'] + label * {
 .pay-fact {
     display: flex;
     justify-content: space-between;
+    position: relative;
+}
+
+.pay-fact p > span {
+    color: #4d6480;
+    display: block;
+    font-size: 0.8em;
+    font-weight: 600;
+    margin-bottom: -0.6em;
+}
+
+.pay-fact.pay-later {
+    border: none;
+    margin-bottom: 50px;
 }
 
 .terms_link {

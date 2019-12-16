@@ -4,8 +4,9 @@ import InfoPopup from './InfoPopup';
 class TableItem extends Component {
     state = {};
     render() {
+        const { payLater } = this.props;
         return (
-            <div className="pay-fact">
+            <div className={'pay-fact ' + (payLater ? 'pay-later' : '')}>
                 <span>
                     <p style={{ float: 'left' }}>{this.props.label}</p>
                     {this.props.info && <InfoPopup info={this.props.info} />}
