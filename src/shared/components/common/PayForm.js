@@ -126,8 +126,10 @@ const PaymentWrapper = (props) => {
     }
 
     let initialPaymentType;
+    let canSelectPayment = true;
     if (availablePayoutMethods.length === 1) {
         initialPaymentType = availablePayoutMethods[0].payoutType;
+        canSelectPayment = false;
     }
 
     const [paymentType, setPaymentType] = useState(initialPaymentType);
@@ -176,7 +178,7 @@ const PaymentWrapper = (props) => {
     return (
         <PayFormContainer className="pay-form" ref={div}>
             <div className="left">
-                {!paymentIntent || !paymentType ? (
+                {!paymentIntent && canSelectPayment ? (
                     <PaymentMethodSelect
                         {...props}
                         setPaymentType={setPaymentType}
@@ -184,15 +186,19 @@ const PaymentWrapper = (props) => {
                         setChosen={setChosen}
                         loading={loading}
                     />
-                ) : (
+                ) : null}
+                {paymentIntent && (
                     <BankPayForm
                         {...props}
                         paymentIntent={paymentIntent}
                         paymentConfirmed={paymentConfirmed}
-                        goBack={() => setPaymentType(null)}
+                        goBack={canSelectPayment ? () => setPaymentType(null) : false}
                         canBePaid={canBePaid}
                     />
                 )}
+                {!canSelectPayment && loading ? (
+                    <LoadingPaymentInitial translate={translate} />
+                ) : null}
             </div>
 
             <div className="right">
@@ -241,6 +247,21 @@ const PaymentWrapper = (props) => {
                 <p className="terms_link">{translate('event.offer.terms')}</p>
             </div>
         </PayFormContainer>
+    );
+};
+
+const LoadingPaymentInitial = ({ translate }) => {
+    return (
+        <>
+            <TextWrapper
+                label={translate('Pay')}
+                showLock={true}
+                text={translate('event.offer.payment-info')}
+            />
+            <Col center>
+                <LoadingIndicator label={translate('gettingPayment')} />
+            </Col>
+        </>
     );
 };
 
