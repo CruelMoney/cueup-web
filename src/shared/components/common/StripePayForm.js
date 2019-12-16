@@ -138,7 +138,7 @@ const StripeForm = ({ translate, stripe, paymentIntent, onPaymentConfirmed, goBa
                         {translate('Confirm & Pay')}
                     </SmartButton>
                 </RowMobileCol>
-                <ErrorMessageApollo error={'error'} />
+                <ErrorMessageApollo error={error} />
             </div>
         </form>
     );
