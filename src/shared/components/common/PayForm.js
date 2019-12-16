@@ -6,7 +6,14 @@ import { Query, useMutation, useLazyQuery } from 'react-apollo';
 import ReactPixel from 'react-facebook-pixel';
 import Checkmark from 'react-ionicons/lib/IosCheckmarkCircle';
 import styled, { css } from 'styled-components';
-import { LoadingIndicator, Row, SmartButton, PrimaryButton, Col } from 'components/Blocks';
+import {
+    LoadingIndicator,
+    Row,
+    SmartButton,
+    PrimaryButton,
+    Col,
+    RowMobileCol,
+} from 'components/Blocks';
 import { Label } from 'components/FormComponents';
 import { Body, BodyBold } from 'components/Text';
 import { PAYOUT_TYPES } from 'constants/constants';
@@ -32,6 +39,7 @@ const BankPayForm = ({
     currentLanguage,
     paymentConfirmed,
     paymentIntent,
+    goBack,
 }) => {
     const canBePaid = offer.daysUntilPaymentPossible < 1;
 
@@ -62,10 +70,22 @@ const BankPayForm = ({
             <StripeFormWrapper
                 onPaymentConfirmed={paymentConfirmed}
                 paymentIntent={paymentIntent}
+                goBack={goBack}
             />
         ),
         XENDIT: (
-            <XenditPayForm onPaymentConfirmed={paymentConfirmed} paymentIntent={paymentIntent} />
+            <XenditPayForm
+                onPaymentConfirmed={paymentConfirmed}
+                paymentIntent={paymentIntent}
+                goBack={goBack}
+            />
+        ),
+        DIRECT: (
+            <StripeFormWrapper
+                onPaymentConfirmed={paymentConfirmed}
+                paymentIntent={paymentIntent}
+                goBack={goBack}
+            />
         ),
     };
 
@@ -104,7 +124,6 @@ const PaymentWrapper = (props) => {
         variables: {
             gigId: id,
             eventId: event.id,
-            paymentType,
         },
     });
 
@@ -114,6 +133,7 @@ const PaymentWrapper = (props) => {
                 variables: {
                     id,
                     locale: currentLanguage,
+                    paymentType,
                 },
             });
         }
@@ -143,24 +163,21 @@ const PaymentWrapper = (props) => {
     return (
         <PayFormContainer className="pay-form" ref={div}>
             <div className="left">
-                {!paymentIntent ? (
+                {!paymentIntent || !paymentType ? (
                     <PaymentMethodSelect
                         {...props}
                         setPaymentType={setPaymentType}
                         chosen={chosen}
                         setChosen={setChosen}
+                        loading={loading}
                     />
                 ) : (
                     <BankPayForm
                         {...props}
                         paymentIntent={paymentIntent}
                         paymentConfirmed={paymentConfirmed}
+                        goBack={() => setPaymentType(null)}
                     />
-                )}
-                {loading && (
-                    <Row center>
-                        <LoadingIndicator label={translate('gettingPayment')} />
-                    </Row>
                 )}
             </div>
 
@@ -214,7 +231,7 @@ const PaymentWrapper = (props) => {
 };
 
 const PaymentMethodSelect = (props) => {
-    const { translate, chosen, setChosen } = props;
+    const { translate, chosen, setChosen, loading, setPaymentType } = props;
 
     return (
         <div>
@@ -237,9 +254,15 @@ const PaymentMethodSelect = (props) => {
                     onClick={() => setChosen(PAYOUT_TYPES.DIRECT)}
                 />
             </div>
-            <Row right>
-                <PrimaryButton>Continue</PrimaryButton>
-            </Row>
+            <RowMobileCol right>
+                <SmartButton
+                    level="primary"
+                    loading={loading}
+                    onClick={() => setPaymentType(chosen)}
+                >
+                    Continue
+                </SmartButton>
+            </RowMobileCol>
         </div>
     );
 };

@@ -13,12 +13,19 @@ import styled from 'styled-components';
 import * as Sentry from '@sentry/browser';
 import { Input, InputRow, LabelHalf } from 'components/FormComponents';
 import { validators, useForm } from 'components/hooks/useForm';
-import { inputStyle, SmartButton } from 'components/Blocks';
+import {
+    inputStyle,
+    SmartButton,
+    Row,
+    SecondaryButton,
+    TeritaryButton,
+    RowMobileCol,
+} from 'components/Blocks';
 import { Environment } from '../../constants/constants';
 import CountrySelector from './CountrySelector';
 import ErrorMessageApollo from './ErrorMessageApollo';
 
-const StripeForm = ({ translate, stripe, paymentIntent, onPaymentConfirmed }) => {
+const StripeForm = ({ translate, stripe, paymentIntent, onPaymentConfirmed, goBack }) => {
     const cardElement = useRef();
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
@@ -120,11 +127,18 @@ const StripeForm = ({ translate, stripe, paymentIntent, onPaymentConfirmed }) =>
                 />
             </PaymentRow>
 
-            <div style={{ marginTop: '24px' }}>
-                <SmartButton type="submit" loading={loading}>
-                    {translate('Confirm & Pay')}
-                </SmartButton>
-                <ErrorMessageApollo error={error} />
+            <div style={{ marginTop: '16x' }}>
+                <RowMobileCol right reverse>
+                    {goBack && (
+                        <TeritaryButton onClick={goBack} type="button">
+                            Back
+                        </TeritaryButton>
+                    )}
+                    <SmartButton type="submit" loading={loading}>
+                        {translate('Confirm & Pay')}
+                    </SmartButton>
+                </RowMobileCol>
+                <ErrorMessageApollo error={'error'} />
             </div>
         </form>
     );
