@@ -1323,6 +1323,12 @@ input[type='file'] + label * {
     opacity: 0.5;
 }
 
+@media (max-width: 670px) {
+    .pay-fact.pay-later {
+        margin-bottom: 0px;
+    }
+}
+
 .terms_link {
     font-size: 0.8em;
     line-height: 1.4em;

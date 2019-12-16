@@ -301,7 +301,7 @@ const MethodWrapper = styled(Row)`
 
 const PayFormContainer = styled.div`
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap-reverse;
 `;
 
 const ThankYouContent = ({ translate, style }) => {
