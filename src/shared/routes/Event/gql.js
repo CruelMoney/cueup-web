@@ -121,6 +121,21 @@ const EVENT_GIGS = gql`
                         currency
                         formatted(locale: $locale)
                     }
+                    offer(currency: $currency) {
+                        amount
+                        currency
+                        formatted(locale: $locale)
+                    }
+                    amountPaid(currency: $currency) {
+                        amount
+                        currency
+                        formatted(locale: $locale)
+                    }
+                    amountLeft(currency: $currency) {
+                        amount
+                        currency
+                        formatted(locale: $locale)
+                    }
                     cancelationPolicy {
                         days
                         percentage

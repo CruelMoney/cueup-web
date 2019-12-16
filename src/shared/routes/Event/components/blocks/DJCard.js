@@ -162,7 +162,16 @@ const DjCard = ({ style, idx, gig, translate, theEvent, hasMessage, onOpenChat }
     );
 };
 
-const Offer = ({ name, offer, translate, gig, theEvent, initiateBooking }) => {
+const Offer = ({
+    name,
+    offer,
+    amountPaid,
+    amountLeft,
+    translate,
+    gig,
+    theEvent,
+    initiateBooking,
+}) => {
     const [decline, { loading }] = useMutation(DECLINE_DJ, {
         variables: {
             gigId: gig.id,
@@ -182,12 +191,22 @@ const Offer = ({ name, offer, translate, gig, theEvent, initiateBooking }) => {
 
     const { status } = gig;
 
+    const confirmed = ['CONFIRMED'].includes(status);
+
     return (
         <OfferRow middle>
             <OfferTextWrapper>
-                <OfferText muted={!offer}>{offer ? offer.formatted : 'No offer yet'}</OfferText>
-                {['CONFIRMED'].includes(status) && (
-                    <OfferText muted={true}>Paid and confirmed</OfferText>
+                {!confirmed && (
+                    <OfferText muted={!offer}>{offer ? offer.formatted : 'No offer yet'}</OfferText>
+                )}
+                {confirmed && (
+                    <>
+                        <OfferText muted={!offer}>{amountPaid?.formatted}</OfferText>
+                        <OfferText muted={true}>Paid and confirmed</OfferText>
+                        {amountLeft?.amount && (
+                            <OfferText muted>{amountLeft.formatted} remaining</OfferText>
+                        )}
+                    </>
                 )}
             </OfferTextWrapper>
             <Filler />
