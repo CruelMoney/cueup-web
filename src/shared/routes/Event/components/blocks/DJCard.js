@@ -224,6 +224,7 @@ const PayPopup = ({ showing, close, gig, paymentPossible, theEvent }) => {
                 paymentPossible={paymentPossible}
                 id={gig.id}
                 offer={gig.offer}
+                gig={gig}
                 event={theEvent}
             />
         </Popup>

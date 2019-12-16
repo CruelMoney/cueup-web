@@ -1,12 +1,15 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import useComponentSize from '@rehooks/component-size';
 import { connect } from 'react-redux';
 import { getTranslate, getActiveLanguage } from 'react-localize-redux';
-import { Query, useMutation } from 'react-apollo';
+import { Query, useMutation, useLazyQuery } from 'react-apollo';
 import ReactPixel from 'react-facebook-pixel';
 import Checkmark from 'react-ionicons/lib/IosCheckmarkCircle';
-import styled from 'styled-components';
-import { LoadingIndicator, Row } from 'components/Blocks';
+import styled, { css } from 'styled-components';
+import { LoadingIndicator, Row, SmartButton, PrimaryButton, Col } from 'components/Blocks';
+import { Label } from 'components/FormComponents';
+import { Body, BodyBold } from 'components/Text';
+import { PAYOUT_TYPES } from 'constants/constants';
 import { REQUEST_PAYMENT_INTENT, PAYMENT_CONFIRMED } from '../../routes/Event/gql';
 import * as tracker from '../../utils/analytics/autotrack';
 import { changeCurrency } from '../../actions/SessionActions';
@@ -20,42 +23,16 @@ import { LoadingPlaceholder2 } from './LoadingPlaceholder';
 import requestFormContent from './RequestForm/content.json';
 import NotifyPayment from './NotifyPayment';
 
-const PayForm = ({
+const BankPayForm = ({
     translate,
     event,
-    onPaymentConfirmed,
     currency,
     offer,
-    changeCurrency,
     id,
     currentLanguage,
+    paymentConfirmed,
+    paymentIntent,
 }) => {
-    const div = useRef();
-    const size = useComponentSize(div);
-    const [isPaid, setIsPaid] = useState(false);
-
-    const [setPaymentConfirmed] = useMutation(PAYMENT_CONFIRMED, {
-        variables: {
-            gigId: id,
-            eventId: event.id,
-        },
-    });
-
-    const paymentConfirmed = () => {
-        setPaymentConfirmed();
-        onPaymentConfirmed && onPaymentConfirmed();
-        setIsPaid(true);
-        tracker.trackEventPaid(offer.totalPayment.amount);
-        ReactPixel.track('Purchase', {
-            currency: currency,
-            value: offer.totalPayment.amount,
-        });
-    };
-
-    if (isPaid) {
-        return <ThankYouContent style={size} translate={translate} />;
-    }
-
     const canBePaid = offer.daysUntilPaymentPossible < 1;
 
     if (!canBePaid) {
@@ -80,93 +57,223 @@ const PayForm = ({
         variables.currency = currency;
     }
 
+    const PayForms = {
+        STRIPE: (
+            <StripeFormWrapper
+                onPaymentConfirmed={paymentConfirmed}
+                paymentIntent={paymentIntent}
+            />
+        ),
+        XENDIT: (
+            <XenditPayForm onPaymentConfirmed={paymentConfirmed} paymentIntent={paymentIntent} />
+        ),
+    };
+
+    return (
+        <>
+            <TextWrapper
+                label={translate('Pay')}
+                showLock={true}
+                text={translate('event.offer.payment-info')}
+            />
+            {PayForms[paymentIntent.paymentProvider]}
+        </>
+    );
+};
+
+const PaymentWrapper = (props) => {
+    const {
+        offer,
+        translate,
+        onPaymentConfirmed,
+        currency,
+        id,
+        event,
+        gig,
+        currentLanguage,
+    } = props;
+    const { availablePayoutMethods } = gig ?? {};
+    const div = useRef();
+    const size = useComponentSize(div);
+    const [isPaid, setIsPaid] = useState(false);
+    const [requestPaymentIntent, { loading, data }] = useLazyQuery(REQUEST_PAYMENT_INTENT);
+    const [paymentType, setPaymentType] = useState();
+
+    const [setPaymentConfirmed] = useMutation(PAYMENT_CONFIRMED, {
+        variables: {
+            gigId: id,
+            eventId: event.id,
+            paymentType,
+        },
+    });
+
+    useEffect(() => {
+        if (paymentType) {
+            requestPaymentIntent({
+                variables: {
+                    id,
+                    locale: currentLanguage,
+                },
+            });
+        }
+    }, [availablePayoutMethods, currentLanguage, id, paymentType, requestPaymentIntent]);
+
+    const paymentConfirmed = () => {
+        setPaymentConfirmed();
+        onPaymentConfirmed && onPaymentConfirmed();
+        setIsPaid(true);
+        tracker.trackEventPaid(offer.totalPayment.amount);
+        ReactPixel.track('Purchase', {
+            currency: currency,
+            value: offer.totalPayment.amount,
+        });
+    };
+
+    if (isPaid) {
+        return <ThankYouContent style={size} translate={translate} />;
+    }
+
+    const { requestPaymentIntent: paymentIntent } = data ?? {};
+    const { recommendedCurrency } = paymentIntent ?? {};
+    const showCurrencyChange = currency && recommendedCurrency !== currency;
+
     return (
         <PayFormContainer className="pay-form" ref={div}>
-            <Query query={REQUEST_PAYMENT_INTENT} variables={variables} onError={console.log}>
-                {({ data = {}, loading, error }) => {
-                    if (error) {
-                        return null;
-                    }
+            <div className="left">
+                {!paymentIntent ? (
+                    <PaymentMethodSelect {...props} setPaymentType={setPaymentType} />
+                ) : (
+                    <BankPayForm
+                        {...props}
+                        paymentIntent={paymentIntent}
+                        paymentConfirmed={paymentConfirmed}
+                    />
+                )}
+                {loading && (
+                    <Row center>
+                        <LoadingIndicator label={translate('gettingPayment')} />
+                    </Row>
+                )}
+            </div>
 
-                    const { requestPaymentIntent = {} } = data;
-                    const { recommendedCurrency, offer } = requestPaymentIntent;
-                    const showCurrencyChange = currency && recommendedCurrency !== currency;
+            <div className="right">
+                {!loading && showCurrencyChange && (
+                    <p className="notice">
+                        This DJ uses a different currency, you might getter a better deal by paying
+                        in {recommendedCurrency}.{' '}
+                        <a
+                            href="#recommended"
+                            onClick={(_) => {
+                                changeCurrency(recommendedCurrency);
+                            }}
+                        >
+                            Change to {recommendedCurrency}
+                        </a>
+                    </p>
+                )}
 
-                    const PayForms = {
-                        STRIPE: (
-                            <StripeFormWrapper
-                                onPaymentConfirmed={paymentConfirmed}
-                                paymentIntent={requestPaymentIntent}
-                            />
-                        ),
-                        XENDIT: (
-                            <XenditPayForm
-                                onPaymentConfirmed={paymentConfirmed}
-                                paymentIntent={requestPaymentIntent}
-                            />
-                        ),
-                    };
+                <MoneyTable>
+                    <TableItem label={translate('DJ price')}>{offer.offer.formatted}</TableItem>
+                    <TableItem
+                        label={translate('Service fee')}
+                        info={<div>{translate('event.offer.fee')}</div>}
+                    >
+                        {offer.serviceFee.formatted}
+                    </TableItem>
+                    <TableItem label="Total">{offer.totalPayment.formatted}</TableItem>
+                </MoneyTable>
 
-                    return (
-                        <>
-                            <div className="left">
-                                <TextWrapper
-                                    label={translate('Pay')}
-                                    showLock={true}
-                                    text={translate('event.offer.payment-info')}
-                                />
-                                {loading ? (
-                                    <Row center>
-                                        <LoadingIndicator label={translate('gettingPayment')} />
-                                    </Row>
-                                ) : (
-                                    PayForms[requestPaymentIntent.paymentProvider]
-                                )}
-                            </div>
-
-                            <div className="right">
-                                {!loading && showCurrencyChange && (
-                                    <p className="notice">
-                                        This DJ uses a different currency, you might getter a better
-                                        deal by paying in {recommendedCurrency}.{' '}
-                                        <a
-                                            href="#recommended"
-                                            onClick={(_) => {
-                                                changeCurrency(recommendedCurrency);
-                                            }}
-                                        >
-                                            Change to {recommendedCurrency}
-                                        </a>
-                                    </p>
-                                )}
-                                {loading ? (
-                                    <LoadingPlaceholder2 />
-                                ) : (
-                                    <MoneyTable>
-                                        <TableItem label={translate('DJ price')}>
-                                            {offer.offer.formatted}
-                                        </TableItem>
-                                        <TableItem
-                                            label={translate('Service fee')}
-                                            info={<div>{translate('event.offer.fee')}</div>}
-                                        >
-                                            {offer.serviceFee.formatted}
-                                        </TableItem>
-                                        <TableItem label="Total">
-                                            {offer.totalPayment.formatted}
-                                        </TableItem>
-                                    </MoneyTable>
-                                )}
-
-                                <p className="terms_link">{translate('event.offer.terms')}</p>
-                            </div>
-                        </>
-                    );
-                }}
-            </Query>
+                <p className="terms_link">{translate('event.offer.terms')}</p>
+            </div>
         </PayFormContainer>
     );
 };
+
+const PaymentMethodSelect = (props) => {
+    const { translate } = props;
+    const [chosen, setChosen] = useState(PAYOUT_TYPES.DIRECT);
+    return (
+        <div>
+            <TextWrapper label={translate('Pay-method')} showLock={true} />
+            <div style={{ marginBottom: '30px' }}>
+                <MethodButton
+                    checked={chosen === PAYOUT_TYPES.DIRECT}
+                    title={'Pay later'}
+                    description={
+                        "The DJ will handle the payment, and you'll only pay the service fee now."
+                    }
+                    onClick={() => setChosen(PAYOUT_TYPES.DIRECT)}
+                />
+                <MethodButton
+                    checked={chosen === PAYOUT_TYPES.BANK}
+                    title={'Pay now'}
+                    description={
+                        "Cueup will facilitate your payment. You'll pay today after completing the booking."
+                    }
+                    onClick={() => setChosen(PAYOUT_TYPES.BANK)}
+                />
+            </div>
+            <Row right>
+                <PrimaryButton>Continue</PrimaryButton>
+            </Row>
+        </div>
+    );
+};
+
+const MethodButton = ({ title, description, checked, onClick }) => {
+    return (
+        <MethodWrapper onClick={onClick}>
+            <RadioIndicator checked={checked} />
+            <Col>
+                <BodyBold bold>{title}</BodyBold>
+                <Body>{description}</Body>
+            </Col>
+        </MethodWrapper>
+    );
+};
+
+const RadioIndicator = styled.div`
+    height: 25px;
+    width: 25px;
+    min-width: 25px;
+    min-height: 25px;
+    border-radius: 25px;
+    border: 3px solid #98a4b3;
+    display: inline-block;
+    margin-right: 1em;
+    margin-top: 0.2em;
+    position: relative;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    ${({ checked }) =>
+        checked &&
+        css`
+            border-color: #31daff;
+            &:after {
+                position: absolute;
+                content: '';
+                height: 13px;
+                width: 13px;
+                background: #31daff;
+                border-radius: 100%;
+            }
+        `}
+`;
+
+const MethodWrapper = styled(Row)`
+    background-color: #edf2f7;
+    padding: 1em;
+    border-radius: 6px;
+    cursor: pointer;
+    &:hover {
+        background-color: #e6edf4;
+    }
+    &:nth-child(2) {
+        margin-top: 15px;
+    }
+`;
 
 const PayFormContainer = styled.div`
     display: flex;
@@ -200,6 +307,6 @@ function mapDispatchToProps(dispatch, ownprops) {
 const SmartPay = connect(
     mapStateToProps,
     mapDispatchToProps
-)(PayForm);
+)(PaymentWrapper);
 
 export default addTranslate(SmartPay, [content, requestFormContent]);

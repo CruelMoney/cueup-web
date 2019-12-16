@@ -130,6 +130,7 @@ const EVENT_GIGS = gql`
                     id
                     permalink
                     artistName
+                    displayName @client
                     picture {
                         path
                     }
@@ -179,8 +180,13 @@ const EVENT_REVIEW = gql`
 `;
 
 const REQUEST_PAYMENT_INTENT = gql`
-    query RequestPaymentintent($id: ID!, $currency: Currency, $locale: String) {
-        requestPaymentIntent(gigId: $id, currency: $currency) {
+    query RequestPaymentintent(
+        $id: ID!
+        $currency: Currency
+        $locale: String
+        $paymentType: PayoutType
+    ) {
+        requestPaymentIntent(gigId: $id, currency: $currency, paymentType: $paymentType) {
             __typename
             gigId
             recommendedCurrency

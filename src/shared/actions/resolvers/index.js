@@ -22,6 +22,11 @@ const resolvers = {
             }
             return false;
         },
+        displayName: (user) => {
+            const { userMetadata, artistName } = user ?? {};
+            const { firstName } = userMetadata ?? {};
+            return artistName ?? firstName;
+        },
     },
     Mutation: {
         paymentConfirmed: (_root, variables, { cache, getCacheKey }) => {
@@ -55,6 +60,8 @@ export const typeDefs = gql`
     extend type User {
         isDj: Boolean
         isOwn: Boolean
+        isOrganizer: Boolean
+        displayName: String
     }
 `;
 

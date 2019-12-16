@@ -336,4 +336,9 @@ const all = {
     OrganizerCurrencies,
 };
 
+export const PAYOUT_TYPES = Object.freeze({
+    BANK: 'BANK',
+    DIRECT: 'DIRECT',
+});
+
 export default all;

@@ -140,6 +140,7 @@
   ],
   "Offers": ["Offers", "Tilbud"],
   "Pay": ["Pay", "Betal"],
+  "Pay-method": ["When do you want to pay?", "Hvornår vil du betale?"],
   "DJ price": ["DJ price", "DJ pris"],
   "Cardholder name": ["Cardholder name", "Kortholders navn"],
   "mm/yy": ["mm/yy", "mm/åå"],
