@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useState, useCallback, forwardRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-apollo';
@@ -201,6 +201,11 @@ const MainContent = (props) => {
     const { location, setPopup } = props;
     const [height, setHeight] = useState('auto');
     const direction = getDirection(location.pathname);
+    const [ssr, setSsr] = useState(true);
+
+    useEffect(() => {
+        setSsr(false);
+    }, []);
 
     const transitions = useTransition(location, (location) => location.pathname, {
         config: {
@@ -226,11 +231,12 @@ const MainContent = (props) => {
             </Switch>
             <AnimationWrapper>
                 {transitions.map(({ item, props: style, key }) => (
-                    <TransitionComponent
+                    <SSRComponent
+                        key={key}
                         {...props}
+                        ssr={ssr}
                         item={item}
                         style={style}
-                        key={key}
                         registerHeight={setHeight}
                         showDecline={() => setPopup(true)}
                     />
@@ -240,8 +246,41 @@ const MainContent = (props) => {
     );
 };
 
-const TransitionComponent = (ogProps) => {
-    const { style, item, match, gig, registerHeight, loading } = ogProps;
+const SSRComponent = ({ ssr, ...props }) => {
+    if (ssr) {
+        return <GigRoutes {...props} />;
+    }
+
+    return <TransitionComponent {...props} />;
+};
+
+const GigRoutes = forwardRef((props, ref) => {
+    const { style, item, match } = props;
+    return (
+        <animated.div style={style} ref={ref}>
+            <Switch location={item}>
+                <Route
+                    path={match.path + '/information'}
+                    render={(navProps) => <Information {...navProps} {...props} />}
+                />
+                <Route
+                    path={match.path + '/offer'}
+                    render={(navProps) => <Offer {...navProps} {...props} />}
+                />
+                <Route
+                    path={match.path + '/review'}
+                    render={(navProps) => <GigReview {...navProps} {...props} />}
+                />
+                <Route
+                    path={match.path + '/chat'}
+                    render={(navProps) => <MobileChat {...navProps} {...props} />}
+                />
+            </Switch>
+        </animated.div>
+    );
+});
+
+const TransitionComponent = ({ registerHeight, ...props }) => {
     const ref = useRef(null);
     const { bounds } = useMeasure(ref, 'bounds');
 
@@ -251,28 +290,7 @@ const TransitionComponent = (ogProps) => {
         }
     }, [bounds, registerHeight]);
 
-    return (
-        <animated.div style={style} ref={ref}>
-            <Switch location={item}>
-                <Route
-                    path={match.path + '/information'}
-                    render={(props) => <Information {...props} gig={gig} loading={loading} />}
-                />
-                <Route
-                    path={match.path + '/offer'}
-                    render={(props) => <Offer {...props} {...ogProps} />}
-                />
-                <Route
-                    path={match.path + '/review'}
-                    render={(props) => <GigReview {...props} {...ogProps} />}
-                />
-                <Route
-                    path={match.path + '/chat'}
-                    render={(props) => <MobileChat {...props} {...ogProps} />}
-                />
-            </Switch>
-        </animated.div>
-    );
+    return <GigRoutes {...props} />;
 };
 
 const CancelationDeclinePopup = ({ gig, hide, onCancelled }) => {

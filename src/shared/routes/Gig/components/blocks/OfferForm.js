@@ -231,7 +231,7 @@ const OfferForm = ({
                 </Col>
             ) : null}
 
-            {payoutInfoValid ? (
+            {canUpdatePrice ? (
                 <>
                     <RadioSelect
                         containerStyle={{ marginBottom: '30px' }}
