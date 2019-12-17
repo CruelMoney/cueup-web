@@ -8,7 +8,7 @@ import {
     DeleteFileButton,
     LabelHalf,
 } from '../../../components/FormComponents';
-import constants from '../../../constants/constants';
+import constants, { PAYOUT_TYPES } from '../../../constants/constants';
 import ImageUploader from '../../../components/ImageInput';
 import PasswordChanger from '../components/PasswordChanger';
 import DatePickerPopup from '../../../components/DatePicker';
@@ -350,7 +350,6 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
 
 const PayoutPopup = ({ user, hasPayout }) => {
     const [showing, setShowing] = useState(false);
-
     return (
         <>
             <Input
@@ -358,7 +357,7 @@ const PayoutPopup = ({ user, hasPayout }) => {
                 type="button"
                 attention={!hasPayout}
                 onClick={(s) => setShowing(true)}
-                label="Payout information"
+                label="Payout methods"
                 buttonText={'update'}
             />
             <Popup showing={showing} onClickOutside={(_) => setShowing(false)} width={'500px'}>

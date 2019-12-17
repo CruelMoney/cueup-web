@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { getTranslate, getActiveLanguage } from 'react-localize-redux';
 import { Elements, StripeProvider, injectStripe } from 'react-stripe-elements';
-import { Query, Mutation, useMutation } from 'react-apollo';
+import { Query, Mutation, useMutation, useQuery } from 'react-apollo';
 import { Title, BodySmall } from 'components/Text';
 import { Input, InputRow, Label } from 'components/FormComponents';
 import CurrencySelector from 'components/CurrencySelector';
 import { SmartButton, Row, TeritaryButton, LoadingIndicator } from 'components/Blocks';
 import { useForm } from 'components/hooks/useForm';
-import { Environment } from '../../constants/constants';
-import { USER_BANK_ACCOUNT, UPDATE_USER_PAYOUT } from '../gql';
-import IbanField from './IbanField';
-import CountrySelector, { BankSelector } from './CountrySelector';
-import ErrorMessageApollo, { getErrorMessage } from './ErrorMessageApollo';
-import PhoneInput from './PhoneInput';
+import { Environment, AllCurrencies } from '../../../constants/constants';
+import IbanField from '../IbanField';
+import CountrySelector, { BankSelector } from '../CountrySelector';
+import ErrorMessageApollo, { getErrorMessage } from '../ErrorMessageApollo';
+import PhoneInput from '../PhoneInput';
+import { UPDATE_USER_PAYOUT, USER_PAYOUT_DATA, USER_PAYOUT_METHOD } from './gql';
 
 const getStripeData = async ({ country, stripe, name, currency }) => {
     const tokenData = {
@@ -44,7 +42,17 @@ const getXenditData = ({ country, name, bankCode, bankAccountNumber }) => {
     };
 };
 
-const PayoutForm = ({ user, isUpdate, translate, stripe, onCancel, onSubmitted }) => {
+const PayoutForm = ({
+    user,
+    loading,
+    bankAccount,
+    isUpdate,
+    translate,
+    stripe,
+    onCancel,
+    onSubmitted,
+    availableBankCountries,
+}) => {
     const [mutate, { loading: submitting, error }] = useMutation(UPDATE_USER_PAYOUT, {
         onCompleted: onSubmitted,
     });
@@ -60,7 +68,6 @@ const PayoutForm = ({ user, isUpdate, translate, stripe, onCancel, onSubmitted }
                 variables: {
                     ...data,
                     phone: values.phone,
-                    id: user.id,
                     paymentProvider: useXendit ? 'XENDIT' : 'STRIPE',
                 },
             });
@@ -70,64 +77,47 @@ const PayoutForm = ({ user, isUpdate, translate, stripe, onCancel, onSubmitted }
         }
     };
 
+    if (loading) {
+        return (
+            <div style={{ height: 200, justifyContent: 'center' }}>
+                <LoadingIndicator label={'Loading bank information'} />
+            </div>
+        );
+    }
+
     return (
-        <div className="payout-form">
-            <Title>{translate('Payout')}</Title>
-            <BodySmall>{translate('payout.description')}</BodySmall>
+        <>
+            <MainForm
+                availableBankCountries={availableBankCountries}
+                bankAccount={bankAccount}
+                translate={translate}
+                user={user}
+                loading={loading || submitting}
+                submit={submit}
+                isUpdate={isUpdate}
+                onCancel={onCancel}
+            />
+            <ErrorMessageApollo error={error || localError} />
 
-            <Query query={USER_BANK_ACCOUNT} ssr={false}>
-                {({ data, loading }) => {
-                    if (loading) {
-                        return (
-                            <div style={{ height: 200, justifyContent: 'center' }}>
-                                <LoadingIndicator label={'Loading bank information'} />
-                            </div>
-                        );
-                    }
-
-                    if (!data || !data.me) {
-                        data = {
-                            me: {
-                                userMetadata: { bankAccount: {} },
-                            },
-                        };
-                    }
-
-                    const {
-                        me: {
-                            userMetadata: { bankAccount = {} },
-                        },
-                    } = data;
-
-                    return (
-                        <>
-                            <MainForm
-                                bankAccount={bankAccount}
-                                translate={translate}
-                                user={user}
-                                loading={loading || submitting}
-                                submit={submit}
-                                isUpdate={isUpdate}
-                                onCancel={onCancel}
-                            />
-                            <ErrorMessageApollo error={error || localError} />
-
-                            <div className="row center">
-                                <div className="col-xs-10">
-                                    <p className="terms_link text-center">
-                                        {translate('payout.terms')}
-                                    </p>
-                                </div>
-                            </div>
-                        </>
-                    );
-                }}
-            </Query>
-        </div>
+            <div className="row center">
+                <div className="col-xs-10">
+                    <p className="terms_link text-center">{translate('payout.terms')}</p>
+                </div>
+            </div>
+        </>
     );
 };
 
-const MainForm = ({ user, bankAccount, translate, isUpdate, submit, onCancel, loading }) => {
+const MainForm = ({
+    user,
+    bankAccount,
+    availableBankCountries,
+    translate,
+    isUpdate,
+    submit,
+    onCancel,
+    loading,
+}) => {
     const { userMetadata } = user;
     const { phone, firstName, lastName } = userMetadata || {};
     const initialName = `${firstName} ${lastName}`;
@@ -153,6 +143,18 @@ const MainForm = ({ user, bankAccount, translate, isUpdate, submit, onCancel, lo
         }
     };
 
+    const onCountryChange = (c) => {
+        const selectedCountry = availableBankCountries.find((c2) => c2.countryCode === c);
+        setValue('country')(c);
+        setValue('currency')(selectedCountry?.defaultCurrency);
+        setValue('bankName')(null);
+        setValue('routingNumber1')(null);
+        setValue('routingNumber2')(null);
+    };
+
+    const availableCountryCodes = availableBankCountries.map((c) => c.countryCode);
+    const bankCountry = availableBankCountries.find((c) => c.countryCode === form.country);
+
     return (
         <>
             <InputRow style={{ marginTop: '24px' }}>
@@ -160,9 +162,10 @@ const MainForm = ({ user, bankAccount, translate, isUpdate, submit, onCancel, lo
                     noShadow
                     forceHeight
                     defaultValue={form.country}
+                    filter={(c) => availableCountryCodes.includes(c.value)}
                     label={translate('country')}
                     placeholder={translate('country')}
-                    onSave={setValue('country')}
+                    onSave={onCountryChange}
                     validation={(v) => (v ? null : 'Please select a country from the list')}
                     registerValidation={registerValidation('country')}
                     unregisterValidation={unregisterValidation('country')}
@@ -233,9 +236,10 @@ const MainForm = ({ user, bankAccount, translate, isUpdate, submit, onCancel, lo
                             key={form.country}
                             label={translate('currency')}
                             name="currency"
-                            value={inIndonesia ? 'IDR' : null}
+                            filter={(c) => bankCountry.supportedCurrencies.includes(c)}
                             defaultValue={form.currency}
                             disabled={inIndonesia}
+                            suggestions={AllCurrencies}
                             onSave={setValue('currency')}
                             placeholder={inIndonesia ? undefined : translate('currency')}
                             validation={(v) => (v ? null : 'Please select currency')}
@@ -283,14 +287,30 @@ const StripeWrapper = (props) => {
     );
 };
 
-function mapStateToProps(state, ownprops) {
-    return {
-        ...ownprops,
-        translate: getTranslate(state.locale),
-        currentLanguage: getActiveLanguage(state.locale).code,
-    };
-}
+const DataWrapper = (props) => {
+    const { translate } = props;
 
-export default connect(mapStateToProps)(StripeWrapper);
+    const { loading, data } = useQuery(USER_PAYOUT_METHOD, {
+        variables: { id: props.id },
+        ssr: false,
+        skip: !props.id,
+    });
 
-export const DisconnectedPayoutForm = StripeWrapper;
+    const bankAccount = data?.payoutMethod;
+
+    return (
+        <div className="payout-form">
+            <Title>{translate('Bank Account')}</Title>
+            <BodySmall>{translate('payout.description')}</BodySmall>
+
+            <StripeWrapper
+                {...props}
+                loading={loading}
+                bankAccount={bankAccount}
+                availableBankCountries={data?.availableBankCountries}
+            />
+        </div>
+    );
+};
+
+export default DataWrapper;

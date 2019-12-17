@@ -135,6 +135,10 @@
   "second": ["second", "sekund"],
   "payout": {
     "country-not-found": ["Country could not be found.", "Landet kunne ikke findes."],
+    "description-1": [
+      "Choose what payout methods you want to use. You can always switch off methods when responding to a gig.",
+      "Vælg hvilke udbetalingsmetoder du vil bruge. Du kan altid fravælge metoder når du svarer på et gig."
+    ],
     "description": [
       "All information is encrypted. We are using IBAN numbers to allow deals between countries. That way you can play gigs in foreign contries if you're traveling.",
       "Alt information er krypteret. Vi bruger IBAN-nummer for at kunne tilbyde gigs i udlandet."

@@ -5,10 +5,10 @@ import SuggestionList from './SuggestionList';
 const CurrencySelector = ({ defaultValue, initialValue, ...props }) => {
     return (
         <SuggestionList
-            {...props}
             disableInput
             defaultValue={defaultValue || initialValue || ''}
             suggestions={constants.Currencies}
+            {...props}
         />
     );
 };

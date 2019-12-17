@@ -52,7 +52,6 @@ const IbanField = ({ onChange, label, children, onReady }) => {
                         invalid: 'invalid',
                     }}
                     onChange={onChangeHandler}
-                    onReady={console.log}
                 />
             </Wrapper>
         </InputLabel>

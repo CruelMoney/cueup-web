@@ -264,6 +264,7 @@ const PaymentMethodSelect = (props) => {
         <div>
             <TextWrapper label={translate('Pay-method')} showLock={true} />
             <RadioSelect
+                containerStyle={{ marginBottom: '30px' }}
                 setChosen={setChosen}
                 options={[
                     {

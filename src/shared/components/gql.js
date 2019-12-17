@@ -45,6 +45,11 @@ const ME = gql`
                     last4
                 }
             }
+            payoutMethods {
+                id
+                payoutType
+                paymentProvider
+            }
             userSettings {
                 currency
                 notifications
@@ -122,70 +127,6 @@ const VERIFY_EMAIL = gql`
     }
 `;
 
-const AVAILABLE_BANKS = gql`
-    query banks($countryCode: String!) {
-        availableBanks(countryCode: $countryCode)
-    }
-`;
-
-const USER_BANK_ACCOUNT = gql`
-    query UserBankAccount {
-        me {
-            id
-            userMetadata {
-                bankAccount {
-                    last4
-                    currency
-                    accountHolderName
-                    bankName
-                    bankCode
-                    countryCode
-                    status
-                }
-            }
-        }
-    }
-`;
-
-const UPDATE_USER_PAYOUT = gql`
-    mutation updateUserPayout(
-        $id: ID!
-        $payoutInfo: JSON!
-        $paymentProvider: PaymentProvider!
-        $phone: String
-    ) {
-        updateUser(
-            id: $id
-            payoutInfo: $payoutInfo
-            paymentProvider: $paymentProvider
-            phone: $phone
-        ) {
-            id
-            userMetadata {
-                phone
-                bankAccount {
-                    last4
-                    currency
-                    accountHolderName
-                    bankName
-                    bankCode
-                    countryCode
-                    status
-                }
-            }
-            appMetadata {
-                earned {
-                    amount
-                    currency
-                }
-            }
-            userSettings {
-                currency
-            }
-        }
-    }
-`;
-
 const MY_GIGS = gql`
     query MyGigs($limit: Int, $page: Int, $currency: Currency, $locale: String) {
         myGigs(pagination: { limit: $limit, page: $page }) {
@@ -235,7 +176,6 @@ const PAY_EVENT = gql`
 `;
 
 export {
-    AVAILABLE_BANKS,
     LOGIN,
     ME,
     REQUEST_PASSWORD_RESET,
@@ -243,8 +183,6 @@ export {
     CREATE_USER,
     REQUEST_EMAIL_VERIFICATION,
     VERIFY_EMAIL,
-    USER_BANK_ACCOUNT,
-    UPDATE_USER_PAYOUT,
     MY_GIGS,
     PAY_EVENT,
 };

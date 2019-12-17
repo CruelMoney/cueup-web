@@ -5,7 +5,7 @@ import { Input } from '../FormComponents';
 import { inputStyle } from '../Blocks';
 
 const SuggestionList = ({
-    suggestions = [], // can be either strings or {label, value}
+    suggestions: ogSuggestions = [], // can be either strings or {label, value}
     value,
     defaultValue,
     onChange,
@@ -17,8 +17,14 @@ const SuggestionList = ({
     half,
     style,
     children,
+    filter,
     ...props
 }) => {
+    let suggestions = ogSuggestions;
+    if (filter) {
+        suggestions = suggestions.filter(filter);
+    }
+
     const inputRef = useRef();
 
     const getDefaultValue = (v) => {

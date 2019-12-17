@@ -2,12 +2,14 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { Col, Row } from './Blocks';
 import { BodyBold, Body } from './Text';
+import { StyledCheckbox, DumbCheckbox } from './Checkbox';
 
-const RadioSelect = ({ options, chosen, setChosen }) => {
+const RadioSelect = ({ multi, options, chosen, setChosen, containerStyle }) => {
     return (
-        <div style={{ marginBottom: '30px' }}>
+        <div style={containerStyle}>
             {options.map(({ value, ...props }) => (
                 <MethodButton
+                    multi={multi}
                     key={value}
                     checked={chosen === value}
                     onClick={() => setChosen(value)}
@@ -18,10 +20,19 @@ const RadioSelect = ({ options, chosen, setChosen }) => {
     );
 };
 
-export const MethodButton = ({ title, description, checked, onClick, withIndicator = true }) => {
+export const MethodButton = ({
+    multi,
+    title,
+    description,
+    checked,
+    onClick,
+    withIndicator = true,
+}) => {
+    const Indicator = multi ? DumbCheckbox : RadioIndicator;
+
     return (
         <MethodWrapper onClick={onClick}>
-            {withIndicator && <RadioIndicator checked={checked} />}
+            {withIndicator && <Indicator checked={checked} />}
             <Col>
                 <BodyBold bold>{title}</BodyBold>
                 <Body>{description}</Body>
@@ -67,9 +78,16 @@ const MethodWrapper = styled(Row)`
     cursor: pointer;
     &:hover {
         background-color: #e9ecf0;
+        ${StyledCheckbox} {
+            background: #f6f8f9;
+        }
     }
     &:nth-child(2) {
         margin-top: 15px;
+    }
+    ${StyledCheckbox} {
+        margin-right: 14px;
+        background: #e9ecf0;
     }
 `;
 

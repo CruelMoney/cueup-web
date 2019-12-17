@@ -46,6 +46,19 @@ export const Environment = {
 export const Currencies = ['DKK', 'EUR', 'GBP', 'NOK', 'SEK', 'USD', 'IDR'];
 export const OrganizerCurrencies = ['USD', 'EUR', 'GBP', 'DKK', 'NOK', 'SEK', 'IDR'];
 
+export const AllCurrencies = [
+    ...Currencies,
+    'CHF',
+    'AUD',
+    'CAD',
+    'HKD',
+    'JPY',
+    'MYR',
+    'NZD',
+    'PLN',
+    'SGD',
+];
+
 export const ActionTypes = keyMirror({
     // Session
     SIGNUP_REQUESTED: null,

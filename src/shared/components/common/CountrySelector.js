@@ -2,10 +2,10 @@ import React from 'react';
 import { getData } from 'country-list';
 import { Query } from 'react-apollo';
 import { SearchableSuggestionList } from 'components/SuggestionList/SuggestionList';
-import { AVAILABLE_BANKS } from '../gql';
+import { AVAILABLE_BANKS } from './PayoutForm/gql';
 
 const countries = getData().map(({ code, name }) => ({ label: name, value: code }));
-const CountrySelector = ({ ...props }) => {
+const CountrySelector = (props) => {
     return <SearchableSuggestionList {...props} suggestions={countries} />;
 };
 

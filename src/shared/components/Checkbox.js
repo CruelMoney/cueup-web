@@ -23,11 +23,11 @@ const Icon = styled.svg`
     stroke-width: 1px;
 `;
 
-const StyledCheckbox = styled.div`
+export const StyledCheckbox = styled.div`
     display: inline-block;
     width: 24px;
     height: 24px;
-    background: ${(props) => (props.checked ? '#50E3C2' : '#F6F8F9')};
+    background: ${(props) => (props.checked ? '#50E3C2 !important' : '#F6F8F9')};
     border-radius: 3px;
     cursor: pointer;
 
@@ -37,7 +37,7 @@ const StyledCheckbox = styled.div`
         visibility: ${(props) => (props.checked ? 'visible' : 'hidden')};
     }
     :hover {
-        background: ${(props) => (props.checked ? '#50E3C2' : '#e9ecf0')};
+        background: ${(props) => (props.checked ? '#50E3C2 !important' : '#e9ecf0')};
     }
     ${HiddenCheckbox}:focus + & {
         box-shadow: inset 0 0 0 3px #50e3c2;
@@ -56,7 +56,7 @@ const CheckboxContainer = styled.div`
     vertical-align: middle;
 `;
 
-const Checkbox = ({ className, defaultValue, onChange, label, withBorder, ...props }) => {
+const Checkbox = ({ defaultValue, onChange, ...props }) => {
     const [checked, setChecked] = useState(defaultValue || false);
 
     const updateVal = (newVal) => {
@@ -65,12 +65,19 @@ const Checkbox = ({ className, defaultValue, onChange, label, withBorder, ...pro
     };
 
     return (
-        <CheckboxContainer
-            className={className}
+        <DumbCheckbox
             onClick={() => {
                 updateVal(!checked);
             }}
-        >
+            checked={checked}
+            {...props}
+        />
+    );
+};
+
+export const DumbCheckbox = ({ className, onClick, checked, label, withBorder, ...props }) => {
+    return (
+        <CheckboxContainer className={className} onClick={onClick}>
             <Label
                 onClick={(e) => {
                     e.preventDefault();
