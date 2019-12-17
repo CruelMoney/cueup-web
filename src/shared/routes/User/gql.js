@@ -537,6 +537,9 @@ const GIG = gql`
             availablePayoutMethods {
                 payoutType
                 paymentProvider
+                ... on Direct {
+                    description
+                }
             }
         }
     }

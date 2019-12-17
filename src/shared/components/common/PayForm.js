@@ -108,7 +108,6 @@ const BankPayForm = ({
 
 const PaymentWrapper = (props) => {
     const {
-        offer,
         translate,
         onPaymentConfirmed,
         currency,
@@ -118,12 +117,28 @@ const PaymentWrapper = (props) => {
         currentLanguage,
         changeCurrency,
     } = props;
-    let { availablePayoutMethods = [] } = gig ?? {};
-    const canBePaid = offer.daysUntilPaymentPossible < 1;
+
     const div = useRef();
     const size = useComponentSize(div);
     const [isPaid, setIsPaid] = useState(false);
     const [requestPaymentIntent, { loading, data }] = useLazyQuery(REQUEST_PAYMENT_INTENT);
+
+    let { availablePayoutMethods = [] } = gig ?? {};
+    const { offer: gigOffer } = gig ?? {};
+    const { requestPaymentIntent: paymentIntent, offer: paymentOffer } = data ?? {};
+
+    const offer = {
+        ...gigOffer,
+        ...paymentOffer,
+    };
+
+    const canBePaid = offer.daysUntilPaymentPossible < 1;
+    const { recommendedCurrency } = paymentIntent ?? {};
+    const showCurrencyChange = currency && recommendedCurrency !== currency;
+
+    const payLater = chosen === PAYOUT_TYPES.DIRECT;
+
+    const chosenMethod = availablePayoutMethods.find((v) => v.payoutType === chosen);
 
     // can be paid direct
     if (availablePayoutMethods.some((pm) => pm.payoutType === PAYOUT_TYPES.DIRECT) && !canBePaid) {
@@ -153,12 +168,13 @@ const PaymentWrapper = (props) => {
             requestPaymentIntent({
                 variables: {
                     id,
+                    currency,
                     locale: currentLanguage,
                     paymentType,
                 },
             });
         }
-    }, [currentLanguage, id, paymentType, requestPaymentIntent]);
+    }, [currency, currentLanguage, id, paymentType, requestPaymentIntent]);
 
     const paymentConfirmed = () => {
         setPaymentConfirmed();
@@ -174,14 +190,6 @@ const PaymentWrapper = (props) => {
     if (isPaid) {
         return <ThankYouContent style={size} translate={translate} />;
     }
-
-    const { requestPaymentIntent: paymentIntent } = data ?? {};
-    const { recommendedCurrency } = paymentIntent ?? {};
-    const showCurrencyChange = currency && recommendedCurrency !== currency;
-
-    const payLater = chosen === PAYOUT_TYPES.DIRECT;
-
-    const chosenMethod = availablePayoutMethods.find((v) => v.payoutType === chosen);
 
     return (
         <PayFormContainer className="pay-form" ref={div}>

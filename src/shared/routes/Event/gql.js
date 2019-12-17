@@ -106,21 +106,6 @@ const EVENT_GIGS = gql`
                 offer {
                     canBePaid
                     daysUntilPaymentPossible
-                    totalPayment(currency: $currency) {
-                        amount
-                        currency
-                        formatted(locale: $locale)
-                    }
-                    serviceFee(currency: $currency) {
-                        amount
-                        currency
-                        formatted(locale: $locale)
-                    }
-                    offer(currency: $currency) {
-                        amount
-                        currency
-                        formatted(locale: $locale)
-                    }
                     offer(currency: $currency) {
                         amount
                         currency
