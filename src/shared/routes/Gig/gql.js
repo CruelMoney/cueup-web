@@ -80,6 +80,10 @@ const GIG = gql`
                     formatted
                 }
             }
+            availablePayoutMethods {
+                paymentProvider
+                payoutType
+            }
             review {
                 id
                 rating
@@ -151,8 +155,19 @@ const GET_OFFER = gql`
 `;
 
 const MAKE_OFFER = gql`
-    mutation MakeOffer($gigId: ID!, $amount: Int!, $currency: Currency!, $locale: String) {
-        makeOffer(gigId: $gigId, amount: $amount, currency: $currency) {
+    mutation MakeOffer(
+        $gigId: ID!
+        $amount: Int!
+        $currency: Currency!
+        $locale: String
+        $payoutTypes: [PayoutType!]!
+    ) {
+        makeOffer(
+            gigId: $gigId
+            amount: $amount
+            currency: $currency
+            acceptedPayoutTypes: $payoutTypes
+        ) {
             offer {
                 amount
                 formatted(locale: $locale)

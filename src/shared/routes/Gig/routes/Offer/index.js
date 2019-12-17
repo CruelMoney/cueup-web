@@ -11,13 +11,15 @@ const Content = ({ gig, theEvent, me, showDecline }) => {
     if (!me || !gig) {
         return null;
     }
-    const { userSettings, userMetadata } = me;
-    const info =
-        'Enter your price to play this gig. You can always update the offer until the organizer has confirmed.';
+    const { userSettings, payoutMethods } = me;
 
     return (
         <Col>
-            <Popup showing={payoutPopup} onClickOutside={() => setPayoutPopup(false)}>
+            <Popup
+                width={'500px'}
+                showing={payoutPopup}
+                onClickOutside={() => setPayoutPopup(false)}
+            >
                 <PayoutForm
                     user={me}
                     onCancel={() => setPayoutPopup(false)}
@@ -25,14 +27,15 @@ const Content = ({ gig, theEvent, me, showDecline }) => {
                 />
             </Popup>
             <Title>Make offer</Title>
-            <Body>{info}</Body>
+
             <OfferForm
                 showPopup={() => setPayoutPopup(true)}
                 profileCurrency={userSettings.currency}
                 gig={gig}
                 event={theEvent}
-                payoutInfoValid={!!userMetadata.bankAccount}
+                payoutInfoValid={false && payoutMethods?.length}
                 showDecline={showDecline}
+                user={me}
             />
         </Col>
     );

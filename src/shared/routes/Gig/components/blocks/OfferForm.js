@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import debounce from 'lodash/debounce';
 import { useMutation } from '@apollo/react-hooks';
+import RadioSelect from 'components/RadioSelect';
 import { GET_OFFER, MAKE_OFFER, GIG } from '../../gql';
 import ErrorMessageApollo from '../../../../components/common/ErrorMessageApollo';
-import { gigStates } from '../../../../constants/constants';
+import { gigStates, PAYOUT_TYPES } from '../../../../constants/constants';
 import {
     SecondaryButton,
     SmartButton,
@@ -24,10 +25,9 @@ const OfferForm = ({
     profileCurrency,
     translate,
     payoutInfoValid,
-    event,
-    updateGig,
     showPopup,
     showDecline,
+    user,
 }) => {
     const initOffer = gig.offer || {
         offer: { amount: 0, formatted: 0 },
@@ -38,19 +38,33 @@ const OfferForm = ({
     };
     const initCurrency = gig.offer ? gig.offer.offer.currency : profileCurrency.toUpperCase();
 
+    let initPayoutMethods = gig.availablePayoutMethods.map((pm) => pm.payoutType);
+    if (!initPayoutMethods.length) {
+        // grab from dj
+        initPayoutMethods = user.payoutMethods.map((pm) => pm.payoutType);
+    }
+    initPayoutMethods = initPayoutMethods.reduce((acc, pType) => ({ ...acc, [pType]: true }), {});
+
     const [offer, setNewOffer] = useState(initOffer);
     const [error, setError] = useState(null);
     const [currency, setCurrency] = useState(initCurrency);
     const [loading, setLoading] = useState(false);
     const [submitLoading, setSubmitLoading] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+    const [payoutMethods, setPayoutMethods] = useState(initPayoutMethods);
+    const [pendingUpdate, setPendingUpdate] = useState(false);
 
     const [getOffer] = useMutation(GET_OFFER);
     const [makeOffer] = useMutation(MAKE_OFFER, {
         refetchQueries: [
             {
                 query: GIG,
-                variables: { id: gig.id },
+                variables: {
+                    id: gig.id,
+                    payoutTypes: Object.entries(payoutMethods)
+                        .filter(([k, v]) => v)
+                        .map(([k]) => k),
+                },
             },
         ],
     });
@@ -112,8 +126,24 @@ const OfferForm = ({
         getFees({ newCurrency: c, amount: offer.offer.amount });
     };
 
+    const updatePaymentMethods = (key) => {
+        if (!user.payoutMethods.some((pm) => pm.payoutType === key)) {
+            showPopup();
+
+            return;
+        }
+
+        setPendingUpdate(true);
+        setPayoutMethods((s) => ({
+            ...s,
+            [key]: !s[key],
+        }));
+    };
+
     const canSubmit =
-        (offer.offer.amount !== initOffer.offer.amount || currency !== initOffer.offer.currency) &&
+        (pendingUpdate ||
+            (offer.offer.amount !== initOffer.offer.amount ||
+                currency !== initOffer.offer.currency)) &&
         parseInt(offer.offer.amount, 10) > 0 &&
         !loading;
 
@@ -149,7 +179,7 @@ const OfferForm = ({
             )}
 
             {payoutInfoValid ? (
-                <Col style={{ maxWidth: '400px', marginBottom: '30px', marginTop: '30px' }}>
+                <Col style={{ marginBottom: '30px', marginTop: '30px' }}>
                     <div style={style1}>
                         <TableRow
                             label={translate('Service fee')}
@@ -189,9 +219,38 @@ const OfferForm = ({
                 </Col>
             ) : null}
 
-            {!payoutInfoValid ? <Body>{translate('gig.offer.update-payout')}</Body> : null}
+            <Body>
+                {!payoutInfoValid
+                    ? translate('gig.offer.update-payout')
+                    : 'Enter your price to play this gig. You can always update the offer until the organizer has confirmed.'}
+            </Body>
 
-            <RowWrap>
+            {payoutInfoValid ? (
+                <>
+                    <RadioSelect
+                        containerStyle={{ marginBottom: '30px' }}
+                        multi
+                        setChosen={updatePaymentMethods}
+                        options={[
+                            {
+                                checked: payoutMethods.DIRECT,
+                                title: 'Directly to you',
+                                description: 'Organizer can pay directly to you in cash etc.',
+                                value: PAYOUT_TYPES.DIRECT,
+                            },
+                            {
+                                checked: payoutMethods.BANK,
+                                title: 'Using Cueup',
+                                description:
+                                    'Organizer can pay through Cueup to your bank account.',
+                                value: PAYOUT_TYPES.BANK,
+                            },
+                        ]}
+                    />
+                </>
+            ) : null}
+
+            <RowWrap style={{ marginTop: '24px' }}>
                 <div name={'gig-cancel-' + gig.id}>
                     {[gigStates.REQUESTED, gigStates.ACCEPTED].includes(gig.status) && (
                         <SecondaryButton onClick={showDecline}>
