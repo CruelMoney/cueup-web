@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, forwardRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { useQuery } from 'react-apollo';
@@ -105,6 +105,11 @@ const Content = React.memo((props) => {
     const { theEvent, loading } = eventProps;
     const [height, setHeight] = useState('auto');
     const direction = getDirection(location.pathname);
+    const [ssr, setSsr] = useState(true);
+
+    useEffect(() => {
+        setSsr(false);
+    }, []);
 
     const transitions = useTransition(location, (location) => location.pathname, {
         config: {
@@ -134,8 +139,9 @@ const Content = React.memo((props) => {
                     <BorderCol style={{ height: height || 'auto' }}>
                         <AnimationWrapper>
                             {transitions.map(({ item, props, key }) => (
-                                <TransitionComponent
+                                <SSRComponent
                                     item={item}
+                                    ssr={ssr}
                                     style={props}
                                     key={key}
                                     match={match}
@@ -154,7 +160,39 @@ const Content = React.memo((props) => {
     );
 });
 
-const TransitionComponent = ({ style, item, match, eventProps, registerHeight }) => {
+const SSRComponent = ({ ssr, ...props }) => {
+    if (ssr) {
+        return <GigRoutes {...props} />;
+    }
+
+    return <TransitionComponent {...props} />;
+};
+
+const GigRoutes = forwardRef((props, ref) => {
+    const { style, item, match } = props;
+    return (
+        <animated.div style={style} ref={ref}>
+            <Switch location={item}>
+                <Route
+                    path={[match.path + '/overview', match.path + '/info']}
+                    render={(navProps) => <Overview {...navProps} {...props} />}
+                />
+                <Route
+                    path={match.path + '/requirements'}
+                    render={(navProps) => (
+                        <Requirements {...navProps} {...props} pathname={match.url} />
+                    )}
+                />
+                <Route
+                    path={match.path + '/review'}
+                    render={(navProps) => <Review {...navProps} {...props} />}
+                />
+            </Switch>
+        </animated.div>
+    );
+});
+
+const TransitionComponent = ({ registerHeight, ...props }) => {
     const ref = useRef(null);
     const { bounds } = useMeasure(ref, 'bounds');
 
@@ -164,26 +202,7 @@ const TransitionComponent = ({ style, item, match, eventProps, registerHeight })
         }
     }, [bounds, registerHeight]);
 
-    return (
-        <animated.div style={style} ref={ref}>
-            <Switch location={item}>
-                <Route
-                    path={[match.path + '/overview', match.path + '/info']}
-                    render={(props) => <Overview {...props} {...eventProps} />}
-                />
-                <Route
-                    path={match.path + '/requirements'}
-                    render={(props) => (
-                        <Requirements {...props} {...eventProps} pathname={match.url} />
-                    )}
-                />
-                <Route
-                    path={match.path + '/review'}
-                    render={(props) => <Review {...props} {...eventProps} />}
-                />
-            </Switch>
-        </animated.div>
-    );
+    return <GigRoutes {...props} />;
 };
 
 const ContainerRow = styled(Row)`
