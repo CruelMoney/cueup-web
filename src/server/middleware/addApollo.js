@@ -1,10 +1,15 @@
 import { ApolloLink } from 'apollo-link';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import fetch from 'node-fetch';
 import resolvers from '../../shared/actions/resolvers';
+import introspectionQueryResultData from '../../../fragmentTypes.json';
+
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+    introspectionQueryResultData,
+});
 
 const addApollo = (_req, res, next) => {
     const headers = {
@@ -29,7 +34,7 @@ const addApollo = (_req, res, next) => {
     const apolloClient = new ApolloClient({
         ssrMode: true,
         link,
-        cache: new InMemoryCache(),
+        cache: new InMemoryCache({ fragmentMatcher }),
         resolvers,
     });
 

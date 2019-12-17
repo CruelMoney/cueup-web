@@ -165,6 +165,9 @@ const EVENT_GIGS = gql`
                 availablePayoutMethods {
                     payoutType
                     paymentProvider
+                    ... on Direct {
+                        description
+                    }
                 }
             }
         }

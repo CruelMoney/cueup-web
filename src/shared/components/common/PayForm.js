@@ -8,7 +8,9 @@ import Checkmark from 'react-ionicons/lib/IosCheckmarkCircle';
 import styled from 'styled-components';
 import { LoadingIndicator, Col, RowMobileCol, SmartButton } from 'components/Blocks';
 import RadioSelect from 'components/RadioSelect';
-import { PAYOUT_TYPES } from 'constants/constants';
+import { PAYOUT_TYPES, PAYMENT_PROVIDERS } from 'constants/constants';
+import { Body, HeaderTitle, SmallHeader } from 'components/Text';
+import { Label, TextArea, InputRow } from 'components/FormComponents';
 import { REQUEST_PAYMENT_INTENT, PAYMENT_CONFIRMED } from '../../routes/Event/gql';
 import * as tracker from '../../utils/analytics/autotrack';
 import * as actions from '../../actions/SessionActions';
@@ -32,6 +34,7 @@ const BankPayForm = ({
     paymentIntent,
     goBack,
     canBePaid,
+    chosenMethod,
 }) => {
     if (!canBePaid && paymentIntent.paymentProvider === 'STRIPE') {
         return (
@@ -80,14 +83,26 @@ const BankPayForm = ({
     };
 
     return (
-        <>
+        <div>
             <TextWrapper
-                label={translate('Pay')}
+                label={
+                    paymentIntent.paymentProvider === PAYMENT_PROVIDERS.DIRECT
+                        ? translate('Confirm Booking')
+                        : translate('Pay')
+                }
                 showLock={true}
-                text={translate('event.offer.payment-info')}
+                text={chosenMethod?.description ? null : translate('event.offer.payment-info')}
             />
+            {chosenMethod?.description && (
+                <>
+                    <SmallHeader>Description by the DJ:</SmallHeader>
+                    <Body
+                        style={{ fontStyle: 'italic', marginBottom: '30px' }}
+                    >{`"${chosenMethod?.description}"`}</Body>
+                </>
+            )}
             {PayForms[paymentIntent.paymentProvider]}
-        </>
+        </div>
     );
 };
 
@@ -118,11 +133,10 @@ const PaymentWrapper = (props) => {
     }
 
     let initialPaymentType;
-    let canSelectPayment = true;
     if (availablePayoutMethods.length === 1) {
         initialPaymentType = availablePayoutMethods[0].payoutType;
-        canSelectPayment = false;
     }
+    const canSelectPayment = availablePayoutMethods.length > 1;
 
     const [paymentType, setPaymentType] = useState(initialPaymentType);
     const [chosen, setChosen] = useState(PAYOUT_TYPES.BANK);
@@ -167,10 +181,12 @@ const PaymentWrapper = (props) => {
 
     const payLater = chosen === PAYOUT_TYPES.DIRECT;
 
+    const chosenMethod = availablePayoutMethods.find((v) => v.payoutType === chosen);
+
     return (
         <PayFormContainer className="pay-form" ref={div}>
             <div className="left">
-                {!paymentIntent && canSelectPayment ? (
+                {(!paymentIntent || !paymentType) && canSelectPayment ? (
                     <PaymentMethodSelect
                         {...props}
                         setPaymentType={setPaymentType}
@@ -179,9 +195,10 @@ const PaymentWrapper = (props) => {
                         loading={loading}
                     />
                 ) : null}
-                {paymentIntent && (
+                {paymentType && paymentIntent && (
                     <BankPayForm
                         {...props}
+                        chosenMethod={chosenMethod}
                         paymentIntent={paymentIntent}
                         paymentConfirmed={paymentConfirmed}
                         goBack={canSelectPayment ? () => setPaymentType(null) : false}
@@ -266,6 +283,7 @@ const PaymentMethodSelect = (props) => {
             <RadioSelect
                 containerStyle={{ marginBottom: '30px' }}
                 setChosen={setChosen}
+                chosen={chosen}
                 options={[
                     {
                         title: 'Pay now',

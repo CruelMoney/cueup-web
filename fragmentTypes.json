@@ -3,8 +3,23 @@
     "types": [
       {
         "kind": "INTERFACE",
+        "name": "PayoutMethod",
+        "possibleTypes": [
+          {
+            "name": "Bank"
+          },
+          {
+            "name": "Direct"
+          }
+        ]
+      },
+      {
+        "kind": "INTERFACE",
         "name": "PaymentIntent",
         "possibleTypes": [
+          {
+            "name": "DirectPaymentIntent"
+          },
           {
             "name": "StripePaymentIntent"
           },

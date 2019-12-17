@@ -239,17 +239,17 @@ const OfferForm = ({
                         setChosen={updatePaymentMethods}
                         options={[
                             {
-                                checked: payoutMethods.DIRECT,
-                                title: 'Directly to you',
-                                description: 'Organizer can pay directly to you in cash etc.',
-                                value: PAYOUT_TYPES.DIRECT,
-                            },
-                            {
                                 checked: payoutMethods.BANK,
                                 title: 'Using Cueup',
                                 description:
                                     'Organizer can pay through Cueup to your bank account.',
                                 value: PAYOUT_TYPES.BANK,
+                            },
+                            {
+                                checked: payoutMethods.DIRECT,
+                                title: 'Directly to you',
+                                description: 'Organizer can pay directly to you in cash etc.',
+                                value: PAYOUT_TYPES.DIRECT,
                             },
                         ]}
                     />

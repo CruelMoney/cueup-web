@@ -6,10 +6,10 @@ import { onError } from 'apollo-link-error';
 import { ApolloLink } from 'apollo-link';
 import { setContext } from 'apollo-link-context';
 import { createUploadLink } from 'apollo-upload-client';
+import introspectionQueryResultData from '../../fragmentTypes.json';
 import { Environment } from './constants/constants';
 import resolvers from './actions/resolvers';
 import { authService } from './utils/AuthService';
-import introspectionQueryResultData from './fragmentTypes.json';
 import customFetch from './utils/uploadProgress';
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({

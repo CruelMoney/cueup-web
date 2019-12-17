@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 import { NavLink } from 'react-router-dom';
@@ -15,8 +15,11 @@ const EventProgress = ({ theEvent = {} }) => {
             hash,
         },
     });
+    if (!data?.event) {
+        return null;
+    }
 
-    const accepted = data.event && data.event.gigs && data.event.gigs.some((g) => g.offer);
+    const accepted = data?.event?.gigs.some((g) => g.offer);
 
     return (
         <Wrapper>
