@@ -8,7 +8,7 @@ import { ME } from 'components/gql';
 import { PAYMENT_PROVIDERS, PAYOUT_TYPES } from '../../../constants/constants';
 import ErrorMessageApollo, { getErrorMessage } from '../ErrorMessageApollo';
 import PhoneInput from '../PhoneInput';
-import { UPDATE_USER_PAYOUT, USER_PAYOUT_METHOD } from './gql';
+import { UPDATE_USER_PAYOUT, USER_PAYOUT_METHOD, REMOVE_PAYOUT_METHOD } from './gql';
 
 const PayoutForm = ({ loading, translate, onSubmitted, ...props }) => {
     const [mutate, { loading: submitting, error }] = useMutation(UPDATE_USER_PAYOUT, {
@@ -59,6 +59,12 @@ const MainForm = ({ user, direct = {}, translate, isUpdate, submit, onCancel, lo
     const { userMetadata } = user;
     const { phone } = userMetadata || {};
 
+    const [remove, { loading: removing }] = useMutation(REMOVE_PAYOUT_METHOD, {
+        variables: { id: direct?.id },
+        onCompleted: onCancel,
+        refetchQueries: [{ query: ME }],
+        awaitRefetchQueries: true,
+    });
     const [form, setForm] = useState({
         phone,
         description: direct?.description,
@@ -102,9 +108,19 @@ const MainForm = ({ user, direct = {}, translate, isUpdate, submit, onCancel, lo
                 />
             </InputRow>
             <Row right>
-                <TeritaryButton onClick={onCancel}>{translate('cancel')}</TeritaryButton>
+                <TeritaryButton onClick={onCancel}>{translate('back')}</TeritaryButton>
+                {isUpdate && (
+                    <SmartButton
+                        level="secondary"
+                        warning="Are you sure you want to remove the payout method?"
+                        loading={removing}
+                        onClick={remove}
+                    >
+                        {translate('Remove')}
+                    </SmartButton>
+                )}
                 <SmartButton loading={loading} type="submit" onClick={handleSubmit}>
-                    {isUpdate ? translate('update') : translate('save')}
+                    {isUpdate ? translate('Update') : translate('Save')}
                 </SmartButton>
             </Row>
         </>

@@ -16,7 +16,7 @@ import {
 import CountrySelector, { BankSelector } from '../CountrySelector';
 import ErrorMessageApollo, { getErrorMessage } from '../ErrorMessageApollo';
 import PhoneInput from '../PhoneInput';
-import { UPDATE_USER_PAYOUT, USER_PAYOUT_METHOD } from './gql';
+import { UPDATE_USER_PAYOUT, USER_PAYOUT_METHOD, REMOVE_PAYOUT_METHOD } from './gql';
 
 const getStripeData = async ({
     stripe,
@@ -152,6 +152,13 @@ const MainForm = ({
     const { phone, firstName, lastName } = userMetadata || {};
     const initialName = `${firstName} ${lastName}`;
     const bankAccountParsed = bankAccount || {};
+
+    const [remove, { loading: removing }] = useMutation(REMOVE_PAYOUT_METHOD, {
+        variables: { id: bankAccount?.id },
+        onCompleted: onCancel,
+        refetchQueries: [{ query: ME }],
+        awaitRefetchQueries: true,
+    });
 
     const [form, setForm] = useState({
         phone,
@@ -307,9 +314,19 @@ const MainForm = ({
                 />
             </InputRow>
             <Row right>
-                <TeritaryButton onClick={onCancel}>{translate('cancel')}</TeritaryButton>
+                <TeritaryButton onClick={onCancel}>{translate('back')}</TeritaryButton>
+                {isUpdate && (
+                    <SmartButton
+                        level="secondary"
+                        warning="Are you sure you want to remove the payout method?"
+                        loading={removing}
+                        onClick={remove}
+                    >
+                        {translate('Remove')}
+                    </SmartButton>
+                )}
                 <SmartButton loading={loading} type="submit" onClick={handleSubmit}>
-                    {isUpdate ? translate('update') : translate('save')}
+                    {isUpdate ? translate('Update') : translate('Save')}
                 </SmartButton>
             </Row>
         </>
