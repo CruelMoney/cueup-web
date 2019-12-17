@@ -89,7 +89,7 @@ const MainForm = ({ user, direct = {}, translate, isUpdate, submit, onCancel, lo
 
                 <Input
                     type="text-area"
-                    defaultValue={form.last4 ? '∙∙∙∙∙∙∙∙∙∙∙∙' + form.last4 : null}
+                    defaultValue={form.description}
                     label={'Description'}
                     placeholder={'Cash at event etc...'}
                     onSave={setValue('description')}
