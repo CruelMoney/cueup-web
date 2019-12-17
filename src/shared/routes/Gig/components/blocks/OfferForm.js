@@ -166,7 +166,7 @@ const OfferForm = ({
             <Body>
                 {!payoutInfoValid
                     ? translate('gig.offer.update-payout')
-                    : 'Enter your price to play this gig. You can always update the offer until the organizer has confirmed.'}
+                    : gigStateDescription[gig.status] ?? gigStateDescription.default}
             </Body>
 
             {canUpdatePrice && (
@@ -296,6 +296,12 @@ const OfferForm = ({
             <ErrorMessageApollo error={error} />
         </div>
     );
+};
+
+const gigStateDescription = {
+    [gigStates.CONFIRMED]: 'The organizer has accepted your offer',
+    default:
+        'Enter your price to play this gig. You can always update the offer until the organizer has confirmed.',
 };
 
 const style1 = { marginBottom: '24px' };

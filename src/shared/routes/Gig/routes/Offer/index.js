@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { gigStates } from 'constants/constants';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
 import { Col } from '../../../../components/Blocks';
 import { Body, Title } from '../../../../components/Text';
@@ -26,7 +27,7 @@ const Content = ({ gig, theEvent, me, showDecline }) => {
                     onSubmitted={() => setPayoutPopup(false)}
                 />
             </Popup>
-            <Title>Make offer</Title>
+            <Title>{gigStateTitles[gig.status] ?? gigStateTitles.default}</Title>
 
             <OfferForm
                 showPopup={() => setPayoutPopup(true)}
@@ -39,6 +40,12 @@ const Content = ({ gig, theEvent, me, showDecline }) => {
             />
         </Col>
     );
+};
+
+const gigStateTitles = {
+    [gigStates.CONFIRMED]: 'Your Offer',
+    [gigStates.FINISHED]: 'Your Offer',
+    default: 'Make Offer',
 };
 
 const Offer = ({ loading, ...props }) =>
