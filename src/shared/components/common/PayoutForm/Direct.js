@@ -79,7 +79,7 @@ const MainForm = ({ user, direct = {}, translate, isUpdate, submit, onCancel, lo
             <InputRow style={{ marginTop: '24px' }}>
                 <PhoneInput
                     half
-                    label={translate('payout.account-phone')}
+                    label={translate('Phone')}
                     defaultValue={form.phone}
                     name="phone"
                     validation={(v) => (v ? null : 'Please enter phone number')}
