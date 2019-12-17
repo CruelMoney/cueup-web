@@ -2,20 +2,12 @@ import React, { useRef, useState, useEffect } from 'react';
 import useComponentSize from '@rehooks/component-size';
 import { connect } from 'react-redux';
 import { getTranslate, getActiveLanguage } from 'react-localize-redux';
-import { Query, useMutation, useLazyQuery } from 'react-apollo';
+import { useMutation, useLazyQuery } from 'react-apollo';
 import ReactPixel from 'react-facebook-pixel';
 import Checkmark from 'react-ionicons/lib/IosCheckmarkCircle';
-import styled, { css } from 'styled-components';
-import {
-    LoadingIndicator,
-    Row,
-    SmartButton,
-    PrimaryButton,
-    Col,
-    RowMobileCol,
-} from 'components/Blocks';
-import { Label } from 'components/FormComponents';
-import { Body, BodyBold } from 'components/Text';
+import styled from 'styled-components';
+import { LoadingIndicator, Col, RowMobileCol, SmartButton } from 'components/Blocks';
+import RadioSelect from 'components/RadioSelect';
 import { PAYOUT_TYPES } from 'constants/constants';
 import { REQUEST_PAYMENT_INTENT, PAYMENT_CONFIRMED } from '../../routes/Event/gql';
 import * as tracker from '../../utils/analytics/autotrack';
@@ -26,7 +18,6 @@ import TextWrapper from './TextElement';
 import MoneyTable, { TableItem } from './MoneyTable';
 import StripeFormWrapper from './StripePayForm';
 import XenditPayForm from './XenditPayForm';
-import { LoadingPlaceholder2 } from './LoadingPlaceholder';
 import requestFormContent from './RequestForm/content.json';
 import NotifyPayment from './NotifyPayment';
 
@@ -272,24 +263,23 @@ const PaymentMethodSelect = (props) => {
     return (
         <div>
             <TextWrapper label={translate('Pay-method')} showLock={true} />
-            <div style={{ marginBottom: '30px' }}>
-                <MethodButton
-                    checked={chosen === PAYOUT_TYPES.BANK}
-                    title={'Pay now'}
-                    description={
-                        "Cueup will facilitate your payment. You'll pay today after completing the booking."
-                    }
-                    onClick={() => setChosen(PAYOUT_TYPES.BANK)}
-                />
-                <MethodButton
-                    checked={chosen === PAYOUT_TYPES.DIRECT}
-                    title={'Pay later'}
-                    description={
-                        "The DJ will handle the payment, and you'll only pay the service fee now."
-                    }
-                    onClick={() => setChosen(PAYOUT_TYPES.DIRECT)}
-                />
-            </div>
+            <RadioSelect
+                setChosen={setChosen}
+                options={[
+                    {
+                        title: 'Pay now',
+                        description:
+                            "Cueup will facilitate your payment. You'll pay today after completing the booking.",
+                        value: PAYOUT_TYPES.BANK,
+                    },
+                    {
+                        title: 'Pay later',
+                        description:
+                            "The DJ will handle the payment, and you'll only pay the service fee now.",
+                        value: PAYOUT_TYPES.DIRECT,
+                    },
+                ]}
+            />
             <RowMobileCol right>
                 <SmartButton
                     level="primary"
@@ -302,61 +292,6 @@ const PaymentMethodSelect = (props) => {
         </div>
     );
 };
-
-const MethodButton = ({ title, description, checked, onClick }) => {
-    return (
-        <MethodWrapper onClick={onClick}>
-            <RadioIndicator checked={checked} />
-            <Col>
-                <BodyBold bold>{title}</BodyBold>
-                <Body>{description}</Body>
-            </Col>
-        </MethodWrapper>
-    );
-};
-
-const RadioIndicator = styled.div`
-    height: 25px;
-    width: 25px;
-    min-width: 25px;
-    min-height: 25px;
-    border-radius: 25px;
-    border: 3px solid #98a4b3;
-    display: inline-block;
-    margin-right: 1em;
-    margin-top: 0.2em;
-    position: relative;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    ${({ checked }) =>
-        checked &&
-        css`
-            border-color: #31daff;
-            &:after {
-                position: absolute;
-                content: '';
-                height: 13px;
-                width: 13px;
-                background: #31daff;
-                border-radius: 100%;
-            }
-        `}
-`;
-
-const MethodWrapper = styled(Row)`
-    background-color: #edf2f7;
-    padding: 1em;
-    border-radius: 6px;
-    cursor: pointer;
-    &:hover {
-        background-color: #e6edf4;
-    }
-    &:nth-child(2) {
-        margin-top: 15px;
-    }
-`;
 
 const PayFormContainer = styled.div`
     display: flex;
