@@ -6,6 +6,7 @@ import RadioSelect from 'components/RadioSelect';
 import { PAYOUT_TYPES } from '../../../constants/constants';
 
 import StripeWrapper from './BankAccount';
+import DirectPayout from './Direct';
 
 function mapStateToProps(state, ownprops) {
     return {
@@ -24,10 +25,24 @@ const PayoutComponent = connect(mapStateToProps)((props) => {
     const [currentView, setCurrentView] = useState();
 
     if (currentView === PAYOUT_TYPES.BANK) {
-        return <StripeWrapper {...props} {...bankAccount} onCancel={() => setCurrentView(null)} />;
+        return (
+            <StripeWrapper
+                {...props}
+                {...bankAccount}
+                onSubmitted={() => setCurrentView(null)}
+                onCancel={() => setCurrentView(null)}
+            />
+        );
     }
     if (currentView === PAYOUT_TYPES.DIRECT) {
-        return <StripeWrapper {...props} {...direct} onCancel={() => setCurrentView(null)} />;
+        return (
+            <DirectPayout
+                {...props}
+                {...direct}
+                onSubmitted={() => setCurrentView(null)}
+                onCancel={() => setCurrentView(null)}
+            />
+        );
     }
 
     return (

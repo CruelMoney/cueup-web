@@ -143,6 +143,10 @@
       "All information is encrypted. We are using IBAN numbers to allow deals between countries. That way you can play gigs in foreign contries if you're traveling.",
       "Alt information er krypteret. Vi bruger IBAN-nummer for at kunne tilbyde gigs i udlandet."
     ],
+    "description-direct": [
+      "Fill out directions for the organizer to pay you. For example cash at the event, PayPal address, EAN number, or something else.",
+      "Beskriv hvordan arrangøren kan betale dig. For eksempel ved eventet, PayPal, EAN-nummer, eller noget andet. "
+    ],
     "address-description": [
       "Enter the address of the person or business that the bank account is associated with.",
       "Indtast adressen på den person eller forretning som bankkontoen er forbundet med."

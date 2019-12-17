@@ -353,5 +353,10 @@ export const PAYOUT_TYPES = Object.freeze({
     BANK: 'BANK',
     DIRECT: 'DIRECT',
 });
+export const PAYMENT_PROVIDERS = Object.freeze({
+    STRIPE: 'STRIPE',
+    XENDIT: 'XENDIT',
+    DIRECT: 'DIRECT',
+});
 
 export default all;

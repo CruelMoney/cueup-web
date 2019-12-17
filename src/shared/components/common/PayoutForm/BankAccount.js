@@ -6,37 +6,69 @@ import { Input, InputRow, Label } from 'components/FormComponents';
 import CurrencySelector from 'components/CurrencySelector';
 import { SmartButton, Row, TeritaryButton, LoadingIndicator } from 'components/Blocks';
 import { useForm } from 'components/hooks/useForm';
-import { Environment, AllCurrencies } from '../../../constants/constants';
-import IbanField from '../IbanField';
+import { ME } from 'components/gql';
+import {
+    Environment,
+    AllCurrencies,
+    PAYMENT_PROVIDERS,
+    PAYOUT_TYPES,
+} from '../../../constants/constants';
 import CountrySelector, { BankSelector } from '../CountrySelector';
 import ErrorMessageApollo, { getErrorMessage } from '../ErrorMessageApollo';
 import PhoneInput from '../PhoneInput';
-import { UPDATE_USER_PAYOUT, USER_PAYOUT_DATA, USER_PAYOUT_METHOD } from './gql';
+import { UPDATE_USER_PAYOUT, USER_PAYOUT_METHOD } from './gql';
 
-const getStripeData = async ({ country, stripe, name, currency }) => {
-    const tokenData = {
-        currency,
-        account_holder_name: name,
-        account_holder_type: 'individual',
+const getStripeData = async ({
+    stripe,
+    country,
+    currency,
+    name,
+    accountNumber,
+    routingNumber1,
+    routingNumber2,
+    phone,
+}) => {
+    const account = {
+        type: 'bank_acount',
+        bank_account: {
+            country,
+            currency,
+            account_holder_name: name,
+            account_holder_type: 'individual',
+            account_number: accountNumber.trim(),
+        },
     };
+    if (routingNumber1) {
+        account.bank_account.routing_number = [routingNumber1, routingNumber2]
+            .filter(Boolean)
+            .map((r) => r.trim())
+            .join('');
+    }
 
-    const { error, token } = await stripe.createToken(tokenData);
+    const { error, token } = await stripe.createToken('bank_account', account);
 
     if (error) {
         throw new Error(error.message);
     } else {
-        console.log({ token });
-        return { payoutInfo: token };
+        return {
+            data: { ...token, phone },
+            phone,
+            provider: PAYMENT_PROVIDERS.STRIPE,
+            type: PAYOUT_TYPES.BANK,
+        };
     }
 };
 
-const getXenditData = ({ country, name, bankCode, bankAccountNumber }) => {
+const getXenditData = ({ phone, country, name, bankCode, accountNumber }) => {
     return {
-        payoutInfo: {
+        provider: PAYMENT_PROVIDERS.XENDIT,
+        type: PAYOUT_TYPES.BANK,
+        data: {
+            phone,
             country,
             currency: 'IDR',
             bankAccountHolderName: name,
-            bankAccountNumber: bankAccountNumber.trim(),
+            bankAccountNumber: accountNumber.trim(),
             bankCode,
         },
     };
@@ -55,21 +87,19 @@ const PayoutForm = ({
 }) => {
     const [mutate, { loading: submitting, error }] = useMutation(UPDATE_USER_PAYOUT, {
         onCompleted: onSubmitted,
+        refetchQueries: [{ query: ME }],
+        awaitRefetchQueries: true,
     });
     const [localError, setLocalError] = useState();
     const submit = async (values) => {
         setLocalError(null);
         try {
             const useXendit = values.country === 'ID';
-            const data = useXendit
+            const variables = useXendit
                 ? getXenditData(values)
                 : await getStripeData({ ...values, stripe });
             mutate({
-                variables: {
-                    ...data,
-                    phone: values.phone,
-                    paymentProvider: useXendit ? 'XENDIT' : 'STRIPE',
-                },
+                variables,
             });
         } catch (error) {
             const message = getErrorMessage(error);
@@ -203,31 +233,17 @@ const MainForm = ({
                 />
 
                 {inIndonesia ? (
-                    <>
-                        <BankSelector
-                            noShadow
-                            label={translate('Bank')}
-                            defaultValue={form.bankCode}
-                            placeholder={'Bank name'}
-                            forceHeight={300}
-                            onChange={setValue('bankCode')}
-                            validation={(v) => (v ? null : 'Please select a bank')}
-                            registerValidation={registerValidation('bankCode')}
-                            unregisterValidation={unregisterValidation('bankCode')}
-                        />
-                        <Input
-                            label={translate('payout.account-number')}
-                            name="bankAccountNumber"
-                            validate={['required']}
-                            type="tel"
-                            fullWidth={false}
-                            placeholder={'000000000'}
-                            onChange={setValue('bankAccountNumber')}
-                            validation={(v) => (v ? null : 'Please enter account number')}
-                            registerValidation={registerValidation('bankAccountNumber')}
-                            unregisterValidation={unregisterValidation('bankAccountNumber')}
-                        />
-                    </>
+                    <BankSelector
+                        noShadow
+                        label={translate('Bank')}
+                        defaultValue={form.bankCode}
+                        placeholder={'Bank name'}
+                        forceHeight={300}
+                        onChange={setValue('bankCode')}
+                        validation={(v) => (v ? null : 'Please select a bank')}
+                        registerValidation={registerValidation('bankCode')}
+                        unregisterValidation={unregisterValidation('bankCode')}
+                    />
                 ) : (
                     <>
                         <CurrencySelector
@@ -246,16 +262,49 @@ const MainForm = ({
                             registerValidation={registerValidation('currency')}
                             unregisterValidation={unregisterValidation('currency')}
                         />
-                        <IbanField
-                            label={translate('payout.IBAN-number')}
-                            onChange={setValue('bankName')}
-                        />
+
+                        {bankCountry?.labels.label2 && (
+                            <Input
+                                disabled={!form.country}
+                                label={bankCountry?.labels.label2}
+                                placeholder={bankCountry?.labels.placeholder2}
+                                onSave={setValue('routingNumber1')}
+                                validation={(v) =>
+                                    v ? null : 'Please enter ' + bankCountry?.labels.label2
+                                }
+                                registerValidation={registerValidation('routingNumber1')}
+                                unregisterValidation={unregisterValidation('routingNumber1')}
+                            />
+                        )}
+                        {bankCountry?.labels.label3 && (
+                            <Input
+                                disabled={!form.country}
+                                label={bankCountry?.labels.label3}
+                                placeholder={bankCountry?.labels.placeholder3}
+                                onSave={setValue('routingNumber2')}
+                                validation={(v) =>
+                                    v ? null : 'Please enter ' + bankCountry?.labels.label3
+                                }
+                                registerValidation={registerValidation('routingNumber2')}
+                                unregisterValidation={unregisterValidation('routingNumber2')}
+                            />
+                        )}
 
                         {typeof form.bankName === 'string' && (
                             <Label style={{ marginTop: '-20px' }}>{form.bankName}</Label>
                         )}
                     </>
                 )}
+                <Input
+                    disabled={!form.country}
+                    defaultValue={form.last4 ? '∙∙∙∙∙∙∙∙∙∙∙∙' + form.last4 : null}
+                    label={bankCountry?.labels.label1 ?? 'IBAN or Account Number'}
+                    placeholder={bankCountry?.labels.placeholder1 ?? 'EU5000400440116243'}
+                    onSave={setValue('accountNumber')}
+                    validation={(v) => (v ? null : 'Please enter ' + bankCountry?.labels.label1)}
+                    registerValidation={registerValidation('accountNumber')}
+                    unregisterValidation={unregisterValidation('accountNumber')}
+                />
             </InputRow>
             <Row right>
                 <TeritaryButton onClick={onCancel}>{translate('cancel')}</TeritaryButton>
@@ -307,6 +356,7 @@ const DataWrapper = (props) => {
                 {...props}
                 loading={loading}
                 bankAccount={bankAccount}
+                isUpdate={props.id}
                 availableBankCountries={data?.availableBankCountries}
             />
         </div>
