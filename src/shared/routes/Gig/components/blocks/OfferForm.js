@@ -61,15 +61,21 @@ const OfferForm = ({
                 query: GIG,
                 variables: {
                     id: gig.id,
-                    payoutTypes: Object.entries(payoutMethods)
-                        .filter(([k, v]) => v)
-                        .map(([k]) => k),
                 },
             },
         ],
     });
 
     const updateOffer = async () => {
+        const payoutTypes = Object.entries(payoutMethods)
+            .filter(([k, v]) => v)
+            .map(([k]) => k);
+
+        if (!payoutTypes.length) {
+            window.alert('Select at least 1 payout method');
+            return;
+        }
+
         if (payoutInfoValid) {
             setError(null);
             setSubmitLoading(true);
@@ -81,6 +87,7 @@ const OfferForm = ({
                         currency,
                         amount: offer.offer.amount,
                         gigId: gig.id,
+                        payoutTypes,
                     },
                 });
                 setNewOffer(newOffer);
@@ -156,15 +163,20 @@ const OfferForm = ({
 
     return (
         <div>
+            <Body>
+                {!payoutInfoValid
+                    ? translate('gig.offer.update-payout')
+                    : 'Enter your price to play this gig. You can always update the offer until the organizer has confirmed.'}
+            </Body>
+
             {canUpdatePrice && (
-                <InputRow style={{ marginTop: '20px' }}>
+                <InputRow small style={{ marginTop: '20px' }}>
                     <Input
                         half
                         label="Price"
                         name="amount"
                         placeholder="00,00"
                         //onUpdatePipeFunc={(oldVal,val)=>moneyPipe(oldVal,val,"DKK")}
-
                         type="text"
                         onChange={(val) => getFees({ amount: parseInt(val, 10) * 100 })}
                         defaultValue={initOffer.offer.amount && initOffer.offer.amount / 100}
@@ -218,12 +230,6 @@ const OfferForm = ({
                     </div>
                 </Col>
             ) : null}
-
-            <Body>
-                {!payoutInfoValid
-                    ? translate('gig.offer.update-payout')
-                    : 'Enter your price to play this gig. You can always update the offer until the organizer has confirmed.'}
-            </Body>
 
             {payoutInfoValid ? (
                 <>

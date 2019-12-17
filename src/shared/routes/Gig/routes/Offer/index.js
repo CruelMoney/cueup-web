@@ -33,7 +33,7 @@ const Content = ({ gig, theEvent, me, showDecline }) => {
                 profileCurrency={userSettings.currency}
                 gig={gig}
                 event={theEvent}
-                payoutInfoValid={false && payoutMethods?.length}
+                payoutInfoValid={payoutMethods?.length}
                 showDecline={showDecline}
                 user={me}
             />
