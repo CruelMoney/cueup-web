@@ -132,8 +132,8 @@ const PaymentWrapper = (props) => {
 
     const canBePaid = offer.daysUntilPaymentPossible < 1;
     const { recommendedCurrency } = paymentIntent ?? {};
-    const showCurrencyChange = currency && recommendedCurrency !== currency;
-
+    const showCurrencyChange =
+        recommendedCurrency && (currency && recommendedCurrency !== currency);
     // can be paid direct
     if (availablePayoutMethods.some((pm) => pm.payoutType === PAYOUT_TYPES.DIRECT) && !canBePaid) {
         availablePayoutMethods = availablePayoutMethods.filter(
