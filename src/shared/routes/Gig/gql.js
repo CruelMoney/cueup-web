@@ -31,11 +31,20 @@ const GIG = gql`
                     amount
                     formatted(locale: $locale)
                 }
-                discount
                 cancelationPolicy {
                     percentage
                     days
                 }
+                amountPaid {
+                    amount
+                    formatted(locale: $locale)
+                }
+                amountLeft {
+                    amount
+                    formatted(locale: $locale)
+                }
+                discount
+                payoutType
             }
             event {
                 id

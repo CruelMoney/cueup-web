@@ -185,6 +185,12 @@ const getSystemMessage = ({ gig, showDecline, navigateToOffer }) => {
             createdAt: new Date(),
             content:
                 'Whoop! The gig has been confirmed. \nMake sure that everything is agreed upon with the organizer, and get ready to play.',
+            actions: [
+                {
+                    label: 'See details',
+                    action: navigateToOffer,
+                },
+            ],
         },
         [gigStates.EVENT_CANCELLED]: {
             systemMessage: true,

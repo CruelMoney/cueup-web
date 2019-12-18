@@ -154,7 +154,7 @@ const OfferForm = ({
         parseInt(offer.offer.amount, 10) > 0 &&
         !loading;
 
-    const { serviceFee, totalPayment, totalPayout, djFee } = offer;
+    const { payoutType } = offer;
 
     const canUpdatePrice =
         payoutInfoValid &&
@@ -190,70 +190,54 @@ const OfferForm = ({
                 </InputRow>
             )}
 
-            {payoutInfoValid ? (
-                <Col style={{ marginBottom: '30px', marginTop: '30px' }}>
-                    <div style={style1}>
-                        <TableRow
-                            label={translate('Service fee')}
-                            info={<div>{translate('gig.offer.service-fee-info')}</div>}
-                        >
-                            {loading
-                                ? 'loading...'
-                                : serviceFee.formatted
-                                ? serviceFee.formatted
-                                : '...'}
-                        </TableRow>
-                        <Hr />
-                        <TableRow label="Organizers total price" bold>
-                            {loading
-                                ? 'loading...'
-                                : totalPayment.formatted
-                                ? totalPayment.formatted
-                                : '...'}
-                        </TableRow>
-                    </div>
-                    <div style={style1}>
-                        <TableRow
-                            label={translate('Cueup fee')}
-                            info={<div>{translate('gig.offer.dj-fee-info')}</div>}
-                        >
-                            {loading ? 'loading...' : djFee.formatted ? djFee.formatted : '...'}
-                        </TableRow>
-                        <Hr />
-                        <TableRow label="Your total payout" bold>
-                            {loading
-                                ? 'loading...'
-                                : totalPayout.formatted
-                                ? totalPayout.formatted
-                                : '...'}
-                        </TableRow>
-                    </div>
-                </Col>
+            {[gigStates.CONFIRMED, gigStates.FINISHED].includes(gig.status) && (
+                <RadioSelect
+                    containerStyle={{ marginTop: '30px' }}
+                    disabled
+                    options={[
+                        {
+                            checked: true,
+                            title:
+                                payoutType === PAYOUT_TYPES.BANK
+                                    ? 'Using Cueup'
+                                    : 'Directly to you',
+                            description:
+                                payoutType === PAYOUT_TYPES.BANK
+                                    ? "Organizer has paid using Cueup and you'll receive the payment after the event"
+                                    : 'Organizer will pay directly to you',
+                        },
+                    ]}
+                />
+            )}
+
+            {payoutInfoValid && ![gigStates.CONFIRMED, gigStates.FINISHED].includes(gig.status) ? (
+                <OfferTable translate={translate} loading={loading} {...offer} />
+            ) : null}
+
+            {[gigStates.CONFIRMED, gigStates.FINISHED].includes(gig.status) ? (
+                <RemainingPayment translate={translate} loading={loading} {...offer} />
             ) : null}
 
             {canUpdatePrice ? (
-                <>
-                    <RadioSelect
-                        containerStyle={{ marginBottom: '30px' }}
-                        multi
-                        setChosen={updatePaymentMethods}
-                        options={[
-                            {
-                                checked: payoutMethods.BANK,
-                                title: 'Using Cueup',
-                                description:
-                                    'Organizer can pay through Cueup to your bank account.',
-                                value: PAYOUT_TYPES.BANK,
-                            },
-                            {
-                                checked: payoutMethods.DIRECT,
-                                title: 'Directly to you',
-                                description: 'Organizer can pay directly to you in cash etc.',
-                                value: PAYOUT_TYPES.DIRECT,
-                            },
-                        ]}
-                    />
-                </>
+                <RadioSelect
+                    containerStyle={{ marginBottom: '30px' }}
+                    multi
+                    setChosen={updatePaymentMethods}
+                    options={[
+                        {
+                            checked: payoutMethods.BANK,
+                            title: 'Using Cueup',
+                            description: 'Organizer can pay through Cueup to your bank account.',
+                            value: PAYOUT_TYPES.BANK,
+                        },
+                        {
+                            checked: payoutMethods.DIRECT,
+                            title: 'Directly to you',
+                            description: 'Organizer can pay directly to you in cash etc.',
+                            value: PAYOUT_TYPES.DIRECT,
+                        },
+                    ]}
+                />
             ) : null}
 
             <RowWrap style={{ marginTop: '24px' }}>
@@ -298,8 +282,84 @@ const OfferForm = ({
     );
 };
 
+const RemainingPayment = ({
+    translate,
+    payoutType,
+    amountLeft,
+    amountPaid,
+    totalPayment,
+    offer,
+    serviceFee,
+}) => {
+    const isDirect = payoutType === PAYOUT_TYPES.DIRECT;
+    return (
+        <Col style={{ marginBottom: '30px', marginTop: '30px' }}>
+            <div style={style1}>
+                <TableRow label="Your offer">{offer.formatted}</TableRow>
+                <Hr />
+                <TableRow
+                    label={translate('Service fee')}
+                    info={<div>{translate('gig.offer.service-fee-info')}</div>}
+                >
+                    {serviceFee.formatted}
+                </TableRow>
+                <Hr />
+                <TableRow label="Organizers total price" bold>
+                    {totalPayment.formatted}
+                </TableRow>
+            </div>
+            <div style={style1}>
+                <TableRow label={translate('Already paid')} bold={!isDirect}>
+                    {amountPaid.formatted}
+                </TableRow>
+                <Hr />
+                {isDirect && (
+                    <TableRow label={translate('Remaining payment to you')} bold>
+                        {amountLeft.formatted}
+                    </TableRow>
+                )}
+            </div>
+        </Col>
+    );
+};
+
+const OfferTable = ({ loading, translate, totalPayment, serviceFee, djFee, totalPayout }) => {
+    return (
+        <Col style={{ marginBottom: '30px', marginTop: '30px' }}>
+            <div style={style1}>
+                <TableRow
+                    label={translate('Service fee')}
+                    info={<div>{translate('gig.offer.service-fee-info')}</div>}
+                >
+                    {loading ? 'loading...' : serviceFee.formatted ? serviceFee.formatted : '...'}
+                </TableRow>
+                <Hr />
+                <TableRow label="Organizers total price" bold>
+                    {loading
+                        ? 'loading...'
+                        : totalPayment.formatted
+                        ? totalPayment.formatted
+                        : '...'}
+                </TableRow>
+            </div>
+            <div style={style1}>
+                <TableRow
+                    label={translate('Cueup fee')}
+                    info={<div>{translate('gig.offer.dj-fee-info')}</div>}
+                >
+                    {loading ? 'loading...' : djFee.formatted ? djFee.formatted : '...'}
+                </TableRow>
+                <Hr />
+                <TableRow label="Your total payout" bold>
+                    {loading ? 'loading...' : totalPayout.formatted ? totalPayout.formatted : '...'}
+                </TableRow>
+            </div>
+        </Col>
+    );
+};
+
 const gigStateDescription = {
-    [gigStates.CONFIRMED]: 'The organizer has accepted your offer',
+    [gigStates.CONFIRMED]: 'The organizer has accepted your offer.',
     default:
         'Enter your price to play this gig. You can always update the offer until the organizer has confirmed.',
 };

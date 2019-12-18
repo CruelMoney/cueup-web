@@ -4,13 +4,14 @@ import { Col, Row } from './Blocks';
 import { BodyBold, Body } from './Text';
 import { StyledCheckbox, DumbCheckbox } from './Checkbox';
 
-const RadioSelect = ({ multi, options, chosen, setChosen, containerStyle }) => {
+const RadioSelect = ({ disabled, multi, options, chosen, setChosen, containerStyle }) => {
     return (
         <div style={containerStyle}>
-            {options.map(({ value, ...props }) => (
+            {options.map(({ value, ...props }, idx) => (
                 <MethodButton
                     multi={multi}
-                    key={value}
+                    key={value ?? idx}
+                    disabled={disabled}
                     checked={chosen === value}
                     onClick={() => setChosen(value)}
                     {...props}
@@ -27,11 +28,12 @@ export const MethodButton = ({
     checked,
     onClick,
     withIndicator = true,
+    disabled,
 }) => {
     const Indicator = multi ? DumbCheckbox : RadioIndicator;
 
     return (
-        <MethodWrapper onClick={onClick}>
+        <MethodWrapper onClick={onClick} style={{ pointerEvents: disabled ? 'none' : 'auto' }}>
             {withIndicator && <Indicator checked={checked} />}
             <Col>
                 <BodyBold bold>{title}</BodyBold>
