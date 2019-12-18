@@ -169,23 +169,28 @@ const SSRComponent = ({ ssr, ...props }) => {
 };
 
 const GigRoutes = forwardRef((props, ref) => {
-    const { style, item, match } = props;
+    const { style, item, match, eventProps } = props;
     return (
         <animated.div style={style} ref={ref}>
             <Switch location={item}>
                 <Route
                     path={[match.path + '/overview', match.path + '/info']}
-                    render={(navProps) => <Overview {...navProps} {...props} />}
+                    render={(navProps) => <Overview {...navProps} {...props} {...eventProps} />}
                 />
                 <Route
                     path={match.path + '/requirements'}
                     render={(navProps) => (
-                        <Requirements {...navProps} {...props} pathname={match.url} />
+                        <Requirements
+                            {...navProps}
+                            {...props}
+                            {...eventProps}
+                            pathname={match.url}
+                        />
                     )}
                 />
                 <Route
                     path={match.path + '/review'}
-                    render={(navProps) => <Review {...navProps} {...props} />}
+                    render={(navProps) => <Review {...navProps} {...props} {...eventProps} />}
                 />
             </Switch>
         </animated.div>
@@ -202,7 +207,7 @@ const TransitionComponent = ({ registerHeight, ...props }) => {
         }
     }, [bounds, registerHeight]);
 
-    return <GigRoutes {...props} />;
+    return <GigRoutes ref={ref} {...props} />;
 };
 
 const ContainerRow = styled(Row)`

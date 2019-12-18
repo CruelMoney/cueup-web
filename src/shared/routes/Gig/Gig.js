@@ -290,7 +290,7 @@ const TransitionComponent = ({ registerHeight, ...props }) => {
         }
     }, [bounds, registerHeight]);
 
-    return <GigRoutes {...props} />;
+    return <GigRoutes ref={ref} {...props} />;
 };
 
 const CancelationDeclinePopup = ({ gig, hide, onCancelled }) => {

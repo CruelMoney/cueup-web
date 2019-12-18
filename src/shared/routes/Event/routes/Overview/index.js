@@ -16,7 +16,7 @@ const EventGigs = React.forwardRef(
         const { status } = theEvent;
 
         const [gigMessages, setGigMessages] = useState([]);
-        const { data = {}, loading: loadingGigs } = useQuery(EVENT_GIGS, {
+        const { data = {}, loading: loadingGigs, error } = useQuery(EVENT_GIGS, {
             skip: !theEvent.id,
             variables: {
                 id: theEvent.id,
