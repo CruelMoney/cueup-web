@@ -121,6 +121,16 @@ const EVENT_GIGS = gql`
                         currency
                         formatted(locale: $locale)
                     }
+                    totalPayment(currency: $currency) {
+                        amount
+                        currency
+                        formatted(locale: $locale)
+                    }
+                    serviceFee(currency: $currency) {
+                        amount
+                        currency
+                        formatted(locale: $locale)
+                    }
                     cancelationPolicy {
                         days
                         percentage

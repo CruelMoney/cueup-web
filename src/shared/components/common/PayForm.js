@@ -9,8 +9,7 @@ import styled from 'styled-components';
 import { LoadingIndicator, Col, RowMobileCol, SmartButton } from 'components/Blocks';
 import RadioSelect from 'components/RadioSelect';
 import { PAYOUT_TYPES, PAYMENT_PROVIDERS } from 'constants/constants';
-import { Body, HeaderTitle, SmallHeader } from 'components/Text';
-import { Label, TextArea, InputRow } from 'components/FormComponents';
+import { Body, SmallHeader } from 'components/Text';
 import { REQUEST_PAYMENT_INTENT, PAYMENT_CONFIRMED } from '../../routes/Event/gql';
 import * as tracker from '../../utils/analytics/autotrack';
 import * as actions from '../../actions/SessionActions';
@@ -117,7 +116,6 @@ const PaymentWrapper = (props) => {
         currentLanguage,
         changeCurrency,
     } = props;
-
     const div = useRef();
     const size = useComponentSize(div);
     const [isPaid, setIsPaid] = useState(false);
@@ -136,10 +134,6 @@ const PaymentWrapper = (props) => {
     const { recommendedCurrency } = paymentIntent ?? {};
     const showCurrencyChange = currency && recommendedCurrency !== currency;
 
-    const payLater = chosen === PAYOUT_TYPES.DIRECT;
-
-    const chosenMethod = availablePayoutMethods.find((v) => v.payoutType === chosen);
-
     // can be paid direct
     if (availablePayoutMethods.some((pm) => pm.payoutType === PAYOUT_TYPES.DIRECT) && !canBePaid) {
         availablePayoutMethods = availablePayoutMethods.filter(
@@ -154,7 +148,10 @@ const PaymentWrapper = (props) => {
     const canSelectPayment = availablePayoutMethods.length > 1;
 
     const [paymentType, setPaymentType] = useState(initialPaymentType);
-    const [chosen, setChosen] = useState(PAYOUT_TYPES.BANK);
+
+    const payLater = paymentType === PAYOUT_TYPES.DIRECT;
+
+    const chosenMethod = availablePayoutMethods.find((v) => v.payoutType === paymentType);
 
     const [setPaymentConfirmed] = useMutation(PAYMENT_CONFIRMED, {
         variables: {
@@ -198,8 +195,7 @@ const PaymentWrapper = (props) => {
                     <PaymentMethodSelect
                         {...props}
                         setPaymentType={setPaymentType}
-                        chosen={chosen}
-                        setChosen={setChosen}
+                        paymentType={paymentType}
                         loading={loading}
                     />
                 ) : null}
@@ -283,7 +279,8 @@ const LoadingPaymentInitial = ({ translate }) => {
 };
 
 const PaymentMethodSelect = (props) => {
-    const { translate, chosen, setChosen, loading, setPaymentType } = props;
+    const { translate, loading, setPaymentType, paymentType } = props;
+    const [chosen, setChosen] = useState(paymentType ?? PAYOUT_TYPES.BANK);
 
     return (
         <div>
