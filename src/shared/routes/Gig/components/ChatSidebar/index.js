@@ -207,7 +207,7 @@ const getSystemMessage = ({ gig, showDecline, navigateToOffer }) => {
             systemMessage: true,
             createdAt: new Date(),
             content:
-                'Another DJ will play this gig. \nTo increase your chances of getting gigs, make sure that your profile is complete.',
+                'Another DJ will play this gig. \nTo increase your chances of getting gigs, make sure that your profile is complete with pictures, a good bio, mixtapes etc.',
         },
         [gigStates.DECLINED]: {
             systemMessage: true,
@@ -218,6 +218,12 @@ const getSystemMessage = ({ gig, showDecline, navigateToOffer }) => {
             systemMessage: true,
             createdAt: new Date(),
             content: 'You have cancelled this gig',
+        },
+        [gigStates.ORGANIZER_DECLINED]: {
+            systemMessage: true,
+            createdAt: new Date(),
+            content:
+                'Another DJ will play this gig. \nTo increase your chances of getting gigs, make sure that your profile is complete with pictures, a good bio, mixtapes etc.',
         },
     };
 

@@ -28,6 +28,7 @@ export const gigStates = {
     CONFIRMED: 'CONFIRMED',
     DECLINED: 'DECLINED',
     LOST: 'LOST',
+    ORGANIZER_DECLINED: 'ORGANIZER_DECLINED',
 };
 
 export const Environment = {

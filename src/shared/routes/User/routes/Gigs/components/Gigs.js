@@ -34,9 +34,13 @@ const Gigs = (props) => {
         const renderGigs = gigs
             .filter(
                 ({ status }) =>
+                    // never show declined and cancelled
                     status !== gigStates.DECLINED &&
                     status !== gigStates.CANCELLED &&
-                    (filter.length > 0 || status !== gigStates.LOST) &&
+                    // dont show lost or declined as default unless filter is set to show
+                    (filter.length > 0 ||
+                        ![gigStates.LOST, gigStates.ORGANIZER_DECLINED].includes(status)) &&
+                    // show what filter requires, or everything if empty
                     (filter.length === 0 || filter.includes(status))
             )
             .map((gig) => {
@@ -86,27 +90,30 @@ const Gigs = (props) => {
                                 <Checkbox
                                     style={{ marginBottom: '12px' }}
                                     label={'Confirmed'}
-                                    onChange={toggleFilter('CONFIRMED')}
+                                    onChange={toggleFilter(gigStates.CONFIRMED)}
                                 />
                                 <Checkbox
                                     style={{ marginBottom: '12px' }}
                                     label={'Requested'}
-                                    onChange={toggleFilter('REQUESTED')}
+                                    onChange={toggleFilter(gigStates.REQUESTED)}
                                 />
                                 <Checkbox
                                     style={{ marginBottom: '12px' }}
                                     label={'Accepted'}
-                                    onChange={toggleFilter('ACCEPTED')}
+                                    onChange={toggleFilter(gigStates.ACCEPTED)}
                                 />
                                 <Checkbox
                                     style={{ marginBottom: '12px' }}
                                     label={'Finished'}
-                                    onChange={toggleFilter('FINISHED')}
+                                    onChange={toggleFilter(gigStates.FINISHED)}
                                 />
                                 <Checkbox
                                     style={{ marginBottom: '12px' }}
                                     label={'Lost'}
-                                    onChange={toggleFilter('LOST')}
+                                    onChange={(val) => {
+                                        toggleFilter(gigStates.LOST)(val);
+                                        toggleFilter(gigStates.ORGANIZER_DECLINED)(val);
+                                    }}
                                 />
                             </Col>
                         </HideBelow>
