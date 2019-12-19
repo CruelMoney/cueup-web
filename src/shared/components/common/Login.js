@@ -27,6 +27,7 @@ class Login extends PureComponent {
             isValid: false,
             error: props.error,
             message: '',
+            loading: false,
         };
     }
 
@@ -73,17 +74,19 @@ class Login extends PureComponent {
     };
 
     render() {
+        const { loading } = this.state;
         const { translate, onLogin } = this.props;
 
         return (
             <Query query={ME}>
-                {({ refetch, loading: loadingMe }) => (
+                {({ refetch }) => (
                     <div className="login">
                         <Mutation
                             mutation={LOGIN}
                             variables={this.state}
                             onError={(error) => {
                                 console.log({ error });
+                                this.setState({ loading: false });
                             }}
                             onCompleted={async (data) => {
                                 const {
@@ -93,12 +96,18 @@ class Login extends PureComponent {
                                     authService.setSession(token);
                                     await refetch();
                                     onLogin && (await onLogin());
+                                    this.setState({ loading: false });
                                 }
                             }}
                         >
-                            {(mutate, { error, loading }) => {
+                            {(mutate, { error }) => {
                                 return (
-                                    <form onSubmit={(_) => mutate()}>
+                                    <form
+                                        onSubmit={(_) => {
+                                            this.setState({ loading: true });
+                                            mutate();
+                                        }}
+                                    >
                                         <div>
                                             <Input
                                                 blurOnEnter={false}
@@ -141,9 +150,10 @@ class Login extends PureComponent {
                                                 active={this.isValid()}
                                                 disabled={!this.isValid()}
                                                 type={'submit'}
-                                                loading={loading || loadingMe}
+                                                loading={loading}
                                                 name="email_login"
                                                 onClick={(_) => {
+                                                    this.setState({ loading: true });
                                                     mutate();
                                                 }}
                                             >

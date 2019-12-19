@@ -16,7 +16,7 @@ import {
 } from '../../../../components/Blocks';
 import { Input, InputRow } from '../../../../components/FormComponents';
 import CurrencySelector from '../../../../components/CurrencySelector';
-import { Body, BodyBold } from '../../../../components/Text';
+import { Body, BodyBold, TitleClean } from '../../../../components/Text';
 import addTranslate from '../../../../components/higher-order/addTranslate';
 import content from '../../../User/content.json';
 
@@ -217,6 +217,8 @@ const OfferForm = ({
             {[gigStates.CONFIRMED, gigStates.FINISHED].includes(gig.status) ? (
                 <RemainingPayment translate={translate} loading={loading} {...offer} />
             ) : null}
+
+            <TitleClean>Organizer payment</TitleClean>
 
             {canUpdatePrice ? (
                 <RadioSelect
