@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import debounce from 'lodash/debounce';
 import { localize } from 'react-localize-redux';
 import { useMutation } from 'react-apollo';
+import * as Sentry from '@sentry/browser';
 import { SmartButton, Row, Avatar, Col } from 'components/Blocks';
 import { Input, InputRow } from 'components/FormComponents';
 import { useForm, validators, useValidation } from 'components/hooks/useForm';
@@ -18,7 +19,8 @@ import { CREATE_USER } from '../../../components/gql';
 import ErrorMessageApollo from '../../../components/common/ErrorMessageApollo';
 
 const SignupForm = ({ translate, geoCity, reference }) => {
-    const [mutate, { loading, error }] = useMutation(CREATE_USER);
+    const [loading, setLoading] = useState(false);
+    const [mutate, { error }] = useMutation(CREATE_USER);
     const genreRef = useRef();
     const [state, setState] = useState({
         genres: [],
@@ -38,39 +40,45 @@ const SignupForm = ({ translate, geoCity, reference }) => {
 
     const signup = async (e) => {
         e.preventDefault();
-        console.log({ state });
 
         const errors = runValidations(true);
 
         if (errors?.length) {
             return;
         }
-        let { name } = state;
-        const { playingLocation, playingRadius, locationName, profilePicture } = state;
-        name = name.split(' ');
-        const lastName = name.pop();
-        const firstName = name.join(' ');
+        try {
+            setLoading(true);
+            let { name } = state;
+            const { playingLocation, playingRadius, locationName, profilePicture } = state;
+            name = name.split(' ');
+            const lastName = name.pop();
+            const firstName = name.join(' ');
 
-        const { id: pictureId } = await profilePicture;
+            const { id: pictureId } = await profilePicture;
 
-        const variables = {
-            ...state,
-            lastName,
-            firstName,
-            profilePicture: pictureId,
-            playingLocation: {
-                name: locationName,
-                latitude: playingLocation.lat,
-                longitude: playingLocation.lng,
-                radius: playingRadius,
-            },
-            reference: reference,
-            redirectLink: c.Environment.CALLBACK_DOMAIN,
-        };
-        await mutate({ variables });
-        setValue({
-            msg: "Thanks for joining. Please verify your email using the link we've just sent.",
-        });
+            const variables = {
+                ...state,
+                lastName,
+                firstName,
+                profilePicture: pictureId,
+                playingLocation: {
+                    name: locationName,
+                    latitude: playingLocation.lat,
+                    longitude: playingLocation.lng,
+                    radius: playingRadius,
+                },
+                reference: reference,
+                redirectLink: c.Environment.CALLBACK_DOMAIN,
+            };
+            await mutate({ variables });
+            setValue({
+                msg: "Thanks for joining. Please verify your email using the link we've just sent.",
+            });
+        } catch (err) {
+            Sentry.captureException(err);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const updateMap = debounce((location) => {
