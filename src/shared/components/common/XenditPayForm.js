@@ -8,14 +8,14 @@ import Iframe from 'react-iframe';
 import { withApollo, useMutation } from 'react-apollo';
 import styled from 'styled-components';
 import { Input, LabelHalf, InputRow } from 'components/FormComponents';
-import { SmartButton, inputStyle } from 'components/Blocks';
+import { SmartButton, inputStyle, RowMobileCol, TeritaryButton } from 'components/Blocks';
 import { useForm, validators } from 'components/hooks/useForm';
 import { PAY_EVENT } from '../gql';
 import Popup from './Popup';
 import CountrySelector from './CountrySelector';
 import ErrorMessageApollo, { getErrorMessage } from './ErrorMessageApollo';
 
-const XenditForm = ({ translate, paymentIntent, onPaymentConfirmed, client }) => {
+const XenditForm = ({ translate, paymentIntent, onPaymentConfirmed, client, goBack }) => {
     const [reviewPopup, setReviewPopup] = useState();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState();
@@ -147,15 +147,17 @@ const XenditForm = ({ translate, paymentIntent, onPaymentConfirmed, client }) =>
 
                     <ConnectedCard {...getInputProps('card')} validation={[validators.required]} />
                 </PaymentRow>
-                <div style={{ marginTop: '24px' }}>
-                    <SmartButton
-                        type="submit"
-                        loading={loading}
-                        rounded={true}
-                        name={'confirm_payment'}
-                    >
-                        {translate('Confirm & pay')}
-                    </SmartButton>
+                <div style={{ marginTop: '16x' }}>
+                    <RowMobileCol right reverse>
+                        {goBack && (
+                            <TeritaryButton onClick={goBack} type="button">
+                                Back
+                            </TeritaryButton>
+                        )}
+                        <SmartButton type="submit" loading={loading}>
+                            {translate('Confirm & Pay')}
+                        </SmartButton>
+                    </RowMobileCol>
                     <ErrorMessageApollo error={error} />
                 </div>
             </form>

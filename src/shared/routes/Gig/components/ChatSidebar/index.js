@@ -131,6 +131,7 @@ const getSystemMessage = ({ gig, showDecline, navigateToOffer }) => {
         return null;
     }
     const { expires, status, directBooking } = gig;
+
     const within = moment(expires).fromNow();
 
     if (directBooking && status === gigStates.REQUESTED) {
@@ -156,7 +157,9 @@ const getSystemMessage = ({ gig, showDecline, navigateToOffer }) => {
         [gigStates.REQUESTED]: {
             systemMessage: true,
             createdAt: new Date(),
-            content: `The organizer is waiting on your offer. \nMake an offer within ${within} or the gig will automatically be declined.`,
+            content: `The organizer is waiting on your offer. \nMake an offer ${
+                expires ? 'within ' + within : 'quickly'
+            } or the gig will automatically be declined. You can always update the offer later until the organizer has confirmed.`,
             actions: [
                 {
                     label: 'Decline gig',
