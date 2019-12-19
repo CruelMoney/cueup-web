@@ -59,6 +59,7 @@ const Step4 = ({
                         placeholder={translate('optional')}
                         name="contactPhone"
                         defaultValue={form.contactPhone}
+                        onSave={(contactPhone) => handleChange({ contactPhone })}
                     >
                         <BodySmall>
                             {translate('request-form.step-4.contact-phone-description')}
