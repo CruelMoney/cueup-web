@@ -101,8 +101,9 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
         picture,
         permalink,
         isDj,
+        payoutMethods,
     } = user;
-    const { firstName, lastName, phone, birthday, bankAccount, bio } = userMetadata;
+    const { firstName, lastName, phone, birthday, bio } = userMetadata;
     const { cancelationPolicy, currency, notifications } = userSettings;
     const { roles, instagramConnected, identityVerified, soundCloudConnected } = appMetadata;
 
@@ -254,7 +255,7 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                 title={'Preferences'}
                 description={'Change your preferences for getting paid and notifications.'}
             >
-                {isDj && <PayoutPopup user={user} hasPayout={bankAccount} />}
+                {isDj && <PayoutPopup user={user} hasPayout={payoutMethods?.length} />}
 
                 <CurrencySelector
                     half
