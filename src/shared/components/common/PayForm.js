@@ -157,6 +157,8 @@ const PaymentWrapper = (props) => {
         variables: {
             gigId: id,
             eventId: event.id,
+            amountPaid: offer.totalPayment,
+            amountLeft: null,
         },
     });
 

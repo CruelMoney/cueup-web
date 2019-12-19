@@ -64,6 +64,7 @@ const withToken = setContext(async (_, { headers }) => {
             console.warn(error);
         }
     }
+
     return {
         headers: {
             ...headers,

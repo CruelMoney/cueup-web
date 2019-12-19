@@ -28,9 +28,12 @@ const resolvers = {
             return artistName ?? firstName;
         },
     },
+    Gig: {
+        tempPaidIndicator: () => false,
+    },
     Mutation: {
-        paymentConfirmed: (_root, variables, { cache, getCacheKey }) => {
-            const { gigId } = variables;
+        paymentConfirmed: (_root, variables, { cache, getCacheKey, client }) => {
+            const { gigId, amountLeft, amountPaid } = variables;
             const id = getCacheKey({ __typename: 'Event', id: variables.eventId });
             const fragment = gql`
                 fragment confirmEvent on Event {
@@ -38,16 +41,24 @@ const resolvers = {
                     gigs {
                         id
                         status
+                        tempPaidIndicator @client
                     }
                 }
             `;
             const event = cache.readFragment({ fragment, id });
             let { gigs } = event;
             gigs = gigs.map((g) =>
-                g.id === gigId ? { ...g, status: 'CONFIRMED' } : { ...g, status: 'LOST' }
+                g.id === gigId
+                    ? {
+                          ...g,
+                          status: 'CONFIRMED',
+                          tempPaidIndicator: true,
+                      }
+                    : { ...g, status: 'LOST' }
             );
             const data = { ...event, gigs, status: 'CONFIRMED' };
             cache.writeData({ id, data });
+
             return null;
         },
     },
@@ -55,13 +66,16 @@ const resolvers = {
 
 export const typeDefs = gql`
     extend type Mutation {
-        paymentConfirmed(gigId: ID, eventId: ID): Boolean
+        paymentConfirmed(gigId: ID, eventId: ID, amountLeft: JSON, amountPaid: JSON): Boolean
     }
     extend type User {
         isDj: Boolean
         isOwn: Boolean
         isOrganizer: Boolean
         displayName: String
+    }
+    extend type Gig {
+        tempPaidIndicator: Boolean
     }
 `;
 

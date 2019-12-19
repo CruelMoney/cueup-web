@@ -103,6 +103,7 @@ const EVENT_GIGS = gql`
             gigs {
                 id
                 status
+                tempPaidIndicator @client
                 offer {
                     canBePaid
                     daysUntilPaymentPossible
@@ -229,8 +230,13 @@ const REQUEST_PAYMENT_INTENT = gql`
 `;
 
 const PAYMENT_CONFIRMED = gql`
-    mutation PaymentConfirmed($gigId: ID!, $eventId: ID!) {
-        paymentConfirmed(gigId: $gigId, eventId: $eventId) @client
+    mutation PaymentConfirmed($gigId: ID!, $eventId: ID!, $amountPaid: JSON, $amountLeft: JSON) {
+        paymentConfirmed(
+            gigId: $gigId
+            eventId: $eventId
+            amountPaid: $amountPaid
+            amountLeft: $amountLeft
+        ) @client
     }
 `;
 

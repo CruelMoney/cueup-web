@@ -189,7 +189,8 @@ const Offer = ({
         ],
     });
 
-    const { status } = gig;
+    // tempPaidIndicator is a client side variable set true after payment
+    const { status, tempPaidIndicator } = gig;
 
     const confirmed = ['CONFIRMED'].includes(status);
 
@@ -199,13 +200,14 @@ const Offer = ({
                 {!confirmed && (
                     <OfferText muted={!offer}>{offer ? offer.formatted : 'No offer yet'}</OfferText>
                 )}
-                {confirmed && (
+                {tempPaidIndicator && <OfferText muted={true}>Paid and confirmed</OfferText>}
+                {confirmed && !tempPaidIndicator && (
                     <>
                         <OfferText muted={!offer}>{amountPaid?.formatted}</OfferText>
                         <OfferText muted={true}>Paid and confirmed</OfferText>
-                        {amountLeft?.amount && (
+                        {amountLeft?.amount ? (
                             <OfferText muted>{amountLeft.formatted} remaining</OfferText>
-                        )}
+                        ) : null}
                     </>
                 )}
             </OfferTextWrapper>

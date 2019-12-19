@@ -16,7 +16,12 @@ import {
 import CountrySelector, { BankSelector } from '../CountrySelector';
 import ErrorMessageApollo, { getErrorMessage } from '../ErrorMessageApollo';
 import PhoneInput from '../PhoneInput';
-import { UPDATE_USER_PAYOUT, USER_PAYOUT_METHOD, REMOVE_PAYOUT_METHOD } from './gql';
+import {
+    UPDATE_USER_PAYOUT,
+    USER_PAYOUT_METHOD,
+    REMOVE_PAYOUT_METHOD,
+    USER_PAYOUT_DATA,
+} from './gql';
 
 const getStripeData = async ({
     stripe,
@@ -259,7 +264,9 @@ const MainForm = ({
                             key={form.country}
                             label={translate('currency')}
                             name="currency"
-                            filter={(c) => bankCountry.supportedCurrencies.includes(c)}
+                            filter={(c) =>
+                                bankCountry && bankCountry.supportedCurrencies.includes(c)
+                            }
                             defaultValue={form.currency}
                             disabled={inIndonesia}
                             suggestions={AllCurrencies}
@@ -362,6 +369,10 @@ const DataWrapper = (props) => {
         skip: !props.id,
     });
 
+    const { loading: loadingUserData, data: userData } = useQuery(USER_PAYOUT_DATA, {
+        ssr: false,
+    });
+
     const bankAccount = data?.payoutMethod;
 
     return (
@@ -371,10 +382,12 @@ const DataWrapper = (props) => {
 
             <StripeWrapper
                 {...props}
-                loading={loading}
+                loading={loading || loadingUserData}
                 bankAccount={bankAccount}
                 isUpdate={props.id}
-                availableBankCountries={data?.availableBankCountries}
+                availableBankCountries={
+                    data?.availableBankCountries ?? userData?.availableBankCountries
+                }
             />
         </div>
     );
