@@ -1,8 +1,6 @@
 {
-  "name": "react-ssr-setup",
-  "version": "4.2.0",
-  "author": "Manuel Bieh <npm@manuelbieh.de> (https://github.com/manuelbieh)",
-  "license": "MIT",
+  "name": "cueup-web",
+  "version": "1.4.0",
   "engines": {
     "node": ">=10.0.0",
     "yarn": "^1.12.3"
