@@ -3627,7 +3627,8 @@ ol.breadcrumbs a {
         font-size: 14px;
     }
 
-    .location_ .pull-up {
+    .location_ .pull-up,
+    .location_verifyEmail .pull-up {
         margin-top: 0px;
     }
 }
