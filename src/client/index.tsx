@@ -2,6 +2,7 @@ import React from 'react';
 import { hydrate, render } from 'react-dom';
 import * as Sentry from '@sentry/browser';
 import { loadableReady } from '@loadable/component';
+// import * as serviceWorker from './serviceWorker';
 import Router from './BrowserRouter';
 import './polyfills';
 
@@ -16,8 +17,6 @@ if (production) {
     });
 }
 
-// import registerServiceWorker from "./utils/ServiceWorker";
-
 const rootElement = document.getElementById('app');
 if (rootElement && rootElement.hasChildNodes()) {
     loadableReady().then(() => {
@@ -28,4 +27,4 @@ if (rootElement && rootElement.hasChildNodes()) {
     render(<Router />, rootElement);
 }
 
-// registerServiceWorker();
+// serviceWorker.register();
