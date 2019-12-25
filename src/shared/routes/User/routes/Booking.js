@@ -70,8 +70,6 @@ const Booking = ({ user, loading, translate }) => {
         }
     };
 
-    console.log({ eventCreated });
-
     return (
         <div>
             <ScrollToTop top={0} />
