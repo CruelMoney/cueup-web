@@ -5,7 +5,7 @@ import { PrimaryButton } from 'components/Blocks';
 import usePushNotifications from 'components/hooks/usePushNotifications';
 import { RequestSection } from './RequestForm';
 
-const Step5 = ({ translate, pushIsEnabled, userId }) => {
+const Step5 = ({ translate, pushShouldBeEnabled, userId }) => {
     const { showPrompt } = usePushNotifications({ userId });
 
     return (
@@ -14,7 +14,7 @@ const Step5 = ({ translate, pushIsEnabled, userId }) => {
             <RequestSection>
                 <Body center>{translate('request-form.succes-message')}</Body>
             </RequestSection>
-            {pushIsEnabled && (
+            {pushShouldBeEnabled && (
                 <>
                     <Body style={{ marginBottom: 9 }} center>
                         {translate('request-form.succes-message-2')}

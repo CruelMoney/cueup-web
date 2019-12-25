@@ -21,7 +21,7 @@ import Step5 from './Step5';
 const MainForm = ({ translate, initialCity, countries }) => {
     const [activeStep, setActiveStep] = useState(1);
     const [showLogin, setShowLogin] = useState(false);
-    const { pushIsEnabled } = usePushNotifications();
+    const { pushShouldBeEnabled } = usePushNotifications();
 
     // defaults
     const [form, setForm] = useState({
@@ -153,7 +153,7 @@ const MainForm = ({ translate, initialCity, countries }) => {
                                 unregisterValidation={unregisterValidation}
                                 next={next}
                                 back={back}
-                                pushIsEnabled={pushIsEnabled}
+                                pushShouldBeEnabled={pushShouldBeEnabled}
                                 userId={createdEventData?.createEvent?.organizer?.id}
                             />
                         )}
