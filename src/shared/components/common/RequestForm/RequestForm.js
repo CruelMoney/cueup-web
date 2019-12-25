@@ -33,7 +33,7 @@ const MainForm = ({ translate, initialCity, countries }) => {
     });
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);
     const [error, setError] = useState();
-    const [mutate, { loading, data }] = useCreateEvent(form);
+    const [mutate, { loading, data: createdEventData }] = useCreateEvent(form);
 
     const createEvent = async () => {
         const errors = runValidations();
@@ -154,7 +154,7 @@ const MainForm = ({ translate, initialCity, countries }) => {
                                 next={next}
                                 back={back}
                                 pushIsEnabled={pushIsEnabled}
-                                userId={data?.createEvent?.organizer?.id}
+                                userId={createdEventData?.createEvent?.organizer?.id}
                             />
                         )}
 

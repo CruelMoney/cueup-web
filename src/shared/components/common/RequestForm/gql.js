@@ -43,7 +43,7 @@ const CREATE_EVENT = gql`
         ) {
             id
             organizer {
-                userId
+                id
             }
         }
     }
