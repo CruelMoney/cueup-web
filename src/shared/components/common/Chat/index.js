@@ -3,6 +3,7 @@ import './index.css';
 import moment from 'moment';
 import SendIcon from 'react-ionicons/lib/MdSend';
 import TextareaAutosize from 'react-autosize-textarea';
+import usePushNotifications from 'components/hooks/usePushNotifications';
 import LoadingPlaceholder from '../LoadingPlaceholder';
 import { Avatar } from '../../Blocks';
 import useChat from './useChat';
@@ -14,7 +15,7 @@ const Chat = ({
     placeholder,
     hideComposer,
     chat,
-    systemMessage,
+    systemMessages,
 }) => {
     const messagesContainer = useRef();
 
@@ -33,7 +34,9 @@ const Chat = ({
     }, [onNewContent]);
 
     const dateSorter = (a, b) => new Date(a.createdAt) - new Date(b.createdAt);
-    const allMessages = systemMessage ? [...messages, systemMessage].sort(dateSorter) : messages;
+    const allMessages = systemMessages
+        ? [...messages, ...systemMessages].sort(dateSorter)
+        : messages;
     const datedMessages = toDateGroups(allMessages);
 
     return (
@@ -204,6 +207,7 @@ const SenderGroup = ({ messages, sender, receiver, showPersonalInformation }) =>
                     key={m._id || 'new-message' + idx}
                     {...m}
                     showPersonalInformation={showPersonalInformation}
+                    nextMessage={enrichedMessages[idx + 1]}
                 />
             ))}
         </div>
@@ -224,6 +228,7 @@ const Message = (props) => {
         sending,
         image,
         systemMessage,
+        nextMessage,
     } = props;
     const showNotice = containsEmail || containsNumber || containsURL;
 
@@ -271,11 +276,11 @@ const Message = (props) => {
                 <div className="message-info">Information visible after payment</div>
             )}
             {isLast && isOwn && <Status sending={sending} message={props} />}
-            {systemMessage && (
+            {systemMessage && !nextMessage?.systemMessage ? (
                 <div className="message-info service-message">
                     This is a service message from Cueup, and cannot be replied to.
                 </div>
-            )}
+            ) : null}
         </>
     );
 };
@@ -314,6 +319,30 @@ const Status = ({ sending, message }) => {
     );
 };
 
+const WithNotificationMessage = ({ systemMessages = [], ...props }) => {
+    const { pushShouldBeEnabled, showPrompt } = usePushNotifications({ userId: props?.sender.id });
+
+    let newSystemMessages = systemMessages;
+    if (pushShouldBeEnabled) {
+        newSystemMessages = [
+            ...systemMessages,
+            {
+                systemMessage: true,
+                createdAt: new Date(),
+                content: 'Do you want to enable browser notifications when you get a new message?',
+                actions: [
+                    {
+                        label: 'Enable',
+                        action: showPrompt,
+                    },
+                ],
+            },
+        ];
+    }
+
+    return <Chat {...props} systemMessages={newSystemMessages} />;
+};
+
 const WithChat = (props) => {
     const { sender, receiver, chatId, showPersonalInformation, eventId } = props;
     const chat = useChat({
@@ -326,7 +355,7 @@ const WithChat = (props) => {
         },
     });
 
-    return <Chat {...props} chat={chat} />;
+    return <WithNotificationMessage {...props} chat={chat} />;
 };
 
 const Wrapper = (props) => {
@@ -336,7 +365,7 @@ const Wrapper = (props) => {
         return <WithChat {...props} />;
     }
 
-    return <Chat {...props} />;
+    return <WithNotificationMessage {...props} />;
 };
 
 export default Wrapper;

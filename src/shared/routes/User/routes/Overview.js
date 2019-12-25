@@ -242,7 +242,7 @@ const PhotoGrid = styled.ul`
     grid-gap: 1px;
     list-style: none;
     margin-bottom: 0;
-
+    margin-top: 0;
     > li {
         background: #eff2f5;
         position: relative;

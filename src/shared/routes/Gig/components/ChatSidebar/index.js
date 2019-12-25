@@ -10,7 +10,7 @@ import { gigStates } from '../../../../constants/constants';
 import useChat from '../../../../components/common/Chat/useChat';
 
 const ChatSidebar = (props) => {
-    const { organizer, gig, theEvent, me, systemMessage, loading } = props;
+    const { organizer, gig, theEvent, me, systemMessages, loading } = props;
 
     const messageWrapper = useRef();
 
@@ -105,7 +105,7 @@ const ChatSidebar = (props) => {
                             receiver={receiver}
                             chatId={gig.id}
                             chat={chat}
-                            systemMessage={systemMessage}
+                            systemMessages={systemMessages}
                         />
                     )}
                 </MessagesWrapper>
@@ -289,30 +289,23 @@ const MessagesWrapper = styled.div`
     }
 `;
 
-const Wrapper = memo((props) => {
-    const { gig, navigateToOffer, showDecline } = props;
-
-    let systemMessage = null;
-    if (gig) {
-        systemMessage = getSystemMessage({ gig, navigateToOffer, showDecline });
-    }
-
-    return (
-        <Sidebar large stickyTop={'0px'}>
-            <ChatSidebar {...props} systemMessage={systemMessage} />
-        </Sidebar>
-    );
-});
-
 export const ChatNaked = memo((props) => {
     const { gig, navigateToOffer, showDecline } = props;
 
-    let systemMessage = null;
+    const systemMessages = [];
     if (gig) {
-        systemMessage = getSystemMessage({ gig, navigateToOffer, showDecline });
+        systemMessages.push(getSystemMessage({ gig, navigateToOffer, showDecline }));
     }
 
-    return <ChatSidebar {...props} systemMessage={systemMessage} />;
+    return <ChatSidebar {...props} systemMessages={systemMessages} />;
 });
+
+const Wrapper = (props) => {
+    return (
+        <Sidebar large stickyTop={'0px'}>
+            <ChatNaked {...props} />
+        </Sidebar>
+    );
+};
 
 export default Wrapper;
