@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import * as Sentry from '@sentry/browser';
 
-const usePushNotifications = ({ userId }) => {
+const usePushNotifications = (options = {}) => {
+    const { userId } = options;
     const [loading, setLoading] = useState(true);
     const [pushIsEnabled, setPushIsEnabled] = useState(false);
     const [pushShouldBeEnabled, setPushShouldBeEnabled] = useState(false);
