@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { localize } from 'react-localize-redux';
 import { Query } from 'react-apollo';
+import usePushNotifications from 'components/hooks/usePushNotifications';
 import EmptyPage from '../../../../../components/common/EmptyPage';
 import { LoadingPlaceholder2 } from '../../../../../components/common/LoadingPlaceholder';
 import { MY_GIGS } from '../../../../../components/gql';
-import { Col, Row, HideBelow } from '../../../../../components/Blocks';
-import { Title } from '../../../../../components/Text';
+import { Col, Row, HideBelow, SecondaryButton } from '../../../../../components/Blocks';
+import { Title, BodySmall } from '../../../../../components/Text';
 import Checkbox from '../../../../../components/Checkbox';
 import { gigStates } from '../../../../../constants/constants';
 import GigCard from './GigCard';
@@ -115,12 +116,30 @@ const Gigs = (props) => {
                                         toggleFilter(gigStates.ORGANIZER_DECLINED)(val);
                                     }}
                                 />
+                                <EnableNotifications userId={user.id} />
                             </Col>
                         </HideBelow>
                     </Row>
                 );
             }}
         </Query>
+    );
+};
+
+const EnableNotifications = ({ userId }) => {
+    const { pushShouldBeEnabled, showPrompt } = usePushNotifications({ userId });
+    if (!pushShouldBeEnabled) {
+        return null;
+    }
+
+    return (
+        <div>
+            <Title style={{ marginBottom: '36px', marginTop: '36px' }}>Notifications</Title>
+            <BodySmall>Enable browser notifications when getting new gigs or messages</BodySmall>
+            <SecondaryButton onClick={showPrompt} style={{ marginTop: '12px' }}>
+                Enable
+            </SecondaryButton>
+        </div>
     );
 };
 
