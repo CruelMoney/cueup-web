@@ -109,7 +109,7 @@ export const useCheckDjAvailability = ({ locationName, date }) => {
 };
 
 export const useCreateEvent = (theEvent) => {
-    const [mutate, { loading, error }] = useMutation(CREATE_EVENT);
+    const [mutate, { loading, error, ...rest }] = useMutation(CREATE_EVENT);
 
     let innerError;
 
@@ -133,5 +133,5 @@ export const useCreateEvent = (theEvent) => {
         }
     };
 
-    return [doMutate, { loading, error: error || innerError }];
+    return [doMutate, { loading, error: error || innerError, ...rest }];
 };
