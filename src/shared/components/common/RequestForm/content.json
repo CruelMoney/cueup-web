@@ -4,8 +4,8 @@
       "It looks like there's already an account using that email. Please login or use a different email to continue.<br/>"
     ],
     "succes-message": [
-      "Thanks for using our service. We'll send you an email with confirmation of the event.",
-      "Tak for at du bruger vores service. Vi sender dig en mail med en bekræftelse på dit event."
+      "Thanks for using our service. We'll send you an email to confirm the event.",
+      "Tak for at du bruger vores service. Vi sender dig en mail til at bekræfte eventet."
     ],
     "succes-message-2": [
       "Would you like to receive notifications when you get a new offer?",

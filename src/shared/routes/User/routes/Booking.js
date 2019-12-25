@@ -6,13 +6,14 @@ import wNumb from 'wnumb';
 import * as Sentry from '@sentry/browser';
 import { useCreateEvent } from 'actions/EventActions';
 import { useForm } from 'components/hooks/useForm';
+import usePushNotifications from 'components/hooks/usePushNotifications';
 import { SettingsSection, Input, Label } from '../../../components/FormComponents';
 import DatePickerPopup from '../../../components/DatePicker';
-import { Row, Container, Col, GradientBg } from '../../../components/Blocks';
+import { Row, Container, Col, GradientBg, PrimaryButton, Card } from '../../../components/Blocks';
 import Sidebar, { SidebarContent, CTAButton } from '../../../components/Sidebar';
 import ScrollToTop from '../../../components/common/ScrollToTop';
 import { LoadingPlaceholder2 } from '../../../components/common/LoadingPlaceholder';
-import { SmallHeader, TitleClean } from '../../../components/Text';
+import { SmallHeader, TitleClean, Body, Title } from '../../../components/Text';
 import RiderOptions from '../../../components/RiderOptions';
 import TimeSlider from '../../../components/common/TimeSlider';
 import Slider from '../../../components/common/Slider';
@@ -51,7 +52,7 @@ const Booking = ({ user, loading, translate }) => {
                 lng: user.playingLocation.longitude,
             });
 
-            await create({
+            const result = await create({
                 ...form,
                 timeZoneId,
                 djId: user.id,
@@ -62,11 +63,14 @@ const Booking = ({ user, loading, translate }) => {
                     name: user.playingLocation.name,
                 },
             });
-            setEventCreated(true);
+            const { data } = result;
+            setEventCreated(data?.createEvent);
         } catch (error) {
             Sentry.captureException(error);
         }
     };
+
+    console.log({ eventCreated });
 
     return (
         <div>
@@ -90,22 +94,19 @@ const Booking = ({ user, loading, translate }) => {
             </Popup>
 
             <Container>
-                {eventCreated ? (
-                    <SuccessMessage translate={translate} />
-                ) : (
-                    <EventForm
-                        setValue={setValue}
-                        registerValidation={registerValidation}
-                        unregisterValidation={unregisterValidation}
-                        form={form}
-                        translate={translate}
-                        user={user}
-                        loading={loading}
-                        requestBooking={requestBooking}
-                        setloginPopup={setloginPopup}
-                        loginPopup={loginPopup}
-                    />
-                )}
+                <EventForm
+                    setValue={setValue}
+                    registerValidation={registerValidation}
+                    unregisterValidation={unregisterValidation}
+                    form={form}
+                    translate={translate}
+                    user={user}
+                    loading={loading}
+                    requestBooking={requestBooking}
+                    setloginPopup={setloginPopup}
+                    loginPopup={loginPopup}
+                    eventCreated={eventCreated}
+                />
             </Container>
         </div>
     );
@@ -133,168 +134,175 @@ const EventForm = ({
     requestBooking,
     setloginPopup,
     loginPopup,
+    eventCreated,
 }) => (
     <EventFormWrapper>
-        <Col
-            style={{
-                marginTop: '42px',
-                width: '100%',
-                marginBottom: '60px',
-                zIndex: 0,
-                position: 'relative',
-            }}
-        >
-            <SettingsSection
-                stickyTop={'24px'}
-                title={'Event Details'}
-                description={'Tell us about your event to help the dj decide on a fair price.'}
+        {eventCreated ? (
+            <SuccessMessage translate={translate} userId={eventCreated?.organizer?.id} />
+        ) : (
+            <Col
+                style={{
+                    marginTop: '42px',
+                    width: '100%',
+                    marginBottom: '60px',
+                    zIndex: 0,
+                    position: 'relative',
+                }}
             >
-                <Input
-                    half
-                    type="text"
-                    label="Event Name"
-                    placeholder="Add a short, clear name"
-                    onSave={setValue('name')}
-                    validation={(v) => (v ? null : 'Please enter a name')}
-                    registerValidation={registerValidation('name')}
-                    unregisterValidation={unregisterValidation('name')}
-                />
-                <DatePickerPopup
-                    half
-                    label={'Date'}
-                    minDate={new Date()}
-                    initialDate={form.date ? moment(form.date) : null}
-                    showMonthDropdown={false}
-                    showYearDropdown={false}
-                    maxDate={false}
-                    onSave={setValue('date')}
-                    validation={(v) => (v ? null : 'Please select a date')}
-                    registerValidation={registerValidation('date')}
-                    unregisterValidation={unregisterValidation('date')}
-                />
-                <Label
-                    style={{
-                        width: '100%',
-                        marginRight: '36px',
-                        marginBottom: '30px',
-                    }}
+                <SettingsSection
+                    stickyTop={'24px'}
+                    title={'Event Details'}
+                    description={'Tell us about your event to help the dj decide on a fair price.'}
                 >
-                    <span style={{ marginBottom: '12px', display: 'block' }}>Duration</span>
-                    <TimeSlider
-                        color={'#50e3c2'}
-                        hoursLabel={translate('hours')}
-                        startLabel={translate('start')}
-                        endLabel={translate('end')}
-                        date={moment(form.date)}
-                        onChange={([start, end]) => {
-                            setValue('startMinute')(start);
-                            setValue('endMinute')(end);
-                        }}
+                    <Input
+                        half
+                        type="text"
+                        label="Event Name"
+                        placeholder="Add a short, clear name"
+                        onSave={setValue('name')}
+                        validation={(v) => (v ? null : 'Please enter a name')}
+                        registerValidation={registerValidation('name')}
+                        unregisterValidation={unregisterValidation('name')}
                     />
-                </Label>
+                    <DatePickerPopup
+                        half
+                        label={'Date'}
+                        minDate={new Date()}
+                        initialDate={form.date ? moment(form.date) : null}
+                        showMonthDropdown={false}
+                        showYearDropdown={false}
+                        maxDate={false}
+                        onSave={setValue('date')}
+                        validation={(v) => (v ? null : 'Please select a date')}
+                        registerValidation={registerValidation('date')}
+                        unregisterValidation={unregisterValidation('date')}
+                    />
+                    <Label
+                        style={{
+                            width: '100%',
+                            marginRight: '36px',
+                            marginBottom: '30px',
+                        }}
+                    >
+                        <span style={{ marginBottom: '12px', display: 'block' }}>Duration</span>
+                        <TimeSlider
+                            color={'#50e3c2'}
+                            hoursLabel={translate('hours')}
+                            startLabel={translate('start')}
+                            endLabel={translate('end')}
+                            date={moment(form.date)}
+                            onChange={([start, end]) => {
+                                setValue('startMinute')(start);
+                                setValue('endMinute')(end);
+                            }}
+                        />
+                    </Label>
 
-                <Label
-                    style={{
-                        width: '100%',
-                        marginRight: '36px',
-                        marginBottom: '30px',
-                    }}
+                    <Label
+                        style={{
+                            width: '100%',
+                            marginRight: '36px',
+                            marginBottom: '30px',
+                        }}
+                    >
+                        <span style={{ marginBottom: '12px', display: 'block' }}>Guests</span>
+
+                        <Slider
+                            color={'#50e3c2'}
+                            name="guestsCount"
+                            range={{
+                                'min': 1,
+                                '50%': 100,
+                                '80%': 500,
+                                'max': 1000,
+                            }}
+                            step={1}
+                            connect="lower"
+                            value={[80]}
+                            onChange={(values) => {
+                                setValue('guestsCount')(values[0]);
+                            }}
+                            format={wNumb({
+                                decimals: 0,
+                            })}
+                        />
+                        <span
+                            style={{ marginTop: '15px', display: 'block' }}
+                        >{`${form.guestsCount} people`}</span>
+                    </Label>
+
+                    <div style={{ marginRight: '36px', marginBottom: '30px' }}>
+                        <RiderOptions
+                            onSave={({ speakers, lights }) => {
+                                setValue('speakers')(speakers);
+                                setValue('lights')(lights);
+                            }}
+                        />
+                    </div>
+
+                    <Input
+                        type="text-area"
+                        label={'Description'}
+                        placeholder={translate('request-form.step-3.event-description-description')}
+                        style={{
+                            height: '200px',
+                        }}
+                        onSave={setValue('description')}
+                        validation={(v) => (v ? null : 'Please enter a description')}
+                        registerValidation={registerValidation('description')}
+                        unregisterValidation={unregisterValidation('description')}
+                    />
+                </SettingsSection>
+
+                <SettingsSection
+                    stickyTop={'24px'}
+                    title={'Contact Details'}
+                    description={
+                        'How should we get back to you with updates from the dj? Your information is only shared with the dj.'
+                    }
                 >
-                    <span style={{ marginBottom: '12px', display: 'block' }}>Guests</span>
-
-                    <Slider
-                        color={'#50e3c2'}
-                        name="guestsCount"
-                        range={{
-                            'min': 1,
-                            '50%': 100,
-                            '80%': 500,
-                            'max': 1000,
+                    <Input
+                        type="text"
+                        label="Contact Name"
+                        autoComplete="name"
+                        placeholder="First Last"
+                        validation={(v) => {
+                            if (!v) {
+                                return 'Please enter name';
+                            }
+                            const [firstName, ...lastName] = v.split(' ');
+                            if (!firstName || !lastName.some((s) => !!s.trim())) {
+                                return 'Please enter both first and last name';
+                            }
                         }}
-                        step={1}
-                        connect="lower"
-                        value={[80]}
-                        onChange={(values) => {
-                            setValue('guestsCount')(values[0]);
-                        }}
-                        format={wNumb({
-                            decimals: 0,
-                        })}
+                        required
+                        onSave={setValue('contactName')}
+                        registerValidation={registerValidation('contactName')}
+                        unregisterValidation={unregisterValidation('contactName')}
                     />
-                    <span
-                        style={{ marginTop: '15px', display: 'block' }}
-                    >{`${form.guestsCount} people`}</span>
-                </Label>
 
-                <div style={{ marginRight: '36px', marginBottom: '30px' }}>
-                    <RiderOptions
-                        onSave={({ speakers, lights }) => {
-                            setValue('speakers')(speakers);
-                            setValue('lights')(lights);
-                        }}
+                    <Input
+                        placeholder="mail@email.com"
+                        type="email"
+                        autoComplete="email"
+                        label="Contact Email"
+                        validation={(v) =>
+                            emailValidator.validate(v) ? null : 'Not a valid email'
+                        }
+                        onSave={setValue('contactEmail')}
+                        registerValidation={registerValidation('contactEmail')}
+                        unregisterValidation={unregisterValidation('contactEmail')}
                     />
-                </div>
-
-                <Input
-                    type="text-area"
-                    label={'Description'}
-                    placeholder={translate('request-form.step-3.event-description-description')}
-                    style={{
-                        height: '200px',
-                    }}
-                    onSave={setValue('description')}
-                    validation={(v) => (v ? null : 'Please enter a description')}
-                    registerValidation={registerValidation('description')}
-                    unregisterValidation={unregisterValidation('description')}
-                />
-            </SettingsSection>
-
-            <SettingsSection
-                stickyTop={'24px'}
-                title={'Contact Details'}
-                description={
-                    'How should we get back to you with updates from the dj? Your information is only shared with the dj.'
-                }
-            >
-                <Input
-                    type="text"
-                    label="Contact Name"
-                    autoComplete="name"
-                    placeholder="First Last"
-                    validation={(v) => {
-                        if (!v) {
-                            return 'Please enter name';
-                        }
-                        const [firstName, ...lastName] = v.split(' ');
-                        if (!firstName || !lastName.some((s) => !!s.trim())) {
-                            return 'Please enter both first and last name';
-                        }
-                    }}
-                    required
-                    onSave={setValue('contactName')}
-                    registerValidation={registerValidation('contactName')}
-                    unregisterValidation={unregisterValidation('contactName')}
-                />
-
-                <Input
-                    placeholder="mail@email.com"
-                    type="email"
-                    autoComplete="email"
-                    label="Contact Email"
-                    validation={(v) => (emailValidator.validate(v) ? null : 'Not a valid email')}
-                    onSave={setValue('contactEmail')}
-                    registerValidation={registerValidation('contactEmail')}
-                    unregisterValidation={unregisterValidation('contactEmail')}
-                />
-                <Input
-                    label="Contact Phone"
-                    placeholder="+123456789"
-                    type="tel"
-                    autoComplete="tel"
-                    onSave={setValue('contactPhone')}
-                />
-            </SettingsSection>
-        </Col>
+                    <Input
+                        label="Contact Phone"
+                        placeholder="+123456789"
+                        type="tel"
+                        autoComplete="tel"
+                        onSave={setValue('contactPhone')}
+                    />
+                </SettingsSection>
+            </Col>
+        )}
         <BookingSidebar
             key={loginPopup}
             loading={loading}
@@ -302,11 +310,12 @@ const EventForm = ({
             values={form}
             requestBooking={requestBooking}
             showLogin={() => setloginPopup(true)}
+            eventCreated={eventCreated}
         />
     </EventFormWrapper>
 );
 
-const BookingSidebar = ({ loading, values, requestBooking, showLogin, ...props }) => {
+const BookingSidebar = ({ loading, values, requestBooking, showLogin, eventCreated, ...props }) => {
     const [create, { loading: createLoading, error }] = useCreateEvent();
 
     return (
@@ -332,21 +341,21 @@ const BookingSidebar = ({ loading, values, requestBooking, showLogin, ...props }
                 </SidebarContent>
 
                 <CTAButton
-                    disabled={createLoading}
+                    disabled={createLoading || eventCreated}
                     loading={createLoading}
                     onClick={requestBooking(create)}
                 >
-                    BOOK NOW
+                    {eventCreated ? 'BOOKING DONE' : 'BOOK NOW'}
                 </CTAButton>
             </Sidebar>
 
             <MobileBookingButton>
                 <CTAButton
-                    disabled={createLoading}
+                    disabled={createLoading || eventCreated}
                     loading={createLoading}
                     onClick={requestBooking(create)}
                 >
-                    BOOK NOW
+                    {eventCreated ? 'BOOKING DONE' : 'BOOK NOW'}
                 </CTAButton>
             </MobileBookingButton>
         </>
@@ -421,21 +430,28 @@ const Content = ({ user, values }) => {
     );
 };
 
-const SuccessMessage = ({ translate }) => (
-    <Row middle center>
-        <div className="col-md-8 thank-you-text">
-            <p
-                className="center"
-                style={{
-                    fontSize: '32px',
-                    textAlign: 'center',
-                    lineHeight: '45px',
-                }}
-            >
-                {translate('request-form.succes-message')}
-            </p>
-        </div>
-    </Row>
-);
+const SuccessMessage = ({ translate, userId }) => {
+    const { showPrompt, pushShouldBeEnabled } = usePushNotifications({ userId });
+
+    return (
+        <Col
+            style={{
+                marginTop: '42px',
+                width: '100%',
+            }}
+        >
+            <Title>Thanks</Title>
+            <Body>{translate('request-form.succes-message')}</Body>
+            {pushShouldBeEnabled && (
+                <>
+                    <Body style={{ marginBottom: 9 }}>
+                        {translate('request-form.succes-message-2')}
+                    </Body>
+                    <PrimaryButton onClick={showPrompt}>Get notifications</PrimaryButton>
+                </>
+            )}
+        </Col>
+    );
+};
 
 export default Booking;

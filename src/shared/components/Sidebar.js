@@ -93,7 +93,7 @@ const CTA = styled.button`
     position: relative;
     &:hover {
         color: #ffffff !important;
-        background-color: #00d1ff;
+        background-color: ${({ disabled }) => (disabled ? '#31daff' : '#00d1ff')};
         ${CTAIcon} {
             transform: translate(3px, -50%);
         }
@@ -102,7 +102,10 @@ const CTA = styled.button`
 
 export const CTAButton = ({ children, loading, ...props }) => (
     <CTA {...props}>
-        {children} <CTAIcon>{loading ? <LoadingIndicator /> : <Arrow color="#fff" />}</CTAIcon>
+        {children}{' '}
+        <CTAIcon>
+            {loading ? <LoadingIndicator /> : props.disabled ? null : <Arrow color="#fff" />}
+        </CTAIcon>
     </CTA>
 );
 
