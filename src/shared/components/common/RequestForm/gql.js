@@ -40,7 +40,12 @@ const CREATE_EVENT = gql`
             guestsCount: $guestsCount
             location: $location
             djId: $djId
-        )
+        ) {
+            id
+            organizer {
+                userId
+            }
+        }
     }
 `;
 

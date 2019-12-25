@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import usePushNotifications from 'components/hooks/usePushNotifications';
 import { Label, Value, Checkbox } from '../../../components/FormComponents';
 import { Row, Col, Hr } from '../../../components/Blocks';
 
@@ -13,7 +14,8 @@ const TableRow = styled(Row)`
         flex: 1;
     }
     > *:nth-child(2),
-    > *:nth-child(3) {
+    > *:nth-child(3),
+    > *:nth-child(4) {
         min-width: 100px;
         text-align: center;
     }
@@ -29,20 +31,28 @@ const DJ_NOTIFICATION_TYPES = Object.freeze([
 ]);
 const ORGANIZER_NOTIFICATION_TYPES = Object.freeze(['NEW_OFFER', 'DJ_CANCELLED', 'NEW_MESSAGE']);
 
-const CheckBoxRow = ({ label, email, push, onChange }) => {
+const CheckBoxRow = ({ label, email, push, browser, onChange }) => {
     return (
         <TableRow>
             <Value>{label}</Value>
             <Checkbox defaultValue={push} onChange={(val) => onChange('push')(val)} />
             <Checkbox defaultValue={email} onChange={(val) => onChange('email')(val)} />
+            <Checkbox defaultValue={browser} onChange={(val) => onChange('browser')(val)} />
         </TableRow>
     );
 };
 
-const NotificationPreferences = ({ notifications, onSave, roles }) => {
+const NotificationPreferences = ({ notifications, onSave, roles, userId }) => {
     const [internal, setInternal] = useState(notifications);
+    const { showPrompt, pushShouldBeEnabled, loading, pushIsEnabled } = usePushNotifications({
+        userId,
+    });
 
     const onChange = (key) => (type) => (val) => {
+        if (type === 'browser' && val && pushShouldBeEnabled) {
+            showPrompt();
+        }
+
         const newNotifications = {
             ...internal,
             [key]: {
@@ -55,11 +65,12 @@ const NotificationPreferences = ({ notifications, onSave, roles }) => {
     };
 
     return (
-        <Col style={{ width: '100%', marginRight: '36px' }}>
+        <Col style={{ width: '100%', marginRight: '36px' }} key={loading}>
             <TableRow>
                 <Label>Notifications</Label>
                 <Label>Mobile</Label>
                 <Label>Email</Label>
+                <Label>Browser</Label>
             </TableRow>
             <Hr />
 
@@ -75,13 +86,14 @@ const NotificationPreferences = ({ notifications, onSave, roles }) => {
 
                     return filter.includes(key);
                 })
-                .map(([key, { label, email, push }]) => {
+                .map(([key, { label, email, push, browser = pushIsEnabled }]) => {
                     return (
                         <CheckBoxRow
                             key={key}
                             label={label}
                             email={email}
                             push={push}
+                            browser={browser}
                             onChange={onChange(key)}
                         />
                     );

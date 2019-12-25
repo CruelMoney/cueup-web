@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment-timezone';
 import styled from 'styled-components';
 import { Card, CardShadow, Col, TeritaryButton, Hr, LinkButton } from 'components/Blocks';
@@ -9,6 +9,7 @@ import { useForm } from 'components/hooks/useForm';
 import Login from '../Login';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import ErrorMessageApollo from '../ErrorMessageApollo';
+import usePushNotifications from '../../hooks/usePushNotifications';
 import Progress from './ProgressSubmit';
 import content from './content.json';
 import Step1 from './Step1';
@@ -20,6 +21,7 @@ import Step5 from './Step5';
 const MainForm = ({ translate, initialCity, countries }) => {
     const [activeStep, setActiveStep] = useState(1);
     const [showLogin, setShowLogin] = useState(false);
+    const { pushIsEnabled } = usePushNotifications();
 
     // defaults
     const [form, setForm] = useState({
@@ -31,7 +33,7 @@ const MainForm = ({ translate, initialCity, countries }) => {
     });
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);
     const [error, setError] = useState();
-    const [mutate, { loading }] = useCreateEvent(form);
+    const [mutate, { loading, data }] = useCreateEvent(form);
 
     const createEvent = async () => {
         const errors = runValidations();
@@ -151,6 +153,8 @@ const MainForm = ({ translate, initialCity, countries }) => {
                                 unregisterValidation={unregisterValidation}
                                 next={next}
                                 back={back}
+                                pushIsEnabled={pushIsEnabled}
+                                userId={data?.createEvent?.organizer?.id}
                             />
                         )}
 

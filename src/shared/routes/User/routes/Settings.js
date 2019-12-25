@@ -268,6 +268,7 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                     notifications={notifications}
                     onSave={(notificationSettings) => saveData({ notificationSettings })}
                     roles={roles}
+                    userId={user.id}
                 />
             </SettingsSection>
 

@@ -34,6 +34,31 @@ const HTML = ({
             />
             <script async type="text/javascript" src="/autotrack.js" />
             <script id="stripe-js" src="https://js.stripe.com/v3/" async />
+
+            <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async />
+            <script
+                // eslint-disable-next-line react/no-danger
+                dangerouslySetInnerHTML={{
+                    __html: `
+                    var OneSignal = window.OneSignal || [];
+                    OneSignal.push(function() {
+                        OneSignal.init({
+                        appId: "${process.env.REACT_APP_ONE_SIGNAL_APP_ID}",
+                        autoResubscribe: true,
+                        notifyButton: {
+                            enable: false,
+                        },
+                        welcomeNotification: {
+                            disable: true
+                        },
+                        allowLocalhostAsSecureOrigin: true,
+
+                        });
+                    });
+                `,
+                }}
+            />
+
             {helmet.base.toComponent()}
             {helmet.title.toComponent()}
             {helmet.meta.toComponent()}
