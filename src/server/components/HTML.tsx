@@ -33,9 +33,7 @@ const HTML = ({
                 src="https://www.google-analytics.com/analytics.js"
             />
             <script async type="text/javascript" src="/autotrack.js" />
-            <script id="stripe-js" src="https://js.stripe.com/v3/" async />
 
-            <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async />
             <script
                 // eslint-disable-next-line react/no-danger
                 dangerouslySetInnerHTML={{
@@ -89,6 +87,8 @@ const HTML = ({
             <div id="mobile-menu-portal" />
             <div id="notification-portal" />
 
+            <script id="stripe-js" src="https://js.stripe.com/v3/" defer />
+            <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" defer />
             <script
                 defer
                 // eslint-disable-next-line react/no-danger
