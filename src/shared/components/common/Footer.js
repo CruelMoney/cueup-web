@@ -148,7 +148,10 @@ class footer extends Component {
                                     <Link to={translate('routes./faq/dj')}>Support</Link>
                                 </li>
                                 <li>
-                                    <a className="link-look" href={'mailto:chris@cueup.io'}>
+                                    <a
+                                        className="link-look"
+                                        onClick={() => window.olark('api.box.expand')}
+                                    >
                                         {translate('contact')}
                                     </a>
                                 </li>

@@ -5,7 +5,9 @@ const Olark = loadable(() => import('./olark'));
 
 const useExternals = () => {
     useEffect(() => {
-        Olark.preload();
+        setTimeout(() => {
+            Olark.preload();
+        }, 4000);
     }, []);
 };
 
