@@ -142,3 +142,12 @@ export const HeaderTitle = styled.h1`
         }
     }
 `;
+
+export const PageTitle = styled.h1`
+    font-size: 42px;
+    font-weight: bold;
+    > span {
+        display: block;
+        font-weight: 500;
+    }
+`;

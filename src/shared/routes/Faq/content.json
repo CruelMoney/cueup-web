@@ -11,15 +11,15 @@
       "2": {
         "q": ["How much can I earn?", "Hvor meget kan jeg tjene?"],
         "a": [
-          "You set your own prices, so that depends on your own rates. We will do everything in our power to get you as many gigs as possible.",
+          "You set your own prices, so that depends on your own rates. We will do everything to get you as many gigs as possible.",
           "Du sætter dine egne priser, så hvor meget du tjener afhænger af din pris. Vi vil gøre alt hvad vi kan for at skaffe dig gigs."
         ]
       },
       "3": {
         "q": ["Where can I play?", "Hvor kan jeg spille?"],
         "a": [
-          "Technically you can play in the whole world, as we accept a range of currencies. At the moment we are focused on growing in Denmark, therefore don't expect to receive gigs outside of Denmark.",
-          "Teknisk set kan du spille i hele verden, da vi accepterer flere valuta. I øjeblikket fokuserer vi på at gro i Danmark, og derfor skal du ikke forvente at modtage gigs uden for Danmark."
+          "Technically you can play in the whole world, but some cities have more gigs than others. We recommend that you set your range to a relatively small and realistic area near your current location.",
+          "Teknisk set kan du spille i hele verden. Vi anbefaler at du sætter din radius til et relativt lille og realistisk område om din nuværende placering."
         ]
       },
       "4": {
@@ -39,7 +39,7 @@
         ],
         "a": [
           "If the organizer cancels an event where you have been confirmed to play, the organizer will be refunded in regards to your cancelation policy. You can set your own cancelation policy in your preferences specifying how many percentages are refunded to the organizer if he cancels. After the organizer has cancelled, the rest of the money will be transferred to your bank account.",
-          "Hvis arrangøren aflyser et event som du var blevet booket til, hvis arrangøren blive refunderet i overenstemmelse med din aflysningspolitik. Du kan indstille din egen aflysningspolitik under indstillinger og specificere hvor procent er refunderet. Efter arrangøren har aflyst vil det resterende beløb bliv overført til din bankkonto. "
+          "Hvis arrangøren aflyser et event som du var blevet booket til, vil arrangøren blive refunderet i overenstemmelse med din aflysningspolitik. Du kan indstille din egen aflysningspolitik under indstillinger og specificere hvor procent bliver refunderet. Efter arrangøren har aflyst vil det resterende beløb bliv overført til din bankkonto. "
         ]
       },
       "6": {
@@ -55,8 +55,8 @@
           "Hvad hvis arrangøren vil betale under bordet?"
         ],
         "a": [
-          "If the organizer asks if he can pay in another way than using Cueup, you should refuse. The payment process at Cueup ensures safety for both you and the organizer. If the event is not paid through Cueup, it won't count as an experience, and you can't get a rating for that event thus lowering your trustworthiness. When a organizer sees your offer, the experience will be showed alongside and it will help justify a higher price if you have played at more events. To see an example of what the organizer sees, go to your profile and select 'price offer example'.",
-          "Hvis arrangøren beder om at betale på en anden måde end Cueup, skal du afslå. Betalingsprocessen hos Cueup garanterer sikkerhed for både dig og arrangøren. Hvis eventet ikke betales gennem Cueup, vil det ikke tælle som erfaring på din profil, og du kan ikke modtage en anmeldelse. Når en arrangør ser dit tilbud, vil din erfaring fremgå og det vil hjælpe begrunde en højere pris hvis du har spillet til flere events. For at se et eksempel på hvad arrangøren ser, gå til din profil og vælg 'tilbud eksempel'."
+          "If the organizer asks if he can pay in another way than using Cueup you should refuse. The booking process at Cueup ensures safety for both you and the organizer, and if the event is not confirmed through Cueup, we can't give any assurance of payments, refunds, damaged equipment etc. Additionally it won't count as an experience, and you can't get a rating for that event thus lowering your rank. <br>If you wish to charge the customer directly, you can set up the <i>direct payout</i> method, and they'll only need to pay the service fee when confirming the booking.",
+          "Hvis arrangøren beder om at betale på en anden måde end Cueup bør du afslå. Bookingprocessen hos Cueup garanterer sikkerhed for både dig og arrangøren, og hvis eventet ikke bekræftes gennem Cueup kan vi ikke garantere din betaling, tilbagebetalinger, beskadigt udstyr osv. Derudover vil gigget ikke tælle som erfaring på din profil, og derfor vil du forværre din rank. <br>Hvis du ønsker at kunden betaler direkte til dig, kan du opsætte <i>direct payout</i> i dine indstillinger, og så skal kunden kun betale servicegebyret ved booking-bekræftelsen."
         ]
       },
       "8": {
@@ -75,8 +75,8 @@
           "Kan mine egne kunder betale gennem Cueup?"
         ],
         "a": [
-          "Yes. Go to your profile and scroll to the bottom. Here you'll find a section called 'REFER ORGANIZERS', and you can use one of the provided methods to get share a link to your profile. When referring your own customers the Cueup fee will be discarded.",
-          "Ja. Gå til din profil og scroll ned i bunden. Her finder du 'HENVIS ARRANGØRER', og du kan bruge en af metoderne til at dele din profil til at blive booket direkte. Når du henviser dine egne kunder, vil Cueup gebyret blive fjernet."
+          "Yes, just send a link to your Cueup profile. When referring your own customers the Cueup fee will be discarded.",
+          "Ja, bare send et link til din profil. Når du henviser dine egne kunder, vil Cueup gebyret blive fjernet."
         ]
       },
       "10": {
@@ -85,8 +85,8 @@
           "Kan jeg selv tilføje anmeldelser fra tidligere kunder?"
         ],
         "a": [
-          "Yes. Contact us using the chat function or our email, and we'll sort it out.",
-          "Ja, kontakt os og vi vil hjælpe dig med at få anmeldelsen på din profil."
+          "Yes, you can add it as a testimonial on your profile under reviews.",
+          "Ja, du kan tilføje testimonials på din profil under reviews."
         ]
       },
       "11": {
@@ -112,8 +112,18 @@
       "13": {
         "q": ["Is my profile public?", "Er min profil offentlig?"],
         "a": [
-          "Yes, but people can only find your profile if they have the corresponding link. To see your public profile either go to your profile and select 'public profile', or logout and go to the url of your profile.",
-          "Ja. For at se din offentlige profil, gå til din profil og tryk 'public profile', eller log ud og besøg din profils URL."
+          "Yes, but your profile can only be accessed directly with the link.",
+          "Ja, men din profil kan kun besøges gennem linket til din profil."
+        ]
+      },
+      "14": {
+        "q": [
+          "Can I get the payment at the event?",
+          "Kan jeg få betaling til eventet?"
+        ],
+        "a": [
+          "Yes, to get direct payments from the organizer, set up the <i>Direct payout</i> method in your settings.",
+          "Ja, for at modtage direkte betalinger fra arrangøren, skal du sætte <i>Direct payout</i> metoden op i dine indstillinger."
         ]
       }
     },
@@ -121,8 +131,8 @@
       "1": {
         "q": ["How much does it cost?", "Hvor meget koster det?"],
         "a": [
-          "At Cueup the DJs set their own prices, therefore we can't guarentee finding a DJ within your budget. It will help a lot if you write what your budget is when posting the event.",
-          "Hos Cueup sætter vores DJs deres egne priser, derfor kan vi ikke garantere at finde en DJ inden for dit budget. Det vil hjælpe meget hvis du skriver hvad dit budget er når du indsender dit event."
+          "At Cueup the DJs set their own prices, and we add a small service fee depending on the event. You are encouraged to include the budget when posting the event, otherwise you might receive irrelevant offers.",
+          "Hos Cueup sætter vores DJs deres egne priser, og vi tilføjer et lille servicegebyr. Det anbefales at inkludere dit budget i beskrivelsen, ellers modtager du sandsynligvis irrelevante tilbud."
         ]
       },
       "2": {
@@ -135,8 +145,8 @@
       "3": {
         "q": ["Where are the DJs available?", "Hvor kan jeg booke DJs?"],
         "a": [
-          "Our DJs are located all over the world, but currently we are focusing on growing in Denmark. When posting an event, you will get notified if no DJs could be found in the area.",
-          "Vores DJs befinder sig i hele verden, men i øjeblikket er vi fokuseret på Danmark, og det er her vi har flest DJs. Når du laver et event, vil du få besked hvis vi ikke kan finde nogle DJs i dit område."
+          "Our DJs are located all over the world. When posting an event, you will get notified if no DJs could be found in your area.",
+          "Vores DJs befinder sig i hele verden, og det er her vi har flest DJs. Når du laver et event, vil du få besked hvis vi ikke kan finde nogle DJs i dit område."
         ]
       },
       "4": {
@@ -145,7 +155,7 @@
           "Kan jeg kontakte DJen før jeg booker?"
         ],
         "a": [
-          "Yes. When receiving an offer, you can chat with the DJ. You can then contact the DJ to discuss the price for example. After paying you will receive the DJs phonenumber and email.",
+          "Yes. When receiving an offer, you can chat with the DJ. You can then contact the DJ to discuss the price for example. After paying you will receive the DJs phone number and email.",
           "Ja. Når du modtager et tilbud kan du chatte med DJen for at afstemme prisen etc. Efter du har betalt vil du modtage email og telefonnummer på DJen."
         ]
       },
@@ -169,8 +179,8 @@
           "Hvad hvis DJen vil betale udenom Cueup?"
         ],
         "a": [
-          "If the DJ asks if you can pay in another way than using Cueup, you should refuse. The payment process at Cueup ensures safety for both you and the DJ. If the event is not paid through Cueup, we won't be able to help you if a DJ cancels.",
-          "Hvis DJen beder dig om at betale på anden vis end Cueup, bør du afslå det. Betalingsprocessen hos Cueup garanterer sikkerhed for både dig og DJen. Hvis eventet ikke betales gennem Cueup, kan vi f.eks. ikke hjælpe dig i tilfældet af at DJen aflyser, eller hvis DJen ikke opfylder dine behov."
+          "If the DJ asks if you can pay in another way than using Cueup, you should refuse. The payment process at Cueup ensures safety for both you and the DJ. If the event is not paid through Cueup, we won't be able to help you if a DJ cancels, or in case of other complications.",
+          "Hvis DJen beder dig om at betale på anden vis end Cueup, bør du afslå det. Betalingsprocessen hos Cueup garanterer sikkerhed for både dig og DJen. Hvis eventet ikke betales gennem Cueup, kan vi f.eks. ikke hjælpe dig i tilfældet af at DJen aflyser, eller ved andre komplikationer."
         ]
       },
       "9": {
@@ -179,8 +189,8 @@
           "Hvor mange tilbud vil jeg modtage?"
         ],
         "a": [
-          "We aim to give you 3 offers but you might receive more or less.",
-          "Vi forsøger at give dig 3 tilbud, men du kan også modtage færre eller flere."
+          "We aim to give you at least 3 offers but you might receive more or less. If a DJ does not meet your requirements, you can decline and receive an offer from a new DJ.",
+          "Vi sigter mod at give dig 3 tilbud, men du kan også modtage færre eller flere. Hvis en DJ ikke møder dine krav, kan du decline og modtage et tilbud fra en ny DJ."
         ]
       },
       "10": {
@@ -209,8 +219,18 @@
           "Jeg skal bruge en kvittering der viser moms."
         ],
         "a": [
-          "When an event is paid, Cueup will send an initial receipt showing the total amount paid and the VAT ONLY of the service fees. It is the responsibility of the DJs to provide a receipt showing VAT of their part of the offer.",
-          "Når du betaler en DJ, vil Cueuep sende dig en kvittering der viser det fulde beløb og moms for servicegebyret. Det resterende beløb er en aftale mellem dig og DJen, og du skal bede DJen om at levere en kvittering for deres andel."
+          "In that case we recommends to use the <i>pay later</i> method, and receive an invoice directly from the DJ. Cueup will always send a receipt showing the service fee including VAT, and then it is the responsibility of the DJ to provide a receipt showing VAT of their part of the offer. <br> If the option to pay later does not show up when confirming the booking, ask the DJ to enable direct payments.",
+          "Så anbefaler vi dig at vælge <i>pay later</i> når du bekræfter bookingen, og modtage en fakutra direkte fra DJen. Cueuep vil altid sende dig en kvittering der viser det fulde beløb og moms for servicegebyret. Det resterende beløb er en aftale mellem dig og DJen, og du skal bede DJen om at levere en kvittering for deres andel. \b Hvis muligheden for at betale senere ikke vises ved bekræftelsen, så spørg DJen om at aktivere direkte udbetalinger."
+        ]
+      },
+      "13": {
+        "q": [
+          "Can I pay the DJ at the event?",
+          "Kan jeg betale DJen til eventet?"
+        ],
+        "a": [
+          "Yes, you can choose the pay later option when confirming the booking. If the option does not show up, ask the DJ to enable the direct payment option first.",
+          "Ja, du kan vælge <i>Pay later</i> når du bekræfter bookingen. Hvis muligheden ikke findes, kan du bede DJen om at aktivere direkte betalinger først. "
         ]
       }
     }

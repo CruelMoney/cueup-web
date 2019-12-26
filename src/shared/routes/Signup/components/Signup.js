@@ -37,7 +37,7 @@ class Signup extends Component {
                     <div className="container">
                         <div className="row center-xs">
                             <div className="col-xs-12">
-                                <h1 className="Header-title common-PageTitle">
+                                <h1 className="Header-title text-center common-PageTitle">
                                     {translate('signup.title')}
                                     <span className="Header-subTitle common-PageSubtitle">
                                         {translate('signup.description')}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { PageTitle } from 'components/Text';
 import { CollapsibleContainer, Collapsible } from '../../../../../components/common/Collapsible';
 
 export default class Organizer extends Component {
@@ -9,8 +10,11 @@ export default class Organizer extends Component {
 
         return (
             <div>
-                <h1>{translate('Questions and answers')}</h1>
-                <p className="subtitle">{translate('For organizers')}</p>
+                <PageTitle>
+                    {translate('Questions and answers')}
+                    <span>{translate('For organizers')}</span>
+                </PageTitle>
+
                 <CollapsibleContainer changeHash lazyLoad={false}>
                     <Collapsible label={translate('faq.organizer.1.q')}>
                         <p>{translate('faq.organizer.1.a')}</p>
@@ -45,6 +49,9 @@ export default class Organizer extends Component {
                     </Collapsible>
                     <Collapsible label={translate('faq.organizer.12.q')}>
                         <p>{translate('faq.organizer.12.a')}</p>
+                    </Collapsible>
+                    <Collapsible label={translate('faq.organizer.13.q')}>
+                        <p>{translate('faq.organizer.13.a')}</p>
                     </Collapsible>
                 </CollapsibleContainer>
             </div>
