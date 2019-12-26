@@ -90,7 +90,7 @@ const HTML = ({
             <div id="notification-portal" />
 
             <script
-                async
+                defer
                 // eslint-disable-next-line react/no-danger
                 type="text/javascript"
                 dangerouslySetInnerHTML={{
