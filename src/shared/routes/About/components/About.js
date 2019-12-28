@@ -13,13 +13,32 @@ export default class About extends Component {
                         <div className="col-sm-8">
                             <h1>About Cueup</h1>
                             <p style={{ marginBottom: '30px' }}>
-                                Cueup is the easiest way to book a DJ for your event. <br />
-                                We are all about making sure both DJs and organizers are satisfied.
+                                Cueup was founded in 2016 by Christopher Dengsø in Copenhagen,
+                                Denmark. Since then the company has grown to parts of Asia and
+                                America and continues to expand the community to new countries every
+                                day.
+                                <br />
+                                <br />
+                                We strive to help DJs get ahead in the world and connect them across
+                                borders - all meanwhile making it easier for event organizers to
+                                find a DJ than ever before.
                             </p>
+
                             <p className="terms_link">
                                 Have questions? Read the{' '}
                                 <a target="_blank" href="/faq/dj">
                                     FAQ
+                                </a>
+                            </p>
+                            <p className="terms_link">
+                                Feel like chatting?{' '}
+                                <a
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        window.olark('api.box.expand');
+                                    }}
+                                >
+                                    Send a message
                                 </a>
                             </p>
                             <p className="terms_link">
