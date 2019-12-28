@@ -385,6 +385,7 @@ li .link-look {
 .location_om .navigation .logo,
 .location_blog .navigation .logo,
 .not-found .navigation .logo {
+    color: #32325d;
     fill: #32325d;
 }
 .location_terms .mobileMenuButton h2,
@@ -464,14 +465,15 @@ li .link-look {
 
 .copyright {
     color: #cfd7df;
+    margin-top: 40px;
 }
 
 .footer-columns {
     display: flex;
-    text-align: center;
 }
-.footer-columns > div {
-    width: 150px;
+.footer-columns > div,
+.footer-columns li {
+    margin-right: 40px;
 }
 .text-center {
     text-align: center;
@@ -486,10 +488,18 @@ footer .dropdown-selector-wrapper {
     font-weight: 400;
     margin: auto;
 }
+footer .dropdown-selector-wrapper {
+    color: #31daff;
+    fill: #31daff;
+    font-weight: 600;
+}
 footer h4 {
     font-size: 14px;
     font-weight: 600;
     line-height: 30px;
+}
+footer .locales {
+    margin-top: 0;
 }
 footer a:hover,
 footer .link-look:hover,
