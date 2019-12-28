@@ -70,16 +70,26 @@ class footer extends Component {
                         <div>
                             <ul className="locales">
                                 <li>
-                                    <div className="dropdown-selector-wrapper">
-                                        <img src={languageIcon} alt="Language select" />
+                                    <div
+                                        className="dropdown-selector-wrapper"
+                                        style={{
+                                            color: this.props.color,
+                                            fill: this.props.color,
+                                        }}
+                                    >
+                                        <svg
+                                            width="13"
+                                            height="13"
+                                            version="1.1"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlnsXlink="http://www.w3.org/1999/xlink"
+                                        >
+                                            <path d="M8.079,9.837L6.116,12.3A0.654,0.654,0,0,1,5,11.841V9.852C2.488,9.351,1,7.6,1,5.5,1,3.015,3.087,1,6.5,1S12,3.015,12,5.5A4.5,4.5,0,0,1,8.079,9.837Z" />
+                                        </svg>
                                         <select
                                             id="language-selector"
                                             className="dropdown-selector"
                                             name="language-selector"
-                                            style={{
-                                                color: this.props.color,
-                                                fill: this.props.color,
-                                            }}
                                             onChange={(e) => this.setActiveLanguage(e.target.value)}
                                             value={this.props.currentLanguage || undefined}
                                         >
@@ -90,15 +100,44 @@ class footer extends Component {
                                 </li>
                                 {!this.props.signedIn ? (
                                     <li>
-                                        <div className="dropdown-selector-wrapper">
+                                        <div
+                                            className="dropdown-selector-wrapper"
+                                            style={{
+                                                color: this.props.color,
+                                                fill: this.props.color,
+                                            }}
+                                        >
+                                            <svg
+                                                version="1.1"
+                                                id="Capa_1"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                xmlnsXlink="http://www.w3.org/1999/xlink"
+                                                x="0px"
+                                                y="0px"
+                                                viewBox="0 0 481.569 481.569"
+                                                xmlSpace="preserve"
+                                                width="13"
+                                                height="13"
+                                            >
+                                                <g>
+                                                    <path
+                                                        d="M444.288,429.288c-5.4-13.2-10.9-26.4-16.9-39.4c-5.3-11.6-12.1-15-24.8-12.1c-16.1,3.7-31.9,8.6-48,11.9
+		c-31.1,6.5-62.3,7.1-93-2.6c-38.5-12.1-59-40-71.6-76h104.4c8.2,0,14.8-6.6,14.8-14.8v-32.9c0-8.2-6.6-14.8-14.8-14.8h-114.4
+		c0-9.2-0.1-18,0-26.8h114.4c8.2,0,14.8-6.6,14.8-14.8v-32.9c0-8.2-6.6-14.8-14.8-14.8h-100c0-0.4,0-0.8,0.2-1
+		c12-27.3,29.5-49.2,58.2-60.6c33.4-13.2,67.5-12.9,101.9-5.8c16.3,3.3,32.3,8.3,48.6,12c11.9,2.7,18.8-0.8,23.9-11.9
+		c5.9-12.8,11.3-25.8,16.7-38.9c5.1-12.3,2.1-21-9.5-27.8c-2.9-1.7-5.9-3.1-9-4.3c-48.2-18.8-97.9-25.8-149.2-17.6
+		c-36.1,5.8-69.8,18.2-98.9,40.8c-36.7,28.4-60.5,65.9-74.3,110l-1.7,5.1h-51.4c-8.2,0-14.8,6.6-14.8,14.8v32.9
+		c0,8.2,6.6,14.8,14.8,14.8h40.5c0,9,0,17.7,0,26.8h-40.5c-8.2,0-14.8,6.6-14.8,14.8v32.9c0,8.2,6.6,14.8,14.8,14.8h48.8
+		c3.7,12,6.8,24.2,11.5,35.7c24.7,59.6,66.1,102,128.4,122.2c51.5,16.7,103.4,16.2,155.3,1.9c13.5-3.7,26.9-8.5,39.7-14.4
+		C445.988,450.788,449.188,441.188,444.288,429.288z"
+                                                    />
+                                                </g>
+                                            </svg>
+
                                             <select
                                                 id="currency-selector"
                                                 className="dropdown-selector"
                                                 name="currency-selector"
-                                                style={{
-                                                    color: this.props.color,
-                                                    fill: this.props.color,
-                                                }}
                                                 onChange={(e) =>
                                                     this.props.changeCurrency(e.target.value)
                                                 }
