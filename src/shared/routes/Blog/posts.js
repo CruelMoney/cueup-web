@@ -1,5 +1,91 @@
 const posts = [
     {
+        id: 5,
+        title: 'New "Direct Payout" method',
+        slug: 'new-direct-payout-method',
+        excerpt:
+            'The new direct payout method has been launched and we are so excited for it! DJs are able to change the payment method through preferences…',
+        published_date: '2020-01-02T00:00:00.00Z',
+        updated_date: '2020-01-02T00:00:00.00Z',
+        author: 'Sarah F.S.',
+        thumbnail_url:
+            'https://images.unsplash.com/photo-1553729459-efe14ef6055d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80',
+        thumbnail_alt: 'payout method screenshot',
+        tag: 'payment dj events cancelation policy',
+        category: 'dj',
+        content: `
+        <p>
+        The new direct payout method has been launched and we are so excited for it!
+        </p>
+        <p>
+        DJs are now able to change the payout method in the settings. This will be a great way for DJs who want to get direct payment from the event organizers in cash, using PayPal or something third.
+        </p>
+        <p>
+        Here is the look of the new payout method:
+        </p>
+        <figure ><img
+            
+        role="presentation"
+        src="https://miro.medium.com/max/986/1*DeihXp2hfqMOxK4khAvM4w.png"
+        /><figcaption
+        data-selectable-paragraph=""
+        >
+        Screenshot from the settings
+        </figcaption>
+        </figure>
+
+        <h2>
+        How it works
+        </h2>
+        <p>
+        Here are the differences of the two payout methods:
+        </p>
+        <b>
+        Direct
+        </b>
+        <br/> 
+        <br/>
+        <ul >
+        <li>
+        It will allows DJs to get the payout directly from the event organizers, although DJs will be responsible for their own payout since there will be no cancelation policy applied on this payment method.
+        </li>
+        <li>
+        DJ can decide or discuss with the organizer how the payout will be made.    
+        </li>
+        <li>
+        You can decide to be paid in cash, bank transfer, PayPal etc. 
+        </li>
+        <li>
+        Cueup won’t guarantee for any miscommunication or problem between you and the organizer about the payout.
+        </li>
+        </ul>
+
+        <b>
+        Bank account
+        </b>
+        <br/> 
+        <br/>
+        <ul >
+        <li>
+        When you choose this method, you have to complete your bank account information like IBAN , account number, bank name, or BSB etc. The bank information details might be different, depends on country where your bank is. Some country may not be able to do this method, please see the lists of acceptable country in the settings.
+                </li>
+        <li>
+        There will be a small fee applied on this method, in return your cancelation policy will be applied, and we’ll be responsible for collecting the payment. That means, when an event is cancelled by the organizer, the money they paid will be refunded depending on your cancelation policy.
+                </li>
+        <li>
+        DJs won’t get any penalty when you have to cancel to play the gig. As a result, the payment refund will be fully transferred back to the organizer and Cueup will manage to find another DJ.
+        </li>
+        <li>
+        Using this method, Cueup will manage all the payments. The payment will be transferred to you immediately after the event is finished.
+        </li>
+        </ul>
+
+        <p>
+        DJs can set up both methods and just leave it to the organizer to choose how they want to pay. We always try to offer the best way for both DJ and event organizer.
+        </p>
+            `,
+    },
+    {
         id: 4,
         title: 'How to Throw an Incredible Office Christmas Party',
         slug: 'how-to-throw-a-christmas-party',
