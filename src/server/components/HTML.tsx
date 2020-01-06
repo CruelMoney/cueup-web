@@ -33,7 +33,6 @@ const HTML = ({
                 src="https://www.google-analytics.com/analytics.js"
             />
             <script async type="text/javascript" src="/autotrack.js" />
-            <script id="stripe-js" src="https://js.stripe.com/v3/" async />
 
             <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async />
             <script

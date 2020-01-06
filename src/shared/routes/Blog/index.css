@@ -25,12 +25,12 @@
 }
 
 @media (min-width: 768px) {
-    .post-feed > *:nth-child(6n + 1) {
+    .post-feed > *:nth-child(4n + 1) {
         flex: 1 1 100%;
         flex-direction: row;
         max-width: 100%;
     }
-    .post-feed > *:nth-child(6n + 1) .img-wrapper {
+    .post-feed > *:nth-child(4n + 1) .img-wrapper {
         flex: 1.9;
         height: auto;
     }
