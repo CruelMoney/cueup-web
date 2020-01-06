@@ -18,8 +18,30 @@ bundle-stats.json
 benchmarks
 
 
-# Created by https://www.gitignore.io/api/node,macos,windows,visualstudiocode
-# Edit at https://www.gitignore.io/?templates=node,macos,windows,visualstudiocode
+# Created by https://www.gitignore.io/api/node,code,react,linux,macos,windows
+# Edit at https://www.gitignore.io/?templates=node,code,react,linux,macos,windows
+
+### Code ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+### Linux ###
+*~
+
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
 
 ### macOS ###
 # General
@@ -155,6 +177,7 @@ dist/
 tmp/
 temp/
 
+<<<<<<< HEAD
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
@@ -165,6 +188,20 @@ temp/
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
+=======
+### react ###
+.DS_*
+**/*.backup.*
+**/*.back.*
+
+node_modules
+
+*.sublime*
+
+psd
+thumb
+sketch
+>>>>>>> development
 
 ### Windows ###
 # Windows thumbnail cache files
@@ -192,4 +229,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+<<<<<<< HEAD
 # End of https://www.gitignore.io/api/node,macos,windows,visualstudiocode
+=======
+# End of https://www.gitignore.io/api/node,code,react,linux,macos,windows
+>>>>>>> development
