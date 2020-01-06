@@ -23,7 +23,7 @@ const Title = styled(HeaderTitle)`
 
 const HeroCol = styled(Col)`
     margin-top: 145px;
-    width: 620px;
+    width: 550px;
 `;
 
 const Hero = () => {
