@@ -12,6 +12,7 @@
     "/gig": ["/gig", "/dk/gig"],
     "/blog": ["/blog", "/dk/blog"],
     "/signup": ["/signup", "/dk/tilmeld"],
+    "/become-dj": ["/become-dj", "/dk/bliv-dj"],
     "/book-dj": ["/book-dj", "/dk/book-dj"],
     "/book-dj/denmark": ["/book-dj/denmark", "/dk/book-dj/danmark"],
     "/book-dj/denmark/copenhagen": [

@@ -7,6 +7,7 @@ import ReactPixel from 'react-facebook-pixel';
 
 import { getActiveLanguage, getTranslate, setActiveLanguage } from 'react-localize-redux';
 
+import LazyBecomeDj from 'routes/BecomeDj';
 import { init as analytics } from './utils/analytics/autotrack';
 import { Environment } from './constants/constants';
 
@@ -183,6 +184,7 @@ const RouteWrapper = memo(({ translate, cssLocation }) => {
                     <Route exact path={[translate('routes./'), '/verifyEmail']} component={Home} />
                     <Route path={translate('routes./about')} component={About} />
                     <Route path={[translate('routes./user/:permalink')]} component={User} />
+                    <Route path={translate('routes./become-dj')} component={LazyBecomeDj} />
                     <Route path={translate('routes./signup')} component={Signup} />
                     <Route path={translate('routes./faq')} component={Faq} />
                     <Route path={translate('routes./terms')} component={Terms} />
