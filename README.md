@@ -4,6 +4,7 @@
 ## TOC
 
 -   [Features](#features)
+-   [Get started](#getstarted)
 -   [Usage](#usage)
 -   [Structure](#structure)
 
@@ -40,15 +41,23 @@ This project has out-of-the-box support for the following things:
     -   ✅ Redis
 
 
+## Get Started
+
+`yarn install`
+`cp .env.example .env`
+`yarn start:dev`
+
+Then visit http://localhost:8500
+
 ## Usage
 
-There are npm scripts for all the relevant things. The server will always be started on port 8500 unless otherwise specified in `process.env.PORT`. You can use a `.env` file to specify env vars. If you want to use them in your client side code, don't forget to add them in [config/env.js](config/env.js#L37).
+There are npm scripts for all the relevant things. The server will always be started on port 8500 unless otherwise specified in `process.env.PORT`. You can use a `.env` file to specify env vars. If you want to use them in your client side code, don't forget to add them in `.env` with `REACT_APP` prefix.
 
 ### Noteworthy scripts:
 
 #### `yarn start:dev`
 
-Starts the app in development mode: creates a new client and server dev build using webpack, starts the Express server build (for both file serving and server side pre-rendering) and keeps webpack open in watchmode. Updates the app (if possible) on change using HMR.
+Starts the app in development mode: creates a new client and server dev build using webpack, starts the Express server build (for both file serving and server side pre-rendering) and keeps webpack open in watchmode. Updates the app (if possible) on change using HMR. If you wish to run without SSR run with `--client-only`
 
 #### `yarn start`
 
