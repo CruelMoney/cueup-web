@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { HeaderTitle } from 'components/Text';
+import { HeaderTitle, Body } from 'components/Text';
 import { Container, Col, Row } from 'components/Blocks';
+import addTranslate from '../../../components/higher-order/addTranslate';
+import content from '../content.json';
 
 const Bg = styled.div`
     min-height: 100vh;
@@ -21,22 +23,31 @@ const Title = styled(HeaderTitle)`
     line-height: 72px;
 `;
 
+const SubTitle = styled(Body)`
+    font-size: 20px;
+`;
+
 const HeroCol = styled(Col)`
     margin-top: 145px;
     width: 550px;
 `;
 
-const Hero = () => {
+const Hero = (props) => {
+    const { translate, currentLanguage } = props;
     return (
         <Container>
             <Row center>
                 <HeroCol>
-                    <Title>The only profile a DJ needs</Title>
+                    <Title>{translate('become-dj.hero.the-only-profile-a-DJ-needs')}</Title>
+                    <SubTitle>{translate('become-dj.hero.subtitle')}</SubTitle>
                 </HeroCol>
+            </Row>
+            <Row center>
+                <Body white>text</Body>
             </Row>
             <Bg />
         </Container>
     );
 };
 
-export default Hero;
+export default addTranslate(Hero, content);
