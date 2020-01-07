@@ -4,6 +4,7 @@ import { HeaderTitle, Body } from 'components/Text';
 import { Container, Col, Row } from 'components/Blocks';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import content from '../content.json';
+import ButtonLinkGlow from '../components/ButtonLinkGlow';
 
 const Bg = styled.div`
     min-height: 100vh;
@@ -25,11 +26,22 @@ const Title = styled(HeaderTitle)`
 
 const SubTitle = styled(Body)`
     font-size: 20px;
+    text-align: center;
+    width: 336px;
+    margin: auto;
 `;
 
 const HeroCol = styled(Col)`
     margin-top: 145px;
     width: 550px;
+`;
+
+const HeroButtonLink = styled(ButtonLinkGlow)`
+    display: block;
+    margin-top: 40px;
+    font-size: 18px;
+    height: 50px;
+    box-shadow: 0px 0px 30px 30px #31daff;
 `;
 
 const Hero = (props) => {
@@ -39,12 +51,13 @@ const Hero = (props) => {
             <Row center>
                 <HeroCol>
                     <Title>{translate('become-dj.hero.the-only-profile-a-DJ-needs')}</Title>
-                    <SubTitle>{translate('become-dj.hero.subtitle')}</SubTitle>
+                    <SubTitle white>{translate('become-dj.hero.subtitle')}</SubTitle>
+                    <HeroButtonLink color="#00D1FF" to={props.firstTo} className="button elevated">
+                        {translate('become-dj.hero.apply-to-become-dj')}
+                    </HeroButtonLink>
                 </HeroCol>
             </Row>
-            <Row center>
-                <Body white>text</Body>
-            </Row>
+            <Row center />
             <Bg />
         </Container>
     );

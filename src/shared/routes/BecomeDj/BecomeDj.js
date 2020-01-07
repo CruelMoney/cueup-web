@@ -30,7 +30,7 @@ class Index extends Component {
                     />
                 </Helmet>
                 <ScrollToTop />
-                <Hero />
+                <Hero firstTo={translate('routes./')} />
 
                 <div style={{ height: '100vh' }} />
 
