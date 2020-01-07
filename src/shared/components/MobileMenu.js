@@ -97,7 +97,7 @@ const Content = ({
                 <ul>
                     {!isHome ? (
                         <li>
-                            <Navlink buttonLook={true} to="/" label={translate('arrange-event')} />
+                            <Navlink buttonLook={true} to="/" label={translate('how-it-works')} />
                         </li>
                     ) : null}
 
@@ -150,7 +150,7 @@ const Content = ({
                                 onClick={() => setShow(false)}
                                 buttonLook={true}
                                 to="/signup"
-                                label={translate('apply-to-become-dj')}
+                                label={translate('become-dj')}
                                 important={true}
                             />
                         </li>

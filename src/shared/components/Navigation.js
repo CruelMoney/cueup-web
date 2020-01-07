@@ -63,7 +63,7 @@ const Menu = ({ translate, history, location }) => {
                                                 <Navlink
                                                     buttonLook={true}
                                                     to={translate('routes./')}
-                                                    label={translate('arrange-event')}
+                                                    label={translate('how-it-works')}
                                                 />
                                             </li>
                                         ) : null}
@@ -94,7 +94,7 @@ const Menu = ({ translate, history, location }) => {
                                                 <Navlink
                                                     buttonLook={true}
                                                     to={translate('routes./signup')}
-                                                    label={translate('apply-to-become-dj')}
+                                                    label={translate('become-dj')}
                                                     important={true}
                                                 />
                                             </li>
