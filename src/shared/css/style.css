@@ -246,7 +246,6 @@ body.pre-header-content .navigation {
 .mobileMenuButton {
     backface-visibility: hidden;
     border-radius: 25px;
-    box-shadow: 0 3px 15px 0 rgba(0, 0, 0, 0.25) !important;
     cursor: pointer;
     display: none;
     height: 50px;
@@ -263,16 +262,16 @@ body.pre-header-content .navigation {
 .mobileMenuButton h2,
 .mobileMenuButton h2:before,
 .mobileMenuButton h2:after {
-    background: #31daff;
-    border-radius: 1px;
-    height: 3px;
+    background: white;
+    border-radius: 3px;
+    height: 5px;
     position: absolute;
     transform: translate3d(0, 0, 0);
-    width: 24px;
+    width: 40px;
 }
 .mobileMenuButton h2 {
     font-size: 0;
-    left: 13px;
+    left: 0px;
     top: 23px;
 }
 .mobileMenuButton h2:before,
@@ -281,10 +280,10 @@ body.pre-header-content .navigation {
     left: 0;
 }
 .mobileMenuButton h2:before {
-    top: -9px;
+    top: -14px;
 }
 .mobileMenuButton h2:after {
-    top: 9px;
+    top: 14px;
 }
 
 .popupCloseButton {
