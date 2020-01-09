@@ -9,16 +9,8 @@ import GracefullImage from '../../../components/GracefullImage';
 import DJProfileDesktopImage from '../../../assets/images/desktop-cueup.png';
 
 const Bg = styled.div`
-    // min-height: 130vh;
-    // height: 130vh;
     width: 100vw;
-    // overflow-x: hidden;
     background-image: radial-gradient(50% 58% at 50% 33%, #122b48 12%, #0b1b2d 90%);
-    // position: absolute;
-    // top: 0;
-    // left: 0;
-    // right: 0;
-    // z-index: -1;
 `;
 
 const TextAccent = styled.h3`
