@@ -9,17 +9,16 @@ import GracefullImage from '../../../components/GracefullImage';
 import DJProfileDesktopImage from '../../../assets/images/desktop-cueup.png';
 
 const Bg = styled.div`
-    min-height: 300vh;
-    height: 300vh;
+    // min-height: 130vh;
+    // height: 130vh;
     width: 100vw;
-    overflow-x: hidden;
-    background-image: radial-gradient(50% 58%, #122b48 22%, #0b1b2d 59%);
-    box-shadow: 0 5px 22px -6px rgba(29, 44, 49, 0.05), 0 0 3px 0 rgba(33, 44, 49, 0.05);
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: -1;
+    // overflow-x: hidden;
+    background-image: radial-gradient(50% 58% at 50% 33%, #122b48 12%, #0b1b2d 90%);
+    // position: absolute;
+    // top: 0;
+    // left: 0;
+    // right: 0;
+    // z-index: -1;
 `;
 
 const TextAccent = styled.h3`
@@ -144,68 +143,72 @@ const GracefullImageDJProfile = styled(GracefullImage)`
 const Hero = (props) => {
     const { translate, currentLanguage } = props;
     return (
-        <Container>
-            <Row center>
-                <HeroCol>
-                    <TextAccent margin="0 0 15px 0">
-                        {translate('become-dj.hero.2020-update')}
-                    </TextAccent>
-                    <Title>{translate('become-dj.hero.the-only-profile-a-DJ-needs')}</Title>
-                    <SubTitle white>{translate('become-dj.hero.subtitle')}</SubTitle>
-                    <HeroButtonLink color="#00D1FF" to={props.firstTo} className="button elevated">
-                        {translate('become-dj.hero.apply-to-become-dj')}
-                    </HeroButtonLink>
-                </HeroCol>
-            </Row>
-            <Row>
-                <GetGigsWrapperCol>
-                    <GetGigsTextRow>
-                        {/* <GetGigsTextRowDoubleColWrapper> */}
-                        <GetGigsTextRowCol1>
-                            <GetGigsTextRowColFirstRow>
-                                {translate('become-dj.hero.get-gigs.get')}
-                            </GetGigsTextRowColFirstRow>
-                            <GetGigsTextRowColSecondRow>
-                                {translate('become-dj.hero.get-gigs.gigs')}
-                            </GetGigsTextRowColSecondRow>
-                        </GetGigsTextRowCol1>
-                        <GetGigsTextRowCol2>
-                            <GetGigsTextRowColFirstRow>
-                                {translate('become-dj.hero.upload-mixtapes.upload')}
-                            </GetGigsTextRowColFirstRow>
-                            <GetGigsTextRowColSecondRow>
-                                {translate('become-dj.hero.upload-mixtapes.mixtapes')}
-                            </GetGigsTextRowColSecondRow>
-                        </GetGigsTextRowCol2>
-                        <GetGigsTextRowCol3>
-                            <GetGigsTextRowColFirstRow>
-                                {translate('become-dj.hero.showcase-photos.showcase')}
-                            </GetGigsTextRowColFirstRow>
-                            <GetGigsTextRowColSecondRow>
-                                {translate('become-dj.hero.showcase-photos.photos')}
-                            </GetGigsTextRowColSecondRow>
-                        </GetGigsTextRowCol3>
-                        <GetGigsTextRowCol4>
-                            <GetGigsTextRowColFirstRow>
-                                {translate('become-dj.hero.add-reviews.add')}
-                            </GetGigsTextRowColFirstRow>
-                            <GetGigsTextRowColSecondRow>
-                                {translate('become-dj.hero.add-reviews.reviews')}
-                            </GetGigsTextRowColSecondRow>
-                        </GetGigsTextRowCol4>
-                    </GetGigsTextRow>
-                    <GetGigsImageRow>
-                        <GracefullImageDJProfile
-                            src={DJProfileDesktopImage}
-                            animate
-                            alt="cueup DJ profile - desktop"
-                            style={{ width: '100%' }}
-                        />
-                    </GetGigsImageRow>
-                </GetGigsWrapperCol>
-            </Row>
-            <Bg />
-        </Container>
+        <Bg>
+            <Container>
+                <Row center>
+                    <HeroCol>
+                        <TextAccent margin="0 0 15px 0">
+                            {translate('become-dj.hero.2020-update')}
+                        </TextAccent>
+                        <Title>{translate('become-dj.hero.the-only-profile-a-DJ-needs')}</Title>
+                        <SubTitle white>{translate('become-dj.hero.subtitle')}</SubTitle>
+                        <HeroButtonLink
+                            color="#00D1FF"
+                            to={props.firstTo}
+                            className="button elevated"
+                        >
+                            {translate('become-dj.hero.apply-to-become-dj')}
+                        </HeroButtonLink>
+                    </HeroCol>
+                </Row>
+                <Row>
+                    <GetGigsWrapperCol>
+                        <GetGigsTextRow>
+                            <GetGigsTextRowCol1>
+                                <GetGigsTextRowColFirstRow>
+                                    {translate('become-dj.hero.get-gigs.get')}
+                                </GetGigsTextRowColFirstRow>
+                                <GetGigsTextRowColSecondRow>
+                                    {translate('become-dj.hero.get-gigs.gigs')}
+                                </GetGigsTextRowColSecondRow>
+                            </GetGigsTextRowCol1>
+                            <GetGigsTextRowCol2>
+                                <GetGigsTextRowColFirstRow>
+                                    {translate('become-dj.hero.upload-mixtapes.upload')}
+                                </GetGigsTextRowColFirstRow>
+                                <GetGigsTextRowColSecondRow>
+                                    {translate('become-dj.hero.upload-mixtapes.mixtapes')}
+                                </GetGigsTextRowColSecondRow>
+                            </GetGigsTextRowCol2>
+                            <GetGigsTextRowCol3>
+                                <GetGigsTextRowColFirstRow>
+                                    {translate('become-dj.hero.showcase-photos.showcase')}
+                                </GetGigsTextRowColFirstRow>
+                                <GetGigsTextRowColSecondRow>
+                                    {translate('become-dj.hero.showcase-photos.photos')}
+                                </GetGigsTextRowColSecondRow>
+                            </GetGigsTextRowCol3>
+                            <GetGigsTextRowCol4>
+                                <GetGigsTextRowColFirstRow>
+                                    {translate('become-dj.hero.add-reviews.add')}
+                                </GetGigsTextRowColFirstRow>
+                                <GetGigsTextRowColSecondRow>
+                                    {translate('become-dj.hero.add-reviews.reviews')}
+                                </GetGigsTextRowColSecondRow>
+                            </GetGigsTextRowCol4>
+                        </GetGigsTextRow>
+                        <GetGigsImageRow>
+                            <GracefullImageDJProfile
+                                src={DJProfileDesktopImage}
+                                animate
+                                alt="cueup DJ profile - desktop"
+                                style={{ width: '100%' }}
+                            />
+                        </GetGigsImageRow>
+                    </GetGigsWrapperCol>
+                </Row>
+            </Container>
+        </Bg>
     );
 };
 
