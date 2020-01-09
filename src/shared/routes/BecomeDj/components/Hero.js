@@ -12,6 +12,7 @@ const Bg = styled.div`
     min-height: 300vh;
     height: 300vh;
     width: 100vw;
+    overflow-x: hidden;
     background-image: radial-gradient(50% 58%, #122b48 22%, #0b1b2d 59%);
     box-shadow: 0 5px 22px -6px rgba(29, 44, 49, 0.05), 0 0 3px 0 rgba(33, 44, 49, 0.05);
     position: absolute;
@@ -61,6 +62,9 @@ const GetGigsFirstRow = styled(Row)`
         order: 2;
     }
     flex: 1;
+    align-self: center;
+    justify-content: space-between;
+    width: 80%;
 `;
 
 const GetGigsSecondRow = styled(Row)`
@@ -68,16 +72,17 @@ const GetGigsSecondRow = styled(Row)`
     @media only screen and (max-width: 425px) {
         order: 1;
     }
+    justify-content: center;
+    margin-top: 20px;
 `;
 
 const GetGigsWrapperCol = styled(Col)`
     flex: 1;
     margin-top: 130px;
+    justify-content: center;
 `;
 
-const GetGigsCol = styled(Col)`
-    flex: 1;
-`;
+const GetGigsCol = styled(Col)``;
 
 const GetGigsColFirstRow = styled(Row)`
     opacity: 0.5;
@@ -93,7 +98,7 @@ const GetGigsColSecondRow = styled(Row)`
 `;
 
 const GracefullImageDJProfile = styled(GracefullImage)`
-    width: 550px;
+    width: 100%;
 `;
 
 const Hero = (props) => {
@@ -112,7 +117,7 @@ const Hero = (props) => {
                     </HeroButtonLink>
                 </HeroCol>
             </Row>
-            <Row center fullWidth>
+            <Row>
                 <GetGigsWrapperCol>
                     <GetGigsFirstRow>
                         <GetGigsCol>
@@ -153,6 +158,7 @@ const Hero = (props) => {
                             src={DJProfileDesktopImage}
                             animate
                             alt="cueup DJ profile - desktop"
+                            style={{ width: '100%' }}
                         />
                     </GetGigsSecondRow>
                 </GetGigsWrapperCol>

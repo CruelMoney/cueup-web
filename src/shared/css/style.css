@@ -7,6 +7,7 @@ body {
     font-family: 'AvenirNext', Open Sans, Segoe UI, Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased;
     margin: 0;
+    overflow-x: hidden;
     overflow-y: auto;
     padding: 0;
 }
