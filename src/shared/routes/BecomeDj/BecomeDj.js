@@ -7,6 +7,12 @@ import thumbDa from '../../assets/images/signup_da.png';
 import { Environment } from '../../constants/constants';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Hero from './components/Hero';
+import Integrations from './components/Integrations';
+import GigsFeature from './components/GigsFeature';
+import Payments from './components/Payments';
+import CancelationFeature from './components/CancelationFeature';
+import AvailableOn from './components/AvailableOn';
+import JoinThousands from './components/JoinThousands';
 import content from './content.json';
 
 class Index extends Component {
@@ -31,6 +37,12 @@ class Index extends Component {
                 </Helmet>
                 <ScrollToTop />
                 <Hero firstTo={translate('routes./')} />
+                <Integrations />
+                <GigsFeature />
+                <Payments />
+                <CancelationFeature />
+                <AvailableOn />
+                <JoinThousands />
 
                 <div style={{ height: '100vh' }} />
 

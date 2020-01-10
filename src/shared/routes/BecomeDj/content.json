@@ -32,7 +32,7 @@
 			"and-more" : ["...and more", "...and more"],
 			"coming-soon" : ["* Coming soon", "* Coming soon"]
 		},
-		"gigs": {
+		"gigs-feature": {
 			"new-gig-request": {
 				"new-gig-request": ["NEW GIG REQUEST", "NEW GIG REQUEST"],
 				"new-years-party": ["New Years Party", "New Years Party"],
@@ -102,6 +102,5 @@
 			"content": ["Cueup is a growing community of DJs, a major key to success. Put it this way, it took me twenty five years to get these plants.", "Cueup is a growing community of DJs, a major key to success. Put it this way, it took me twenty five years to get these plants."],
 			"apply-to-become-DJ": ["Apply to become DJ", "Apply to become DJ"]
 		}
-
 	}
 }

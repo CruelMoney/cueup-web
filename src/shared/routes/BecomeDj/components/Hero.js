@@ -20,7 +20,7 @@ const TextAccent = styled.h3`
     ${(margin) => (margin ? margin : '0')}
 `;
 
-export const Title = styled.h1`
+const Title = styled.h1`
     color: #fff;
     margin-bottom: 0.3em;
     display: inline-block;
