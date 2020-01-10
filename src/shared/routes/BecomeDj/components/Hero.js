@@ -4,20 +4,14 @@ import { HeaderTitle, Body } from 'components/Text';
 import { Container, Col, Row } from 'components/Blocks';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import content from '../content.json';
-import ButtonLinkGlow from '../components/ButtonLinkGlow';
 import GracefullImage from '../../../components/GracefullImage';
 import DJProfileDesktopImage from '../../../assets/images/desktop-cueup.png';
+import { TextAccent } from '../components/blocks/TextAccent';
+import ButtonLinkGlow from './blocks/ButtonLinkGlow';
 
 const Bg = styled.div`
     width: 100vw;
     background-image: radial-gradient(50% 58% at 50% 33%, #122b48 12%, #0b1b2d 90%);
-`;
-
-const TextAccent = styled.h3`
-    color: #00d1ff;
-    text-align: center;
-    font-size: 15px;
-    ${(margin) => (margin ? margin : '0')}
 `;
 
 const Title = styled.h1`
