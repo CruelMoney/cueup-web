@@ -7,29 +7,12 @@ import content from '../content.json';
 import GracefullImage from '../../../components/GracefullImage';
 import DJProfileDesktopImage from '../../../assets/images/desktop-cueup.png';
 import { TextAccent } from '../components/blocks/TextAccent';
+import { Title } from '../components/blocks/Title';
 import ButtonLinkGlow from './blocks/ButtonLinkGlow';
 
 const Bg = styled.div`
     width: 100vw;
     background-image: radial-gradient(50% 58% at 50% 33%, #122b48 12%, #0b1b2d 90%);
-`;
-
-const Title = styled.h1`
-    color: #fff;
-    margin-bottom: 0.3em;
-    display: inline-block;
-    position: relative;
-    font-size: 72px;
-    letter-spacing: -1.5px;
-    text-align: center;
-    line-height: 72px;
-    @media only screen and (max-width: 425px) {
-        font-size: 42px;
-        line-height: 45px;
-        > * {
-            display: none;
-        }
-    }
 `;
 
 const SubTitle = styled(Body)`

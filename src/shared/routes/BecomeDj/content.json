@@ -24,6 +24,7 @@
 			}
 		},
 		"integrations": {
+			"integrations" : ["INTEGRATIONS", "INTEGRATIONS"],
 			"combine-content-&-sell-yourself" : ["Combine content & sell yourself", "Combine content & sell yourself"],
 			"instagram" : ["Instagram", "Instagram"],
 			"soundcloud" : ["SoundCloud", "SoundCloud"],
