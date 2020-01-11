@@ -16,6 +16,7 @@ bundle-stats.json
 .vscode
 /dependency-graph.svg
 benchmarks
+.swp
 
 
 # Created by https://www.gitignore.io/api/node,code,react,linux,macos,windows
