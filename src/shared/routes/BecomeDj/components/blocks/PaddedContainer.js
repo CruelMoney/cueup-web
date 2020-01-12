@@ -4,4 +4,5 @@ import { Container } from '../../../../components/Blocks';
 
 export const PaddedContainer = styled(Container)`
     padding-top: ${({ paddingTop }) => (paddingTop ? paddingTop : '0')};
+    padding-bottom: ${({ paddingBottom }) => (paddingBottom ? paddingBottom : '0')};
 `;

@@ -29,7 +29,7 @@
 			"instagram" : ["Instagram", "Instagram"],
 			"soundcloud" : ["SoundCloud", "SoundCloud"],
 			"testimonials" : ["Testimonials", "Testimonials"],
-			"mixcloud" : ["Mixcloud", "Mixcloud"],
+			"mixcloud" : ["Mixcloud*", "Mixcloud*"],
 			"and-more" : ["...and more", "...and more"],
 			"coming-soon" : ["* Coming soon", "* Coming soon"]
 		},

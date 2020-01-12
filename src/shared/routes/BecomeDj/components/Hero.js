@@ -116,7 +116,7 @@ const Hero = (props) => {
             <Container>
                 <Row center>
                     <HeroCol>
-                        <TextAccent margin="0 0 15px 0">
+                        <TextAccent center margin="0 0 15px 0">
                             {translate('become-dj.hero.2020-update')}
                         </TextAccent>
                         <Title>{translate('become-dj.hero.the-only-profile-a-DJ-needs')}</Title>
