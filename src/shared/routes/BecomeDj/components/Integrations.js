@@ -32,7 +32,8 @@ const IntegrationsWrapper = styled.div`
 
 const IntegrationsCol = styled(Col)`
     width: 100%;
-    background: no-repeat 75% 100%/60% url(${integrationsGraphic});
+    background: no-repeat 100% 100%/70% url(${integrationsGraphic});
+    background-origin: content-box;
 `;
 
 const IntegrationsText = styled.p`
@@ -60,7 +61,7 @@ const Integrations = (props) => {
     const { translate, currentLanguage } = props;
     return (
         <Bg>
-            <PaddedContainer paddingTop="120px" paddingBottom="50px">
+            <PaddedContainer paddingTop="120px">
                 <IntegrationsWrapper>
                     <IntegrationsCol>
                         <TextAccent margin="0 0 20px 0">
