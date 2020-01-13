@@ -33,7 +33,7 @@
 			"and-more" : ["...and more", "...and more"],
 			"coming-soon" : ["* Coming soon", "* Coming soon"]
 		},
-		"gigs-feature": {
+		"getting-gigs": {
 			"new-gig-request": {
 				"new-gig-request": ["NEW GIG REQUEST", "NEW GIG REQUEST"],
 				"new-years-party": ["New Years Party", "New Years Party"],
@@ -46,7 +46,7 @@
 				"feature": ["FEATURE", "FEATURE"],
 				"get-gigs": ["Get gigs", "Get gigs"],
 				"chat-the-organizer": ["Chat the organizer.", "Chat the organizer."],
-				"Make-your-offer": ["Make your offer.", "Make your offer."],
+				"make-your-offer": ["Make your offer.", "Make your offer."],
 				"play-get-paid": ["Play - Get paid.", "Play - Get paid."],
 				"read-more": ["Read more", "Read more"],
 				"Amount-of-available-gigs-vary-depending-on-your-area": ["Amount of available gigs vary depending on your area.", "Amount of available gigs vary depending on your area."]
@@ -66,7 +66,7 @@
 				"read-more": ["Read more", "Read more"]
 			}
 		},
-		"cancelation-feature": {
+		"cancelation-policy": {
 			"feature": ["FEATURE", "FEATURE"],
 			"create-your-cancelation-policy": ["Create your cancelation policy", "Create your cancelation policy"],
 			"content": ["Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.", "Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare."],

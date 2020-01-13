@@ -8,10 +8,10 @@ import GracefullImage from '../../../components/GracefullImage';
 
 const Bg = styled.div`
     width: 100vw;
-    order: 5;
+    order: 7;
 `;
 
-const GigsFeature = (props) => {
+const CancelationPolicy = (props) => {
     const { translate, currentLanguage } = props;
     return (
         <Bg>
@@ -22,4 +22,4 @@ const GigsFeature = (props) => {
     );
 };
 
-export default addTranslate(GigsFeature, content);
+export default addTranslate(CancelationPolicy, content);

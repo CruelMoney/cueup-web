@@ -12,9 +12,9 @@ import Hero from './components/Hero';
 import Highlights from './components/Highlights';
 import Laptop from './components/Laptop';
 import Integrations from './components/Integrations';
-import GigsFeature from './components/GigsFeature';
+import GettingGigs from './components/GettingGigs';
 import Payments from './components/Payments';
-import CancelationFeature from './components/CancelationFeature';
+import CancelationPolicy from './components/CancelationPolicy';
 import AvailableOn from './components/AvailableOn';
 import JoinThousands from './components/JoinThousands';
 import content from './content.json';
@@ -58,9 +58,9 @@ class Index extends Component {
                 <Highlights />
                 <Laptop />
                 <Integrations />
-                <GigsFeature />
+                <GettingGigs />
                 <Payments />
-                <CancelationFeature />
+                <CancelationPolicy />
                 <AvailableOn />
                 <JoinThousands />
                 <Bg />
