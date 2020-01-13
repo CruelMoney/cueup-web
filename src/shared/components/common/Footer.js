@@ -32,7 +32,7 @@ class footer extends Component {
         const { translate } = this.props;
 
         return (
-            <div id="preFooter-wrapper">
+            <div id="preFooter-wrapper" style={{ order: '10' }}>
                 <div
                     style={{ backgroundColor: this.props.bgColor }}
                     className={this.props.noSkew ? 'noSkew' : ''}

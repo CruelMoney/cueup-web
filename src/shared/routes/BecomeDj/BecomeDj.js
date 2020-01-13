@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet-async';
+import { findByLabelText } from '@testing-library/react';
 import Footer from 'components/common/Footer';
 import addTranslate from '../../components/higher-order/addTranslate';
 import thumbEn from '../../assets/images/signup.png';
@@ -18,6 +19,11 @@ import AvailableOn from './components/AvailableOn';
 import JoinThousands from './components/JoinThousands';
 import content from './content.json';
 
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
 const Bg = styled.div`
     background-image: radial-gradient(50% 58% at 50% 33%, #122b48 12%, #0b1b2d 90%);
     position: fixed;
@@ -34,7 +40,7 @@ class Index extends Component {
         const thumb = Environment.CALLBACK_DOMAIN + (currentLanguage === 'da' ? thumbDa : thumbEn);
 
         return (
-            <div>
+            <Wrapper className="me">
                 <Helmet>
                     <title>{title}</title>
                     <meta property="og:title" content={title} />
@@ -59,9 +65,10 @@ class Index extends Component {
                 <JoinThousands />
                 <Bg />
 
-                <div style={{ height: '100vh' }} />
+                {/* <div style={{ height: '100vh' }} /> */}
 
                 <Footer
+                    noSkew
                     firstTo={translate('routes./')}
                     secondTo={translate('routes./')}
                     firstLabel={translate('how-it-works')}
@@ -69,7 +76,7 @@ class Index extends Component {
                     title={translate('Wonder how it works?')}
                     subTitle={translate('See how it works, or arrange an event.')}
                 />
-            </div>
+            </Wrapper>
         );
     }
 }

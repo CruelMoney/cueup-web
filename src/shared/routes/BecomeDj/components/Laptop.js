@@ -10,7 +10,10 @@ const LaptopContainer = styled(Container)`
     position: sticky;
     top: 0px;
     z-index: -1;
-    margin-bottom: 100px;
+    order: 3;
+    @media only screen and (max-width: 685px) {
+        order: 2;
+    }
 `;
 
 const GetGigsImageRow = styled(Row)`

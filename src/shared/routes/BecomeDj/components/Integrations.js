@@ -16,6 +16,8 @@ const Bg = styled.div`
     background-color: #0b1b2d;
     z-index: 1;
     padding-top: 20px;
+    order: 4;
+    margin-top: 100px;
 `;
 
 const TitleWrapper = styled.div`
@@ -52,7 +54,7 @@ const IntegrationsTextStarred = styled(IntegrationsText)`
 
 const MobileImage = styled.div`
     @media only screen and (max-width: 685px) {
-        height: 380px;
+        height: 330px;
         margin: 30px -15px 0 -15px;
         background: no-repeat 50% 100% url(${integrationsGraphicMobile});
     }

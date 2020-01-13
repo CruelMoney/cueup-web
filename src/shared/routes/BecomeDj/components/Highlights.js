@@ -7,6 +7,14 @@ import content from '../content.json';
 import GracefullImage from '../../../components/GracefullImage';
 import ButtonLinkGlow from './blocks/ButtonLinkGlow';
 
+const OrderedContainer = styled(Container)`
+    z-index: -2;
+    order: 2;
+    @media only screen and (max-width: 685px) {
+        order: 3;
+    }
+`;
+
 const SubTitle = styled(Body)`
     font-size: 20px;
     text-align: center;
@@ -29,7 +37,6 @@ const HeroButtonLink = styled(ButtonLinkGlow)`
 
 const GetGigsWrapperCol = styled(Col)`
     flex: 1;
-    margin-top: 130px;
     justify-content: center;
     width: 100%;
 `;
@@ -40,7 +47,7 @@ const GetGigsTextRow = styled(Row)`
     justify-content: space-between;
     width: 83%;
     flex-wrap: wrap;
-    @media only screen and (max-width: 685px) {
+    @media only screen and (max-width: 375px) {
         order: 2;
         margin-top: 20px;
         width: 100%;
@@ -52,7 +59,7 @@ const GetGigsTextRowCol = styled(Col)`
     @media only screen and (max-width: 375px) {
         flex-basis: 100%;
     }
-    @media only screen and (min-width: 375px) and (max-width: 685px) {
+    @media only screen and (min-width: 375px) and (max-width: 375px) {
         flex-basis: 50%;
     }
 `;
@@ -95,7 +102,7 @@ const GracefullImageDJProfile = styled(GracefullImage)`
 const Highlights = (props) => {
     const { translate, currentLanguage } = props;
     return (
-        <Container>
+        <OrderedContainer>
             <Row>
                 <GetGigsWrapperCol>
                     <GetGigsTextRow>
@@ -134,7 +141,7 @@ const Highlights = (props) => {
                     </GetGigsTextRow>
                 </GetGigsWrapperCol>
             </Row>
-        </Container>
+        </OrderedContainer>
     );
 };
 

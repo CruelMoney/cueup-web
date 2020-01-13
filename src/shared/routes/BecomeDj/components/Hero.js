@@ -8,6 +8,11 @@ import { TextAccent } from '../components/blocks/TextAccent';
 import { Title } from '../components/blocks/Title';
 import ButtonLinkGlow from './blocks/ButtonLinkGlow';
 
+const OrderedContainer = styled(Container)`
+    order: 1;
+    margin-bottom: 130px;
+`;
+
 const SubTitle = styled(Body)`
     font-size: 20px;
     text-align: center;
@@ -31,7 +36,7 @@ const HeroButtonLink = styled(ButtonLinkGlow)`
 const Hero = (props) => {
     const { translate, currentLanguage } = props;
     return (
-        <Container>
+        <OrderedContainer>
             <Row center>
                 <HeroCol>
                     <TextAccent center margin="0 0 15px 0">
@@ -44,7 +49,7 @@ const Hero = (props) => {
                     </HeroButtonLink>
                 </HeroCol>
             </Row>
-        </Container>
+        </OrderedContainer>
     );
 };
 

@@ -8,6 +8,7 @@ import GracefullImage from '../../../components/GracefullImage';
 
 const Bg = styled.div`
     width: 100vw;
+    order: 9;
 `;
 
 const JoinThousands = (props) => {
