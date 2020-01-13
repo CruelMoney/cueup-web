@@ -40,10 +40,18 @@ const IntegrationsCol = styled(Col)`
 const IntegrationsText = styled.p`
     margin-top: 50px;
     font-family: AvenirNext-Medium;
-    font-size: ${({ size }) => (size ? size : '32px')};
     color: #ffffff;
     letter-spacing: -0.67px;
     line-height: 96px;
+    font-size: 32px;
+    font-family: AvenirNext-Medium;
+    @media only screen and (max-width: 685px) {
+        margin-top: 10px;
+        font-size: 27px;
+        color: #ffffff;
+        letter-spacing: -0.56px;
+        line-height: 60px;
+    }
 `;
 
 const IntegrationsTextStarred = styled(IntegrationsText)`
