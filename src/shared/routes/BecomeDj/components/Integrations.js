@@ -9,31 +9,29 @@ import { TextAccent } from '../components/blocks/TextAccent';
 import { Title } from '../components/blocks/Title';
 import { PaddedContainer } from '../components/blocks/PaddedContainer';
 import integrationsGraphic from '../../../assets/images/integrations/integrations_graphic.svg';
+import integrationsGraphicMobile from '../../../assets/images/integrations/integrations_graphic_mobile.svg';
 
 const Bg = styled.div`
-    width: 100vw;
+    width: 100%;
     // height: 100vh;
     background-color: #0b1b2d;
 `;
 
 const TitleWrapper = styled.div`
-    width: 570px;
+    max-width: 570px;
     align-self: flex-start;
 `;
 
 const IntegrationsWrapper = styled.div`
     display: flex;
     flex-direction: row;
-
-    @media only screen and (maxwidth: 685px) {
-        flex-direction: column;
-    }
 `;
 
 const IntegrationsCol = styled(Col)`
     width: 100%;
-    background: no-repeat 100% 100%/70% url(${integrationsGraphic});
-    background-origin: content-box;
+    @media only screen and (min-width: 685px) {
+        background: no-repeat 100% 100%/70% url(${integrationsGraphic});
+    }
 `;
 
 const IntegrationsText = styled.p`
@@ -51,10 +49,12 @@ const IntegrationsTextStarred = styled(IntegrationsText)`
     letter-spacing: -0.31px;
 `;
 
-const DottedLine = styled.div`
-    width: 150px;
-    opacity: 0.34;
-    border-top: 4px dotted #ffffff;
+const MobileImage = styled.div`
+    @media only screen and (max-width: 375px) {
+        height: 380px;
+        margin: 30px -15px 0 -15px;
+        background: no-repeat url(${integrationsGraphicMobile});
+    }
 `;
 
 const Integrations = (props) => {
@@ -64,6 +64,7 @@ const Integrations = (props) => {
             <PaddedContainer paddingTop="120px">
                 <IntegrationsWrapper>
                     <IntegrationsCol>
+                        <MobileImage />
                         <TextAccent margin="0 0 20px 0">
                             {translate('become-dj.integrations.integrations')}
                         </TextAccent>

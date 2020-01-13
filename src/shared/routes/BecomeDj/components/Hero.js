@@ -11,7 +11,7 @@ import { Title } from '../components/blocks/Title';
 import ButtonLinkGlow from './blocks/ButtonLinkGlow';
 
 const Bg = styled.div`
-    width: 100vw;
+    width: 100%;
     background-image: radial-gradient(50% 58% at 50% 33%, #122b48 12%, #0b1b2d 90%);
 `;
 
