@@ -13,8 +13,9 @@ import integrationsGraphicMobile from '../../../assets/images/integrations/integ
 
 const Bg = styled.div`
     width: 100%;
-    // height: 100vh;
     background-color: #0b1b2d;
+    z-index: 1;
+    padding-top: 20px;
 `;
 
 const TitleWrapper = styled.div`
@@ -50,10 +51,10 @@ const IntegrationsTextStarred = styled(IntegrationsText)`
 `;
 
 const MobileImage = styled.div`
-    @media only screen and (max-width: 375px) {
+    @media only screen and (max-width: 685px) {
         height: 380px;
         margin: 30px -15px 0 -15px;
-        background: no-repeat url(${integrationsGraphicMobile});
+        background: no-repeat 50% 100% url(${integrationsGraphicMobile});
     }
 `;
 
@@ -61,7 +62,7 @@ const Integrations = (props) => {
     const { translate, currentLanguage } = props;
     return (
         <Bg>
-            <PaddedContainer paddingTop="120px">
+            <Container>
                 <IntegrationsWrapper>
                     <IntegrationsCol>
                         <MobileImage />
@@ -87,7 +88,7 @@ const Integrations = (props) => {
                         </IntegrationsTextStarred>
                     </IntegrationsCol>
                 </IntegrationsWrapper>
-            </PaddedContainer>
+            </Container>
         </Bg>
     );
 };
