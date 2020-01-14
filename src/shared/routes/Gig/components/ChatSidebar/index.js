@@ -132,7 +132,7 @@ const getSystemMessage = ({ gig, showDecline, navigateToOffer }) => {
     }
     const { expires, status, directBooking } = gig;
 
-    const within = moment(expires).fromNow();
+    const within = moment(expires).fromNow(true);
 
     if (directBooking && status === gigStates.REQUESTED) {
         return {
