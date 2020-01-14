@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Container, Col, Row } from 'components/Blocks';
-import { Body } from 'components/Text';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import content from '../content.json';
 import { TextAccent } from '../components/blocks/TextAccent';

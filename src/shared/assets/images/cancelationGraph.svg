@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="981px" height="166px" viewBox="0 0 981 166" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>Landing page</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <radialGradient cx="50%" cy="93.9497347%" fx="50%" fy="93.9497347%" r="80.1366059%" gradientTransform="translate(0.500000,0.939497),scale(0.553571,1.000000),rotate(-90.000000),scale(1.000000,0.969716),translate(-0.500000,-0.939497)" id="radialGradient-1">
+            <stop stop-color="#122B48" offset="0%"></stop>
+            <stop stop-color="#0B1B2D" offset="100%"></stop>
+        </radialGradient>
+        <rect id="path-2" x="0" y="0" width="1792" height="992"></rect>
+        <filter x="-1.8%" y="-2.8%" width="103.6%" height="106.6%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.129411765   0 0 0 0 0.17254902   0 0 0 0 0.192156863  0 0 0 0.05 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMorphology radius="3" operator="erode" in="SourceAlpha" result="shadowSpreadOuter2"></feMorphology>
+            <feOffset dx="0" dy="5" in="shadowSpreadOuter2" result="shadowOffsetOuter2"></feOffset>
+            <feGaussianBlur stdDeviation="11" in="shadowOffsetOuter2" result="shadowBlurOuter2"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.11372549   0 0 0 0 0.17254902   0 0 0 0 0.192156863  0 0 0 0.05 0" type="matrix" in="shadowBlurOuter2" result="shadowMatrixOuter2"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="shadowMatrixOuter2"></feMergeNode>
+            </feMerge>
+        </filter>
+        <rect id="path-4" x="424" y="752" width="943" height="34" rx="17"></rect>
+        <filter x="-3.2%" y="-88.2%" width="106.4%" height="276.5%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="10" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.0557439675   0 0 0 0 0.110235729   0 0 0 0 0.173771513  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Landing-page" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD" transform="translate(-405.000000, -4593.000000)">
+            <g id="Cancelation-policy" transform="translate(0.000000, 3895.000000)">
+                <g id="Rectangle-Copy-11">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                    <use fill="url(#radialGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+                </g>
+                <g id="Rectangle">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+                    <use fill="#00D1FF" fill-rule="evenodd" xlink:href="#path-4"></use>
+                </g>
+                <rect id="Rectangle-Copy-2" fill="#0092B3" x="726" y="752" width="641" height="34" rx="17"></rect>
+                <rect id="Rectangle-Copy" fill="#005466" x="1043" y="752" width="324" height="34" rx="17"></rect>
+                <circle id="Oval" fill="#FFFFFF" cx="692.5" cy="769.5" r="8.5"></circle>
+                <circle id="Oval-Copy" fill="#FFFFFF" cx="1001.5" cy="769.5" r="8.5"></circle>
+                <circle id="Oval-Copy-2" fill="#FFFFFF" cx="1330.5" cy="769.5" r="8.5"></circle>
+                <g id="Labels" transform="translate(632.000000, 694.000000)" fill="#F9F9F9" font-family="AvenirNext-Regular, Avenir Next" font-size="20" font-weight="normal" opacity="0.752952939">
+                    <text id="14-days-prior">
+                        <tspan x="0.21" y="20">14 days prior</tspan>
+                    </text>
+                    <text id="100%-Refund">
+                        <tspan x="33.27" y="142">100%</tspan>
+                        <tspan x="26.47" y="169">Refund</tspan>
+                    </text>
+                    <text id="50%-Refund">
+                        <tspan x="350.07" y="142">50%</tspan>
+                        <tspan x="337.47" y="169">Refund</tspan>
+                    </text>
+                    <text id="0%-Refund">
+                        <tspan x="684.87" y="142">0%</tspan>
+                        <tspan x="666.47" y="169">Refund</tspan>
+                    </text>
+                    <text id="Event-start">
+                        <tspan x="322.02" y="20">Event start</tspan>
+                    </text>
+                    <text id="Event-end">
+                        <tspan x="651.22" y="20">Event end</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

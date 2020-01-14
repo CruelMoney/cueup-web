@@ -7,7 +7,7 @@ import content from '../content.json';
 import GracefullImage from '../../../components/GracefullImage';
 
 const Bg = styled.div`
-    width: 100vw;
+    width: 100%;
     order: 9;
 `;
 

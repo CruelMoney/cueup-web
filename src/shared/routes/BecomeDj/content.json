@@ -79,14 +79,17 @@
 				},
 				"refund": {
 					"100%-refund": {
+						"100%-refund": ["100% Refund", "100% Refund"],
 						"100%": ["100%", "100%"],
 						"refund": ["Refund", "Refund"]
 					},
 					"50%-refund": {
+						"50%-refund": ["50% Refund", "50% Refund"],
 						"50%": ["50%", "50%"],
 						"refund": ["Refund", "Refund"]
 					},
 					"0%-refund": {
+						"0%-refund": ["0% Refund", "0% Refund"],
 						"0%": ["0%", "0%"],
 						"refund": ["Refund", "Refund"]
 					}

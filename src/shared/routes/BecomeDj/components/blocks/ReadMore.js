@@ -4,12 +4,14 @@ import GracefullImage from '../../../../components/GracefullImage';
 import addTranslate from '../../../../components/higher-order/addTranslate';
 import content from '../../content.json';
 import arrow from '../../../../assets/images/arrow_right.png';
+import whiteArrow from '../../../../assets/images/white_arrow.png';
 
 const ReadMoreText = styled.p`
     margin-top: 50px;
     font-family: AvenirNext-DemiBold;
     font-size: 20px;
     color: #122b48;
+    color: ${({ white }) => (white ? 'white' : '#122b48')};
     align-self: flex-end;
     @media only screen and (max-width: 685px) {
         margin-top: 20px;
@@ -24,15 +26,14 @@ const ReadMoreWrapper = styled.div`
 `;
 
 const ReadMore = (props) => {
-    const { translate, currentLanguage } = props;
+    const { white, translate, currentLanguage } = props;
     return (
-        // <div className="read-more"></div>
         <ReadMoreWrapper>
-            <ReadMoreText>
+            <ReadMoreText white>
                 {translate('become-dj.getting-gigs.get-gigs-feature.read-more')} <br />
             </ReadMoreText>
             <GracefullImage
-                src={arrow}
+                src={white ? whiteArrow : arrow}
                 animate
                 alt="right arrow"
                 style={{

@@ -7,8 +7,10 @@ import content from '../content.json';
 import GracefullImage from '../../../components/GracefullImage';
 
 const Bg = styled.div`
-    width: 100vw;
+    width: 100%;
     order: 8;
+    /* display: flex;
+    flex-direction: column; */
 `;
 
 const AvailableOn = (props) => {

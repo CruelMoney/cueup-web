@@ -35,12 +35,12 @@ const HeroButtonLink = styled(ButtonLinkGlow)`
     box-shadow: 0px 0px 30px 30px #31daff;
 `;
 
-const GetGigsWrapperCol = styled(Col)`
+const WrapperCol = styled(Col)`
     flex: 1;
     justify-content: center;
     width: 100%;
 `;
-const GetGigsTextRow = styled(Row)`
+const TextRow = styled(Row)`
     order: 1;
     flex: 1;
     align-self: center;
@@ -54,42 +54,42 @@ const GetGigsTextRow = styled(Row)`
     }
 `;
 
-const GetGigsTextRowCol = styled(Col)`
+const TextRowCol = styled(Col)`
     padding: 10px;
     @media only screen and (max-width: 375px) {
         flex-basis: 100%;
     }
-    @media only screen and (min-width: 375px) and (max-width: 375px) {
+    @media only screen and (min-width: 375px) and (max-width: 685px) {
         flex-basis: 50%;
     }
 `;
-const GetGigsTextRowCol1 = styled(GetGigsTextRowCol)`
+const TextRowCol1 = styled(TextRowCol)`
     order: 1;
 `;
-const GetGigsTextRowCol2 = styled(GetGigsTextRowCol)`
+const TextRowCol2 = styled(TextRowCol)`
     order: 2;
 `;
-const GetGigsTextRowCol3 = styled(GetGigsTextRowCol)`
+const TextRowCol3 = styled(TextRowCol)`
     order: 3;
     @media only screen and (max-width: 685px) {
         order: 4;
     }
 `;
-const GetGigsTextRowCol4 = styled(GetGigsTextRowCol)`
+const TextRowCol4 = styled(TextRowCol)`
     order: 4;
     @media only screen and (max-width: 685px) {
         order: 3;
     }
 `;
 
-const GetGigsTextRowColFirstRow = styled(Row)`
+const TextRowColFirstRow = styled(Row)`
     opacity: 0.5;
     font-family: AvenirNext-DemiBold;
     font-size: 12px;
     color: #ffffff;
 `;
 
-const GetGigsTextRowColSecondRow = styled(Row)`
+const TextRowColSecondRow = styled(Row)`
     font-family: AvenirNext-Bold;
     font-size: 32px;
     color: #ffffff;
@@ -104,42 +104,42 @@ const Highlights = (props) => {
     return (
         <OrderedContainer>
             <Row>
-                <GetGigsWrapperCol>
-                    <GetGigsTextRow>
-                        <GetGigsTextRowCol1>
-                            <GetGigsTextRowColFirstRow>
+                <WrapperCol>
+                    <TextRow>
+                        <TextRowCol1>
+                            <TextRowColFirstRow>
                                 {translate('become-dj.hero.get-gigs.get')}
-                            </GetGigsTextRowColFirstRow>
-                            <GetGigsTextRowColSecondRow>
+                            </TextRowColFirstRow>
+                            <TextRowColSecondRow>
                                 {translate('become-dj.hero.get-gigs.gigs')}
-                            </GetGigsTextRowColSecondRow>
-                        </GetGigsTextRowCol1>
-                        <GetGigsTextRowCol2>
-                            <GetGigsTextRowColFirstRow>
+                            </TextRowColSecondRow>
+                        </TextRowCol1>
+                        <TextRowCol2>
+                            <TextRowColFirstRow>
                                 {translate('become-dj.hero.upload-mixtapes.upload')}
-                            </GetGigsTextRowColFirstRow>
-                            <GetGigsTextRowColSecondRow>
+                            </TextRowColFirstRow>
+                            <TextRowColSecondRow>
                                 {translate('become-dj.hero.upload-mixtapes.mixtapes')}
-                            </GetGigsTextRowColSecondRow>
-                        </GetGigsTextRowCol2>
-                        <GetGigsTextRowCol3>
-                            <GetGigsTextRowColFirstRow>
+                            </TextRowColSecondRow>
+                        </TextRowCol2>
+                        <TextRowCol3>
+                            <TextRowColFirstRow>
                                 {translate('become-dj.hero.showcase-photos.showcase')}
-                            </GetGigsTextRowColFirstRow>
-                            <GetGigsTextRowColSecondRow>
+                            </TextRowColFirstRow>
+                            <TextRowColSecondRow>
                                 {translate('become-dj.hero.showcase-photos.photos')}
-                            </GetGigsTextRowColSecondRow>
-                        </GetGigsTextRowCol3>
-                        <GetGigsTextRowCol4>
-                            <GetGigsTextRowColFirstRow>
+                            </TextRowColSecondRow>
+                        </TextRowCol3>
+                        <TextRowCol4>
+                            <TextRowColFirstRow>
                                 {translate('become-dj.hero.add-reviews.add')}
-                            </GetGigsTextRowColFirstRow>
-                            <GetGigsTextRowColSecondRow>
+                            </TextRowColFirstRow>
+                            <TextRowColSecondRow>
                                 {translate('become-dj.hero.add-reviews.reviews')}
-                            </GetGigsTextRowColSecondRow>
-                        </GetGigsTextRowCol4>
-                    </GetGigsTextRow>
-                </GetGigsWrapperCol>
+                            </TextRowColSecondRow>
+                        </TextRowCol4>
+                    </TextRow>
+                </WrapperCol>
             </Row>
         </OrderedContainer>
     );
