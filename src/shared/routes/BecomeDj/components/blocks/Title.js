@@ -18,3 +18,9 @@ export const Title = styled.h1`
         }
     }
 `;
+
+export const BlueTitle = styled(Title)`
+    font-family: AvenirNext-Bold;
+    font-size: 64px;
+    color: #122b48;
+`;

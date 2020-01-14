@@ -2,13 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { HeaderTitle, Body } from 'components/Text';
 import { Container, Col, Row } from 'components/Blocks';
-import { TextAccent } from '../components/blocks/TextAccent';
-import { Title } from '../components/blocks/Title';
+import { ResponsiveTextAccent } from '../components/blocks/TextAccent';
+import { BlueTitle } from '../components/blocks/Title';
+import { GrayText } from '../components/blocks/Text';
+import ReadMore from '../components/blocks/ReadMore';
+import gigRequest from '../../../assets/images/gig_request.png';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import content from '../content.json';
 import GracefullImage from '../../../components/GracefullImage';
-import gigRequest from '../../../assets/images/gig_request.png';
-import arrow from '../../../assets/images/arrow_right.png';
 
 const Bg = styled.div`
     padding-top: 50px;
@@ -23,6 +24,7 @@ const GettingGigsWrapper = styled.div`
     padding-bottom: 50px;
     @media only screen and (max-width: 685px) {
         flex-direction: column;
+        align-items: center;
     }
 `;
 
@@ -31,32 +33,9 @@ const TextCol = styled.div`
     display: flex;
     flex-direction: column;
     padding: 0 0 0 150px;
-`;
-
-const BlueTitle = styled(Title)`
-    font-family: AvenirNext-Bold;
-    font-size: 64px;
-    color: #122b48;
-`;
-
-const GrayText = styled.p`
-    margin-top: 50px;
-    font-family: AvenirNext-Regular;
-    font-size: 20px;
-    color: #4d6480;
-    line-height: 34px;
-`;
-
-const ReadMoreText = styled.p`
-    margin-top: 50px;
-    font-family: AvenirNext-DemiBold;
-    font-size: 20px;
-    color: #122b48;
-    align-self: flex-end;
-`;
-
-const ReadMoreWrapper = styled.div`
-    display: flex;
+    @media only screen and (max-width: 685px) {
+        padding: 0;
+    }
 `;
 
 const GettingGigs = (props) => {
@@ -72,9 +51,9 @@ const GettingGigs = (props) => {
                         style={{ width: '40%', alignSelf: 'center' }}
                     />
                     <TextCol>
-                        <TextAccent margin="0 0 15px 0">
+                        <ResponsiveTextAccent margin="0 0 15px 0">
                             {translate('become-dj.getting-gigs.get-gigs-feature.feature')}
-                        </TextAccent>
+                        </ResponsiveTextAccent>
                         <BlueTitle left size="64px" line="64px" spacing="-1.33px">
                             {translate('become-dj.getting-gigs.get-gigs-feature.get-gigs')}
                         </BlueTitle>
@@ -92,23 +71,7 @@ const GettingGigs = (props) => {
                             )}{' '}
                             <br />
                         </GrayText>
-                        <ReadMoreWrapper>
-                            <ReadMoreText>
-                                {translate('become-dj.getting-gigs.get-gigs-feature.read-more')}{' '}
-                                <br />
-                            </ReadMoreText>
-                            <GracefullImage
-                                src={arrow}
-                                animate
-                                alt="right arrow"
-                                style={{
-                                    marginLeft: '20px',
-                                    maxWidth: '20px',
-                                    alignSelf: 'flex-end',
-                                    paddingBottom: '10px',
-                                }}
-                            />
-                        </ReadMoreWrapper>
+                        <ReadMore />
                     </TextCol>
                 </GettingGigsWrapper>
             </Container>
