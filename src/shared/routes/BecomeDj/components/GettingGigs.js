@@ -21,10 +21,11 @@ const Bg = styled.div`
 const GettingGigsWrapper = styled.div`
     display: flex;
     flex-direction: row;
-    padding-bottom: 50px;
+    padding-bottom: 150px;
     @media only screen and (max-width: 685px) {
         flex-direction: column;
         align-items: center;
+        padding-bottom: 100px;
     }
 `;
 

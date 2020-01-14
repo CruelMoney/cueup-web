@@ -6,18 +6,12 @@ import addTranslate from '../../../components/higher-order/addTranslate';
 import content from '../content.json';
 import { TextAccent } from '../components/blocks/TextAccent';
 import { Title } from '../components/blocks/Title';
+import { SubTitle } from '../components/blocks/SubTitle';
 import ButtonLinkGlow from './blocks/ButtonLinkGlow';
 
 const OrderedContainer = styled(Container)`
     order: 1;
     margin-bottom: 130px;
-`;
-
-const SubTitle = styled(Body)`
-    font-size: 20px;
-    text-align: center;
-    width: 336px;
-    margin: auto;
 `;
 
 const HeroCol = styled(Col)`
