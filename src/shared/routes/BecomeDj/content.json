@@ -97,9 +97,16 @@
 			}
 		},
 		"available-on-iphone": {
-			"available-on": ["AVAILABLE ON", "AVAILABLE ON"],
-			"iphone": ["iPhone", "iPhone"],
-			"content": ["Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non.", "Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non."]
+			"desktop": {
+				"available-on": ["AVAILABLE ON", "AVAILABLE ON"],
+				"iphone": ["iPhone", "iPhone"],
+				"content": ["Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non.", "Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non."]
+			},
+			"mobile": {
+				"available-on": ["AVAILABLE ON", "AVAILABLE ON"],
+				"iphone-and-android": ["iPhone and Android", "iPhone and Android"],
+				"content": ["Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non.", "Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non."]
+			}
 		},
 		"join-thousands-of-DJs": {
 			"join-thousands-of-DJs": ["Join thousands of DJs", "Join thousands of DJs"],

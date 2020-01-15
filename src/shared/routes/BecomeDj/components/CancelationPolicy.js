@@ -25,7 +25,7 @@ const CancelationContainer = styled(Container)`
 
 const TitleWrapper = styled.div`
     width: 60%;
-    margin: 0 0 50px 0;
+    margin: 0 0 20px 0;
 `;
 
 const CancelationSubTitle = styled(SubTitle)`

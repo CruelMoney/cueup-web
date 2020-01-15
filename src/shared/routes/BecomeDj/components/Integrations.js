@@ -16,6 +16,7 @@ const Bg = styled.div`
     background-color: #0b1b2d;
     z-index: 1;
     padding-top: 20px;
+    padding-bottom: 20px;
     order: 4;
     margin-top: 100px;
 `;
@@ -58,6 +59,9 @@ const IntegrationsTextStarred = styled(IntegrationsText)`
     opacity: 0.5;
     font-size: 15px;
     letter-spacing: -0.31px;
+    @media only screen and (max-width: 685px) {
+        font-size: 15px;
+    }
 `;
 
 const MobileImage = styled.div`

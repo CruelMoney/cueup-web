@@ -7,7 +7,7 @@ import arrow from '../../../../assets/images/arrow_right.png';
 import whiteArrow from '../../../../assets/images/white_arrow.png';
 
 const ReadMoreText = styled.p`
-    margin-top: 50px;
+    margin-top: 40px;
     font-family: AvenirNext-DemiBold;
     font-size: 20px;
     color: ${({ white }) => (white ? 'white' : '#122b48')};

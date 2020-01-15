@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { HeaderTitle, Body } from 'components/Text';
 import { Container, Col, Row } from 'components/Blocks';
+import GracefullVideo from 'components/GracefullVideo';
 import { ResponsiveTextAccent } from '../components/blocks/TextAccent';
 import { BlueTitle } from '../components/blocks/Title';
 import { GrayText } from '../components/blocks/Text';
@@ -12,7 +13,7 @@ import content from '../content.json';
 import GracefullImage from '../../../components/GracefullImage';
 
 const Bg = styled.div`
-    padding-top: 50px;
+    padding-top: 150px;
     background-color: white;
     width: 100%;
     order: 5;
@@ -39,18 +40,21 @@ const TextCol = styled.div`
     }
 `;
 
+const StyledImage = styled(GracefullImage)`
+    width: 40%;
+    align-self: center;
+    @media only screen and (max-width: 685px) {
+        width: 85%;
+    }
+`;
+
 const GettingGigs = (props) => {
     const { translate, currentLanguage } = props;
     return (
         <Bg>
             <Container>
                 <GettingGigsWrapper>
-                    <GracefullImage
-                        src={gigRequest}
-                        animate
-                        alt="Gig request"
-                        style={{ width: '40%', alignSelf: 'center' }}
-                    />
+                    <StyledImage src={gigRequest} animate alt="Gig request" style={{}} />
                     <TextCol>
                         <ResponsiveTextAccent margin="0 0 15px 0">
                             {translate('become-dj.getting-gigs.get-gigs-feature.feature')}
