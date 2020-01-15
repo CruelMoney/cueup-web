@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { HeaderTitle, Body } from 'components/Text';
 import { Container, Col, Row } from 'components/Blocks';
-import { ResponsiveTextAccent } from '../components/blocks/TextAccent';
+import { TextAccent } from '../components/blocks/TextAccent';
 import { BlueTitle } from '../components/blocks/Title';
 import { GrayText } from '../components/blocks/Text';
 import addTranslate from '../../../components/higher-order/addTranslate';
@@ -22,8 +22,8 @@ const Bg = styled.div`
 `;
 
 const DesktopContainer = styled.div`
-    padding-left: 150px;
-    padding-right: 150px;
+    padding-left: 100px;
+    padding-right: 100px;
     display: flex;
     flex-direction: row;
     @media only screen and (max-width: 685px) {
@@ -36,12 +36,15 @@ const DesktopTextContainer = styled.div`
     flex: 1;
     flex-direction: column;
     justify-content: center;
+    margin: 50px 10px 50px 0;
 `;
 
 const DesktopImageContainer = styled.div`
     display: flex;
     flex: 1;
     flex-direction: column;
+    justify-content: center;
+    margin: 0 0 0 10px;
 `;
 
 const MobileContainer = styled.div`
@@ -60,6 +63,7 @@ const MobileTextContainer = styled.div`
 
 const MobileImageContainer = styled.div`
     padding-top: 50px;
+    margin-right: -15px;
     display: flex;
     flex: 1;
     flex-direction: row;
@@ -83,9 +87,9 @@ const AvailableOn = (props) => {
             <Container>
                 <DesktopContainer>
                     <DesktopTextContainer>
-                        <ResponsiveTextAccent margin="0 0 15px 0">
+                        <TextAccent margin="0 0 15px 0">
                             {translate('become-dj.available-on-iphone.desktop.available-on')}
-                        </ResponsiveTextAccent>
+                        </TextAccent>
                         <BlueTitle left size="64px" line="64px" spacing="-1.33px">
                             {translate('become-dj.available-on-iphone.desktop.iphone')}
                         </BlueTitle>
@@ -98,16 +102,16 @@ const AvailableOn = (props) => {
                             src={mobileHovering}
                             animate
                             alt="Gig request"
-                            style={{ width: '60%', alignSelf: 'center' }}
+                            style={{ width: '70%', alignSelf: 'center' }}
                         />
                     </DesktopImageContainer>
                 </DesktopContainer>
 
                 <MobileContainer>
                     <MobileTextContainer>
-                        <ResponsiveTextAccent margin="0 0 15px 0">
+                        <TextAccent margin="0 0 15px 0">
                             {translate('become-dj.available-on-iphone.mobile.available-on')}
-                        </ResponsiveTextAccent>
+                        </TextAccent>
                         <BlueTitle left size="64px" line="64px" spacing="-1.33px">
                             {translate('become-dj.available-on-iphone.mobile.iphone-and-android')}
                         </BlueTitle>
@@ -132,7 +136,7 @@ const AvailableOn = (props) => {
                                 style={{
                                     width: '100%',
                                     alignSelf: 'center',
-                                    padding: '10px',
+                                    padding: '10px 0px 0px 10px',
                                     flex: '1',
                                 }}
                             />
@@ -143,7 +147,7 @@ const AvailableOn = (props) => {
                                 style={{
                                     width: '100%',
                                     alignSelf: 'center',
-                                    padding: '10px',
+                                    padding: '10px 0px 10px 10px',
                                     flex: '1',
                                 }}
                             />
