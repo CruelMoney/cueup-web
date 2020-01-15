@@ -16,6 +16,9 @@ const Bg = styled.div`
     width: 100%;
     /* background-color: white; */
     background-image: linear-gradient(to bottom, white 0% 80%, #0b1b2d 80%);
+    @media only screen and (max-width: 685px) {
+        background-image: linear-gradient(to bottom, white 0% 90%, #0b1b2d 90%);
+    }
     order: 6;
 `;
 
