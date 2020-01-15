@@ -10,7 +10,6 @@ const ReadMoreText = styled.p`
     margin-top: 50px;
     font-family: AvenirNext-DemiBold;
     font-size: 20px;
-    color: #122b48;
     color: ${({ white }) => (white ? 'white' : '#122b48')};
     align-self: flex-end;
     @media only screen and (max-width: 685px) {
@@ -29,7 +28,7 @@ const ReadMore = (props) => {
     const { white, translate, currentLanguage } = props;
     return (
         <ReadMoreWrapper>
-            <ReadMoreText white>
+            <ReadMoreText white={white}>
                 {translate('become-dj.getting-gigs.get-gigs-feature.read-more')} <br />
             </ReadMoreText>
             <GracefullImage

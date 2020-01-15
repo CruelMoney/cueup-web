@@ -14,7 +14,7 @@ import GracefullImage from '../../../components/GracefullImage';
 const Bg = styled.div`
     padding-top: 50px;
     background-color: white;
-    width: 100vw;
+    width: 100%;
     order: 5;
 `;
 
