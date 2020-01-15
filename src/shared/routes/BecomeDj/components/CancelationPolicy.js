@@ -13,7 +13,7 @@ import ReadMore from '../components/blocks/ReadMore';
 const Bg = styled.div`
     width: 100%;
     order: 7;
-    background-image: radial-gradient(50% 50%, #122b48 6%, #0b1b2d 86%);
+    background-image: radial-gradient(90% 50% at 50% 80%, #122b48 6%, #0b1b2d 86%);
 `;
 
 const CancelationContainer = styled(Container)`
