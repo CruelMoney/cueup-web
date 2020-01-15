@@ -14,7 +14,8 @@ import invoice from '../../../assets/images/Invoice.png';
 
 const Bg = styled.div`
     width: 100%;
-    background-color: white;
+    /* background-color: white; */
+    background-image: linear-gradient(to bottom, white 0% 80%, #0b1b2d 80%);
     order: 6;
 `;
 
