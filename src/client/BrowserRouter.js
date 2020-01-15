@@ -1,10 +1,12 @@
 /* eslint-disable import/first */
 import React, { Component } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { HelmetProvider } from 'react-helmet-async';
 import ReactModal from 'react-modal';
 import useExternals from 'External';
+import { LocalizedRouter, appStrings } from 'i18n';
+import { AppLanguage } from 'i18n/app-languages';
 import App from '../shared/App';
 import store from '../shared/store';
 import ApolloProvider from '../shared/ApolloProvider';
@@ -15,20 +17,20 @@ const MyRouter = () => {
     useExternals();
 
     return (
-        <ApolloProvider>
-            <Router>
-                <HelmetProvider>
-                    <App />
-                </HelmetProvider>
-            </Router>
-        </ApolloProvider>
+        <Provider store={store}>
+            <ApolloProvider>
+                <LocalizedRouter
+                    RouterComponent={BrowserRouter}
+                    languages={AppLanguage}
+                    appStrings={appStrings}
+                >
+                    <HelmetProvider>
+                        <App />
+                    </HelmetProvider>
+                </LocalizedRouter>
+            </ApolloProvider>
+        </Provider>
     );
 };
 
-const BrowserRouter = (props) => (
-    <Provider store={store}>
-        <MyRouter {...props} />
-    </Provider>
-);
-
-export default BrowserRouter;
+export default MyRouter;

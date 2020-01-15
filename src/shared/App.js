@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
 import ReactPixel from 'react-facebook-pixel';
 
-import { getActiveLanguage, getTranslate, setActiveLanguage } from 'react-localize-redux';
-
+import { LocalizedSwitch, useTranslate } from 'i18n';
+import { AppRoute } from 'i18n/app-routes';
 import { init as analytics } from './utils/analytics/autotrack';
 import { Environment } from './constants/constants';
 
@@ -31,38 +31,17 @@ import { MobileMenuContext } from './components/MobileMenu';
 import BottomPlayer from './routes/User/routes/Sounds/BottomPlayer';
 import './css/style.css';
 
-let redirected = false;
-
 const compareRoutes = (r1 = [], r2 = [], key = 'route') => {
     return r1.every((v, idx) => r2[idx] && v[key] === r2[idx][key]);
 };
 
 const App = (props) => {
-    const { location, translate, activeLanguage, setActiveLanguage } = props;
+    const { location } = props;
 
-    const setLanguage = useCallback(setActiveLanguage, []);
-
-    const savedLanguage = typeof localStorage !== 'undefined' ? localStorage.language : false;
-
-    const url = location.pathname;
-    const urlLocale = url.split('/')[1] === 'dk' ? 'da' : 'en';
-    const language = savedLanguage || urlLocale;
-    let redirect = false;
-
-    // Update language and url if user has different language saved
-    if (!!savedLanguage && savedLanguage !== urlLocale) {
-        const redirectUrl = getTranslatedURL(url, translate('code.' + activeLanguage), translate);
-
-        redirect = redirectUrl + location.search;
-    }
-
+    const translate = useTranslate();
     const [state, setState] = useState({
         mobileLinks: [],
     });
-
-    useEffect(() => {
-        setLanguage(language);
-    }, [language, setLanguage]);
 
     useEffect(() => {
         // Setup custom analytics
@@ -110,31 +89,24 @@ const App = (props) => {
         [setState]
     );
 
-    if (!!redirect && location.pathname !== redirect && !redirected) {
-        redirected = true;
-        return <Redirect to={redirect} />;
-    }
-
-    const thumb = activeLanguage === 'da' ? defaultImageDa : defaultImage;
+    const thumb = defaultImage;
     const title = translate('Book DJs with ease') + ' | Cueup';
     const description = translate('site-description');
+    const url = location.pathname;
     const urlArr = url.split('/');
     let cssLocation = urlArr[1] === 'dk' ? urlArr[2] : urlArr[1];
     cssLocation = `location_${cssLocation || ''}`;
     const pageURL = Environment.CALLBACK_DOMAIN + location.pathname;
-    const altLangURL =
-        Environment.CALLBACK_DOMAIN +
-        getTranslatedURL(url, translate('code.' + activeLanguage), translate);
 
     return (
         <ErrorHandling>
             <div className={cssLocation}>
                 <Helmet>
-                    <link
+                    {/* <link
                         rel="alternate"
                         href={altLangURL}
                         hrefLang={translate('hreflang.' + activeLanguage)}
-                    />
+                    /> */}
 
                     <title>{title}</title>
 
@@ -174,13 +146,15 @@ const App = (props) => {
     );
 };
 
-const RouteWrapper = memo(({ translate, cssLocation }) => {
+const RouteWrapper = memo(({ cssLocation }) => {
     return (
         <>
             <Navigation />
             <div id="content" className={cssLocation}>
-                <Switch>
-                    <Route exact path={[translate('routes./'), '/verifyEmail']} component={Home} />
+                <LocalizedSwitch>
+                    <Route exact path={[AppRoute.Home, AppRoute.VerifyEmail]} component={Home} />
+                    {/* 
+                    <Route path={translate('routes./reset-password')} component={ResetPassword} />
                     <Route path={translate('routes./about')} component={About} />
                     <Route path={[translate('routes./user/:permalink')]} component={User} />
                     <Route path={translate('routes./signup')} component={Signup} />
@@ -195,12 +169,11 @@ const RouteWrapper = memo(({ translate, cssLocation }) => {
                         path={translate('routes./book-dj') + '/:country/:city?'}
                         component={LocationLanding}
                     />
-                    <Route path={translate('routes./book-dj')} component={LazyLocationsOverview} />
-                    <Route path={translate('routes./blog')} component={Blog} />
-                    <Route path={translate('routes./reset-password')} component={ResetPassword} />
+                    <Route path={translate('routes./book-dj')} component={LazyLocationsOverview} /> */}
+                    <Route path={AppRoute.Blog} component={Blog} />
 
                     <Route component={NotFound} />
-                </Switch>
+                </LocalizedSwitch>
 
                 <BottomPlayer />
             </div>
@@ -212,22 +185,7 @@ const mapStateToProps = (state, ownprops) => {
     return {
         loggedIn: state.login.status.signedIn,
         profile: state.login.profile,
-        activeLanguage: getActiveLanguage(state.locale).code,
-        translate: getTranslate(state.locale),
     };
 };
 
-function mapDispatchToProps(dispatch, ownprops) {
-    return {
-        setActiveLanguage: (code) => {
-            dispatch(setActiveLanguage(code));
-        },
-    };
-}
-
-export default withRouter(
-    connect(
-        mapStateToProps,
-        mapDispatchToProps
-    )(memo(App))
-);
+export default withRouter(connect(mapStateToProps)(memo(App)));
