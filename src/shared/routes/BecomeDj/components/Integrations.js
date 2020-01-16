@@ -12,11 +12,12 @@ import integrationsGraphic from '../../../assets/images/integrations/integration
 import integrationsGraphicMobile from '../../../assets/images/integrations/integrations_graphic_mobile.svg';
 
 const Bg = styled.div`
+    display: flex;
+    justify-content: center;
     width: 100%;
     background-color: #0b1b2d;
     z-index: 1;
     padding-top: 20px;
-    padding-bottom: 20px;
     order: 4;
     margin-top: 100px;
 `;

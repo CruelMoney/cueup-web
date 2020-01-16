@@ -14,6 +14,8 @@ import mobileRightBottom from '../../../assets/images/available-on/4 copy.png';
 import mobileHovering from '../../../assets/images/available-on/iPhone X Hovering - Right.png';
 
 const Bg = styled.div`
+    display: flex;
+    justify-content: center;
     padding-top: 150px;
     padding-bottom: 150px;
     width: 100%;

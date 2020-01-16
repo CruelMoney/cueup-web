@@ -13,6 +13,8 @@ import paymentCard from '../../../assets/images/Credit card.png';
 import invoice from '../../../assets/images/Invoice.png';
 
 const Bg = styled.div`
+    display: flex;
+    justify-content: center;
     width: 100%;
     order: 6;
     background-image: linear-gradient(to bottom, white 0% 80%, #0b1b2d 80%);

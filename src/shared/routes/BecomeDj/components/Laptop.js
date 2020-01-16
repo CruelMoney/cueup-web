@@ -7,6 +7,8 @@ import GracefullImage from '../../../components/GracefullImage';
 import DJProfileDesktopImage from '../../../assets/images/desktop-cueup.png';
 
 const LaptopContainer = styled(Container)`
+    display: flex;
+    justify-content: center;
     position: sticky;
     top: 0px;
     z-index: -1;

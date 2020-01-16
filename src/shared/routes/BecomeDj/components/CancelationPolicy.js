@@ -11,6 +11,8 @@ import { SubTitle } from '../components/blocks/SubTitle';
 import ReadMore from '../components/blocks/ReadMore';
 
 const Bg = styled.div`
+    display: flex;
+    justify-content: center;
     width: 100%;
     order: 7;
     background-image: radial-gradient(90% 50% at 50% 80%, #122b48 6%, #0b1b2d 86%);

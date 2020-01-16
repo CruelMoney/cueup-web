@@ -13,6 +13,8 @@ import content from '../content.json';
 import GracefullImage from '../../../components/GracefullImage';
 
 const Bg = styled.div`
+    display: flex;
+    justify-content: center;
     padding-top: 150px;
     background-color: white;
     width: 100%;

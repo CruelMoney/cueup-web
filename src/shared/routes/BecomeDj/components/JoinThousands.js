@@ -2,22 +2,371 @@ import React from 'react';
 import styled from 'styled-components';
 import { HeaderTitle, Body } from 'components/Text';
 import { Container, Col, Row } from 'components/Blocks';
+import { Title } from '../components/blocks/Title';
+import { PaddedContainer } from '../components/blocks/PaddedContainer';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import content from '../content.json';
 import GracefullImage from '../../../components/GracefullImage';
+import Apply from '../components/blocks/Apply';
+import vynil from '../../../assets/Vinyl@2x.png';
 
 const Bg = styled.div`
+    display: flex;
+    justify-content: center;
     width: 100%;
     order: 9;
+    background-color: white;
+    z-index: 20;
+    position: relative;
+    height: 850px;
+`;
+
+const JoinThousandsContainer = styled.div`
+    position: relative;
+    width: 90%;
+`;
+
+const BlueRectangle = styled.div`
+    background-image: radial-gradient(60% 110% at 50% 100%, #00d1ff 0%, #00d1ff 53%, #0092b3 150%);
+    box-shadow: 0 5px 22px -6px rgba(29, 44, 49, 0.05), 0 0 3px 0 rgba(33, 44, 49, 0.05);
+    border-radius: 28px;
+    width: 70%;
+    height: 90%;
+    position: absolute;
+    bottom: 10%;
+    left: 15%;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+`;
+
+const DesktopAvatarWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    padding: 40px 60px 40px 60px;
+    z-index: 21;
+    width: 100%;
+    @media only screen and (max-width: 685px) {
+        display: none;
+    }
+`;
+
+const MobileAvatarWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    @media only screen and (min-width: 685px) {
+        display: none;
+    }
+`;
+
+const Avatar = styled.div`
+    width: 100px;
+    height: 100px;
+    /* margin: 0 10px; */
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 0 0 4px 0 rgba(18, 43, 72, 0.1), 0 5px 10px -2px rgba(18, 43, 72, 0.64);
+    margin-bottom: ${({ offset }) => (offset ? offset : '0px')};
+`;
+
+const TextWrapper = styled.div`
+    padding: 50px 100px 50px 100px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+`;
+
+const Content = styled(Body)`
+    font-size: 20px;
+    text-align: center;
+    margin: auto;
+`;
+
+const DesktopAvatarRow1 = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+`;
+
+const DesktopAvatarRow2 = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: -40px;
+`;
+
+const Filler = styled.div`
+    width: 100px;
+    height: 100px;
 `;
 
 const JoinThousands = (props) => {
     const { translate, currentLanguage } = props;
     return (
         <Bg>
-            <Container>
-                <Row center />
-            </Container>
+            <DesktopAvatarWrapper>
+                <DesktopAvatarRow1>
+                    <Avatar offset="20px">
+                        <GracefullImage
+                            src={vynil}
+                            animate
+                            alt="DJ-Avatar"
+                            style={{
+                                width: '100px',
+                                height: '100px',
+                                alignSelf: 'center',
+                            }}
+                        />
+                    </Avatar>
+                    <Avatar offset="100px">
+                        <GracefullImage
+                            src={vynil}
+                            animate
+                            alt="DJ-Avatar"
+                            style={{
+                                width: '100px',
+                                height: '100px',
+                                alignSelf: 'center',
+                            }}
+                        />
+                    </Avatar>
+                    <Avatar offset="0px">
+                        <GracefullImage
+                            src={vynil}
+                            animate
+                            alt="DJ-Avatar"
+                            style={{
+                                width: '100px',
+                                height: '100px',
+                                alignSelf: 'center',
+                            }}
+                        />
+                    </Avatar>
+                    <Avatar offset="80px">
+                        <GracefullImage
+                            src={vynil}
+                            animate
+                            alt="DJ-Avatar"
+                            style={{
+                                width: '100px',
+                                height: '100px',
+                                alignSelf: 'center',
+                            }}
+                        />
+                    </Avatar>
+                    <Avatar offset="-20px">
+                        <GracefullImage
+                            src={vynil}
+                            animate
+                            alt="DJ-Avatar"
+                            style={{
+                                width: '100px',
+                                height: '100px',
+                                alignSelf: 'center',
+                            }}
+                        />
+                    </Avatar>
+                    <Avatar offset="60px">
+                        <GracefullImage
+                            src={vynil}
+                            animate
+                            alt="DJ-Avatar"
+                            style={{
+                                width: '100px',
+                                height: '100px',
+                                alignSelf: 'center',
+                            }}
+                        />
+                    </Avatar>
+                    <Avatar offset="-20px">
+                        <GracefullImage
+                            src={vynil}
+                            animate
+                            alt="DJ-Avatar"
+                            style={{
+                                width: '100px',
+                                height: '100px',
+                                alignSelf: 'center',
+                            }}
+                        />
+                    </Avatar>
+                    <Avatar offset="80px">
+                        <GracefullImage
+                            src={vynil}
+                            animate
+                            alt="DJ-Avatar"
+                            style={{
+                                width: '100px',
+                                height: '100px',
+                                alignSelf: 'center',
+                            }}
+                        />
+                    </Avatar>
+                    <Avatar offset="0px">
+                        <GracefullImage
+                            src={vynil}
+                            animate
+                            alt="DJ-Avatar"
+                            style={{
+                                width: '100px',
+                                height: '100px',
+                                alignSelf: 'center',
+                            }}
+                        />
+                    </Avatar>
+                    <Avatar offset="100px">
+                        <GracefullImage
+                            src={vynil}
+                            animate
+                            alt="DJ-Avatar"
+                            style={{
+                                width: '100px',
+                                height: '100px',
+                                alignSelf: 'center',
+                            }}
+                        />
+                    </Avatar>
+                    <Avatar offset="20px">
+                        <GracefullImage
+                            src={vynil}
+                            animate
+                            alt="DJ-Avatar"
+                            style={{
+                                width: '100px',
+                                height: '100px',
+                                alignSelf: 'center',
+                            }}
+                        />
+                    </Avatar>
+                </DesktopAvatarRow1>
+                <DesktopAvatarRow2>
+                    <Filler />
+                    <Avatar offset="100px">
+                        <GracefullImage
+                            src={vynil}
+                            animate
+                            alt="DJ-Avatar"
+                            style={{
+                                width: '100px',
+                                height: '100px',
+                                alignSelf: 'center',
+                            }}
+                        />
+                    </Avatar>
+                    <Avatar offset="0px">
+                        <GracefullImage
+                            src={vynil}
+                            animate
+                            alt="DJ-Avatar"
+                            style={{
+                                width: '100px',
+                                height: '100px',
+                                alignSelf: 'center',
+                            }}
+                        />
+                    </Avatar>
+                    <Avatar offset="80px">
+                        <GracefullImage
+                            src={vynil}
+                            animate
+                            alt="DJ-Avatar"
+                            style={{
+                                width: '100px',
+                                height: '100px',
+                                alignSelf: 'center',
+                            }}
+                        />
+                    </Avatar>
+                    <Avatar offset="-20px">
+                        <GracefullImage
+                            src={vynil}
+                            animate
+                            alt="DJ-Avatar"
+                            style={{
+                                width: '100px',
+                                height: '100px',
+                                alignSelf: 'center',
+                            }}
+                        />
+                    </Avatar>
+                    <Avatar offset="60px">
+                        <GracefullImage
+                            src={vynil}
+                            animate
+                            alt="DJ-Avatar"
+                            style={{
+                                width: '100px',
+                                height: '100px',
+                                alignSelf: 'center',
+                            }}
+                        />
+                    </Avatar>
+                    <Avatar offset="-20px">
+                        <GracefullImage
+                            src={vynil}
+                            animate
+                            alt="DJ-Avatar"
+                            style={{
+                                width: '100px',
+                                height: '100px',
+                                alignSelf: 'center',
+                            }}
+                        />
+                    </Avatar>
+                    <Avatar offset="80px">
+                        <GracefullImage
+                            src={vynil}
+                            animate
+                            alt="DJ-Avatar"
+                            style={{
+                                width: '100px',
+                                height: '100px',
+                                alignSelf: 'center',
+                            }}
+                        />
+                    </Avatar>
+                    <Avatar offset="0px">
+                        <GracefullImage
+                            src={vynil}
+                            animate
+                            alt="DJ-Avatar"
+                            style={{
+                                width: '100px',
+                                height: '100px',
+                                alignSelf: 'center',
+                            }}
+                        />
+                    </Avatar>
+                    <Avatar offset="100px">
+                        <GracefullImage
+                            src={vynil}
+                            animate
+                            alt="DJ-Avatar"
+                            style={{
+                                width: '100px',
+                                height: '100px',
+                                alignSelf: 'center',
+                            }}
+                        />
+                    </Avatar>
+                    <Filler />
+                </DesktopAvatarRow2>
+            </DesktopAvatarWrapper>
+            <MobileAvatarWrapper />
+
+            <BlueRectangle>
+                <TextWrapper>
+                    <Title center size="64px" line="64px" spacing="-1.33px">
+                        {translate('become-dj.join-thousands-of-DJs.join-thousands-of-DJs')}
+                    </Title>
+                    <Content white>{translate('become-dj.join-thousands-of-DJs.content')}</Content>
+                    <Apply white />
+                </TextWrapper>
+            </BlueRectangle>
         </Bg>
     );
 };
