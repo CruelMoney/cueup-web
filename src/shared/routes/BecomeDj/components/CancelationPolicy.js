@@ -22,7 +22,7 @@ const CancelationContainer = styled(Container)`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0 0 120px 0;
+    margin: 60px 0 120px 0;
 `;
 
 const TitleWrapper = styled.div`
