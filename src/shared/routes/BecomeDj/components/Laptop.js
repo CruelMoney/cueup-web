@@ -9,12 +9,12 @@ import DJProfileDesktopImage from '../../../assets/images/desktop-cueup.png';
 const LaptopContainer = styled(Container)`
     display: flex;
     justify-content: center;
-    position: sticky;
-    top: 0px;
     z-index: -1;
-    order: 3;
+    order: 2;
+    position: sticky;
+    top: -82px;
     @media only screen and (max-width: 685px) {
-        order: 2;
+        order: 1;
     }
 `;
 

@@ -9,31 +9,11 @@ import ButtonLinkGlow from './blocks/ButtonLinkGlow';
 
 const OrderedContainer = styled(Container)`
     z-index: -2;
-    order: 2;
+    order: 1;
     @media only screen and (max-width: 685px) {
-        order: 3;
+        order: 2;
     }
 `;
-
-// const SubTitle = styled(Body)`
-//     font-size: 20px;
-//     text-align: center;
-//     width: 336px;
-//     margin: auto;
-// `;
-
-// const HeroCol = styled(Col)`
-//     margin-top: 145px;
-//     width: 550px;
-// `;
-
-// const HeroButtonLink = styled(ButtonLinkGlow)`
-//     display: block;
-//     margin-top: 40px;
-//     font-size: 18px;
-//     height: 50px;
-//     box-shadow: 0px 0px 30px 30px #31daff;
-// `;
 
 const WrapperCol = styled(Col)`
     flex: 1;

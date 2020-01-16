@@ -9,8 +9,7 @@ import thumbDa from '../../assets/images/signup_da.png';
 import { Environment } from '../../constants/constants';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Hero from './components/Hero';
-import Highlights from './components/Highlights';
-import Laptop from './components/Laptop';
+import HighlightsLaptop from './components/HighlightsLaptop';
 import Integrations from './components/Integrations';
 import GettingGigs from './components/GettingGigs';
 import Payments from './components/Payments';
@@ -55,8 +54,7 @@ class Index extends Component {
                 </Helmet>
                 <ScrollToTop />
                 <Hero firstTo={translate('routes./')} />
-                <Highlights />
-                <Laptop />
+                <HighlightsLaptop />
                 <Integrations />
                 <GettingGigs />
                 <Payments />
