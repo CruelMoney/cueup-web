@@ -37,7 +37,7 @@ class Index extends Component {
         const { translate, currentLanguage } = this.props;
         const title = translate('become-dj.title') + ' | Cueup';
         const thumb = Environment.CALLBACK_DOMAIN + (currentLanguage === 'da' ? thumbDa : thumbEn);
-
+        const themeColor = '#25F4D2';
         return (
             <Wrapper className="me">
                 <Helmet>
@@ -67,6 +67,7 @@ class Index extends Component {
 
                 <Footer
                     noSkew
+                    color={themeColor}
                     firstTo={translate('routes./')}
                     secondTo={translate('routes./')}
                     firstLabel={translate('how-it-works')}
