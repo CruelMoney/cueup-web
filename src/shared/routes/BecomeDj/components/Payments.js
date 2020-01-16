@@ -17,9 +17,9 @@ const Bg = styled.div`
     justify-content: center;
     width: 100%;
     order: 6;
-    background-image: linear-gradient(to bottom, white 0% 80%, #0b1b2d 80%);
+    background-image: linear-gradient(to bottom, white 0% 85%, #0b1b2d 85%);
     @media only screen and (max-width: 685px) {
-        background-image: linear-gradient(to bottom, white 0% 90%, #0b1b2d 90%);
+        background-image: linear-gradient(to bottom, white 0% 93%, #0b1b2d 93%);
     }
 `;
 

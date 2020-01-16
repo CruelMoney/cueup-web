@@ -15,25 +15,25 @@ const OrderedContainer = styled(Container)`
     }
 `;
 
-const SubTitle = styled(Body)`
-    font-size: 20px;
-    text-align: center;
-    width: 336px;
-    margin: auto;
-`;
+// const SubTitle = styled(Body)`
+//     font-size: 20px;
+//     text-align: center;
+//     width: 336px;
+//     margin: auto;
+// `;
 
-const HeroCol = styled(Col)`
-    margin-top: 145px;
-    width: 550px;
-`;
+// const HeroCol = styled(Col)`
+//     margin-top: 145px;
+//     width: 550px;
+// `;
 
-const HeroButtonLink = styled(ButtonLinkGlow)`
-    display: block;
-    margin-top: 40px;
-    font-size: 18px;
-    height: 50px;
-    box-shadow: 0px 0px 30px 30px #31daff;
-`;
+// const HeroButtonLink = styled(ButtonLinkGlow)`
+//     display: block;
+//     margin-top: 40px;
+//     font-size: 18px;
+//     height: 50px;
+//     box-shadow: 0px 0px 30px 30px #31daff;
+// `;
 
 const WrapperCol = styled(Col)`
     flex: 1;
@@ -93,10 +93,6 @@ const TextRowColSecondRow = styled(Row)`
     font-family: AvenirNext-Bold;
     font-size: 32px;
     color: #ffffff;
-`;
-
-const GracefullImageDJProfile = styled(GracefullImage)`
-    width: 100%;
 `;
 
 const Highlights = (props) => {

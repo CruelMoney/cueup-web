@@ -36,14 +36,15 @@ const TextCol = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 0 0 0 150px;
+    padding: 0 0 0 5%;
     @media only screen and (max-width: 685px) {
         padding: 0;
     }
 `;
 
 const StyledImage = styled(GracefullImage)`
-    width: 40%;
+    width: 60%;
+    padding: 0 0 0 10%;
     align-self: center;
     @media only screen and (max-width: 685px) {
         width: 85%;

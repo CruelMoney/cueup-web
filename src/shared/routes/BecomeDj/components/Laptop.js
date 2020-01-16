@@ -38,8 +38,8 @@ const Shadow = styled.div`
     border-radius: 50% / 100%;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    background-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 2vw 3vw rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 2vw 3vw rgba(255, 255, 255, 0.1);
 `;
 
 const Laptop = (props) => {
