@@ -18,7 +18,7 @@ const Bg = styled.div`
     background-color: white;
     z-index: 20;
     position: relative;
-    height: 800px;
+    height: 730px;
     @media only screen and (max-width: 685px) {
         height: 700px;
     }
@@ -32,7 +32,7 @@ const JoinThousandsContainer = styled.div`
 const AvatarWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 40px 60px 40px 60px;
+    padding: 40px 3% 40px 3%;
     z-index: 21;
     width: 100%;
     @media only screen and (max-width: 685px) {
@@ -44,6 +44,7 @@ const AvatarRow1 = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    margin-bottom: 20px;
     @media only screen and (max-width: 685px) {
         margin-left: -20px;
         margin-right: -20px;
@@ -104,12 +105,11 @@ const BlueRectangle = styled.div`
 
 const TextWrapper = styled.div`
     padding: 0 0 50px 0;
-    width: 70%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-content: center;
     @media only screen and (max-width: 685px) {
-        width: 90%;
         padding: 0 0 50px 0;
     }
 `;
@@ -118,6 +118,7 @@ const Content = styled(Body)`
     font-size: 20px;
     text-align: center;
     margin: auto;
+    width: 70%;
 `;
 
 const JoinThousands = (props) => {
