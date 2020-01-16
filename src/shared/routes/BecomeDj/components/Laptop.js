@@ -18,12 +18,13 @@ const LaptopContainer = styled(Container)`
     }
 `;
 
-const GetGigsImageRow = styled(Row)`
+const GetGigsImageCol = styled(Col)`
     order: 2;
     @media only screen and (max-width: 685px) {
         order: 1;
     }
     justify-content: center;
+    align-items: center;
     margin-top: 10px;
 `;
 
@@ -31,19 +32,30 @@ const GracefullImageDJProfile = styled(GracefullImage)`
     width: 100%;
 `;
 
+const Shadow = styled.div`
+    width: 77%;
+    height: 1vw;
+    border-radius: 50% / 100%;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 2vw 3vw rgba(255, 255, 255, 0.2);
+`;
+
 const Laptop = (props) => {
     return (
         <LaptopContainer>
-            <Row>
-                <GetGigsImageRow>
+            <Col>
+                <GetGigsImageCol>
                     <GracefullImageDJProfile
                         src={DJProfileDesktopImage}
                         animate
                         alt="cueup DJ profile - desktop"
                         style={{ width: '100%' }}
                     />
-                </GetGigsImageRow>
-            </Row>
+                    <Shadow />
+                </GetGigsImageCol>
+            </Col>
         </LaptopContainer>
     );
 };

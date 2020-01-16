@@ -34,7 +34,7 @@ const IntegrationsWrapper = styled.div`
 
 const IntegrationsCol = styled(Col)`
     width: 100%;
-    @media only screen and (min-width: 685px) {
+    @media only screen and (min-width: 375px) {
         background: no-repeat 100% 100%/70% url(${integrationsGraphic});
     }
 `;
@@ -47,7 +47,7 @@ const IntegrationsText = styled.p`
     line-height: 96px;
     font-size: 32px;
     font-family: AvenirNext-Medium;
-    @media only screen and (max-width: 685px) {
+    @media only screen and (max-width: 375px) {
         margin-top: 10px;
         font-size: 27px;
         color: #ffffff;
@@ -60,16 +60,17 @@ const IntegrationsTextStarred = styled(IntegrationsText)`
     opacity: 0.5;
     font-size: 15px;
     letter-spacing: -0.31px;
-    @media only screen and (max-width: 685px) {
+    @media only screen and (max-width: 375px) {
         font-size: 15px;
     }
 `;
 
 const MobileImage = styled.div`
-    @media only screen and (max-width: 685px) {
+    @media only screen and (max-width: 375px) {
         height: 330px;
         margin: 30px -15px 0 -15px;
         background: no-repeat 50% 100% url(${integrationsGraphicMobile});
+        background-size: contain;
     }
 `;
 
