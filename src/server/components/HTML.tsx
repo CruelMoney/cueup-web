@@ -27,12 +27,7 @@ const HTML = ({
                 name="viewport"
                 content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
             />
-            <script
-                async
-                type="text/javascript"
-                src="https://www.google-analytics.com/analytics.js"
-            />
-            <script async type="text/javascript" src="/autotrack.js" />
+            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-59876038-4" />
 
             <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async />
             <script

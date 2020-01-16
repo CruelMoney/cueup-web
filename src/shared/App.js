@@ -7,7 +7,7 @@ import ReactPixel from 'react-facebook-pixel';
 
 import { getActiveLanguage, getTranslate, setActiveLanguage } from 'react-localize-redux';
 
-import { init as analytics } from './utils/analytics/autotrack';
+import * as gtag from './utils/analytics/autotrack';
 import { Environment } from './constants/constants';
 
 import Home from './routes/Home';
@@ -67,11 +67,19 @@ const App = (props) => {
     useEffect(() => {
         // Setup custom analytics
         if (process.env.NODE_ENV !== 'development') {
-            analytics();
+            gtag.init();
             ReactPixel.init(Environment.PIXEL_ID);
-            ReactPixel.pageView();
         }
     }, []);
+
+    useEffect(() => {
+        if (process.env.NODE_ENV !== 'development') {
+            setTimeout(() => {
+                gtag.pageView(location.pathname);
+                ReactPixel.pageView();
+            }, 100);
+        }
+    }, [location.pathname]);
 
     const registerMobileLinks = useCallback(
         (routes, mobileLabel) => {
