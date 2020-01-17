@@ -8,6 +8,9 @@ import { BlueTitle } from '../components/blocks/Title';
 import { GrayText } from '../components/blocks/Text';
 import ReadMore from '../components/blocks/ReadMore';
 import gigRequest from '../../../assets/images/gig_request.png';
+import NY from '../../../assets/images/gigs/NY.png';
+import LA from '../../../assets/images/gigs/LA.png';
+import Bali from '../../../assets/images/gigs/Bali.png';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import content from '../content.json';
 import GracefullImage from '../../../components/GracefullImage';
@@ -51,13 +54,51 @@ const StyledImage = styled(GracefullImage)`
     }
 `;
 
+const AnimatedCardWrapper = styled.div`
+    width: 60%;
+    padding: 0 0 0 10%;
+    align-self: center;
+    @media only screen and (max-width: 685px) {
+        width: 85%;
+    }
+`;
+
+const AnimatedCard = styled(GracefullImage)`
+    width: 100%;
+    /* animation-name: stack;
+    animation-duration: 4s; */
+    /* animation-fill-mode: forwards; */
+    animation: 4s infinite stack;
+
+    @keyframes stack {
+        0% {
+            transform: scale(0.7);
+        }
+        25% {
+            transform: scale(0.8);
+        }
+        50% {
+            transform: scale(0.9);
+        }
+        75% {
+            transform: scale(1);
+        }
+        100% {
+            transform: scale(1.1);
+        }
+    }
+`;
+
 const GettingGigs = (props) => {
     const { translate, currentLanguage } = props;
     return (
         <Bg>
             <Container>
                 <GettingGigsWrapper>
-                    <StyledImage src={gigRequest} animate alt="Gig request" style={{}} />
+                    <StyledImage src={gigRequest} animate alt="Gig request" />
+                    {/* <AnimatedCardWrapper>
+                        <AnimatedCard src={LA}/>
+                    </AnimatedCardWrapper> */}
                     <TextCol>
                         <ResponsiveTextAccent margin="0 0 15px 0">
                             {translate('become-dj.getting-gigs.get-gigs-feature.feature')}

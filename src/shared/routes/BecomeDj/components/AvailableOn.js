@@ -12,6 +12,8 @@ import mobileLeft from '../../../assets/images/available-on/1_front.png';
 import mobileRightTop from '../../../assets/images/available-on/4.png';
 import mobileRightBottom from '../../../assets/images/available-on/4 copy.png';
 import mobileHovering from '../../../assets/images/available-on/iPhone X Hovering - Right.png';
+import appStore from '../../../assets/images/available-on/app store.png';
+import playStore from '../../../assets/images/available-on/googleplay.png';
 
 const Bg = styled.div`
     display: flex;
@@ -82,6 +84,11 @@ const MobileImageContainerCol = styled.div`
     flex-direction: column;
 `;
 
+const StoresContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
+
 const AvailableOn = (props) => {
     const { translate, currentLanguage } = props;
     return (
@@ -98,12 +105,18 @@ const AvailableOn = (props) => {
                         <GrayText>
                             {translate('become-dj.available-on-iphone.desktop.content')}
                         </GrayText>
+                        <GracefullImage
+                            src={appStore}
+                            animate
+                            alt="app store"
+                            style={{ width: '148px', paddingTop: '50px' }}
+                        />
                     </DesktopTextContainer>
                     <DesktopImageContainer>
                         <GracefullImage
                             src={mobileHovering}
                             animate
-                            alt="Gig request"
+                            alt="iPhone"
                             style={{ width: '70%', alignSelf: 'center' }}
                         />
                     </DesktopImageContainer>
@@ -117,7 +130,7 @@ const AvailableOn = (props) => {
                         <BlueTitle left size="64px" line="64px" spacing="-1.33px">
                             {translate('become-dj.available-on-iphone.mobile.iphone-and-android')}
                         </BlueTitle>
-                        <GrayText>
+                        <GrayText mobileTextAlign="left">
                             {translate('become-dj.available-on-iphone.mobile.content')}
                         </GrayText>
                     </MobileTextContainer>
@@ -126,7 +139,7 @@ const AvailableOn = (props) => {
                             <GracefullImage
                                 src={mobileLeft}
                                 animate
-                                alt="Gig request"
+                                alt="Mobile"
                                 style={{ width: '100%', alignSelf: 'center', margin: '10px' }}
                             />
                         </MobileImageContainerCol>
@@ -134,7 +147,7 @@ const AvailableOn = (props) => {
                             <GracefullImage
                                 src={mobileRightTop}
                                 animate
-                                alt="Gig request"
+                                alt="Mobile"
                                 style={{
                                     width: '100%',
                                     alignSelf: 'center',
@@ -145,7 +158,7 @@ const AvailableOn = (props) => {
                             <GracefullImage
                                 src={mobileRightBottom}
                                 animate
-                                alt="Gig request"
+                                alt="Mobile"
                                 style={{
                                     width: '100%',
                                     alignSelf: 'center',
@@ -155,6 +168,28 @@ const AvailableOn = (props) => {
                             />
                         </MobileImageContainerCol>
                     </MobileImageContainer>
+                    <StoresContainer>
+                        <GracefullImage
+                            src={playStore}
+                            animate
+                            alt="Google Play store"
+                            style={{
+                                width: '54%',
+                                alignSelf: 'center',
+                                padding: '30px 10px 10px 0px',
+                            }}
+                        />
+                        <GracefullImage
+                            src={appStore}
+                            animate
+                            alt="Apple app store"
+                            style={{
+                                width: '46%',
+                                alignSelf: 'center',
+                                padding: '30px 0px 10px 0px',
+                            }}
+                        />
+                    </StoresContainer>
                 </MobileContainer>
             </Container>
         </Bg>

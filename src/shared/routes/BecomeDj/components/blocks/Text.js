@@ -8,7 +8,7 @@ export const GrayText = styled.p`
     color: #4d6480;
     line-height: 34px;
     @media only screen and (max-width: 685px) {
-        text-align: center;
+        text-align: ${({ mobileTextAlign }) => (mobileTextAlign ? mobileTextAlign : 'center')};
         margin-top: 20px;
     }
 `;
