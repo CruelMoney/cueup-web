@@ -20,7 +20,7 @@ const Bg = styled.div`
     position: relative;
     height: 730px;
     @media only screen and (max-width: 685px) {
-        height: 700px;
+        height: 720px;
     }
 `;
 
@@ -36,7 +36,7 @@ const AvatarWrapper = styled.div`
     z-index: 21;
     width: 100%;
     @media only screen and (max-width: 685px) {
-        padding: 40px 0px;
+        padding: 30px 0px;
     }
 `;
 
@@ -44,7 +44,7 @@ const AvatarRow1 = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     @media only screen and (max-width: 685px) {
         margin-left: -20px;
         margin-right: -20px;
