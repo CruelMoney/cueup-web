@@ -17,6 +17,7 @@ bundle-stats.json
 /dependency-graph.svg
 benchmarks
 .swp
+.DS_Store
 
 
 # Created by https://www.gitignore.io/api/node,code,react,linux,macos,windows
