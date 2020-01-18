@@ -51,6 +51,7 @@ const StyledImage = styled(GracefullImage)`
     align-self: center;
     @media only screen and (max-width: 685px) {
         width: 85%;
+        padding: 0px;
     }
 `;
 
@@ -60,6 +61,7 @@ const AnimatedCardWrapper = styled.div`
     align-self: center;
     @media only screen and (max-width: 685px) {
         width: 85%;
+        padding: 0px;
     }
 `;
 
