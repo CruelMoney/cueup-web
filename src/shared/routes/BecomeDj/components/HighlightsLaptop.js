@@ -5,18 +5,12 @@ import content from '../content.json';
 import Laptop from './Laptop';
 import Highlights from './Highlights';
 
-const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    order: 2;
-`;
-
 const HighlightsLaptop = (props) => {
     return (
-        <Wrapper>
+        <div>
             <Highlights />
             <Laptop />
-        </Wrapper>
+        </div>
     );
 };
 

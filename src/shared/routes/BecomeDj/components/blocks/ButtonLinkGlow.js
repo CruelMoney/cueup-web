@@ -74,7 +74,6 @@ class ButtonLinkGlow extends Component {
             height: '50px',
             display: 'flex',
             boxShadow: '0px 0px 45px 0px rgba(0, 209, 255, 0.75)',
-            textShadow: '0px 2px 4px rgba(0,0,0,0.5)',
         };
     };
 

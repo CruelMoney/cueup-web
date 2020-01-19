@@ -8,8 +8,8 @@ import GracefullImage from '../../../components/GracefullImage';
 import { TextAccent } from '../components/blocks/TextAccent';
 import { Title } from '../components/blocks/Title';
 import { PaddedContainer } from '../components/blocks/PaddedContainer';
-import integrationsGraphic from '../../../assets/images/integrations/integrations_graphic.svg';
-import integrationsGraphicMobile from '../../../assets/images/integrations/integrations_graphic_mobile.svg';
+import integrationsGraphic from '../../../assets/images/integrations/Brands.png';
+import integrationsGraphicMobile from '../../../assets/images/integrations/Brands_mobile.png';
 
 const Bg = styled.div`
     display: flex;
@@ -25,43 +25,65 @@ const Bg = styled.div`
 const TitleWrapper = styled.div`
     max-width: 570px;
     align-self: flex-start;
+    @media only screen and (min-width: 375px) {
+        position: relative;
+        :after {
+            content: '';
+            background: url(${integrationsGraphic});
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            width: 846px;
+            height: 764px;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            transform: translate(75%, 90%);
+        }
+    }
 `;
 
 const IntegrationsWrapper = styled.div`
     display: flex;
     flex-direction: row;
+    margin-top: 200px;
 `;
 
 const IntegrationsCol = styled(Col)`
     width: 100%;
-    @media only screen and (min-width: 375px) {
-        background: no-repeat 100% 100%/70% url(${integrationsGraphic});
-    }
+    position: relative;
 `;
 
-const IntegrationsText = styled.p`
-    margin-top: 50px;
-    font-family: AvenirNext-Medium;
-    color: #ffffff;
-    letter-spacing: -0.67px;
-    line-height: 96px;
-    font-size: 32px;
-    font-family: AvenirNext-Medium;
+const IntegrationsText = styled.ul`
+    margin-top: 15px;
+    margin-bottom: 100px;
+    > p {
+        font-family: 'AvenirNext-Medium';
+        color: #fff;
+        letter-spacing: -0.67px;
+        font-size: 32px;
+    }
     @media only screen and (max-width: 375px) {
         margin-top: 10px;
-        font-size: 27px;
-        color: #ffffff;
-        letter-spacing: -0.56px;
-        line-height: 60px;
+        > p {
+            font-size: 27px;
+            color: #ffffff;
+            letter-spacing: -0.56px;
+            line-height: 60px;
+        }
     }
 `;
 
 const IntegrationsTextStarred = styled(IntegrationsText)`
-    opacity: 0.5;
-    font-size: 15px;
-    letter-spacing: -0.31px;
-    @media only screen and (max-width: 375px) {
+    > p {
+        opacity: 0.5;
         font-size: 15px;
+        letter-spacing: -0.31px;
+        position: absolute;
+        bottom: 15px;
+        left: 0;
+        @media only screen and (max-width: 375px) {
+            font-size: 15px;
+        }
     }
 `;
 
@@ -77,35 +99,31 @@ const MobileImage = styled.div`
 const Integrations = (props) => {
     const { translate, currentLanguage } = props;
     return (
-        <Bg>
-            <Container>
-                <IntegrationsWrapper>
-                    <IntegrationsCol>
-                        <MobileImage />
-                        <TextAccent margin="0 0 20px 0">
-                            {translate('become-dj.integrations.integrations')}
-                        </TextAccent>
-                        <TitleWrapper>
-                            <Title left size="64px" line="64px" spacing="-1.33px">
-                                {translate(
-                                    'become-dj.integrations.combine-content-&-sell-yourself'
-                                )}
-                            </Title>
-                        </TitleWrapper>
-                        <IntegrationsText>
-                            {translate('become-dj.integrations.instagram')} <br />
-                            {translate('become-dj.integrations.soundcloud')} <br />
-                            {translate('become-dj.integrations.testimonials')} <br />
-                            {translate('become-dj.integrations.mixcloud')} <br />
-                            {translate('become-dj.integrations.and-more')} <br />
-                        </IntegrationsText>
-                        <IntegrationsTextStarred>
-                            {translate('become-dj.integrations.coming-soon')}
-                        </IntegrationsTextStarred>
-                    </IntegrationsCol>
-                </IntegrationsWrapper>
-            </Container>
-        </Bg>
+        <Container>
+            <IntegrationsWrapper>
+                <IntegrationsCol>
+                    <MobileImage />
+                    <TextAccent margin="0 0 20px 0">
+                        {translate('become-dj.integrations.integrations')}
+                    </TextAccent>
+                    <TitleWrapper>
+                        <Title left size="64px" line="64px" spacing="-1.33px">
+                            {translate('become-dj.integrations.combine-content-&-sell-yourself')}
+                        </Title>
+                    </TitleWrapper>
+                    <IntegrationsText>
+                        <p>{translate('become-dj.integrations.instagram')}</p>
+                        <p>{translate('become-dj.integrations.soundcloud')}</p>
+                        <p>{translate('become-dj.integrations.testimonials')}</p>
+                        <p>{translate('become-dj.integrations.mixcloud')}</p>
+                        <p>{translate('become-dj.integrations.and-more')}</p>
+                    </IntegrationsText>
+                    <IntegrationsTextStarred>
+                        <p>{translate('become-dj.integrations.coming-soon')}</p>
+                    </IntegrationsTextStarred>
+                </IntegrationsCol>
+            </IntegrationsWrapper>
+        </Container>
     );
 };
 

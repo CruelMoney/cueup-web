@@ -9,7 +9,7 @@ import DJProfileDesktopImage from '../../../assets/images/desktop-cueup.png';
 const LaptopContainer = styled(Container)`
     display: flex;
     justify-content: center;
-    z-index: -1;
+    z-index: 1;
     order: 2;
     position: sticky;
     @media only screen and (max-width: 685px) {
@@ -35,12 +35,13 @@ const LaptopImage = styled.img`
 
 const Shadow = styled.div`
     width: 77%;
-    height: 1vw;
+    height: 35px;
     border-radius: 50% / 100%;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    background-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 2vw 3vw rgba(255, 255, 255, 0.1);
+    margin-top: -55px;
+    box-shadow: 0 0 80px 0 rgba(255, 255, 255, 0.3);
+    z-index: -1;
 `;
 
 const Laptop = (props) => {

@@ -18,17 +18,8 @@ import AvailableOn from './components/AvailableOn';
 import JoinThousands from './components/JoinThousands';
 import content from './content.json';
 
-const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-`;
-
 const Bg = styled.div`
     background-image: radial-gradient(50% 58% at 50% 33%, #122b48 12%, #0b1b2d 90%);
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 200vh;
     z-index: -10;
 `;
 
@@ -39,7 +30,7 @@ class Index extends Component {
         const thumb = Environment.CALLBACK_DOMAIN + (currentLanguage === 'da' ? thumbDa : thumbEn);
         const themeColor = '#25F4D2';
         return (
-            <Wrapper className="me">
+            <>
                 <Helmet>
                     <title>{title}</title>
                     <meta property="og:title" content={title} />
@@ -53,15 +44,16 @@ class Index extends Component {
                     />
                 </Helmet>
                 <ScrollToTop />
-                <Hero firstTo={translate('routes./')} />
-                <HighlightsLaptop />
-                <Integrations />
+                <Bg>
+                    <Hero firstTo={translate('routes./')} />
+                    <HighlightsLaptop />
+                    <Integrations />
+                </Bg>
                 <GettingGigs />
                 <Payments />
                 <CancelationPolicy />
                 <AvailableOn />
                 <JoinThousands />
-                <Bg />
 
                 {/* <div style={{ height: '100vh' }} /> */}
 
@@ -74,7 +66,7 @@ class Index extends Component {
                     title={translate('Wonder how it works?')}
                     subTitle={translate('See how it works, or arrange an event.')}
                 />
-            </Wrapper>
+            </>
         );
     }
 }
