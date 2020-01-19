@@ -1,15 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Container, Col, Row } from 'components/Blocks';
-import { Body } from 'components/Text';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import content from '../content.json';
-import GracefullImage from '../../../components/GracefullImage';
-import ButtonLinkGlow from './blocks/ButtonLinkGlow';
 
 const OrderedContainer = styled(Container)`
     z-index: -2;
     order: 1;
+    padding: 0 5%;
     @media only screen and (max-width: 685px) {
         order: 2;
     }
@@ -25,7 +23,7 @@ const TextRow = styled(Row)`
     flex: 1;
     align-self: center;
     justify-content: space-between;
-    width: 83%;
+    width: 71%;
     flex-wrap: wrap;
     @media only screen and (max-width: 375px) {
         order: 2;
@@ -35,7 +33,6 @@ const TextRow = styled(Row)`
 `;
 
 const TextRowCol = styled(Col)`
-    padding: 10px;
     @media only screen and (max-width: 375px) {
         flex-basis: 100%;
     }
@@ -65,7 +62,7 @@ const TextRowCol4 = styled(TextRowCol)`
 const TextRowColFirstRow = styled(Row)`
     opacity: 0.5;
     font-family: AvenirNext-DemiBold;
-    font-size: 12px;
+    font-size: 15px;
     color: #ffffff;
 `;
 

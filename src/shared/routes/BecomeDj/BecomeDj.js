@@ -66,7 +66,6 @@ class Index extends Component {
                 {/* <div style={{ height: '100vh' }} /> */}
 
                 <Footer
-                    noSkew
                     color={themeColor}
                     firstTo={translate('routes./')}
                     secondTo={translate('routes./')}

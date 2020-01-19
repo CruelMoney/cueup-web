@@ -12,7 +12,6 @@ const LaptopContainer = styled(Container)`
     z-index: -1;
     order: 2;
     position: sticky;
-    top: -82px;
     @media only screen and (max-width: 685px) {
         order: 1;
     }
@@ -22,13 +21,15 @@ const GetGigsImageCol = styled(Col)`
     order: 2;
     @media only screen and (max-width: 685px) {
         order: 1;
+        padding: 0px;
     }
+    padding: 0 100px;
     justify-content: center;
     align-items: center;
     margin-top: 10px;
 `;
 
-const GracefullImageDJProfile = styled(GracefullImage)`
+const LaptopImage = styled.img`
     width: 100%;
 `;
 
@@ -47,11 +48,10 @@ const Laptop = (props) => {
         <LaptopContainer>
             <Col>
                 <GetGigsImageCol>
-                    <GracefullImageDJProfile
+                    <LaptopImage
                         src={DJProfileDesktopImage}
                         animate
                         alt="cueup DJ profile - desktop"
-                        style={{ width: '100%' }}
                     />
                     <Shadow />
                 </GetGigsImageCol>

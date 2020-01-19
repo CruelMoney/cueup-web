@@ -9,13 +9,6 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     order: 2;
-    position: sticky;
-    top: -82px;
-    z-index: -1;
-    @media only screen and (max-width: 685px) {
-        position: sticky;
-        top: 0px;
-    }
 `;
 
 const HighlightsLaptop = (props) => {
