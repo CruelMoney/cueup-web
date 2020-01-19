@@ -15,7 +15,6 @@ const Bg = styled.div`
     justify-content: center;
     width: 100%;
     order: 9;
-    background-color: white;
     z-index: 20;
     position: relative;
     height: 730px;
