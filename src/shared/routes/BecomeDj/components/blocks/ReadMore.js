@@ -15,6 +15,7 @@ const ReadMoreText = styled.p`
     @media only screen and (max-width: 685px) {
         margin-top: 20px;
     }
+    ${({ noMargin }) => (noMargin ? 'margin-top: 0px;' : '')}
 `;
 
 const ReadMoreWrapper = styled.div`
@@ -25,15 +26,14 @@ const ReadMoreWrapper = styled.div`
 `;
 
 const ReadMore = (props) => {
-    const { white, translate, currentLanguage } = props;
+    const { white, translate, currentLanguage, noMargin } = props;
     return (
         <ReadMoreWrapper>
-            <ReadMoreText white={white}>
+            <ReadMoreText white={white} noMargin={noMargin}>
                 {translate('become-dj.getting-gigs.get-gigs-feature.read-more')} <br />
             </ReadMoreText>
-            <GracefullImage
+            <img
                 src={white ? whiteArrow : arrow}
-                animate
                 alt="right arrow"
                 style={{
                     marginLeft: '15px',
