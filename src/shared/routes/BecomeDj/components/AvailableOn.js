@@ -1,10 +1,10 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { HeaderTitle, Body } from 'components/Text';
 import { Container, Col, Row } from 'components/Blocks';
 import { TextAccent } from '../components/blocks/TextAccent';
 import { BlueTitle } from '../components/blocks/Title';
-import { GrayText } from '../components/blocks/Text';
+import { GrayText, Header } from '../components/blocks/Text';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import GracefullImage from '../../../components/GracefullImage';
 import mobileLeft from '../../../assets/images/available-on/1_front.png';
@@ -14,15 +14,13 @@ import iphoneX from '../../../assets/images/available-on/iphone_x.png';
 import android from '../../../assets/images/available-on/android.png';
 import appStore from '../../../assets/images/available-on/app store.png';
 import playStore from '../../../assets/images/available-on/googleplay.png';
-import observeStickyHeaderChanges from './stickyEvents';
 
 const Bg = styled.div`
     display: flex;
     justify-content: center;
     padding-top: 150px;
-    padding-bottom: 150px;
+    padding-bottom: 200px;
     width: 100%;
-    background-color: white;
     order: 8;
 `;
 
@@ -40,6 +38,7 @@ const DesktopTextContainer = styled.div`
     display: flex;
     flex: 1;
     flex-direction: column;
+    position: relative;
 `;
 
 const DesktopImageContainer = styled.div`
@@ -95,49 +94,118 @@ const StickyText = styled.div`
     margin-top: 50%;
 `;
 
+let lastScrollPosition = 0;
+
 const AvailableOn = (props) => {
     const { translate, currentLanguage } = props;
-    const scrollContainer = useRef();
+    const textAnimation = useRef();
+    const buttonAnimation = useRef();
+    const androidRef = useRef();
 
     useEffect(() => {
-        observeStickyHeaderChanges(scrollContainer.current);
+        const observer = new IntersectionObserver(
+            (records, observer) => {
+                for (const record of records) {
+                    if (record.intersectionRatio >= 0.5) {
+                        lastScrollPosition = window.scrollY;
+                        textAnimation.current.style.transform = 'translateY(-100%)';
+                        buttonAnimation.current.style.transform = 'translateY(-100%)';
+                    } else if (record.intersectionRatio < 0.5) {
+                        textAnimation.current.style.transform = 'none';
+                        buttonAnimation.current.style.transform = 'none';
+                    }
+                }
+            },
+            { threshold: [0, 0.5, 1], root: null, rootMargin: '0px' }
+        );
+
+        observer.observe(androidRef.current);
+
+        return () => {
+            observer.disconnect();
+        };
     }, []);
+
+    console.log('render');
 
     return (
         <Bg>
             <Container>
                 <DesktopContainer>
-                    <DesktopTextContainer ref={scrollContainer}>
+                    <DesktopTextContainer>
                         <StickyText>
                             <TextAccent margin="0 0 15px 0">
                                 {translate('become-dj.available-on-iphone.desktop.available-on')}
                             </TextAccent>
-                            <BlueTitle left size="64px" line="64px" spacing="-1.33px">
-                                {translate('become-dj.available-on-iphone.desktop.iphone')}
-                            </BlueTitle>
+                            <div
+                                style={{ overflow: 'hidden', height: '64px', marginBottom: '18px' }}
+                            >
+                                <div
+                                    style={{
+                                        height: '64px',
+                                        transition:
+                                            'transform 500ms cubic-bezier(0.215, 0.610, 0.355, 1)',
+                                    }}
+                                    ref={textAnimation}
+                                >
+                                    <Header style={{ marginBottom: '0px' }} left>
+                                        iPhone
+                                    </Header>
+                                    <Header style={{ marginBottom: '0px' }} left>
+                                        Android
+                                    </Header>
+                                </div>
+                            </div>
                             <GrayText>
                                 {translate('become-dj.available-on-iphone.desktop.content')}
                             </GrayText>
-                            <GracefullImage
-                                src={appStore}
-                                animate
-                                alt="app store"
-                                style={{ width: '148px', marginTop: '50px' }}
-                            />
+                            <div style={{ overflow: 'hidden', height: '50px', marginTop: '50px' }}>
+                                <div
+                                    style={{
+                                        height: '50px',
+                                        transition:
+                                            'transform 500ms cubic-bezier(0.215, 0.610, 0.355, 1)',
+                                    }}
+                                    ref={buttonAnimation}
+                                >
+                                    <img
+                                        src={appStore}
+                                        alt="app store"
+                                        style={{
+                                            height: '50px',
+                                            display: 'block',
+                                        }}
+                                    />
+                                    <img
+                                        src={playStore}
+                                        alt="app store"
+                                        style={{
+                                            height: '50px',
+                                            display: 'block',
+                                            marginTop: '1px',
+                                        }}
+                                    />
+                                </div>
+                            </div>
                         </StickyText>
                     </DesktopTextContainer>
                     <DesktopImageContainer>
-                        <GracefullImage
+                        <img
                             src={iphoneX}
                             animate
                             alt="dj gigs iPhone"
                             style={{ width: '323px', alignSelf: 'center' }}
                         />
-                        <GracefullImage
+                        <img
+                            ref={androidRef}
                             src={android}
                             animate
                             alt="dj gigs android"
-                            style={{ width: '323px', alignSelf: 'center', marginTop: '100px' }}
+                            style={{
+                                width: '323px',
+                                alignSelf: 'center',
+                                marginTop: '200px',
+                            }}
                         />
                     </DesktopImageContainer>
                 </DesktopContainer>
@@ -148,7 +216,7 @@ const AvailableOn = (props) => {
                             {translate('become-dj.available-on-iphone.mobile.available-on')}
                         </TextAccent>
                         <BlueTitle left size="64px" line="64px" spacing="-1.33px">
-                            {translate('become-dj.available-on-iphone.mobile.iphone-and-android')}
+                            iPhone & Android
                         </BlueTitle>
                         <GrayText mobileTextAlign="left">
                             {translate('become-dj.available-on-iphone.mobile.content')}
