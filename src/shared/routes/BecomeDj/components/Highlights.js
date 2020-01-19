@@ -5,12 +5,7 @@ import addTranslate from '../../../components/higher-order/addTranslate';
 import content from '../content.json';
 
 const OrderedContainer = styled(Container)`
-    z-index: -2;
-    order: 1;
     padding: 0 5%;
-    @media only screen and (max-width: 685px) {
-        order: 2;
-    }
 `;
 
 const WrapperCol = styled(Col)`
@@ -26,18 +21,20 @@ const TextRow = styled(Row)`
     width: 71%;
     flex-wrap: wrap;
     @media only screen and (max-width: 375px) {
-        order: 2;
-        margin-top: 20px;
-        width: 100%;
+        margin-top: 50px;
+        width: 90%;
     }
 `;
 
 const TextRowCol = styled(Col)`
     @media only screen and (max-width: 375px) {
         flex-basis: 100%;
+        align-items: center;
+        margin-bottom: 24px;
     }
     @media only screen and (min-width: 375px) and (max-width: 685px) {
         flex-basis: 50%;
+        align-items: flex-start;
     }
 `;
 const TextRowCol1 = styled(TextRowCol)`
