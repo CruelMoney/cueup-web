@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Container, Col, Row } from 'components/Blocks';
 import addTranslate from '../../../components/higher-order/addTranslate';
-import content from '../content.json';
 import { Header } from '../components/blocks/Text';
 import { TextAccent } from '../components/blocks/TextAccent';
 import { SubTitle } from '../components/blocks/SubTitle';
@@ -159,4 +158,4 @@ const CancelationPolicy = (props) => {
     );
 };
 
-export default addTranslate(CancelationPolicy, content);
+export default addTranslate(CancelationPolicy);

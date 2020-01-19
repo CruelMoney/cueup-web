@@ -12,7 +12,6 @@ import NY from '../../../assets/images/gigs/NY.png';
 import LA from '../../../assets/images/gigs/LA.png';
 import Bali from '../../../assets/images/gigs/Bali.png';
 import addTranslate from '../../../components/higher-order/addTranslate';
-import content from '../content.json';
 import GracefullImage from '../../../components/GracefullImage';
 
 const Bg = styled.div`
@@ -127,4 +126,4 @@ const GettingGigs = (props) => {
     );
 };
 
-export default addTranslate(GettingGigs, content);
+export default addTranslate(GettingGigs);

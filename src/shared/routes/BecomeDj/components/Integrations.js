@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { HeaderTitle, Body } from 'components/Text';
 import { Container, Col, Row } from 'components/Blocks';
 import addTranslate from '../../../components/higher-order/addTranslate';
-import content from '../content.json';
 import GracefullImage from '../../../components/GracefullImage';
 import { TextAccent } from '../components/blocks/TextAccent';
 import { Title } from '../components/blocks/Title';
@@ -127,4 +126,4 @@ const Integrations = (props) => {
     );
 };
 
-export default addTranslate(Integrations, content);
+export default addTranslate(Integrations);

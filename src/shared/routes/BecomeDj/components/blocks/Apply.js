@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import GracefullImage from '../../../../components/GracefullImage';
 import addTranslate from '../../../../components/higher-order/addTranslate';
-import content from '../../content.json';
 import arrow from '../../../../assets/images/arrow_right.png';
 import whiteArrow from '../../../../assets/images/white_arrow.png';
 
@@ -47,4 +46,4 @@ const Apply = (props) => {
     );
 };
 
-export default addTranslate(Apply, content);
+export default addTranslate(Apply);

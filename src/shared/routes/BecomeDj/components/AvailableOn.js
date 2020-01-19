@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { HeaderTitle, Body } from 'components/Text';
 import { Container, Col, Row } from 'components/Blocks';
@@ -6,14 +6,15 @@ import { TextAccent } from '../components/blocks/TextAccent';
 import { BlueTitle } from '../components/blocks/Title';
 import { GrayText } from '../components/blocks/Text';
 import addTranslate from '../../../components/higher-order/addTranslate';
-import content from '../content.json';
 import GracefullImage from '../../../components/GracefullImage';
 import mobileLeft from '../../../assets/images/available-on/1_front.png';
 import mobileRightTop from '../../../assets/images/available-on/4.png';
 import mobileRightBottom from '../../../assets/images/available-on/4 copy.png';
-import mobileHovering from '../../../assets/images/available-on/iphone_x.png';
+import iphoneX from '../../../assets/images/available-on/iphone_x.png';
+import android from '../../../assets/images/available-on/android.png';
 import appStore from '../../../assets/images/available-on/app store.png';
 import playStore from '../../../assets/images/available-on/googleplay.png';
+import observeStickyHeaderChanges from './stickyEvents';
 
 const Bg = styled.div`
     display: flex;
@@ -39,8 +40,6 @@ const DesktopTextContainer = styled.div`
     display: flex;
     flex: 1;
     flex-direction: column;
-    justify-content: center;
-    margin: 50px 10px 50px 0;
 `;
 
 const DesktopImageContainer = styled.div`
@@ -89,35 +88,56 @@ const StoresContainer = styled.div`
     flex-direction: row;
 `;
 
+const StickyText = styled.div`
+    position: sticky;
+    top: 50vh;
+    transform: translateY(-50%);
+    margin-top: 50%;
+`;
+
 const AvailableOn = (props) => {
     const { translate, currentLanguage } = props;
+    const scrollContainer = useRef();
+
+    useEffect(() => {
+        observeStickyHeaderChanges(scrollContainer.current);
+    }, []);
+
     return (
         <Bg>
             <Container>
                 <DesktopContainer>
-                    <DesktopTextContainer>
-                        <TextAccent margin="0 0 15px 0">
-                            {translate('become-dj.available-on-iphone.desktop.available-on')}
-                        </TextAccent>
-                        <BlueTitle left size="64px" line="64px" spacing="-1.33px">
-                            {translate('become-dj.available-on-iphone.desktop.iphone')}
-                        </BlueTitle>
-                        <GrayText>
-                            {translate('become-dj.available-on-iphone.desktop.content')}
-                        </GrayText>
-                        <GracefullImage
-                            src={appStore}
-                            animate
-                            alt="app store"
-                            style={{ width: '148px', paddingTop: '50px' }}
-                        />
+                    <DesktopTextContainer ref={scrollContainer}>
+                        <StickyText>
+                            <TextAccent margin="0 0 15px 0">
+                                {translate('become-dj.available-on-iphone.desktop.available-on')}
+                            </TextAccent>
+                            <BlueTitle left size="64px" line="64px" spacing="-1.33px">
+                                {translate('become-dj.available-on-iphone.desktop.iphone')}
+                            </BlueTitle>
+                            <GrayText>
+                                {translate('become-dj.available-on-iphone.desktop.content')}
+                            </GrayText>
+                            <GracefullImage
+                                src={appStore}
+                                animate
+                                alt="app store"
+                                style={{ width: '148px', marginTop: '50px' }}
+                            />
+                        </StickyText>
                     </DesktopTextContainer>
                     <DesktopImageContainer>
                         <GracefullImage
-                            src={mobileHovering}
+                            src={iphoneX}
                             animate
-                            alt="iPhone"
-                            style={{ width: '70%', alignSelf: 'center' }}
+                            alt="dj gigs iPhone"
+                            style={{ width: '323px', alignSelf: 'center' }}
+                        />
+                        <GracefullImage
+                            src={android}
+                            animate
+                            alt="dj gigs android"
+                            style={{ width: '323px', alignSelf: 'center', marginTop: '100px' }}
                         />
                     </DesktopImageContainer>
                 </DesktopContainer>
@@ -196,4 +216,4 @@ const AvailableOn = (props) => {
     );
 };
 
-export default addTranslate(AvailableOn, content);
+export default addTranslate(AvailableOn);

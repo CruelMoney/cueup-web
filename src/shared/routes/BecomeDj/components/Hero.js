@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { NavLink as Link } from 'react-router-dom';
 import { Container, Col, Row, PrimaryButton } from 'components/Blocks';
 import addTranslate from '../../../components/higher-order/addTranslate';
-import content from '../content.json';
 import { TextAccent } from '../components/blocks/TextAccent';
 import { Title } from '../components/blocks/Title';
 import { SubTitle } from '../components/blocks/SubTitle';
@@ -54,4 +53,4 @@ const Hero = (props) => {
     );
 };
 
-export default addTranslate(Hero, content);
+export default addTranslate(Hero);

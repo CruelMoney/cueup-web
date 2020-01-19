@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Container, Col, Row } from 'components/Blocks';
 import addTranslate from '../../../components/higher-order/addTranslate';
-import content from '../content.json';
 import Macbook from '../../../assets/images/perf_gallery_hw__bdxj0rf7d3te_large_2x.png';
 import DJProfile from '../../../assets/images/dj_profile.jpg';
 
@@ -59,4 +58,4 @@ const Laptop = (props) => {
     );
 };
 
-export default addTranslate(Laptop, content);
+export default addTranslate(Laptop);

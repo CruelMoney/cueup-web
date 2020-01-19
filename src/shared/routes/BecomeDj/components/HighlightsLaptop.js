@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Col } from 'components/Blocks';
 import addTranslate from '../../../components/higher-order/addTranslate';
-import content from '../content.json';
 import Laptop from './Laptop';
 import Highlights from './Highlights';
 
@@ -20,4 +19,4 @@ const HighlightsLaptop = (props) => {
     );
 };
 
-export default addTranslate(HighlightsLaptop, content);
+export default addTranslate(HighlightsLaptop);

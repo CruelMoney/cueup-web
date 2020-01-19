@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Container, Col, Row } from 'components/Blocks';
 import addTranslate from '../../../components/higher-order/addTranslate';
-import content from '../content.json';
 
 const OrderedContainer = styled(Container)`
     padding: 0 5%;
@@ -116,4 +115,4 @@ const Highlights = (props) => {
     );
 };
 
-export default addTranslate(Highlights, content);
+export default addTranslate(Highlights);

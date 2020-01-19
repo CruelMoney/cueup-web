@@ -5,7 +5,6 @@ import { Container, Col, Row } from 'components/Blocks';
 import { Title } from '../components/blocks/Title';
 import { PaddedContainer } from '../components/blocks/PaddedContainer';
 import addTranslate from '../../../components/higher-order/addTranslate';
-import content from '../content.json';
 import GracefullImage from '../../../components/GracefullImage';
 import Apply from '../components/blocks/Apply';
 import vynil from '../../../assets/Vinyl@2x.png';
@@ -365,4 +364,4 @@ const JoinThousands = (props) => {
     );
 };
 
-export default addTranslate(JoinThousands, content);
+export default addTranslate(JoinThousands);
