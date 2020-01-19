@@ -15,14 +15,14 @@ const Bg = styled.div`
     justify-content: center;
     width: 100%;
     order: 7;
-    background-image: radial-gradient(90% 90% at 50% 80%, #122b48 6%, #0b1b2d 86%);
+    background-image: radial-gradient(40% 50%, #122b48 20%, #0b1b2d 95%);
 `;
 
 const CancelationContainer = styled(Container)`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 60px 0 120px 0;
+    margin: 120px 0;
 `;
 
 const TitleWrapper = styled.div`

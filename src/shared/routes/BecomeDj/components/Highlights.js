@@ -6,6 +6,7 @@ import content from '../content.json';
 
 const OrderedContainer = styled(Container)`
     padding: 0 5%;
+    margin-bottom: 15px;
 `;
 
 const WrapperCol = styled(Col)`

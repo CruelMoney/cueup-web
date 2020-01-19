@@ -28,7 +28,7 @@ class Index extends Component {
         const { translate, currentLanguage } = this.props;
         const title = translate('become-dj.title') + ' | Cueup';
         const thumb = Environment.CALLBACK_DOMAIN + (currentLanguage === 'da' ? thumbDa : thumbEn);
-        const themeColor = '#25F4D2';
+        const themeColor = '#00d1ff';
         return (
             <>
                 <Helmet>
