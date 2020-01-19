@@ -11,7 +11,7 @@ import GracefullImage from '../../../components/GracefullImage';
 import mobileLeft from '../../../assets/images/available-on/1_front.png';
 import mobileRightTop from '../../../assets/images/available-on/4.png';
 import mobileRightBottom from '../../../assets/images/available-on/4 copy.png';
-import mobileHovering from '../../../assets/images/available-on/iPhone X Hovering - Right.png';
+import mobileHovering from '../../../assets/images/available-on/iphone_x.png';
 import appStore from '../../../assets/images/available-on/app store.png';
 import playStore from '../../../assets/images/available-on/googleplay.png';
 
