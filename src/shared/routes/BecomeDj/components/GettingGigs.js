@@ -18,8 +18,7 @@ import GracefullImage from '../../../components/GracefullImage';
 const Bg = styled.div`
     display: flex;
     justify-content: center;
-    padding-top: 150px;
-    background-color: white;
+    padding: 250px 0;
     width: 100%;
     order: 5;
 `;
@@ -27,11 +26,9 @@ const Bg = styled.div`
 const GettingGigsWrapper = styled.div`
     display: flex;
     flex-direction: row;
-    padding-bottom: 150px;
     @media only screen and (max-width: 685px) {
         flex-direction: column;
         align-items: center;
-        padding-bottom: 100px;
     }
 `;
 
