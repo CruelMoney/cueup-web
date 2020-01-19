@@ -539,7 +539,8 @@ footer .social svg {
 }
 #preFooter {
     background: transparent;
-    padding: 50px 0;
+    margin-top: 50px;
+    padding-bottom: 50px;
     width: 100%;
 }
 #preFooter:before {
@@ -559,6 +560,7 @@ footer .social svg {
 }
 #preFooter.noSkew {
     margin-top: 0;
+    padding-top: 50px;
 }
 #preFooter .action-title {
     color: #32325d;
