@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import GracefullImage from '../../../../components/GracefullImage';
 import addTranslate from '../../../../components/higher-order/addTranslate';
 import content from '../../content.json';
@@ -20,15 +20,19 @@ const ReadMoreText = styled.p`
 
 const ReadMoreWrapper = styled.div`
     display: flex;
-    @media only screen and (max-width: 685px) {
-        justify-content: center;
-    }
+    ${({ mobileCenter }) =>
+        mobileCenter &&
+        css`
+            @media only screen and (max-width: 685px) {
+                justify-content: center;
+            }
+        `}
 `;
 
 const ReadMore = (props) => {
-    const { white, translate, currentLanguage, noMargin } = props;
+    const { white, translate, noMargin, mobileCenter = true } = props;
     return (
-        <ReadMoreWrapper>
+        <ReadMoreWrapper mobileCenter={mobileCenter}>
             <ReadMoreText white={white} noMargin={noMargin}>
                 {translate('become-dj.getting-gigs.get-gigs-feature.read-more')} <br />
             </ReadMoreText>

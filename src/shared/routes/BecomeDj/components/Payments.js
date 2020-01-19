@@ -5,8 +5,8 @@ import { Container, Col, Row } from 'components/Blocks';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import content from '../content.json';
 import GracefullImage from '../../../components/GracefullImage';
-import { ResponsiveTextAccent } from '../components/blocks/TextAccent';
-import { GrayText, BlueHeader } from '../components/blocks/Text';
+import { TextAccent } from '../components/blocks/TextAccent';
+import { GrayText, Header } from '../components/blocks/Text';
 import ReadMore from '../components/blocks/ReadMore';
 import paymentCard from '../../../assets/images/credit_card.png';
 import invoice from '../../../assets/images/Invoice.png';
@@ -16,10 +16,7 @@ const Bg = styled.div`
     justify-content: center;
     width: 100%;
     order: 6;
-    background-image: linear-gradient(to bottom, white 0% 85%, #0b1b2d 85%);
-    @media only screen and (max-width: 685px) {
-        background-image: linear-gradient(to bottom, white 0% 93%, #0b1b2d 93%);
-    }
+    margin-bottom: -84px;
 `;
 
 const CardsContainer = styled.div`
@@ -45,9 +42,10 @@ const Card = styled.div`
         margin-top: 12px;
     }
     h2 {
-        font-size: 60px;
         margin-left: -3px;
-        margin-bottom: 24px;
+    }
+    @media only screen and (max-width: 685px) {
+        padding: 24px 36px 0 24px;
     }
 `;
 
@@ -77,13 +75,15 @@ const Payments = (props) => {
 
 const CardItem = ({ translate, header, description, imgSrc }) => (
     <Card>
-        <ResponsiveTextAccent margin="0 0 15px 0">
+        <TextAccent margin="0 0 15px 0">
             {translate('become-dj.payments.card-payments.receive-payments')}
-        </ResponsiveTextAccent>
-        <BlueHeader left>{header}</BlueHeader>
-        <GrayText>{description}</GrayText>
+        </TextAccent>
+        <Header mobileTextAlign="left" small>
+            {header}
+        </Header>
+        <GrayText mobileTextAlign="left">{description}</GrayText>
         <div className="read-more">
-            <ReadMore className="read-more" />
+            <ReadMore mobileCenter={false} className="read-more" />
         </div>
         <div style={{ flex: 1 }} />
         <GracefullImage

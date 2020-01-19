@@ -5,7 +5,7 @@ import { Container, Col, Row } from 'components/Blocks';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import content from '../content.json';
 import GracefullImage from '../../../components/GracefullImage';
-import { Title } from '../components/blocks/Title';
+import { Header } from '../components/blocks/Text';
 import { TextAccent } from '../components/blocks/TextAccent';
 import { SubTitle } from '../components/blocks/SubTitle';
 import ReadMore from '../components/blocks/ReadMore';
@@ -242,9 +242,9 @@ const CancelationPolicy = (props) => {
                     {translate('become-dj.cancelation-policy.feature')}
                 </TextAccent>
                 <TitleWrapper>
-                    <Title>
+                    <Header white center>
                         {translate('become-dj.cancelation-policy.create-your-cancelation-policy')}
-                    </Title>
+                    </Header>
                 </TitleWrapper>
                 <CancelationSubTitle white>
                     {translate('become-dj.cancelation-policy.content')}

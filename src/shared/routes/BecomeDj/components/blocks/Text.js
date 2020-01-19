@@ -12,12 +12,16 @@ export const GrayText = styled.p`
     }
 `;
 
-export const BlueHeader = styled.h2`
+export const Header = styled.h2`
     font-size: 64px;
     color: #122b48;
     line-height: 1em;
+    margin-bottom: 0.3em;
     @media only screen and (max-width: 685px) {
         text-align: ${({ mobileTextAlign }) => (mobileTextAlign ? mobileTextAlign : 'center')};
         font-size: 32px;
     }
+    ${({ white }) => (white ? 'color: #fff;' : '')}
+    ${({ center }) => (center ? 'text-align: center;' : '')}
+    ${({ small }) => (small ? 'font-size: 60px;' : '')}
 `;
