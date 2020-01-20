@@ -11,6 +11,7 @@ import LocationSelector from 'components/common/LocationSelectorSimple';
 import ToggleButtonHandler from 'components/common/ToggleButtonHandler';
 import ImageUploader from 'components/ImageInput';
 import useImageUpload from 'components/hooks/useImageUpload';
+import { trackSignup } from 'utils/analytics/autotrack';
 import NumberedList from '../../../components/common/NumberedList';
 import c from '../../../constants/constants';
 import GeoCoder from '../../../utils/GeoCoder';
@@ -74,6 +75,7 @@ const SignupForm = ({ translate, geoCity, reference }) => {
             setValue({
                 msg: "Thanks for joining. Please verify your email using the link we've just sent.",
             });
+            trackSignup();
         } catch (err) {
             Sentry.captureException(err);
         } finally {
