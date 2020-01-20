@@ -3338,10 +3338,6 @@ ol.breadcrumbs a {
         margin-top: 0px;
     }
 
-    #content > div {
-        padding: 0;
-        padding-top: 0px;
-    }
     .location_about #content,
     .location_faq #content,
     .location_terms #content {

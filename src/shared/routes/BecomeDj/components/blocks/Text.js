@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 export const GrayText = styled.p`
-    font-family: 'AvenirNext-Regular';
     font-size: 20px;
     color: #4d6480;
     line-height: 34px;

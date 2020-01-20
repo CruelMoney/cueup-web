@@ -5,6 +5,6 @@ import { Body } from 'components/Text';
 export const SubTitle = styled(Body)`
     font-size: 20px;
     text-align: center;
-    width: 336px;
+    max-width: 444px;
     margin: auto;
 `;
