@@ -10,21 +10,10 @@ import { PaddedContainer } from '../components/blocks/PaddedContainer';
 import integrationsGraphic from '../../../assets/images/integrations/Brands.png';
 import integrationsGraphicMobile from '../../../assets/images/integrations/Brands_mobile.png';
 
-const Bg = styled.div`
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    background-color: #0b1b2d;
-    z-index: 1;
-    padding-top: 20px;
-    order: 4;
-    margin-top: 100px;
-`;
-
 const TitleWrapper = styled.div`
     max-width: 570px;
     align-self: flex-start;
-    @media only screen and (min-width: 375px) {
+    @media only screen and (min-width: 376px) {
         position: relative;
         :after {
             content: '';
@@ -44,7 +33,10 @@ const TitleWrapper = styled.div`
 const IntegrationsWrapper = styled.div`
     display: flex;
     flex-direction: row;
-    margin-top: 200px;
+
+    @media only screen and (max-width: 375px) {
+        margin-top: 0px;
+    }
 `;
 
 const IntegrationsCol = styled(Col)`
@@ -63,6 +55,8 @@ const IntegrationsText = styled.ul`
     }
     @media only screen and (max-width: 375px) {
         margin-top: 10px;
+        margin-bottom: 30px;
+
         > p {
             font-size: 27px;
             color: #ffffff;

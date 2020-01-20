@@ -20,10 +20,13 @@ const CancelationContainer = styled(Container)`
     flex-direction: column;
     align-items: center;
     margin: 120px 0;
+    @media only screen and (max-width: 685px) {
+        margin: 60px 0;
+    }
 `;
 
 const TitleWrapper = styled.div`
-    width: 60%;
+    max-width: 570px;
     margin: 0 0 20px 0;
 `;
 
@@ -67,6 +70,7 @@ const GraphWrapper = styled.div`
     position: relative;
     @media only screen and (max-width: 685px) {
         width: 100%;
+        margin: 100px 0 50px 0;
     }
 `;
 
