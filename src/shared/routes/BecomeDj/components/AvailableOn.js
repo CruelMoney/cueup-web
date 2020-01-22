@@ -7,9 +7,7 @@ import { BlueTitle } from '../components/blocks/Title';
 import { GrayText, Header } from '../components/blocks/Text';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import GracefullImage from '../../../components/GracefullImage';
-import mobileLeft from '../../../assets/images/available-on/1_front.png';
-import mobileRightTop from '../../../assets/images/available-on/4.png';
-import mobileRightBottom from '../../../assets/images/available-on/4 copy.png';
+import mobileIphone from '../../../assets/images/available-on/iphone_mobile.png';
 import iphoneX from '../../../assets/images/available-on/iphone_x.png';
 import android from '../../../assets/images/available-on/android.png';
 import appStore from '../../../assets/images/available-on/app store.png';
@@ -226,61 +224,29 @@ const AvailableOn = (props) => {
                         </GrayText>
                     </MobileTextContainer>
                     <MobileImageContainer>
-                        <MobileImageContainerCol>
-                            <GracefullImage
-                                src={mobileLeft}
-                                animate
-                                alt="Mobile"
-                                style={{ width: '100%', alignSelf: 'center', margin: '10px' }}
-                            />
-                        </MobileImageContainerCol>
-                        <MobileImageContainerCol>
-                            <GracefullImage
-                                src={mobileRightTop}
-                                animate
-                                alt="Mobile"
-                                style={{
-                                    width: '100%',
-                                    alignSelf: 'center',
-                                    padding: '10px 0px 0px 10px',
-                                    flex: '1',
-                                }}
-                            />
-                            <GracefullImage
-                                src={mobileRightBottom}
-                                animate
-                                alt="Mobile"
-                                style={{
-                                    width: '100%',
-                                    alignSelf: 'center',
-                                    padding: '10px 0px 10px 10px',
-                                    flex: '1',
-                                }}
-                            />
-                        </MobileImageContainerCol>
-                    </MobileImageContainer>
-                    <StoresContainer>
                         <GracefullImage
-                            src={playStore}
+                            src={mobileIphone}
                             animate
+                            alt="Mobile"
+                            style={{ height: '338px' }}
+                        />
+                    </MobileImageContainer>
+                    <Row between style={{ marginTop: '24px' }}>
+                        <img
+                            src={playStore}
                             alt="Google Play store"
                             style={{
-                                width: '54%',
-                                alignSelf: 'center',
-                                padding: '30px 10px 10px 0px',
+                                height: '50px',
                             }}
                         />
-                        <GracefullImage
+                        <img
                             src={appStore}
-                            animate
                             alt="Apple app store"
                             style={{
-                                width: '46%',
-                                alignSelf: 'center',
-                                padding: '30px 0px 10px 0px',
+                                height: '50px',
                             }}
                         />
-                    </StoresContainer>
+                    </Row>
                 </MobileContainer>
             </Container>
         </Bg>
