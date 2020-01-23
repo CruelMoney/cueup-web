@@ -11,6 +11,7 @@ const Popup = memo((props) => {
         noBackground,
         children,
         lazy = true,
+        style,
     } = props;
     const [showingChildren, setShowingChildren] = useState(showing);
 
@@ -35,7 +36,7 @@ const Popup = memo((props) => {
         };
     }, [showing]);
 
-    const style = {
+    const baseStyle = {
         overlay: {
             position: 'fixed',
             top: 0,
@@ -58,7 +59,7 @@ const Popup = memo((props) => {
         },
     };
     return (
-        <Modal style={style} isOpen={true} contentLabel="popup">
+        <Modal style={baseStyle} isOpen={true} contentLabel="popup">
             <div
                 className={'filter-background' + (showing ? ' active' : '')}
                 style={{
@@ -84,6 +85,7 @@ const Popup = memo((props) => {
                         width: width ? width : null,
                         backgroundColor: noBackground ? 'transparent' : 'white',
                         zIndex: '1001',
+                        ...style,
                     }}
                     className={
                         'card popup' + (showing ? ' active' : '') + (noPadding ? ' no-padding' : '')

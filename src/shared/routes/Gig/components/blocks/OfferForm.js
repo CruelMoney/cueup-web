@@ -169,7 +169,7 @@ const OfferForm = ({
                     : gigStateDescription[gig.status] ?? gigStateDescription.default}
             </Body>
 
-            {canUpdatePrice && (
+            {!!canUpdatePrice && (
                 <InputRow small style={{ marginTop: '20px' }}>
                     <Input
                         half
@@ -218,29 +218,31 @@ const OfferForm = ({
                 <RemainingPayment translate={translate} loading={loading} {...offer} />
             ) : null}
 
-            <TitleClean>Organizer payment</TitleClean>
-
-            {canUpdatePrice ? (
-                <RadioSelect
-                    containerStyle={{ marginBottom: '30px' }}
-                    multi
-                    setChosen={updatePaymentMethods}
-                    options={[
-                        {
-                            checked: payoutMethods.BANK,
-                            title: 'Using Cueup',
-                            description: 'Organizer can pay through Cueup to your bank account.',
-                            value: PAYOUT_TYPES.BANK,
-                        },
-                        {
-                            checked: payoutMethods.DIRECT,
-                            title: 'Directly to you',
-                            description: 'Organizer can pay directly to you in cash etc.',
-                            value: PAYOUT_TYPES.DIRECT,
-                        },
-                    ]}
-                />
-            ) : null}
+            {!!canUpdatePrice && (
+                <>
+                    <TitleClean>Organizer payment</TitleClean>
+                    <RadioSelect
+                        containerStyle={{ marginBottom: '30px' }}
+                        multi
+                        setChosen={updatePaymentMethods}
+                        options={[
+                            {
+                                checked: payoutMethods.BANK,
+                                title: 'Using Cueup',
+                                description:
+                                    'Organizer can pay through Cueup to your bank account.',
+                                value: PAYOUT_TYPES.BANK,
+                            },
+                            {
+                                checked: payoutMethods.DIRECT,
+                                title: 'Directly to you',
+                                description: 'Organizer can pay directly to you in cash etc.',
+                                value: PAYOUT_TYPES.DIRECT,
+                            },
+                        ]}
+                    />
+                </>
+            )}
 
             <RowWrap style={{ marginTop: '24px' }}>
                 <div name={'gig-cancel-' + gig.id}>
@@ -257,7 +259,7 @@ const OfferForm = ({
                     )}
                 </div>
 
-                {canUpdatePrice && (
+                {canUpdatePrice ? (
                     <SmartButton
                         disabled={!canSubmit}
                         loading={submitLoading}
@@ -270,13 +272,13 @@ const OfferForm = ({
                             ? translate('Send offer')
                             : translate('Update offer')}
                     </SmartButton>
-                )}
+                ) : null}
 
-                {!payoutInfoValid && (
+                {!payoutInfoValid ? (
                     <PrimaryButton rounded={true} onClick={showPopup} name="show-payout-popup">
                         {translate('Update payout info')}
                     </PrimaryButton>
-                )}
+                ) : null}
             </RowWrap>
 
             <ErrorMessageApollo error={error} />
@@ -315,7 +317,7 @@ const RemainingPayment = ({
                     {amountPaid.formatted}
                 </TableRow>
                 <Hr />
-                {isDirect && (
+                {!!isDirect && (
                     <TableRow label={translate('Remaining payment to you')} bold>
                         {amountLeft.formatted}
                     </TableRow>
