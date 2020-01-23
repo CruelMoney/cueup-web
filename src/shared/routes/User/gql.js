@@ -407,12 +407,13 @@ const REQUEST_VERIFICATION = gql`
         $lastName: String!
         $birthday: DateTime!
         $address: String!
+        $state: String
         $city: String!
         $countryCode: String!
         $postalCode: String!
         $documentFront: Upload!
         $documentBack: Upload
-        $ssnLast4: Int
+        $ssnLast4: String
         $phone: String
     ) {
         updateUser(
@@ -425,6 +426,7 @@ const REQUEST_VERIFICATION = gql`
                 address: $address
                 city: $city
                 countryCode: $countryCode
+                state: $state
                 postalCode: $postalCode
                 documentFront: $documentFront
                 documentBack: $documentBack

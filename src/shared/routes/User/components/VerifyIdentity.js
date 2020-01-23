@@ -17,6 +17,7 @@ import ErrorMessageApollo from '../../../components/common/ErrorMessageApollo';
 const CustomCol = styled(Col)`
     flex: 1;
     margin: 0 15px;
+    min-width: 320px;
 `;
 
 const statusText = {
@@ -199,7 +200,7 @@ const VerifyIdentity = ({ initialData, status, details, onCancel }) => {
                                 type="number"
                                 min={0}
                                 max={9999}
-                                onSave={onChange('last4')}
+                                onSave={onChange('ssnLast4')}
                                 maxLength={4}
                                 disabled={formDisabled}
                                 validation={(v) => {
@@ -210,8 +211,8 @@ const VerifyIdentity = ({ initialData, status, details, onCancel }) => {
                                         return 'Only last 4 digits';
                                     }
                                 }}
-                                registerValidation={registerValidation('last4')}
-                                unregisterValidation={unregisterValidation('last4')}
+                                registerValidation={registerValidation('ssnLast4')}
+                                unregisterValidation={unregisterValidation('ssnLast4')}
                             />
                         )}
                         {!inProcess && (
