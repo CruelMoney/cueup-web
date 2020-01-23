@@ -203,7 +203,7 @@ const OfferForm = ({
                                     : 'Directly to you',
                             description:
                                 payoutType === PAYOUT_TYPES.BANK
-                                    ? "Organizer has paid using Cueup and you'll receive the payment after the event."
+                                    ? "Organizer has paid using Cueup and we'll transfer to you after the event."
                                     : 'Organizer will pay directly to you.',
                         },
                     ]}
