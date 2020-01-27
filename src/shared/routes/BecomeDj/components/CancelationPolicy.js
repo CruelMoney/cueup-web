@@ -21,7 +21,7 @@ const CancelationContainer = styled(Container)`
     align-items: center;
     margin: 120px 0;
     @media only screen and (max-width: 685px) {
-        margin: 60px 0;
+        margin: 80px 0;
     }
 `;
 

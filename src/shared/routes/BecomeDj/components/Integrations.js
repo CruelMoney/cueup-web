@@ -1,12 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { HeaderTitle, Body } from 'components/Text';
-import { Container, Col, Row } from 'components/Blocks';
+import { Container, Col } from 'components/Blocks';
 import addTranslate from '../../../components/higher-order/addTranslate';
-import GracefullImage from '../../../components/GracefullImage';
+import { Header } from '../components/blocks/Text';
 import { TextAccent } from '../components/blocks/TextAccent';
-import { Title } from '../components/blocks/Title';
-import { PaddedContainer } from '../components/blocks/PaddedContainer';
 import integrationsGraphic from '../../../assets/images/integrations/Brands.png';
 import integrationsGraphicMobile from '../../../assets/images/integrations/Brands_mobile.png';
 
@@ -25,7 +22,7 @@ const TitleWrapper = styled.div`
             position: absolute;
             right: 0;
             bottom: 0;
-            transform: translate(75%, 90%);
+            transform: translate(90%, 90%);
         }
     }
 `;
@@ -33,7 +30,11 @@ const TitleWrapper = styled.div`
 const IntegrationsWrapper = styled.div`
     display: flex;
     flex-direction: row;
-
+    margin-top: 200px;
+    padding-left: 120px;
+    @media only screen and (max-width: 768px) {
+        padding-left: 0px;
+    }
     @media only screen and (max-width: 375px) {
         margin-top: 0px;
     }
@@ -59,9 +60,6 @@ const IntegrationsText = styled.ul`
 
         > p {
             font-size: 27px;
-            color: #ffffff;
-            letter-spacing: -0.56px;
-            line-height: 60px;
         }
     }
 `;
@@ -100,9 +98,9 @@ const Integrations = (props) => {
                         {translate('become-dj.integrations.integrations')}
                     </TextAccent>
                     <TitleWrapper>
-                        <Title left size="64px" line="64px" spacing="-1.33px">
+                        <Header mobileTextAlign="left" small white>
                             {translate('become-dj.integrations.combine-content-&-sell-yourself')}
-                        </Title>
+                        </Header>
                     </TitleWrapper>
                     <IntegrationsText>
                         <p>{translate('become-dj.integrations.instagram')}</p>

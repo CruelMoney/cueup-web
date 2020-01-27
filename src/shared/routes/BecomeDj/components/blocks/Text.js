@@ -16,11 +16,12 @@ export const Header = styled.h2`
     color: #122b48;
     line-height: 1em;
     margin-bottom: 0.3em;
+    white-space: pre-wrap;
     @media only screen and (max-width: 685px) {
         text-align: ${({ mobileTextAlign }) => (mobileTextAlign ? mobileTextAlign : 'center')};
         font-size: 32px;
     }
     ${({ white }) => (white ? 'color: #fff;' : '')}
     ${({ center }) => (center ? 'text-align: center;' : '')}
-    ${({ small }) => (small ? 'font-size: 60px;' : '')}
+    ${({ small }) => (small ? 'font-size: 48px;' : '')}
 `;
