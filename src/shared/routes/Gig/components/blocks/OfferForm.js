@@ -301,18 +301,6 @@ const RemainingPayment = ({
             <div style={style1}>
                 <TableRow label="Your offer">{offer.formatted}</TableRow>
                 <Hr />
-                <TableRow
-                    label={translate('Service fee')}
-                    info={<div>{translate('gig.offer.service-fee-info')}</div>}
-                >
-                    {serviceFee.formatted}
-                </TableRow>
-                <Hr />
-                <TableRow label="Organizers total price" bold>
-                    {totalPayment.formatted}
-                </TableRow>
-            </div>
-            <div style={style1}>
                 <TableRow label={translate('Already paid')} bold={!isDirect}>
                     {amountPaid.formatted}
                 </TableRow>
