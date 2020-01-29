@@ -327,7 +327,7 @@ const OfferTable = ({ loading, translate, totalPayment, serviceFee, djFee, total
                 </TableRow>
                 <Hr />
                 <TableRow
-                    label={translate('Cueup fee')}
+                    label={translate('Payment processing')}
                     info={<div>{translate('gig.offer.dj-fee-info')}</div>}
                 >
                     {loading ? 'loading...' : djFee.formatted ? djFee.formatted : '...'}
