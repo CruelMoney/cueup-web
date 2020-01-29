@@ -107,8 +107,7 @@ export const trackError = (error, fieldsObj = {}) => {
 
 export function trackCheckAvailability() {
     gtag('event', 'checkavailability', {
-        eventCategory: 'Event',
-        eventAction: 'checkavailability',
+        event_category: 'Event',
     });
     gtag('event', 'conversion', {
         send_to: ADS_ID + '/7KbhCK67m7oBEMD1hKED',
@@ -116,15 +115,13 @@ export function trackCheckAvailability() {
 }
 export function trackSignup() {
     gtag('event', 'created', {
-        eventCategory: 'Account',
-        eventAction: 'created',
+        event_category: 'Account',
     });
     gtag('event', 'conversion', { send_to: ADS_ID + '/4yucCNLZm7oBEMD1hKED' });
 }
 export function trackEventPosted() {
     gtag('event', 'created', {
-        eventCategory: 'Event',
-        eventAction: 'created',
+        event_category: 'Event',
     });
     gtag('event', 'conversion', {
         send_to: ADS_ID + '/GXTzCJros7oBEMD1hKED',
@@ -132,9 +129,8 @@ export function trackEventPosted() {
 }
 export function trackEventPaid(val) {
     gtag('event', 'paid', {
-        eventCategory: 'Event',
-        eventAction: 'paid',
-        eventValue: val,
+        event_category: 'Event',
+        value: val,
     });
 }
 

@@ -228,7 +228,7 @@ const OfferForm = ({
                         options={[
                             {
                                 checked: payoutMethods.BANK,
-                                title: 'Using Cueup',
+                                title: 'Using Cueup - Secure & Guaranteed',
                                 description:
                                     'Organizer can pay through Cueup to your bank account.',
                                 value: PAYOUT_TYPES.BANK,
@@ -338,15 +338,6 @@ const OfferTable = ({ loading, translate, totalPayment, serviceFee, djFee, total
                     {loading ? 'loading...' : serviceFee.formatted ? serviceFee.formatted : '...'}
                 </TableRow>
                 <Hr />
-                <TableRow label="Organizers total price" bold>
-                    {loading
-                        ? 'loading...'
-                        : totalPayment.formatted
-                        ? totalPayment.formatted
-                        : '...'}
-                </TableRow>
-            </div>
-            <div style={style1}>
                 <TableRow
                     label={translate('Cueup fee')}
                     info={<div>{translate('gig.offer.dj-fee-info')}</div>}
