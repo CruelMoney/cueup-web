@@ -38,7 +38,11 @@ const updateMediumPosts = async () => {
 
     const writeToFile = async (content) =>
         new Promise((r, e) => {
-            fs.writeFile(postsPath, JSON.stringify(content), r);
+            fs.writeFile('src/shared/routes/Blog/posts.json', JSON.stringify(content), (err) => {
+                if (err) {
+                    e(err);
+                }
+            });
         });
 
     const mediumPosts = await getPosts();
@@ -48,10 +52,8 @@ const updateMediumPosts = async () => {
     );
 
     newPosts = newPosts.map(parseMediumPost);
-
     const newContent = [...newPosts, ...currentPosts];
 
     await writeToFile(newContent);
 };
-
 updateMediumPosts();
