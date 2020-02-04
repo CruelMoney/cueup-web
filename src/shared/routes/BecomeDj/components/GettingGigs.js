@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useTransition, animated, config } from 'react-spring';
 import { HeaderTitle, Body } from 'components/Text';
 import { Container, Col, Row } from 'components/Blocks';
 import GracefullVideo from 'components/GracefullVideo';
@@ -41,51 +42,35 @@ const TextCol = styled.div`
     }
 `;
 
-const StyledImage = styled(GracefullImage)`
-    width: 60%;
-    padding: 0 0 0 10%;
-    align-self: center;
-    @media only screen and (max-width: 685px) {
-        width: 85%;
-        padding: 0px;
-    }
+const GigCard = styled.div`
+    border-radius: 6px;
+    width: 300px;
+    height: 170px;
+    background: #fff;
+    padding: 1.5em;
+    box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25), 0 18px 36px -18px rgba(0, 0, 0, 0.3),
+        0 -12px 36px -8px rgba(0, 0, 0, 0.025);
 `;
 
-const AnimatedCardWrapper = styled.div`
-    width: 60%;
-    padding: 0 0 0 10%;
-    align-self: center;
-    @media only screen and (max-width: 685px) {
-        width: 85%;
-        padding: 0px;
-    }
-`;
+const cards = [{ id: 1 }, { id: 2 }, { id: 3 }];
 
-const AnimatedCard = styled(GracefullImage)`
-    width: 100%;
-    /* animation-name: stack;
-    animation-duration: 4s; */
-    /* animation-fill-mode: forwards; */
-    animation: 4s infinite stack;
+const AnimatedCards = () => {
+    const [index, set] = useState(0);
+    const transitions = useTransition(cards, (item) => item.id, {
+        from: { opacity: 0 },
+        enter: { opacity: 1 },
+        leave: { opacity: 0 },
+        config: config.molasses,
+    });
 
-    @keyframes stack {
-        0% {
-            transform: scale(0.7);
-        }
-        25% {
-            transform: scale(0.8);
-        }
-        50% {
-            transform: scale(0.9);
-        }
-        75% {
-            transform: scale(1);
-        }
-        100% {
-            transform: scale(1.1);
-        }
-    }
-`;
+    useEffect(() => setInterval(() => set((state) => (state + 1) % 4), 2000), []);
+
+    return transitions.map(({ item, props, key }) => (
+        <animated.li key={key} style={{ ...props }}>
+            <GigCard />
+        </animated.li>
+    ));
+};
 
 const GettingGigs = (props) => {
     const { translate, currentLanguage } = props;
@@ -93,10 +78,9 @@ const GettingGigs = (props) => {
         <Bg>
             <Container>
                 <GettingGigsWrapper>
-                    <StyledImage src={gigRequest} animate alt="Gig request" />
-                    {/* <AnimatedCardWrapper>
-                        <AnimatedCard src={LA}/>
-                    </AnimatedCardWrapper> */}
+                    <ul>
+                        <AnimatedCards />
+                    </ul>
                     <TextCol>
                         <ResponsiveTextAccent margin="0 0 15px 0">
                             {translate('become-dj.getting-gigs.get-gigs-feature.feature')}
