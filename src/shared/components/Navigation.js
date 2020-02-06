@@ -68,27 +68,6 @@ const Menu = ({ translate, history, location }) => {
                                             </li>
                                         ) : null}
 
-                                        {!loggedIn && !loading ? (
-                                            <li>
-                                                <button
-                                                    className="link-look"
-                                                    onClick={() => setLoginExpanded((s) => !s)}
-                                                >
-                                                    {translate('login')}
-                                                </button>
-                                                <Popup
-                                                    width={320}
-                                                    showing={loginExpanded}
-                                                    onClickOutside={() => setLoginExpanded(false)}
-                                                >
-                                                    <Login
-                                                        onLogin={() => setLoginExpanded(false)}
-                                                        user={user}
-                                                    />
-                                                </Popup>
-                                            </li>
-                                        ) : null}
-
                                         {loggedIn ? null : (
                                             <li>
                                                 <Navlink
@@ -107,6 +86,27 @@ const Menu = ({ translate, history, location }) => {
                                                     onClick={doLogout}
                                                     label={translate('log-out')}
                                                 />
+                                            </li>
+                                        ) : null}
+
+                                        {!loggedIn && !loading ? (
+                                            <li>
+                                                <button
+                                                    className="link-look"
+                                                    onClick={() => setLoginExpanded((s) => !s)}
+                                                >
+                                                    {translate('login')}
+                                                </button>
+                                                <Popup
+                                                    width={320}
+                                                    showing={loginExpanded}
+                                                    onClickOutside={() => setLoginExpanded(false)}
+                                                >
+                                                    <Login
+                                                        onLogin={() => setLoginExpanded(false)}
+                                                        user={user}
+                                                    />
+                                                </Popup>
                                             </li>
                                         ) : null}
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { localize } from 'react-localize-redux';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 import {
     PrimaryButton,
     Row,
@@ -58,11 +59,11 @@ class Signup extends Component {
                             </Col>
                         </Row>
                         <Row center style={{ margin: '24px 0' }}>
-                            <a href="become-dj">
+                            <NavLink to="become-dj">
                                 <ReadMore color={'#fff'} style={{ margin: 'auto', color: '#fff' }}>
                                     Read more
                                 </ReadMore>
-                            </a>
+                            </NavLink>
                         </Row>
                         <Row
                             style={{
