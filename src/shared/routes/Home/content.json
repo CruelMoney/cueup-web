@@ -1,12 +1,12 @@
 {
   "home":{
     "title": [
-      "Book qualified DJs with ease", 
-      "Book kvalificerede DJs uden bekymkringer"
+      "Book DJs easily and secure", 
+      "Lej DJs uden bekymringer"
     ],
     "introduction": [
-      "Cueup is the easiest way for you to get a great DJ for your event. Just fill out the form below, and soon you will receive non-binding offers from qualified DJs.",
-      "Cueup er den nemmeste måde at skaffe en DJ til dit event. Fortæl os om dit event herunder, og snart vil du modtage uforpligtende tilbud fra kvalificerede DJs."
+      "Cueup is the easiest way for you to get a great DJ for your event. Tell us about your event below, and check out 100s of qualified DJs.",
+      "Cueup er den nemmeste måde at leje en DJ til dit event. Fortæl os om dit arrangement herunder, og kom i kontakt med 100-vis af kvalificerede DJs."
     ],
     "sections": {
       "left":{
@@ -15,18 +15,18 @@
           "Sikkert bookingsystem"
         ],
         "content":[
-          "At Cueup you are garuanteed to get the most value for money. In case of a cancelation from either side, the money is instantly refunded. Otherwise the money is disbursed when the DJ has played at the event. In case of a cancelation by the DJ, we will try to find a new DJ as quickly as possible.",
-          "Hos Cueup er du garanteret at få mest muligt ud af dine penge. I tilfældet af aflysning fra DJ eller arrangør vil dine penge blive refunderet med det samme. Ellers bliver pengene overført når eventet er afsluttet. I tilfælde af at DJen aflyser, vil vi forsøge at finde en ny DJ hurtigst muligt."  
+          "At Cueup you are garuanteed to get the most value for money. The money is only disbursed when the DJ has played at the event, and in case of cancelation by the DJ, the money is instantly refunded. We'll then find a new DJ as quickly as possible.",
+          "Hos Cueup er du garanteret at få mest muligt ud af dine penge. Dine penge bliver først overført når eventet er afsluttet, og I tilfælde af at DJen aflyser, vil dine penge blive refunderet med det samme. Vi vil dernæst finde en ny DJ hurtigst muligt."  
         ]
       },
       "right":{
         "title": [
-          "The most qualified DJs",
-          "De mest kvalificerede DJs"
+          "Book the best DJ",
+          "Lej den bedste DJ"
         ],
         "content":[
-          "At Cueup we focus on finding the most qualified DJ for your event - so you don’t have to. Don’t waste time searching for DJs when you can have offers from great DJs send directly to you. Each offer shows the DJ, their reviews and rating so you can confidently choose a DJ you can trust.",
-          "Hos Cueup fokuserer vi på at finde den mest kvalificerede DJ til dit event - så du ikke skal spilde tid. Spild ikke din tid på at søge efter DJs, når du kan få sendt tilbud direkte fra fremragende DJs. Hvert tilbud viser dig DJen, deres anmeldelser og bedømmelse så du trygt kan vælge en DJ. "
+          "At Cueup we match your event with the DJs that fit the best. On every DJ's profile, you can see the price, read reveiews, play music, and see picture from other events. When you've chosen a DJ you want to book, you can talk the details of the night through.",
+          "Hos Cueup matcher vi dit event med de DJs der passer bedst. På hver DJ's profil kan du se pris, læse anmeldelser, lytte til musik og se billeder fra tidligere events. Når du har fundet en DJ du vil leje, kan i snakke detaljerne igennem for aftenen."
         ]
       }
     },
