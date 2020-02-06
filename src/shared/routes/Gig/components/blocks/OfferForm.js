@@ -228,7 +228,7 @@ const OfferForm = ({
                         options={[
                             {
                                 checked: payoutMethods.BANK,
-                                title: 'Using Cueup',
+                                title: 'Using Cueup - Secure & Guaranteed',
                                 description:
                                     'Organizer can pay through Cueup to your bank account.',
                                 value: PAYOUT_TYPES.BANK,
@@ -301,18 +301,6 @@ const RemainingPayment = ({
             <div style={style1}>
                 <TableRow label="Your offer">{offer.formatted}</TableRow>
                 <Hr />
-                <TableRow
-                    label={translate('Service fee')}
-                    info={<div>{translate('gig.offer.service-fee-info')}</div>}
-                >
-                    {serviceFee.formatted}
-                </TableRow>
-                <Hr />
-                <TableRow label="Organizers total price" bold>
-                    {totalPayment.formatted}
-                </TableRow>
-            </div>
-            <div style={style1}>
                 <TableRow label={translate('Already paid')} bold={!isDirect}>
                     {amountPaid.formatted}
                 </TableRow>
@@ -338,17 +326,8 @@ const OfferTable = ({ loading, translate, totalPayment, serviceFee, djFee, total
                     {loading ? 'loading...' : serviceFee.formatted ? serviceFee.formatted : '...'}
                 </TableRow>
                 <Hr />
-                <TableRow label="Organizers total price" bold>
-                    {loading
-                        ? 'loading...'
-                        : totalPayment.formatted
-                        ? totalPayment.formatted
-                        : '...'}
-                </TableRow>
-            </div>
-            <div style={style1}>
                 <TableRow
-                    label={translate('Cueup fee')}
+                    label={translate('Payment processing')}
                     info={<div>{translate('gig.offer.dj-fee-info')}</div>}
                 >
                     {loading ? 'loading...' : djFee.formatted ? djFee.formatted : '...'}

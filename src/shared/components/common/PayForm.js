@@ -6,6 +6,7 @@ import { useMutation, useLazyQuery } from 'react-apollo';
 import ReactPixel from 'react-facebook-pixel';
 import Checkmark from 'react-ionicons/lib/IosCheckmarkCircle';
 import styled from 'styled-components';
+import { captureException } from '@sentry/core';
 import { LoadingIndicator, Col, RowMobileCol, SmartButton } from 'components/Blocks';
 import RadioSelect from 'components/RadioSelect';
 import { PAYOUT_TYPES, PAYMENT_PROVIDERS } from 'constants/constants';
@@ -35,6 +36,14 @@ const BankPayForm = ({
     canBePaid,
     chosenMethod,
 }) => {
+    useEffect(() => {
+        try {
+            tracker.pageView('cofirm-booking/' + paymentIntent.paymentProvider);
+        } catch (error) {
+            captureException(error);
+        }
+    }, [paymentIntent.paymentProvider]);
+
     if (!canBePaid && paymentIntent.paymentProvider === 'STRIPE') {
         return (
             <div style={{ padding: '2em' }}>
@@ -94,7 +103,12 @@ const BankPayForm = ({
             />
             {chosenMethod?.description && (
                 <>
-                    <SmallHeader>Description by the DJ:</SmallHeader>
+                    <Body style={{ marginBottom: '12px' }}>
+                        You'll only pay a small amount of the offer, and the DJ will handle the rest
+                        of the payment. After this payment, the booking is confirmed and you'll
+                        receive each others contact information.
+                    </Body>
+                    <SmallHeader>Directions by the DJ:</SmallHeader>
                     <Body
                         style={{ fontStyle: 'italic', marginBottom: '30px' }}
                     >{`"${chosenMethod?.description}"`}</Body>
@@ -123,7 +137,9 @@ const PaymentWrapper = (props) => {
 
     let { availablePayoutMethods = [] } = gig ?? {};
     const { offer: gigOffer } = gig ?? {};
-    const { requestPaymentIntent: paymentIntent, offer: paymentOffer } = data ?? {};
+    const { requestPaymentIntent: paymentIntent } = data ?? {};
+
+    const { recommendedCurrency, amount, offer: paymentOffer } = paymentIntent ?? {};
 
     const offer = {
         ...gigOffer,
@@ -131,7 +147,6 @@ const PaymentWrapper = (props) => {
     };
 
     const canBePaid = offer.daysUntilPaymentPossible < 1;
-    const { recommendedCurrency } = paymentIntent ?? {};
     const showCurrencyChange =
         recommendedCurrency && (currency && recommendedCurrency !== currency);
     // can be paid direct
@@ -175,15 +190,27 @@ const PaymentWrapper = (props) => {
         }
     }, [currency, currentLanguage, id, paymentType, requestPaymentIntent]);
 
+    useEffect(() => {
+        try {
+            tracker.pageView('cofirm-booking');
+        } catch (error) {
+            captureException(error);
+        }
+    }, []);
+
     const paymentConfirmed = () => {
         setPaymentConfirmed();
         onPaymentConfirmed && onPaymentConfirmed();
         setIsPaid(true);
-        tracker.trackEventPaid(offer.totalPayment.amount);
-        ReactPixel.track('Purchase', {
-            currency: currency,
-            value: offer.totalPayment.amount,
-        });
+        try {
+            tracker.trackEventPaid(amount.amount);
+            ReactPixel.track('Purchase', {
+                currency: currency,
+                value: amount.amount,
+            });
+        } catch (error) {
+            captureException(error);
+        }
     };
 
     if (isPaid) {
@@ -233,29 +260,14 @@ const PaymentWrapper = (props) => {
                 )}
 
                 <MoneyTable>
-                    <TableItem
-                        payLater={payLater}
-                        label={
-                            payLater ? (
-                                <>
-                                    <span>{translate('Pay later')}</span>
-                                    {translate('DJ price')}
-                                </>
-                            ) : (
-                                translate('DJ price')
-                            )
-                        }
-                    >
-                        {offer.offer.formatted}
-                    </TableItem>
-                    <TableItem
-                        label={translate('Service fee')}
-                        info={<div>{translate('event.offer.fee')}</div>}
-                    >
-                        {offer.serviceFee.formatted}
-                    </TableItem>
-                    <TableItem label={payLater ? 'Payment now' : 'Total'}>
-                        {payLater ? offer.serviceFee.formatted : offer.totalPayment.formatted}
+                    <TableItem label={translate('DJ price')}>{offer.offer?.formatted}</TableItem>
+                    {!!payLater && (
+                        <TableItem payLater label={<span>{translate('Pay directly to DJ')}</span>}>
+                            {offer.totalPayout?.formatted}
+                        </TableItem>
+                    )}
+                    <TableItem label={payLater ? 'Payment now' : 'Total'} bold>
+                        {amount ? amount.formatted : offer.totalPayment.formatted}
                     </TableItem>
                 </MoneyTable>
 
@@ -301,7 +313,7 @@ const PaymentMethodSelect = (props) => {
                     {
                         title: 'Pay later',
                         description:
-                            "The DJ will handle the payment, and you'll only pay the service fee now.",
+                            "The DJ will handle the payment, and you'll only pay a small amount now.",
                         value: PAYOUT_TYPES.DIRECT,
                     },
                 ]}
@@ -325,6 +337,14 @@ const PayFormContainer = styled.div`
 `;
 
 const ThankYouContent = ({ translate, style }) => {
+    useEffect(() => {
+        try {
+            tracker.pageView('cofirm-booking/success');
+        } catch (error) {
+            captureException(error);
+        }
+    }, []);
+
     return (
         <div className="payment-confirmation" style={style}>
             <Checkmark color={'#50E3C2'} fontSize="42px" />

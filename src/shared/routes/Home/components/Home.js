@@ -48,7 +48,7 @@ class Home extends Component {
 
                                 <div style={{ float: 'left', marginTop: '20px' }}>
                                     <PrimaryButton invert onClick={this.handleButtonClick}>
-                                        {translate('get-offers')}
+                                        {translate('find-djs')}
                                     </PrimaryButton>
                                 </div>
                             </div>

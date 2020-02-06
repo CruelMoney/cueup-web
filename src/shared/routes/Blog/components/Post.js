@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Disqus from 'disqus-react';
-import posts from '../posts.js';
+import posts from '../posts.json';
 import Formatter from '../../../utils/Formatter';
 import Sharing from '../../../components/common/Sharing-v2';
 import ButtonLink from '../../../components/common/ButtonLink';

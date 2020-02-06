@@ -30,7 +30,8 @@
     "tsc": "tsc --noEmit",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "introspect": "graphql-codegen --config codegen.yml"
+    "introspect": "graphql-codegen --config codegen.yml",
+    "update:blog": "babel-node scripts/update-blogposts.js"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.2",
@@ -137,12 +138,14 @@
     "storybook": "^5.1.11",
     "styled-components": "^4.3.2",
     "url-polyfill": "^1.1.7",
-    "wnumb": "^1.0.4"
+    "wnumb": "^1.0.4",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.4",
-    "@babel/core": "^7.6.4",
+    "@babel/core": "^7.8.4",
     "@babel/helper-create-regexp-features-plugin": "^7.7.4",
+    "@babel/node": "^7.8.4",
     "@babel/plugin-proposal-class-properties": "^7.5.0",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.4.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.5.1",

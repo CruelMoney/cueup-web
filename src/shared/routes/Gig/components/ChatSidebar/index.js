@@ -139,7 +139,7 @@ const getSystemMessage = ({ gig, showDecline, navigateToOffer }) => {
             systemMessage: true,
             createdAt: new Date(),
             content:
-                'The organizer is waiting on your offer. \nThis is a direct booking from your profile and the Cueup fee is discarded.',
+                'The organizer is waiting on your offer. \nThis is a direct booking from your profile and the service fee is discarded.',
             actions: [
                 {
                     label: 'Decline gig',
