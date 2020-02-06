@@ -157,7 +157,7 @@ export const ReadMore = ({ color, children, back, ...props }) => {
     );
 };
 
-export const ReadMoreButton = ({ children, onClick, style, back }) => {
+export const ReadMoreButton = ({ children, onClick, color, style, back }) => {
     return (
         <button
             onClick={onClick}
@@ -169,7 +169,9 @@ export const ReadMoreButton = ({ children, onClick, style, back }) => {
                 ...style,
             }}
         >
-            <ReadMore back={back}>{children}</ReadMore>
+            <ReadMore back={back} color={color}>
+                {children}
+            </ReadMore>
         </button>
     );
 };

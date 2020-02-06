@@ -1,10 +1,30 @@
 import React, { Component } from 'react';
 import { localize } from 'react-localize-redux';
+import styled from 'styled-components';
+import {
+    PrimaryButton,
+    Row,
+    Container,
+    Col,
+    SecondaryButton,
+    TeritaryButton,
+    ReadMoreButton,
+    ReadMore,
+} from 'components/Blocks';
+import { TextAccent } from 'routes/BecomeDj/components/blocks/TextAccent';
 import vinyl from '../../../assets/Vinyl.svg';
 import krIcon from '../../../assets/money.svg';
 import Footer from '../../../components/common/Footer';
 import appStoreBadge from '../../../assets/app-store-badge.svg';
 import SignUpForm from './SignUpForm';
+
+const Header = styled.header`
+    background-image: radial-gradient(50% 58% at 50% 33%, #122b48 12%, #0b1b2d 90%);
+    z-index: -10;
+    overflow: auto;
+    padding-bottom: 0;
+    padding-top: 100px;
+`;
 
 class Signup extends Component {
     state = {
@@ -19,37 +39,35 @@ class Signup extends Component {
         });
     }
 
-    themeColor = '#B031FF';
-    secondColor = '#31DAFF';
-
     render() {
         const { translate } = this.props;
 
         return (
             <div>
-                <header className="">
-                    <div id="stripes">
-                        <span />
-                        <span />
-                        <span className="white" />
-                        <span />
-                    </div>
-                    <div className="container">
-                        <div className="row center-xs">
-                            <div className="col-xs-12">
+                <Header>
+                    <Container>
+                        <Row center>
+                            <Col middle>
+                                <TextAccent>SIGN UP</TextAccent>
                                 <h1 className="Header-title text-center common-PageTitle">
                                     {translate('signup.title')}
                                     <span className="Header-subTitle common-PageSubtitle">
                                         {translate('signup.description')}
                                     </span>
                                 </h1>
-                            </div>
-                        </div>
-                        <div
-                            className="row center"
+                            </Col>
+                        </Row>
+                        <Row center style={{ margin: '24px 0' }}>
+                            <a href="become-dj">
+                                <ReadMore color={'#fff'} style={{ margin: 'auto', color: '#fff' }}>
+                                    Read more
+                                </ReadMore>
+                            </a>
+                        </Row>
+                        <Row
                             style={{
+                                margin: '40px 0',
                                 marginBottom: '40px',
-                                marginTop: '-20px',
                             }}
                         >
                             <div className="col-xs-12 center">
@@ -73,45 +91,16 @@ class Signup extends Component {
                                     />
                                 </a>
                             </div>
-                        </div>
-                    </div>
-                    <div className="container">
-                        <div className="info-boxes">
-                            <div className="row">
-                                <div className="col-sm-6 col-md-5 col-md-push-1">
-                                    <div className="card">
-                                        <img src={krIcon} alt="Money icon" />
-                                        <h2 style={{ color: 'rgb(176, 49, 255)' }}>
-                                            {translate('signup.sections.left.header')}
-                                        </h2>
-                                        <p style={{ color: '#32325D' }}>
-                                            {translate('signup.sections.left.content')}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="col-sm-6 col-md-5 col-md-push-1">
-                                    <div className="card">
-                                        <img src={vinyl} alt="vinyl icon" />
-                                        <h2 style={{ color: 'rgb(176, 49, 255)' }}>
-                                            {translate('signup.sections.right.header')}
-                                        </h2>
-                                        <p style={{ color: '#32325D' }}>
-                                            {translate('signup.sections.right.content')}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </header>
-                <div className="container" style={{ marginTop: '80px', marginBottom: '80px' }}>
+                        </Row>
+                    </Container>
+                </Header>
+                <div className="container" style={{ marginBottom: '80px' }}>
                     <div className="signup">
                         <SignUpForm translate={translate} reference={this.state.reference} />
                     </div>
                 </div>
                 <Footer
                     noSkew
-                    color={this.themeColor}
                     firstTo={translate('routes./')}
                     secondTo={translate('routes./')}
                     firstLabel={translate('how-it-works')}
