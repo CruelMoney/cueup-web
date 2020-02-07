@@ -95,6 +95,7 @@
       "chart": {
         "time": {
           "14-days-prior": ["14 days prior", "14 days prior"],
+          "30-days-prior": ["30 days prior", "30 days prior"],
           "event-start": ["Event start", "Event start"],
           "event-end": ["Event end", "Event end"]
         },
