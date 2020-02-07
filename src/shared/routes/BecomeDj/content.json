@@ -32,11 +32,10 @@
         "Combine content \nto sell yourself",
         "Combine content \nto sell yourself"
       ],
-      "instagram": ["Instagram", "Instagram"],
-      "soundcloud": ["SoundCloud", "SoundCloud"],
-      "testimonials": ["Testimonials", "Testimonials"],
+      "photos": ["Photos", "Fotos"],
+      "videos": ["Videos", "Videoer"],
       "mixcloud": ["Mixcloud*", "Mixcloud*"],
-      "and-more": ["...and more", "...and more"],
+      "more": ["...more", "...more"],
       "coming-soon": ["* Coming soon", "* Coming soon"]
     },
     "getting-gigs": {

@@ -7,4 +7,5 @@ export const SubTitle = styled(Body)`
     text-align: center;
     max-width: 444px;
     margin: auto;
+    line-height: 1.7em;
 `;

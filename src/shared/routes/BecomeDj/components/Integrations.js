@@ -47,7 +47,7 @@ const IntegrationsCol = styled(Col)`
 
 const IntegrationsText = styled.ul`
     margin-top: 15px;
-    margin-bottom: 100px;
+    margin-bottom: 40px;
     > p {
         font-family: 'AvenirNext-Medium';
         color: #fff;
@@ -103,11 +103,14 @@ const Integrations = (props) => {
                         </Header>
                     </TitleWrapper>
                     <IntegrationsText>
-                        <p>{translate('become-dj.integrations.instagram')}</p>
-                        <p>{translate('become-dj.integrations.soundcloud')}</p>
-                        <p>{translate('become-dj.integrations.testimonials')}</p>
-                        <p>{translate('become-dj.integrations.mixcloud')}</p>
-                        <p>{translate('become-dj.integrations.and-more')}</p>
+                        <p>Instagram</p>
+                        <p>SoundCloud</p>
+                        <p>Testimonials</p>
+                        <p>{translate('become-dj.integrations.photos')}</p>
+                        <p>{translate('become-dj.integrations.videos')}</p>
+                        <p>Mixtapes</p>
+                        <p>Mixcloud*</p>
+                        <p>{translate('become-dj.integrations.more')}</p>
                     </IntegrationsText>
                     <IntegrationsTextStarred>
                         <p>{translate('become-dj.integrations.coming-soon')}</p>
