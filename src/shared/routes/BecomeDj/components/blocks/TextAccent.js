@@ -9,7 +9,7 @@ export const TextAccent = styled.h3`
 `;
 
 export const ResponsiveTextAccent = styled(TextAccent)`
-    @media only screen and (max-width: 685px) {
+    @media only screen and (max-width: 768px) {
         text-align: center;
         margin-top: 30px;
     }

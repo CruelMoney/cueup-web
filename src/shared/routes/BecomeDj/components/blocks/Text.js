@@ -5,7 +5,7 @@ export const GrayText = styled.p`
     font-size: 20px;
     color: #4d6480;
     line-height: 34px;
-    @media only screen and (max-width: 685px) {
+    @media only screen and (max-width: 768px) {
         text-align: ${({ mobileTextAlign }) => (mobileTextAlign ? mobileTextAlign : 'center')};
         margin-top: 20px;
     }
@@ -17,7 +17,7 @@ export const Header = styled.h2`
     line-height: 1em;
     margin-bottom: 0.3em;
     white-space: pre-wrap;
-    @media only screen and (max-width: 685px) {
+    @media only screen and (max-width: 768px) {
         text-align: ${({ mobileTextAlign }) => (mobileTextAlign ? mobileTextAlign : 'center')};
         font-size: 32px;
     }

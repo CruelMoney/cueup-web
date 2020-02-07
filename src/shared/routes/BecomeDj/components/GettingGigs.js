@@ -70,7 +70,7 @@ const GettingGigsWrapper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
-    @media only screen and (max-width: 685px) {
+    @media only screen and (max-width: 768px) {
         flex-direction: column;
         align-items: center;
     }
@@ -80,7 +80,7 @@ const TextCol = styled.div`
     display: flex;
     flex-direction: column;
     margin-left: 90px;
-    @media only screen and (max-width: 685px) {
+    @media only screen and (max-width: 768px) {
         padding: 0;
         margin-left: 0px;
         margin-top: -50px;
@@ -97,7 +97,7 @@ const CardsWrapper = styled.ul`
     right: 6em;
     height: 20em;
 
-    @media only screen and (max-width: 685px) {
+    @media only screen and (max-width: 768px) {
         top: 0;
         right: 0;
     }
@@ -112,7 +112,7 @@ const GigRequestBubble = styled.div`
     right: 5em;
     top: 1em;
     z-index: 5;
-    @media only screen and (max-width: 685px) {
+    @media only screen and (max-width: 768px) {
         top: -6em;
         right: -1em;
     }

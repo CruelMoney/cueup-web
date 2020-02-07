@@ -30,6 +30,7 @@ const DesktopContainer = styled.div`
     padding-right: 100px;
     display: flex;
     flex-direction: row;
+
     @media only screen and (max-width: 685px) {
         display: none;
     }
@@ -48,6 +49,23 @@ const DesktopImageContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     margin: 0 0 0 10px;
+    img {
+        width: 323px;
+        align-self: center;
+    }
+    .android {
+        margin-top: 200px;
+    }
+    @media only screen and (max-width: 768px) {
+        img {
+            width: 250px;
+            left: 50px;
+            position: relative;
+        }
+        .android {
+            margin-top: 200px;
+        }
+    }
 `;
 
 const MobileContainer = styled.div`
@@ -72,27 +90,31 @@ const MobileImageContainer = styled.div`
     flex-direction: row;
 `;
 
-const MobileImageContainerRow = styled.div`
-    display: flex;
-    flex: 1;
-    flex-direction: row;
-`;
-const MobileImageContainerCol = styled.div`
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-`;
-
-const StoresContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-`;
-
 const StickyText = styled.div`
     position: sticky;
     top: 50vh;
     transform: translateY(-50%);
     margin-top: 50%;
+    @media only screen and (min-width: 768px) {
+        margin-top: 60%;
+    }
+`;
+
+const AnimatedText = styled.div`
+    height: 64px;
+    transition: transform 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    @media (max-width: 768px) {
+        height: 32px;
+    }
+`;
+
+const AnimatedTextWrapper = styled.div`
+    height: 64px;
+    overflow: hidden;
+    margin-bottom: 18px;
+    @media (max-width: 768px) {
+        height: 32px;
+    }
 `;
 
 let lastScrollPosition = 0;
@@ -135,29 +157,28 @@ const AvailableOn = (props) => {
                 <DesktopContainer>
                     <DesktopTextContainer>
                         <StickyText>
-                            <TextAccent margin="0 0 15px 0">
+                            <TextAccent margin="0 0 15px 0" mobileTextAlign="left">
                                 {translate('become-dj.available-on-iphone.desktop.available-on')}
                             </TextAccent>
-                            <div
-                                style={{ overflow: 'hidden', height: '64px', marginBottom: '18px' }}
-                            >
-                                <div
-                                    style={{
-                                        height: '64px',
-                                        transition:
-                                            'transform 500ms cubic-bezier(0.215, 0.610, 0.355, 1)',
-                                    }}
-                                    ref={textAnimation}
-                                >
-                                    <Header style={{ marginBottom: '0px' }} left>
+                            <AnimatedTextWrapper>
+                                <AnimatedText ref={textAnimation}>
+                                    <Header
+                                        style={{ marginBottom: '0px' }}
+                                        left
+                                        mobileTextAlign="left"
+                                    >
                                         iPhone
                                     </Header>
-                                    <Header style={{ marginBottom: '0px' }} left>
+                                    <Header
+                                        style={{ marginBottom: '0px' }}
+                                        left
+                                        mobileTextAlign="left"
+                                    >
                                         Android
                                     </Header>
-                                </div>
-                            </div>
-                            <GrayText>
+                                </AnimatedText>
+                            </AnimatedTextWrapper>
+                            <GrayText mobileTextAlign="left">
                                 {translate('become-dj.available-on-iphone.desktop.content')}
                             </GrayText>
                             <div style={{ overflow: 'hidden', height: '50px', marginTop: '50px' }}>
@@ -191,22 +212,12 @@ const AvailableOn = (props) => {
                         </StickyText>
                     </DesktopTextContainer>
                     <DesktopImageContainer>
-                        <img
-                            src={iphoneX}
-                            animate
-                            alt="dj gigs iPhone"
-                            style={{ width: '323px', alignSelf: 'center' }}
-                        />
+                        <img src={iphoneX} className="iphone" alt="dj gigs iPhone" />
                         <img
                             ref={androidRef}
                             src={android}
-                            animate
+                            className="android"
                             alt="dj gigs android"
-                            style={{
-                                width: '323px',
-                                alignSelf: 'center',
-                                marginTop: '200px',
-                            }}
                         />
                     </DesktopImageContainer>
                 </DesktopContainer>
