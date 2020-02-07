@@ -2285,6 +2285,10 @@ p.error {
     padding-top: 100px;
 }
 
+.info-boxes .card {
+    height: 100%;
+}
+
 .info-boxes > .container {
     position: relative;
     z-index: 1;

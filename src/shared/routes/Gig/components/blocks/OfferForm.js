@@ -169,7 +169,7 @@ const OfferForm = ({
                     : gigStateDescription[gig.status] ?? gigStateDescription.default}
             </Body>
 
-            {canUpdatePrice && (
+            {!!canUpdatePrice && (
                 <InputRow small style={{ marginTop: '20px' }}>
                     <Input
                         half
@@ -203,7 +203,7 @@ const OfferForm = ({
                                     : 'Directly to you',
                             description:
                                 payoutType === PAYOUT_TYPES.BANK
-                                    ? "Organizer has paid using Cueup and you'll receive the payment after the event."
+                                    ? "Organizer has paid using Cueup and we'll transfer to you after the event."
                                     : 'Organizer will pay directly to you.',
                         },
                     ]}
@@ -218,29 +218,31 @@ const OfferForm = ({
                 <RemainingPayment translate={translate} loading={loading} {...offer} />
             ) : null}
 
-            <TitleClean>Organizer payment</TitleClean>
-
-            {canUpdatePrice ? (
-                <RadioSelect
-                    containerStyle={{ marginBottom: '30px' }}
-                    multi
-                    setChosen={updatePaymentMethods}
-                    options={[
-                        {
-                            checked: payoutMethods.BANK,
-                            title: 'Using Cueup',
-                            description: 'Organizer can pay through Cueup to your bank account.',
-                            value: PAYOUT_TYPES.BANK,
-                        },
-                        {
-                            checked: payoutMethods.DIRECT,
-                            title: 'Directly to you',
-                            description: 'Organizer can pay directly to you in cash etc.',
-                            value: PAYOUT_TYPES.DIRECT,
-                        },
-                    ]}
-                />
-            ) : null}
+            {!!canUpdatePrice && (
+                <>
+                    <TitleClean>Organizer payment</TitleClean>
+                    <RadioSelect
+                        containerStyle={{ marginBottom: '30px' }}
+                        multi
+                        setChosen={updatePaymentMethods}
+                        options={[
+                            {
+                                checked: payoutMethods.BANK,
+                                title: 'Using Cueup - Secure & Guaranteed',
+                                description:
+                                    'Organizer can pay through Cueup to your bank account.',
+                                value: PAYOUT_TYPES.BANK,
+                            },
+                            {
+                                checked: payoutMethods.DIRECT,
+                                title: 'Directly to you',
+                                description: 'Organizer can pay directly to you in cash etc.',
+                                value: PAYOUT_TYPES.DIRECT,
+                            },
+                        ]}
+                    />
+                </>
+            )}
 
             <RowWrap style={{ marginTop: '24px' }}>
                 <div name={'gig-cancel-' + gig.id}>
@@ -257,7 +259,7 @@ const OfferForm = ({
                     )}
                 </div>
 
-                {canUpdatePrice && (
+                {canUpdatePrice ? (
                     <SmartButton
                         disabled={!canSubmit}
                         loading={submitLoading}
@@ -270,13 +272,13 @@ const OfferForm = ({
                             ? translate('Send offer')
                             : translate('Update offer')}
                     </SmartButton>
-                )}
+                ) : null}
 
-                {!payoutInfoValid && (
+                {!payoutInfoValid ? (
                     <PrimaryButton rounded={true} onClick={showPopup} name="show-payout-popup">
                         {translate('Update payout info')}
                     </PrimaryButton>
-                )}
+                ) : null}
             </RowWrap>
 
             <ErrorMessageApollo error={error} />
@@ -299,23 +301,11 @@ const RemainingPayment = ({
             <div style={style1}>
                 <TableRow label="Your offer">{offer.formatted}</TableRow>
                 <Hr />
-                <TableRow
-                    label={translate('Service fee')}
-                    info={<div>{translate('gig.offer.service-fee-info')}</div>}
-                >
-                    {serviceFee.formatted}
-                </TableRow>
-                <Hr />
-                <TableRow label="Organizers total price" bold>
-                    {totalPayment.formatted}
-                </TableRow>
-            </div>
-            <div style={style1}>
                 <TableRow label={translate('Already paid')} bold={!isDirect}>
                     {amountPaid.formatted}
                 </TableRow>
                 <Hr />
-                {isDirect && (
+                {!!isDirect && (
                     <TableRow label={translate('Remaining payment to you')} bold>
                         {amountLeft.formatted}
                     </TableRow>
@@ -336,17 +326,8 @@ const OfferTable = ({ loading, translate, totalPayment, serviceFee, djFee, total
                     {loading ? 'loading...' : serviceFee.formatted ? serviceFee.formatted : '...'}
                 </TableRow>
                 <Hr />
-                <TableRow label="Organizers total price" bold>
-                    {loading
-                        ? 'loading...'
-                        : totalPayment.formatted
-                        ? totalPayment.formatted
-                        : '...'}
-                </TableRow>
-            </div>
-            <div style={style1}>
                 <TableRow
-                    label={translate('Cueup fee')}
+                    label={translate('Payment processing')}
                     info={<div>{translate('gig.offer.dj-fee-info')}</div>}
                 >
                     {loading ? 'loading...' : djFee.formatted ? djFee.formatted : '...'}

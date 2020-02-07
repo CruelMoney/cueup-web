@@ -232,5 +232,9 @@
   "payment-succes-message": [
     "The DJ has been booked, and you will receive a receipt on email.",
     "DJ'en er booket, og du vil få en kvittering på din email."
+  ],
+  "find-djs": [
+    "Find DJs",
+    "Find DJs"
   ]
 }

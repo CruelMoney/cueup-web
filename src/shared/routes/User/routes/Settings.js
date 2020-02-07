@@ -390,7 +390,11 @@ const VerifyIdentityPopup = ({ user, identityVerified, initialShowing = false })
                 success={identityVerified}
                 disabled={identityVerified}
             />
-            <Popup showing={showing} onClickOutside={(_) => setShowing(false)} width={'550px'}>
+            <Popup
+                showing={showing}
+                onClickOutside={(_) => setShowing(false)}
+                style={{ maxWidth: '1000px' }}
+            >
                 <VerifyIdentity
                     isUpdate={identityVerified}
                     user={user}

@@ -82,6 +82,7 @@ const HTML = ({
             <div id="tooltip-portal" />
             <div id="mobile-menu-portal" />
             <div id="notification-portal" />
+            <div id="portal" />
         </body>
     </html>
 );

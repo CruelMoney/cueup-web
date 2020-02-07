@@ -127,6 +127,11 @@ const EVENT_GIGS = gql`
                         currency
                         formatted(locale: $locale)
                     }
+                    totalPayout(currency: $currency) {
+                        amount
+                        formatted(locale: $locale)
+                        currency
+                    }
                     serviceFee(currency: $currency) {
                         amount
                         currency
@@ -208,6 +213,10 @@ const REQUEST_PAYMENT_INTENT = gql`
             token {
                 token
             }
+            amount {
+                amount
+                formatted(locale: $locale)
+            }
             offer {
                 totalPayment(currency: $currency) {
                     amount
@@ -220,6 +229,11 @@ const REQUEST_PAYMENT_INTENT = gql`
                     currency
                 }
                 offer(currency: $currency) {
+                    amount
+                    formatted(locale: $locale)
+                    currency
+                }
+                totalPayout(currency: $currency) {
                     amount
                     formatted(locale: $locale)
                     currency
