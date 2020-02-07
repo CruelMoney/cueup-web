@@ -1,117 +1,148 @@
 {
-	"become-dj": {
-		"title": ["Become DJ", "Become DJ"],
-		"hero": {
-			"2020-update": ["2020 UPDATE","2020 UPDATE"],
-			"the-only-profile-a-DJ-needs": ["The only profile a DJ needs", "The only profile a DJ needs"],
-			"subtitle": ["Filium morte multavit si sine dubio praeclara sunt, explicabo nemo.", "Filium morte multavit si sine dubio praeclara sunt, explicabo nemo."],
-			"apply-to-become-dj": ["Apply to become DJ", "Ansøg om at blive DJ"],
-			"get-gigs": {
-				"get" : ["Get", "Get"],
-				"gigs" : ["Gigs", "Gigs"]
-			},
-			"upload-mixtapes": {
-				"upload" : ["Upload", "Upload"],
-				"mixtapes" : ["Mixtapes", "Mixtapes"]
-			},
-			"showcase-photos": {
-				"showcase" : ["Showcase", "Showcase"],
-				"photos" : ["Photos", "Photos"]
-			},
-			"add-reviews": {
-				"add" : ["Add", "Add"],
-				"reviews" : ["Reviews", "Reviews"]
-			}
-		},
-		"integrations": {
-			"integrations" : ["INTEGRATIONS", "INTEGRATIONS"],
-			"combine-content-&-sell-yourself" : ["Combine content to sell yourself", "Combine content to sell yourself"],
-			"instagram" : ["Instagram", "Instagram"],
-			"soundcloud" : ["SoundCloud", "SoundCloud"],
-			"testimonials" : ["Testimonials", "Testimonials"],
-			"mixcloud" : ["Mixcloud*", "Mixcloud*"],
-			"and-more" : ["...and more", "...and more"],
-			"coming-soon" : ["* Coming soon", "* Coming soon"]
-		},
-		"getting-gigs": {
-			"new-gig-request": {
-				"new-gig-request": ["NEW GIG REQUEST", "NEW GIG REQUEST"],
-				"new-years-party": ["New Years Party", "New Years Party"],
-				"in-a-month": ["In a month", "In a month"],
-				"make-your-offer": ["Make your offer", "Make your offer"],
-				"4-hours": ["4 hours", "4 hours"],
-				"200 guests": ["200 guests", "200 guests"]
-			},
-			"get-gigs-feature": {
-				"feature": ["FEATURE", "FEATURE"],
-				"get-gigs": ["Get gigs", "Get gigs"],
-				"chat-the-organizer": ["Chat the organizer.", "Chat the organizer."],
-				"make-your-offer": ["Make your offer.", "Make your offer."],
-				"play-get-paid": ["Play - Get paid.", "Play - Get paid."],
-				"read-more": ["Read more", "Read more"],
-				"Amount-of-available-gigs-vary-depending-on-your-area": ["Amount of available gigs vary depending on your area.", "Amount of available gigs vary depending on your area."]
-			}
-		},
-		"payments": {
-			"card-payments": {
-				"receive-payments": ["RECEIVE PAYMENTS", "RECEIVE PAYMENTS"],
-				"card-payments": ["Card payments", "Card payments"],
-				"content": ["Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.", "Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare."],
-				"read-more": ["Read more", "Read more"]
-			},
-			"direct-payments": {
-				"receive-payments": ["RECEIVE PAYMENTS", "RECEIVE PAYMENTS"],
-				"direct-payments": ["Direct payments", "Direct payments"],
-				"content": ["Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.", "Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare."],
-				"read-more": ["Read more", "Read more"]
-			}
-		},
-		"cancelation-policy": {
-			"feature": ["FEATURE", "FEATURE"],
-			"create-your-cancelation-policy": ["Create your cancelation policy", "Create your cancelation policy"],
-			"content": ["Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.", "Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare."],
-			"read-more": ["Read more", "Read more"],
-			"chart": {
-				"time": {
-					"14-days-prior": ["14 days prior", "14 days prior"],
-					"event-start": ["Event start", "Event start"],
-					"event-end": ["Event end", "Event end"]
-				},
-				"refund": {
-					"100%-refund": {
-						"100%-refund": ["100% Refund", "100% Refund"],
-						"100%": ["100%", "100%"],
-						"refund": ["Refund", "Refund"]
-					},
-					"50%-refund": {
-						"50%-refund": ["50% Refund", "50% Refund"],
-						"50%": ["50%", "50%"],
-						"refund": ["Refund", "Refund"]
-					},
-					"0%-refund": {
-						"0%-refund": ["0% Refund", "0% Refund"],
-						"0%": ["0%", "0%"],
-						"refund": ["Refund", "Refund"]
-					}
-				}
-			}
-		},
-		"available-on-iphone": {
-			"desktop": {
-				"available-on": ["AVAILABLE ON", "AVAILABLE ON"],
-				"iphone": ["iPhone", "iPhone"],
-				"content": ["Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non.", "Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non."]
-			},
-			"mobile": {
-				"available-on": ["AVAILABLE ON", "AVAILABLE ON"],
-				"iphone-and-android": ["iPhone & Android", "iPhone & Android"],
-				"content": ["Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non.", "Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non."]
-			}
-		},
-		"join-thousands-of-DJs": {
-			"join-thousands-of-DJs": ["Join thousands of DJs", "Join thousands of DJs"],
-			"content": ["Cueup is a growing community of DJs, a major key to success. Put it this way, it took me twenty five years to get these plants.", "Cueup is a growing community of DJs, a major key to success. Put it this way, it took me twenty five years to get these plants."],
-			"apply-to-become-DJ": ["Apply to become DJ", "Apply to become DJ"]
-		}
-	}
+  "become-dj": {
+    "title": ["Become DJ", "Become DJ"],
+    "hero": {
+      "2020-update": ["2020 UPDATE", "2020 UPDATE"],
+      "the-only-profile-a-DJ-needs": ["The only profile a DJ needs", "The only profile a DJ needs"],
+      "subtitle": [
+        "Filium morte multavit si sine dubio praeclara sunt, explicabo nemo.",
+        "Filium morte multavit si sine dubio praeclara sunt, explicabo nemo."
+      ],
+      "apply-to-become-dj": ["Apply to become DJ", "Ansøg om at blive DJ"],
+      "get-gigs": {
+        "get": ["Get", "Get"],
+        "gigs": ["Gigs", "Gigs"]
+      },
+      "upload-mixtapes": {
+        "upload": ["Upload", "Upload"],
+        "mixtapes": ["Mixtapes", "Mixtapes"]
+      },
+      "showcase-photos": {
+        "showcase": ["Showcase", "Showcase"],
+        "photos": ["Photos", "Photos"]
+      },
+      "add-reviews": {
+        "add": ["Add", "Add"],
+        "reviews": ["Reviews", "Reviews"]
+      }
+    },
+    "integrations": {
+      "integrations": ["INTEGRATIONS", "INTEGRATIONS"],
+      "combine-content-&-sell-yourself": [
+        "Combine content \nto sell yourself",
+        "Combine content \nto sell yourself"
+      ],
+      "instagram": ["Instagram", "Instagram"],
+      "soundcloud": ["SoundCloud", "SoundCloud"],
+      "testimonials": ["Testimonials", "Testimonials"],
+      "mixcloud": ["Mixcloud*", "Mixcloud*"],
+      "and-more": ["...and more", "...and more"],
+      "coming-soon": ["* Coming soon", "* Coming soon"]
+    },
+    "getting-gigs": {
+      "new-gig-request": {
+        "new-gig-request": ["NEW GIG REQUEST", "NEW GIG REQUEST"],
+        "new-years-party": ["New Years Party", "New Years Party"],
+        "in-a-month": ["In a month", "In a month"],
+        "make-your-offer": ["Make your offer", "Make your offer"],
+        "4-hours": ["4 hours", "4 hours"],
+        "200 guests": ["200 guests", "200 guests"]
+      },
+      "get-gigs-feature": {
+        "feature": ["FEATURE", "FEATURE"],
+        "get-gigs": ["Get gigs", "Get gigs"],
+        "chat-the-organizer": ["Chat the organizer.", "Chat the organizer."],
+        "make-your-offer": ["Make your offer.", "Make your offer."],
+        "play-get-paid": ["Play - Get paid.", "Play - Get paid."],
+        "read-more": ["Read more", "Read more"],
+        "Amount-of-available-gigs-vary-depending-on-your-area": [
+          "Amount of available gigs vary depending on your area.",
+          "Amount of available gigs vary depending on your area."
+        ]
+      }
+    },
+    "payments": {
+      "card-payments": {
+        "receive-payments": ["RECEIVE PAYMENTS", "RECEIVE PAYMENTS"],
+        "card-payments": ["Card payments", "Card payments"],
+        "content": [
+          "Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.",
+          "Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare."
+        ],
+        "read-more": ["Read more", "Read more"]
+      },
+      "direct-payments": {
+        "receive-payments": ["RECEIVE PAYMENTS", "RECEIVE PAYMENTS"],
+        "direct-payments": ["Direct payments", "Direct payments"],
+        "content": [
+          "Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.",
+          "Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare."
+        ],
+        "read-more": ["Read more", "Read more"]
+      }
+    },
+    "cancelation-policy": {
+      "feature": ["FEATURE", "FEATURE"],
+      "create-your-cancelation-policy": [
+        "Create your cancelation policy",
+        "Create your cancelation policy"
+      ],
+      "content": [
+        "Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.",
+        "Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare."
+      ],
+      "read-more": ["Read more", "Read more"],
+      "chart": {
+        "time": {
+          "14-days-prior": ["14 days prior", "14 days prior"],
+          "30-days-prior": ["30 days prior", "30 days prior"],
+          "event-start": ["Event start", "Event start"],
+          "event-end": ["Event end", "Event end"]
+        },
+        "refund": {
+          "100%-refund": {
+            "100%-refund": ["100% Refund", "100% Refund"],
+            "100%": ["100%", "100%"],
+            "refund": ["Refund", "Refund"]
+          },
+          "50%-refund": {
+            "50%-refund": ["50% Refund", "50% Refund"],
+            "50%": ["50%", "50%"],
+            "refund": ["Refund", "Refund"]
+          },
+          "0%-refund": {
+            "0%-refund": ["0% Refund", "0% Refund"],
+            "0%": ["0%", "0%"],
+            "refund": ["Refund", "Refund"]
+          }
+        }
+      }
+    },
+    "available-on-iphone": {
+      "desktop": {
+        "available-on": ["AVAILABLE ON", "AVAILABLE ON"],
+        "iphone": ["iPhone", "iPhone"],
+        "content": [
+          "Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non.",
+          "Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non."
+        ]
+      },
+      "mobile": {
+        "available-on": ["AVAILABLE ON", "AVAILABLE ON"],
+        "iphone-and-android": ["iPhone & Android", "iPhone & Android"],
+        "content": [
+          "Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non.",
+          "Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non."
+        ]
+      }
+    },
+    "join-thousands-of-DJs": {
+      "join-thousands-of-DJs": ["Join thousands of DJs", "Join thousands of DJs"],
+      "content": [
+        "Cueup is a growing community of DJs, a major key to success. Put it this way, it took me twenty five years to get these plants.",
+        "Cueup is a growing community of DJs, a major key to success. Put it this way, it took me twenty five years to get these plants."
+      ],
+      "apply-to-become-DJ": ["Apply to become DJ", "Apply to become DJ"]
+    }
+  }
 }

@@ -21,7 +21,7 @@ const CancelationContainer = styled(Container)`
     align-items: center;
     margin: 120px 0;
     @media only screen and (max-width: 685px) {
-        margin: 60px 0;
+        margin: 80px 0;
     }
 `;
 
@@ -122,7 +122,7 @@ const CancelationPolicy = (props) => {
                     <TextWrapper>
                         <Col middle>
                             <BarText>
-                                {translate('become-dj.cancelation-policy.chart.time.14-days-prior')}
+                                {translate('become-dj.cancelation-policy.chart.time.30-days-prior')}
                             </BarText>
                             <Dot />
                             <BarText>
@@ -133,7 +133,7 @@ const CancelationPolicy = (props) => {
                         </Col>
                         <Col middle>
                             <BarText>
-                                {translate('become-dj.cancelation-policy.chart.time.event-start')}
+                                {translate('become-dj.cancelation-policy.chart.time.14-days-prior')}
                             </BarText>
                             <Dot />
                             <BarText>
@@ -144,7 +144,7 @@ const CancelationPolicy = (props) => {
                         </Col>
                         <Col middle>
                             <BarText>
-                                {translate('become-dj.cancelation-policy.chart.time.event-end')}
+                                {translate('become-dj.cancelation-policy.chart.time.event-start')}
                             </BarText>
 
                             <Dot />

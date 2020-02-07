@@ -31,7 +31,7 @@ const Card = styled.div`
     flex: 1;
     flex-direction: column;
     background: #ffffff;
-    box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.06), 0 13px 13px 0 rgba(0, 0, 0, 0.08),
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.06), 0 13px 13px 0 rgba(0, 0, 0, 0.08),
         0 20px 15px 0 rgba(0, 0, 0, 0.04);
     border-radius: 28px;
     padding: 67px 39px 0 39px;
@@ -43,8 +43,19 @@ const Card = styled.div`
     h2 {
         margin-left: -3px;
     }
+    > img {
+        margin-top: 60px;
+    }
     @media only screen and (max-width: 685px) {
+        margin: 0px;
+        margin-top: 15px;
         padding: 24px 36px 0 24px;
+        p {
+            margin-top: 6px;
+        }
+        > img {
+            margin-top: 20px;
+        }
     }
 `;
 
@@ -92,7 +103,7 @@ const CardItem = ({ translate, header, description, imgSrc }) => (
             style={{
                 alignSelf: 'center',
                 width: '100%',
-                marginTop: '60px',
+
                 top: '1px',
                 position: 'relative',
             }}
