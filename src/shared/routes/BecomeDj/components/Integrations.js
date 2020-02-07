@@ -57,9 +57,9 @@ const IntegrationsText = styled.ul`
     @media only screen and (max-width: 375px) {
         margin-top: 10px;
         margin-bottom: 30px;
-
+        column-count: 2;
         > p {
-            font-size: 27px;
+            font-size: 20px;
         }
     }
 `;

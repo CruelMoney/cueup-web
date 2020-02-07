@@ -234,6 +234,23 @@ const AvailableOn = (props) => {
                             {translate('become-dj.available-on-iphone.mobile.content')}
                         </GrayText>
                     </MobileTextContainer>
+                    <Row style={{ marginTop: '24px' }}>
+                        <img
+                            src={playStore}
+                            alt="Google Play store"
+                            style={{
+                                height: '40px',
+                                marginRight: '12px',
+                            }}
+                        />
+                        <img
+                            src={appStore}
+                            alt="Apple app store"
+                            style={{
+                                height: '40px',
+                            }}
+                        />
+                    </Row>
                     <MobileImageContainer>
                         <GracefullImage
                             src={mobileIphone}
@@ -242,22 +259,6 @@ const AvailableOn = (props) => {
                             style={{ height: '338px' }}
                         />
                     </MobileImageContainer>
-                    <Row between style={{ marginTop: '24px' }}>
-                        <img
-                            src={playStore}
-                            alt="Google Play store"
-                            style={{
-                                height: '50px',
-                            }}
-                        />
-                        <img
-                            src={appStore}
-                            alt="Apple app store"
-                            style={{
-                                height: '50px',
-                            }}
-                        />
-                    </Row>
                 </MobileContainer>
             </Container>
         </Bg>
