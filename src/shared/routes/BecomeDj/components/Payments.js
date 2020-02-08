@@ -7,8 +7,8 @@ import addTranslate from '../../../components/higher-order/addTranslate';
 import GracefullImage from '../../../components/GracefullImage';
 import { TextAccent } from '../components/blocks/TextAccent';
 import { GrayText, Header } from '../components/blocks/Text';
-import paymentCard from '../../../assets/images/credit_card.png';
-import invoice from '../../../assets/images/Invoice.png';
+import paymentCard from '../../../assets/images/credit_card.jpg';
+import invoice from '../../../assets/images/Invoice.jpg';
 import Pattern from './blocks/Pattern';
 
 const Bg = styled.div`
@@ -45,15 +45,16 @@ const Card = styled.div`
     h2 {
         margin-left: -3px;
     }
-    > img {
+    > .card-image {
         margin-top: 60px;
+        border-radius: 18px 18px 0 0;
     }
     @media only screen and (max-width: 768px) {
         padding: 30px 30px 0 30px;
         p {
             margin-top: 6px;
         }
-        > img {
+        > .card-image {
             margin-top: 30px;
         }
     }
@@ -64,7 +65,7 @@ const Card = styled.div`
         p {
             margin-top: 6px;
         }
-        > img {
+        > .card-image {
             margin-top: 20px;
         }
     }
@@ -116,12 +117,15 @@ const CardItem = ({ translate, header, description, imgSrc }) => (
         <GracefullImage
             src={imgSrc}
             animate
+            lazyload
+            className="card-image"
             alt="Payment Card"
             style={{
                 alignSelf: 'center',
                 width: '100%',
                 top: '1px',
                 position: 'relative',
+                minHeight: '100px',
             }}
         />
     </Card>

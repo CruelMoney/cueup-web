@@ -15,10 +15,10 @@ const TitleWrapper = styled.div`
         :after {
             content: '';
             background: url(${integrationsGraphic});
-            background-size: 75% 75%;
+            background-size: 100% 100%;
             background-repeat: no-repeat;
-            width: 846px;
-            height: 764px;
+            width: 635px;
+            height: 573px;
             position: absolute;
             right: 0;
             bottom: 0;
