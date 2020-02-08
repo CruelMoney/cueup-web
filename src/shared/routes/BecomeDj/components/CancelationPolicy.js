@@ -101,7 +101,7 @@ const CancelationPolicy = (props) => {
     return (
         <Bg>
             <CancelationContainer>
-                <TextAccent center margin="50px 0 15px 0">
+                <TextAccent center style={{ marginTop: '50px' }}>
                     {translate('become-dj.cancelation-policy.feature')}
                 </TextAccent>
                 <TitleWrapper>

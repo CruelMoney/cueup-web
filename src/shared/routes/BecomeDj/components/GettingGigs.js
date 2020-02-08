@@ -6,6 +6,7 @@ import TimeIcon from 'react-ionicons/lib/IosTime';
 import { NavLink } from 'react-router-dom';
 import { HeaderTitle, Body, BodySmall, BodyBold } from 'components/Text';
 import { Container, Col, Row, ReadMore } from 'components/Blocks';
+import GracefullImage from 'components/GracefullImage';
 import { ResponsiveTextAccent } from '../components/blocks/TextAccent';
 import { BlueTitle } from '../components/blocks/Title';
 import { GrayText } from '../components/blocks/Text';
@@ -217,7 +218,7 @@ const Gig = ({ name, img, date, status, duration, guests }) => {
                 </div>
             </div>
             <div>
-                <img src={img} alt="map" />
+                <GracefullImage lazyload animate src={img} alt="map" />
             </div>
         </GigCard>
     );

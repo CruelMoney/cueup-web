@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Container, Col } from 'components/Blocks';
+import GracefullImage from 'components/GracefullImage';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import { Header } from '../components/blocks/Text';
 import { TextAccent } from '../components/blocks/TextAccent';
@@ -35,11 +36,20 @@ const IntegrationsWrapper = styled.div`
     flex-direction: row;
     margin-top: 200px;
     padding-left: 120px;
+    .mobile-integrations {
+        display: none;
+        object-fit: contain;
+        height: 330px;
+        margin: 30px -15px 0 -15px;
+    }
     @media only screen and (max-width: 768px) {
         padding-left: 0px;
     }
     @media only screen and (max-width: 425px) {
         margin-top: 0px;
+        .mobile-integrations {
+            display: block;
+        }
     }
 `;
 
@@ -82,22 +92,20 @@ const IntegrationsTextStarred = styled(IntegrationsText)`
     }
 `;
 
-const MobileImage = styled.div`
-    @media only screen and (max-width: 425px) {
-        height: 330px;
-        margin: 30px -15px 0 -15px;
-        background: no-repeat 50% 100% url(${integrationsGraphicMobile});
-        background-size: contain;
-    }
-`;
-
 const Integrations = (props) => {
     const { translate, currentLanguage } = props;
     return (
         <Container>
             <IntegrationsWrapper>
                 <IntegrationsCol>
-                    <MobileImage />
+                    <GracefullImage
+                        animate
+                        lazyload
+                        src={integrationsGraphicMobile}
+                        style={{ backgroundColor: 'transparent' }}
+                        className="mobile-integrations"
+                        alt="soundcloud mixcloud"
+                    />
                     <TextAccent margin="0 0 20px 0">
                         {translate('become-dj.integrations.integrations')}
                     </TextAccent>

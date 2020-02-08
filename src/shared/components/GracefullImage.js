@@ -59,8 +59,8 @@ const GracefullImage = ({ src, style, alt, animate, lazyload, ...props }) => {
             <div
                 ref={lazyload ? ref : null}
                 style={{
-                    ...style,
                     backgroundColor: '#EFF2F5',
+                    ...style,
                 }}
                 {...props}
             />
