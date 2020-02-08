@@ -164,14 +164,14 @@ const AvailableOn = (props) => {
                             <AnimatedTextWrapper>
                                 <AnimatedText ref={textAnimation}>
                                     <Header
-                                        style={{ marginBottom: '0px' }}
+                                        style={{ marginBottom: '0px', lineHeight: '1em' }}
                                         left
                                         mobileTextAlign="left"
                                     >
                                         iPhone
                                     </Header>
                                     <Header
-                                        style={{ marginBottom: '0px' }}
+                                        style={{ marginBottom: '0px', lineHeight: '1em' }}
                                         left
                                         mobileTextAlign="left"
                                     >

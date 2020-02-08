@@ -587,6 +587,9 @@ footer .social svg {
     border-color: inherit !important;
     color: inherit !important;
 }
+#preFooter .button {
+    min-width: 150px;
+}
 .dropdown-selector {
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
@@ -1903,7 +1906,6 @@ button.active .info-popup {
     padding: 10px 10px;
     position: relative;
     text-overflow: ellipsis;
-    text-transform: capitalize;
     transition: all 0.1s ease-in-out;
     visibility: visible;
     white-space: nowrap;

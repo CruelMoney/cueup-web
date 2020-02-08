@@ -59,12 +59,12 @@ class Index extends Component {
 
                 <Footer
                     color={themeColor}
-                    firstTo={translate('routes./')}
+                    firstTo={translate('routes./signup')}
                     secondTo={translate('routes./')}
-                    firstLabel={translate('how-it-works')}
-                    secondLabel={translate('arrange-event')}
-                    title={translate('Wonder how it works?')}
-                    subTitle={translate('See how it works, or arrange an event.')}
+                    firstLabel={translate('sign up')}
+                    secondLabel={translate('how-it-works')}
+                    title={translate('Ready to get started?')}
+                    subTitle={translate('Apply to become DJ now.')}
                 />
             </>
         );

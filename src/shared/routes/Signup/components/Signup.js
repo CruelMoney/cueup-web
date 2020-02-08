@@ -60,7 +60,7 @@ class Signup extends Component {
                         </Row>
                         <Row center style={{ margin: '24px 0' }}>
                             <NavLink to="become-dj">
-                                <ReadMore color={'#fff'} style={{ margin: 'auto', color: '#fff' }}>
+                                <ReadMore size={'18px'} center white uppercase={false}>
                                     Read more
                                 </ReadMore>
                             </NavLink>

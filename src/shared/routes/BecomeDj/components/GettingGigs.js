@@ -14,6 +14,7 @@ import cph from '../assets/maps/cph.png';
 import la from '../assets/maps/la.png';
 import nyc from '../assets/maps/nyc.png';
 import bali from '../assets/maps/bali.png';
+import Pattern from './blocks/Pattern';
 
 const gigCards = [
     {
@@ -159,7 +160,7 @@ const GigCard = styled.div`
     h4 {
         text-transform: capitalize;
         margin-bottom: 0.75em;
-        font-size: 1.1em;
+        font-size: 1.3em;
     }
     .top {
         border-bottom: 1px solid #ebebeb;
@@ -274,6 +275,10 @@ const GettingGigs = (props) => {
         <Bg>
             <Container>
                 <GettingGigsWrapper>
+                    <Pattern
+                        style={{ width: '300px', height: '155px', right: '-50px', top: '-160px' }}
+                    />
+
                     <AnimatedCards />
                     <TextCol>
                         <ResponsiveTextAccent margin="0 0 15px 0">

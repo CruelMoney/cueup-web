@@ -135,7 +135,7 @@ const JoinThousands = (props) => {
                 </Wrapper>
                 <TextWrapper>
                     <Header center white>
-                        {translate('become-dj.join-thousands-of-DJs.join-thousands-of-DJs')}
+                        Be part of a{'\n'}Global Community
                     </Header>
                     <SubTitle white style={{ maxWidth: '577px' }}>
                         {translate('become-dj.join-thousands-of-DJs.content')}

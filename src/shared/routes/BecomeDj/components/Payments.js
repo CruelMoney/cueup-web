@@ -67,7 +67,7 @@ const Payments = (props) => {
         <Bg>
             <Container>
                 <CardsContainer>
-                    <Pattern style={{ right: '-40px', top: '-114px', zIndex: -1 }} />
+                    <Pattern style={{ right: '-40px', bottom: '10px', zIndex: -1 }} />
 
                     <CardItem
                         translate={translate}
@@ -75,7 +75,7 @@ const Payments = (props) => {
                         description={translate('become-dj.payments.card-payments.content')}
                         imgSrc={paymentCard}
                     />
-                    <Pattern style={{ left: '-110px', bottom: '10px', zIndex: -1 }} />
+                    <Pattern style={{ left: '-110px', top: '-100px', zIndex: -1 }} />
 
                     <CardItem
                         translate={translate}
