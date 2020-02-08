@@ -12,6 +12,7 @@ import iphoneX from '../../../assets/images/available-on/iphone_x.png';
 import android from '../../../assets/images/available-on/android.png';
 import appStore from '../../../assets/images/available-on/app store.png';
 import playStore from '../../../assets/images/available-on/googleplay.png';
+import Pattern from './blocks/Pattern';
 
 const Bg = styled.div`
     display: flex;
@@ -30,7 +31,7 @@ const DesktopContainer = styled.div`
     padding-right: 100px;
     display: flex;
     flex-direction: row;
-
+    position: relative;
     @media only screen and (max-width: 685px) {
         display: none;
     }
@@ -44,6 +45,7 @@ const DesktopTextContainer = styled.div`
 `;
 
 const DesktopImageContainer = styled.div`
+    position: relative;
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -149,12 +151,11 @@ const AvailableOn = (props) => {
         };
     }, []);
 
-    console.log('render');
-
     return (
         <Bg>
             <Container>
                 <DesktopContainer>
+                    <Pattern style={{ left: '-240px', top: '400px', zIndex: -1 }} />
                     <DesktopTextContainer>
                         <StickyText>
                             <TextAccent margin="0 0 15px 0" mobileTextAlign="left">
@@ -190,34 +191,58 @@ const AvailableOn = (props) => {
                                     }}
                                     ref={buttonAnimation}
                                 >
-                                    <img
-                                        src={appStore}
-                                        alt="app store"
-                                        style={{
-                                            height: '50px',
-                                            display: 'block',
-                                        }}
-                                    />
-                                    <img
-                                        src={playStore}
-                                        alt="app store"
-                                        style={{
-                                            height: '50px',
-                                            display: 'block',
-                                            marginTop: '1px',
-                                        }}
-                                    />
+                                    <a
+                                        href="https://apps.apple.com/us/app/cueup-gigs/id1458267647?mt=8"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <img
+                                            src={appStore}
+                                            alt="app store"
+                                            style={{
+                                                height: '50px',
+                                                display: 'block',
+                                            }}
+                                        />
+                                    </a>
+                                    <a
+                                        href="https://play.google.com/store/apps/details?id=io.cueup.gigs&utm_source=website&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <img
+                                            src={playStore}
+                                            alt="app store"
+                                            style={{
+                                                height: '50px',
+                                                display: 'block',
+                                                marginTop: '1px',
+                                            }}
+                                        />
+                                    </a>
                                 </div>
                             </div>
                         </StickyText>
                     </DesktopTextContainer>
                     <DesktopImageContainer>
                         <img src={iphoneX} className="iphone" alt="dj gigs iPhone" />
+                        <Pattern
+                            style={{ right: '50px', top: '-50px', height: '480px', zIndex: -1 }}
+                        />
+
                         <img
                             ref={androidRef}
                             src={android}
                             className="android"
                             alt="dj gigs android"
+                        />
+                        <Pattern
+                            style={{
+                                left: '300px',
+                                width: '300px',
+                                bottom: '0px',
+                                zIndex: -1,
+                            }}
                         />
                     </DesktopImageContainer>
                 </DesktopContainer>
@@ -235,21 +260,33 @@ const AvailableOn = (props) => {
                         </GrayText>
                     </MobileTextContainer>
                     <Row style={{ marginTop: '24px' }}>
-                        <img
-                            src={playStore}
-                            alt="Google Play store"
-                            style={{
-                                height: '40px',
-                                marginRight: '12px',
-                            }}
-                        />
-                        <img
-                            src={appStore}
-                            alt="Apple app store"
-                            style={{
-                                height: '40px',
-                            }}
-                        />
+                        <a
+                            href="https://play.google.com/store/apps/details?id=io.cueup.gigs&utm_source=website&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <img
+                                src={playStore}
+                                alt="Google Play store"
+                                style={{
+                                    height: '40px',
+                                    marginRight: '12px',
+                                }}
+                            />
+                        </a>
+                        <a
+                            href="https://apps.apple.com/us/app/cueup-gigs/id1458267647?mt=8"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <img
+                                src={appStore}
+                                alt="Apple app store"
+                                style={{
+                                    height: '40px',
+                                }}
+                            />
+                        </a>
                     </Row>
                     <MobileImageContainer>
                         <GracefullImage

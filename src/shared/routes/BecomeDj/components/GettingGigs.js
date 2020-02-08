@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { useTransition, animated, config } from 'react-spring';
 import PeopleIcon from 'react-ionicons/lib/MdPeople';
 import TimeIcon from 'react-ionicons/lib/IosTime';
+import { NavLink } from 'react-router-dom';
 import { HeaderTitle, Body, BodySmall, BodyBold } from 'components/Text';
-import { Container, Col, Row } from 'components/Blocks';
+import { Container, Col, Row, ReadMore } from 'components/Blocks';
 import { ResponsiveTextAccent } from '../components/blocks/TextAccent';
 import { BlueTitle } from '../components/blocks/Title';
 import { GrayText } from '../components/blocks/Text';
-import ReadMore from '../components/blocks/ReadMore';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import cph from '../assets/maps/cph.png';
 import la from '../assets/maps/la.png';
@@ -70,6 +70,7 @@ const GettingGigsWrapper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
+    position: relative;
     @media only screen and (max-width: 768px) {
         flex-direction: column;
         align-items: center;
@@ -215,7 +216,7 @@ const Gig = ({ name, img, date, status, duration, guests }) => {
 };
 
 const AnimatedCards = () => {
-    const [cards, set] = useState(gigCards);
+    const [cards, set] = useState([...gigCards]);
 
     const Offset = 32;
     const transitions = useTransition(
@@ -229,13 +230,18 @@ const AnimatedCards = () => {
             native: true,
             from: { opacity: 0 },
             leave: { opacity: 0 },
-            enter: ({ y }) => ({ y, opacity: 1 }),
+            enter: ({ y }) => ({ y, opacity: -1 }),
             update: ({ y, opacity }) => ({ y, opacity }),
             config: config.molasses,
         }
     );
 
-    useEffect(() => setInterval(() => set((cc) => [cc.pop(), ...cc]), 3000), []);
+    useEffect(() => {
+        const rotate = () => set((cc) => [cc.pop(), ...cc]);
+        rotate();
+        const int = setInterval(rotate, 3000);
+        return () => clearInterval(int);
+    }, []);
 
     return (
         <GigRequestsWrapper>
@@ -290,7 +296,11 @@ const GettingGigs = (props) => {
                             )}{' '}
                             <br />
                         </GrayText>
-                        <ReadMore />
+                        <NavLink to="/blog/stop-missing-dj-gigs" style={{ marginTop: '20px' }}>
+                            <ReadMore size="18px" uppercase={false}>
+                                {translate('read-more')}
+                            </ReadMore>
+                        </NavLink>
                     </TextCol>
                 </GettingGigsWrapper>
                 <BodySmall style={{ textAlign: 'center', margin: '0 35px', marginTop: '60px' }}>

@@ -115,7 +115,6 @@ const tertiaryStyle = css`
 
 export const ReadMoreText = styled.span`
     ${tertiaryStyle}
-    text-transform:	 uppercase;
     text-align: left;
 `;
 
@@ -139,17 +138,50 @@ const ButtonIconBack = styled.span`
     }
 `;
 
-export const ReadMore = ({ color, children, back, ...props }) => {
+export const ReadMore = ({
+    color,
+    children,
+    back,
+    style = {},
+    center,
+    uppercase = true,
+    size,
+    white,
+    ...props
+}) => {
+    if (white) {
+        color = '#fff';
+    }
+    if (color) {
+        style.color = color;
+    }
+
+    if (center) {
+        style = {
+            textAlign: 'center',
+            margin: 'auto',
+            ...style,
+        };
+    }
+
+    if (size) {
+        style.fontSize = size;
+    }
+
+    if (uppercase) {
+        style.textTransform = 'uppercase';
+    }
+
     return (
-        <ReadMoreText {...props}>
+        <ReadMoreText style={style} {...props}>
             {!back && children}
             {back ? (
                 <ButtonIconBack>
-                    <ArrowBack fontSize={'15px'} color={color || '#4d6480'} />
+                    <ArrowBack fontSize={size ?? '15px'} color={color || '#4d6480'} />
                 </ButtonIconBack>
             ) : (
                 <ButtonIcon>
-                    <Arrow fontSize={'15px'} color={color || '#4d6480'} />{' '}
+                    <Arrow fontSize={size ?? '15px'} color={color || '#4d6480'} />{' '}
                 </ButtonIcon>
             )}
             {back && children}

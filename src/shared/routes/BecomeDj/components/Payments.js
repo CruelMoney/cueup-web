@@ -1,14 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 import { HeaderTitle, Body } from 'components/Text';
-import { Container, Col, Row } from 'components/Blocks';
+import { Container, Col, Row, ReadMore } from 'components/Blocks';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import GracefullImage from '../../../components/GracefullImage';
 import { TextAccent } from '../components/blocks/TextAccent';
 import { GrayText, Header } from '../components/blocks/Text';
-import ReadMore from '../components/blocks/ReadMore';
 import paymentCard from '../../../assets/images/credit_card.png';
 import invoice from '../../../assets/images/Invoice.png';
+import Pattern from './blocks/Pattern';
 
 const Bg = styled.div`
     display: flex;
@@ -21,6 +22,7 @@ const Bg = styled.div`
 const CardsContainer = styled.div`
     display: flex;
     justify-content: center;
+    position: relative;
     @media only screen and (max-width: 685px) {
         flex-direction: column;
     }
@@ -65,12 +67,16 @@ const Payments = (props) => {
         <Bg>
             <Container>
                 <CardsContainer>
+                    <Pattern style={{ right: '-40px', top: '-114px', zIndex: -1 }} />
+
                     <CardItem
                         translate={translate}
                         header={translate('become-dj.payments.card-payments.card-payments')}
                         description={translate('become-dj.payments.card-payments.content')}
                         imgSrc={paymentCard}
                     />
+                    <Pattern style={{ left: '-110px', bottom: '10px', zIndex: -1 }} />
+
                     <CardItem
                         translate={translate}
                         header={translate('become-dj.payments.direct-payments.direct-payments')}
@@ -92,9 +98,11 @@ const CardItem = ({ translate, header, description, imgSrc }) => (
             {header}
         </Header>
         <GrayText mobileTextAlign="left">{description}</GrayText>
-        <div className="read-more">
-            <ReadMore mobileCenter={false} className="read-more" />
-        </div>
+        <NavLink to="/blog/new-direct-payout-method" style={{ marginTop: '20px' }}>
+            <ReadMore size="18px" uppercase={false}>
+                {translate('read-more')}
+            </ReadMore>
+        </NavLink>
         <div style={{ flex: 1 }} />
         <GracefullImage
             src={imgSrc}

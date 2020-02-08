@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Container, Col, Row } from 'components/Blocks';
+import { NavLink } from 'react-router-dom';
+import { Container, Col, Row, ReadMore } from 'components/Blocks';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import { Header } from '../components/blocks/Text';
 import { TextAccent } from '../components/blocks/TextAccent';
 import { SubTitle } from '../components/blocks/SubTitle';
-import ReadMore from '../components/blocks/ReadMore';
 
 const Bg = styled.div`
     display: flex;
@@ -112,7 +112,11 @@ const CancelationPolicy = (props) => {
                 <CancelationSubTitle white>
                     {translate('become-dj.cancelation-policy.content')}
                 </CancelationSubTitle>
-                <ReadMore white />
+                <NavLink to="/blog" style={{ marginTop: '42px' }}>
+                    <ReadMore white size="18px" uppercase={false}>
+                        {translate('read-more')}
+                    </ReadMore>
+                </NavLink>
                 <GraphWrapper>
                     <Graph>
                         <BarWrapper />

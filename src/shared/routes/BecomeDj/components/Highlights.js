@@ -45,7 +45,7 @@ const TextRowColFirstRow = styled(Row)`
 
 const TextRowColSecondRow = styled(Row)`
     font-size: 32px;
-    font-weight: 600;
+    font-weight: 700;
 
     color: #ffffff;
 `;

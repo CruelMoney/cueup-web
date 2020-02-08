@@ -6,6 +6,7 @@ import Laptop from './Laptop';
 import Highlights from './Highlights';
 
 const Wrapper = styled(Col)`
+    position: relative;
     @media only screen and (max-width: 425px) {
         flex-direction: column-reverse;
     }

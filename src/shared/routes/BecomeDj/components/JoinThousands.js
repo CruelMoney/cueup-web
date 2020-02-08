@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 import { Body } from 'components/Text';
-import { Container } from 'components/Blocks';
+import { Container, ReadMore } from 'components/Blocks';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import GracefullImage from '../../../components/GracefullImage';
-import Apply from '../components/blocks/Apply';
 import dj1 from '../assets/1.jpg';
 import dj2 from '../assets/2.jpg';
 import dj3 from '../assets/3.jpg';
@@ -140,7 +140,14 @@ const JoinThousands = (props) => {
                     <SubTitle white style={{ maxWidth: '577px' }}>
                         {translate('become-dj.join-thousands-of-DJs.content')}
                     </SubTitle>
-                    <Apply white />
+                    <NavLink
+                        to={translate('routes./signup')}
+                        style={{ margin: 'auto', marginTop: '42px' }}
+                    >
+                        <ReadMore white size="18px" uppercase={false}>
+                            {translate('become-dj.join-thousands-of-DJs.apply-to-become-DJ')}
+                        </ReadMore>
+                    </NavLink>
                 </TextWrapper>
             </BlueRectangle>
         </Container>
