@@ -159,8 +159,10 @@ const Avatar = ({ src, ...rest }) => (
         <GracefullImage
             animate
             src={src}
+            lazyload
             alt="DJ-Avatar"
             style={{
+                height: '100%',
                 width: '100%',
                 alignSelf: 'center',
                 background: '#3febeb',

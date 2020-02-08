@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
+import { useInView } from 'react-intersection-observer';
+
 export const keyframeFadeIn = keyframes`
     from { opacity: 0; }
     to   { opacity: 1; }
@@ -32,14 +34,30 @@ function useImageLoaded({ src }) {
     return loaded;
 }
 
-const GracefullImage = ({ src, style, alt, animate, ...props }) => {
+const GracefullImage = ({ src, style, alt, animate, lazyload, ...props }) => {
+    const [ref, inView] = useInView({
+        rootMargin: '200px',
+        triggerOnce: true,
+    });
+
+    let source = null;
+
+    if (lazyload) {
+        if (inView) {
+            source = src;
+        }
+    } else {
+        source = src;
+    }
+
     const loaded = useImageLoaded({
-        src,
+        src: source,
     });
 
     if (!loaded) {
         return (
             <div
+                ref={lazyload ? ref : null}
                 style={{
                     ...style,
                     backgroundColor: '#EFF2F5',

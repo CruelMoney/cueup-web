@@ -120,7 +120,6 @@ const CardItem = ({ translate, header, description, imgSrc }) => (
             style={{
                 alignSelf: 'center',
                 width: '100%',
-
                 top: '1px',
                 position: 'relative',
             }}

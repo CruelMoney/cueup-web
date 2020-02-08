@@ -51,7 +51,8 @@ const DesktopImageContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     margin: 0 0 0 10px;
-    img {
+    img,
+    > div {
         width: 323px;
         align-self: center;
     }
@@ -219,17 +220,19 @@ const AvailableOn = (props) => {
                         </StickyText>
                     </DesktopTextContainer>
                     <DesktopImageContainer>
-                        <img src={iphoneX} className="iphone" alt="dj gigs iPhone" />
+                        <GracefullImage
+                            lazyload
+                            animate
+                            src={iphoneX}
+                            className="iphone"
+                            alt="dj gigs iPhone"
+                        />
                         <Pattern
                             style={{ right: '50px', top: '-50px', height: '480px', zIndex: -1 }}
                         />
-
-                        <img
-                            ref={androidRef}
-                            src={android}
-                            className="android"
-                            alt="dj gigs android"
-                        />
+                        <div ref={androidRef} className="android">
+                            <GracefullImage animate lazyload src={android} alt="dj gigs android" />
+                        </div>
                         <Pattern
                             style={{
                                 left: '300px',

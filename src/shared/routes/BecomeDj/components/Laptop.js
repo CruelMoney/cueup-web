@@ -3,7 +3,10 @@ import styled from 'styled-components';
 import { Container, Col, Row } from 'components/Blocks';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import Macbook from '../../../assets/images/perf_gallery_hw__bdxj0rf7d3te_large_2x.png';
-import DJProfile from '../../../assets/images/dj_profile.jpg';
+import screenShot1 from '../assets/screenshots/1.jpg';
+import screenShot2 from '../assets/screenshots/2.jpg';
+import screenShot3 from '../assets/screenshots/3.jpg';
+import screenShot4 from '../assets/screenshots/4.jpg';
 import Pattern from './blocks/Pattern';
 
 const LaptopContainer = styled(Container)`
@@ -51,7 +54,7 @@ const Laptop = (props) => {
                     <div style={{ position: 'relative' }}>
                         <Pattern style={{ left: '-175px', bottom: '-50px', zIndex: '-2' }} />
 
-                        <LaptopContentImage src={DJProfile} animate alt="cueup DJ profile " />
+                        <LaptopContentImage src={screenShot4} animate alt="cueup DJ profile " />
                         <LaptopImage src={Macbook} animate alt="macbook 13 inch" />
                     </div>
                     <Shadow />
