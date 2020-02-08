@@ -82,10 +82,17 @@ const TextCol = styled.div`
     display: flex;
     flex-direction: column;
     margin-left: 90px;
+    a {
+        margin-top: 20px;
+    }
     @media only screen and (max-width: 768px) {
         padding: 0;
         margin-left: 0px;
         margin-top: -50px;
+        a {
+            margin: auto;
+            margin-top: 20px;
+        }
     }
 `;
 
@@ -301,7 +308,7 @@ const GettingGigs = (props) => {
                             )}{' '}
                             <br />
                         </GrayText>
-                        <NavLink to="/blog/stop-missing-dj-gigs" style={{ marginTop: '20px' }}>
+                        <NavLink to="/blog/stop-missing-dj-gigs">
                             <ReadMore size="18px" uppercase={false}>
                                 {translate('read-more')}
                             </ReadMore>

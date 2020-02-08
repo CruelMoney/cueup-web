@@ -54,7 +54,7 @@ const Card = styled.div`
             margin-top: 6px;
         }
         > img {
-            margin-top: 20px;
+            margin-top: 30px;
         }
     }
     @media only screen and (max-width: 425px) {

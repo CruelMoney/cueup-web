@@ -105,18 +105,12 @@ const StickyText = styled.div`
 const AnimatedText = styled.div`
     height: 64px;
     transition: transform 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
-    @media (max-width: 768px) {
-        height: 32px;
-    }
 `;
 
 const AnimatedTextWrapper = styled.div`
     height: 64px;
     overflow: hidden;
     margin-bottom: 18px;
-    @media (max-width: 768px) {
-        height: 32px;
-    }
 `;
 
 let lastScrollPosition = 0;
