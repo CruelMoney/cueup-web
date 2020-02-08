@@ -5,7 +5,7 @@ export const TextAccent = styled.h3`
     color: #00d1ff;
     text-align: ${({ center }) => (center ? 'center' : 'left')};
     font-size: 15px;
-    margin: ${({ margin }) => (margin ? margin : '0')};
+    margin-bottom: 12px;
 `;
 
 export const ResponsiveTextAccent = styled(TextAccent)`
