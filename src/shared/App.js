@@ -42,27 +42,18 @@ const App = (props) => {
 
     const setLanguage = useCallback(setActiveLanguage, []);
 
-    const savedLanguage = typeof localStorage !== 'undefined' ? localStorage.language : false;
-
     const url = location.pathname;
     const urlLocale = url.split('/')[1] === 'dk' ? 'da' : 'en';
-    const language = savedLanguage || urlLocale;
-    let redirect = false;
-
-    // Update language and url if user has different language saved
-    if (!!savedLanguage && savedLanguage !== urlLocale) {
-        const redirectUrl = getTranslatedURL(url, translate('code.' + activeLanguage), translate);
-
-        redirect = redirectUrl + location.search;
-    }
+    const language = urlLocale;
+    const redirect = false;
 
     const [state, setState] = useState({
         mobileLinks: [],
     });
 
-    useEffect(() => {
-        setLanguage(language);
-    }, [language, setLanguage]);
+    // useEffect(() => {
+    //     setLanguage(language);
+    // }, [language, setLanguage]);
 
     useEffect(() => {
         // Setup custom analytics
