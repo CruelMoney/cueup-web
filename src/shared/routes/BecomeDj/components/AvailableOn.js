@@ -262,7 +262,8 @@ const AvailableOn = (props) => {
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <img
+                            <GracefullImage
+                                lazyload
                                 src={playStore}
                                 alt="Google Play store"
                                 style={{
@@ -276,7 +277,8 @@ const AvailableOn = (props) => {
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <img
+                            <GracefullImage
+                                lazyload
                                 src={appStore}
                                 alt="Apple app store"
                                 style={{
