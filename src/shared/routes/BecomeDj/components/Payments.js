@@ -36,8 +36,8 @@ const Card = styled.div`
     box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.06), 0 13px 13px 0 rgba(0, 0, 0, 0.08),
         0 20px 15px 0 rgba(0, 0, 0, 0.04);
     border-radius: 28px;
-    padding: 67px 39px 0 39px;
-    margin: 15px;
+    padding: 39px 39px 0 39px;
+    margin: 12px;
     overflow: hidden;
     .read-more p {
         margin-top: 12px;
@@ -48,7 +48,16 @@ const Card = styled.div`
     > img {
         margin-top: 60px;
     }
-    @media only screen and (max-width: 685px) {
+    @media only screen and (max-width: 768px) {
+        padding: 30px 30px 0 30px;
+        p {
+            margin-top: 6px;
+        }
+        > img {
+            margin-top: 20px;
+        }
+    }
+    @media only screen and (max-width: 425px) {
         margin: 0px;
         margin-top: 15px;
         padding: 24px 36px 0 24px;
