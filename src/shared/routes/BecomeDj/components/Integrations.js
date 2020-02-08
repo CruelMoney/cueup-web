@@ -10,7 +10,7 @@ import integrationsGraphicMobile from '../../../assets/images/integrations/Brand
 const TitleWrapper = styled.div`
     max-width: 570px;
     align-self: flex-start;
-    @media only screen and (min-width: 376px) {
+    @media only screen and (min-width: 426px) {
         position: relative;
         :after {
             content: '';
@@ -38,7 +38,7 @@ const IntegrationsWrapper = styled.div`
     @media only screen and (max-width: 768px) {
         padding-left: 0px;
     }
-    @media only screen and (max-width: 375px) {
+    @media only screen and (max-width: 425px) {
         margin-top: 0px;
     }
 `;
@@ -56,14 +56,14 @@ const IntegrationsText = styled.ul`
     position: relative;
     z-index: 1;
     > p {
-        font-family: 'AvenirNext-Medium';
+        font-weight: 600;
         color: #fff;
         letter-spacing: -0.67px;
         font-size: 32px;
     }
-    @media only screen and (max-width: 375px) {
-        margin-top: 10px;
-        margin-bottom: 30px;
+    @media only screen and (max-width: 425px) {
+        margin-top: 24px;
+        margin-bottom: 15px;
 
         > p {
             font-size: 20px;
@@ -75,10 +75,7 @@ const IntegrationsTextStarred = styled(IntegrationsText)`
     > p {
         opacity: 0.5;
         font-size: 15px;
-        letter-spacing: -0.31px;
-        position: absolute;
         bottom: 15px;
-        left: 0;
         @media only screen and (max-width: 375px) {
             font-size: 15px;
         }
@@ -86,7 +83,7 @@ const IntegrationsTextStarred = styled(IntegrationsText)`
 `;
 
 const MobileImage = styled.div`
-    @media only screen and (max-width: 375px) {
+    @media only screen and (max-width: 425px) {
         height: 330px;
         margin: 30px -15px 0 -15px;
         background: no-repeat 50% 100% url(${integrationsGraphicMobile});

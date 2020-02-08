@@ -9,6 +9,9 @@ const Pattern = styled.div`
     height: 270px;
     width: 200px;
     position: absolute;
+    @media screen and (max-width: 425px) {
+        display: none;
+    }
 `;
 
 export default Pattern;

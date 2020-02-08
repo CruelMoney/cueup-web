@@ -21,7 +21,6 @@ import SignUpForm from './SignUpForm';
 
 const Header = styled.header`
     background-image: radial-gradient(50% 58% at 50% 33%, #122b48 12%, #0b1b2d 90%);
-    z-index: -10;
     overflow: auto;
     padding-bottom: 0;
     padding-top: 100px;
@@ -44,7 +43,7 @@ class Signup extends Component {
         const { translate } = this.props;
 
         return (
-            <div>
+            <>
                 <Header>
                     <Container>
                         <Row center>
@@ -109,7 +108,7 @@ class Signup extends Component {
                     title={translate('Wonder how it works?')}
                     subTitle={translate('See how it works, or arrange an event.')}
                 />
-            </div>
+            </>
         );
     }
 }
