@@ -4,7 +4,6 @@ import { Container, Col, Row } from 'components/Blocks';
 import addTranslate from '../../../components/higher-order/addTranslate';
 
 const OrderedContainer = styled(Container)`
-    padding: 0 5%;
     margin-bottom: 15px;
 `;
 
@@ -14,58 +13,40 @@ const WrapperCol = styled(Col)`
     width: 100%;
 `;
 const TextRow = styled(Row)`
-    order: 1;
     flex: 1;
     align-self: center;
     justify-content: space-between;
-    width: 71%;
     flex-wrap: wrap;
-    @media only screen and (max-width: 375px) {
-        margin-top: 50px;
-        width: 90%;
+    width: 100%;
+    padding: 0 200px;
+    @media only screen and (max-width: 768px) {
+        padding: 0 70px;
+    }
+    @media only screen and (max-width: 425px) {
+        margin-top: 15px;
+        padding: 0 15px;
     }
 `;
 
 const TextRowCol = styled(Col)`
-    @media only screen and (max-width: 375px) {
-        flex-basis: 100%;
-        align-items: center;
-        margin-bottom: 24px;
-    }
-    @media only screen and (min-width: 375px) and (max-width: 685px) {
+    margin-top: 24px;
+    @media only screen and (max-width: 767px) {
         flex-basis: 50%;
         align-items: flex-start;
-    }
-`;
-const TextRowCol1 = styled(TextRowCol)`
-    order: 1;
-`;
-const TextRowCol2 = styled(TextRowCol)`
-    order: 2;
-`;
-const TextRowCol3 = styled(TextRowCol)`
-    order: 3;
-    @media only screen and (max-width: 685px) {
-        order: 4;
-    }
-`;
-const TextRowCol4 = styled(TextRowCol)`
-    order: 4;
-    @media only screen and (max-width: 685px) {
-        order: 3;
     }
 `;
 
 const TextRowColFirstRow = styled(Row)`
     opacity: 0.5;
-    font-family: AvenirNext-DemiBold;
     font-size: 15px;
     color: #ffffff;
+    font-weight: 600;
 `;
 
 const TextRowColSecondRow = styled(Row)`
-    font-family: AvenirNext-Bold;
     font-size: 32px;
+    font-weight: 600;
+
     color: #ffffff;
 `;
 
@@ -76,38 +57,38 @@ const Highlights = (props) => {
             <Row>
                 <WrapperCol>
                     <TextRow>
-                        <TextRowCol1>
+                        <TextRowCol>
                             <TextRowColFirstRow>
                                 {translate('become-dj.hero.get-gigs.get')}
                             </TextRowColFirstRow>
                             <TextRowColSecondRow>
                                 {translate('become-dj.hero.get-gigs.gigs')}
                             </TextRowColSecondRow>
-                        </TextRowCol1>
-                        <TextRowCol2>
+                        </TextRowCol>
+                        <TextRowCol>
                             <TextRowColFirstRow>
                                 {translate('become-dj.hero.upload-mixtapes.upload')}
                             </TextRowColFirstRow>
                             <TextRowColSecondRow>
                                 {translate('become-dj.hero.upload-mixtapes.mixtapes')}
                             </TextRowColSecondRow>
-                        </TextRowCol2>
-                        <TextRowCol3>
+                        </TextRowCol>
+                        <TextRowCol>
                             <TextRowColFirstRow>
                                 {translate('become-dj.hero.showcase-photos.showcase')}
                             </TextRowColFirstRow>
                             <TextRowColSecondRow>
                                 {translate('become-dj.hero.showcase-photos.photos')}
                             </TextRowColSecondRow>
-                        </TextRowCol3>
-                        <TextRowCol4>
+                        </TextRowCol>
+                        <TextRowCol>
                             <TextRowColFirstRow>
                                 {translate('become-dj.hero.add-reviews.add')}
                             </TextRowColFirstRow>
                             <TextRowColSecondRow>
                                 {translate('become-dj.hero.add-reviews.reviews')}
                             </TextRowColSecondRow>
-                        </TextRowCol4>
+                        </TextRowCol>
                     </TextRow>
                 </WrapperCol>
             </Row>

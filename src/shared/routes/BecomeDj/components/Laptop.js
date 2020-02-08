@@ -12,7 +12,7 @@ const LaptopContainer = styled(Container)`
 `;
 
 const GetGigsImageCol = styled(Col)`
-    @media only screen and (max-width: 685px) {
+    @media only screen and (max-width: 768px) {
         padding: 0px;
     }
     padding: 0 100px;

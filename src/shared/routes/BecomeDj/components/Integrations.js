@@ -15,14 +15,17 @@ const TitleWrapper = styled.div`
         :after {
             content: '';
             background: url(${integrationsGraphic});
-            background-size: 100% 100%;
+            background-size: 75% 75%;
             background-repeat: no-repeat;
             width: 846px;
             height: 764px;
             position: absolute;
             right: 0;
             bottom: 0;
-            transform: translate(90%, 90%);
+            z-index: 0;
+            -webkit-transform: translate(90%, 90%);
+            -ms-transform: translate(90%, 90%);
+            transform: translate(105%, 80%);
         }
     }
 `;
@@ -48,6 +51,10 @@ const IntegrationsCol = styled(Col)`
 const IntegrationsText = styled.ul`
     margin-top: 15px;
     margin-bottom: 40px;
+    column-count: 2;
+    max-width: 500px;
+    position: relative;
+    z-index: 1;
     > p {
         font-family: 'AvenirNext-Medium';
         color: #fff;
@@ -57,7 +64,7 @@ const IntegrationsText = styled.ul`
     @media only screen and (max-width: 375px) {
         margin-top: 10px;
         margin-bottom: 30px;
-        column-count: 2;
+
         > p {
             font-size: 20px;
         }
