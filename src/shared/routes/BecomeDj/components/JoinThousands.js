@@ -137,8 +137,9 @@ const JoinThousands = (props) => {
                     <Header center white>
                         Be part of a {'\n'}global community
                     </Header>
-                    <SubTitle white style={{ maxWidth: '577px' }}>
-                        {translate('become-dj.join-thousands-of-DJs.content')}
+                    <SubTitle white style={{ maxWidth: '520px', fontWeight: 500 }}>
+                        Cueup is a growing community of DJs. Joining Cueup also means you become
+                        part of a group of the most talented and passionate DJs around the world.
                     </SubTitle>
                     <NavLink
                         to={translate('routes./signup')}

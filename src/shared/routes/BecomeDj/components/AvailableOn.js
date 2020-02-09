@@ -173,7 +173,8 @@ const AvailableOn = (props) => {
                                 </AnimatedText>
                             </AnimatedTextWrapper>
                             <GrayText mobileTextAlign="left">
-                                {translate('become-dj.available-on-iphone.desktop.content')}
+                                Have all your gigs available at your fingertips, set your current
+                                location, and respond quickly to the organizers.
                             </GrayText>
                             <div style={{ overflow: 'hidden', height: '50px', marginTop: '50px' }}>
                                 <div

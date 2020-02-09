@@ -82,6 +82,7 @@ const TextCol = styled.div`
     display: flex;
     flex-direction: column;
     margin-left: 90px;
+    max-width: 425px;
     a {
         margin-top: 20px;
     }
@@ -291,18 +292,8 @@ const GettingGigs = (props) => {
                             {translate('become-dj.getting-gigs.get-gigs-feature.get-gigs')}
                         </BlueTitle>
                         <GrayText>
-                            {translate(
-                                'become-dj.getting-gigs.get-gigs-feature.chat-the-organizer'
-                            )}{' '}
-                            <br />
-                            {translate(
-                                'become-dj.getting-gigs.get-gigs-feature.make-your-offer'
-                            )}{' '}
-                            <br />
-                            {translate(
-                                'become-dj.getting-gigs.get-gigs-feature.play-get-paid'
-                            )}{' '}
-                            <br />
+                            At Cueup we constantly work on bringing gigs to our DJs. You just have
+                            to chat the organizer - make your offer - play - get paid.
                         </GrayText>
                         <NavLink to="/blog/stop-missing-dj-gigs">
                             <ReadMore size="18px" uppercase={false}>

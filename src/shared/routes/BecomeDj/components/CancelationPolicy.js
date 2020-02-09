@@ -31,9 +31,9 @@ const TitleWrapper = styled.div`
 `;
 
 const CancelationSubTitle = styled(SubTitle)`
-    width: 45%;
+    max-width: 45%;
     @media only screen and (max-width: 685px) {
-        width: 90%;
+        max-width: 90%;
     }
 `;
 
@@ -110,7 +110,8 @@ const CancelationPolicy = (props) => {
                     </Header>
                 </TitleWrapper>
                 <CancelationSubTitle white>
-                    {translate('become-dj.cancelation-policy.content')}
+                    When accepting payments using Cueup, your cancelation policy will automatically
+                    be enforced, and you can define the policy exactly how you want.
                 </CancelationSubTitle>
                 <NavLink to="/blog" style={{ marginTop: '42px' }}>
                     <ReadMore white size="18px" uppercase={false}>

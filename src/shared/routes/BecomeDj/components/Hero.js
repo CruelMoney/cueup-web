@@ -26,7 +26,7 @@ const HeroButtonLink = styled(PrimaryButton)`
     box-shadow: 0 0 45px #00d1ff;
     margin: 0 auto;
     text-align: center;
-    max-width: 250px;
+    min-width: 250px;
     transition-duration: 750ms;
     :hover {
         box-shadow: 0 0 70px #00d1ff;

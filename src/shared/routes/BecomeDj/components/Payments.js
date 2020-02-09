@@ -79,14 +79,18 @@ const Payments = (props) => {
                     <CardItem
                         translate={translate}
                         header={translate('become-dj.payments.card-payments.card-payments')}
-                        description={translate('become-dj.payments.card-payments.content')}
+                        description={
+                            'Accept card payments from your customers through Cueup. We take care of charging the organizer, and transfer directly to your bank account.'
+                        }
                         imgSrc={paymentCard}
                     />
 
                     <CardItem
                         translate={translate}
                         header={translate('become-dj.payments.direct-payments.direct-payments')}
-                        description={translate('become-dj.payments.direct-payments.content')}
+                        description={
+                            "You're fully responsible for charging the organizer, and you can ask for the payment however your like. Cash, invoice or another payment system."
+                        }
                         imgSrc={invoice}
                     />
                 </CardsContainer>
