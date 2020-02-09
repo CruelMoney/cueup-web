@@ -736,7 +736,8 @@ input[type='file'] + label * {
     width: 300px;
 }
 
-.login button {
+.login button,
+.login a {
     width: 100%;
 }
 
@@ -757,9 +758,6 @@ input[type='file'] + label * {
 }
 .login label:last-child {
     margin-bottom: 20px;
-}
-.login button:first-child {
-    margin-bottom: 10px;
 }
 
 .login p {
