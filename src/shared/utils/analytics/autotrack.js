@@ -7,7 +7,7 @@
  * https://support.google.com/analytics/answer/1032385
  */
 const TRACKING_ID = 'UA-59876038-4';
-const OPTIMIZE_ID = 'GTM-KW2PT4L';
+const OPTIMIZE_ID = 'GTM-5TZWGZW';
 const ADS_ID = 'AW-874592960';
 
 /**
