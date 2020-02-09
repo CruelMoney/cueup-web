@@ -6,6 +6,6 @@ export const useLogout = () => {
 
     return async () => {
         authService.logout();
-        client.writeData({ data: { me: null } });
+        // client.writeData({ data: { me: null } });
     };
 };
