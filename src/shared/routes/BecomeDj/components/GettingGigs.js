@@ -152,7 +152,7 @@ const GigCard = styled.div`
     > * {
         flex: 1;
     }
-    img {
+    .location-map {
         width: 100%;
         height: 100%;
         object-fit: cover;
@@ -217,7 +217,7 @@ const Gig = ({ name, img, date, status, duration, guests }) => {
                 </div>
             </div>
             <div>
-                <GracefullImage lazyload animate src={img} alt="map" />
+                <GracefullImage lazyload src={img} className="location-map" alt="map" />
             </div>
         </GigCard>
     );
