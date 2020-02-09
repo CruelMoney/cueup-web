@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Query } from 'react-apollo';
 import { notificationService } from '../utils/NotificationService';
@@ -25,6 +25,15 @@ const Menu = ({ translate, history, location }) => {
         history.push(translate('routes./'));
         logout();
     };
+
+    useEffect(() => {
+        const parsedUrl = new URL(window.location.href);
+        const showLogin = parsedUrl.searchParams.get('showLogin');
+
+        if (showLogin) {
+            setLoginExpanded(true);
+        }
+    }, [setLoginExpanded]);
 
     const isHome = location.pathname === '/' || location.pathname === '/dk';
 
@@ -77,7 +86,7 @@ const Menu = ({ translate, history, location }) => {
                                                     {translate('login')}
                                                 </button>
                                                 <Popup
-                                                    width={320}
+                                                    width={'568px'}
                                                     showing={loginExpanded}
                                                     onClickOutside={() => setLoginExpanded(false)}
                                                 >

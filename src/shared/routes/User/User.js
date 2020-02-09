@@ -11,27 +11,27 @@ import { Helmet } from 'react-helmet-async';
 import requestformContent from '../../components/common/RequestForm/content.json';
 import addTranslate from '../../components/higher-order/addTranslate';
 import Sidebar, { SidebarContent } from '../../components/Sidebar';
-import Footer from '../../components/common/Footer.js';
+import Footer from '../../components/common/Footer';
 import { Container, Row, Col, Divider } from '../../components/Blocks';
 import ScrollToTop from '../../components/common/ScrollToTop';
-import Popup from '../../components/common/Popup.js';
-import Login from '../../components/common/Login.js';
-import { SimpleSharing } from '../../components/common/Sharing-v2.js';
+import Popup from '../../components/common/Popup';
+import Login from '../../components/common/Login';
+import { SimpleSharing } from '../../components/common/Sharing-v2';
 import { LoadingPlaceholder2 } from '../../components/common/LoadingPlaceholder';
 
 import GracefullImage from '../../components/GracefullImage';
 import { SmallHeader, TitleClean } from '../../components/Text';
-import { ME } from '../../components/gql.js';
-import SavingIndicator from '../../components/SavingIndicator.js';
-import useLogActivity, { ACTIVITY_TYPES } from '../../components/hooks/useLogActivity.js';
+import { ME } from '../../components/gql';
+import SavingIndicator from '../../components/SavingIndicator';
+import useLogActivity, { ACTIVITY_TYPES } from '../../components/hooks/useLogActivity';
 import BookingButton from './components/BookingButton';
-import ProfileProgress from './components/ProfileProgress.js';
+import ProfileProgress from './components/ProfileProgress';
 import { Overview, Settings, Reviews, Gigs, Events, Booking, Photos, Sounds } from './routes';
-import { USER, UPDATE_USER } from './gql.js';
+import { USER, UPDATE_USER } from './gql';
 import BackToEvent from './components/BackToEvent';
-import Header from './components/Header.js';
+import Header from './components/Header';
 import content from './content.json';
-import { Stats, MobileBookingButton, IconRow, CertifiedVerified } from './components/Common.js';
+import { Stats, MobileBookingButton, IconRow, CertifiedVerified } from './components/Common';
 
 const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
     const { userMetadata = {}, appMetadata = {}, playingLocation } = user || {};
@@ -228,7 +228,7 @@ const LoginPopup = ({ translate }) => {
     const [shwowing, setShwowing] = useState(true);
 
     return (
-        <Popup showing={shwowing} width={'400px'} onClickOutside={() => setShwowing(false)}>
+        <Popup showing={shwowing} width={'568px'} onClickOutside={() => setShwowing(false)}>
             <>
                 <TitleClean center>Login</TitleClean>
                 <p>{translate('Login to see your gigs')}</p>
