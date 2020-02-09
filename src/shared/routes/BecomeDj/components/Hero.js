@@ -6,7 +6,6 @@ import addTranslate from '../../../components/higher-order/addTranslate';
 import { TextAccent } from '../components/blocks/TextAccent';
 import { Title } from '../components/blocks/Title';
 import { SubTitle } from '../components/blocks/SubTitle';
-import Pattern from './blocks/Pattern';
 
 const OrderedContainer = styled(Container)`
     order: 1;
@@ -41,7 +40,6 @@ const Hero = (props) => {
         <OrderedContainer>
             <Row center>
                 <HeroCol>
-                    <Pattern style={{ right: '-175px', top: '50px' }} />
                     <TextAccent center margin="0 0 15px 0">
                         {translate('become-dj.hero.2020-update')}
                     </TextAccent>

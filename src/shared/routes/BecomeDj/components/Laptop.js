@@ -7,7 +7,6 @@ import screenShot1 from '../assets/screenshots/1.jpg';
 import screenShot2 from '../assets/screenshots/2.jpg';
 import screenShot3 from '../assets/screenshots/3.jpg';
 import screenShot4 from '../assets/screenshots/4.jpg';
-import Pattern from './blocks/Pattern';
 
 const LaptopContainer = styled(Container)`
     display: flex;
@@ -52,8 +51,6 @@ const Laptop = (props) => {
             <Col>
                 <GetGigsImageCol>
                     <div style={{ position: 'relative' }}>
-                        <Pattern style={{ left: '-175px', bottom: '-50px', zIndex: '-2' }} />
-
                         <LaptopContentImage src={screenShot4} animate alt="cueup DJ profile " />
                         <LaptopImage src={Macbook} animate alt="macbook 13 inch" />
                     </div>

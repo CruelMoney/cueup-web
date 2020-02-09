@@ -12,7 +12,6 @@ import iphoneX from '../../../assets/images/available-on/iphone_x.png';
 import android from '../../../assets/images/available-on/android.png';
 import appStore from '../../../assets/images/available-on/app store.png';
 import playStore from '../../../assets/images/available-on/googleplay.png';
-import Pattern from './blocks/Pattern';
 
 const Bg = styled.div`
     display: flex;
@@ -150,7 +149,6 @@ const AvailableOn = (props) => {
         <Bg>
             <Container>
                 <DesktopContainer>
-                    <Pattern style={{ left: '-240px', top: '400px', zIndex: -1 }} />
                     <DesktopTextContainer>
                         <StickyText>
                             <TextAccent margin="0 0 15px 0" mobileTextAlign="left">
@@ -227,20 +225,10 @@ const AvailableOn = (props) => {
                             className="iphone"
                             alt="dj gigs iPhone"
                         />
-                        <Pattern
-                            style={{ right: '50px', top: '-50px', height: '480px', zIndex: -1 }}
-                        />
+
                         <div ref={androidRef} className="android">
                             <GracefullImage animate lazyload src={android} alt="dj gigs android" />
                         </div>
-                        <Pattern
-                            style={{
-                                left: '300px',
-                                width: '300px',
-                                bottom: '0px',
-                                zIndex: -1,
-                            }}
-                        />
                     </DesktopImageContainer>
                 </DesktopContainer>
 

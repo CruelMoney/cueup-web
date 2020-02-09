@@ -9,7 +9,6 @@ import { TextAccent } from '../components/blocks/TextAccent';
 import { GrayText, Header } from '../components/blocks/Text';
 import paymentCard from '../../../assets/images/credit_card.jpg';
 import invoice from '../../../assets/images/Invoice.jpg';
-import Pattern from './blocks/Pattern';
 
 const Bg = styled.div`
     display: flex;
@@ -77,15 +76,12 @@ const Payments = (props) => {
         <Bg>
             <Container>
                 <CardsContainer>
-                    <Pattern style={{ right: '-40px', bottom: '10px', zIndex: -1 }} />
-
                     <CardItem
                         translate={translate}
                         header={translate('become-dj.payments.card-payments.card-payments')}
                         description={translate('become-dj.payments.card-payments.content')}
                         imgSrc={paymentCard}
                     />
-                    <Pattern style={{ left: '-110px', top: '-100px', zIndex: -1 }} />
 
                     <CardItem
                         translate={translate}
