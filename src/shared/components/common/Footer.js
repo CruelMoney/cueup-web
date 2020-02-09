@@ -257,17 +257,18 @@ class footer extends Component {
                                         {translate('about')}
                                     </Link>
                                 </li>
-
                                 <li>
                                     <a
                                         className="link-look"
-                                        onClick={() => window.olark('api.box.expand')}
+                                        href={'mailto:chris@cueup.io?subject=Job inquiry'}
                                     >
-                                        {translate('Feedback')}
+                                        {translate('Jobs')}
                                     </a>
                                 </li>
                                 <li>
-                                    <Link to={translate('routes./blog')}>Blog</Link>
+                                    <Link to={translate('routes./become-dj')}>
+                                        {translate('Become DJ')}
+                                    </Link>
                                 </li>
                                 <li>
                                     <Link to={translate('routes./terms/agreements')}>
@@ -293,17 +294,20 @@ class footer extends Component {
                                 <li>
                                     <a
                                         className="link-look"
-                                        href={'mailto:chris@cueup.io?subject=Press inquiry'}
+                                        onClick={() => window.olark('api.box.expand')}
                                     >
-                                        {translate('Press')}
+                                        {translate('Feedback')}
                                     </a>
+                                </li>
+                                <li>
+                                    <Link to={translate('routes./blog')}>Blog</Link>
                                 </li>
                                 <li>
                                     <a
                                         className="link-look"
-                                        href={'mailto:chris@cueup.io?subject=Job inquiry'}
+                                        href={'mailto:chris@cueup.io?subject=Press inquiry'}
                                     >
-                                        {translate('Jobs')}
+                                        {translate('Press')}
                                     </a>
                                 </li>
                             </ul>

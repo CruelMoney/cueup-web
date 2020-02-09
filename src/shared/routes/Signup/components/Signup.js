@@ -24,6 +24,9 @@ const Header = styled.header`
     overflow: auto;
     padding-bottom: 0;
     padding-top: 100px;
+    .Header-title {
+        margin-top: 0 !important;
+    }
 `;
 
 class Signup extends Component {

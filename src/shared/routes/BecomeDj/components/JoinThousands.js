@@ -134,7 +134,7 @@ const JoinThousands = (props) => {
                     </AvatarRow2>
                 </Wrapper>
                 <TextWrapper>
-                    <Header center white>
+                    <Header center white largeMargin>
                         Be part of a {'\n'}global community
                     </Header>
                     <SubTitle white style={{ maxWidth: '520px', fontWeight: 500 }}>
@@ -166,7 +166,7 @@ const Avatar = ({ src, ...rest }) => (
                 height: '100%',
                 width: '100%',
                 alignSelf: 'center',
-                background: '#3febeb',
+                background: '#fff',
             }}
         />
     </AvatarWrapper>

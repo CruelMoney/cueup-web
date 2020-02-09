@@ -40,11 +40,11 @@ const Hero = (props) => {
         <OrderedContainer>
             <Row center>
                 <HeroCol>
-                    <TextAccent center margin="0 0 15px 0">
-                        {translate('become-dj.hero.2020-update')}
-                    </TextAccent>
+                    <TextAccent center>{translate('become-dj.hero.2020-update')}</TextAccent>
                     <Title>{translate('become-dj.hero.the-only-profile-a-DJ-needs')}</Title>
-                    <SubTitle white>{translate('become-dj.hero.subtitle')}</SubTitle>
+                    <SubTitle style={{ margin: '15px auto' }} white>
+                        {translate('become-dj.hero.subtitle')}
+                    </SubTitle>
                     <NavLink
                         to={translate('routes./signup')}
                         style={{ margin: 'auto', marginTop: '40px' }}

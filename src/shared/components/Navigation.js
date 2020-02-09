@@ -67,22 +67,22 @@ const Menu = ({ translate, history, location }) => {
 
                                     <MobileMenu />
                                     <ul className="main-menu">
-                                        {!isHome ? (
+                                        {loggedIn ? null : (
                                             <li>
                                                 <Navlink
                                                     buttonLook={true}
-                                                    to={translate('routes./')}
-                                                    label={translate('how-it-works')}
+                                                    to={translate('routes./become-dj')}
+                                                    label={translate('become-a-dj')}
+                                                    important={true}
                                                 />
                                             </li>
-                                        ) : null}
-
+                                        )}
                                         {loggedIn ? null : (
                                             <li>
                                                 <Navlink
                                                     buttonLook={true}
                                                     to={translate('routes./signup')}
-                                                    label={translate('become-dj')}
+                                                    label={translate('sign up')}
                                                     important={true}
                                                 />
                                             </li>

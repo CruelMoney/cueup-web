@@ -8,8 +8,7 @@ import { HeaderTitle, Body, BodySmall, BodyBold } from 'components/Text';
 import { Container, Col, Row, ReadMore } from 'components/Blocks';
 import GracefullImage from 'components/GracefullImage';
 import { ResponsiveTextAccent } from '../components/blocks/TextAccent';
-import { BlueTitle } from '../components/blocks/Title';
-import { GrayText } from '../components/blocks/Text';
+import { GrayText, Header } from '../components/blocks/Text';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import cph from '../assets/maps/cph.png';
 import la from '../assets/maps/la.png';
@@ -62,8 +61,8 @@ const Bg = styled.div`
     order: 5;
     padding: 250px 0;
 
-    @media only screen and (max-width: 685px) {
-        padding: 150px 0;
+    @media only screen and (max-width: 768px) {
+        padding: 150px 0 50px 0;
     }
 `;
 
@@ -72,16 +71,19 @@ const GettingGigsWrapper = styled.div`
     flex-direction: row;
     justify-content: center;
     position: relative;
+    padding-left: 130px;
     @media only screen and (max-width: 768px) {
         flex-direction: column;
         align-items: center;
+        text-align: center;
+        padding-left: 0px;
     }
 `;
 
 const TextCol = styled.div`
     display: flex;
     flex-direction: column;
-    margin-left: 90px;
+    margin-left: 50px;
     max-width: 425px;
     a {
         margin-top: 20px;
@@ -285,12 +287,12 @@ const GettingGigs = (props) => {
                 <GettingGigsWrapper>
                     <AnimatedCards />
                     <TextCol>
-                        <ResponsiveTextAccent margin="0 0 15px 0">
+                        <ResponsiveTextAccent>
                             {translate('become-dj.getting-gigs.get-gigs-feature.feature')}
                         </ResponsiveTextAccent>
-                        <BlueTitle left size="64px" line="64px" spacing="-1.33px">
+                        <Header bigMobile>
                             {translate('become-dj.getting-gigs.get-gigs-feature.get-gigs')}
-                        </BlueTitle>
+                        </Header>
                         <GrayText>
                             At Cueup we constantly work on bringing gigs to our DJs. You just have
                             to chat the organizer - make your offer - play - get paid.

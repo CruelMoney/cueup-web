@@ -27,14 +27,10 @@ const CancelationContainer = styled(Container)`
 
 const TitleWrapper = styled.div`
     max-width: 570px;
-    margin: 0 0 20px 0;
 `;
 
 const CancelationSubTitle = styled(SubTitle)`
-    max-width: 45%;
-    @media only screen and (max-width: 685px) {
-        max-width: 90%;
-    }
+    max-width: 570px;
 `;
 
 const Dot = styled.div`
@@ -105,7 +101,7 @@ const CancelationPolicy = (props) => {
                     {translate('become-dj.cancelation-policy.feature')}
                 </TextAccent>
                 <TitleWrapper>
-                    <Header white center>
+                    <Header white center largeMargin>
                         {translate('become-dj.cancelation-policy.create-your-cancelation-policy')}
                     </Header>
                 </TitleWrapper>

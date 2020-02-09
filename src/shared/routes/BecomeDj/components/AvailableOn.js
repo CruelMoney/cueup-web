@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { HeaderTitle, Body } from 'components/Text';
 import { Container, Col, Row } from 'components/Blocks';
 import { TextAccent } from '../components/blocks/TextAccent';
-import { BlueTitle } from '../components/blocks/Title';
 import { GrayText, Header } from '../components/blocks/Text';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import GracefullImage from '../../../components/GracefullImage';
@@ -238,9 +237,7 @@ const AvailableOn = (props) => {
                         <TextAccent margin="0 0 15px 0">
                             {translate('become-dj.available-on-iphone.mobile.available-on')}
                         </TextAccent>
-                        <BlueTitle left size="64px" line="64px" spacing="-1.33px">
-                            iPhone & Android
-                        </BlueTitle>
+                        <Header style={{ textAlign: 'left' }}>iPhone & Android</Header>
                         <GrayText mobileTextAlign="left">
                             {translate('become-dj.available-on-iphone.mobile.content')}
                         </GrayText>

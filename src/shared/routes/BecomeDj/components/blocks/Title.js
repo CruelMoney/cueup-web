@@ -18,8 +18,3 @@ export const Title = styled.h1`
         }
     }
 `;
-
-export const BlueTitle = styled(Title)`
-    font-size: 64px;
-    color: #122b48;
-`;
