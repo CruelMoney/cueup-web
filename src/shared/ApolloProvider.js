@@ -24,21 +24,11 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward, re
             console.log(`[GraphQL error]: Message: ${message}, Path: ${path}`)
         );
 
-        let headers = {};
         for (const err of graphQLErrors) {
             // handle errors differently based on its error code
             switch (err.extensions.code) {
                 case 'UNAUTHENTICATED':
-                    // old token might have expired, lets remove it and try again
-                    authService.logout();
-                    headers = operation.getContext().headers;
-                    operation.setContext({
-                        headers: {
-                            ...headers,
-                            'x-token': null,
-                        },
-                    });
-                    return forward(operation);
+                    break;
 
                 // handle other errors
                 default:

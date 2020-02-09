@@ -105,7 +105,10 @@ const Login = ({ redirect = false, error, translate, onLogin, history }) => {
     const onPressSocial = (social) => (e) => {
         e.preventDefault();
         setSocialLoading(social);
-        window.location.replace(process.env.REACT_APP_CUEUP_GQL_DOMAIN + '/auth/' + social);
+        const redirect = '?redirect=' + window.location.href;
+        window.location.replace(
+            process.env.REACT_APP_CUEUP_GQL_DOMAIN + '/auth/' + social + redirect
+        );
     };
 
     const { loading } = state;

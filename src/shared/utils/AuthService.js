@@ -13,8 +13,6 @@ class AuthService extends EventEmitter {
     }
 
     logout() {
-        console.log('log out');
-
         // Clear access token and ID token from local storage
         localStorage.removeItem('token');
         document.cookie = 'x-token=; path=/; expires = Thu, 01 Jan 1970 00:00:00 GMT';
@@ -29,7 +27,6 @@ class AuthService extends EventEmitter {
     getAccessToken() {
         // Retrieves the user token from localStorage
         const token = getCookie('x-token') ?? localStorage.getItem('token');
-        console.log({ token });
         return token;
     }
 
