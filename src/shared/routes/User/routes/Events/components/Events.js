@@ -68,19 +68,15 @@ class Events extends PureComponent {
             );
         };
 
-        function renderLoadingItem() {
-            return [<LoadingPlaceholder key={1} />, <LoadingPlaceholder key={2} />];
-        }
-
         return (
             <div className="events">
                 <Query query={MY_EVENTS}>
                     {({ loading, data }) => {
                         if (loading || !data) {
-                            return renderLoadingItem();
+                            return <LoadingPlaceholder key={1} />;
                         }
 
-                        return data?.me?.events.edges.map((e, i) => renderEvent(e, i));
+                        return data?.me?.events.edges.map((e, i) => renderEvent(e, i)) ?? null;
                     }}
                 </Query>
             </div>
