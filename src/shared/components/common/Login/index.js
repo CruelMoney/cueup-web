@@ -6,7 +6,15 @@ import { withRouter, NavLink } from 'react-router-dom';
 import { Mutation, Query } from 'react-apollo';
 import styled from 'styled-components';
 import addTranslate from 'components/higher-order/addTranslate';
-import { SecondaryButtonLink, SmartButton, Row, RowWrap, Hr, Col } from 'components/Blocks';
+import {
+    SecondaryButtonLink,
+    SmartButton,
+    Row,
+    RowWrap,
+    Hr,
+    Col,
+    SecondaryButton,
+} from 'components/Blocks';
 import { BodySmall } from 'components/Text';
 import { LOGIN, REQUEST_PASSWORD_RESET, ME } from '../../gql';
 import * as c from '../../../constants/constants';
@@ -17,11 +25,19 @@ import fbLogo from './fb.svg';
 import googleLogo from './google.svg';
 
 const LoginStyle = styled.div`
-    a {
+    button {
         margin-bottom: 12px;
+        > span {
+            width: 100%;
+        }
+        > span:nth-child(2) {
+            width: auto;
+            position: absolute;
+            right: 1em;
+        }
         img {
             position: absolute;
-            left: 12px;
+            left: 0px;
             height: 20px;
             width: 20px;
             top: 50%;
@@ -39,6 +55,8 @@ const Login = ({ redirect = false, error, translate, onLogin, history }) => {
         message: '',
         loading: false,
     });
+
+    const [socialLoading, setSocialLoading] = useState(null);
 
     const setStateValue = useCallback((data) => setState((s) => ({ ...s, ...data })), [setState]);
 
@@ -82,6 +100,15 @@ const Login = ({ redirect = false, error, translate, onLogin, history }) => {
     const isValid = () => {
         const { email, password } = state;
         return !!email && !!password;
+    };
+
+    const onPressSocial = (social) => (e) => {
+        e.preventDefault();
+        setSocialLoading(social);
+        const redirect = '?redirect=' + window.location.href;
+        window.location.replace(
+            process.env.REACT_APP_CUEUP_GQL_DOMAIN + '/auth/' + social + redirect
+        );
     };
 
     const { loading } = state;
@@ -187,25 +214,23 @@ const Login = ({ redirect = false, error, translate, onLogin, history }) => {
                                             </BodySmall>
                                         </Col>
 
-                                        <SecondaryButtonLink
-                                            href={
-                                                process.env.REACT_APP_CUEUP_GQL_DOMAIN +
-                                                '/auth/facebook'
-                                            }
+                                        <SmartButton
+                                            level="secondary"
+                                            onClick={onPressSocial('facebook')}
+                                            loading={socialLoading === 'facebook'}
                                         >
                                             <img src={fbLogo} alt="facebook logo" />
                                             Continue with Facebook
-                                        </SecondaryButtonLink>
+                                        </SmartButton>
 
-                                        <SecondaryButtonLink
-                                            href={
-                                                process.env.REACT_APP_CUEUP_GQL_DOMAIN +
-                                                '/auth/google'
-                                            }
+                                        <SmartButton
+                                            level="secondary"
+                                            onClick={onPressSocial('google')}
+                                            loading={socialLoading === 'google'}
                                         >
                                             <img src={googleLogo} alt="google logo" />
                                             Continue with Google
-                                        </SecondaryButtonLink>
+                                        </SmartButton>
 
                                         <Mutation mutation={REQUEST_PASSWORD_RESET}>
                                             {(forgot, { loading: loadingForgot }) => {
