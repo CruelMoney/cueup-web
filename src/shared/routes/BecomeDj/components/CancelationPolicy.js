@@ -102,7 +102,7 @@ const CancelationPolicy = (props) => {
                 </TextAccent>
                 <TitleWrapper>
                     <Header white center largeMargin>
-                        {translate('become-dj.cancelation-policy.create-your-cancelation-policy')}
+                        Create your {'\n'}cancelation policy
                     </Header>
                 </TitleWrapper>
                 <CancelationSubTitle white>
