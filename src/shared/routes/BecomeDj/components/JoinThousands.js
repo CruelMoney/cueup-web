@@ -100,10 +100,18 @@ const TextWrapper = styled.div`
     }
 `;
 
+const OverflowContainer = styled(Container)`
+    position: relative;
+    z-index: 1;
+    @media only screen and (max-width: 1260px) {
+        overflow: hidden;
+    }
+`;
+
 const JoinThousands = (props) => {
     const { translate, currentLanguage } = props;
     return (
-        <Container style={{ zIndex: 1, position: 'relative', overflow: 'hidden' }}>
+        <OverflowContainer>
             <BlueRectangle>
                 <Wrapper>
                     <AvatarRow1>
@@ -151,7 +159,7 @@ const JoinThousands = (props) => {
                     </NavLink>
                 </TextWrapper>
             </BlueRectangle>
-        </Container>
+        </OverflowContainer>
     );
 };
 

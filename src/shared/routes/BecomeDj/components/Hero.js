@@ -41,7 +41,9 @@ const Hero = (props) => {
             <Row center>
                 <HeroCol>
                     <TextAccent center>{translate('become-dj.hero.2020-update')}</TextAccent>
-                    <Title>{translate('become-dj.hero.the-only-profile-a-DJ-needs')}</Title>
+                    <Title>
+                        The only profile <br />a DJ needs.
+                    </Title>
                     <SubTitle style={{ margin: '15px auto' }} white>
                         As a DJ you don't want to waste time promoting yourself when you could be
                         out playing. Cueup makes it simple to get booked.

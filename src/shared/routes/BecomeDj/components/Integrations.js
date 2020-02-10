@@ -95,7 +95,7 @@ const IntegrationsTextStarred = styled(IntegrationsText)`
 const Integrations = (props) => {
     const { translate, currentLanguage } = props;
     return (
-        <Container>
+        <Container style={{ overflow: 'hidden' }}>
             <IntegrationsWrapper>
                 <IntegrationsCol>
                     <GracefullImage
