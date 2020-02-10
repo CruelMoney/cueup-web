@@ -19,9 +19,9 @@ const Bg = styled.div`
     padding-bottom: 200px;
     width: 100%;
     order: 8;
-    overflow: hidden;
     @media only screen and (max-width: 685px) {
         padding: 80px 0;
+        overflow: hidden;
     }
 `;
 
