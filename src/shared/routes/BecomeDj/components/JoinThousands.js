@@ -103,7 +103,7 @@ const TextWrapper = styled.div`
 const JoinThousands = (props) => {
     const { translate, currentLanguage } = props;
     return (
-        <Container style={{ zIndex: 1, position: 'relative' }}>
+        <Container style={{ zIndex: 1, position: 'relative', overflow: 'hidden' }}>
             <BlueRectangle>
                 <Wrapper>
                     <AvatarRow1>

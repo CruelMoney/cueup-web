@@ -46,10 +46,7 @@ const Hero = (props) => {
                         As a DJ you don't want to waste time promoting yourself when you could be
                         out playing. Cueup makes it simple to get booked.
                     </SubTitle>
-                    <NavLink
-                        to={translate('routes./signup')}
-                        style={{ margin: 'auto', marginTop: '40px' }}
-                    >
+                    <NavLink to={translate('routes./signup')} style={{ marginTop: '40px' }}>
                         <HeroButtonLink color="#00D1FF" to={props.firstTo}>
                             {translate('become-dj.hero.apply-to-become-dj')}
                         </HeroButtonLink>

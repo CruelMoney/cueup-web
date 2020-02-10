@@ -89,7 +89,7 @@ const Payments = (props) => {
                         translate={translate}
                         header={translate('become-dj.payments.direct-payments.direct-payments')}
                         description={
-                            "You're fully responsible for charging the organizer, and you can ask for the payment however your like. Cash, invoice or another payment system."
+                            'You can also be responsible for charging the organizer yourself, and ask for the payment however your like. Cash, invoice or another payment system.'
                         }
                         imgSrc={invoice}
                     />

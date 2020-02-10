@@ -19,6 +19,7 @@ const Bg = styled.div`
     padding-bottom: 200px;
     width: 100%;
     order: 8;
+    overflow: hidden;
     @media only screen and (max-width: 685px) {
         padding: 80px 0;
     }
@@ -239,7 +240,8 @@ const AvailableOn = (props) => {
                         </TextAccent>
                         <Header style={{ textAlign: 'left' }}>iPhone & Android</Header>
                         <GrayText mobileTextAlign="left">
-                            {translate('become-dj.available-on-iphone.mobile.content')}
+                            Have all your gigs available at your fingertips, set your current
+                            location, and respond quickly to the organizers.
                         </GrayText>
                     </MobileTextContainer>
                     <Row style={{ marginTop: '24px' }}>
