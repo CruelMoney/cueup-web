@@ -109,7 +109,7 @@ const OverflowContainer = styled(Container)`
 `;
 
 const JoinThousands = (props) => {
-    const { translate, currentLanguage } = props;
+    const { title, description, label, to } = props;
     return (
         <OverflowContainer>
             <BlueRectangle>
@@ -143,18 +143,14 @@ const JoinThousands = (props) => {
                 </Wrapper>
                 <TextWrapper>
                     <Header center white largeMargin>
-                        Be part of a {'\n'}global community
+                        {title}
                     </Header>
                     <SubTitle white style={{ maxWidth: '520px', fontWeight: 500 }}>
-                        Cueup is a growing community of DJs. Joining Cueup also means you become
-                        part of a group of the most talented and passionate DJs around the world.
+                        {description}
                     </SubTitle>
-                    <NavLink
-                        to={translate('routes./signup')}
-                        style={{ margin: 'auto', marginTop: '42px' }}
-                    >
+                    <NavLink to={to} style={{ margin: 'auto', marginTop: '42px' }}>
                         <ReadMore white size="18px" uppercase={false}>
-                            {translate('become-dj.join-thousands-of-DJs.apply-to-become-DJ')}
+                            {label}
                         </ReadMore>
                     </NavLink>
                 </TextWrapper>
