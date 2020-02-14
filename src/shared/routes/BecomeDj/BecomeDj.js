@@ -53,7 +53,14 @@ class Index extends Component {
                 <Payments />
                 <CancelationPolicy />
                 <AvailableOn />
-                <JoinThousands />
+                <JoinThousands
+                    title={'Be part of a \n global community'}
+                    description={
+                        'Cueup is a growing community of DJs. Joining Cueup also means you become part of a group of the most talented and passionate DJs around the world.'
+                    }
+                    to={translate('routes./signup')}
+                    label={translate('become-dj.join-thousands-of-DJs.apply-to-become-DJ')}
+                />
 
                 {/* <div style={{ height: '100vh' }} /> */}
 
