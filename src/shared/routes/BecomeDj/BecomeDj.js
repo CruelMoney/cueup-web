@@ -61,6 +61,7 @@ class Index extends Component {
                     to={translate('routes./signup')}
                     label={translate('become-dj.join-thousands-of-DJs.apply-to-become-DJ')}
                 />
+
                 {/* <div style={{ height: '100vh' }} /> */}
 
                 <Footer
