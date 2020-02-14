@@ -25,6 +25,8 @@ const Bg = styled.div`
 
 class Index extends Component {
     render() {
+        console.log('test');
+
         const { translate, currentLanguage } = this.props;
         const title = translate('become-dj.title') + ' | Cueup';
         const thumb = Environment.CALLBACK_DOMAIN + (currentLanguage === 'da' ? thumbDa : thumbEn);
