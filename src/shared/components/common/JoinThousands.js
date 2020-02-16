@@ -23,9 +23,9 @@ import dj18 from '../../assets/images/people/joinThousands/18.jpg';
 import dj19 from '../../assets/images/people/joinThousands/19.jpg';
 import dj20 from '../../assets/images/people/joinThousands/20.jpg';
 import { Header } from '../../routes/BecomeDj/components/blocks/Text';
-import { SubTitle } from '../../routes/BecomeDj/components/blocks/SubTitle';
 import GracefullImage from '../GracefullImage';
 import addTranslate from '../higher-order/addTranslate';
+import { SubTitle } from './SubTitle';
 
 const Wrapper = styled.div`
     display: flex;

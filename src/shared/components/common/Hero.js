@@ -3,18 +3,17 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { Container, Col, Row, PrimaryButton } from 'components/Blocks';
 import { TextAccent } from '../../routes/BecomeDj/components/blocks/TextAccent';
-import { Title } from '../../routes/BecomeDj/components/blocks/Title';
-import { SubTitle } from '../../routes/BecomeDj/components/blocks/SubTitle';
 import addTranslate from '../higher-order/addTranslate';
+import { SubTitle } from './SubTitle';
+import { Title } from './Title';
 
 const OrderedContainer = styled(Container)`
     order: 1;
-    margin-bottom: 130px;
+    margin-bottom: ${({ marginBottom }) => (marginBottom ? marginBottom : '0px')};
 `;
 
 const HeroCol = styled(Col)`
     margin-top: 145px;
-    width: 550px;
     position: relative;
 `;
 
@@ -47,25 +46,21 @@ const Hero = (props) => {
         heroButtonText,
     } = props;
     return (
-        <OrderedContainer>
+        <OrderedContainer marginBottom="130px">
             <Row center>
                 <HeroCol>
                     <TextAccent center>{blueAccent}</TextAccent>
                     <Title>
-                        {/* The only profile <br />a DJ needs. */}
                         {titleLine1}
                         <br />
                         {titleLine2}
                     </Title>
                     <SubTitle style={{ margin: '15px auto' }} white>
-                        {/* As a DJ you don't want to waste time promoting yourself when you could be
-                        out playing. Cueup makes it simple to get booked. */}
                         {subtitle}
                     </SubTitle>
                     {heroContent}
                     <NavLink to={translate('routes./signup')} style={{ marginTop: '40px' }}>
                         <HeroButtonLink color="#00D1FF" to={props.firstTo}>
-                            {/* {translate('become-dj.hero.apply-to-become-dj')} */}
                             {heroButtonText}
                         </HeroButtonLink>
                     </NavLink>

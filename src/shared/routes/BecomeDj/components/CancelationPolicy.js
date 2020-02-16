@@ -5,7 +5,7 @@ import { Container, Col, Row, ReadMore } from 'components/Blocks';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import { Header } from '../components/blocks/Text';
 import { TextAccent } from '../components/blocks/TextAccent';
-import { SubTitle } from '../components/blocks/SubTitle';
+import { SubTitle } from '../../../components/common/SubTitle';
 
 const Bg = styled.div`
     display: flex;

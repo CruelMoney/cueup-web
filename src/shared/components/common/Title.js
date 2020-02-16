@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import styled from 'styled-components';
 
 export const Title = styled.h1`
@@ -10,10 +9,12 @@ export const Title = styled.h1`
     line-height: ${({ line }) => (line ? line : '72px')};
     text-align: ${({ left }) => (left ? 'left' : 'center')};
     @media only screen and (max-width: 685px) {
-        font-size: 42px;
-        line-height: 45px;
+        font-size: ${({ size }) => (size ? size : '42px')};
+        line-height: ${({ line }) => (line ? line : '45px')};
         > * {
             display: none;
         }
     }
 `;
+
+export default Title;
