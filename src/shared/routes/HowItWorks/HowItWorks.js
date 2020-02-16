@@ -9,19 +9,66 @@ import thumbDa from '../../assets/images/signup_da.png';
 import { Environment } from '../../constants/constants';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Hero from '../../components/common/Hero';
-import JoinThousands from '../../components/common/JoinThousands';
-import HighlightsLaptop from '../../components/common/HighlightsLaptop';
-import Integrations from './components/Integrations';
-import GettingGigs from './components/GettingGigs';
-import Payments from './components/Payments';
-import CancelationPolicy from './components/CancelationPolicy';
-import AvailableOn from './components/AvailableOn';
-import content from './content.json';
+// import HighlightsLaptop from './components/HighlightsLaptop';
+// import Integrations from './components/Integrations';
+// import GettingGigs from './components/GettingGigs';
+// import Payments from './components/Payments';
+// import CancelationPolicy from './components/CancelationPolicy';
+// import AvailableOn from './components/AvailableOn';
+// import JoinThousands from './components/JoinThousands';
+// import content from './content.json';
 
 const Bg = styled.div`
     background-image: radial-gradient(50% 58% at 50% 33%, #122b48 12%, #0b1b2d 90%);
     z-index: -10;
 `;
+
+const HowItWorksCard = () => {
+    return <></>;
+};
+
+const cardsData = [
+    {
+        number: '01',
+        title: 'Tell us about your event.',
+        description:
+            'Certe, inquam, pertinax non fuisse torquem detraxit hosti et quidem.  detraxit hosti et quidem.',
+    },
+    {
+        number: '02',
+        title: 'Message the DJs.',
+        description:
+            'Certe, inquam, pertinax non fuisse torquem detraxit hosti et quidem.  detraxit hosti et quidem.',
+    },
+    {
+        number: '03',
+        title: 'Confirm booking.',
+        description:
+            'Certe, inquam, pertinax non fuisse torquem detraxit hosti et quidem.  detraxit hosti et quidem.',
+    },
+];
+
+const HowItWorksCards = () => {
+    return (
+        <>
+            <HowItWorksCard
+                number="01"
+                title="Tell us about your event."
+                description="Certe, inquam, pertinax non fuisse torquem detraxit hosti et quidem.  detraxit hosti et quidem."
+            />
+            <HowItWorksCard
+                number="02"
+                title="Message the DJs."
+                description="Certe, inquam, pertinax non fuisse torquem detraxit hosti et quidem.  detraxit hosti et quidem."
+            />
+            <HowItWorksCard
+                number="03"
+                title="Confirm booking."
+                description="Certe, inquam, pertinax non fuisse torquem detraxit hosti et quidem.  detraxit hosti et quidem."
+            />
+        </>
+    );
+};
 
 class Index extends Component {
     render() {
@@ -48,17 +95,16 @@ class Index extends Component {
                 <ScrollToTop />
                 <Bg>
                     <Hero
+                        blueAccent="BOOKING A DJ"
                         firstTo={translate('routes./')}
-                        blueAccent="2020 UPDATE"
-                        titleLine1="The only profile"
-                        titleLine2="a DJ needs."
-                        subtitle="As a DJ you don't want to waste time promoting yourself when you could be out playing. Cueup makes it simple to get booked."
-                        heroButtonText="Apply to become DJ"
+                        titleLine1="How it works"
+                        heroContent={<HowItWorksCards />}
+                        heroButtonText="Find a DJ"
                     />
-                    <HighlightsLaptop />
-                    <Integrations />
+                    {/* <HighlightsLaptop />
+                    <Integrations /> */}
                 </Bg>
-                <GettingGigs />
+                {/*<GettingGigs />
                 <Payments />
                 <CancelationPolicy />
                 <AvailableOn />
@@ -69,7 +115,7 @@ class Index extends Component {
                     }
                     to={translate('routes./signup')}
                     label={translate('become-dj.join-thousands-of-DJs.apply-to-become-DJ')}
-                />
+                /> */}
 
                 {/* <div style={{ height: '100vh' }} /> */}
 
@@ -87,4 +133,5 @@ class Index extends Component {
     }
 }
 
-export default addTranslate(Index, content);
+// export default addTranslate(Index, content);
+export default addTranslate(Index);

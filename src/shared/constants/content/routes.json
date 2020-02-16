@@ -13,20 +13,15 @@
     "/blog": ["/blog", "/dk/blog"],
     "/signup": ["/signup", "/dk/tilmeld"],
     "/become-dj": ["/become-dj", "/dk/become-dj"],
+    "/how-it-works": ["/how-it-works", "/dk/how-it-works"],
     "/book-dj": ["/book-dj", "/dk/book-dj"],
     "/book-dj/denmark": ["/book-dj/denmark", "/dk/book-dj/danmark"],
     "/book-dj/denmark/copenhagen": [
       "/book-dj/denmark/copenhagen",
       "/dk/book-dj/danmark/koebenhavn"
     ],
-    "/book-dj/denmark/aarhus": [
-      "/book-dj/denmark/aarhus",
-      "/dk/book-dj/danmark/aarhus"
-    ],
-    "/book-dj/denmark/odense": [
-      "/book-dj/denmark/odense",
-      "/dk/book-dj/danmark/odense"
-    ],
+    "/book-dj/denmark/aarhus": ["/book-dj/denmark/aarhus", "/dk/book-dj/danmark/aarhus"],
+    "/book-dj/denmark/odense": ["/book-dj/denmark/odense", "/dk/book-dj/danmark/odense"],
     "/user": ["/user", "/dk/user"],
     "/user/signup": ["/user/signup", "/dk/user/tilmeld"],
     "/user/:permalink": ["/user/:permalink", "/dk/user/:permalink"],

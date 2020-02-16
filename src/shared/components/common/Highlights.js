@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import styled from 'styled-components';
 import { Container, Col, Row } from 'components/Blocks';
-import addTranslate from '../../../components/higher-order/addTranslate';
+import addTranslate from '../higher-order/addTranslate';
 
 const OrderedContainer = styled(Container)`
     margin-bottom: 15px;

@@ -8,6 +8,7 @@ import ReactPixel from 'react-facebook-pixel';
 import { getActiveLanguage, getTranslate, setActiveLanguage } from 'react-localize-redux';
 
 import LazyBecomeDj from 'routes/BecomeDj';
+import LazyHowItWorks from 'routes/HowItWorks';
 import * as gtag from './utils/analytics/autotrack';
 import { Environment } from './constants/constants';
 import Home from './routes/Home';
@@ -34,16 +35,19 @@ import './css/style.css';
 let redirected = false;
 
 const compareRoutes = (r1 = [], r2 = [], key = 'route') => {
+    // eslint-disable-next-line security/detect-object-injection
     return r1.every((v, idx) => r2[idx] && v[key] === r2[idx][key]);
 };
 
 const App = (props) => {
     const { location, translate, activeLanguage, setActiveLanguage } = props;
 
+    // eslint-disable-next-line no-unused-vars
     const setLanguage = useCallback(setActiveLanguage, []);
 
     const url = location.pathname;
     const urlLocale = url.split('/')[1] === 'dk' ? 'da' : 'en';
+    // eslint-disable-next-line no-unused-vars
     const language = urlLocale;
     const redirect = false;
 
@@ -183,6 +187,7 @@ const RouteWrapper = memo(({ translate, cssLocation }) => {
                     <Route path={translate('routes./about')} component={About} />
                     <Route path={[translate('routes./user/:permalink')]} component={User} />
                     <Route path={translate('routes./become-dj')} component={LazyBecomeDj} />
+                    <Route path={translate('routes./how-it-works')} component={LazyHowItWorks} />
                     <Route path={translate('routes./signup')} component={Signup} />
                     <Route path={translate('routes./faq')} component={Faq} />
                     <Route path={translate('routes./terms')} component={Terms} />
@@ -208,6 +213,7 @@ const RouteWrapper = memo(({ translate, cssLocation }) => {
     );
 });
 
+// eslint-disable-next-line no-unused-vars
 const mapStateToProps = (state, ownprops) => {
     return {
         loggedIn: state.login.status.signedIn,
@@ -217,6 +223,7 @@ const mapStateToProps = (state, ownprops) => {
     };
 };
 
+// eslint-disable-next-line no-unused-vars
 function mapDispatchToProps(dispatch, ownprops) {
     return {
         setActiveLanguage: (code) => {

@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Col } from 'components/Blocks';
-import addTranslate from '../../../components/higher-order/addTranslate';
+import addTranslate from '../components/higher-order/addTranslate';
+// eslint-disable-next-line import/no-unresolved
 import Laptop from './Laptop';
+// eslint-disable-next-line import/no-unresolved
 import Highlights from './Highlights';
 
 const Wrapper = styled(Col)`
@@ -11,7 +13,7 @@ const Wrapper = styled(Col)`
         flex-direction: column-reverse;
     }
 `;
-const HighlightsLaptop = (props) => {
+const HighlightsLaptop = () => {
     return (
         <Wrapper>
             <Highlights />

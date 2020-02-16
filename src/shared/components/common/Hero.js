@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { NavLink as Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Container, Col, Row, PrimaryButton } from 'components/Blocks';
-import addTranslate from '../../../components/higher-order/addTranslate';
-import { TextAccent } from '../components/blocks/TextAccent';
-import { Title } from '../components/blocks/Title';
-import { SubTitle } from '../components/blocks/SubTitle';
+import { TextAccent } from '../../routes/BecomeDj/components/blocks/TextAccent';
+import { Title } from '../../routes/BecomeDj/components/blocks/Title';
+import { SubTitle } from '../../routes/BecomeDj/components/blocks/SubTitle';
+import addTranslate from '../higher-order/addTranslate';
 
 const OrderedContainer = styled(Container)`
     order: 1;
@@ -35,22 +35,38 @@ const HeroButtonLink = styled(PrimaryButton)`
 `;
 
 const Hero = (props) => {
-    const { translate, currentLanguage } = props;
+    const {
+        translate,
+        // eslint-disable-next-line no-unused-vars
+        currentLanguage,
+        blueAccent,
+        titleLine1,
+        titleLine2,
+        subtitle,
+        heroContent,
+        heroButtonText,
+    } = props;
     return (
         <OrderedContainer>
             <Row center>
                 <HeroCol>
-                    <TextAccent center>{translate('become-dj.hero.2020-update')}</TextAccent>
+                    <TextAccent center>{blueAccent}</TextAccent>
                     <Title>
-                        The only profile <br />a DJ needs.
+                        {/* The only profile <br />a DJ needs. */}
+                        {titleLine1}
+                        <br />
+                        {titleLine2}
                     </Title>
                     <SubTitle style={{ margin: '15px auto' }} white>
-                        As a DJ you don't want to waste time promoting yourself when you could be
-                        out playing. Cueup makes it simple to get booked.
+                        {/* As a DJ you don't want to waste time promoting yourself when you could be
+                        out playing. Cueup makes it simple to get booked. */}
+                        {subtitle}
                     </SubTitle>
+                    {heroContent}
                     <NavLink to={translate('routes./signup')} style={{ marginTop: '40px' }}>
                         <HeroButtonLink color="#00D1FF" to={props.firstTo}>
-                            {translate('become-dj.hero.apply-to-become-dj')}
+                            {/* {translate('become-dj.hero.apply-to-become-dj')} */}
+                            {heroButtonText}
                         </HeroButtonLink>
                     </NavLink>
                 </HeroCol>
