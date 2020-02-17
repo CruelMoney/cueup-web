@@ -8,7 +8,7 @@ import { HeaderTitle, Body, BodySmall, BodyBold } from 'components/Text';
 import { Container, Col, Row, ReadMore } from 'components/Blocks';
 import GracefullImage from 'components/GracefullImage';
 import { ResponsiveTextAccent } from '../components/blocks/TextAccent';
-import { GrayText, Header } from '../components/blocks/Text';
+import { GrayText, Header } from '../../../components/common/Text';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import cph from '../assets/maps/cph.png';
 import la from '../assets/maps/la.png';

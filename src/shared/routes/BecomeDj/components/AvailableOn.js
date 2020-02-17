@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { HeaderTitle, Body } from 'components/Text';
 import { Container, Col, Row } from 'components/Blocks';
 import { TextAccent } from '../components/blocks/TextAccent';
-import { GrayText, Header } from '../components/blocks/Text';
+import { GrayText, Header } from '../../../components/common/Text';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import GracefullImage from '../../../components/GracefullImage';
 import mobileIphone from '../../../assets/images/available-on/iphone_mobile.png';

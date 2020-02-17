@@ -22,9 +22,9 @@ import dj17 from '../../assets/images/people/joinThousands/17.jpg';
 import dj18 from '../../assets/images/people/joinThousands/18.jpg';
 import dj19 from '../../assets/images/people/joinThousands/19.jpg';
 import dj20 from '../../assets/images/people/joinThousands/20.jpg';
-import { Header } from '../../routes/BecomeDj/components/blocks/Text';
 import GracefullImage from '../GracefullImage';
 import addTranslate from '../higher-order/addTranslate';
+import { Header } from './Text';
 import { SubTitle } from './SubTitle';
 
 const Wrapper = styled.div`
@@ -144,7 +144,10 @@ const JoinThousands = (props) => {
                     <Header center white largeMargin>
                         {title}
                     </Header>
-                    <SubTitle white style={{ maxWidth: '520px', fontWeight: 500 }}>
+                    <SubTitle
+                        white
+                        style={{ maxWidth: '520px', fontWeight: 500, whiteSpace: 'pre-line' }}
+                    >
                         {description}
                     </SubTitle>
                     <NavLink to={to} style={{ margin: 'auto', marginTop: '42px' }}>

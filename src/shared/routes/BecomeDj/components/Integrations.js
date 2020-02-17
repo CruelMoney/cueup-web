@@ -5,7 +5,7 @@ import GracefullImage from 'components/GracefullImage';
 import addTranslate from '../../../components/higher-order/addTranslate';
 import integrationsGraphic from '../../../assets/images/integrations/Brands.png';
 import integrationsGraphicMobile from '../../../assets/images/integrations/Brands_mobile.png';
-import { Header } from './blocks/Text';
+import { Header } from '../../../components/common/Text';
 import { TextAccent } from './blocks/TextAccent';
 
 const TitleWrapper = styled.div`
