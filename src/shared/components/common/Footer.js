@@ -7,6 +7,7 @@ import * as c from '../../constants/constants';
 import * as actions from '../../actions/SessionActions';
 import { getTranslatedURL } from '../../utils/HelperFunctions';
 import InstagramLogo from '../../assets/InstagramLogo';
+// eslint-disable-next-line no-unused-vars
 import languageIcon from '../../assets/icons/language.svg';
 import ButtonLink from './ButtonLink';
 
@@ -320,6 +321,7 @@ class footer extends Component {
     }
 }
 
+// eslint-disable-next-line no-unused-vars
 function mapStatetoProps(state, ownprops) {
     return {
         signedIn: state.login.status.signedIn,
@@ -329,6 +331,7 @@ function mapStatetoProps(state, ownprops) {
     };
 }
 
+// eslint-disable-next-line no-unused-vars
 function mapDispatchToProps(dispatch, ownprops) {
     return {
         changeCurrency: (currency) => {

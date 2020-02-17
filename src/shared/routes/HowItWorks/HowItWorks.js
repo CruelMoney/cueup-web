@@ -12,8 +12,8 @@ import Hero from '../../components/common/Hero';
 import { Title } from '../../components/common/Title';
 import { Body } from '../../components/Text';
 
-// import HighlightsLaptop from './components/HighlightsLaptop';
-// import Integrations from './components/Integrations';
+import HighlightsLaptop from '../../components/common/HighlightsLaptop';
+// import Integrations from '../BecomeDj/components/Integrations';
 // import GettingGigs from './components/GettingGigs';
 // import Payments from './components/Payments';
 // import CancelationPolicy from './components/CancelationPolicy';
@@ -24,20 +24,24 @@ import { Body } from '../../components/Text';
 const Bg = styled.div`
     background-image: radial-gradient(50% 58% at 50% 33%, #122b48 12%, #0b1b2d 90%);
     z-index: -10;
-`;
-
-const halfOval = styled.div`
-    background: #0b1b2d;
-    /* border-radius: 0 0 50% 50%; */
-    height: 100px;
-    /* width: 100%;
-    z-index: -10; */
+    /* padding-bottom: 200px; */
+    border-radius: 0 0 50% 50%;
+    display: flex;
+    justify-self: center;
+    width: 160vw;
+    margin: 0 -30vw 0 -30vw;
+    overflow: hidden;
+    @media only screen and (max-width: 768px) {
+        width: 300vw;
+        margin: 0 -100vw 0 -100vw;
+    }
 `;
 
 const CardWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    max-width: 100vw;
 `;
 const HowItWorksCardBox = styled.div`
     width: 278px;
@@ -161,11 +165,23 @@ class Index extends Component {
                         heroContent={<HowItWorksCards />}
                         heroButtonText="Find a DJ"
                     />
-                    {/* <HighlightsLaptop />
-                    <Integrations /> */}
                     {/* <div style={{ height: '1000px' }} />> */}
                 </Bg>
-                {/* <halfOval /> */}
+                <HighlightsLaptop
+                    blue
+                    text1Row1="Direct"
+                    text1Row2="Message"
+                    text2Row1="Listen to"
+                    text2Row2="Mixes"
+                    text3Row1="See"
+                    text3Row2="Pictures"
+                    text4Row1="Check"
+                    text4Row2="Reviews"
+                    margin="50px 0 0 0"
+                    textAccent="DJ PROFILE"
+                    title="Get an overview"
+                />
+                {/* <Integrations /> */}
                 {/*<GettingGigs />
                 <Payments />
                 <CancelationPolicy />

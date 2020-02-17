@@ -55,7 +55,16 @@ class Index extends Component {
                         subtitle="As a DJ you don't want to waste time promoting yourself when you could be out playing. Cueup makes it simple to get booked."
                         heroButtonText="Apply to become DJ"
                     />
-                    <HighlightsLaptop />
+                    <HighlightsLaptop
+                        text1Row1="Get"
+                        text1Row2="Gigs"
+                        text2Row1="Upload"
+                        text2Row2="Mixtapes"
+                        text3Row1="Showcase"
+                        text3Row2="Photos"
+                        text4Row1="Add"
+                        text4Row2="Reviews"
+                    />
                     <Integrations />
                 </Bg>
                 <GettingGigs />

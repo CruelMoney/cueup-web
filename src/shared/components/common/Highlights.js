@@ -40,55 +40,50 @@ const TextRowCol = styled(Col)`
 const TextRowColFirstRow = styled(Row)`
     opacity: 0.5;
     font-size: 15px;
-    color: #ffffff;
+    color: ${({ blue }) => (blue ? '#122b48' : '#fff')};
     font-weight: 600;
 `;
 
 const TextRowColSecondRow = styled(Row)`
     font-size: 32px;
     font-weight: 700;
-
-    color: #ffffff;
+    color: ${({ blue }) => (blue ? '#122b48' : '#fff')};
 `;
 
 const Highlights = (props) => {
-    const { translate, currentLanguage } = props;
+    const {
+        blue,
+        translate,
+        currentLanguage,
+        text1Row1,
+        text1Row2,
+        text2Row1,
+        text2Row2,
+        text3Row1,
+        text3Row2,
+        text4Row1,
+        text4Row2,
+    } = props;
     return (
         <OrderedContainer>
             <Row>
                 <WrapperCol>
                     <TextRow>
                         <TextRowCol>
-                            <TextRowColFirstRow>
-                                {translate('become-dj.hero.get-gigs.get')}
-                            </TextRowColFirstRow>
-                            <TextRowColSecondRow>
-                                {translate('become-dj.hero.get-gigs.gigs')}
-                            </TextRowColSecondRow>
+                            <TextRowColFirstRow blue={blue}>{text1Row1}</TextRowColFirstRow>
+                            <TextRowColSecondRow blue={blue}>{text1Row2}</TextRowColSecondRow>
                         </TextRowCol>
                         <TextRowCol>
-                            <TextRowColFirstRow>
-                                {translate('become-dj.hero.upload-mixtapes.upload')}
-                            </TextRowColFirstRow>
-                            <TextRowColSecondRow>
-                                {translate('become-dj.hero.upload-mixtapes.mixtapes')}
-                            </TextRowColSecondRow>
+                            <TextRowColFirstRow blue={blue}>{text2Row1}</TextRowColFirstRow>
+                            <TextRowColSecondRow blue={blue}>{text2Row2}</TextRowColSecondRow>
                         </TextRowCol>
                         <TextRowCol>
-                            <TextRowColFirstRow>
-                                {translate('become-dj.hero.showcase-photos.showcase')}
-                            </TextRowColFirstRow>
-                            <TextRowColSecondRow>
-                                {translate('become-dj.hero.showcase-photos.photos')}
-                            </TextRowColSecondRow>
+                            <TextRowColFirstRow blue={blue}>{text3Row1}</TextRowColFirstRow>
+                            <TextRowColSecondRow blue={blue}>{text3Row2}</TextRowColSecondRow>
                         </TextRowCol>
                         <TextRowCol>
-                            <TextRowColFirstRow>
-                                {translate('become-dj.hero.add-reviews.add')}
-                            </TextRowColFirstRow>
-                            <TextRowColSecondRow>
-                                {translate('become-dj.hero.add-reviews.reviews')}
-                            </TextRowColSecondRow>
+                            <TextRowColFirstRow blue={blue}>{text4Row1}</TextRowColFirstRow>
+                            <TextRowColSecondRow blue={blue}>{text4Row2}</TextRowColSecondRow>
                         </TextRowCol>
                     </TextRow>
                 </WrapperCol>

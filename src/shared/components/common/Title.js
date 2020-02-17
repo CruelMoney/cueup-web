@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 export const Title = styled.h1`
-    color: #fff;
+    color: ${({ blue }) => (blue ? '#122b48' : '#fff')};
     margin-bottom: 0.3em;
+    ${({ margin }) => (margin ? 'margin: ' + margin : '')};
     display: inline-block;
     position: relative;
     font-size: ${({ size }) => (size ? size : '72px')};

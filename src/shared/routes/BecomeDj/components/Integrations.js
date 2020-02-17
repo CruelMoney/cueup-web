@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { Container, Col } from 'components/Blocks';
 import GracefullImage from 'components/GracefullImage';
 import addTranslate from '../../../components/higher-order/addTranslate';
-import { Header } from '../components/blocks/Text';
-import { TextAccent } from '../components/blocks/TextAccent';
 import integrationsGraphic from '../../../assets/images/integrations/Brands.png';
 import integrationsGraphicMobile from '../../../assets/images/integrations/Brands_mobile.png';
+import { Header } from './blocks/Text';
+import { TextAccent } from './blocks/TextAccent';
 
 const TitleWrapper = styled.div`
     max-width: 570px;
