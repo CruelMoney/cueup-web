@@ -205,7 +205,6 @@ const UPDATE_USER = gql`
             playedVenues: $playedVenues
         ) {
             id
-            auth0Id
             email
             permalink
             artistName

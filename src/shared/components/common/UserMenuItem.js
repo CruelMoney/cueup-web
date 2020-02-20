@@ -49,7 +49,7 @@ class UserMenuItem extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        userId: state.login.profile.auth0Id,
+        userId: state.login.profile.id,
         notifications: state.notifications.data.length,
     };
 };
