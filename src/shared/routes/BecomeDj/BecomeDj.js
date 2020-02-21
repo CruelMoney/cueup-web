@@ -46,7 +46,7 @@ class Index extends Component {
                 <ScrollToTop />
                 <Bg>
                     <Hero
-                        firstTo={translate('routes./')}
+                        firstTo={translate('routes./signup')}
                         blueAccent="2020 UPDATE"
                         title={'The only profile\n a DJ needs.'}
                         subtitle="As a DJ you don't want to waste time promoting yourself when you could be out playing. Cueup makes it simple to get booked."

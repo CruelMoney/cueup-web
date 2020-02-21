@@ -54,10 +54,8 @@ const Hero = (props) => {
                         {subtitle}
                     </SubTitle>
                     {heroContent}
-                    <NavLink to={translate('routes./signup')} style={{ marginTop: '40px' }}>
-                        <HeroButtonLink color="#00D1FF" to={props.firstTo}>
-                            {heroButtonText}
-                        </HeroButtonLink>
+                    <NavLink to={props.firstTo} style={{ marginTop: '40px' }}>
+                        <HeroButtonLink color="#00D1FF">{heroButtonText}</HeroButtonLink>
                     </NavLink>
                 </HeroCol>
             </Row>

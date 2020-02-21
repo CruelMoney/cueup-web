@@ -76,7 +76,7 @@ class Index extends Component {
                 <Bg>
                     <Hero
                         blueAccent="BOOKING A DJ"
-                        firstTo={translate('routes./')}
+                        firstTo={translate('routes./') + '#book-dj'}
                         title="How it works"
                         heroContent={<HowItWorksCards />}
                         heroButtonText="Find a DJ"
@@ -113,7 +113,7 @@ class Index extends Component {
                                 you a new DJ.
                             </SubTitle>
                             <NavLink
-                                to={translate('routes./')}
+                                to={translate('routes./') + '#book-dj'}
                                 style={{
                                     marginTop: '42px',
                                     display: 'flex',
@@ -147,13 +147,13 @@ class Index extends Component {
                     description={
                         'Cueup is a growing community that gathers thousands of the most talented DJs, all around the world. \n Find the best DJ for your event now.'
                     }
-                    to={translate('routes./')}
+                    to={translate('routes./') + '#book-dj'}
                     label="Find a DJ"
                 />
                 <Spacer height="50px" />
                 <Footer
                     color={themeColor}
-                    firstTo={translate('routes./')}
+                    firstTo={translate('routes./') + '#book-dj'}
                     secondTo={translate('routes./blog')}
                     firstLabel={translate('Arrange event')}
                     secondLabel={translate('Blog')}
