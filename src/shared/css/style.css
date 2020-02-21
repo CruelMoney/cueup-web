@@ -674,10 +674,10 @@ form a {
 nav a {
     font-weight: 600;
 }
-nav a:hover {
+nav .main-menu a:hover {
     text-decoration: underline;
 }
-nav a.active {
+nav .main-menu a.active {
     text-decoration: underline;
 }
 a:focus {

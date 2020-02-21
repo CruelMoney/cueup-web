@@ -23,10 +23,10 @@ class MyNavlink extends Component {
         return (
             <div onClick={onClick}>
                 <NavLink
-                    {...rest}
                     to={to}
                     className={'navLink ' + (borderHover ? 'borderHover' : '')}
                     activeClassName="active"
+                    {...rest}
                 >
                     {label ? label : children}
                 </NavLink>

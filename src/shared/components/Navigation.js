@@ -103,6 +103,7 @@ const Menu = ({ translate, history, location }) => {
                                                     to={translate('routes./')}
                                                     onClick={doLogout}
                                                     label={translate('log-out')}
+                                                    activeClassName=""
                                                 />
                                             </li>
                                         ) : null}
