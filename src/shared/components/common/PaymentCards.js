@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { TextAccent } from 'routes/BecomeDj/components/blocks/TextAccent';
@@ -51,18 +51,20 @@ const Card = styled.div`
     }
 `;
 
-const CardItem = ({ translate, header, description, imgSrc }) => (
+const CardItem = ({ header, description, imgSrc, accent, link }) => (
     <Card>
-        <TextAccent margin="0 0 15px 0">RECEIVE PAYMENTS</TextAccent>
+        <TextAccent margin="0 0 15px 0">{accent}</TextAccent>
         <Header mobileTextAlign="left" small>
             {header}
         </Header>
         <GrayText mobileTextAlign="left">{description}</GrayText>
-        <NavLink to="/blog/new-direct-payout-method" style={{ marginTop: '20px' }}>
-            <ReadMore size="18px" uppercase={false}>
-                Read more
-            </ReadMore>
-        </NavLink>
+        {!!link && (
+            <NavLink to={link} style={{ marginTop: '20px' }}>
+                <ReadMore size="18px" uppercase={false}>
+                    Read more
+                </ReadMore>
+            </NavLink>
+        )}
         <div style={{ flex: 1 }} />
         <GracefullImage
             src={imgSrc}
@@ -91,19 +93,23 @@ const CardsContainer = styled.div`
 `;
 
 export const PaymentCards = (props) => {
-    const { margin } = props;
+    const { margin, header1, header2, description1, description2, accent, link } = props;
     return (
         <CardsContainer margin={margin}>
             <CardItem
-                header="Card payments"
-                description="Accept card payments from your customers through Cueup. We take care of charging the organizer, and transfer directly to your bank account."
+                accent={accent}
+                header={header1}
+                description={description1}
                 imgSrc={paymentCard}
+                link={link}
             />
 
             <CardItem
-                header="Direct payments"
-                description="You can also be responsible for charging the organizer yourself, and ask for the payment however your like. Cash, invoice or another payment system."
+                accent={accent}
+                header={header2}
+                description={description2}
                 imgSrc={invoice}
+                link={link}
             />
         </CardsContainer>
     );

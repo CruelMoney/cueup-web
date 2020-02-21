@@ -127,12 +127,23 @@ class Index extends Component {
                         </Col>
                     </Container>
                     <Container>
-                        <PaymentCards margin="70px 0 -450px 0" />
+                        <PaymentCards
+                            margin="70px 0 -450px 0"
+                            accent="PAYMENT METHODS"
+                            header1={'Credit or Debit Card'}
+                            description1={
+                                'Accept card payments from your customers through Cueup. We take care of charging the organizer, and transfer directly to your bank account.'
+                            }
+                            header2={'Invoice or Cash'}
+                            description2={
+                                'You can also be responsible for charging the organizer yourself, and ask for the payment however your like. Cash, invoice or another payment system.'
+                            }
+                        />
                     </Container>
                 </Bg2>
                 <Spacer height="400px" />
                 <JoinThousands
-                    title={'find the perfect DJ'}
+                    title={'Find the perfect DJ'}
                     description={
                         'Cueup is a growing community that gathers thousands of the most talented DJs, all around the world. \n Find the best DJ for your event, and book him now.'
                     }
