@@ -16,7 +16,7 @@ import Hero from '../../components/common/Hero';
 import { Title } from '../../components/common/Title';
 import { SubTitle } from '../../components/common/SubTitle';
 import { Body } from '../../components/Text';
-import { ReadMore, Container } from '../../components/Blocks';
+import { ReadMore, Container, Col } from '../../components/Blocks';
 import HighlightsLaptop from '../../components/common/HighlightsLaptop';
 import HowItWorksCards from './components/HowItWorksCards';
 
@@ -47,6 +47,13 @@ const Spacer = styled.div`
     height: ${({ height }) => (height ? height : '0px')};
 `;
 
+const CustomCol = styled(Col)`
+    margin-top: 100px;
+    margin-bottom: -100px;
+    @media only screen and (max-width: 768px) {
+        margin-bottom: -60px;
+    }
+`;
 class Index extends Component {
     render() {
         const { translate, currentLanguage } = this.props;
@@ -78,6 +85,10 @@ class Index extends Component {
                     />
                     {/* <div style={{ height: '1000px' }} />> */}
                 </Bg>
+                <CustomCol>
+                    <TextAccent center>DJ PROFILE</TextAccent>
+                    <Title blue>Get an overview</Title>
+                </CustomCol>
                 <HighlightsLaptop
                     blue
                     text1Row1="Direct"
@@ -89,8 +100,6 @@ class Index extends Component {
                     text4Row1="Check"
                     text4Row2="Reviews"
                     margin="50px 0 70px 0"
-                    textAccent="DJ PROFILE"
-                    title="Get an overview"
                 />
                 <Bg2>
                     <TextAccent center>PAYMENT</TextAccent>
