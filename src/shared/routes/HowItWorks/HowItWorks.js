@@ -77,7 +77,7 @@ class Index extends Component {
                     <Hero
                         blueAccent="BOOKING A DJ"
                         firstTo={translate('routes./')}
-                        titleLine1="How it works"
+                        title="How it works"
                         heroContent={<HowItWorksCards />}
                         heroButtonText="Find a DJ"
                     />

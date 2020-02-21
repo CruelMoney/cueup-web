@@ -10,18 +10,18 @@ const CardWrapper = styled.div`
     max-width: 100vw;
 `;
 const HowItWorksCardBox = styled.div`
-    width: 278px;
+    width: 280px;
     height: 242px;
     border-radius: 28px;
     background: #183659;
-    margin: 20px;
+    margin: 15px;
 `;
 const HowItWorksCardHeader = styled.div`
     display: flex;
     height: 78px;
 `;
 const HowItWorksCardTitle = styled.div`
-    width: 208px;
+    width: 200px;
     height: 90px;
     display: flex;
     justify-content: flex-start;
@@ -48,7 +48,6 @@ const HowItWorksCardDescription = styled.div`
 `;
 const CardHeader = styled.h3`
     font-size: 24px;
-    line-height: 24px;
     color: #fff;
 `;
 
@@ -81,19 +80,19 @@ const HowItWorksCards = () => {
             number: '01',
             title: 'Tell us about your event.',
             description:
-                'Certe, inquam, pertinax non fuisse torquem detraxit hosti et quidem.  detraxit hosti et quidem.',
+                "We'll match you with the most qualified DJs when we know what kind of event you're organizing.",
         },
         {
             number: '02',
             title: 'Message the DJs.',
             description:
-                'Certe, inquam, pertinax non fuisse torquem detraxit hosti et quidem.  detraxit hosti et quidem.',
+                "Shortly after you'll see all the qualified DJs. Message them to agree on the details and get a fair price.",
         },
         {
             number: '03',
             title: 'Confirm booking.',
             description:
-                'Certe, inquam, pertinax non fuisse torquem detraxit hosti et quidem.  detraxit hosti et quidem.',
+                "Once you've found a DJ that meets your requirements, you can pay directly to the DJ or with card on Cueup.",
         },
     ];
     const cards = cardsData.map((card) => (

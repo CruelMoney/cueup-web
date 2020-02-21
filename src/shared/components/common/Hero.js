@@ -39,8 +39,7 @@ const Hero = (props) => {
         // eslint-disable-next-line no-unused-vars
         currentLanguage,
         blueAccent,
-        titleLine1,
-        titleLine2,
+        title,
         subtitle,
         heroContent,
         heroButtonText,
@@ -50,11 +49,7 @@ const Hero = (props) => {
             <Row center>
                 <HeroCol>
                     <TextAccent center>{blueAccent}</TextAccent>
-                    <Title>
-                        {titleLine1}
-                        <br />
-                        {titleLine2}
-                    </Title>
+                    <Title>{title}</Title>
                     <SubTitle style={{ margin: '15px auto' }} white>
                         {subtitle}
                     </SubTitle>

@@ -25,8 +25,6 @@ const Bg = styled.div`
 
 class Index extends Component {
     render() {
-        console.log('test');
-
         const { translate, currentLanguage } = this.props;
         const title = translate('become-dj.title') + ' | Cueup';
         const thumb = Environment.CALLBACK_DOMAIN + (currentLanguage === 'da' ? thumbDa : thumbEn);
@@ -50,8 +48,7 @@ class Index extends Component {
                     <Hero
                         firstTo={translate('routes./')}
                         blueAccent="2020 UPDATE"
-                        titleLine1="The only profile"
-                        titleLine2="a DJ needs."
+                        title={'The only profile\n a DJ needs.'}
                         subtitle="As a DJ you don't want to waste time promoting yourself when you could be out playing. Cueup makes it simple to get booked."
                         heroButtonText="Apply to become DJ"
                     />
