@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-// import { findByLabelText } from '@testing-library/react';
-import { Title } from '../../../components/common/Title';
+import { Header } from 'routes/BecomeDj/components/blocks/Text';
 import { Body } from '../../../components/Text';
 
 const CardWrapper = styled.div`
@@ -38,7 +37,6 @@ const HowItWorksCardNumberBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 14px;
     /* box-shadow: 1px 0px 5px #294566; */
     /* margin: -28px 0 0 -28px; */
 `;
@@ -48,18 +46,26 @@ const HowItWorksCardDescription = styled.div`
     justify-content: flex-start;
     align-items: center;
 `;
+const CardHeader = styled.h3`
+    font-size: 24px;
+    line-height: 24px;
+    color: #fff;
+`;
+
+const CardHeaderNumber = styled.h3`
+    font-size: 33px;
+    color: #fff;
+`;
 
 const HowItWorksCard = (props) => {
     return (
         <HowItWorksCardBox>
             <HowItWorksCardHeader>
                 <HowItWorksCardNumberBox>
-                    <Title size="33px">{props.number}</Title>
+                    <CardHeaderNumber>{props.number}</CardHeaderNumber>
                 </HowItWorksCardNumberBox>
                 <HowItWorksCardTitle>
-                    <Title left size="24px" line="24px">
-                        {props.title}
-                    </Title>
+                    <CardHeader>{props.title}</CardHeader>
                 </HowItWorksCardTitle>
             </HowItWorksCardHeader>
             <HowItWorksCardDescription>

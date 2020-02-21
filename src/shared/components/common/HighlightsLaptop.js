@@ -31,10 +31,12 @@ const HighlightsLaptop = (props) => {
     } = props;
     return (
         <Wrapper margin={margin}>
-            <TextAccent center>{textAccent}</TextAccent>
-            <Title blue margin="0 0 50px 0">
-                {title}
-            </Title>
+            {!!textAccent && <TextAccent center>{textAccent}</TextAccent>}
+            {!!title && (
+                <Title blue margin="0 0 50px 0">
+                    {title}
+                </Title>
+            )}
             <Highlights
                 blue={blue}
                 text1Row1={text1Row1}

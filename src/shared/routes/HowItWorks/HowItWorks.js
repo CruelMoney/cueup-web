@@ -7,6 +7,7 @@ import Footer from 'components/common/Footer';
 import { TextAccent } from 'routes/BecomeDj/components/blocks/TextAccent';
 import PaymentCards from 'components/common/PaymentCards';
 import JoinThousands from 'components/common/JoinThousands';
+import { Header } from 'components/common/Text';
 import addTranslate from '../../components/higher-order/addTranslate';
 import thumbEn from '../../assets/images/signup.png';
 import thumbDa from '../../assets/images/signup_da.png';
@@ -49,10 +50,7 @@ const Spacer = styled.div`
 
 const CustomCol = styled(Col)`
     margin-top: 100px;
-    margin-bottom: -100px;
-    @media only screen and (max-width: 768px) {
-        margin-bottom: -60px;
-    }
+    margin-bottom: -60px;
 `;
 class Index extends Component {
     render() {
@@ -87,7 +85,9 @@ class Index extends Component {
                 </Bg>
                 <CustomCol>
                     <TextAccent center>DJ PROFILE</TextAccent>
-                    <Title blue>Get an overview</Title>
+                    <Header blue center>
+                        Get an overview
+                    </Header>
                 </CustomCol>
                 <HighlightsLaptop
                     blue
@@ -102,24 +102,31 @@ class Index extends Component {
                     margin="50px 0 70px 0"
                 />
                 <Bg2>
-                    <TextAccent center>PAYMENT</TextAccent>
-                    <Title center>
-                        Guaranteed
-                        <br />
-                        money back
-                    </Title>
-                    <SubTitle white>
-                        Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur,
-                        inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.
-                    </SubTitle>
-                    <NavLink
-                        to="/"
-                        style={{ marginTop: '42px', display: 'flex', justifyContent: 'center' }}
-                    >
-                        <ReadMore white size="18px" uppercase={false}>
-                            Arrange event
-                        </ReadMore>
-                    </NavLink>
+                    <Container>
+                        <Col>
+                            <TextAccent center>PAYMENT</TextAccent>
+                            <Header white center largeMargin>
+                                Money back{'\n'}guarentee
+                            </Header>
+                            <SubTitle white>
+                                Tum dicere exorsus est laborum et via procedat oratio quaerimus
+                                igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus
+                                confirmare.
+                            </SubTitle>
+                            <NavLink
+                                to="/"
+                                style={{
+                                    marginTop: '42px',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <ReadMore white size="18px" uppercase={false}>
+                                    Arrange event
+                                </ReadMore>
+                            </NavLink>
+                        </Col>
+                    </Container>
                     <Container>
                         <PaymentCards margin="70px 0 -450px 0" />
                     </Container>
