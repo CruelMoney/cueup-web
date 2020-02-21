@@ -72,7 +72,7 @@ const MainForm = ({ translate, initialCity, countries }) => {
     };
 
     return (
-        <div className="request-form">
+        <div className="request-form" id="book-dj">
             <div className="request-columns">
                 <Wrapper style={{ padding: 0 }}>
                     <Progress setProgress={setProgress} currentStep={activeStep - 1} />

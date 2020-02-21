@@ -8,7 +8,7 @@ import LoadingPlaceholder, {
 class LoadingForm extends Component {
     render() {
         return (
-            <div className="request-form">
+            <div className="request-form" id="book-dj">
                 <div className="request-columns">
                     <Wrapper>
                         <LoadingCard>

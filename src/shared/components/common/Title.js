@@ -6,6 +6,7 @@ export const Title = styled.h1`
     ${({ margin }) => (margin ? 'margin: ' + margin : '')};
     display: inline-block;
     position: relative;
+    white-space: pre-line;
     font-size: ${({ size }) => (size ? size : '72px')};
     line-height: ${({ line }) => (line ? line : '72px')};
     text-align: ${({ left }) => (left ? 'left' : 'center')};

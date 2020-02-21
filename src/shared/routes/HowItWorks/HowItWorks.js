@@ -81,7 +81,6 @@ class Index extends Component {
                         heroContent={<HowItWorksCards />}
                         heroButtonText="Find a DJ"
                     />
-                    {/* <div style={{ height: '1000px' }} />> */}
                 </Bg>
                 <CustomCol>
                     <TextAccent center>DJ PROFILE</TextAccent>
@@ -109,12 +108,12 @@ class Index extends Component {
                                 Money back{'\n'}guarentee
                             </Header>
                             <SubTitle white>
-                                Tum dicere exorsus est laborum et via procedat oratio quaerimus
-                                igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus
-                                confirmare.
+                                If a DJ cancels on you, we have your back and will immediately
+                                refund all the money. We'll then make an extensive effort to find
+                                you a new DJ.
                             </SubTitle>
                             <NavLink
-                                to="/"
+                                to={translate('routes./')}
                                 style={{
                                     marginTop: '42px',
                                     display: 'flex',
