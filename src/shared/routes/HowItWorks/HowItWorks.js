@@ -136,7 +136,7 @@ class Index extends Component {
                             }
                             header2={'Invoice or Cash'}
                             description2={
-                                'You can also pay directly to the DJ using any other payment method that the DJ has set up. For example ask for an invoice or just pay in cash.'
+                                'You can also pay the DJ directly using any other payment method that the DJ is providing. For example ask for an invoice or just pay in cash.'
                             }
                         />
                     </Container>
