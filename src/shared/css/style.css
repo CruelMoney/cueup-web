@@ -675,9 +675,11 @@ nav a {
     font-weight: 600;
 }
 nav a:hover {
-    text-decoration: none;
+    text-decoration: underline;
 }
-
+nav a.active {
+    text-decoration: underline;
+}
 a:focus {
     text-decoration: none;
 }

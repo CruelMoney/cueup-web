@@ -67,6 +67,15 @@ const Menu = ({ translate, history, location }) => {
 
                                     <MobileMenu />
                                     <ul className="main-menu">
+                                        <li>
+                                            <Navlink
+                                                buttonLook={true}
+                                                to={translate('routes./how-it-works')}
+                                                label={translate('how-it-works')}
+                                                important={true}
+                                            />
+                                        </li>
+
                                         {loggedIn ? null : (
                                             <li>
                                                 <Navlink

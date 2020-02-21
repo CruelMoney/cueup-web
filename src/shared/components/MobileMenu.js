@@ -97,7 +97,12 @@ const Content = ({
                 <ul>
                     {!isHome ? (
                         <li>
-                            <Navlink buttonLook={true} to="/" label={translate('how-it-works')} />
+                            <Navlink
+                                onClick={() => setShow(false)}
+                                buttonLook={true}
+                                to={translate('routes./how-it-works')}
+                                label={translate('how-it-works')}
+                            />
                         </li>
                     ) : null}
 
@@ -149,8 +154,19 @@ const Content = ({
                             <Navlink
                                 onClick={() => setShow(false)}
                                 buttonLook={true}
-                                to="/signup"
+                                to={translate('routes./become-dj')}
                                 label={translate('become-dj')}
+                                important={true}
+                            />
+                        </li>
+                    )}
+                    {loggedIn ? null : (
+                        <li>
+                            <Navlink
+                                onClick={() => setShow(false)}
+                                buttonLook={true}
+                                to={translate('routes./signup')}
+                                label={translate('sign up')}
                                 important={true}
                             />
                         </li>
