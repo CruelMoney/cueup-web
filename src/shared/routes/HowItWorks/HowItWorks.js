@@ -153,12 +153,12 @@ class Index extends Component {
                 <Spacer height="50px" />
                 <Footer
                     color={themeColor}
-                    firstTo={translate('routes./signup')}
+                    firstTo={translate('routes./')}
                     secondTo={translate('routes./blog')}
-                    firstLabel={translate('Sign up')}
+                    firstLabel={translate('Arrange event')}
                     secondLabel={translate('Blog')}
                     title={translate('Ready to get started?')}
-                    subTitle={translate('Apply to become DJ now, or read our blog.')}
+                    subTitle={translate('Arrange an event or read our blog.')}
                 />
             </>
         );

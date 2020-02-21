@@ -328,7 +328,7 @@ const Index = ({ translate, match, location }) => {
                                     <Footer
                                         noSkew
                                         firstTo={translate('routes./')}
-                                        secondTo={translate('routes./')}
+                                        secondTo={translate('routes./how-it-works')}
                                         firstLabel={translate('how-it-works')}
                                         secondLabel={translate('arrange-event')}
                                         title={translate('Wonder how it works?')}
