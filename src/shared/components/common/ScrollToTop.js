@@ -13,8 +13,6 @@ const ScrollToTop = ({ location: { pathname }, top = 0, animate }) => {
             }
         }
 
-        console.log({ newTop });
-
         window.scroll({
             top: newTop,
             left: 0,
