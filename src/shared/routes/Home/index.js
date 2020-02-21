@@ -9,7 +9,7 @@ class Index extends Component {
         return (
             <>
                 <Home {...this.props} cache />
-                <ScrollToTop />
+                <ScrollToTop alwaysScroll />
             </>
         );
     }
