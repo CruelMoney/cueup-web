@@ -132,11 +132,11 @@ class Index extends Component {
                             accent="PAYMENT METHODS"
                             header1={'Credit or Debit Card'}
                             description1={
-                                'Accept card payments from your customers through Cueup. We take care of charging the organizer, and transfer directly to your bank account.'
+                                "The easiest way to pay the DJ is using your card. We'll take care of the rest and refund all the money in case the DJ cancels."
                             }
                             header2={'Invoice or Cash'}
                             description2={
-                                'You can also be responsible for charging the organizer yourself, and ask for the payment however your like. Cash, invoice or another payment system.'
+                                'You can also pay directly to the DJ using any other payment method that the DJ has set up. For example ask for an invoice or just pay in cash.'
                             }
                         />
                     </Container>
@@ -145,7 +145,7 @@ class Index extends Component {
                 <JoinThousands
                     title={'Find the perfect DJ'}
                     description={
-                        'Cueup is a growing community that gathers thousands of the most talented DJs, all around the world. \n Find the best DJ for your event, and book him now.'
+                        'Cueup is a growing community that gathers thousands of the most talented DJs, all around the world. \n Find the best DJ for your event now.'
                     }
                     to={translate('routes./')}
                     label="Find a DJ"
