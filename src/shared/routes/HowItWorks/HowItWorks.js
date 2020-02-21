@@ -106,7 +106,7 @@ class Index extends Component {
                         <Col>
                             <TextAccent center>PAYMENT</TextAccent>
                             <Header white center largeMargin>
-                                Money back{'\n'}guarentee
+                                Money back{'\n'}guarantee
                             </Header>
                             <SubTitle white>
                                 Tum dicere exorsus est laborum et via procedat oratio quaerimus
