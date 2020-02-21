@@ -105,7 +105,7 @@ class Index extends Component {
                         <Col>
                             <TextAccent center>PAYMENT</TextAccent>
                             <Header white center largeMargin>
-                                Money back{'\n'}guarentee
+                                Money back{'\n'}guarantee
                             </Header>
                             <SubTitle white>
                                 If a DJ cancels on you, we have your back and will immediately
