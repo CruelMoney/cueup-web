@@ -547,6 +547,25 @@ const GIG = gql`
     }
 `;
 
+const USER_EDITS = gql`
+    query UserEdits {
+        me {
+            id
+            appMetadata {
+                profileStatus
+                approved
+            }
+            editsMap @client
+            edits {
+                id
+                status
+                fieldName
+                message
+            }
+        }
+    }
+`;
+
 export {
     MY_EVENTS,
     USER,
@@ -569,4 +588,5 @@ export {
     DELETE_MEDIA,
     LOG_ACTIVITY,
     GIG,
+    USER_EDITS,
 };

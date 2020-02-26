@@ -252,76 +252,97 @@ const Index = ({ translate, match, location }) => {
     }, []);
 
     return (
-        <Query
-            query={USER}
-            variables={{ permalink: match.params.permalink }}
-            onError={console.warn}
-        >
-            {({ data: userData, loading: loadingUser }) => {
-                const { user: profileUser } = userData || {};
-                const loading = loadingUser;
+        <>
+            <Query query={ME} onError={console.warn}>
+                {({ data, loading: loadingMe }) => (
+                    <Query
+                        query={USER}
+                        variables={{ permalink: match.params.permalink }}
+                        onError={console.warn}
+                    >
+                        {({ data: userData, loading: loadingUser }) => {
+                            const { user: profileUser } = userData || {};
+                            const loading = loadingMe || loadingUser;
 
-                if (!loadingUser && !profileUser) {
-                    return <Redirect to={translate('routes./not-found')} />;
-                }
+                            if (!loadingUser && !profileUser) {
+                                return <Redirect to={translate('routes./not-found')} />;
+                            }
 
-                const user = profileUser;
+                            let user = profileUser;
 
-                const title = user ? user.artistName || user.userMetadata.firstName : null;
-                const thumb = user ? user.picture.path : null;
-                const description = user ? user.userMetadata.bio : null;
-                if (user) {
-                    user.title = title;
-                }
+                            if (user && data && data.me) {
+                                user.isOwn = user.isOwn || data.me.id === user.id;
+                            }
 
-                return (
-                    <div>
-                        {!hasScrolled && <ScrollToTop />}
-                        {user && (
-                            <Helmet>
-                                <title>{title}</title>
-                                <meta property="og:title" content={title} />
-                                <meta name="twitter:title" content={title} />
+                            if (user && user.isOwn && data && data.me) {
+                                user = mergeObjects(user, data.me);
+                            }
 
-                                <meta property="og:image" content={thumb} />
-                                <meta name="twitter:image" content={thumb} />
+                            const title = user
+                                ? user.artistName || user.userMetadata.firstName
+                                : null;
+                            const thumb = user ? user.picture.path : null;
+                            const description = user ? user.userMetadata.bio : null;
+                            if (user) {
+                                user.title = title;
+                            }
 
-                                <meta name="description" content={description} />
-                                <meta name="twitter:description" content={description} />
-                                <meta property="og:description" content={description} />
+                            return (
+                                <div>
+                                    {!hasScrolled && <ScrollToTop />}
+                                    {user && (
+                                        <Helmet>
+                                            <title>{title}</title>
+                                            <meta property="og:title" content={title} />
+                                            <meta name="twitter:title" content={title} />
 
-                                {user.isOwn && (
-                                    <meta
-                                        name="apple-itunes-app"
-                                        content="app-id=1458267647, app-argument=userProfile"
+                                            <meta property="og:image" content={thumb} />
+                                            <meta name="twitter:image" content={thumb} />
+
+                                            <meta name="description" content={description} />
+                                            <meta
+                                                name="twitter:description"
+                                                content={description}
+                                            />
+                                            <meta property="og:description" content={description} />
+
+                                            {user.isOwn && (
+                                                <meta
+                                                    name="apple-itunes-app"
+                                                    content="app-id=1458267647, app-argument=userProfile"
+                                                />
+                                            )}
+                                        </Helmet>
+                                    )}
+                                    <SavingIndicator loading={isSaving} error={error} />
+
+                                    <UserRoutes
+                                        loading={loading}
+                                        user={user}
+                                        updateUser={updateUser}
+                                        match={match}
+                                        location={location}
+                                        translate={translate}
                                     />
-                                )}
-                            </Helmet>
-                        )}
-                        <SavingIndicator loading={isSaving} error={error} />
 
-                        <UserRoutes
-                            loading={loading}
-                            user={user}
-                            updateUser={updateUser}
-                            match={match}
-                            location={location}
-                            translate={translate}
-                        />
-
-                        <Footer
-                            noSkew
-                            firstTo={translate('routes./')}
-                            secondTo={translate('routes./how-it-works')}
-                            firstLabel={translate('how-it-works')}
-                            secondLabel={translate('arrange-event')}
-                            title={translate('Wonder how it works?')}
-                            subTitle={translate('See how it works, or arrange an event.')}
-                        />
-                    </div>
-                );
-            }}
-        </Query>
+                                    <Footer
+                                        noSkew
+                                        firstTo={translate('routes./')}
+                                        secondTo={translate('routes./how-it-works')}
+                                        firstLabel={translate('how-it-works')}
+                                        secondLabel={translate('arrange-event')}
+                                        title={translate('Wonder how it works?')}
+                                        subTitle={translate(
+                                            'See how it works, or arrange an event.'
+                                        )}
+                                    />
+                                </div>
+                            );
+                        }}
+                    </Query>
+                )}
+            </Query>
+        </>
     );
 };
 

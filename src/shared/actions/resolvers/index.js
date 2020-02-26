@@ -1,5 +1,22 @@
 import gql from 'graphql-tag';
+import { EDIT_STATUS } from 'constants/constants';
 import { ME } from '../../components/gql';
+
+const getEditsMap = (user) => {
+    const { edits = [] } = user ?? {};
+
+    return edits.reduce(
+        (acc, edit) => ({
+            ...acc,
+            [edit.fieldName]: {
+                ...edit,
+                hasError: edit.status === EDIT_STATUS.REJECTED,
+                attention: edit.status === EDIT_STATUS.PENDING,
+            },
+        }),
+        {}
+    );
+};
 
 const resolvers = {
     User: {
@@ -27,6 +44,7 @@ const resolvers = {
             const { firstName } = userMetadata ?? {};
             return artistName ?? firstName;
         },
+        editsMap: getEditsMap,
     },
     Gig: {
         tempPaidIndicator: () => false,

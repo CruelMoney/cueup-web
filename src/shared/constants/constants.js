@@ -360,4 +360,10 @@ export const PAYMENT_PROVIDERS = Object.freeze({
     DIRECT: 'DIRECT',
 });
 
+export const EDIT_STATUS = {
+    REJECTED: 'REJECTED',
+    PENDING: 'PENDING',
+    APPROVED: 'APPROVED',
+};
+
 export default all;

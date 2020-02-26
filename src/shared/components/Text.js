@@ -30,7 +30,7 @@ export const Stat = ({ label, value, style, ...props }) => (
 export const SmallHeader = styled.h6`
     font-size: 15px;
     line-height: 1.5em;
-    color: #122b48;
+    color: ${({ white }) => (white ? '#fff' : '#122b48')};
 `;
 
 export const Title = styled.h3`

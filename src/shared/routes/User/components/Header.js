@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { useQuery } from 'react-apollo';
+import { withRouter, useHistory } from 'react-router';
+import Popup from 'components/common/Popup';
+import MyNavlink from 'components/common/Navlink';
 import Navigation from '../../../components/SubNavigation';
 import Rating from '../../../components/common/Rating';
 import VerifiedBadge from '../../../components/graphics/VerifiedBadge';
@@ -13,13 +17,50 @@ import {
     Col,
     Avatar,
     GradientBg,
+    LoadingIndicator,
+    TeritaryButton,
+    SecondaryButton,
 } from '../../../components/Blocks';
 import { Spacing } from '../../../components/Sidebar';
-import { HeaderTitle } from '../../../components/Text';
+import {
+    HeaderTitle,
+    SmallHeader,
+    Stat,
+    SmallBold,
+    BodyBold,
+    Title,
+    Body,
+} from '../../../components/Text';
 import ConditionalWrap from '../../../components/ConditionalWrap';
 import useWindowSize from '../../../components/hooks/useWindowSize';
+import { EDIT_STATUS } from '../../../constants/constants';
+import { USER_EDITS } from '../gql';
 import { Stats, CertifiedVerified } from './Common';
+import ProfileProgress from './ProfileProgress';
 
+const content = {
+    [EDIT_STATUS.PENDING]: {
+        title: {
+            approved: 'We are still reviewing your changes',
+            unapproved: 'We are still reviewing your application',
+        },
+        description: {
+            approved:
+                "Some of your recent changes need our approval, this usually don't take too long.",
+            unapproved: 'In the meantime you can fill out the rest of your profile.',
+        },
+    },
+    [EDIT_STATUS.REJECTED]: {
+        title: {
+            approved: 'Changes needed on your profile',
+            unapproved: 'You need to make some changes to be approved',
+        },
+        description: {
+            approved: 'Required changes:',
+            unapproved: 'Required changes:',
+        },
+    },
+};
 const getRoutesFromUser = (user, pathname) => {
     const routes = [{ route: 'overview', label: 'overview', active: true }];
 
@@ -122,81 +163,146 @@ const HeaderWrapper = styled.div`
 `;
 
 const UserContent = ({ user }) => {
+    const [showing, setShowing] = useState(false);
+
     const { artistName, userMetadata, appMetadata, reviews } = user;
     const { firstName } = userMetadata;
-    const { certified, rating, identityVerified, experience, followers } = appMetadata;
+    const {
+        certified,
+        rating,
+        identityVerified,
+        experience,
+        followers,
+        profileStatus,
+        approved,
+    } = appMetadata;
 
     const { width } = useWindowSize();
+    const statusContent = content[profileStatus];
+
+    const approvedKey = approved ? 'approved' : 'unapproved';
 
     return (
-        <ConditionalWrap
-            condition={width <= 768}
-            wrap={(children) => <NavLink to={'overview'}>{children}</NavLink>}
-        >
-            <HeaderWrapper>
-                <Row middle>
-                    <Col style={{ flex: 1, alignItems: 'flex-start' }}>
-                        <HeaderTitle>
-                            {artistName || firstName}
-                            {certified && (
-                                <Tooltip
-                                    text={
-                                        'This dj has been certified by Cueup. The Cueup team has personally met and seen this dj play.'
-                                    }
-                                >
-                                    {({ ref, close, open }) => (
-                                        <VerifiedBadge
-                                            ref={ref}
-                                            style={{ marginLeft: '15px' }}
-                                            onMouseEnter={open}
-                                            onMouseLeave={close}
+        <>
+            <ConditionalWrap
+                condition={width <= 768}
+                wrap={(children) => <NavLink to={'overview'}>{children}</NavLink>}
+            >
+                <HeaderWrapper>
+                    <Row middle>
+                        <Col style={{ flex: 1, alignItems: 'flex-start' }}>
+                            <HeaderTitle>
+                                {artistName || firstName}
+                                {certified && (
+                                    <Tooltip
+                                        text={
+                                            'This dj has been certified by Cueup. The Cueup team has personally met and seen this dj play.'
+                                        }
+                                    >
+                                        {({ ref, close, open }) => (
+                                            <VerifiedBadge
+                                                ref={ref}
+                                                style={{ marginLeft: '15px' }}
+                                                onMouseEnter={open}
+                                                onMouseLeave={close}
+                                            />
+                                        )}
+                                    </Tooltip>
+                                )}
+                            </HeaderTitle>
+                            {rating && (
+                                <div>
+                                    <RatingWrapper>
+                                        <Rating
+                                            color={'#fff'}
+                                            emptyColor={'#ffffff99'}
+                                            rating={rating}
                                         />
-                                    )}
-                                </Tooltip>
+                                    </RatingWrapper>
+                                    <ReviewsCount>
+                                        {reviews.pageInfo.totalDocs} reviews
+                                    </ReviewsCount>
+                                </div>
                             )}
-                        </HeaderTitle>
-                        {rating && (
-                            <div>
-                                <RatingWrapper>
-                                    <Rating
-                                        color={'#fff'}
-                                        emptyColor={'#ffffff99'}
-                                        rating={rating}
-                                    />
-                                </RatingWrapper>
-                                <ReviewsCount>{reviews.pageInfo.totalDocs} reviews</ReviewsCount>
-                            </div>
-                        )}
 
-                        {(experience || followers) && (
-                            <ShowBelow width={425}>
-                                <StatsWrapper>
-                                    <Stats
-                                        white
-                                        experience={experience}
-                                        followers={followers}
-                                        marginRight={'15px'}
-                                    />
-                                </StatsWrapper>
-                            </ShowBelow>
-                        )}
-                    </Col>
-                    <ShowBelow width={425}>
-                        <Col>
-                            <Avatar size="extraLarge" src={user.picture.path} />
+                            {!!statusContent && (
+                                <button onClick={() => setShowing(true)}>
+                                    <BodyBold white>
+                                        {statusContent.title[approvedKey]} - read more
+                                    </BodyBold>
+                                </button>
+                            )}
+
+                            {(experience || followers) && (
+                                <ShowBelow width={425}>
+                                    <StatsWrapper>
+                                        <Stats
+                                            white
+                                            experience={experience}
+                                            followers={followers}
+                                            marginRight={'15px'}
+                                        />
+                                    </StatsWrapper>
+                                </ShowBelow>
+                            )}
                         </Col>
-                    </ShowBelow>
-                </Row>
-                <ShowBelow width={425} style={{ marginTop: '24px' }}>
-                    <Row>
-                        <CertifiedVerified
-                            certified={certified}
-                            identityVerified={identityVerified}
-                        />
+                        <ShowBelow width={425}>
+                            <Col>
+                                <Avatar size="extraLarge" src={user.picture.path} />
+                            </Col>
+                        </ShowBelow>
                     </Row>
-                </ShowBelow>
-            </HeaderWrapper>
-        </ConditionalWrap>
+                    <ShowBelow width={425} style={{ marginTop: '24px' }}>
+                        <Row>
+                            <CertifiedVerified
+                                certified={certified}
+                                identityVerified={identityVerified}
+                            />
+                        </Row>
+                    </ShowBelow>
+                </HeaderWrapper>
+            </ConditionalWrap>
+            <Popup showing={showing} onClickOutside={() => setShowing(false)} width={'500px'}>
+                <EditPopup
+                    title={statusContent.title[approvedKey]}
+                    profileStatus={profileStatus}
+                    description={statusContent.description[approvedKey]}
+                    close={() => setShowing(false)}
+                    user={user}
+                />
+            </Popup>
+        </>
+    );
+};
+
+const EditPopup = ({ title, description, profileStatus, close, user }) => {
+    const { loading, data } = useQuery(USER_EDITS);
+    const history = useHistory();
+    const edits = data?.me?.edits || [];
+
+    const goToSettings = () => {
+        close();
+        history.push('settings');
+    };
+
+    return (
+        <div>
+            <Title>{title}</Title>
+            <Body>{description}</Body>
+            {loading ? (
+                <LoadingIndicator />
+            ) : (
+                <ol className="numbered-list">
+                    {edits?.map((e) => <li key={e.id}>{e.message}</li>)}
+                </ol>
+            )}
+
+            {profileStatus === EDIT_STATUS.REJECTED && (
+                <SecondaryButton onClick={goToSettings}>Go to settings</SecondaryButton>
+            )}
+
+            {profileStatus === EDIT_STATUS.PENDING && <ProfileProgress user={user} />}
+        </div>
     );
 };
 
