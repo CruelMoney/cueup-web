@@ -34,6 +34,8 @@ const ME = gql`
                     formatted
                 }
                 roles
+                profileStatus
+                approved
             }
             userMetadata {
                 firstName
@@ -41,9 +43,6 @@ const ME = gql`
                 bio
                 birthday
                 phone
-                bankAccount {
-                    last4
-                }
             }
             payoutMethods {
                 id

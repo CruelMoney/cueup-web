@@ -40,7 +40,7 @@ const checks = [
     },
     {
         label: 'Add payout methods',
-        check: (u) => !u.payoutMethods?.length,
+        check: (u) => !!u.payoutMethods?.length,
         linkTo: 'settings?modal=payoutMethods',
     },
 ];
