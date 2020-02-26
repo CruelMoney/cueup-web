@@ -264,9 +264,8 @@ const UserContent = ({ user }) => {
             </ConditionalWrap>
             <Popup showing={showing} onClickOutside={() => setShowing(false)} width={'500px'}>
                 <EditPopup
-                    title={statusContent.title[approvedKey]}
                     profileStatus={profileStatus}
-                    description={statusContent.description[approvedKey]}
+                    approvedKey={approvedKey}
                     close={() => setShowing(false)}
                     user={user}
                 />
@@ -275,10 +274,11 @@ const UserContent = ({ user }) => {
     );
 };
 
-const EditPopup = ({ title, description, profileStatus, close, user }) => {
+const EditPopup = ({ profileStatus, approvedKey, close, user }) => {
     const { loading, data } = useQuery(USER_EDITS);
     const history = useHistory();
     const edits = data?.me?.edits || [];
+    const statusContent = content[profileStatus];
 
     const goToSettings = () => {
         close();
@@ -287,8 +287,8 @@ const EditPopup = ({ title, description, profileStatus, close, user }) => {
 
     return (
         <div>
-            <Title>{title}</Title>
-            <Body>{description}</Body>
+            <Title>{statusContent?.title[approvedKey]}</Title>
+            <Body>{statusContent?.description[approvedKey]}</Body>
             {loading ? (
                 <LoadingIndicator />
             ) : (
