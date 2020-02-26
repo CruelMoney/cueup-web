@@ -16,6 +16,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     introspectionQueryResultData,
 });
 
+let token;
 // custome error handling, only logging errors atm
 const errorLink = onError(({ graphQLErrors, networkError, operation, forward, response }) => {
     if (graphQLErrors) {
@@ -28,6 +29,8 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward, re
             // handle errors differently based on its error code
             switch (err.extensions.code) {
                 case 'UNAUTHENTICATED':
+                    token = null;
+                    authService.logout();
                     break;
 
                 // handle other errors
@@ -43,7 +46,6 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward, re
     }
 });
 
-let token;
 const withToken = setContext(async (_, { headers }) => {
     // get token if not present
     if (!token) {

@@ -34,9 +34,11 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
     const params = new URLSearchParams(location.search);
     const modal = params.get('modal');
     const verifyIdentity = modal === 'verifyIdentity';
-    if (modal) {
-        history.push(location.pathname);
-    }
+    const addPayoutMethod = modal === 'payoutMethods';
+
+    const onModalClose = () => {
+        history.replace(location.pathname);
+    };
 
     const [connectInstagram, { loading: instaLoading, disconnect }] = useConnectInstagram();
 
@@ -255,7 +257,15 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                 title={'Preferences'}
                 description={'Change your preferences for getting paid and notifications.'}
             >
-                {isDj && <PayoutPopup user={user} hasPayout={payoutMethods?.length} />}
+                {isDj && (
+                    <PayoutPopup
+                        key={addPayoutMethod}
+                        user={user}
+                        hasPayout={payoutMethods?.length}
+                        isActive={addPayoutMethod}
+                        onClose={onModalClose}
+                    />
+                )}
 
                 <CurrencySelector
                     half
@@ -350,8 +360,14 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
     );
 };
 
-const PayoutPopup = ({ user, hasPayout }) => {
-    const [showing, setShowing] = useState(false);
+const PayoutPopup = ({ user, hasPayout, isActive = false, onClose }) => {
+    const [showing, setShowing] = useState(isActive);
+
+    const close = () => {
+        onClose();
+        setShowing(false);
+    };
+
     return (
         <>
             <Input
@@ -362,13 +378,13 @@ const PayoutPopup = ({ user, hasPayout }) => {
                 label="Payout methods"
                 buttonText={'update'}
             />
-            <Popup showing={showing} onClickOutside={(_) => setShowing(false)} width={'500px'}>
+            <Popup showing={showing} onClickOutside={close} width={'500px'}>
                 <PayoutForm
                     color={'#31daff'}
                     isUpdate={hasPayout}
                     user={user}
-                    onCancel={() => setShowing(false)}
-                    onSubmitted={() => setShowing(false)}
+                    onCancel={close}
+                    onSubmitted={close}
                 />
             </Popup>
         </>

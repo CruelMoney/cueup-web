@@ -39,9 +39,9 @@ const checks = [
         linkTo: '/signup',
     },
     {
-        label: 'Verify your identity',
-        check: (u) => !!u.appMetadata.identityVerified,
-        linkTo: 'settings?modal=verifyIdentity',
+        label: 'Add payout methods',
+        check: (u) => !u.payoutMethods?.length,
+        linkTo: 'settings?modal=payoutMethods',
     },
 ];
 
