@@ -163,8 +163,6 @@ const HeaderWrapper = styled.div`
 `;
 
 const UserContent = ({ user }) => {
-    const [showing, setShowing] = useState(false);
-
     const { artistName, userMetadata, appMetadata, reviews } = user;
     const { firstName } = userMetadata;
     const {
@@ -179,8 +177,9 @@ const UserContent = ({ user }) => {
 
     const { width } = useWindowSize();
     const statusContent = content[profileStatus];
-
     const approvedKey = approved ? 'approved' : 'unapproved';
+
+    const [showing, setShowing] = useState(!approved);
 
     return (
         <>
@@ -293,7 +292,7 @@ const EditPopup = ({ profileStatus, approvedKey, close, user }) => {
                 <LoadingIndicator />
             ) : (
                 <ol className="numbered-list">
-                    {edits?.map((e) => <li key={e.id}>{e.message}</li>)}
+                    {edits?.filter((e) => e.message).map((e) => <li key={e.id}>{e.message}</li>)}
                 </ol>
             )}
 
