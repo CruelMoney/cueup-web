@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import emailValidator from 'email-validator';
-import { Mutation } from 'react-apollo';
+import { Mutation, useQuery } from 'react-apollo';
 import { useConnectInstagram } from 'components/hooks/useConnectInstagram';
 import {
     SettingsSection,
@@ -18,7 +18,7 @@ import GenreSelector from '../../../components/GenreSelector';
 import CancelationPolicyPopup from '../components/CancelationPolicyPopup';
 import PayoutForm from '../../../components/common/PayoutForm';
 import Popup from '../../../components/common/Popup';
-import { DELETE_USER } from '../gql';
+import { DELETE_USER, USER_EDITS } from '../gql';
 import PhoneInput from '../../../components/common/PhoneInput';
 import TextAreaPopup from '../../../components/TextAreaPopup';
 import VerifyIdentity from '../components/VerifyIdentity';
@@ -35,6 +35,9 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
     const modal = params.get('modal');
     const verifyIdentity = modal === 'verifyIdentity';
     const addPayoutMethod = modal === 'payoutMethods';
+
+    const { data } = useQuery(USER_EDITS);
+    const editsMap = data?.me?.editsMap || {};
 
     const onModalClose = () => {
         history.replace(location.pathname);
@@ -171,8 +174,9 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                     half
                     label="Profile picture"
                     buttonText="change picture"
-                    attention={!picture}
                     onSave={updateKey('picture')}
+                    error={editsMap.profilePictureId?.message}
+                    displayError
                 />
             </SettingsSection>
 
@@ -225,6 +229,8 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                                 bio,
                             })
                         }
+                        error={editsMap.bio?.message}
+                        displayError
                     />
 
                     <ImageUploader

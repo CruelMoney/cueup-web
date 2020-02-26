@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Input } from './FormComponents';
 
 const ImageUploader = ({ onSave, options, ...props }) => {
-    const [error, setError] = useState(null);
+    const [error, setError] = useState(props.error);
 
     const handleFile = async (_, e) => {
         const file = e.target.files[0];

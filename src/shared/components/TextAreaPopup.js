@@ -4,7 +4,16 @@ import { Row, TeritaryButton, PrimaryButton } from './Blocks';
 import Popup from './common/Popup';
 import { BodySmall } from './Text';
 
-const TextAreaPopup = ({ initialValue, save, label, characters = 100, children, ...props }) => {
+const TextAreaPopup = ({
+    initialValue,
+    save,
+    label,
+    characters = 100,
+    children,
+    error,
+    attention,
+    ...props
+}) => {
     const [value, setValue] = useState(initialValue);
     const [showing, setShowing] = useState(false);
 
@@ -16,6 +25,8 @@ const TextAreaPopup = ({ initialValue, save, label, characters = 100, children, 
                 label={label}
                 buttonText={'edit'}
                 onClick={(_) => setShowing(true)}
+                error={error}
+                attention={attention}
             />
 
             <Popup showing={showing} onClickOutside={(_) => setShowing(false)} width={'520px'}>

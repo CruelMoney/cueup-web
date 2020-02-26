@@ -205,7 +205,6 @@ const UPDATE_USER = gql`
             playedVenues: $playedVenues
         ) {
             id
-            auth0Id
             email
             permalink
             artistName
@@ -238,6 +237,12 @@ const UPDATE_USER = gql`
                     days
                     percentage
                 }
+            }
+            edits {
+                id
+                status
+                fieldName
+                message
             }
         }
     }
