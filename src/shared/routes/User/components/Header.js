@@ -179,7 +179,7 @@ const UserContent = ({ user }) => {
     const statusContent = content[profileStatus];
     const approvedKey = approved ? 'approved' : 'unapproved';
 
-    const [showing, setShowing] = useState(!approved);
+    const [showing, setShowing] = useState(!approved && user.isOwn);
 
     return (
         <>

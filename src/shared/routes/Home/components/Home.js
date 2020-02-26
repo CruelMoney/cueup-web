@@ -37,17 +37,15 @@ class Home extends Component {
         return (
             <div className="header-wrapper pull-up">
                 <header>
-                    <div id="stripes" className="v1">
-                        <span />
-                    </div>
+                    <div id="stripes" className="v1" />
                     <div className="container">
                         <div className="row">
                             <div className="col-md-5">
                                 <h1 key="title">{translate('home.title')}</h1>
                                 <p key="paragraph">{translate('home.introduction')}</p>
 
-                                <div style={{ float: 'left', marginTop: '20px' }}>
-                                    <PrimaryButton invert onClick={this.handleButtonClick}>
+                                <div style={{ float: 'left', marginTop: '42px' }}>
+                                    <PrimaryButton white onClick={this.handleButtonClick}>
                                         {translate('find-djs')}
                                     </PrimaryButton>
                                 </div>
