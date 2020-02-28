@@ -27,6 +27,8 @@ const getPriority = (gig) => {
 const Gigs = (props) => {
     const { translate, notifications, user, currentLanguage, loading: loadingUser } = props;
 
+    const approved = user?.appMetadata?.approved;
+
     const [filter, setFilter] = useState([]);
     const toggleFilter = (key) => (val) =>
         setFilter((ff) => (val ? [...ff, key] : ff.filter((f2) => f2 !== key)));
@@ -54,6 +56,19 @@ const Gigs = (props) => {
             .sort((g1, g2) => getPriority(g1) - getPriority(g2));
 
         if (renderGigs.length === 0) {
+            if (approved) {
+                return (
+                    <EmptyPage
+                        title="No gigs yet"
+                        message={
+                            <div>
+                                We are still reviewing your application. Come back here once you
+                                have been approved.
+                            </div>
+                        }
+                    />
+                );
+            }
             return <EmptyPage message={<div>{translate('no-gigs-description')}</div>} />;
         }
         return renderGigs.map((gig, idx) => (

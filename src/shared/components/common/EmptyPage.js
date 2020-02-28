@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
 import { localize } from 'react-localize-redux';
 import styled from 'styled-components';
+import { Body } from 'components/Text';
 import Svg404 from '../graphics/404';
 
-class EmptyPage extends Component {
-    render() {
-        const { translate } = this.props;
-        return (
-            <Wrapper>
-                <Svg404 />
-                <div>
-                    <h2>{this.props.title ? this.props.title : translate('empty-page-message')}</h2>
+const EmptyPage = ({ message, title, translate }) => {
+    return (
+        <Wrapper>
+            <Svg404 />
+            <div>
+                <h2>{title ? title : translate('empty-page-message')}</h2>
 
-                    <div>{this.props.message}</div>
-                </div>
-            </Wrapper>
-        );
-    }
-}
+                {message && <Body style={{ marginTop: 15 }}>{message}</Body>}
+            </div>
+        </Wrapper>
+    );
+};
 
 const Wrapper = styled.div`
     min-height: 400px;
@@ -33,7 +31,9 @@ const Wrapper = styled.div`
     svg {
         max-width: 300px;
         margin-right: 30px;
-        margin-left: 30px;
+    }
+    > div {
+        max-width: 300px;
     }
 `;
 

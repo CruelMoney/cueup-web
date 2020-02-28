@@ -191,8 +191,8 @@
   "Refer DJs": ["Refer DJs", "Henvis DJs"],
   "Bio": ["Biography", "Biografi"],
   "empty-page-message": [
-    "Looks like there's nothing here.",
-    "Ser ud til at der ikke findes noget her."
+    "Nothing here.",
+    "Intet at se her"
   ],
   "No relevant DJ could be found": ["No relevant DJ could be found", "Ingen DJs kunne findes"],
   "The event is cancelled": ["The event is cancelled", "Eventet er aflyst"],
