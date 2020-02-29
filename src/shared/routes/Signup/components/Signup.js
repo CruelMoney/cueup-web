@@ -13,6 +13,7 @@ import {
     ReadMore,
 } from 'components/Blocks';
 import { TextAccent } from 'routes/BecomeDj/components/blocks/TextAccent';
+import { Body } from 'components/Text';
 import vinyl from '../../../assets/Vinyl.svg';
 import krIcon from '../../../assets/money.svg';
 import Footer from '../../../components/common/Footer';
@@ -99,6 +100,12 @@ class Signup extends Component {
                 </Header>
                 <div className="container" style={{ marginBottom: '80px' }}>
                     <div className="signup">
+                        <Body style={{ marginBottom: 50 }}>
+                            Fill out the form to create a profile. After you sign up, we will review
+                            your profile to ensure that you meet our requirements. If you don't get
+                            approved, we will let you know what changes you need to make. After you
+                            have been approved, you will be welcomed and get access to all features.
+                        </Body>
                         <SignUpForm translate={translate} reference={this.state.reference} />
                     </div>
                 </div>
