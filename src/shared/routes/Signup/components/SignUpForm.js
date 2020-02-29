@@ -105,7 +105,7 @@ const SignupForm = ({ translate, geoCity, reference }) => {
             <NumberedList>
                 <RegistrationElement
                     name="email"
-                    label="Email"
+                    label="Email*"
                     active={true}
                     text={translate('signup.form.email')}
                 >
@@ -123,7 +123,7 @@ const SignupForm = ({ translate, geoCity, reference }) => {
 
                 <RegistrationElement
                     name="password"
-                    label="Password"
+                    label="Password*"
                     active={true}
                     text={translate('signup.form.password')}
                 >
@@ -141,7 +141,7 @@ const SignupForm = ({ translate, geoCity, reference }) => {
 
                 <RegistrationElement
                     name="name"
-                    label={translate('Name')}
+                    label={translate('Name') + '*'}
                     active={true}
                     text={translate('finish-signup.name')}
                 >
@@ -158,8 +158,25 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                 </RegistrationElement>
 
                 <RegistrationElement
+                    name="artistName"
+                    label={translate('Artist name')}
+                    active={true}
+                >
+                    <Input
+                        big
+                        name="artistName"
+                        autoComplete="artistName"
+                        placeholder={'DJ ' + (state.name?.split(' ')[0] || 'name')}
+                        onSave={(name) => setValue({ name })}
+                        validation={[validators.required, validators.lastName]}
+                        registerValidation={registerValidation('name')}
+                        unregisterValidation={unregisterValidation('name')}
+                    />
+                </RegistrationElement>
+
+                <RegistrationElement
                     name="phone"
-                    label={translate('Phone number')}
+                    label={translate('Phone') + '*'}
                     active={true}
                     text={translate('finish-signup.phone')}
                 >
@@ -178,7 +195,7 @@ const SignupForm = ({ translate, geoCity, reference }) => {
 
                 <RegistrationElement
                     name="location"
-                    label={translate('Location')}
+                    label={translate('Location') + '*'}
                     active={true}
                     text={translate('finish-signup.location')}
                 >
@@ -209,7 +226,7 @@ const SignupForm = ({ translate, geoCity, reference }) => {
 
                 <RegistrationElement
                     name="genres"
-                    label={translate('Genres')}
+                    label={translate('Genres') + '*'}
                     active={true}
                     text={translate('finish-signup.genres')}
                     ref={genreRef}
@@ -228,7 +245,7 @@ const SignupForm = ({ translate, geoCity, reference }) => {
 
                 <RegistrationElement
                     name="picture"
-                    label={translate('Picture')}
+                    label={translate('Picture') + '*'}
                     active={true}
                     text={translate('finish-signup.picture')}
                 >
@@ -262,7 +279,7 @@ const SignupForm = ({ translate, geoCity, reference }) => {
 
                 <RegistrationElement
                     name="bio"
-                    label={translate('About you')}
+                    label={translate('About you') + '*'}
                     active={true}
                     text={translate('finish-signup.about')}
                 >
