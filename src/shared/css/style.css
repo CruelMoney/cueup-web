@@ -2132,6 +2132,7 @@ table {
 .signup p {
     color: #8998aa;
     position: relative;
+    white-space: pre-line;
     z-index: 1;
 }
 .signup li label,

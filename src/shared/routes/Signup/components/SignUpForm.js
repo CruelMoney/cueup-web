@@ -289,7 +289,20 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                         style={{ height: '150px' }}
                         name="bio"
                         onSave={(bio) => setValue({ bio })}
-                        validation={[validators.required, validators.minLength(100)]}
+                        validation={[
+                            validators.required,
+                            validators.minLength(100),
+                            validators.containsEmail(
+                                "Email addresses aren't allowed on profiles. Always communicate directly through Cueup"
+                            ),
+                            validators.containsNumber(
+                                "For security phone numbers aren't allowed on profiles. Always communicate directly through Cueup"
+                            ),
+                            validators.containsURL("Links to websites aren't allowed on profiles."),
+                            validators.containsInstagram(
+                                "Instagram handles aren't allowed on profiles."
+                            ),
+                        ]}
                         registerValidation={registerValidation('bio')}
                         unregisterValidation={unregisterValidation('bio')}
                     />

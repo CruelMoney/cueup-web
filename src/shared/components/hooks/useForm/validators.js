@@ -22,3 +22,43 @@ export function email(value) {
 export const matches = (str) => (str2) => {
     return str !== str2 ? 'Not equal' : null;
 };
+
+const urlMatchers = () => [
+    /(?:(ftp|http|https)?:\/\/)?[w{2:4}]?(?:[\w-]+\.)+([a-z]|[A-Z]|[0-9]){2,6}/gi,
+];
+
+const numberMatchers = () => [/(\+)?(?:[0-9]\s*){8,}/gi];
+
+const emailMatchers = () => [
+    /[A-Z0-9._%+-]+(\s*(at|@)\s*|\s*[[|{|(]+\s*(at|@)\s*[)|}\]]+\s*)([A-Z0-9.-]+\s*(\.|\s*[[|{|(]*\s*(dot|\.)\s*[)|}|\]]*\s*))+\s*[a-z]{2,6}/gi,
+];
+
+const instaMatchers = () => [/((instagram)|(insta(\W){1}))/gi];
+
+export const containsNumber = (message = 'Cannot contain phone numbers') => (value) => {
+    if (numberMatchers().some((m) => m.test(value))) {
+        return message;
+    }
+    return null;
+};
+
+export const containsEmail = (message = 'Cannot contain emails') => (value) => {
+    if (emailMatchers().some((m) => m.test(value))) {
+        return message;
+    }
+    return null;
+};
+
+export const containsURL = (message = 'Cannot contain phone URLs') => (value) => {
+    if (urlMatchers().some((m) => m.test(value))) {
+        return message;
+    }
+    return null;
+};
+
+export const containsInstagram = (message = 'Cannot contain Instagram handle') => (value) => {
+    if (instaMatchers().some((m) => m.test(value))) {
+        return message;
+    }
+    return null;
+};

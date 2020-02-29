@@ -72,8 +72,8 @@
 			"Fortæl os venligst lidt om dig selv. Denne beskrivelse vil være offentlig på din profil. Fortæl os hvilken slags DJ du er, hvor meget erfaring har du, hvilke typer events spiller du normalt?"
 		],
 		"picture": [
-			"Please choose a picture with your face visible. This helps the customer feel safe when they book you.",
-			"Vælg venligst et billede hvor de ansigt er synligt. Det giver kunden mere sikkerhed når du skal bookes."
+			"Please choose a picture with your face visible. \nThis helps the organizer feel safe when they book you.",
+			"Vælg venligst et billede hvor de ansigt er synligt. \nDet giver arrangøren mere sikkerhed når du skal bookes."
 		]
 	},
 	"Sign up": ["Sign up", "Tilmeld"]
