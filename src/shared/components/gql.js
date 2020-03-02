@@ -76,6 +76,7 @@ const CREATE_USER = gql`
         $password: String!
         $firstName: String!
         $lastName: String!
+        $artistName: String
         $playingLocation: Area!
         $genres: [String!]!
         $experienceLevel: ExperienceLevel
@@ -90,6 +91,7 @@ const CREATE_USER = gql`
             redirectLink: $redirectLink
             firstName: $firstName
             lastName: $lastName
+            artistName: $artistName
             playingLocation: $playingLocation
             genres: $genres
             experienceLevel: $experienceLevel
