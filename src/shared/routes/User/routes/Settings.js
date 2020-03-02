@@ -192,7 +192,7 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                         label="Artist name"
                         attention={!artistName}
                         defaultValue={artistName}
-                        placeholder="Dj Khaled"
+                        placeholder={'Dj ' + (firstName || 'name')}
                         type="text"
                         onSave={(artistName) => saveData({ artistName: artistName.trim() })}
                     />

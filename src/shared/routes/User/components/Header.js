@@ -41,8 +41,8 @@ import ProfileProgress from './ProfileProgress';
 const content = {
     [EDIT_STATUS.PENDING]: {
         title: {
-            approved: 'We are still reviewing your changes',
-            unapproved: 'We are still reviewing your application',
+            approved: 'We are reviewing your changes',
+            unapproved: 'We are reviewing your application',
         },
         description: {
             approved:
