@@ -229,6 +229,10 @@ const UPDATE_USER = gql`
                 birthday
                 phone
             }
+            appMetadata {
+                profileStatus
+                approved
+            }
             userSettings {
                 currency
                 standby
