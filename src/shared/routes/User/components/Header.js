@@ -300,7 +300,9 @@ const EditPopup = ({ profileStatus, approvedKey, close, user }) => {
                 <SecondaryButton onClick={goToSettings}>Go to settings</SecondaryButton>
             )}
 
-            {profileStatus === EDIT_STATUS.PENDING && <ProfileProgress user={user} />}
+            {profileStatus === EDIT_STATUS.PENDING && (
+                <ProfileProgress user={user} onClick={close} hideSharing />
+            )}
         </div>
     );
 };

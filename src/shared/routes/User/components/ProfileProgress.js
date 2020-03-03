@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CheckCircle from 'react-ionicons/lib/MdAddCircle';
 import CheckCircleDone from 'react-ionicons/lib/MdCheckmarkCircle';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { Body, SmallBold, SmallHeader } from '../../../components/Text';
 import { Col, Row } from '../../../components/Blocks';
 import { SimpleSharing } from '../../../components/common/Sharing-v2';
-
 const checks = [
     {
         label: 'Add profile picture',
@@ -54,7 +53,9 @@ const ProgressItemText = styled(SmallHeader)`
     margin-left: 6px;
 `;
 
-const ProgressItem = ({ label, done, linkTo }) => {
+const ProgressItem = ({ label, done, linkTo, onClick }) => {
+    const history = useHistory();
+
     const Content = (
         <Row style={{ marginBottom: '15px' }} middle>
             {done ? (
@@ -70,10 +71,15 @@ const ProgressItem = ({ label, done, linkTo }) => {
         return Content;
     }
 
-    return <NavLink to={linkTo}>{Content}</NavLink>;
+    const handleClick = () => {
+        onClick && onClick();
+        linkTo && history.push(linkTo);
+    };
+
+    return <button onClick={handleClick}>{Content}</button>;
 };
 
-const ProfileProgress = ({ user }) => {
+const ProfileProgress = ({ user, onClick, hideSharing = false }) => {
     const items = checks
         .map((c) => ({ ...c, done: c.check(user) }))
         .sort((a, b) => b.done - a.done);
@@ -81,6 +87,9 @@ const ProfileProgress = ({ user }) => {
     const progress = items.filter((c) => c.done).length / items.length;
 
     if (progress === 1 || !user.isDj) {
+        if (hideSharing) {
+            return null;
+        }
         return <SimpleSharing shareUrl={user && `/user/${user.permalink}/overview}]`} />;
     }
     return (
@@ -94,7 +103,7 @@ const ProfileProgress = ({ user }) => {
             <ProgressBar progress={progress} />
 
             {items.map((c) => (
-                <ProgressItem key={c.label} {...c} />
+                <ProgressItem key={c.label} onClick={onClick} {...c} />
             ))}
         </Col>
     );
