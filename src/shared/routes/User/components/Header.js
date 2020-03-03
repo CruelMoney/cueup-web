@@ -46,7 +46,7 @@ const content = {
         },
         description: {
             approved:
-                "Some of your recent changes need our approval, this usually don't take too long.",
+                "Some of your recent changes need our approval, this usually doesn't take too long.",
             unapproved: 'In the meantime you can fill out the rest of your profile.',
         },
     },
@@ -127,6 +127,14 @@ const HeaderSpacing = styled(Spacing)`
     @media only screen and (max-width: 768px) {
         margin-right: 30px;
     }
+`;
+
+const StatusButton = styled.button`
+    background: rgba(255, 255, 255, 0.4);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    padding: 0.5em 1.2em;
+    border-radius: 2em;
 `;
 
 const Header = ({ user, loading, pathname, children }) => {
@@ -225,11 +233,11 @@ const UserContent = ({ user }) => {
                             )}
 
                             {!!statusContent && (
-                                <button onClick={() => setShowing(true)}>
+                                <StatusButton onClick={() => setShowing(true)}>
                                     <BodyBold white>
                                         {statusContent.title[approvedKey]} - read more
                                     </BodyBold>
-                                </button>
+                                </StatusButton>
                             )}
 
                             {(experience || followers) && (
