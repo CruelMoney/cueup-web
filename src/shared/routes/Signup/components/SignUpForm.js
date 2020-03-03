@@ -167,10 +167,7 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                         name="artistName"
                         autoComplete="artistName"
                         placeholder={'DJ ' + (state.name?.split(' ')[0] || 'name')}
-                        onSave={(name) => setValue({ name })}
-                        validation={[validators.required, validators.lastName]}
-                        registerValidation={registerValidation('name')}
-                        unregisterValidation={unregisterValidation('name')}
+                        onSave={(artistName) => setValue({ artistName })}
                     />
                 </RegistrationElement>
 
