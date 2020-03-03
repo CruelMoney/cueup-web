@@ -56,7 +56,7 @@ const Gigs = (props) => {
             .sort((g1, g2) => getPriority(g1) - getPriority(g2));
 
         if (renderGigs.length === 0) {
-            if (approved) {
+            if (!approved) {
                 return (
                     <EmptyPage
                         title="No gigs yet"
