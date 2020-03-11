@@ -139,7 +139,8 @@ const Login = ({ redirect = false, error, translate, onLogin, history }) => {
                         {(mutate) => {
                             return (
                                 <form
-                                    onSubmit={(_) => {
+                                    onSubmit={(e) => {
+                                        e.preventDefault();
                                         setStateValue({ loading: true });
                                         mutate();
                                     }}
