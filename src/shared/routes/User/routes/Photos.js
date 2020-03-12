@@ -15,7 +15,7 @@ import GracefullVideo from '../../../components/GracefullVideo';
 import ReorderGrid from '../components/ReorderGrid';
 import SavingIndicator from '../../../components/SavingIndicator';
 import InstagramLogo from '../../../assets/InstagramLogo';
-import { BodySmall } from '../../../components/Text';
+import { BodySmall, Body } from '../../../components/Text';
 
 const LIMIT = 6;
 
@@ -159,6 +159,8 @@ const Photos = ({ user, loading }) => {
     const nextPage = loading || loadingPhotos ? 1 : data.user.media.pageInfo.nextPage;
 
     const userId = user && user.id;
+
+    const { instagramUsername, instagramStatus } = data?.user?.appMetadata || {};
 
     const loadMore = useCallback(
         (page, userId) => {
@@ -373,7 +375,9 @@ const Photos = ({ user, loading }) => {
                 <EmptyPage
                     title="No Photos or Videos"
                     message={isOwn ? <EmptyCTA user={user} uploadFiles={uploadFiles} /> : ''}
-                />
+                >
+                    <Body style={{ marginTop: 24 }}>{instagramStatus}</Body>
+                </EmptyPage>
                 <SavingIndicator loading={saving.length > 0} message={'Uploading'} />
             </>
         );

@@ -5,6 +5,8 @@ import { Query } from 'react-apollo';
 import queryString from 'query-string';
 import { useMutation } from '@apollo/react-hooks';
 import Pin from 'react-ionicons/lib/MdPin';
+import LogoInstagram from 'react-ionicons/lib/LogoInstagram';
+
 import moment from 'moment';
 import AddCircle from 'react-ionicons/lib/MdAddCircle';
 import { Helmet } from 'react-helmet-async';
@@ -35,7 +37,14 @@ import { Stats, MobileBookingButton, IconRow, CertifiedVerified } from './compon
 
 const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
     const { userMetadata = {}, appMetadata = {}, playingLocation } = user || {};
-    const { experience, followers, createdAt, certified, identityVerified } = appMetadata;
+    const {
+        experience,
+        followers,
+        createdAt,
+        certified,
+        identityVerified,
+        instagramUsername,
+    } = appMetadata;
 
     const memberSince = moment(createdAt).format('MMMM YYYY');
     return (
@@ -83,6 +92,21 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                                 <Pin color={'#98a4b3'} style={{ marginRight: '15px' }} />
                                 {playingLocation.name}
                             </IconRow>
+                        )}
+                        {instagramUsername && (
+                            <a
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                href={'https://instagram.com/' + instagramUsername}
+                            >
+                                <IconRow>
+                                    <LogoInstagram
+                                        color={'#98a4b3'}
+                                        style={{ marginRight: '15px' }}
+                                    />
+                                    {instagramUsername}
+                                </IconRow>
+                            </a>
                         )}
                         <CertifiedVerified
                             certified={certified}

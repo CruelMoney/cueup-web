@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Body } from 'components/Text';
 import Svg404 from '../graphics/404';
 
-const EmptyPage = ({ message, title, translate }) => {
+const EmptyPage = ({ message, title, translate, children }) => {
     return (
         <Wrapper>
             <Svg404 />
@@ -12,6 +12,7 @@ const EmptyPage = ({ message, title, translate }) => {
                 <h2>{title ? title : translate('empty-page-message')}</h2>
 
                 {message && <Body style={{ marginTop: 15 }}>{message}</Body>}
+                {children}
             </div>
         </Wrapper>
     );
