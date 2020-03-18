@@ -416,7 +416,6 @@ const VerifyIdentityPopup = ({ user, identityVerified, initialShowing = false })
             <Input
                 half
                 type="button"
-                attention={!identityVerified}
                 onClick={(s) => setShowing(true)}
                 label="Verify identity"
                 buttonText={identityVerified ? 'verified' : 'get verified'}
