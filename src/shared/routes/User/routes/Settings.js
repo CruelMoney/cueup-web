@@ -35,6 +35,10 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
     const modal = params.get('modal');
     const verifyIdentity = modal === 'verifyIdentity';
     const addPayoutMethod = modal === 'payoutMethods';
+    const bioModal = modal === 'bio';
+    const genresModal = modal === 'genres';
+    const locationModal = modal === 'location';
+    const cancelationPolicyModal = modal === 'cancelationPolicy';
 
     const { data } = useQuery(USER_EDITS);
     const editsMap = data?.me?.editsMap || {};
@@ -206,12 +210,18 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                         }}
                     />
                     <LocationPicker
+                        isActive={locationModal}
                         initialLocation={playingLocation}
                         save={(playingLocation) => saveData({ playingLocation })}
                     />
 
-                    <GenreSelector initialGenres={genres} save={(genres) => saveData({ genres })} />
+                    <GenreSelector
+                        isActive={genresModal}
+                        initialGenres={genres}
+                        save={(genres) => saveData({ genres })}
+                    />
                     <CancelationPolicyPopup
+                        isActive={cancelationPolicyModal}
                         initialValue={cancelationPolicy}
                         save={(p) =>
                             saveData({
@@ -222,6 +232,7 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                         translate={translate}
                     />
                     <TextAreaPopup
+                        isActive={bioModal}
                         initialValue={bio || ''}
                         label="Bio"
                         save={(bio) =>

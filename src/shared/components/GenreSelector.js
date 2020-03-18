@@ -5,9 +5,9 @@ import { Row, TeritaryButton, PrimaryButton } from './Blocks';
 import Popup from './common/Popup';
 import { ToggleButtonHandler } from './common/ToggleButtonHandler';
 
-const GenreSelector = ({ initialGenres = [], save, half }) => {
+const GenreSelector = ({ initialGenres = [], save, half, isActive }) => {
     const [genres, setGenres] = useState(initialGenres);
-    const [showing, setShowing] = useState(false);
+    const [showing, setShowing] = useState(isActive);
 
     return (
         <>

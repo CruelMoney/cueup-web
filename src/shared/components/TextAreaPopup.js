@@ -12,10 +12,11 @@ const TextAreaPopup = ({
     children,
     error,
     attention,
+    isActive,
     ...props
 }) => {
     const [value, setValue] = useState(initialValue);
-    const [showing, setShowing] = useState(false);
+    const [showing, setShowing] = useState(isActive);
 
     return (
         <>
