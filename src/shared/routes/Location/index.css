@@ -149,8 +149,15 @@
     animation-delay: 256ms;
 }
 
+.gm-style a img {
+    display: none;
+}
+
 /* Tablet */
 @media only screen and (max-width: 768px) {
+    .gm-style a img {
+        display: block;
+    }
     .location_book-dj header .container.fix-top-mobile {
         display: block;
         margin: 0;
