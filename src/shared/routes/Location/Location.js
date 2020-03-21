@@ -112,7 +112,7 @@ const Location = (props) => {
             <div className="span-wrapper">
                 <header
                     style={{
-                        height: isMobile ? '700px' : '600px',
+                        height: isMobile ? '500px' : '600px',
                         backgroundColor: '#ebebeb',
                     }}
                 >
@@ -123,10 +123,10 @@ const Location = (props) => {
                             hideRoads={true}
                             radius={radius}
                             defaultCenter={{
-                                lat: coordinates.lat + (isMobile ? 0 : 0.05),
+                                lat: coordinates.lat + (isMobile ? 0.125 : 0.05),
                                 lng: coordinates.lng - (isMobile ? 0 : city ? 0.5 : 2),
                             }}
-                            height={isMobile ? 700 : 600}
+                            height={isMobile ? 500 : 600}
                             value={coordinates}
                             editable={false}
                             themeColor={themeColor}
@@ -137,6 +137,8 @@ const Location = (props) => {
 
                     <article>
                         <div className="container fix-top-mobile">
+                            <GoogleMapsLogo />
+
                             <div className="row">
                                 <div className="col-md-5 col-sm-6">
                                     <div className="card">
@@ -156,18 +158,17 @@ const Location = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="show-tablet-down">
-                            <div className="container">
-                                <div className="row">
-                                    <div className="col-xs-12">
-                                        <p key="paragraph">{siteDescription}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </article>
                 </header>
-
+                <div className="show-tablet-down">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-xs-12">
+                                <p key="paragraph">{siteDescription}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className="container">
                     <FormRow center>
                         <div ref={requestForm} />
@@ -234,6 +235,40 @@ const Location = (props) => {
         </div>
     );
 };
+
+const GoogleMapsLogoWrapper = styled.div`
+    transform: translateX(-100%);
+    width: 100%;
+    position: absolute;
+    left: 270px;
+    height: 100%;
+    justify-content: flex-end;
+    align-items: flex-end;
+    display: flex;
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
+`;
+
+const GoogleMapsLogo = () => (
+    <GoogleMapsLogoWrapper>
+        <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://maps.google.com/maps?ll=55.7286,12.0635&amp;z=9&amp;t=m&amp;hl=en-US&amp;gl=US&amp;mapclient=apiv3"
+            title="Open this area in Google Maps (opens a new window)"
+        >
+            <div>
+                <img
+                    style={{ width: '66px', height: '26px' }}
+                    alt=""
+                    src="https://maps.gstatic.com/mapfiles/api-3/images/google_white5_hdpi.png"
+                    draggable="false"
+                />
+            </div>
+        </a>
+    </GoogleMapsLogoWrapper>
+);
 
 const FormRow = styled(Row)`
     padding-left: 200px;
