@@ -74,18 +74,18 @@ const CREATE_USER = gql`
     mutation CreateUser(
         $email: EmailAddress!
         $password: String!
-        $firstName: String!
-        $lastName: String!
+        $firstName: String
+        $lastName: String
         $artistName: String
-        $playingLocation: Area!
-        $genres: [String!]!
+        $playingLocation: Area
+        $genres: [String!]
         $experienceLevel: ExperienceLevel
-        $bio: String!
+        $bio: String
         $redirectLink: String!
-        $profilePicture: ID!
+        $profilePicture: ID
         $phone: String
     ) {
-        signUp(
+        signUpToken(
             email: $email
             password: $password
             redirectLink: $redirectLink
@@ -98,7 +98,9 @@ const CREATE_USER = gql`
             bio: $bio
             profilePicture: $profilePicture
             phone: $phone
-        )
+        ) {
+            token
+        }
     }
 `;
 

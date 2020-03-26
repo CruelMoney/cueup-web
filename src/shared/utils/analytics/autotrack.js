@@ -106,32 +106,40 @@ export const trackError = (error, fieldsObj = {}) => {
 };
 
 export function trackCheckAvailability() {
-    gtag('event', 'checkavailability', {
-        event_category: 'Event',
-    });
-    gtag('event', 'conversion', {
-        send_to: ADS_ID + '/7KbhCK67m7oBEMD1hKED',
-    });
+    if (window.gtag) {
+        window.gtag('event', 'checkavailability', {
+            event_category: 'Event',
+        });
+        window.gtag('event', 'conversion', {
+            send_to: ADS_ID + '/7KbhCK67m7oBEMD1hKED',
+        });
+    }
 }
 export function trackSignup() {
-    gtag('event', 'created', {
-        event_category: 'Account',
-    });
-    gtag('event', 'conversion', { send_to: ADS_ID + '/4yucCNLZm7oBEMD1hKED' });
+    if (window.gtag) {
+        window.gtag('event', 'created', {
+            event_category: 'Account',
+        });
+        window.gtag('event', 'conversion', { send_to: ADS_ID + '/4yucCNLZm7oBEMD1hKED' });
+    }
 }
 export function trackEventPosted() {
-    gtag('event', 'created', {
-        event_category: 'Event',
-    });
-    gtag('event', 'conversion', {
-        send_to: ADS_ID + '/GXTzCJros7oBEMD1hKED',
-    });
+    if (window.gtag) {
+        window.gtag('event', 'created', {
+            event_category: 'Event',
+        });
+        window.gtag('event', 'conversion', {
+            send_to: ADS_ID + '/GXTzCJros7oBEMD1hKED',
+        });
+    }
 }
 export function trackEventPaid(val) {
-    gtag('event', 'paid', {
-        event_category: 'Event',
-        value: val,
-    });
+    if (window.gtag) {
+        window.gtag('event', 'paid', {
+            event_category: 'Event',
+            value: val,
+        });
+    }
 }
 
 /**

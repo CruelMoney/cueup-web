@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import debounce from 'lodash/debounce';
 import { localize } from 'react-localize-redux';
-import { useMutation } from 'react-apollo';
+import { useMutation, useLazyQuery } from 'react-apollo';
 import * as Sentry from '@sentry/browser';
 import { SmartButton, Row, Avatar, Col } from 'components/Blocks';
 import { Input, InputRow } from 'components/FormComponents';
@@ -12,20 +12,43 @@ import ToggleButtonHandler from 'components/common/ToggleButtonHandler';
 import ImageUploader from 'components/ImageInput';
 import useImageUpload from 'components/hooks/useImageUpload';
 import { trackSignup } from 'utils/analytics/autotrack';
+import { authService } from 'utils/AuthService';
 import NumberedList from '../../../components/common/NumberedList';
 import c from '../../../constants/constants';
 import GeoCoder from '../../../utils/GeoCoder';
 import SimpleMap from '../../../components/common/Map';
-import { CREATE_USER } from '../../../components/gql';
+import { CREATE_USER, ME } from '../../../components/gql';
 import ErrorMessageApollo from '../../../components/common/ErrorMessageApollo';
+
+const isDevelopment = process.env.NODE_ENV === 'development';
+
+const initialState = isDevelopment
+    ? {
+          genres: [],
+          locationName: 'Bali',
+          playingRadius: 25000,
+          playingLocation: {
+              lat: -8.415773,
+              lng: 115.182847,
+          },
+      }
+    : { genres: [] };
 
 const SignupForm = ({ translate, geoCity, reference }) => {
     const [loading, setLoading] = useState(false);
+    const [loadMe] = useLazyQuery(ME, {
+        onError: console.log,
+        onCompleted: ({ me }) => {
+            console.log({ me });
+            if (me) {
+                window.location = '/user' + me.permaLink;
+            }
+        },
+    });
+
     const [mutate, { error }] = useMutation(CREATE_USER);
     const genreRef = useRef();
-    const [state, setState] = useState({
-        genres: [],
-    });
+    const [state, setState] = useState(initialState);
     const { registerValidation, unregisterValidation, runValidations } = useForm(state);
 
     const { error: genreError, runValidation: runGenreValidation } = useValidation({
@@ -55,13 +78,10 @@ const SignupForm = ({ translate, geoCity, reference }) => {
             const lastName = name.pop();
             const firstName = name.join(' ');
 
-            const { id: pictureId } = await profilePicture;
-
             const variables = {
                 ...state,
                 lastName,
                 firstName,
-                profilePicture: pictureId,
                 playingLocation: {
                     name: locationName,
                     latitude: playingLocation.lat,
@@ -71,12 +91,21 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                 reference: reference,
                 redirectLink: c.Environment.CALLBACK_DOMAIN,
             };
-            await mutate({ variables });
-            setValue({
-                msg: "Thanks for joining. Please verify your email using the link we've just sent.",
-            });
+
+            if (profilePicture) {
+                const { id: pictureId } = await profilePicture;
+                variables.profilePicture = pictureId;
+            }
+
+            const { data } = await mutate({ variables });
             trackSignup();
+            const token = data?.signUpToken?.token;
+            if (token) {
+                authService.setSession(token);
+                await loadMe();
+            }
         } catch (err) {
+            console.log(err);
             Sentry.captureException(err);
         } finally {
             setLoading(false);
@@ -266,7 +295,7 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                             onSave={(profilePicture) =>
                                 setValue({ profilePicture: beginUpload(profilePicture) })
                             }
-                            validation={[validators.required]}
+                            validation={[!isDevelopment && validators.required].filter(Boolean)}
                             registerValidation={registerValidation('profilePicture')}
                             unregisterValidation={unregisterValidation('profilePicture')}
                         />

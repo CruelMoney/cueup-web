@@ -17,7 +17,7 @@ import { TitleClean } from './Text';
 import { useLogout } from './hooks/useLogout';
 import { LoadingIndicator } from './Blocks';
 
-const Menu = ({ translate, history, location }) => {
+const Menu = ({ translate, history }) => {
     const [loginExpanded, setLoginExpanded] = useState(false);
     const logout = useLogout();
 
@@ -34,8 +34,6 @@ const Menu = ({ translate, history, location }) => {
             setLoginExpanded(true);
         }
     }, [setLoginExpanded]);
-
-    const isHome = location.pathname === '/' || location.pathname === '/dk';
 
     return (
         <Query
