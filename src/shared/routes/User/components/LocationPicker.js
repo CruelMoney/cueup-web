@@ -7,7 +7,7 @@ import Popup from '../../../components/common/Popup';
 import Map from '../../../components/common/Map';
 import GeoCoder from '../../../utils/GeoCoder';
 
-const LocationPicker = ({ initialLocation, save }) => {
+const LocationPicker = ({ initialLocation, save, isActive }) => {
     const [location, setLocation] = useState(
         initialLocation
             ? {
@@ -19,7 +19,7 @@ const LocationPicker = ({ initialLocation, save }) => {
             : null
     );
     const [error, setError] = useState(null);
-    const [showing, setShowing] = useState(false);
+    const [showing, setShowing] = useState(isActive);
 
     const updateMap = debounce((location) => {
         if (location) {

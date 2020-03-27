@@ -149,8 +149,15 @@
     animation-delay: 256ms;
 }
 
+.gm-style a img {
+    display: none;
+}
+
 /* Tablet */
 @media only screen and (max-width: 768px) {
+    .gm-style a img {
+        display: block;
+    }
     .location_book-dj header .container.fix-top-mobile {
         display: block;
         margin: 0;
@@ -199,10 +206,8 @@
 
     .show-tablet-down {
         background: rgba(49, 217, 255, 0.95);
-        bottom: 0;
         color: white;
         padding: 2em 0;
-        position: absolute !important;
         width: 100%;
     }
 

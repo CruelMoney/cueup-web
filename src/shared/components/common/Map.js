@@ -80,6 +80,13 @@ class SimpleMap extends Component {
         const { mapOptions } = this.props;
         return (
             <GoogleMap
+                ref={(r) => {
+                    if (r) {
+                        const div = r.getDiv();
+                        div.style.paddingLeft = '100px';
+                        console.log(div);
+                    }
+                }}
                 key={this.props.key}
                 defaultZoom={this.getZoomLevel(this.props.radius)}
                 defaultCenter={this.props.defaultCenter || this.marker.position}
@@ -88,7 +95,7 @@ class SimpleMap extends Component {
                     scrollwheel: false,
                     streetViewControl: false,
                     mapTypeControl: false,
-
+                    disableDefaultUI: true,
                     styles: [
                         {
                             stylers: [{ visibility: 'off' }],

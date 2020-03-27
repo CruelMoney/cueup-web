@@ -12,7 +12,7 @@ class UserMenuItem extends Component {
     render() {
         //Cut length if too long
         function getLabel(name) {
-            if (name.length > 20) {
+            if (name?.length > 20) {
                 return name.substring(0, 20) + '...';
             }
             return name;

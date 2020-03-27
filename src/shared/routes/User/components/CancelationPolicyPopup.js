@@ -7,9 +7,9 @@ import Popup from '../../../components/common/Popup';
 import Slider from '../../../components/common/Slider';
 import { Stat, StatUnit, BodySmall } from '../../../components/Text';
 
-const CancelationPolicyPopup = ({ initialValue, save, translate }) => {
+const CancelationPolicyPopup = ({ initialValue, save, translate, isActive }) => {
     const [cancelationPolicy, setCancelationPolicy] = useState(initialValue);
-    const [showing, setShowing] = useState(false);
+    const [showing, setShowing] = useState(isActive);
 
     return (
         <>

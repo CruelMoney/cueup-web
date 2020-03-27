@@ -18,6 +18,7 @@ const SuggestionList = ({
     style,
     children,
     filter,
+    footer,
     ...props
 }) => {
     let suggestions = ogSuggestions;
@@ -137,6 +138,7 @@ const SuggestionList = ({
                             {s.label || s}
                         </Suggestion>
                     ))}
+                    {footer}
                 </List>
             )}
             {children}

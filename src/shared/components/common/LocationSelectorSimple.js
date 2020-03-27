@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import useScript from '@charlietango/use-script';
 import SuggestionList from '../SuggestionList';
+import poweredByGoogle from '../../assets/powered_by_google.png';
 
 function toTitleCase(str) {
+    if (!str) {
+        return str;
+    }
     return str.replace(/\w\S*/g, (txt) => {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
@@ -10,6 +14,7 @@ function toTitleCase(str) {
 
 const LocationSelector = ({ placeholder, countries = [], ...props }) => {
     const [dataSource, setDataSource] = useState([]);
+    const [focus, setFocus] = useState(false);
     const locationService = useRef();
 
     const [loaded] = useScript(
@@ -56,12 +61,29 @@ const LocationSelector = ({ placeholder, countries = [], ...props }) => {
     };
 
     return (
-        <SuggestionList
-            onChange={onChangeHandler}
-            placeholder={placeholder || 'City'}
-            suggestions={dataSource}
-            {...props}
-        />
+        <>
+            <SuggestionList
+                onChange={onChangeHandler}
+                placeholder={placeholder || 'City'}
+                suggestions={dataSource}
+                onFocus={() => setFocus(true)}
+                onBlur={() => setFocus(false)}
+                {...props}
+            />
+            {focus && (
+                <div
+                    style={{
+                        position: 'absolute',
+                        top: '40px',
+                        right: '15px',
+                        pointerEvents: 'none',
+                        zIndex: 2,
+                    }}
+                >
+                    <img style={{ width: '96px' }} src={poweredByGoogle} alt="powered by google" />
+                </div>
+            )}
+        </>
     );
 };
 
