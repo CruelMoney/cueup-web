@@ -16,7 +16,6 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     introspectionQueryResultData,
 });
 
-let token;
 // custome error handling, only logging errors atm
 const errorLink = onError(({ graphQLErrors, networkError, operation, forward, response }) => {
     if (graphQLErrors) {
@@ -29,7 +28,6 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward, re
             // handle errors differently based on its error code
             switch (err.extensions.code) {
                 case 'UNAUTHENTICATED':
-                    token = null;
                     authService.logout();
                     break;
 
@@ -47,32 +45,15 @@ const errorLink = onError(({ graphQLErrors, networkError, operation, forward, re
 });
 
 const withToken = setContext(async (_, { headers }) => {
-    // get token if not present
-    if (!token) {
-        try {
-            const userToken = authService.getToken();
-            token = userToken;
-        } catch (error) {
-            console.warn(error);
-        }
-    }
+    const userToken = authService.getToken();
 
     return {
         headers: {
             ...headers,
-            'x-token': token ? `${token}` : '',
+            'x-token': userToken ? `${userToken}` : '',
         },
     };
 });
-
-const resetToken = onError(({ networkError }) => {
-    if (networkError && networkError.name === 'ServerError' && networkError.statusCode === 401) {
-        // remove cached token on 401 from the server
-        token = null;
-    }
-});
-
-const authFlowLink = withToken.concat(resetToken);
 
 const cache = new InMemoryCache({ fragmentMatcher }).restore(window.__APOLLO_STATE__);
 
@@ -82,7 +63,7 @@ const uploadLink = createUploadLink({
     fetch: customFetch,
 });
 
-const link = ApolloLink.from([errorLink, authFlowLink, uploadLink]);
+const link = ApolloLink.from([errorLink, withToken, uploadLink]);
 
 const client = new ApolloClient({
     cache,
@@ -92,7 +73,6 @@ const client = new ApolloClient({
 });
 
 const reset = async () => {
-    token = null;
     authService.logout();
     await client.resetStore();
 };
