@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import debounce from 'lodash/debounce';
 import { localize } from 'react-localize-redux';
-import { useMutation, useLazyQuery } from 'react-apollo';
+import { useMutation, useLazyQuery, useQuery, useApolloClient } from 'react-apollo';
 import * as Sentry from '@sentry/browser';
 import { SmartButton, Row, Avatar, Col } from 'components/Blocks';
 import { Input, InputRow } from 'components/FormComponents';
@@ -13,6 +13,7 @@ import ImageUploader from 'components/ImageInput';
 import useImageUpload from 'components/hooks/useImageUpload';
 import { trackSignup } from 'utils/analytics/autotrack';
 import { authService } from 'utils/AuthService';
+import useOnLoggedIn from 'components/hooks/useOnLoggedIn';
 import NumberedList from '../../../components/common/NumberedList';
 import c from '../../../constants/constants';
 import GeoCoder from '../../../utils/GeoCoder';
@@ -34,18 +35,10 @@ const initialState = isDevelopment
       }
     : { genres: [] };
 
-const SignupForm = ({ translate, geoCity, reference }) => {
-    const [loading, setLoading] = useState(false);
-    const [loadMe] = useLazyQuery(ME, {
-        onError: console.log,
-        onCompleted: ({ me }) => {
-            console.log({ me });
-            if (me) {
-                window.location = '/user' + me.permaLink;
-            }
-        },
-    });
+const SignupForm = ({ translate, reference }) => {
+    const onLoggedIn = useOnLoggedIn();
 
+    const [loading, setLoading] = useState(false);
     const [mutate, { error }] = useMutation(CREATE_USER);
     const genreRef = useRef();
     const [state, setState] = useState(initialState);
@@ -74,14 +67,9 @@ const SignupForm = ({ translate, geoCity, reference }) => {
             setLoading(true);
             let { name } = state;
             const { playingLocation, playingRadius, locationName, profilePicture } = state;
-            name = name.split(' ');
-            const lastName = name.pop();
-            const firstName = name.join(' ');
 
             const variables = {
                 ...state,
-                lastName,
-                firstName,
                 playingLocation: {
                     name: locationName,
                     latitude: playingLocation.lat,
@@ -92,6 +80,12 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                 redirectLink: c.Environment.CALLBACK_DOMAIN,
             };
 
+            if (name) {
+                name = name.split(' ');
+                variables.lastName = name.pop();
+                variables.firstName = name.join(' ');
+            }
+
             if (profilePicture) {
                 const { id: pictureId } = await profilePicture;
                 variables.profilePicture = pictureId;
@@ -101,8 +95,7 @@ const SignupForm = ({ translate, geoCity, reference }) => {
             trackSignup();
             const token = data?.signUpToken?.token;
             if (token) {
-                authService.setSession(token);
-                await loadMe();
+                onLoggedIn({ token });
             }
         } catch (err) {
             console.log(err);
@@ -180,7 +173,10 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                         autoComplete="name"
                         placeholder={translate('first-last')}
                         onSave={(name) => setValue({ name })}
-                        validation={[validators.required, validators.lastName]}
+                        validation={[
+                            !isDevelopment && validators.required,
+                            !isDevelopment && validators.lastName,
+                        ].filter(Boolean)}
                         registerValidation={registerValidation('name')}
                         unregisterValidation={unregisterValidation('name')}
                     />
@@ -213,7 +209,7 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                         placeholder="12345678"
                         autoComplete="tel"
                         onSave={(phone) => setValue({ phone })}
-                        validation={[validators.required]}
+                        validation={[!isDevelopment && validators.required].filter(Boolean)}
                         registerValidation={registerValidation('phone')}
                         unregisterValidation={unregisterValidation('phone')}
                     />
@@ -315,20 +311,26 @@ const SignupForm = ({ translate, geoCity, reference }) => {
                         style={{ height: '150px' }}
                         name="bio"
                         onSave={(bio) => setValue({ bio })}
-                        validation={[
-                            validators.required,
-                            validators.minLength(100),
-                            validators.containsEmail(
-                                "Email addresses aren't allowed on profiles. Always communicate directly through Cueup"
-                            ),
-                            validators.containsNumber(
-                                "For security phone numbers aren't allowed on profiles. Always communicate directly through Cueup"
-                            ),
-                            validators.containsURL("Links to websites aren't allowed on profiles."),
-                            validators.containsInstagram(
-                                "Instagram handles aren't allowed on profiles."
-                            ),
-                        ]}
+                        validation={
+                            isDevelopment
+                                ? []
+                                : [
+                                      validators.required,
+                                      validators.minLength(100),
+                                      validators.containsEmail(
+                                          "Email addresses aren't allowed on profiles. Always communicate directly through Cueup"
+                                      ),
+                                      validators.containsNumber(
+                                          "For security phone numbers aren't allowed on profiles. Always communicate directly through Cueup"
+                                      ),
+                                      validators.containsURL(
+                                          "Links to websites aren't allowed on profiles."
+                                      ),
+                                      validators.containsInstagram(
+                                          "Instagram handles aren't allowed on profiles."
+                                      ),
+                                  ]
+                        }
                         registerValidation={registerValidation('bio')}
                         unregisterValidation={unregisterValidation('bio')}
                     />

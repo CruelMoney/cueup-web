@@ -263,6 +263,7 @@ const Index = ({ translate, match, location }) => {
                         {({ data: userData, loading: loadingUser }) => {
                             const { user: profileUser } = userData || {};
                             const loading = loadingMe || loadingUser;
+                            const me = data?.me;
 
                             if (!loadingUser && !profileUser) {
                                 return <Redirect to={translate('routes./not-found')} />;
@@ -272,6 +273,10 @@ const Index = ({ translate, match, location }) => {
 
                             if (user && data && data.me) {
                                 user.isOwn = user.isOwn || data.me.id === user.id;
+                            }
+
+                            if (me && user.isOwn && !me.appMetadata.onboarded) {
+                                return <Redirect to={'/complete-signup'} />;
                             }
 
                             if (user && user.isOwn && data && data.me) {
