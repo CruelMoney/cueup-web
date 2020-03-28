@@ -260,12 +260,13 @@ const Index = ({ translate, match, location }) => {
                         variables={{ permalink: match.params.permalink }}
                         onError={console.warn}
                     >
-                        {({ data: userData, loading: loadingUser }) => {
+                        {({ data: userData, loading: loadingUser, error }) => {
                             const { user: profileUser } = userData || {};
                             const loading = loadingMe || loadingUser;
                             const me = data?.me;
 
-                            if (!loadingUser && !profileUser) {
+                            console.log({ loadingUser, userData, error });
+                            if (!loading && !profileUser) {
                                 return <Redirect to={translate('routes./not-found')} />;
                             }
 
@@ -275,7 +276,7 @@ const Index = ({ translate, match, location }) => {
                                 user.isOwn = user.isOwn || data.me.id === user.id;
                             }
 
-                            if (me && user.isOwn && !me.appMetadata.onboarded) {
+                            if (me && !me.appMetadata.onboarded && user?.isOwn) {
                                 return <Redirect to={'/complete-signup'} />;
                             }
 

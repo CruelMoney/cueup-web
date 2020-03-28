@@ -14,6 +14,7 @@ import useImageUpload from 'components/hooks/useImageUpload';
 import { trackSignup } from 'utils/analytics/autotrack';
 import { authService } from 'utils/AuthService';
 import useOnLoggedIn from 'components/hooks/useOnLoggedIn';
+import { UPDATE_USER } from 'routes/User/gql';
 import NumberedList from '../../../components/common/NumberedList';
 import c from '../../../constants/constants';
 import GeoCoder from '../../../utils/GeoCoder';
@@ -23,24 +24,27 @@ import ErrorMessageApollo from '../../../components/common/ErrorMessageApollo';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
-const initialState = isDevelopment
-    ? {
-          genres: [],
-          locationName: 'Bali',
-          playingRadius: 25000,
-          playingLocation: {
-              lat: -8.415773,
-              lng: 115.182847,
-          },
-      }
-    : { genres: [] };
-
-const SignupForm = ({ translate, reference }) => {
+const SignupForm = ({ translate, reference, user }) => {
     const onLoggedIn = useOnLoggedIn();
 
     const [loading, setLoading] = useState(false);
-    const [mutate, { error }] = useMutation(CREATE_USER);
+    const [mutate, { error }] = useMutation(user ? UPDATE_USER : CREATE_USER);
     const genreRef = useRef();
+
+    const initialState = {};
+
+    //create initial state
+    if (user) {
+        initialState.email = user.email;
+        initialState.bio = user.userMetadata.bio;
+        initialState.genres = user.genres || [];
+        initialState.artistName = user.artistName;
+        initialState.phone = user.userMetadata.phone;
+        if (user.userMetadata.firstName) {
+            initialState.name = user.userMetadata.firstName + ' ' + user.userMetadata.lastName;
+        }
+    }
+
     const [state, setState] = useState(initialState);
     const { registerValidation, unregisterValidation, runValidations } = useForm(state);
 
@@ -53,7 +57,9 @@ const SignupForm = ({ translate, reference }) => {
 
     const setValue = (slice) => setState((s) => ({ ...s, ...slice }));
 
-    const { preview, beginUpload, error: uploadError } = useImageUpload();
+    const { preview, beginUpload, error: uploadError } = useImageUpload({
+        initialPreview: user?.picture?.path,
+    });
 
     const signup = async (e) => {
         e.preventDefault();
@@ -70,15 +76,18 @@ const SignupForm = ({ translate, reference }) => {
 
             const variables = {
                 ...state,
-                playingLocation: {
+                reference: reference,
+                redirectLink: c.Environment.CALLBACK_DOMAIN,
+            };
+
+            if (playingLocation) {
+                variables.playingLocation = {
                     name: locationName,
                     latitude: playingLocation.lat,
                     longitude: playingLocation.lng,
                     radius: playingRadius,
-                },
-                reference: reference,
-                redirectLink: c.Environment.CALLBACK_DOMAIN,
-            };
+                };
+            }
 
             if (name) {
                 name = name.split(' ');
@@ -91,10 +100,26 @@ const SignupForm = ({ translate, reference }) => {
                 variables.profilePicture = pictureId;
             }
 
+            if (user) {
+                variables.id = user.id;
+            }
+
+            // can be update or signup
             const { data } = await mutate({ variables });
-            trackSignup();
-            const token = data?.signUpToken?.token;
+
+            console.log('data');
+            let token = null;
+
+            if (!user) {
+                trackSignup();
+                token = data?.signUpToken?.token;
+            } else {
+                token = authService.getAccessToken();
+            }
+
             if (token) {
+                console.log('onlogged in');
+
                 onLoggedIn({ token });
             }
         } catch (err) {
@@ -136,6 +161,7 @@ const SignupForm = ({ translate, reference }) => {
                         name="email"
                         placeholder="mail@gmail.com"
                         autoComplete="email"
+                        defaultValue={state.email}
                         onSave={(email) => setValue({ email })}
                         validation={[validators.required, validators.email]}
                         registerValidation={registerValidation('email')}
@@ -143,23 +169,25 @@ const SignupForm = ({ translate, reference }) => {
                     />
                 </RegistrationElement>
 
-                <RegistrationElement
-                    name="password"
-                    label="Password*"
-                    active={true}
-                    text={translate('signup.form.password')}
-                >
-                    <Input
-                        big
-                        type="password"
+                {!user && (
+                    <RegistrationElement
                         name="password"
-                        placeholder="Something super secret"
-                        onSave={(password) => setValue({ password })}
-                        validation={[validators.required, validators.minLength(6)]}
-                        registerValidation={registerValidation('password')}
-                        unregisterValidation={unregisterValidation('password')}
-                    />
-                </RegistrationElement>
+                        label="Password*"
+                        active={true}
+                        text={translate('signup.form.password')}
+                    >
+                        <Input
+                            big
+                            type="password"
+                            name="password"
+                            placeholder="Something super secret"
+                            onSave={(password) => setValue({ password })}
+                            validation={[validators.required, validators.minLength(6)]}
+                            registerValidation={registerValidation('password')}
+                            unregisterValidation={unregisterValidation('password')}
+                        />
+                    </RegistrationElement>
+                )}
 
                 <RegistrationElement
                     name="name"
@@ -171,6 +199,7 @@ const SignupForm = ({ translate, reference }) => {
                         big
                         name="name"
                         autoComplete="name"
+                        defaultValue={state.name}
                         placeholder={translate('first-last')}
                         onSave={(name) => setValue({ name })}
                         validation={[
@@ -191,6 +220,7 @@ const SignupForm = ({ translate, reference }) => {
                         big
                         name="artistName"
                         autoComplete="artistName"
+                        defaultValue={state.artistName}
                         placeholder={'DJ ' + (state.name?.split(' ')[0] || 'name')}
                         onSave={(artistName) => setValue({ artistName })}
                     />
@@ -208,6 +238,7 @@ const SignupForm = ({ translate, reference }) => {
                         type="tel"
                         placeholder="12345678"
                         autoComplete="tel"
+                        defaultValue={state.phone}
                         onSave={(phone) => setValue({ phone })}
                         validation={[!isDevelopment && validators.required].filter(Boolean)}
                         registerValidation={registerValidation('phone')}
@@ -256,6 +287,7 @@ const SignupForm = ({ translate, reference }) => {
                     <ToggleButtonHandler
                         name="genres"
                         potentialValues={c.GENRES}
+                        value={state.genres}
                         onChange={(genres) => {
                             setValue({ genres });
                             runGenreValidation(genres);
@@ -291,7 +323,9 @@ const SignupForm = ({ translate, reference }) => {
                             onSave={(profilePicture) =>
                                 setValue({ profilePicture: beginUpload(profilePicture) })
                             }
-                            validation={[!isDevelopment && validators.required].filter(Boolean)}
+                            validation={[
+                                !isDevelopment && !user?.picture && validators.required,
+                            ].filter(Boolean)}
                             registerValidation={registerValidation('profilePicture')}
                             unregisterValidation={unregisterValidation('profilePicture')}
                         />
@@ -310,6 +344,7 @@ const SignupForm = ({ translate, reference }) => {
                         validate={['required']}
                         style={{ height: '150px' }}
                         name="bio"
+                        defaultValue={state.bio}
                         onSave={(bio) => setValue({ bio })}
                         validation={
                             isDevelopment

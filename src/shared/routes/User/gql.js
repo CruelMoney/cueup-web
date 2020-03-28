@@ -10,6 +10,7 @@ const USER = gql`
             genres
             artistName
             picture {
+                id
                 path
             }
             coverPhoto {

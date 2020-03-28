@@ -16,6 +16,7 @@ import About from './routes/About';
 import CueupEvent from './routes/Event';
 import Gig from './routes/Gig';
 import Signup from './routes/Signup';
+import CompleteSignup from './routes/CompleteSignup';
 import User from './routes/User';
 import Faq from './routes/Faq';
 import Terms from './routes/Terms';
@@ -189,6 +190,7 @@ const RouteWrapper = memo(({ translate, cssLocation }) => {
                     <Route path={translate('routes./become-dj')} component={LazyBecomeDj} />
                     <Route path={translate('routes./how-it-works')} component={LazyHowItWorks} />
                     <Route path={translate('routes./signup')} component={Signup} />
+                    <Route path={'/complete-signup'} component={CompleteSignup} />
                     <Route path={translate('routes./faq')} component={Faq} />
                     <Route path={translate('routes./terms')} component={Terms} />
                     <Route

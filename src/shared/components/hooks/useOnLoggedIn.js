@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import { ME } from 'components/gql';
 import { authService } from 'utils/AuthService';
 
-const useOnLoggedIn = ({ onLoggedIn }) => {
+const useOnLoggedIn = ({ onLoggedIn } = {}) => {
     const { refetch } = useQuery(ME);
     const history = useHistory();
 

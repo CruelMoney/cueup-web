@@ -3,14 +3,14 @@ import { useState } from 'react';
 import { UPLOAD_FILE } from 'routes/User/gql';
 import { ImageCompressor } from '../../utils/ImageCompressor';
 
-const useImageUpload = ({ onCompleted } = {}) => {
+const useImageUpload = ({ onCompleted, initialPreview } = {}) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState();
     const [mutate] = useMutation(UPLOAD_FILE, {
         onCompleted,
         onError: setError,
     });
-    const [preview, setPreview] = useState();
+    const [preview, setPreview] = useState(initialPreview);
 
     const beginUpload = async (file) => {
         try {
