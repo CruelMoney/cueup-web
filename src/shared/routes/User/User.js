@@ -265,7 +265,6 @@ const Index = ({ translate, match, location }) => {
                             const loading = loadingMe || loadingUser;
                             const me = data?.me;
 
-                            console.log({ loadingUser, userData, error });
                             if (!loading && !profileUser) {
                                 return <Redirect to={translate('routes./not-found')} />;
                             }

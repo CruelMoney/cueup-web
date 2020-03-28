@@ -212,6 +212,7 @@ const UPDATE_USER = gql`
             genres
             playedVenues
             picture {
+                id
                 path
             }
             coverPhoto {
@@ -233,6 +234,7 @@ const UPDATE_USER = gql`
             appMetadata {
                 profileStatus
                 approved
+                onboarded
             }
             userSettings {
                 currency

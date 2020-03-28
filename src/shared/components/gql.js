@@ -37,6 +37,7 @@ const ME = gql`
                 roles
                 profileStatus
                 approved
+                onboarded
             }
             userMetadata {
                 firstName
