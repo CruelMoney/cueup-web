@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import { ME } from 'components/gql';
 import { authService } from 'utils/AuthService';
 
-const useOnLoggedIn = ({ onLoggedIn } = {}) => {
+const useOnLoggedIn = ({ onLoggedIn, redirect = true } = {}) => {
     const { refetch } = useQuery(ME);
     const history = useHistory();
 
@@ -17,13 +17,15 @@ const useOnLoggedIn = ({ onLoggedIn } = {}) => {
                 await onLoggedIn(data);
             }
 
-            const onboarded = data?.me?.appMetadata?.onboarded;
-            const permalink = data?.me?.permalink;
+            if (data?.me && redirect) {
+                const onboarded = data?.me?.appMetadata?.onboarded;
+                const permalink = data?.me?.permalink;
 
-            if (onboarded) {
-                history.push('user/' + permalink + '/overview');
-            } else {
-                history.push('/complete-signup');
+                if (onboarded) {
+                    history.push('user/' + permalink + '/overview');
+                } else {
+                    history.push('/complete-signup');
+                }
             }
         }
     };

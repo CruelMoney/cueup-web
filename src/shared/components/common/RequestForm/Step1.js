@@ -101,9 +101,7 @@ const Step1 = ({
                             name="date"
                             label={translate('request-form.step-1.event-date')}
                             disabled
-                            onClick={() => {
-                                setShowDatePickter(true);
-                            }}
+                            style={{ pointerEvents: 'none', zIndex: 2, position: 'relative' }}
                             value={eventDateString}
                             validation={(v) => (v ? null : 'Please select a date')}
                             registerValidation={registerValidation('date')}

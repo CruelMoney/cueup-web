@@ -83,7 +83,7 @@ const Step3 = ({
                 />
             </RequestSection>
             <Row right style={{ marginTop: '12px' }}>
-                <TeritaryButton type="button" className="back-button" onClick={back}>
+                <TeritaryButton type="button" onClick={back}>
                     {translate('back')}
                 </TeritaryButton>
                 <PrimaryButton type="button" onClick={() => next()}>

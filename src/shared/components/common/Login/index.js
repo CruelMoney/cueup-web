@@ -47,7 +47,7 @@ const LoginStyle = styled.div`
     }
 `;
 
-const Login = ({ error, translate, onLogin }) => {
+const Login = ({ redirect = true, error, translate, onLogin }) => {
     const [state, setState] = useState({
         email: '',
         password: '',
@@ -62,7 +62,7 @@ const Login = ({ error, translate, onLogin }) => {
         setStateValue({ loading: false, error: null });
     };
 
-    const onLoggedIn = useOnLoggedIn({ onLoggedIn: callback });
+    const onLoggedIn = useOnLoggedIn({ onLoggedIn: callback, redirect });
 
     const [socialLoading, setSocialLoading] = useState(null);
 
