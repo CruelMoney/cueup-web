@@ -109,8 +109,8 @@ const UserContainer = styled(Container)`
 
 const Content = React.memo(({ match, ...userProps }) => {
     const { user, loading, location } = userProps;
-    const showPrivateRoutes = loading || (user && user.isOwn);
-    const bookingEnabled = user && user.isDj && !user.userSettings.standby;
+    const showPrivateRoutes = loading || user?.isOwn;
+    const bookingEnabled = user?.isDj && !user.userSettings.standby;
 
     // check for event
     const queries = queryString.parse(location.search);
@@ -120,7 +120,7 @@ const Content = React.memo(({ match, ...userProps }) => {
         comingFromEvent = true;
     }
 
-    const overviewIsEvents = showPrivateRoutes && !user.isDj;
+    const overviewIsEvents = showPrivateRoutes && !user?.isDj;
 
     return (
         <div>

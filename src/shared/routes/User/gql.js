@@ -10,7 +10,6 @@ const USER = gql`
             genres
             artistName
             picture {
-                id
                 path
             }
             coverPhoto {
@@ -212,7 +211,6 @@ const UPDATE_USER = gql`
             genres
             playedVenues
             picture {
-                id
                 path
             }
             coverPhoto {
