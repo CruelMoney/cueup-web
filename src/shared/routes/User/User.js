@@ -120,6 +120,8 @@ const Content = React.memo(({ match, ...userProps }) => {
         comingFromEvent = true;
     }
 
+    const overviewIsEvents = showPrivateRoutes && !user.isDj;
+
     return (
         <div>
             <ScrollToTop animate top={280} />
@@ -148,7 +150,13 @@ const Content = React.memo(({ match, ...userProps }) => {
                                 strict
                                 exact
                                 path={match.url + '/overview'}
-                                render={(props) => <Overview {...props} {...userProps} />}
+                                render={(props) =>
+                                    overviewIsEvents ? (
+                                        <Events {...props} {...userProps} />
+                                    ) : (
+                                        <Overview {...props} {...userProps} />
+                                    )
+                                }
                             />
                             <Route
                                 strict

@@ -62,20 +62,22 @@ const content = {
     },
 };
 const getRoutesFromUser = (user, pathname) => {
-    const routes = [{ route: 'overview', label: 'overview', active: true }];
+    const routes = [];
 
     if (user) {
         const roles = user.appMetadata.roles;
+        const isDj = roles.includes('DJ');
+        const isOrganizer = roles.includes('ORGANIZER');
 
-        routes.push({ route: 'photos', label: 'photos' });
-
-        if (roles.includes('ORGANIZER')) {
+        if (isOrganizer) {
             if (user.isOwn) {
-                routes.push({ route: 'events', label: 'events' });
+                routes.push({ route: 'events', label: 'events', active: !isDj });
             }
         }
 
-        if (roles.includes('DJ')) {
+        if (isDj) {
+            routes.push({ route: 'overview', label: 'overview', active: true });
+            routes.push({ route: 'photos', label: 'photos' });
             routes.push({ route: 'sounds', label: 'sounds' });
             if (user.isOwn) {
                 routes.push({ route: 'gigs', label: 'gigs' });
@@ -232,7 +234,7 @@ const UserContent = ({ user }) => {
                                 </div>
                             )}
 
-                            {!!statusContent && (
+                            {user.isDj && !!statusContent && (
                                 <StatusButton onClick={() => setShowing(true)}>
                                     <BodyBold white>
                                         {statusContent.title[approvedKey]} - read more
@@ -269,14 +271,16 @@ const UserContent = ({ user }) => {
                     </ShowBelow>
                 </HeaderWrapper>
             </ConditionalWrap>
-            <Popup showing={showing} onClickOutside={() => setShowing(false)} width={'500px'}>
-                <EditPopup
-                    profileStatus={profileStatus}
-                    approvedKey={approvedKey}
-                    close={() => setShowing(false)}
-                    user={user}
-                />
-            </Popup>
+            {user.isDj && (
+                <Popup showing={showing} onClickOutside={() => setShowing(false)} width={'500px'}>
+                    <EditPopup
+                        profileStatus={profileStatus}
+                        approvedKey={approvedKey}
+                        close={() => setShowing(false)}
+                        user={user}
+                    />
+                </Popup>
+            )}
         </>
     );
 };

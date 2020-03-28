@@ -60,7 +60,10 @@ const EventGigs = React.forwardRef(
 
         if (!loading && gigs.length === 0) {
             return (
-                <EmptyPage title="No DJs" message={'No DJs here at the moment, come back later.'} />
+                <EmptyPage
+                    title="No DJs"
+                    message={'We are still finding DJs for you, come back later.'}
+                />
             );
         }
 
