@@ -28,6 +28,8 @@ jobs:
           command: yarn test
 
   deploy-staging:
+    docker:
+      - image: ubuntu:14.04
     steps:
       - run:
           name: Add remote git
@@ -37,6 +39,8 @@ jobs:
           command: git push staging master
 
   deploy-production:
+    docker:
+      - image: ubuntu:14.04
     steps:
       - run:
           name: Add remote git
