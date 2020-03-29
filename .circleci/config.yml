@@ -10,20 +10,20 @@ jobs:
       - node/with-cache:
           steps:
             - run:
-              name: Install dependencies
-              command: yarn install
+                name: Install dependencies
+                command: yarn install
 
             - run:
-              name: Lint files
-              command: yarn lint
+                name: Lint files
+                command: yarn lint
 
             - run:
-              name: Check types
-              command: yarn tsc
+                name: Check types
+                command: yarn tsc
 
             - run:
-              name: Run tests
-              command: yarn test
+                name: Run tests
+                command: yarn test
 workflows:
     build-and-test:
       jobs:
