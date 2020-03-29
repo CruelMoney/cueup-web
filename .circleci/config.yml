@@ -31,6 +31,7 @@ jobs:
     docker:
       - image: alpine/git
     steps:
+      - checkout
       - run:
           name: Add remote git
           command: git remote add staging dokku@cueup.io:staging.cueup
@@ -42,6 +43,7 @@ jobs:
     docker:
       - image: alpine/git
     steps:
+      - checkout
       - run:
           name: Add remote git
           command: git remote add production dokku@cueup.io:cueup
