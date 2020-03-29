@@ -56,8 +56,8 @@ jobs:
 executors:
   with-redis:
     docker:
-      - image: cypress/base-12-6-0
-      - image: redis      
+      - image: cypress/base:12.6.0
+      - image: circleci/redis      
 
 workflows:
   build-deploy:
