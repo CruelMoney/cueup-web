@@ -31,6 +31,8 @@ jobs:
       - cypress/run:
           yarn: true
           record: true
+          parallel: true
+          parallelism: 2
           build: yarn build
           start: yarn start
           wait-on: http://localhost:3000
