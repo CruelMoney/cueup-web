@@ -32,6 +32,7 @@ jobs:
       - image: alpine/git
     steps:
       - checkout
+      - add_ssh_keys
       - run:
           name: Add remote git
           command: git remote add staging dokku@cueup.io:staging.cueup
@@ -44,6 +45,7 @@ jobs:
       - image: alpine/git
     steps:
       - checkout
+      - add_ssh_keys
       - run:
           name: Add remote git
           command: git remote add production dokku@cueup.io:cueup
