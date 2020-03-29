@@ -72,9 +72,6 @@ workflows:
               only: 
                 - staging
                 - master
-          environment:
-            REACT_APP_CUEUP_GQL_DOMAIN: https://staging.gql.cueup.io
-            WEBSITE_URL: http://localhost:3000
       # - deploy-staging:
       #     requires:
       #       - cypress/run
