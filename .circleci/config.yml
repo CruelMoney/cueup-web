@@ -1,19 +1,16 @@
 version: 2.1
 orbs:
   node: circleci/node@2.0.0
+  cypress: cypress-io/cypress@1.19.1
 jobs:
-  build-and-test:
-    executor:
-      name: node/default
-      tag: "10.17.0"
+  lint-and-test: 
+    docker: 
+      - image: ubuntu:14.04
     steps:
       - checkout
       - node/install-packages:
           pkg-manager: yarn
           cache-key: yarn.lock
-      - run:
-          name: Install deps
-          command: yarn
 
       - run:
           name: Lint files
@@ -26,6 +23,17 @@ jobs:
       - run:
           name: Run tests
           command: yarn test
+
+  e2e:
+    docker: 
+      - image: ubuntu:14.04
+    steps:
+      - cypress/run:
+          yarn: true
+          record: true
+          build: yarn build
+          start: yarn start
+          wait-on: http://localhost:3000
 
   deploy-staging:
     docker:
@@ -59,16 +67,24 @@ jobs:
 workflows:
   build-deploy:
     jobs:
-      - build-and-test
-      - deploy-staging:
+      - lint-and-test
+      - e2e:
           requires:
-            - build-and-test
+            - lint-and-test
           filters:
             branches:
-              only: staging
-      - deploy-production:
-          requires:
-            - build-and-test
-          filters:
-            branches:
-              only: master
+              only: 
+                - staging
+                - master
+      # - deploy-staging:
+      #     requires:
+      #       - e2e
+      #     filters:
+      #       branches:
+      #         only: staging
+      # - deploy-production:
+      #     requires:
+      #       - e2e
+      #     filters:
+      #       branches:
+      #         only: master
