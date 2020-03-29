@@ -1,5 +1,3 @@
-const CopyPlugin = require('copy-webpack-plugin');
-const paths = require('../paths');
 const baseConfig = require('./client.base');
 const generateSourceMap = process.env.OMIT_SOURCEMAP === 'true' ? false : true;
 
