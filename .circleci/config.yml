@@ -58,6 +58,8 @@ executors:
     docker:
       - image: cypress/base:12.6.0
       - image: circleci/redis      
+    environment:
+      CYPRESS_BASE_URL: http://localhost:3000
 
 workflows:
   build-deploy:
