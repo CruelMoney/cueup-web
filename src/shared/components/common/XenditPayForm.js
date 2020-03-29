@@ -1,7 +1,5 @@
 /* eslint-disable camelcase */
 import React, { useState, useReducer, useEffect, useCallback } from 'react';
-import { getTranslate } from 'react-localize-redux';
-import { connect } from 'react-redux';
 import Card from 'react-credit-card-input';
 import useScript from '@charlietango/use-script';
 import Iframe from 'react-iframe';
@@ -282,12 +280,4 @@ const Wrapper = styled.div`
         justify-content: center;
     }
 `;
-
-function mapStateToProps(state, ownprops) {
-    return {
-        ...ownprops,
-        translate: getTranslate(state.locale),
-    };
-}
-
-export default connect(mapStateToProps)(withApollo(XenditForm));
+export default withApollo(XenditForm);

@@ -1,5 +1,4 @@
 import React from 'react';
-import addTranslate from 'components/higher-order/addTranslate';
 import { Body } from 'components/Text';
 import { PrimaryButton } from 'components/Blocks';
 import usePushNotifications from 'components/hooks/usePushNotifications';
@@ -28,4 +27,4 @@ const Step5 = ({ translate, pushShouldBeEnabled, userId }) => {
     );
 };
 
-export default addTranslate(Step5);
+export default Step5;

@@ -17,7 +17,6 @@ import {
 import { Input, InputRow } from '../../../../components/FormComponents';
 import CurrencySelector from '../../../../components/CurrencySelector';
 import { Body, BodyBold, TitleClean } from '../../../../components/Text';
-import addTranslate from '../../../../components/higher-order/addTranslate';
 import content from '../../../User/content.json';
 
 const OfferForm = ({
@@ -362,4 +361,4 @@ const TableRow = ({ label, value, children, bold }) =>
         </Row>
     );
 
-export default addTranslate(OfferForm, [content]);
+export default OfferForm;

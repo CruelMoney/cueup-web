@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import debounce from 'lodash/debounce';
-import { localize } from 'react-localize-redux';
 import { useMutation, useLazyQuery, useQuery, useApolloClient } from 'react-apollo';
 import * as Sentry from '@sentry/browser';
 import { SmartButton, Row, Avatar, Col } from 'components/Blocks';
@@ -421,4 +420,4 @@ const SignupForm = ({ translate, reference, user }) => {
     );
 };
 
-export default localize(SignupForm, 'locale');
+export default SignupForm;

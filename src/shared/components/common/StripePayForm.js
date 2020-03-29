@@ -7,8 +7,6 @@ import {
     StripeProvider,
     PaymentRequestButtonElement,
 } from 'react-stripe-elements';
-import { getTranslate } from 'react-localize-redux';
-import { connect } from 'react-redux';
 import styled from 'styled-components';
 import * as Sentry from '@sentry/browser';
 import { Input, InputRow, LabelHalf } from 'components/FormComponents';
@@ -246,13 +244,6 @@ class StripeFormWrapper extends PureComponent {
     }
 }
 
-function mapStateToProps(state, ownprops) {
-    return {
-        ...ownprops,
-        translate: getTranslate(state.locale),
-    };
-}
-
 const ConnectedCard = ({ refForward, onSave }) => {
     const [error, setError] = useState();
     return (
@@ -305,4 +296,4 @@ const Wrapper = styled.div`
     padding-left: 9px;
 `;
 
-export default connect(mapStateToProps)(StripeFormWrapper);
+export default StripeFormWrapper;

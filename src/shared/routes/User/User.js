@@ -9,7 +9,6 @@ import moment from 'moment';
 import AddCircle from 'react-ionicons/lib/MdAddCircle';
 import { Helmet } from 'react-helmet-async';
 import requestformContent from '../../components/common/RequestForm/content.json';
-import addTranslate from '../../components/higher-order/addTranslate';
 import Sidebar, { SidebarContent } from '../../components/Sidebar';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col, Divider } from '../../components/Blocks';
@@ -429,4 +428,4 @@ const mergeObjects = (o1, o2) => {
     return o2;
 };
 
-export default addTranslate(Index, [content, requestformContent]);
+export default Index;

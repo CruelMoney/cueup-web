@@ -10,7 +10,6 @@ import MoneyIcon from '../../components/graphics/Money';
 import NoteIcon from '../../components/graphics/Note';
 import Map from '../../components/common/Map';
 import citySvg from '../../assets/City.svg';
-import addTranslate from '../../components/higher-order/addTranslate';
 import { Environment } from '../../constants/constants';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import AsyncRequestForm from '../../components/common/RequestForm';
@@ -277,4 +276,4 @@ const FormRow = styled(Row)`
     }
 `;
 
-export default addTranslate(Location, content);
+export default Location;

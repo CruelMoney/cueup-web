@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { useTransition, animated } from 'react-spring';
 import { useMeasure } from '@softbind/hook-use-measure';
 import requestFormContent from '../../components/common/RequestForm/content.json';
-import addTranslate from '../../components/higher-order/addTranslate';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col } from '../../components/Blocks';
@@ -242,4 +241,4 @@ const AnimationWrapper = styled.div`
     }
 `;
 
-export default addTranslate(Index, [content, requestFormContent]);
+export default Index;

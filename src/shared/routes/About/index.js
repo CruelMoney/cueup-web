@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import { localize } from 'react-localize-redux';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import About from './components/About';
 
@@ -25,4 +24,4 @@ class Index extends Component {
     }
 }
 
-export default localize(Index, 'locale');
+export default Index;

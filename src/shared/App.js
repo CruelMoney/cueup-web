@@ -1,11 +1,8 @@
 /* eslint-disable import/first */
 import React, { memo, useState, useEffect, useCallback } from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
 import ReactPixel from 'react-facebook-pixel';
-
-import { getActiveLanguage, getTranslate, setActiveLanguage } from 'react-localize-redux';
 
 import LazyBecomeDj from 'routes/BecomeDj';
 import LazyHowItWorks from 'routes/HowItWorks';
@@ -215,23 +212,4 @@ const RouteWrapper = memo(({ translate, cssLocation }) => {
     );
 });
 
-// eslint-disable-next-line no-unused-vars
-const mapStateToProps = (state, ownprops) => {
-    return {
-        loggedIn: state.login.status.signedIn,
-        profile: state.login.profile,
-        activeLanguage: getActiveLanguage(state.locale).code,
-        translate: getTranslate(state.locale),
-    };
-};
-
-// eslint-disable-next-line no-unused-vars
-function mapDispatchToProps(dispatch, ownprops) {
-    return {
-        setActiveLanguage: (code) => {
-            dispatch(setActiveLanguage(code));
-        },
-    };
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(memo(App)));
+export default withRouter(App);

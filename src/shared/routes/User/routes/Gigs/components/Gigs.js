@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { localize } from 'react-localize-redux';
 import { Query } from 'react-apollo';
 import usePushNotifications from 'components/hooks/usePushNotifications';
 import EmptyPage from '../../../../../components/common/EmptyPage';
@@ -158,12 +156,4 @@ const EnableNotifications = ({ userId }) => {
     );
 };
 
-function mapStateToProps(state, ownProps) {
-    return {
-        notifications: state.notifications.data,
-    };
-}
-
-const SmartGigs = connect(mapStateToProps)(Gigs);
-
-export default localize(SmartGigs, 'locale');
+export default Gigs;

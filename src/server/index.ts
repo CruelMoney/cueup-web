@@ -14,7 +14,6 @@ import paths from '../../config/paths';
 // import { configureStore } from '../shared/store';
 import errorHandler from './middleware/errorHandler';
 import serverRenderer from './middleware/serverRenderer';
-import addStore from './middleware/addStore';
 import webhookVerification from './middleware/webhookVerification';
 import { i18nextXhr, refreshTranslations } from './middleware/i18n';
 
@@ -48,7 +47,6 @@ app.use(
 
 !isDevelopment && addRedis(app);
 app.use(addApollo);
-app.use(addStore);
 app.use(addLoadableExtractor);
 
 addSitemap(app);

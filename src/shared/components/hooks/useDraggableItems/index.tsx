@@ -358,10 +358,10 @@ function debounce(
     immediate?: boolean
 ): (args: any) => void {
     let timeout: any;
-    return function(instance: any) {
+    return function (instance: any) {
         const context = instance;
         const args: any = arguments;
-        const later = function() {
+        const later = function () {
             timeout = null;
             if (!immediate) {
                 func.apply(context, args);

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
 import { HelmetProvider } from 'react-helmet-async';
 import { renderToStringWithData } from '@apollo/react-ssr';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
@@ -20,13 +19,11 @@ const serverRenderer = () => async (req, res) => {
         <ApolloProvider client={res.locals.apolloClient}>
             <ChunkExtractorManager extractor={res.locals.chunkExtractor}>
                 <StyleSheetManager sheet={sheet.instance}>
-                    <Provider store={res.locals.store}>
-                        <StaticRouter location={req.url} context={routerContext}>
-                            <HelmetProvider context={helmetContext}>
-                                <App />
-                            </HelmetProvider>
-                        </StaticRouter>
-                    </Provider>
+                    <StaticRouter location={req.url} context={routerContext}>
+                        <HelmetProvider context={helmetContext}>
+                            <App />
+                        </HelmetProvider>
+                    </StaticRouter>
                 </StyleSheetManager>
             </ChunkExtractorManager>
         </ApolloProvider>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { localize } from 'react-localize-redux';
 import { Helmet } from 'react-helmet-async';
 import { Mutation } from 'react-apollo';
 import { SmartButton } from 'components/Blocks';
@@ -150,4 +149,4 @@ const NotFound = ({ translate }) => {
     );
 };
 
-export default localize(NotFound, 'locale');
+export default NotFound;

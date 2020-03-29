@@ -3,7 +3,6 @@ import emailValidator from 'email-validator';
 import { Row, TeritaryButton, PrimaryButton, SmartButton } from 'components/Blocks';
 import { BodySmall } from 'components/Text';
 import { Input, InputRow } from 'components/FormComponents';
-import addTranslate from 'components/higher-order/addTranslate';
 import { RequestSection } from './RequestForm';
 
 const Step4 = ({
@@ -120,4 +119,4 @@ const Step4 = ({
     );
 };
 
-export default addTranslate(Step4);
+export default Step4;

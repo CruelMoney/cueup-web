@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink as Link, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { getTranslate, getActiveLanguage, setActiveLanguage } from 'react-localize-redux';
 import * as c from '../../constants/constants';
-/*animation stuff*/
-import * as actions from '../../actions/SessionActions';
 import { getTranslatedURL } from '../../utils/HelperFunctions';
 import InstagramLogo from '../../assets/InstagramLogo';
 // eslint-disable-next-line no-unused-vars
@@ -321,28 +317,4 @@ class footer extends Component {
     }
 }
 
-// eslint-disable-next-line no-unused-vars
-function mapStatetoProps(state, ownprops) {
-    return {
-        signedIn: state.login.status.signedIn,
-        currency: state.session.currency,
-        translate: getTranslate(state.locale),
-        currentLanguage: getActiveLanguage(state.locale).code,
-    };
-}
-
-// eslint-disable-next-line no-unused-vars
-function mapDispatchToProps(dispatch, ownprops) {
-    return {
-        changeCurrency: (currency) => {
-            dispatch(actions.changeCurrency(currency));
-        },
-        setActiveLanguage: (code) => {
-            dispatch(setActiveLanguage(code));
-        },
-    };
-}
-
-const SmartFooter = connect(mapStatetoProps, mapDispatchToProps)(footer);
-
-export default withRouter(SmartFooter);
+export default footer;

@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { useQuery } from 'react-apollo';
-import { withRouter, useHistory } from 'react-router';
+import { useHistory } from 'react-router';
 import Popup from 'components/common/Popup';
-import MyNavlink from 'components/common/Navlink';
 import Navigation from '../../../components/SubNavigation';
 import Rating from '../../../components/common/Rating';
 import VerifiedBadge from '../../../components/graphics/VerifiedBadge';
@@ -18,19 +17,10 @@ import {
     Avatar,
     GradientBg,
     LoadingIndicator,
-    TeritaryButton,
     SecondaryButton,
 } from '../../../components/Blocks';
 import { Spacing } from '../../../components/Sidebar';
-import {
-    HeaderTitle,
-    SmallHeader,
-    Stat,
-    SmallBold,
-    BodyBold,
-    Title,
-    Body,
-} from '../../../components/Text';
+import { HeaderTitle, BodyBold, Title, Body } from '../../../components/Text';
 import ConditionalWrap from '../../../components/ConditionalWrap';
 import useWindowSize from '../../../components/hooks/useWindowSize';
 import { EDIT_STATUS } from '../../../constants/constants';

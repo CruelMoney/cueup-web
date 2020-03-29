@@ -5,7 +5,6 @@ import Footer from '../../components/common/Footer';
 
 import Map from '../../components/common/Map';
 import citySvg from '../../assets/City.svg';
-import addTranslate from '../../components/higher-order/addTranslate';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import content from './content.json';
 import './index.css';
@@ -94,4 +93,4 @@ const Location = (props) => {
     );
 };
 
-export default addTranslate(Location, content);
+export default Location;

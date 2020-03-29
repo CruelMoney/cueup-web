@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { localize } from 'react-localize-redux';
 import { Helmet } from 'react-helmet-async';
 import EmptyPage from '../../components/common/EmptyPage';
 import Footer from '../../components/common/Footer';
@@ -47,4 +46,4 @@ class NotFound extends Component {
     }
 }
 
-export default localize(NotFound, 'locale');
+export default NotFound;

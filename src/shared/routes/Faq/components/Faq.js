@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { localize } from 'react-localize-redux';
 import Footer from '../../../components/common/Footer';
 import ButtonLink from '../../../components/common/ButtonLink';
 
@@ -63,4 +62,4 @@ class Faq extends Component {
     }
 }
 
-export default localize(Faq, 'locale');
+export default Faq;

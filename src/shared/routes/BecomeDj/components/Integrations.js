@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Container, Col } from 'components/Blocks';
 import GracefullImage from 'components/GracefullImage';
-import addTranslate from '../../../components/higher-order/addTranslate';
 import integrationsGraphic from '../../../assets/images/integrations/Brands.png';
 import integrationsGraphicMobile from '../../../assets/images/integrations/Brands_mobile.png';
 import { Header } from '../../../components/common/Text';
@@ -133,4 +132,4 @@ const Integrations = (props) => {
     );
 };
 
-export default addTranslate(Integrations);
+export default Integrations;

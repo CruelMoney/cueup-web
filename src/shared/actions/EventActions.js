@@ -43,23 +43,6 @@ export const getLocation = (location) => {
     });
 };
 
-export function postEvent(event, mutate, callback) {
-    return async (dispatch) => {
-        try {
-            const { error } = await mutate({
-                variables: event,
-            });
-            callback(error);
-            if (!error) {
-                tracker.trackEventPosted();
-                ReactPixel.track('Lead');
-            }
-        } catch (error) {
-            callback(error);
-        }
-    };
-}
-
 export const useCheckDjAvailability = ({ locationName, date }) => {
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);

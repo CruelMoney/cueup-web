@@ -5,7 +5,6 @@ import { useQuery, useMutation } from 'react-apollo';
 import styled from 'styled-components';
 import { useTransition, animated } from 'react-spring';
 import { useMeasure } from '@softbind/hook-use-measure';
-import addTranslate from '../../components/higher-order/addTranslate';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col, TeritaryButton, SmartButton } from '../../components/Blocks';
@@ -420,4 +419,4 @@ const GigContainer = styled(Container)`
     }
 `;
 
-export default addTranslate(Index);
+export default Index;

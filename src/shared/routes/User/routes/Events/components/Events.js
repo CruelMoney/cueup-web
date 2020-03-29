@@ -1,6 +1,4 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { localize } from 'react-localize-redux';
 import { Query } from 'react-apollo';
 import Formatter from '../../../../../utils/Formatter';
 import NavLink from '../../../../../components/common/Navlink';
@@ -8,15 +6,6 @@ import LoadingPlaceholder from '../../../../../components/common/LoadingPlacehol
 import { MY_EVENTS } from '../../../gql';
 
 class Events extends PureComponent {
-    static propTypes = {
-        events: PropTypes.arrayOf(PropTypes.object),
-        fetchEvents: PropTypes.func,
-        payEvent: PropTypes.func,
-        editEvent: PropTypes.func,
-        cancelEvent: PropTypes.func,
-        loading: PropTypes.bool,
-    };
-
     render() {
         const { translate } = this.props;
 
@@ -84,4 +73,4 @@ class Events extends PureComponent {
     }
 }
 
-export default localize(Events, 'locale');
+export default Events;

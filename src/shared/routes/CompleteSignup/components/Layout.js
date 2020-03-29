@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { localize } from 'react-localize-redux';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { Row, Container, Col, ReadMore, LoadingIndicator } from 'components/Blocks';
@@ -98,4 +97,4 @@ const Layout = ({ loading, user, translate }) => {
     );
 };
 
-export default localize(Layout, 'locale');
+export default Layout;

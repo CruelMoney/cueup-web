@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import { TeritaryButton, Row, PrimaryButton } from 'components/Blocks';
 import { useValidation } from 'components/hooks/useForm';
 import { Input, Label, LabelHalf, InputRow } from 'components/FormComponents';
-import addTranslate from 'components/higher-order/addTranslate';
 import { BodySmall } from 'components/Text';
 import ToggleButtonHandler from '../ToggleButtonHandler';
 import c from '../../../constants/constants';
@@ -120,4 +119,4 @@ const Step2 = ({
     );
 };
 
-export default addTranslate(Step2);
+export default Step2;

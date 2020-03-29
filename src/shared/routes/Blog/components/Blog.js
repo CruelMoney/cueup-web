@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { NavLink as Link } from 'react-router-dom';
-import { localize } from 'react-localize-redux';
 import { SmartButton, Row } from 'components/Blocks.js';
 import posts from '../posts.json';
 import Popup from '../../../components/common/Popup';
@@ -84,4 +83,4 @@ class Blog extends Component {
     }
 }
 
-export default localize(Blog, 'locale');
+export default Blog;

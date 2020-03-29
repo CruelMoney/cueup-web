@@ -8,7 +8,6 @@ import { TextAccent } from 'routes/BecomeDj/components/blocks/TextAccent';
 import PaymentCards from 'components/common/PaymentCards';
 import JoinThousands from 'components/common/JoinThousands';
 import { Header } from 'components/common/Text';
-import addTranslate from '../../components/higher-order/addTranslate';
 import thumbEn from '../../assets/images/signup.png';
 import thumbDa from '../../assets/images/signup_da.png';
 import { Environment } from '../../constants/constants';
@@ -165,5 +164,5 @@ class Index extends Component {
     }
 }
 
-// export default addTranslate(Index, content);
-export default addTranslate(Index);
+// export default Index;
+export default Index;

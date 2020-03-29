@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Container } from 'components/Blocks';
-import addTranslate from '../../../components/higher-order/addTranslate';
 import PaymentCards from '../../../components/common/PaymentCards';
 
 const Bg = styled.div`
@@ -13,7 +12,6 @@ const Bg = styled.div`
 `;
 
 const Payments = (props) => {
-    const { translate, currentLanguage } = props;
     return (
         <Bg>
             <Container>
@@ -34,4 +32,4 @@ const Payments = (props) => {
     );
 };
 
-export default addTranslate(Payments);
+export default Payments;

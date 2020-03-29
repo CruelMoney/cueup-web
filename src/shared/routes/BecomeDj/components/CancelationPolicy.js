@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { Container, Col, Row, ReadMore } from 'components/Blocks';
-import addTranslate from '../../../components/higher-order/addTranslate';
 import { Header } from '../../../components/common/Text';
 import { TextAccent } from '../components/blocks/TextAccent';
 import { SubTitle } from '../../../components/common/SubTitle';
@@ -163,4 +162,4 @@ const CancelationPolicy = (props) => {
     );
 };
 
-export default addTranslate(CancelationPolicy);
+export default CancelationPolicy;

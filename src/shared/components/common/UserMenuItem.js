@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { notificationService } from '../../utils/NotificationService';
 import { Avatar } from '../Blocks';
 
@@ -47,11 +46,4 @@ class UserMenuItem extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        userId: state.login.profile.id,
-        notifications: state.notifications.data.length,
-    };
-};
-
-export default connect(mapStateToProps)(UserMenuItem);
+export default UserMenuItem;

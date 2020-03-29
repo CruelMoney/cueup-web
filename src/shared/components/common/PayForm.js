@@ -1,7 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
 import useComponentSize from '@rehooks/component-size';
-import { connect } from 'react-redux';
-import { getTranslate, getActiveLanguage } from 'react-localize-redux';
 import { useMutation, useLazyQuery } from 'react-apollo';
 import ReactPixel from 'react-facebook-pixel';
 import Checkmark from 'react-ionicons/lib/IosCheckmarkCircle';
@@ -13,8 +11,6 @@ import { PAYOUT_TYPES, PAYMENT_PROVIDERS } from 'constants/constants';
 import { Body, SmallHeader } from 'components/Text';
 import { REQUEST_PAYMENT_INTENT, PAYMENT_CONFIRMED } from '../../routes/Event/gql';
 import * as tracker from '../../utils/analytics/autotrack';
-import * as actions from '../../actions/SessionActions';
-import addTranslate from '../higher-order/addTranslate';
 import content from '../../routes/Event/content.json';
 import TextWrapper from './TextElement';
 import MoneyTable, { TableItem } from './MoneyTable';
@@ -352,22 +348,4 @@ const ThankYouContent = ({ translate, style }) => {
     );
 };
 
-function mapStateToProps(state, ownprops) {
-    return {
-        translate: getTranslate(state.locale),
-        currentLanguage: getActiveLanguage(state.locale).code,
-        currency: state.session.currency,
-    };
-}
-
-function mapDispatchToProps(dispatch, ownprops) {
-    return {
-        changeCurrency: (currency) => {
-            dispatch(actions.changeCurrency(currency));
-        },
-    };
-}
-
-const SmartPay = connect(mapStateToProps, mapDispatchToProps)(PaymentWrapper);
-
-export default addTranslate(SmartPay, [content, requestFormContent]);
+export default PaymentWrapper;

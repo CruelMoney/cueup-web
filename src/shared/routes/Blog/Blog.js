@@ -3,11 +3,9 @@ import { Switch, Route } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 
 import Footer from '../../components/common/Footer';
-import addTranslate from '../../components/higher-order/addTranslate';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Blog from './components/Blog';
 import Post from './components/Post';
-import content from './content.json';
 import './index.css';
 
 class Index extends Component {
@@ -44,4 +42,4 @@ class Index extends Component {
     }
 }
 
-export default addTranslate(Index, content);
+export default Index;

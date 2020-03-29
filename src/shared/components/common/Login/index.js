@@ -1,25 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import emailValidator from 'email-validator';
 
-import { withRouter, NavLink } from 'react-router-dom';
-import { Mutation, Query } from 'react-apollo';
+import { withRouter } from 'react-router-dom';
+import { Mutation } from 'react-apollo';
 import styled from 'styled-components';
-import addTranslate from 'components/higher-order/addTranslate';
-import {
-    SecondaryButtonLink,
-    SmartButton,
-    Row,
-    RowWrap,
-    Hr,
-    Col,
-    SecondaryButton,
-} from 'components/Blocks';
+import { SmartButton, RowWrap, Hr, Col } from 'components/Blocks';
 import { BodySmall } from 'components/Text';
 import useOnLoggedIn from 'components/hooks/useOnLoggedIn';
-import { LOGIN, REQUEST_PASSWORD_RESET, ME } from '../../gql';
+import { LOGIN, REQUEST_PASSWORD_RESET } from '../../gql';
 import * as c from '../../../constants/constants';
-import { authService } from '../../../utils/AuthService';
 import { Input } from '../../FormComponents';
 import ErrorMessageApollo, { getErrorMessage } from '../ErrorMessageApollo';
 import fbLogo from './fb.svg';
@@ -261,6 +250,4 @@ const Login = ({ redirect = true, error, translate, onLogin }) => {
     );
 };
 
-const SmartLogin = withRouter(addTranslate(Login));
-
-export default (props) => <SmartLogin {...props} />;
+export default Login;

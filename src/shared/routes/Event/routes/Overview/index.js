@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-apollo';
 import { captureException } from '@sentry/core';
-import { connect } from 'react-redux';
 import { Title, Body, HeaderTitle } from '../../../../components/Text';
 import { Col } from '../../../../components/Blocks';
 import DjCard from '../../components/blocks/DJCard';
@@ -159,12 +158,4 @@ const Overview = (props) => {
     return <EventGigs {...props} />;
 };
 
-function mapStateToProps(state, ownprops) {
-    return {
-        currency: state.session.currency,
-    };
-}
-
-const SmartOverview = connect(mapStateToProps)(Overview);
-
-export default SmartOverview;
+export default Overview;

@@ -10,10 +10,8 @@ import MobileMenu from './MobileMenu';
 import BreadCrumbs from './BreadCrumbs';
 import EmailVerifier from './EmailVerifier';
 import { ME } from './gql';
-import addTranslate from './higher-order/addTranslate';
 import Popup from './common/Popup';
 import InstagramConnect from './InstagramConnect';
-import { TitleClean } from './Text';
 import { useLogout } from './hooks/useLogout';
 import { LoadingIndicator } from './Blocks';
 
@@ -163,6 +161,6 @@ const Menu = ({ translate, history }) => {
     );
 };
 
-const SmartNavigation = withRouter(addTranslate(Menu));
+const SmartNavigation = withRouter(Menu);
 
 export default SmartNavigation;

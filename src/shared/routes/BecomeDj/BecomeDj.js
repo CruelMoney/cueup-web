@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Helmet } from 'react-helmet-async';
 // import { findByLabelText } from '@testing-library/react';
 import Footer from 'components/common/Footer';
-import addTranslate from '../../components/higher-order/addTranslate';
 import thumbEn from '../../assets/images/signup.png';
 import thumbDa from '../../assets/images/signup_da.png';
 import { Environment } from '../../constants/constants';
@@ -93,4 +92,4 @@ class Index extends Component {
     }
 }
 
-export default addTranslate(Index, content);
+export default Index;

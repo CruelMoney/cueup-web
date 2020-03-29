@@ -1,6 +1,5 @@
 import React from 'react';
 import wNumb from 'wnumb';
-import addTranslate from 'components/higher-order/addTranslate';
 import { TeritaryButton, PrimaryButton, Row } from 'components/Blocks';
 import { Input, Label } from 'components/FormComponents';
 import { BodySmall } from 'components/Text';
@@ -94,4 +93,4 @@ const Step3 = ({
     );
 };
 
-export default addTranslate(Step3);
+export default Step3;

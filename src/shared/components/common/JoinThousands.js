@@ -23,7 +23,6 @@ import dj18 from '../../assets/images/people/joinThousands/18.jpg';
 import dj19 from '../../assets/images/people/joinThousands/19.jpg';
 import dj20 from '../../assets/images/people/joinThousands/20.jpg';
 import GracefullImage from '../GracefullImage';
-import addTranslate from '../higher-order/addTranslate';
 import { Header } from './Text';
 import { SubTitle } from './SubTitle';
 
@@ -178,4 +177,4 @@ const Avatar = ({ src, ...rest }) => (
     </AvatarWrapper>
 );
 
-export default addTranslate(JoinThousands);
+export default JoinThousands;

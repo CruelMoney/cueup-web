@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Col } from 'components/Blocks';
-import addTranslate from '../higher-order/addTranslate';
 import { TextAccent } from '../../routes/BecomeDj/components/blocks/TextAccent';
 import { Title } from './Title';
 import Laptop from './Laptop';
@@ -53,4 +52,4 @@ const HighlightsLaptop = (props) => {
     );
 };
 
-export default addTranslate(HighlightsLaptop);
+export default HighlightsLaptop;

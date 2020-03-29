@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router';
 import { Helmet } from 'react-helmet-async';
-import addTranslate from '../../components/higher-order/addTranslate';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Faq from './components/Faq';
 import Dj from './routes/DJ';
 import Organizer from './routes/Organizer';
-
-import content from './content.json';
 
 class Index extends Component {
     render() {
@@ -38,4 +35,4 @@ class Index extends Component {
     }
 }
 
-export default addTranslate(Index, content);
+export default Index;

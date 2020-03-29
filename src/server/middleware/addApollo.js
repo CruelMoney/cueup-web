@@ -44,7 +44,7 @@ const addApollo = (_req, res, next) => {
 };
 
 // Ignore errors
-const errorLink = onError(({ graphQLErrors, networkError, response, operation, forward }) => {
+const errorLink = onError(({ graphQLErrors, operation, forward }) => {
     console.log({ graphQLErrors });
     return forward(operation);
 });

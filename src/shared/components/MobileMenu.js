@@ -1,7 +1,6 @@
 import React, { useState, createContext } from 'react';
 import ReactDOM from 'react-dom';
-import { connect } from 'react-redux';
-import { getTranslate } from 'react-localize-redux';
+
 import { Query } from 'react-apollo';
 import Navlink from './common/Navlink';
 import Popup from './common/Popup';
@@ -216,10 +215,4 @@ const Content = ({
     </div>
 );
 
-export const mapStateToProps = (state) => {
-    return {
-        translate: getTranslate(state.locale),
-    };
-};
-
-export default connect(mapStateToProps)(MobileMenu);
+export default MobileMenu;

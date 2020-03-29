@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { localize } from 'react-localize-redux';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import {
@@ -123,4 +122,4 @@ class Signup extends Component {
     }
 }
 
-export default localize(Signup, 'locale');
+export default Signup;

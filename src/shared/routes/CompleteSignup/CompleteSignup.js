@@ -4,12 +4,10 @@ import { Helmet } from 'react-helmet-async';
 import { useQuery } from 'react-apollo';
 import { Redirect } from 'react-router-dom';
 import { ME } from 'components/gql';
-import addTranslate from '../../components/higher-order/addTranslate';
 import thumbEn from '../../assets/images/signup.png';
 import thumbDa from '../../assets/images/signup_da.png';
 import { Environment } from '../../constants/constants';
 import ScrollToTop from '../../components/common/ScrollToTop';
-import content from '../Signup/content.json';
 import Layout from './components/Layout';
 
 const Index = ({ translate, currentLanguage }) => {
@@ -42,4 +40,4 @@ const Index = ({ translate, currentLanguage }) => {
     );
 };
 
-export default addTranslate(Index, content);
+export default Index;

@@ -7,7 +7,6 @@ import { BodySmall, TitleClean } from 'components/Text';
 import { useCreateEvent } from 'actions/EventActions';
 import { useForm } from 'components/hooks/useForm';
 import Login from '../Login';
-import addTranslate from '../../../components/higher-order/addTranslate';
 import ErrorMessageApollo from '../ErrorMessageApollo';
 import usePushNotifications from '../../hooks/usePushNotifications';
 import Progress from './ProgressSubmit';
@@ -222,4 +221,4 @@ export const RequestSection = styled.section`
     }
 `;
 
-export default addTranslate(MainForm, content);
+export default MainForm;

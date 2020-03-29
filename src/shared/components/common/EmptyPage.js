@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { localize } from 'react-localize-redux';
+import React from 'react';
 import styled from 'styled-components';
 import { Body } from 'components/Text';
 import Svg404 from '../graphics/404';
@@ -37,4 +36,4 @@ const Wrapper = styled.div`
     }
 `;
 
-export default localize(EmptyPage, 'locale');
+export default EmptyPage;

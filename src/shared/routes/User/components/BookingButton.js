@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { useQuery } from 'react-apollo';
 import { NavLink } from 'react-router-dom';
 import queryString from 'query-string';
-import { connect } from 'react-redux';
-import { getTranslate } from 'react-localize-redux';
 import { CTAButton } from '../../../components/Sidebar';
 import PayForm from '../../../components/common/PayForm.js';
 import Popup from '../../../components/common/Popup';
@@ -82,14 +80,6 @@ const BookingButton = ({ user, gig, event, hash, offer, translate, showPaymentFo
     );
 };
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        translate: getTranslate(state.locale),
-    };
-};
-
-const SmartButton = connect(mapStateToProps)(BookingButton);
-
 const Wrapper = (props) => {
     const { location, user } = props;
     const [showPopup, setShowPopup] = useState(false);
@@ -137,7 +127,7 @@ const Wrapper = (props) => {
 
     return (
         <>
-            <SmartButton
+            <BookingButton
                 {...props}
                 gig={gig}
                 event={event}

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import moment from 'moment-timezone';
 import { useCheckDjAvailability } from 'actions/EventActions';
-import addTranslate from 'components/higher-order/addTranslate';
 import { BodySmall } from 'components/Text';
 import { Row, SmartButton } from '../../Blocks';
 import { Input } from '../../FormComponents';
@@ -129,4 +128,4 @@ const Step1 = ({
     );
 };
 
-export default addTranslate(Step1);
+export default Step1;
