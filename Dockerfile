@@ -9,5 +9,4 @@ WORKDIR /usr/src/app
 COPY --from=builder /usr/src/app/ /usr/src/app/
 COPY . .
 RUN yarn build
-EXPOSE 8500
-CMD [ "node", "build/server/server.js" ]
+CMD [ "yarn", "start" ]
