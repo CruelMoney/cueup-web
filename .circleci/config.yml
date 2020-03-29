@@ -26,7 +26,26 @@ jobs:
       - run:
           name: Run tests
           command: yarn test
+
+  deploy-staging:
+    steps:
+      - run:
+          - git remote add production dokku@cueup.io:staging.cueup
+          - git push production master     
+
 workflows:
-    build-and-test:
+    build-deploy:
       jobs:
         - build-and-test
+        - deploy-staging:
+            requires:
+              - build-and-test
+            filters:
+              branches:
+                only: staging
+        - deploy-production:
+            requires:
+              - build-and-test
+            filters:
+              branches:
+                only: master
