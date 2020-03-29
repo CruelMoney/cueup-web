@@ -1,4 +1,3 @@
-import io from 'socket.io-client';
 import { Environment } from '../constants/constants';
 
 export default class NotificationService {
@@ -6,32 +5,33 @@ export default class NotificationService {
         this.domain = Environment.CHAT_DOMAIN;
         this.notificationHandlers = [];
         this.onInitialized = [];
-        throw new Error('Missing implementation');
     }
 
-    // init(userId) {
-    //     if (!this.socket && userId) {
-    //         store.dispatch(actions.fetchingNotifications());
+    init(userId) {
+        throw new Error('Missing implementation');
 
-    //         console.log('connecting to: ', Environment.CHAT_DOMAIN + '?userId=' + userId);
+        // if (!this.socket && userId) {
+        //     store.dispatch(actions.fetchingNotifications());
 
-    //         this.socket = io(Environment.CHAT_DOMAIN + '?userId=' + userId);
+        //     console.log('connecting to: ', Environment.CHAT_DOMAIN + '?userId=' + userId);
 
-    //         this.socket.on('initialize notifications', (notifications) => {
-    //             store.dispatch(actions.fetchedNotifications(notifications));
-    //             this.onInitialized.reduce((_, fn) => {
-    //                 return fn();
-    //             }, 0);
-    //         });
+        //     this.socket = io(Environment.CHAT_DOMAIN + '?userId=' + userId);
 
-    //         this.socket.on('new notification', (notification) => {
-    //             store.dispatch(actions.newNotification(notification));
-    //             this.notificationHandlers.reduce((acc, fn) => {
-    //                 return fn(notification);
-    //             }, 0);
-    //         });
-    //     }
-    // }
+        //     this.socket.on('initialize notifications', (notifications) => {
+        //         store.dispatch(actions.fetchedNotifications(notifications));
+        //         this.onInitialized.reduce((_, fn) => {
+        //             return fn();
+        //         }, 0);
+        //     });
+
+        //     this.socket.on('new notification', (notification) => {
+        //         store.dispatch(actions.newNotification(notification));
+        //         this.notificationHandlers.reduce((acc, fn) => {
+        //             return fn(notification);
+        //         }, 0);
+        //     });
+        // }
+    }
 
     // addNotificationHandler = (handler) => {
     //     this.notificationHandlers.push(handler);

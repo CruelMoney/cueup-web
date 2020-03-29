@@ -15,7 +15,6 @@ import ScrollToTop from '../../components/common/ScrollToTop';
 import AsyncRequestForm from '../../components/common/RequestForm';
 import defaultImage from '../../assets/images/cities/default.png';
 import FloatingDJs from './components/FloatingCards';
-import content from './content.json';
 import './index.css';
 import { countries } from './locations';
 import { CitiesList } from './components/CountriesList';

@@ -15,7 +15,6 @@ import GettingGigs from './components/GettingGigs';
 import Payments from './components/Payments';
 import CancelationPolicy from './components/CancelationPolicy';
 import AvailableOn from './components/AvailableOn';
-import content from './content.json';
 
 const Bg = styled.div`
     background-image: radial-gradient(50% 58% at 50% 33%, #122b48 12%, #0b1b2d 90%);

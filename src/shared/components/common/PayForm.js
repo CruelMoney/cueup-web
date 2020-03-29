@@ -11,12 +11,10 @@ import { PAYOUT_TYPES, PAYMENT_PROVIDERS } from 'constants/constants';
 import { Body, SmallHeader } from 'components/Text';
 import { REQUEST_PAYMENT_INTENT, PAYMENT_CONFIRMED } from '../../routes/Event/gql';
 import * as tracker from '../../utils/analytics/autotrack';
-import content from '../../routes/Event/content.json';
 import TextWrapper from './TextElement';
 import MoneyTable, { TableItem } from './MoneyTable';
 import StripeFormWrapper from './StripePayForm';
 import XenditPayForm from './XenditPayForm';
-import requestFormContent from './RequestForm/content.json';
 import NotifyPayment from './NotifyPayment';
 
 const BankPayForm = ({

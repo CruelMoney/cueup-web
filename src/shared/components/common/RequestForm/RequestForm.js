@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import moment from 'moment-timezone';
 import styled from 'styled-components';
-import { Card, CardShadow, Col, TeritaryButton, Hr, LinkButton } from 'components/Blocks';
+import { Card, CardShadow, Col, Hr, LinkButton } from 'components/Blocks';
 import { LabelHalf, InputRow } from 'components/FormComponents';
 import { BodySmall, TitleClean } from 'components/Text';
 import { useCreateEvent } from 'actions/EventActions';
@@ -10,7 +10,6 @@ import Login from '../Login';
 import ErrorMessageApollo from '../ErrorMessageApollo';
 import usePushNotifications from '../../hooks/usePushNotifications';
 import Progress from './ProgressSubmit';
-import content from './content.json';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';

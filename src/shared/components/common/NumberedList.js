@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import lodashMap from 'lodash/map';
 
 class NumberedList extends Component {
@@ -38,9 +37,5 @@ class NumberedList extends Component {
         );
     }
 }
-
-NumberedList.contextTypes = {
-    activeFilters: PropTypes.any,
-};
 
 export default NumberedList;

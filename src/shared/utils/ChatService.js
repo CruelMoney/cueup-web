@@ -1,4 +1,3 @@
-import io from 'socket.io-client';
 import { Environment } from '../constants/constants';
 
 export default class ChatService {
@@ -8,44 +7,45 @@ export default class ChatService {
         this.chatId = chatId;
         this.token = token;
         this.senderId = senderId;
-        throw new Error('missing implementation');
     }
 
-    // init({ showPersonalInformation }) {
-    //     const url =
-    //         Environment.CHAT_DOMAIN +
-    //         '?room=' +
-    //         this.chatId +
-    //         '&token=' +
-    //         this.token +
-    //         (showPersonalInformation ? '&showPersonalInformation=true' : '');
+    init({ showPersonalInformation }) {
+        throw new Error('missing implementation');
 
-    //     this.socket = io(url, {});
+        // const url =
+        //     Environment.CHAT_DOMAIN +
+        //     '?room=' +
+        //     this.chatId +
+        //     '&token=' +
+        //     this.token +
+        //     (showPersonalInformation ? '&showPersonalInformation=true' : '');
 
-    //     this.socket.on('new message', (message) => {
-    //         console.log('new message');
-    //         !!this.onNewMessage && this.onNewMessage(message);
-    //         this.readMessages();
-    //     });
-    //     this.socket.on('started typing', () => {
-    //         !!this.receiverStartedTyping && this.receiverStartedTyping();
-    //     });
-    //     this.socket.on('stopped typing', () => {
-    //         !!this.receiverStoppedTyping && this.receiverStoppedTyping();
-    //     });
-    //     this.socket.on('messages read', () => {
-    //         console.log('on messages read');
-    //         !!this.receiverReadMessages && this.receiverReadMessages();
-    //     });
+        // this.socket = io(url, {});
 
-    //     return new Promise((resolve, reject) => {
-    //         this.socket.on('initialize chat', (data) => {
-    //             console.log('initialize chat');
-    //             resolve(data);
-    //             this.readMessages();
-    //         });
-    //     });
-    // }
+        // this.socket.on('new message', (message) => {
+        //     console.log('new message');
+        //     !!this.onNewMessage && this.onNewMessage(message);
+        //     this.readMessages();
+        // });
+        // this.socket.on('started typing', () => {
+        //     !!this.receiverStartedTyping && this.receiverStartedTyping();
+        // });
+        // this.socket.on('stopped typing', () => {
+        //     !!this.receiverStoppedTyping && this.receiverStoppedTyping();
+        // });
+        // this.socket.on('messages read', () => {
+        //     console.log('on messages read');
+        //     !!this.receiverReadMessages && this.receiverReadMessages();
+        // });
+
+        // return new Promise((resolve, reject) => {
+        //     this.socket.on('initialize chat', (data) => {
+        //         console.log('initialize chat');
+        //         resolve(data);
+        //         this.readMessages();
+        //     });
+        // });
+    }
 
     // sendMessage(message) {
     //     return new Promise((resolve, reject) => {

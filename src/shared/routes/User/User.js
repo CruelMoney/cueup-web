@@ -29,7 +29,6 @@ import { Overview, Settings, Reviews, Gigs, Events, Booking, Photos, Sounds } fr
 import { USER, UPDATE_USER } from './gql';
 import BackToEvent from './components/BackToEvent';
 import Header from './components/Header';
-import content from './content.json';
 import { Stats, MobileBookingButton, IconRow, CertifiedVerified } from './components/Common';
 
 const UserSidebar = ({ user, loading, bookingEnabled, location }) => {

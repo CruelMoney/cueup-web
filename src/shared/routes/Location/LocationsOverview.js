@@ -6,7 +6,6 @@ import Footer from '../../components/common/Footer';
 import Map from '../../components/common/Map';
 import citySvg from '../../assets/City.svg';
 import ScrollToTop from '../../components/common/ScrollToTop';
-import content from './content.json';
 import './index.css';
 import { countries } from './locations';
 import CountriesList from './components/CountriesList';
