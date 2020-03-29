@@ -6,6 +6,9 @@ module.exports = {
         __BROWSER__: true,
         __SERVER__: true,
     },
+    env: {
+        'cypress/globals': true,
+    },
     settings: {
         'import/resolver': {
             node: {
@@ -42,4 +45,5 @@ module.exports = {
             },
         },
     ],
+    plugins: ['cypress', 'chai-friendly'],
 };

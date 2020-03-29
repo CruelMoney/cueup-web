@@ -45,7 +45,11 @@ class Home extends Component {
                                 <p key="paragraph">{translate('home.introduction')}</p>
 
                                 <div style={{ float: 'left', marginTop: '42px' }}>
-                                    <PrimaryButton white onClick={this.handleButtonClick}>
+                                    <PrimaryButton
+                                        white
+                                        onClick={this.handleButtonClick}
+                                        data-cy="cta"
+                                    >
                                         {translate('find-djs')}
                                     </PrimaryButton>
                                 </div>
