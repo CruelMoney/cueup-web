@@ -72,15 +72,3 @@ workflows:
               only: 
                 - staging
                 - master
-      # - deploy-staging:
-      #     requires:
-      #       - cypress/run
-      #     filters:
-      #       branches:
-      #         only: staging
-      # - deploy-production:
-      #     requires:
-      #       - cypress/run
-      #     filters:
-      #       branches:
-      #         only: master
