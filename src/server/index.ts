@@ -1,6 +1,6 @@
 // import React from 'react';
 import path from 'path';
-import * as express from 'express';
+import express, { Application } from 'express';
 import cors from 'cors';
 import chalk from 'chalk';
 import manifestHelpers from 'express-manifest-helpers';
@@ -20,7 +20,7 @@ import { i18nextXhr, refreshTranslations } from './middleware/i18n';
 
 require('dotenv').config();
 
-const app = express.default();
+const app: Application = express();
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 // Use Nginx or Apache to serve static assets in production or remove the if() around the following

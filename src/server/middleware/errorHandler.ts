@@ -1,7 +1,7 @@
 import path from 'path';
-import { Response } from 'express';
+import { ErrorRequestHandler } from 'express';
 
-const errorHandler = (err: Error, _req: any, res: Response, _next: any) =>
+const errorHandler: ErrorRequestHandler = (err: Error, _req: any, res, _next) =>
     res.status(404).json({
         status: 'error',
         message: err.message,
