@@ -24,7 +24,7 @@
     "start": "cross-env PORT=3000 node build/server/server.js",
     "start:pm2": "pm2-runtime start ecosystem.config.js --env production",
     "start:analyzer": "webpack-bundle-analyzer build/client/static/bundle-stats.json",
-    "test": "node scripts/test.js --env=jsdom",
+    "test": "node scripts/test.js --env=jsdom --passWithNoTests",
     "test:update": "yarn-or-npm test --updateSnapshot",
     "transpile": "yarn-or-npm babel -d build/transpiled ./src --extensions .es6,.js,.es,.jsx,.mjs,.ts,.tsx --ignore **/*.d.ts",
     "tsc": "tsc --noEmit",
