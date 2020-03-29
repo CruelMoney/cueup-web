@@ -4,8 +4,9 @@ orbs:
   cypress: cypress-io/cypress@1.19.1
 jobs:
   lint-and-test: 
-    docker: 
-      - image: ubuntu:14.04
+    executor:
+      name: node/default
+      tag: "10.17.0"
     steps:
       - checkout
       - node/install-packages:
