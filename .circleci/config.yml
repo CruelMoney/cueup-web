@@ -10,6 +10,7 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: yarn
+          cache-key: yarn.lock
       - run:
           name: Install deps
           command: yarn
