@@ -37,7 +37,9 @@ jobs:
       - run:
           name: Add remote git
           command: git remote add staging dokku@cueup.io:staging.cueup
-      - deploy: git push staging master
+      - deploy: 
+          name: Deploy staging  
+          command: git push staging master
 
   deploy-production:
     docker:
@@ -51,7 +53,9 @@ jobs:
       - run:
           name: Add remote git
           command: git remote add production dokku@cueup.io:cueup
-      - deploy: git push production master
+      - deploy: 
+          name: Deploy production  
+          command: git push production master
 
 executors:
   with-redis:
