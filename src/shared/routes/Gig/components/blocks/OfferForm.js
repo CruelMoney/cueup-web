@@ -17,7 +17,6 @@ import {
 import { Input, InputRow } from '../../../../components/FormComponents';
 import CurrencySelector from '../../../../components/CurrencySelector';
 import { Body, BodyBold, TitleClean } from '../../../../components/Text';
-import content from '../../../User/content.json';
 
 const OfferForm = ({
     gig,

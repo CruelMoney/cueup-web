@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import debounce from 'lodash/debounce';
-import { useMutation, useLazyQuery, useQuery, useApolloClient } from 'react-apollo';
+import { useMutation } from 'react-apollo';
 import * as Sentry from '@sentry/browser';
-import { SmartButton, Row, Avatar, Col } from 'components/Blocks';
+import { SmartButton, Avatar, Col } from 'components/Blocks';
 import { Input, InputRow } from 'components/FormComponents';
 import { useForm, validators, useValidation } from 'components/hooks/useForm';
 import RegistrationElement from 'components/common/RegistrationElement';
@@ -18,7 +18,7 @@ import NumberedList from '../../../components/common/NumberedList';
 import c from '../../../constants/constants';
 import GeoCoder from '../../../utils/GeoCoder';
 import SimpleMap from '../../../components/common/Map';
-import { CREATE_USER, ME } from '../../../components/gql';
+import { CREATE_USER } from '../../../components/gql';
 import ErrorMessageApollo from '../../../components/common/ErrorMessageApollo';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
