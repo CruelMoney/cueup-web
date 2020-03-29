@@ -24,19 +24,6 @@ jobs:
           name: Run tests
           command: yarn test
 
-  e2e:
-    docker: 
-      - image: ubuntu:14.04
-    steps:
-      - cypress/run:
-          yarn: true
-          record: true
-          parallel: true
-          parallelism: 2
-          build: yarn build
-          start: yarn start
-          wait-on: http://localhost:3000
-
   deploy-staging:
     docker:
       - image: alpine/git
@@ -70,7 +57,14 @@ workflows:
   build-deploy:
     jobs:
       - lint-and-test
-      - e2e:
+      - cypress/run:
+          yarn: true
+          record: true
+          parallel: true
+          parallelism: 2
+          build: yarn build
+          start: yarn start
+          wait-on: http://localhost:3000
           requires:
             - lint-and-test
           filters:
@@ -80,13 +74,13 @@ workflows:
                 - master
       # - deploy-staging:
       #     requires:
-      #       - e2e
+      #       - cypress/run
       #     filters:
       #       branches:
       #         only: staging
       # - deploy-production:
       #     requires:
-      #       - e2e
+      #       - cypress/run
       #     filters:
       #       branches:
       #         only: master
