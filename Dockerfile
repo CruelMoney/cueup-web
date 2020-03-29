@@ -10,4 +10,4 @@ COPY --from=builder /usr/src/app/ /usr/src/app/
 COPY . .
 RUN yarn build
 EXPOSE 8500
-CMD ['yarn', 'start']
+CMD ['node', 'build/server/server.js']
