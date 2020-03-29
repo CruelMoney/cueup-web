@@ -31,10 +31,10 @@ jobs:
     docker:
       - image: alpine/git
     steps:
+      - checkout
       - add_ssh_keys:
           fingerprints:
             - "f7:9c:16:2f:55:98:08:cb:6d:38:b0:9d:83:ed:e1:e4"
-      - checkout
       - run:
           name: Add remote git
           command: git remote add staging dokku@cueup.io:staging.cueup
@@ -46,10 +46,10 @@ jobs:
     docker:
       - image: alpine/git
     steps:
+      - checkout
       - add_ssh_keys:
           fingerprints:
             - "f7:9c:16:2f:55:98:08:cb:6d:38:b0:9d:83:ed:e1:e4"
-      - checkout
       - run:
           name: Add remote git
           command: git remote add production dokku@cueup.io:cueup
