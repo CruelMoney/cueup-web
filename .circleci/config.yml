@@ -10,7 +10,7 @@ jobs:
       name: node/default
     steps:
       - checkout
-      - node/test:
+      - run:
           steps:
             - run:
                 name: Lint files
