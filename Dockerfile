@@ -3,11 +3,10 @@ FROM node:10-alpine
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
-COPY yarn.lock ./
+COPY package*.json  yarn.lock ./
 RUN yarn install
-RUN yarn build
 
 COPY . .
+RUN yarn build
 
 EXPOSE 8500
