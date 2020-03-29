@@ -21,7 +21,7 @@
     "lint:deps": "depcruise -c .dependency-cruiser.js src/",
     "plop": "plop",
     "start:dev": "cross-env NODE_ENV=development node scripts/start.js",
-    "start": "cross-env PORT=3000 node build/server/server.js",
+    "start": "node build/server/server.js",
     "start:pm2": "pm2-runtime start ecosystem.config.js --env production",
     "start:analyzer": "webpack-bundle-analyzer build/client/static/bundle-stats.json",
     "test": "node scripts/test.js --env=jsdom --passWithNoTests",
