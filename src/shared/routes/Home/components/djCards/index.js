@@ -10,6 +10,8 @@ export default () => {
     useEffect(() => {
         setCards(shuffle(DJs));
     }, []);
+
+    console.log({ cards });
     return (
         <div className="dj-cards">
             <div>

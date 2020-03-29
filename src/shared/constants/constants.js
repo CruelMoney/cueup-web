@@ -1,11 +1,11 @@
-const keyMirror = require('keymirror');
-const frank = require('../assets/images/frank-hansen.png');
-const martin = require('../assets/images/martin.jpg');
-const oliver = require('../assets/images/oliver.jpg');
-const emma = require('../assets/images/emma.png');
-const mussa = require('../assets/images/musa.jpg');
-const jan = require('../assets/images/jan.png');
-const peter = require('../assets/images/peter.png');
+import keyMirror from 'keymirror';
+import frank from '../assets/images/frank-hansen.png';
+import martin from '../assets/images/martin.jpg';
+import oliver from '../assets/images/oliver.jpg';
+import emma from '../assets/images/emma.png';
+import mussa from '../assets/images/musa.jpg';
+import jan from '../assets/images/jan.png';
+import peter from '../assets/images/peter.png';
 
 const production = process.env.NODE_ENV === 'production';
 
