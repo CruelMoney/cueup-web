@@ -53,13 +53,18 @@ jobs:
           command: git remote add production dokku@cueup.io:cueup
       - deploy: git push production master
 
+executors:
+  with-redis:
+    docker:
+      - image: cypress/base-12-6-0
+      - image: redis      
 
 workflows:
   build-deploy:
     jobs:
       # - lint-and-test
       - cypress/run:
-          executor: cypress/base-12-6-0
+          executor: with-redis
           yarn: true
           record: true
           build: yarn build
@@ -72,3 +77,15 @@ workflows:
               only: 
                 - staging
                 - master
+      # - deploy-staging:
+      #     requires:
+      #       - cypress/run
+      #     filters:
+      #       branches:
+      #         only: staging
+      # - deploy-production:
+      #     requires:
+      #       - cypress/run
+      #     filters:
+      #       branches:
+      #         only: master
