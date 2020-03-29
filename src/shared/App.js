@@ -234,9 +234,4 @@ function mapDispatchToProps(dispatch, ownprops) {
     };
 }
 
-export default withRouter(
-    connect(
-        mapStateToProps,
-        mapDispatchToProps
-    )(memo(App))
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(memo(App)));
