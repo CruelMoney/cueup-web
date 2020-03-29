@@ -6,7 +6,8 @@ import PlayIcon from '../../../../assets/icons/PlayIcon';
 import PauseIcon from '../../../../assets/icons/PauseIcon';
 import { BodySmall, SmallBold } from '../../../../components/Text';
 import useSoundPlayer, { useCurrentDeck, playerStates } from './useSoundPlayer';
-import { SoundBars, useScanning } from './Sound';
+import useScanning from './useScanning';
+import SoundBars from './SoundBars';
 
 const BottomPlayer = ({ track, next, previous }) => {
     const { progress, state, jumpTo, pause, play } = useSoundPlayer({
