@@ -6,10 +6,14 @@ jobs:
     docker:
       - image: circleci/node:10.15
     working_directory: ~/repo
-    executor:
-      name: node/default
     steps:
       - checkout
+      - node/install-packages
+          pkg-manager: yarn
+      - run:
+          name: Install deps
+          command: yarn
+
       - run:
           name: Lint files
           command: yarn lint
