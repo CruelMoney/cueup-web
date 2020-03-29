@@ -11,18 +11,16 @@ jobs:
     steps:
       - checkout
       - run:
-          steps:
-            - run:
-                name: Lint files
-                command: yarn lint
+          name: Lint files
+          command: yarn lint
 
-            - run:
-                name: Check types
-                command: yarn tsc
+      - run:
+          name: Check types
+          command: yarn tsc
 
-            - run:
-                name: Run tests
-                command: yarn test
+      - run:
+          name: Run tests
+          command: yarn test
 workflows:
     build-and-test:
       jobs:
