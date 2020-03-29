@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router';
 import styled from 'styled-components';
-import { Query } from 'react-apollo';
+import { Query, useMutation } from 'react-apollo';
 import queryString from 'query-string';
-import { useMutation } from '@apollo/react-hooks';
+
 import Pin from 'react-ionicons/lib/MdPin';
 import moment from 'moment';
 import AddCircle from 'react-ionicons/lib/MdAddCircle';

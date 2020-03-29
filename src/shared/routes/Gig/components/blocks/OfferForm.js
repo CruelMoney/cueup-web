@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import debounce from 'lodash/debounce';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from 'react-apollo';
 import RadioSelect from 'components/RadioSelect';
 import { GET_OFFER, MAKE_OFFER, GIG } from '../../gql';
 import ErrorMessageApollo from '../../../../components/common/ErrorMessageApollo';

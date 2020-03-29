@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Query } from 'react-apollo';
-import { useMutation } from '@apollo/react-hooks';
+import { Query, useMutation } from 'react-apollo';
+
 import { Title, Body, BodySmall, BodyBold } from '../../../components/Text';
 import {
     Col,

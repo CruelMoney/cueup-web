@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from 'react-apollo';
 
 import styled from 'styled-components';
 import moment from 'moment';
