@@ -391,21 +391,14 @@ const Content = ({ user, values }) => {
 
     return (
         <>
-            <SmallHeader style={{ marginBottom: '15px' }}>{`Booking of ${artistName ||
-                firstName}`}</SmallHeader>
+            <SmallHeader style={{ marginBottom: '15px' }}>{`Booking of ${
+                artistName || firstName
+            }`}</SmallHeader>
             {name && <SidebarRow>{name}</SidebarRow>}
             <SidebarRow>{moment(date).format('dddd Do MMMM, YYYY')}</SidebarRow>
             <SidebarRow>
-                From{' '}
-                {moment(date)
-                    .startOf('day')
-                    .add(startMinute, 'minutes')
-                    .format('HH:mm')}{' '}
-                to{' '}
-                {moment(date)
-                    .startOf('day')
-                    .add(endMinute, 'minutes')
-                    .format('HH:mm')}
+                From {moment(date).startOf('day').add(startMinute, 'minutes').format('HH:mm')} to{' '}
+                {moment(date).startOf('day').add(endMinute, 'minutes').format('HH:mm')}
             </SidebarRow>
             <SidebarRow>{guestsCount} guests</SidebarRow>
             {speakers && <SidebarRow>Including speakers</SidebarRow>}

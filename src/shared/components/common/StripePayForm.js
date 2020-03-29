@@ -64,33 +64,29 @@ const StripeForm = ({ translate, stripe, paymentIntent, onPaymentConfirmed, goBa
         const { token } = paymentIntent;
         const PAYMENT_INTENT_CLIENT_SECRET = token.token;
 
-        try {
-            const options = {
-                payment_method_data: {
-                    billing_details: {
-                        address: {
-                            country,
-                        },
-                        name,
-                        email,
+        const options = {
+            payment_method_data: {
+                billing_details: {
+                    address: {
+                        country,
                     },
+                    name,
+                    email,
                 },
-                receipt_email: email,
-            };
-            const result = await stripe.handleCardPayment(
-                PAYMENT_INTENT_CLIENT_SECRET,
-                cardElement.current,
-                options
-            );
-            const { error, paymentIntent } = result;
-            if (error) {
-                throw new Error(error.message || 'Something went wrong');
-            }
-            onPaymentConfirmed();
-            return paymentIntent;
-        } catch (error) {
-            throw error;
+            },
+            receipt_email: email,
+        };
+        const result = await stripe.handleCardPayment(
+            PAYMENT_INTENT_CLIENT_SECRET,
+            cardElement.current,
+            options
+        );
+        const { error, paymentIntent } = result;
+        if (error) {
+            throw new Error(error.message || 'Something went wrong');
         }
+        onPaymentConfirmed();
+        return paymentIntent;
     };
 
     return (

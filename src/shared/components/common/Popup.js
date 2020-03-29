@@ -90,7 +90,7 @@ const Popup = memo((props) => {
                     className={
                         'card popup' + (showing ? ' active' : '') + (noPadding ? ' no-padding' : '')
                     }
-                    onClick={function(event) {
+                    onClick={function (event) {
                         event.stopPropagation();
                     }}
                 >

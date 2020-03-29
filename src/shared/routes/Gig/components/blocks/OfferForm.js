@@ -149,8 +149,8 @@ const OfferForm = ({
 
     const canSubmit =
         (pendingUpdate ||
-            (offer.offer.amount !== initOffer.offer.amount ||
-                currency !== initOffer.offer.currency)) &&
+            offer.offer.amount !== initOffer.offer.amount ||
+            currency !== initOffer.offer.currency) &&
         parseInt(offer.offer.amount, 10) > 0 &&
         !loading;
 

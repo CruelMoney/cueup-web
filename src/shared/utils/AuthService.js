@@ -6,9 +6,7 @@ class AuthService extends EventEmitter {
         console.log('set session');
         // Set the time that the access token will expire at
         localStorage.setItem('token', token);
-        const expire = moment()
-            .add(2, 'weeks')
-            .utc();
+        const expire = moment().add(2, 'weeks').utc();
         document.cookie = `x-token=${token}; path=/; expires = ${expire}`;
     }
 

@@ -1,7 +1,7 @@
 import { Environment } from '../constants/constants';
 
 export default {
-    codeAddress: function(address, callback) {
+    codeAddress: function (address, callback) {
         const geocoder = new window.google.maps.Geocoder();
         geocoder.geocode({ address: address }, (results, status) => {
             if (status === window.google.maps.GeocoderStatus.OK) {
@@ -16,11 +16,12 @@ export default {
         });
     },
 
-    getTimeZone: function({ lng, lat }) {
+    getTimeZone: function ({ lng, lat }) {
         return new Promise((resolve, reject) => {
             fetch(
-                `https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lng}&timestamp=${Date.now() /
-                    1000}&key=${Environment.GOOGLE_API_KEY}`
+                `https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lng}&timestamp=${
+                    Date.now() / 1000
+                }&key=${Environment.GOOGLE_API_KEY}`
             )
                 .then((res) => {
                     if (res.ok) {

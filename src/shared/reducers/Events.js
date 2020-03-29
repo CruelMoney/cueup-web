@@ -28,6 +28,7 @@ const events = (state = initialState, action) => {
                 isWaiting: false,
             };
         case ActionTypes.EVENT_CONFIRMED:
+            // eslint-disable-next-line no-case-declarations
             const event = { ...state.values[0], status: 'Confirmed' };
             return {
                 ...state,

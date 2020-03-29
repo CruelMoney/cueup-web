@@ -147,8 +147,7 @@ const PaymentWrapper = (props) => {
     };
 
     const canBePaid = offer.daysUntilPaymentPossible < 1;
-    const showCurrencyChange =
-        recommendedCurrency && (currency && recommendedCurrency !== currency);
+    const showCurrencyChange = recommendedCurrency && currency && recommendedCurrency !== currency;
     // can be paid direct
     if (availablePayoutMethods.some((pm) => pm.payoutType === PAYOUT_TYPES.DIRECT) && !canBePaid) {
         availablePayoutMethods = availablePayoutMethods.filter(
@@ -369,9 +368,6 @@ function mapDispatchToProps(dispatch, ownprops) {
     };
 }
 
-const SmartPay = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(PaymentWrapper);
+const SmartPay = connect(mapStateToProps, mapDispatchToProps)(PaymentWrapper);
 
 export default addTranslate(SmartPay, [content, requestFormContent]);

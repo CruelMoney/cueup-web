@@ -304,7 +304,11 @@ const EditPopup = ({ profileStatus, approvedKey, close, user }) => {
                 <LoadingIndicator />
             ) : (
                 <ol className="numbered-list">
-                    {edits?.filter((e) => e.message).map((e) => <li key={e.id}>{e.message}</li>)}
+                    {edits
+                        ?.filter((e) => e.message)
+                        .map((e) => (
+                            <li key={e.id}>{e.message}</li>
+                        ))}
                 </ol>
             )}
 

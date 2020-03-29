@@ -3,9 +3,9 @@ orbs:
   node: circleci/node@2.0.0
 jobs:
   build-and-test:
-    docker:
-      - image: circleci/node:10.15
-    working_directory: ~/repo
+    executor:
+      name: node/default
+      tag: '10'
     steps:
       - checkout
       - node/install-packages:

@@ -52,8 +52,9 @@ class Post extends Component {
 
                 <header className="title">
                     <time
-                        dateTime={`${publishedDate.getFullYear()}-${publishedDate.getMonth() +
-                            1}-${publishedDate.getDate()}`}
+                        dateTime={`${publishedDate.getFullYear()}-${
+                            publishedDate.getMonth() + 1
+                        }-${publishedDate.getDate()}`}
                     >
                         {Formatter.date.ToLocalString(publishedDate)}
                     </time>

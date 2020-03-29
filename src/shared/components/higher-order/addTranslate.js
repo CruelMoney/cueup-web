@@ -35,10 +35,7 @@ const addTranslate = (Wrappee, content = []) => {
         };
     };
 
-    return connect(
-        mapStateToProps,
-        mapDispatchToProps
-    )(Index);
+    return connect(mapStateToProps, mapDispatchToProps)(Index);
 };
 
 export default addTranslate;

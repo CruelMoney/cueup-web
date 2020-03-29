@@ -400,8 +400,7 @@ export const FileInputWrapper = styled.label`
 `;
 
 export const TeritaryButton = styled.button`
-    ${ButtonTextStyle}
-    :hover {
+    ${ButtonTextStyle} :hover {
         ${({ disabled, warning }) =>
             disabled
                 ? ''

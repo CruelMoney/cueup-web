@@ -327,7 +327,7 @@ const CoverPicture = ({ url, onChange, imageFile }) => {
         if (file) {
             const reader = new FileReader();
 
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 setSrc(e.target.result);
             };
             reader.readAsDataURL(file);
@@ -340,7 +340,7 @@ const CoverPicture = ({ url, onChange, imageFile }) => {
         if (imageFile) {
             const reader = new FileReader();
 
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 setSrc(e.target.result);
             };
             reader.readAsDataURL(imageFile);

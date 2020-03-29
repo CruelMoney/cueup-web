@@ -277,7 +277,7 @@ const Input = React.forwardRef(
         },
         fRef
     ) => {
-        const ref = fRef || useRef();
+        const ref = useRef(fRef);
         const LabelComponent = half ? LabelHalf : InputLabel;
 
         const saveIfInvalid = !!registerValidation;

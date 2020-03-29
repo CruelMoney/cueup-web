@@ -343,9 +343,6 @@ function mapDispatchToProps(dispatch, ownprops) {
     };
 }
 
-const SmartFooter = connect(
-    mapStatetoProps,
-    mapDispatchToProps
-)(footer);
+const SmartFooter = connect(mapStatetoProps, mapDispatchToProps)(footer);
 
 export default withRouter(SmartFooter);

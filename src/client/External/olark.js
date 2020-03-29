@@ -1,4 +1,4 @@
-(function(o, l, a, r, k, y) {
+(function (o, l, a, r, k, y) {
     if (o.olark) {
         return;
     }
@@ -8,17 +8,17 @@
     y.async = 1;
     y.src = '//' + a;
     r.parentNode.insertBefore(y, r);
-    y = o.olark = function() {
+    y = o.olark = function () {
         k.s.push(arguments);
         k.t.push(Number(new Date()));
     };
-    y.extend = function(i, j) {
+    y.extend = function (i, j) {
         y('extend', i, j);
     };
-    y.identify = function(i) {
+    y.identify = function (i) {
         y('identify', (k.i = i));
     };
-    y.configure = function(i, j) {
+    y.configure = function (i, j) {
         y('configure', i, j);
         k.c[i] = j;
     };
