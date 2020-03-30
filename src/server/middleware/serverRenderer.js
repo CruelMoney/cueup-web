@@ -7,11 +7,8 @@ import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 import { ChunkExtractorManager } from '@loadable/server';
 import { ApolloProvider } from 'react-apollo';
 import { I18nextProvider } from 'react-i18next';
-import en from 'constants/locales/en';
 import App from '../../shared/App';
 import Html from '../components/HTML';
-
-const ogEn = { ...en };
 
 const serverRenderer = () => async (req, res) => {
     const sheet = new ServerStyleSheet();
@@ -62,6 +59,7 @@ const serverRenderer = () => async (req, res) => {
     // find and add the used namespaces for this request
     const namespaces = req.i18n.reportNamespaces.getUsedNamespaces();
     namespaces.push('routes');
+
     for (const ns of namespaces) {
         i18nState.store[i18nState.initialLanguage][ns] = req.i18n.getResourceBundle(
             i18nState.initialLanguage,

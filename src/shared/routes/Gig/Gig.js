@@ -1,10 +1,13 @@
 import React, { useRef, useEffect, useState, useCallback, forwardRef } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Redirect, Switch, useRouteMatch } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-apollo';
 import styled from 'styled-components';
 import { useTransition, animated } from 'react-spring';
 import { useMeasure } from '@softbind/hook-use-measure';
+import { useHistory } from 'react-router';
+import useTranslate from 'components/hooks/useTranslate';
+import { appRoutes } from 'constants/locales/appRoutes';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col, TeritaryButton, SmartButton } from '../../components/Blocks';
@@ -26,7 +29,11 @@ import BackToProfile from './components/BackToProfile';
 import GigReview from './routes/GigReview';
 import MobileChat from './routes/MobileChat';
 
-const Index = ({ translate, match, location, history }) => {
+const Index = () => {
+    const { translate } = useTranslate();
+    const match = useRouteMatch();
+    const history = useHistory();
+
     const {
         params: { id },
     } = match;
@@ -57,7 +64,7 @@ const Index = ({ translate, match, location, history }) => {
     const redirectToHome = () => history.push('/');
 
     if (error && error.message.includes('Not your gig')) {
-        return <Redirect to={translate('routes./not-found')} />;
+        return <Redirect to={translate(appRoutes.notFound)} />;
     }
 
     const { event, status } = gig || {};
@@ -105,8 +112,8 @@ const Index = ({ translate, match, location, history }) => {
 
             <Footer
                 noSkew
-                firstTo={translate('routes./how-it-works')}
-                secondTo={translate('routes./')}
+                firstTo={translate(appRoutes.howItWorks)}
+                secondTo={translate(appRoutes.home)}
                 firstLabel={translate('how-it-works')}
                 secondLabel={translate('arrange-event')}
                 title={translate('Organizing a new event?')}

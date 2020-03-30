@@ -66,7 +66,7 @@ const OfferForm = ({
 
     const updateOffer = async () => {
         const payoutTypes = Object.entries(payoutMethods)
-            .filter(([k, v]) => v)
+            .filter(([_k, v]) => v)
             .map(([k]) => k);
 
         if (!payoutTypes.length) {
@@ -163,7 +163,7 @@ const OfferForm = ({
         <div>
             <Body>
                 {!payoutInfoValid
-                    ? translate('gig.offer.update-payout')
+                    ? translate('gig:offer.update-payout')
                     : gigStateDescription[gig.status] ?? gigStateDescription.default}
             </Body>
 
@@ -284,15 +284,7 @@ const OfferForm = ({
     );
 };
 
-const RemainingPayment = ({
-    translate,
-    payoutType,
-    amountLeft,
-    amountPaid,
-    totalPayment,
-    offer,
-    serviceFee,
-}) => {
+const RemainingPayment = ({ translate, payoutType, amountLeft, amountPaid, offer }) => {
     const isDirect = payoutType === PAYOUT_TYPES.DIRECT;
     return (
         <Col style={{ marginBottom: '30px', marginTop: '30px' }}>
@@ -313,20 +305,20 @@ const RemainingPayment = ({
     );
 };
 
-const OfferTable = ({ loading, translate, totalPayment, serviceFee, djFee, totalPayout }) => {
+const OfferTable = ({ loading, translate, serviceFee, djFee, totalPayout }) => {
     return (
         <Col style={{ marginBottom: '30px', marginTop: '30px' }}>
             <div style={style1}>
                 <TableRow
                     label={translate('Service fee')}
-                    info={<div>{translate('gig.offer.service-fee-info')}</div>}
+                    info={<div>{translate('gig:offer.service-fee-info')}</div>}
                 >
                     {loading ? 'loading...' : serviceFee.formatted ? serviceFee.formatted : '...'}
                 </TableRow>
                 <Hr />
                 <TableRow
                     label={translate('Payment processing')}
-                    info={<div>{translate('gig.offer.dj-fee-info')}</div>}
+                    info={<div>{translate('gig:offer.dj-fee-info')}</div>}
                 >
                     {loading ? 'loading...' : djFee.formatted ? djFee.formatted : '...'}
                 </TableRow>

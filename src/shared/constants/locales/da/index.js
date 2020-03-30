@@ -1,8 +1,8 @@
-import common from './common.json';
+import data from './data.json';
 import routes from './routes.ts';
 
 const en = {
-    common,
+    ...data,
     routes,
 };
 
