@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 import { NavLink } from 'react-router-dom';
+import { eventRoutes } from 'routes/Event/routes';
 import checkmark from '../../../../assets/checkmark.svg';
 import { EVENT_GIGS } from '../../gql';
 import ConditionalWrap from '../../../../components/ConditionalWrap';
@@ -26,7 +27,11 @@ const EventProgress = ({ theEvent = {} }) => {
             <ProgressStep label={'Create event'} completed />
             <ProgressStep label={'Get offers from DJs'} completed={accepted} />
             <ProgressStep label={'Confirm and pay'} completed={!!theEvent.chosenGig} />
-            <ProgressStep label={'Review'} completed={theEvent && theEvent.review} to="review" />
+            <ProgressStep
+                label={'Review'}
+                completed={theEvent && theEvent.review}
+                to={eventRoutes.review}
+            />
         </Wrapper>
     );
 };

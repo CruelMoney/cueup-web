@@ -12,6 +12,7 @@ import { LoadingPlaceholder2 } from '../../../components/common/LoadingPlacehold
 import GracefullImage from '../../../components/GracefullImage';
 import GracefullVideo from '../../../components/GracefullVideo';
 import Sound from './Sounds/Sound';
+import { userRoutes } from '.';
 
 const ColumnLayout = styled.section`
     width: 100%;
@@ -437,7 +438,7 @@ const Overview = ({ user, loading }) => {
                         />
                     ) : user.isOwn && user.isDj ? (
                         <AddBlockPlaceholder
-                            to="reviews"
+                            to={userRoutes.reviews}
                             label="Add Highlight"
                             directions="Select text with the cursor from a review or testimonial to highlight it here."
                         />

@@ -12,6 +12,7 @@ import { GIG } from '../gql';
 import { LoadingIndicator } from '../../../components/Blocks';
 import Chat from '../../../components/common/Chat';
 import EmptyPage from '../../../components/common/EmptyPage';
+import { userRoutes } from '../routes';
 
 const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
     const { translate } = useTranslate();
@@ -73,7 +74,7 @@ const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
     }
 
     return (
-        <NavLink to="booking">
+        <NavLink to={userRoutes.booking}>
             <CTAButton>REQUEST BOOKING</CTAButton>
         </NavLink>
     );

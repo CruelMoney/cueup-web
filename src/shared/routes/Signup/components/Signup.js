@@ -37,7 +37,7 @@ const Signup = ({ translate }) => {
                         </Col>
                     </Row>
                     <Row center style={{ margin: '24px 0' }}>
-                        <NavLink to="become-dj">
+                        <NavLink to={translate(appRoutes.becomeDj)}>
                             <ReadMore size={'18px'} center white uppercase={false}>
                                 Read more
                             </ReadMore>
