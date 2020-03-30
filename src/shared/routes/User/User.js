@@ -384,7 +384,7 @@ const UserRoutes = ({ match, user, loading, updateUser, location }) => {
     return (
         <Switch>
             <Route
-                path={match.path + userRoutes.booking}
+                path={match.path + '/' + userRoutes.booking}
                 render={(props) => (
                     <Booking {...props} user={user} loading={loading} translate={translate} />
                 )}

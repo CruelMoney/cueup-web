@@ -8,6 +8,7 @@ import ReactPixel from 'react-facebook-pixel';
 import { userRoutes } from 'routes/User/routes';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
+import { eventRoutes } from 'routes/Event/routes';
 import {
     Col,
     keyframeFadeIn,
@@ -89,7 +90,7 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat }) => {
                                         to={{
                                             pathname: `${translate(appRoutes.user)}/${
                                                 dj.permalink
-                                            }${userRoutes.overview}`,
+                                            }/${userRoutes.overview}`,
                                             state: { gigId: gig.id },
                                             search: `?gigId=${gig.id}&eventId=${theEvent.id}&hash=${theEvent.hash}`,
                                         }}
@@ -231,7 +232,7 @@ const Offer = ({
                     <PrimaryButton onClick={initiateBooking}>Book {name}</PrimaryButton>
                 )}
                 {['CONFIRMED', 'FINISHED'].includes(status) && (
-                    <NavLink to="review">
+                    <NavLink to={eventRoutes.review}>
                         <PrimaryButton>Review {name}</PrimaryButton>
                     </NavLink>
                 )}

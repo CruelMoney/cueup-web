@@ -35,7 +35,7 @@ const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
 
     if (canBeReviewd) {
         return (
-            <NavLink to={`${translate(appRoutes.event)}/${event.id}/${hash}${eventRoutes.review}`}>
+            <NavLink to={`${translate(appRoutes.event)}/${event.id}/${hash}/${eventRoutes.review}`}>
                 <CTAButton>REVIEW</CTAButton>
             </NavLink>
         );

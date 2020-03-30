@@ -114,7 +114,7 @@ const Content = ({
                             <Navlink
                                 onClick={() => setShow(false)}
                                 userNavigation={true}
-                                to={`${translate(appRoutes.user)}/${user.permalink}${
+                                to={`${translate(appRoutes.user)}/${user.permalink}/${
                                     userRoutes.overview
                                 }`}
                                 label={translate('profile')}

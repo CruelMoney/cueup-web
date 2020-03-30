@@ -16,7 +16,7 @@ const Events = () => {
 
         return (
             <div key={id}>
-                <NavLink to={`${translate(appRoutes.event)}/${id}/${hash}${eventRoutes.overview}`}>
+                <NavLink to={`${translate(appRoutes.event)}/${id}/${hash}/${eventRoutes.overview}`}>
                     <div>
                         <div className="event-card" key={i}>
                             <div>

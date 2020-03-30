@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { BodySmall } from 'components/Text';
 import { Container, ReadMore } from 'components/Blocks';
 import GracefullImage from 'components/GracefullImage';
+import { appRoutes } from 'constants/locales/appRoutes';
 import { ResponsiveTextAccent } from '../components/blocks/TextAccent';
 import { GrayText, Header } from '../../../components/common/Text';
 import cph from '../assets/maps/cph.png';
@@ -298,7 +299,7 @@ const GettingGigs = () => {
                             At Cueup we constantly work on bringing gigs to our DJs. You just have
                             to chat the organizer - make your offer - play - get paid.
                         </GrayText>
-                        <NavLink to="/blog/stop-missing-dj-gigs">
+                        <NavLink to={t(appRoutes.blog) + '/stop-missing-dj-gigs'}>
                             <ReadMore size="18px" uppercase={false}>
                                 {t('read-more')}
                             </ReadMore>

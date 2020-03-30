@@ -10,12 +10,12 @@ import Sounds from './Sounds';
 export { Sounds, Photos, Booking, Overview, Settings, Reviews, Gigs, Events };
 
 export const userRoutes = {
-    gigs: '/gigs',
-    overview: '/overview',
-    reviews: '/reviews',
-    booking: '/booking',
-    sounds: '/sounds',
-    events: '/events',
-    settings: '/settings',
-    photos: '/photos',
+    gigs: 'gigs',
+    overview: 'overview',
+    reviews: 'reviews',
+    booking: 'booking',
+    sounds: 'sounds',
+    events: 'events',
+    settings: 'settings',
+    photos: 'photos',
 };

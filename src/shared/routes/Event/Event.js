@@ -180,7 +180,7 @@ const GigRoutes = forwardRef((props, ref) => {
                     render={(navProps) => <Overview {...navProps} {...props} {...eventProps} />}
                 />
                 <Route
-                    path={match.path + eventRoutes.requirements}
+                    path={match.path + '/' + eventRoutes.requirements}
                     render={(navProps) => (
                         <Requirements
                             {...navProps}
@@ -191,7 +191,7 @@ const GigRoutes = forwardRef((props, ref) => {
                     )}
                 />
                 <Route
-                    path={match.path + eventRoutes.review}
+                    path={match.path + '/' + eventRoutes.review}
                     render={(navProps) => <Review {...navProps} {...props} {...eventProps} />}
                 />
             </Switch>

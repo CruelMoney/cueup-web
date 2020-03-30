@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Container, Col, Row, ReadMore } from 'components/Blocks';
+import { appRoutes } from 'constants/locales/appRoutes';
 import { Header } from '../../../components/common/Text';
 import { TextAccent } from '../components/blocks/TextAccent';
 import { SubTitle } from '../../../components/common/SubTitle';
@@ -109,7 +110,7 @@ const CancelationPolicy = (props) => {
                     When accepting payments using Cueup, your cancelation policy will automatically
                     be enforced, and you can define the policy exactly how you want.
                 </CancelationSubTitle>
-                <NavLink to="/blog" style={{ marginTop: '42px' }}>
+                <NavLink to={t(appRoutes.blog)} style={{ marginTop: '42px' }}>
                     <ReadMore white size="18px" uppercase={false}>
                         {t('read-more')}
                     </ReadMore>

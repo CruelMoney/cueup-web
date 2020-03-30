@@ -1,23 +1,4 @@
 {
-  "home": {
-    "title": "Lej DJs uden bekymringer",
-    "introduction": "Cueup er den nemmeste måde at leje en DJ til dit event. Fortæl os om dit arrangement herunder, og kom i kontakt med 100-vis af kvalificerede DJs.",
-    "sections": {
-      "left": {
-        "title": "Sikkert bookingsystem",
-        "content": "Hos Cueup er du garanteret at få mest muligt ud af dine penge. Dine penge bliver først overført når eventet er afsluttet, og I tilfælde af at DJen aflyser, vil dine penge blive refunderet med det samme. Vi vil dernæst finde en ny DJ hurtigst muligt."
-      },
-      "right": {
-        "title": "Lej den bedste DJ",
-        "content": "Hos Cueup matcher vi dit event med de DJs der passer bedst. På hver DJ's profil kan du se pris, læse anmeldelser, lytte til musik og se billeder fra tidligere events. Når du har fundet en DJ du vil leje, kan i snakke detaljerne igennem for aftenen."
-      }
-    },
-    "footer": {
-      "first": "Er du DJ?",
-      "second": "Tilmeld dig som DJ, eller se hvordan det virker."
-    }
-  },
- 
   "common": {
     "currency": "Valuta",
     "book-dj": "Book DJ",
