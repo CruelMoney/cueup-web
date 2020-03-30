@@ -7,11 +7,11 @@ import ScrollToTop from '../../components/common/ScrollToTop';
 import Faq from './components/Faq';
 import Dj from './routes/DJ';
 import Organizer from './routes/Organizer';
-import content from './content.json';
+import content from './newContent.json';
 
 const Index = (props) => {
     const { match, t } = props;
-    useAddTranslationContent(content, 'faq');
+    useNamespaceContent(content, 'faq');
 
     const title = 'FAQ | Cueup';
 
@@ -39,11 +39,11 @@ const Index = (props) => {
     );
 };
 
-const useAddTranslationContent = (resources, ns) => {
+const useNamespaceContent = (resources, ns) => {
     const { i18n } = useTranslation();
-    console.log(i18n);
     i18n.reportNamespaces.addUsedNamespaces([ns]);
-    i18n.addResourceBundle(i18n.language, ns, resources, true, false);
+    console.log(i18n.language);
+    i18n.addResourceBundle(i18n.language, ns, resources[i18n.language], true, false);
 };
 
 export default withTranslation()(Index);
