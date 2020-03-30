@@ -1,6 +1,7 @@
 const config = {
-    lng: 'en',
+    debug: true,
     fallbackLng: 'en',
+    cleanCode: true,
     load: 'languageOnly',
     keySeparator: false, // we do not use keys in form messages.welcome
 

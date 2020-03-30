@@ -25,7 +25,7 @@ const compareRoutes = (r1 = [], r2 = [], key = 'route') => {
 };
 
 const App = ({ location }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const [state, setState] = useState({
         mobileLinks: [],
@@ -94,6 +94,7 @@ const App = ({ location }) => {
     return (
         <ErrorHandling>
             <Helmet>
+                <html lang={i18n.language} xmlLang={i18n.language} />
                 {/* 
                     TODO
                     <link

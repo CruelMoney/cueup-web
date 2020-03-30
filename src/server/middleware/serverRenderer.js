@@ -50,12 +50,10 @@ const serverRenderer = () => async (req, res) => {
     const linkTags = res.locals.chunkExtractor.getLinkElements();
     const cssTags = res.locals.chunkExtractor.getStyleElements();
 
-    let i18nState = { store: {}, initialLanguage: req.i18n.language };
+    const i18nState = { store: {}, initialLanguage: req.i18n.language };
     req.i18n.languages.forEach((l) => {
         i18nState.store[l] = req.i18n.services.resourceStore.data[l];
     });
-    i18nState = JSON.stringify(i18nState).replace(/</g, '\\u003c');
-    console.log(i18nState);
 
     const html = renderToString(
         <Html

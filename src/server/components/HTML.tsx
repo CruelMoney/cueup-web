@@ -9,7 +9,7 @@ type Props = {
     headerChildren: any;
     styleTags: any[];
     scriptTags: any[];
-    i18nState: string;
+    i18nState: any;
 };
 
 const HTML = ({
@@ -21,10 +21,11 @@ const HTML = ({
     helmetContext: { helmet },
     i18nState,
 }: Props) => {
-    console.log(i18nState);
+    const htmlAttrs = helmet.htmlAttributes.toComponent();
+    const bodyAttrs = helmet.bodyAttributes.toComponent();
 
     return (
-        <html lang="">
+        <html {...htmlAttrs}>
             <head>
                 <meta charSet="utf-8" />
                 <meta
@@ -70,12 +71,12 @@ const HTML = ({
                         // see: https://twitter.com/HenrikJoreteg/status/1143953338284703744
                         __html: `
                     window.__APOLLO_STATE__ = ${apolloState};
-                    window.i18nState = ${i18nState};
+                    window.i18nState = ${JSON.stringify(i18nState).replace(/</g, '\\u003c')};
                     `,
                     }}
                 />
             </head>
-            <body>
+            <body {...bodyAttrs}>
                 {/* eslint-disable-next-line react/no-danger */}
                 <div id="app" dangerouslySetInnerHTML={{ __html: children }} />
                 {scripts.filter(Boolean).map((src) => (

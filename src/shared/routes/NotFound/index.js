@@ -5,14 +5,6 @@ import EmptyPage from '../../components/common/EmptyPage';
 import Footer from '../../components/common/Footer';
 
 class NotFound extends Component {
-    componentDidMount() {
-        document.body.classList.add('not-found');
-    }
-
-    componentWillUnmount() {
-        document.body.classList.remove('not-found');
-    }
-
     render() {
         const { t } = this.props;
         const siteTitle = t('not-found-title');
@@ -22,6 +14,7 @@ class NotFound extends Component {
             <div className="not-found-screen">
                 <Helmet>
                     <title>{siteTitle + ' | Cueup'}</title>
+                    <body className="not-found" />
                     <meta name="description" content={siteDescription} />
 
                     <meta property="og:title" content={siteTitle + ' | Cueup'} />
