@@ -4,6 +4,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import ReactPixel from 'react-facebook-pixel';
 import { useTranslation, useSSR } from 'react-i18next';
+import { appRoutes } from 'constants/locales/appRoutes.ts';
 
 import * as gtag from './utils/analytics/autotrack';
 import { Environment } from './constants/constants';
@@ -133,6 +134,7 @@ const App = ({ location }) => {
                     label: state.mobileLabel,
                 }}
             >
+                <Navigation />
                 <RouteWrapper />
             </MobileMenuContext.Provider>
             <div id="popup-container" />
@@ -140,16 +142,15 @@ const App = ({ location }) => {
     );
 };
 
-const RouteWrapper = memo(({ cssLocation }) => {
+const RouteWrapper = () => {
     const { t } = useTranslation();
 
     return (
         <>
-            <Navigation />
-            <div id="content" className={cssLocation}>
+            <div id="content">
                 <Switch>
-                    <Route exact path={[t('routes./'), '/verifyEmail']} component={Home} />
-                    <Route path={t('routes./about')} component={About} />
+                    <Route exact path={[t(appRoutes.home), '/verifyEmail']} component={Home} />
+                    <Route path={t(appRoutes.about)} component={About} />
                     {/* <Route path={translate('routes./become-dj')} component={LazyBecomeDj} />
                     <Route path={translate('routes./how-it-works')} component={LazyHowItWorks} />
                     <Route path={translate('routes./signup')} component={Signup} /> */}
@@ -181,6 +182,6 @@ const RouteWrapper = memo(({ cssLocation }) => {
             </div>
         </>
     );
-});
+};
 
 export default withRouter(App);

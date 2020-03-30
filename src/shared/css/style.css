@@ -377,7 +377,7 @@ li .link-look {
 .location_book-dj,
 .location_locations,
 .location_faq,
-.location_about,
+.white-theme,
 .location_om,
 .location_blog,
 .not-found {
@@ -391,7 +391,7 @@ li .link-look {
 .location_book-dj .navigation .logo,
 .location_locations .navigation .logo,
 .location_faq .navigation .logo,
-.location_about .navigation .logo,
+.white-theme .navigation .logo,
 .location_om .navigation .logo,
 .location_blog .navigation .logo,
 .not-found .navigation .logo {
@@ -416,9 +416,9 @@ li .link-look {
 .location_blog .mobileMenuButton h2,
 .location_blog .mobileMenuButton h2:after,
 .location_blog .mobileMenuButton h2:before,
-.location_about .mobileMenuButton h2,
-.location_about .mobileMenuButton h2:after,
-.location_about .mobileMenuButton h2:before,
+.white-theme .mobileMenuButton h2,
+.white-theme .mobileMenuButton h2:after,
+.white-theme .mobileMenuButton h2:before,
 .location_om .mobileMenuButton h2,
 .location_om .mobileMenuButton h2:after,
 .location_om .mobileMenuButton h2:before {
@@ -443,9 +443,9 @@ li .link-look {
 .location_blog .buttonFixed .mobileMenuButton h2,
 .location_blog .buttonFixed .mobileMenuButton h2:after,
 .location_blog .buttonFixed .mobileMenuButton h2:before,
-.location_about .buttonFixed .mobileMenuButton h2,
-.location_about .buttonFixed .mobileMenuButton h2:after,
-.location_about .buttonFixed .mobileMenuButton h2:before,
+.white-theme .buttonFixed .mobileMenuButton h2,
+.white-theme .buttonFixed .mobileMenuButton h2:after,
+.white-theme .buttonFixed .mobileMenuButton h2:before,
 .location_om .buttonFixed .mobileMenuButton h2,
 .location_om .buttonFixed .mobileMenuButton h2:after,
 .location_om .buttonFixed .mobileMenuButton h2:before {
@@ -456,7 +456,7 @@ li .link-look {
 .location_betingelser nav,
 .location_faq nav,
 .location_blog nav,
-.location_about nav,
+.white-theme nav,
 .location_om nav {
     border-bottom: 1px solid #f6f9fc;
 }
@@ -465,7 +465,7 @@ li .link-look {
 .location_betingelser,
 .location_faq,
 .location_blog,
-.location_about,
+.white-theme,
 .location_om,
 .not-found {
     #content {
@@ -3351,7 +3351,7 @@ ol.breadcrumbs a {
         margin-top: 0px;
     }
 
-    .location_about #content,
+    .white-theme #content,
     .location_faq #content,
     .location_terms #content {
         margin-top: 80px;

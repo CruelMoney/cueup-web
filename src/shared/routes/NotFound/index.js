@@ -14,7 +14,7 @@ class NotFound extends Component {
             <div className="not-found-screen">
                 <Helmet>
                     <title>{siteTitle + ' | Cueup'}</title>
-                    <body className="not-found" />
+                    <body className="white-theme" />
                     <meta name="description" content={siteDescription} />
 
                     <meta property="og:title" content={siteTitle + ' | Cueup'} />

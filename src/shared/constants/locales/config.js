@@ -1,13 +1,13 @@
 import { languagesArray } from './languages';
 
 const config = {
-    debug: true,
+    debug: false,
     language: 'en',
     fallbackLng: 'en',
+    defaultNS: 'common',
     languages: languagesArray,
     cleanCode: true,
     load: 'languageOnly',
-    keySeparator: false, // we do not use keys in form messages.welcome
     interpolation: {
         escapeValue: false, // react already safes from xss
     },
