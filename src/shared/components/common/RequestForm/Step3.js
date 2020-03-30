@@ -73,7 +73,7 @@ const Step3 = ({
                     }}
                     defaultValue={form.description}
                     label={translate('request-form.step-3.event-description')}
-                    placeholder={translate('request-form.step-3.event-description-description')}
+                    placeholder={translate('event-description-placeholder')}
                     name="description"
                     onSave={(description) => handleChange({ description })}
                     validation={(v) => (v ? null : 'Please write a description')}

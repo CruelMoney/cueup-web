@@ -82,7 +82,7 @@ const Requirements = React.forwardRef(({ theEvent, translate, history, pathname 
                     save={save('description')}
                     validation={required('The event needs a description')}
                 >
-                    <Body>{translate('request-form.step-3.event-description-description')}</Body>
+                    <Body>{translate('event-description-placeholder')}</Body>
                 </TextAreaPopup>
                 <GenreSelector half initialGenres={genres} save={save('genres')} />
 

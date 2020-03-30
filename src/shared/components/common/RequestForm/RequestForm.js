@@ -84,9 +84,7 @@ const MainForm = ({ initialCity, countries }) => {
                         {showLogin && (
                             <>
                                 <TitleClean center>Login</TitleClean>
-                                <BodySmall>
-                                    {translate('requestForm:email-exists-message')}
-                                </BodySmall>
+                                <BodySmall>{translate('email-exists-message')}</BodySmall>
                                 <Login
                                     redirect={false}
                                     onLogin={() => {

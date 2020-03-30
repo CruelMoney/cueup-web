@@ -79,9 +79,7 @@ const Booking = ({ user, loading, translate }) => {
             <Popup width="380px" showing={loginPopup} onClickOutside={() => setloginPopup(false)}>
                 <div>
                     <TitleClean center>Login</TitleClean>
-                    <p style={{ marginBottom: '20px' }}>
-                        {translate('request-form.email-exists-message')}
-                    </p>
+                    <p style={{ marginBottom: '20px' }}>{translate('email-exists-message')}</p>
                     <Login
                         redirect={false}
                         onLogin={() => {
@@ -241,7 +239,7 @@ const EventForm = ({
                     <Input
                         type="text-area"
                         label={'Description'}
-                        placeholder={translate('request-form.step-3.event-description-description')}
+                        placeholder={translate('event-description-placeholder')}
                         style={{
                             height: '200px',
                         }}
@@ -432,11 +430,11 @@ const SuccessMessage = ({ translate, userId }) => {
             }}
         >
             <Title>Thanks</Title>
-            <Body>{translate('request-form.succes-message')}</Body>
+            <Body>{translate('post-event-succes-message')}</Body>
             {pushShouldBeEnabled && (
                 <>
                     <Body style={{ marginBottom: 9 }}>
-                        {translate('request-form.succes-message-2')}
+                        {translate('post-event-succes-message-2')}
                     </Body>
                     <PrimaryButton onClick={showPrompt}>Get notifications</PrimaryButton>
                 </>

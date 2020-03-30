@@ -242,6 +242,35 @@
         "empty-reviews-own": "Ask your customers to leave a review. <br/> It will help you get more gigs.",
         "empty-reviews": "This DJ does not have any reviews. <br/>",
         "Appears after the offer is confirmed by the organizer.": "Appears after the offer is confirmed by the organizer.",
-        "offer": "Offer"
+        "offer": "Offer",
+
+        "Event information": "Event information",
+        "DJ offers": "DJ offers",
+        "Contact information": "Contact information",
+        "Organizing a new event?": "Organizing a new event?",
+        "Cancel event": "Cancel event",
+        "cancel-event-warning": "Are you sure you want to cancel the event?",
+        "Offers": "Offers",
+        "Pay": "Pay",
+        "Pay-method": "When do you want to pay?",
+        "DJ price": "DJ price",
+        "Cardholder name": "Cardholder name",
+        "mm/yy": "mm/yy",
+        "Notify": "Notify",
+        "Confirm & pay": "Confirm & pay",
+        "Submit review": "Submit review",
+        "Contact name": "Contact name",
+        "Contact": "Contact",
+        "Member for": "Member for",
+        "Decline DJ": "Decline DJ",
+        "decline-warning": "Are you sure you want to decline this DJ? If you decline, the DJ will be removed, and a new DJ will be asked to make an offer. If you are dissatisfied with the price, you can message the DJ asking for a different offer.",
+        "Phone number visible after confirmation": "Phone number visible after confirmation",
+        "Email visible after confirmation": "Email visible after confirmation",
+    
+        "event-description-placeholder": "What is the budget? \nWhat is the age of the guests? \nWhat kind of venue is it? \nDo you have any special requirements? \n",
+        "email-exists-message": "It looks like there's already an account using that email. Please login or use a different email to continue.\n",
+
+        "post-event-succes-message": "Thanks for using our service. We'll send you an email to confirm the event.",
+        "post-event-succes-message-2": "Would you like to receive notifications when you get a new offer?"
     }
 }

@@ -1,8 +1,5 @@
 {
     "en": {
-        "email-exists-message": "It looks like there's already an account using that email. Please login or use a different email to continue.<br/>",
-        "succes-message": "Thanks for using our service. We'll send you an email to confirm the event.",
-        "succes-message-2": "Would you like to receive notifications when you get a new offer?",
         "no-djs-message": "Sorry, we don't have any DJs available.",
         "choose-genres": "Choose",
         "let-cueup-decide": "Let Cueup decide",
@@ -28,8 +25,7 @@
             "music-duration": "Music duration",
             "guests": "Guests",
             "guests-description": "${ prefix } <span>${ amount } people</span> attending the event.",
-            "event-description": "Description",
-            "event-description-description": "What is the budget? \nWhat is the age of the guests? \nWhat kind of venue is it? \nDo you have any special requirements? \n"
+            "event-description": "Description"
         },
         "step-4": {
             "header": "Great! We're finding DJs now. <span>How can we get back to you?</span>",
@@ -45,8 +41,6 @@
         }
     },
     "da": {
-        "succes-message": "Tak for at du bruger vores service. Vi sender dig en mail til at bekræfte eventet.",
-        "succes-message-2": "Vil du modtage besked når du får et nyt tilbud?",
         "no-djs-message": "Desværre, vi har ingen ledige DJs.",
         "choose-genres": "Vælg",
         "let-cueup-decide": "Lad Cueup vælge",
@@ -72,8 +66,7 @@
             "music-duration": "Musik varighed",
             "guests": "Gæster",
             "guests-description": "${ prefix } <span>${ amount } gæster</span> til begivenheden.",
-            "event-description": "Beskrivelse",
-            "event-description-description": "Hvor stort er budgettet? \nHvad er alderen på gæsterne? \nHvilken slags lokation er det? \nHar du nogle specielle krav? \n"
+            "event-description": "Beskrivelse"
         },
         "step-4": {
             "header": "Vi finder DJs nu. <span>Hvordan kan vi kontakte dig?</span>",

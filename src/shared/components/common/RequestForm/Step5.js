@@ -11,12 +11,12 @@ const Step5 = ({ translate, pushShouldBeEnabled, userId }) => {
         <div>
             <h3>{translate('request-form.step-5.header')}</h3>
             <RequestSection>
-                <Body center>{translate('request-form.succes-message')}</Body>
+                <Body center>{translate('post-event-succes-message')}</Body>
             </RequestSection>
             {pushShouldBeEnabled && (
                 <>
                     <Body style={{ marginBottom: 9 }} center>
-                        {translate('request-form.succes-message-2')}
+                        {translate('post-event-succes-message-2')}
                     </Body>
                     <PrimaryButton style={{ margin: 'auto' }} onClick={showPrompt}>
                         Get notifications
