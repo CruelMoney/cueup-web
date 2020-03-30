@@ -75,9 +75,7 @@ const Step1 = ({
                             forceHeight
                             name="locationName"
                             label={translate('requestForm:step-1.event-location')}
-                            placeholder={translate(
-                                'request-form.step-1.event-location-placeholder'
-                            )}
+                            placeholder={translate('requestForm:step-1.event-location-placeholder')}
                             onSave={(locationName) => handleChange({ locationName })}
                             validation={(v) => (v ? null : 'Please select a location')}
                             registerValidation={registerValidation('locationName')}

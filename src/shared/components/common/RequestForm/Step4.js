@@ -23,10 +23,10 @@ const Step4 = ({
     return (
         <div>
             <form onSubmit={submit}>
-                <h3>{translate('request-form.step-4.header')}</h3>
+                <h3>{translate('requestForm:step-4.header')}</h3>
                 <RequestSection>
                     <Input
-                        label={translate('request-form.step-4.contact-name')}
+                        label={translate('requestForm:step-4.contact-name')}
                         name="contactName"
                         placeholder={translate('first-last')}
                         type="text"
@@ -46,7 +46,7 @@ const Step4 = ({
                         unregisterValidation={unregisterValidation('contactName')}
                     >
                         <BodySmall>
-                            {translate('request-form.step-4.contact-name-description')}
+                            {translate('requestForm:step-4.contact-name-description')}
                         </BodySmall>
                     </Input>
                 </RequestSection>
@@ -54,14 +54,14 @@ const Step4 = ({
                 <RequestSection>
                     <Input
                         type="tel"
-                        label={translate('request-form.step-4.contact-phone')}
+                        label={translate('requestForm:step-4.contact-phone')}
                         placeholder={translate('optional')}
                         name="contactPhone"
                         defaultValue={form.contactPhone}
                         onSave={(contactPhone) => handleChange({ contactPhone })}
                     >
                         <BodySmall>
-                            {translate('request-form.step-4.contact-phone-description')}
+                            {translate('requestForm:step-4.contact-phone-description')}
                         </BodySmall>
                     </Input>
                 </RequestSection>
@@ -71,7 +71,7 @@ const Step4 = ({
                             half
                             type="email"
                             name="contactEmail"
-                            label={translate('request-form.step-4.contact-email')}
+                            label={translate('requestForm:step-4.contact-email')}
                             autoComplete="email"
                             placeholder="Email"
                             defaultValue={form.contactEmail}
@@ -102,7 +102,7 @@ const Step4 = ({
                         />
                     </InputRow>
                     <BodySmall>
-                        {translate('request-form.step-4.contact-email-description')}
+                        {translate('requestForm:step-4.contact-email-description')}
                     </BodySmall>
                 </RequestSection>
 

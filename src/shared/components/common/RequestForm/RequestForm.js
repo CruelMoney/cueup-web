@@ -21,6 +21,7 @@ import content from './content.json';
 
 const MainForm = ({ initialCity, countries }) => {
     const { translate } = useNamespaceContent(content, 'requestForm');
+
     const [activeStep, setActiveStep] = useState(1);
     const [showLogin, setShowLogin] = useState(false);
     const { pushShouldBeEnabled } = usePushNotifications();

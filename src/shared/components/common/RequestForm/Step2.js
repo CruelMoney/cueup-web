@@ -42,17 +42,17 @@ const Step2 = ({
 
     return (
         <form name="requestForm-step-2">
-            <h3>{translate('request-form.step-2.header')}</h3>
+            <h3>{translate('requestForm:step-2.header')}</h3>
             <RequestSection>
                 <Input
-                    label={translate('request-form.step-2.event-name')}
+                    label={translate('requestForm:step-2.event-name')}
                     onSave={(name) => handleChange({ name })}
                     validation={(v) => (v ? null : 'Please write a name')}
                     registerValidation={registerValidation('name')}
                     unregisterValidation={unregisterValidation('name')}
                     defaultValue={form.name}
                 >
-                    <BodySmall>{translate('request-form.step-2.event-name-description')}</BodySmall>
+                    <BodySmall>{translate('requestForm:step-2.event-name-description')}</BodySmall>
                 </Input>
             </RequestSection>
             <RequestSection>
@@ -80,15 +80,15 @@ const Step2 = ({
                 </InputRow>
             </RequestSection>
             <RequestSection>
-                <Label>{translate('request-form.step-2.event-genres')} </Label>
+                <Label>{translate('requestForm:step-2.event-genres')} </Label>
                 <BodySmall style={{ marginBottom: '10px' }}>
-                    {translate('request-form.step-2.event-genres-description')}
+                    {translate('requestForm:step-2.event-genres-description')}
                 </BodySmall>
                 <GenreChooser
                     letCueupDecide={form.letCueupDecide}
                     setLetcueupDecide={handleGenreSelection}
-                    chooseLabel={translate('request-form.choose-genres')}
-                    cueupDecideLabel={translate('request-form.let-cueup-decide')}
+                    chooseLabel={translate('requestForm:choose-genres')}
+                    cueupDecideLabel={translate('requestForm:let-cueup-decide')}
                     name="genres"
                 />
                 {form.letCueupDecide === false ? (

@@ -18,10 +18,10 @@ const Step3 = ({
 }) => {
     return (
         <form>
-            <h3>{translate('request-form.step-3.header')}</h3>
+            <h3>{translate('requestForm:step-3.header')}</h3>
             <RequestSection>
                 <Label style={{ marginBottom: '12px', display: 'block' }}>
-                    {translate('request-form.step-3.music-duration')}
+                    {translate('requestForm:step-3.music-duration')}
                 </Label>
                 <TimeSlider
                     hoursLabel={translate('hours')}
@@ -38,7 +38,7 @@ const Step3 = ({
 
             <RequestSection>
                 <Label style={{ marginBottom: '12px', display: 'block' }}>
-                    {translate('request-form.step-3.guests')}
+                    {translate('requestForm:step-3.guests')}
                 </Label>
                 <div>
                     <Slider
@@ -59,7 +59,7 @@ const Step3 = ({
                     />
                 </div>
                 <BodySmall style={{ marginTop: '15px' }}>
-                    {translate('request-form.step-3.guests-description', {
+                    {translate('requestForm:step-3.guests-description', {
                         prefix: form.guestsCount === 1000 ? translate('over') : translate('around'),
                         amount: form.guestsCount,
                     })}
@@ -72,7 +72,7 @@ const Step3 = ({
                         height: '120px',
                     }}
                     defaultValue={form.description}
-                    label={translate('request-form.step-3.event-description')}
+                    label={translate('requestForm:step-3.event-description')}
                     placeholder={translate('event-description-placeholder')}
                     name="description"
                     onSave={(description) => handleChange({ description })}
