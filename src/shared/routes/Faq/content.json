@@ -1,5 +1,4 @@
 {
-  "faq": {
     "dj": {
       "1": {
         "q": ["How much does it cost?", "Hvor meget koster det?"],
@@ -233,8 +232,7 @@
           "Ja, du kan vælge <i>Pay later</i> når du bekræfter bookingen. Hvis muligheden ikke findes, kan du bede DJen om at aktivere direkte betalinger først. "
         ]
       }
-    }
-  },
+    },
   "Questions and answers": ["Questions and answers", "Spørgsmål og svar"],
   "For DJs": ["For DJs", "Til DJs"],
   "For organizers": ["For organizers", "Til arrangører"]

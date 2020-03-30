@@ -11,8 +11,11 @@ const resources = {
     da,
 };
 
-i18next.use(middleware.LanguageDetector).init({ ...config, resources });
+export const addLanguage = async (req, res, next) => {
+    const i18n = i18next.createInstance();
+    i18n.use(middleware.LanguageDetector).init({ ...config, resources });
 
-export const addLanguage = middleware.handle(i18next, {
-    removeLngFromUrl: false,
-});
+    middleware.handle(i18n, {
+        removeLngFromUrl: false,
+    })(req, res, next);
+};
