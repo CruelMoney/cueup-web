@@ -3,11 +3,12 @@ import { Switch, Route, Redirect } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import { withTranslation, useTranslation } from 'react-i18next';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
+import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Faq from './components/Faq';
 import Dj from './routes/DJ';
 import Organizer from './routes/Organizer';
-import content from './newContent.json';
+import content from './content.json';
 
 const Index = (props) => {
     const { match, t } = props;
@@ -37,13 +38,6 @@ const Index = (props) => {
             </Switch>
         </Faq>
     );
-};
-
-const useNamespaceContent = (resources, ns) => {
-    const { i18n } = useTranslation();
-    i18n.reportNamespaces.addUsedNamespaces([ns]);
-    console.log(i18n.language);
-    i18n.addResourceBundle(i18n.language, ns, resources[i18n.language], true, false);
 };
 
 export default withTranslation()(Index);
