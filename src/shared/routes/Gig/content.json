@@ -1,0 +1,82 @@
+{
+    "en": {
+        "messages": {
+            "expired": "Gig has expired 😑",
+            "cancelled": "The gig has been cancelled ☹️",
+            "declined": "You have declined the gig 😮",
+            "lost": "You have lost the gig ☹️",
+            "confirmed": "The gig has been confirmed, get ready to play 😁",
+            "finished": "The gig is finished ☺️",
+            "event-finished": "The event is finished ☺️",
+            "accepted": "Waiting on confirmation from organizer 😊",
+            "referred": "Direct booking",
+            "requested": "Event happens soon, make your offer quickly 🤑"
+        },
+        "status-description": "The gig request will automatically be declined if you don't make an offer within this time. Remember, you can change the offer up until the organizer has paid.",
+        "event": {
+            "info": "Event information",
+            "info-description": "If the information below is not enough to give an offer, don't hesitate contacting the organizer.",
+            "requirements": "Event requirements",
+            "rider-dj": "The organizer does not need speakers or lights.",
+            "rider-lights": "The organizer needs you to bring lights for the event.",
+            "rider-speakers": "The organizer needs you to bring speakers.",
+            "rider-speakers-lights": "The organizer needs you to bring speakers and light.",
+            "duration-description": "The music should start at ${ start }, and end at ${ end }.",
+            "contact": "Contact organizer ${ unread }",
+            "contact-description": "Contact ${ name } to discuss the price, or figure out additional details.",
+            "genres": "Music wishes"
+        },
+        "offer": {
+            "intro": "Enter your price to play this gig. You can always update the offer until it has been paid.",
+            "point": "Use a Cueup point to discard the Cueup fee. You can update whether to use or not use the point, until the offer has been paid. If the gig gets cancelled, the point will be restored.",
+            "direct": "This gig is a direct booking of you, therefore the Cueup fee is discarded.",
+            "use-point": "Use Cueup point",
+            "service-fee-info": "This fee is calculated based <br/> on the offer. <br/> The organizer will pay this fee. <br/>",
+            "dj-fee-info": "A fee on 3% is subtracted <br/> from your price. Using a Cueup <br/> point will discard this fee. <br/>",
+            "lost": "Sorry you have lost this gig to another DJ. <br/> Next time try to set another price or be faster at responding. <br/> Adding info to your profile also helps the organizer being comfortable in choosing you.",
+            "update-payout": "Please update your payout information before making an offer.",
+            "decline-warning": "Are you sure you want to decline the gig?",
+            "cancel-warning": "Are you sure you want to cancel the gig? All money will be refunded to the organizer."
+        }
+    },
+    "da": {
+        "messages": {
+            "expired": "Gig er udløbet 😑",
+            "cancelled": "Gigget er blevet aflyst ☹️",
+            "declined": "Du har afslået gigget 😮",
+            "lost": "Du har tabt gigget ☹️",
+            "confirmed": "Gigget er bekræftet, gør klar til at spille 😁",
+            "finished": "Gigget er færdigt ☺️",
+            "event-finished": "Begivenheden er afsluttet ☺️",
+            "accepted": "Venter på bekræftelse fra kunden 😊",
+            "referred": "Direkte booking",
+            "requested": "Event starter snart, afgiv dit tilbud hurtigt 🤑"
+        },
+        "status-description": "Gigget vil automatisk blive afslået hvis du ikke afgiver et tilbud inden denne tid. Husk at du altid kan ændre tilbuddet indtil kunden har betalt.",
+        "event": {
+            "info": "Event information",
+            "info-description": "Hvis informationen ikke er nok til at afgive et tilbud kan du kontakte kunden for at høre mere.",
+            "requirements": "Event ønsker",
+            "rider-dj": "Kunden har ikke behov for højtalere eller lys.",
+            "rider-lights": "Kunden ønsker at du medbringer lys til begivenheden.",
+            "rider-speakers": "Kunden ønsker at du medbringer højtalere til begivenheden.",
+            "rider-speakers-lights": "Kunden ønsker at du medbringer både højtalere og lys til begivenheden.",
+            "duration-description": "Der skal være musik fra ${ start } indtil ${ end }.",
+            "contact": "Kontakt kunden ${ unread }",
+            "contact-description": "Kontakt ${ name } for at forhandle prisen eller aftale andre detajler.",
+            "genres": "Musikønsker"
+        },
+        "offer": {
+            "intro": "Indtast din pris for at spille til begivenheden. Du kan altid opdatere tilbuddet indtil kunden har betalt.",
+            "point": "Brug Cueup point til at fjerne Cueup gebyret. Du kan opdatere om du vil benytte et point eller ej indtil kunden har betalt. Hvis eventet bliver aflyst vil dit point blive givet tilbage.",
+            "direct": "Dette gig er en direkte booking af dig, derfor er Cueup gebyret fjernet.",
+            "use-point": "Brug Cueup point",
+            "service-fee-info": "Dette gebyr er udregnet baseret <br/> på dit tilbud. <br/> Kunden betaler dette gebyr. <br/>",
+            "dj-fee-info": "Et gebyr på 3% trækkes <br/> fra din pris. Hvis du bruger et <br/> Cueup point fjernes dette gebyr. <br/>",
+            "lost": "Desværre, du har tabt dette gig til en anden DJ. <br/> Næste gang prøv at afgiv en anden pris eller vær hurtigere til at svare kunden. Du kan ogsp tilføjee mere information til din profil for at gøre kunden mere komfortabel med at vælge dig.",
+            "update-payout": "Opdater venligst din udbetalingsinformation før du afgiver et tilbud.",
+            "decline-warning": "Er du sikker på at du vil afslå gigget?",
+            "cancel-warning": "Er du sikker på at du vil aflyse gigget? Hele beløbet vil refunderes til kunden."
+        }
+    }
+}

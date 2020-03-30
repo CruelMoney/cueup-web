@@ -17,46 +17,7 @@
       "second": "Tilmeld dig som DJ, eller se hvordan det virker."
     }
   },
-  "gig": {
-    "messages": {
-      "expired": "Gig er udløbet 😑",
-      "cancelled": "Gigget er blevet aflyst ☹️",
-      "declined": "Du har afslået gigget 😮",
-      "lost": "Du har tabt gigget ☹️",
-      "confirmed": "Gigget er bekræftet, gør klar til at spille 😁",
-      "finished": "Gigget er færdigt ☺️",
-      "event-finished": "Begivenheden er afsluttet ☺️",
-      "accepted": "Venter på bekræftelse fra kunden 😊",
-      "referred": "Direkte booking",
-      "requested": "Event starter snart, afgiv dit tilbud hurtigt 🤑"
-    },
-    "status-description": "Gigget vil automatisk blive afslået hvis du ikke afgiver et tilbud inden denne tid. Husk at du altid kan ændre tilbuddet indtil kunden har betalt.",
-    "event": {
-      "info": "Event information",
-      "info-description": "Hvis informationen ikke er nok til at afgive et tilbud kan du kontakte kunden for at høre mere.",
-      "requirements": "Event ønsker",
-      "rider-dj": "Kunden har ikke behov for højtalere eller lys.",
-      "rider-lights": "Kunden ønsker at du medbringer lys til begivenheden.",
-      "rider-speakers": "Kunden ønsker at du medbringer højtalere til begivenheden.",
-      "rider-speakers-lights": "Kunden ønsker at du medbringer både højtalere og lys til begivenheden.",
-      "duration-description": "Der skal være musik fra ${ start } indtil ${ end }.",
-      "contact": "Kontakt kunden ${ unread }",
-      "contact-description": "Kontakt ${ name } for at forhandle prisen eller aftale andre detajler.",
-      "genres": "Musikønsker"
-    },
-    "offer": {
-      "intro": "Indtast din pris for at spille til begivenheden. Du kan altid opdatere tilbuddet indtil kunden har betalt.",
-      "point": "Brug Cueup point til at fjerne Cueup gebyret. Du kan opdatere om du vil benytte et point eller ej indtil kunden har betalt. Hvis eventet bliver aflyst vil dit point blive givet tilbage.",
-      "direct": "Dette gig er en direkte booking af dig, derfor er Cueup gebyret fjernet.",
-      "use-point": "Brug Cueup point",
-      "service-fee-info": "Dette gebyr er udregnet baseret <br/> på dit tilbud. <br/> Kunden betaler dette gebyr. <br/>",
-      "dj-fee-info": "Et gebyr på 3% trækkes <br/> fra din pris. Hvis du bruger et <br/> Cueup point fjernes dette gebyr. <br/>",
-      "lost": "Desværre, du har tabt dette gig til en anden DJ. <br/> Næste gang prøv at afgiv en anden pris eller vær hurtigere til at svare kunden. Du kan ogsp tilføjee mere information til din profil for at gøre kunden mere komfortabel med at vælge dig.",
-      "update-payout": "Opdater venligst din udbetalingsinformation før du afgiver et tilbud.",
-      "decline-warning": "Er du sikker på at du vil afslå gigget?",
-      "cancel-warning": "Er du sikker på at du vil aflyse gigget? Hele beløbet vil refunderes til kunden."
-    }
-  },
+ 
   "common": {
     "currency": "Valuta",
     "book-dj": "Book DJ",

@@ -8,6 +8,7 @@ import { useMeasure } from '@softbind/hook-use-measure';
 import { useHistory } from 'react-router';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
+import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col, TeritaryButton, SmartButton } from '../../components/Blocks';
@@ -28,9 +29,10 @@ import ChatSidebar from './components/ChatSidebar';
 import BackToProfile from './components/BackToProfile';
 import GigReview from './routes/GigReview';
 import MobileChat from './routes/MobileChat';
+import content from './content.json';
 
 const Index = () => {
-    const { translate } = useTranslate();
+    const { translate } = useNamespaceContent(content, 'gig');
     const match = useRouteMatch();
     const history = useHistory();
 
