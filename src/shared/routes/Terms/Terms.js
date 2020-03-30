@@ -1,33 +1,38 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Switch, Route } from 'react-router';
 import { Helmet } from 'react-helmet-async';
-import i18next from 'i18next';
+import { Redirect } from 'react-router-dom';
+import useTranslate from 'components/hooks/useTranslate';
+import { appRoutes } from 'constants/locales/appRoutes';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Terms from './components/Terms';
 import Agreements from './routes/Agreements';
 import Privacy from './routes/Privacy';
 
-class Index extends Component {
-    render() {
-        const { translate } = this.props;
+const Index = (props) => {
+    const { translate } = useTranslate();
+    const title = translate('Terms & Privacy') + ' | Cueup';
 
-        const title = translate('Terms & Privacy') + ' | Cueup';
-
-        return (
-            <Terms {...this.props}>
-                <Helmet>
-                    <title>{title}</title>
-                    <meta property="og:title" content={title} />
-                    <meta name="twitter:title" content={title} />
-                </Helmet>
-                <ScrollToTop />
-                <Switch>
-                    <Route path={translate('routes./terms/agreements')} component={Agreements} />
-                    <Route path={translate('routes./terms/privacy')} component={Privacy} />
-                </Switch>
-            </Terms>
-        );
-    }
-}
+    return (
+        <Terms {...props}>
+            <Helmet>
+                <title>{title}</title>
+                <body className="white-theme" />
+                <meta property="og:title" content={title} />
+                <meta name="twitter:title" content={title} />
+            </Helmet>
+            <ScrollToTop />
+            <Switch>
+                <Route path={translate(appRoutes.termsAgreements)} component={Agreements} />
+                <Route path={translate(appRoutes.termsPrivacy)} component={Privacy} />
+                <Redirect
+                    exact
+                    from={translate(appRoutes.terms)}
+                    to={translate(appRoutes.termsAgreements)}
+                />
+            </Switch>
+        </Terms>
+    );
+};
 
 export default Index;

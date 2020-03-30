@@ -15,9 +15,11 @@ const routes: RouteKeys = {
     notFound: '/da/ikke-fundet',
     event: '/da/event',
     completeSignup: '/da/completeSignup',
-    terms: '/da/terms',
+    terms: '/da/betingelser',
     gig: '/da/gig',
     resetPassword: '/da/resetPassword',
+    termsAgreements: '/da/betingelser/aftaler',
+    termsPrivacy: '/da/betingelser/privatliv',
 };
 
 export default routes;

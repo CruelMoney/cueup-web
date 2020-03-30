@@ -23,7 +23,7 @@ import ErrorMessageApollo from '../../../components/common/ErrorMessageApollo';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
-const SignupForm = ({ translate, reference, user }) => {
+const SignupForm = ({ translate, user }) => {
     const onLoggedIn = useOnLoggedIn();
 
     const [loading, setLoading] = useState(false);
@@ -75,7 +75,6 @@ const SignupForm = ({ translate, reference, user }) => {
 
             const variables = {
                 ...state,
-                reference: reference,
                 redirectLink: c.Environment.CALLBACK_DOMAIN,
             };
 
@@ -153,7 +152,7 @@ const SignupForm = ({ translate, reference, user }) => {
                     name="email"
                     label="Email*"
                     active={true}
-                    text={translate('signup.form.email')}
+                    text={translate('signup:form.email')}
                 >
                     <Input
                         big
@@ -173,7 +172,7 @@ const SignupForm = ({ translate, reference, user }) => {
                         name="password"
                         label="Password*"
                         active={true}
-                        text={translate('signup.form.password')}
+                        text={translate('signup:form.password')}
                     >
                         <Input
                             big
@@ -192,7 +191,7 @@ const SignupForm = ({ translate, reference, user }) => {
                     name="name"
                     label={translate('Name') + '*'}
                     active={true}
-                    text={translate('finish-signup.name')}
+                    text={translate('signup:name')}
                 >
                     <Input
                         big
@@ -229,7 +228,7 @@ const SignupForm = ({ translate, reference, user }) => {
                     name="phone"
                     label={translate('Phone') + '*'}
                     active={true}
-                    text={translate('finish-signup.phone')}
+                    text={translate('signup:phone')}
                 >
                     <Input
                         big
@@ -249,7 +248,7 @@ const SignupForm = ({ translate, reference, user }) => {
                     name="location"
                     label={translate('Location') + '*'}
                     active={true}
-                    text={translate('finish-signup.location')}
+                    text={translate('signup:location')}
                 >
                     <LocationSelector
                         big
@@ -280,7 +279,7 @@ const SignupForm = ({ translate, reference, user }) => {
                     name="genres"
                     label={translate('Genres') + '*'}
                     active={true}
-                    text={translate('finish-signup.genres')}
+                    text={translate('signup:genres')}
                     ref={genreRef}
                 >
                     <ToggleButtonHandler
@@ -300,7 +299,7 @@ const SignupForm = ({ translate, reference, user }) => {
                     name="picture"
                     label={translate('Picture') + '*'}
                     active={true}
-                    text={translate('finish-signup.picture')}
+                    text={translate('signup:picture')}
                 >
                     <InputRow>
                         {preview && (
@@ -336,7 +335,7 @@ const SignupForm = ({ translate, reference, user }) => {
                     name="bio"
                     label={translate('About you') + '*'}
                     active={true}
-                    text={translate('finish-signup.about')}
+                    text={translate('signup:about')}
                 >
                     <Input
                         type="text-area"
@@ -395,9 +394,10 @@ const SignupForm = ({ translate, reference, user }) => {
                             marginTop: '10px',
                         }}
                         className="terms_link"
-                    >
-                        {translate('terms-message')}
-                    </p>
+                        dangerouslySetInnerHTML={{
+                            __html: translate('terms-message'),
+                        }}
+                    />
                 </Col>
             )}
 

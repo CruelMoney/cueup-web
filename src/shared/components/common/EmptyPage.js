@@ -4,18 +4,31 @@ import { Body } from 'components/Text';
 import Svg404 from '../graphics/404';
 
 const EmptyPage = ({ message, title, translate }) => {
+    const renderTitle = title ? title : translate('empty-page-message');
+
     return (
         <Wrapper>
             <Svg404 />
             <div>
-                <h2
-                    dangerouslySetInnerHTML={{
-                        __html: title ? title : translate('empty-page-message'),
-                    }}
-                />
-                {message && (
-                    <Body style={{ marginTop: 15 }} dangerouslySetInnerHTML={{ __html: message }} />
+                {typeof renderTitle === 'string' ? (
+                    <h2
+                        dangerouslySetInnerHTML={{
+                            __html: renderTitle,
+                        }}
+                    />
+                ) : (
+                    <h2>{renderTitle}</h2>
                 )}
+
+                {message &&
+                    (typeof message === 'string' ? (
+                        <Body
+                            style={{ marginTop: 15 }}
+                            dangerouslySetInnerHTML={{ __html: message }}
+                        />
+                    ) : (
+                        <Body style={{ marginTop: 15 }}>{message}</Body>
+                    ))}
             </div>
         </Wrapper>
     );

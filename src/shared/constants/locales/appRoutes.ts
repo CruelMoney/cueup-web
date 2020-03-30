@@ -16,6 +16,8 @@ export const routeKeys = Object.freeze({
     event: 'event',
     completeSignup: 'completeSignup',
     terms: 'terms',
+    termsAgreements: 'termsAgreements',
+    termsPrivacy: 'termsPrivacy',
     gig: 'gig',
     resetPassword: 'resetPassword',
 });

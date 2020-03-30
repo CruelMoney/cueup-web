@@ -266,9 +266,7 @@ class Footer extends Component {
                                     <Link to={t(appRoutes.becomeDj)}>{t('Become DJ')}</Link>
                                 </li>
                                 <li>
-                                    <Link to={t('routes./terms/agreements')}>
-                                        {t('privacy-and-terms')}
-                                    </Link>
+                                    <Link to={t(appRoutes.terms)}>{t('privacy-and-terms')}</Link>
                                 </li>
                             </ul>
                         </div>
