@@ -7,12 +7,14 @@ import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 import { ChunkExtractorManager } from '@loadable/server';
 import { ApolloProvider } from 'react-apollo';
 import { I18nextProvider } from 'react-i18next';
+import { languagesArray } from 'constants/locales/languages';
 import App from '../../shared/App';
 import Html from '../components/HTML';
 
 const serverRenderer = () => async (req, res) => {
     const sheet = new ServerStyleSheet();
 
+    // these can be used to pass values to and from client code
     const routerContext = {};
     const helmetContext = {};
 
@@ -40,7 +42,6 @@ const serverRenderer = () => async (req, res) => {
         apolloState = res.locals.apolloClient.extract();
     } catch (error) {
         console.log({ error });
-        content = renderToString(Content);
     }
 
     const styleTags = sheet.getStyleElement();
@@ -52,13 +53,19 @@ const serverRenderer = () => async (req, res) => {
 
     const initialLanguage = req.i18n.language;
     const i18nState = {
-        store: { [initialLanguage]: {} },
+        store: {},
         initialLanguage,
     };
 
+    // include all routes
+    for (const lng of languagesArray) {
+        i18nState.store[lng] = {
+            routes: req.i18n.getResourceBundle(lng, 'routes'),
+        };
+    }
+
     // find and add the used namespaces for this request
     const namespaces = req.i18n.reportNamespaces.getUsedNamespaces();
-    namespaces.push('routes');
 
     for (const ns of namespaces) {
         i18nState.store[i18nState.initialLanguage][ns] = req.i18n.getResourceBundle(

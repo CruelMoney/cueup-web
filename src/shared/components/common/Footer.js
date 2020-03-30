@@ -1,14 +1,34 @@
 import React from 'react';
 import { NavLink as Link } from 'react-router-dom';
 import { useRouteMatch } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 import useTranslate from 'components/hooks/useTranslate';
 import { authService } from 'utils/AuthService';
+import { languagesArray } from 'constants/locales/languages';
 import * as c from '../../constants/constants';
 import InstagramLogo from '../../assets/InstagramLogo';
 // eslint-disable-next-line no-unused-vars
 import languageIcon from '../../assets/icons/language.svg';
 import ButtonLink from './ButtonLink';
+
+const useCurrentPageAlt = () => {
+    // get route key by reverse matching
+    const match = useRouteMatch();
+
+    const { i18n, t } = useTranslation();
+
+    const routes = i18n.getResourceBundle(i18n.language, 'routes');
+    const [routeKey] = Object.entries(routes).find(([_key, val]) => val === match.path) || [];
+
+    console.log(routeKey);
+
+    languagesArray.forEach((lng) => {
+        const altRoute = t('routes:' + routeKey, { lng, defaultValue: null });
+        console.log({ altRoute });
+    });
+    //
+};
 
 const Footer = ({
     color = '#31DAFF',
@@ -21,12 +41,8 @@ const Footer = ({
     secondLabel,
     secondTo,
 }) => {
-    const match = useRouteMatch();
-    console.log(JSON.stringify(match));
     const { translate, currentLanguage } = useTranslate();
-
-    const altRoute = translate(match.path);
-    console.log(JSON.stringify({ altRoute }));
+    useCurrentPageAlt();
     const setActiveLanguage = (code) => {
         // setActiveLanguage(code);
         // let url = history.location.pathname;
