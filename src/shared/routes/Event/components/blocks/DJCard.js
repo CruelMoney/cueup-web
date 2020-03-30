@@ -5,6 +5,9 @@ import MailIcon from 'react-ionicons/lib/MdMail';
 import { NavLink } from 'react-router-dom';
 import { useMutation } from 'react-apollo';
 import ReactPixel from 'react-facebook-pixel';
+import { userRoutes } from 'routes/User/routes/index.ts';
+import useTranslate from 'components/hooks/useTranslate';
+import { appRoutes } from 'constants/locales/appRoutes';
 import {
     Col,
     keyframeFadeIn,
@@ -30,7 +33,8 @@ import { ACTIVITY_TYPES, LogActivityInView } from '../../../../components/hooks/
 const hiddenEmail = '12345678@1234'.replace(/\w/g, '•') + '.com';
 const hiddenNumber = '45 12 34 56 78'.replace(/\w/g, '•');
 
-const DjCard = ({ style, idx, gig, translate, theEvent, hasMessage, onOpenChat }) => {
+const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat }) => {
+    const { translate } = useTranslate();
     const [showChat, setShowChat] = useState(false);
     const [showPayment, setShowPayment] = useState(false);
 
@@ -83,9 +87,9 @@ const DjCard = ({ style, idx, gig, translate, theEvent, hasMessage, onOpenChat }
                                     )}
                                     <NavLink
                                         to={{
-                                            pathname: `${translate('routes./user')}/${
+                                            pathname: `${translate(appRoutes.user)}/${
                                                 dj.permalink
-                                            }/overview`,
+                                            }${userRoutes.overview}`,
                                             state: { gigId: gig.id },
                                             search: `?gigId=${gig.id}&eventId=${theEvent.id}&hash=${theEvent.hash}`,
                                         }}
@@ -270,7 +274,7 @@ const ChatPopup = ({ translate, showing, close, dj, organizer, gig, eventId, sho
                 placeholder={
                     <EmptyPage
                         title="No messages"
-                        message={<Body>{translate('event.offer.empty-chat')}</Body>}
+                        message={<Body>{translate('event:offer.empty-chat')}</Body>}
                     />
                 }
             />

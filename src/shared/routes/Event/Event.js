@@ -5,6 +5,9 @@ import { useQuery } from 'react-apollo';
 import styled from 'styled-components';
 import { useTransition, animated } from 'react-spring';
 import { useMeasure } from '@softbind/hook-use-measure';
+import { useRouteMatch } from 'react-router';
+import useTranslate from 'components/hooks/useTranslate';
+import { appRoutes } from 'constants/locales/appRoutes';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col } from '../../components/Blocks';
@@ -14,11 +17,12 @@ import EventHeader from './components/blocks/EventHeader.js';
 import Overview from './routes/Overview';
 import Requirements from './routes/Requirements';
 import Review from './routes/Review';
+import { eventRoutes } from './routes';
 
-const Index = ({ translate, match, location }) => {
-    const {
-        params: { id, hash },
-    } = match;
+const Index = () => {
+    const match = useRouteMatch();
+    const { translate } = useTranslate();
+    const { id, hash } = match.params;
     const { data = {}, loading } = useQuery(EVENT, {
         skip: !id || !hash,
         variables: {
@@ -30,7 +34,7 @@ const Index = ({ translate, match, location }) => {
     const { event: theEvent } = data;
 
     if (!loading && !theEvent) {
-        return <Redirect to={translate('routes./not-found')} />;
+        return <Redirect to={translate(appRoutes.notFound)} />;
     }
 
     const title = theEvent ? theEvent.name : 'Cueup | Event';
@@ -64,8 +68,8 @@ const Index = ({ translate, match, location }) => {
 
             <Footer
                 noSkew
-                firstTo={translate('routes./how-it-works')}
-                secondTo={translate('routes./')}
+                firstTo={translate(appRoutes.howItWorks)}
+                secondTo={translate(appRoutes.home)}
                 firstLabel={translate('how-it-works')}
                 secondLabel={translate('arrange-event')}
                 title={translate('Organizing a new event?')}
@@ -171,11 +175,11 @@ const GigRoutes = forwardRef((props, ref) => {
         <animated.div style={style} ref={ref}>
             <Switch location={item}>
                 <Route
-                    path={[match.path + '/overview', match.path + '/info']}
+                    path={appRoutes.event}
                     render={(navProps) => <Overview {...navProps} {...props} {...eventProps} />}
                 />
                 <Route
-                    path={match.path + '/requirements'}
+                    path={match.path + eventRoutes.requirements}
                     render={(navProps) => (
                         <Requirements
                             {...navProps}
@@ -186,7 +190,7 @@ const GigRoutes = forwardRef((props, ref) => {
                     )}
                 />
                 <Route
-                    path={match.path + '/review'}
+                    path={match.path + eventRoutes.review}
                     render={(navProps) => <Review {...navProps} {...props} {...eventProps} />}
                 />
             </Switch>

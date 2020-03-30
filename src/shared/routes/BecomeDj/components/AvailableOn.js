@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { Container, Row } from 'components/Blocks';
 import { TextAccent } from '../components/blocks/TextAccent';
 import { GrayText, Header } from '../../../components/common/Text';
@@ -114,7 +115,7 @@ const AnimatedTextWrapper = styled.div`
 let lastScrollPosition = 0;
 
 const AvailableOn = (props) => {
-    const { translate, currentLanguage } = props;
+    const { t } = useTranslation();
     const textAnimation = useRef();
     const buttonAnimation = useRef();
     const androidRef = useRef();
@@ -150,7 +151,7 @@ const AvailableOn = (props) => {
                     <DesktopTextContainer>
                         <StickyText>
                             <TextAccent margin="0 0 15px 0" mobileTextAlign="left">
-                                {translate('become-dj.available-on-iphone.desktop.available-on')}
+                                {t('become-dj:available-on-iphone.desktop.available-on')}
                             </TextAccent>
                             <AnimatedTextWrapper>
                                 <AnimatedText ref={textAnimation}>
@@ -234,7 +235,7 @@ const AvailableOn = (props) => {
                 <MobileContainer>
                     <MobileTextContainer>
                         <TextAccent margin="0 0 15px 0">
-                            {translate('become-dj.available-on-iphone.mobile.available-on')}
+                            {t('become-dj:available-on-iphone.mobile.available-on')}
                         </TextAccent>
                         <Header style={{ textAlign: 'left' }}>iPhone & Android</Header>
                         <GrayText mobileTextAlign="left">

@@ -8,9 +8,14 @@ const EmptyPage = ({ message, title, translate }) => {
         <Wrapper>
             <Svg404 />
             <div>
-                <h2>{title ? title : translate('empty-page-message')}</h2>
-
-                {message && <Body style={{ marginTop: 15 }}>{message}</Body>}
+                <h2
+                    dangerouslySetInnerHTML={{
+                        __html: title ? title : translate('empty-page-message'),
+                    }}
+                />
+                {message && (
+                    <Body style={{ marginTop: 15 }} dangerouslySetInnerHTML={{ __html: message }} />
+                )}
             </div>
         </Wrapper>
     );

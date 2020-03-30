@@ -1,1 +1,232 @@
-{"en":{"become-dj":{"title":"Become DJ","hero":{"2020-update":"2020 UPDATE","the-only-profile-a-DJ-needs":"The only profile a DJ needs","subtitle":"As a DJ you don't want to waste time promoting yourself when you could be out playing.","apply-to-become-dj":"Apply to become DJ","get-gigs":{"get":"Get","gigs":"Gigs"},"upload-mixtapes":{"upload":"Upload","mixtapes":"Mixtapes"},"showcase-photos":{"showcase":"Showcase","photos":"Photos"},"add-reviews":{"add":"Add","reviews":"Reviews"}},"integrations":{"integrations":"INTEGRATIONS","combine-content-&-sell-yourself":"Combine all \ncontent in one place","photos":"Photos","videos":"Videos","mixcloud":"Mixcloud*","more":"...more","coming-soon":"* Coming soon"},"getting-gigs":{"new-gig-request":{"new-gig-request":"NEW GIG REQUEST","new-years-party":"New Years Party","in-a-month":"In a month","make-your-offer":"Make your offer","4-hours":"4 hours","200 guests":"200 guests"},"get-gigs-feature":{"feature":"FEATURE","get-gigs":"Get gigs","chat-the-organizer":"Chat the organizer.","make-your-offer":"Make your offer.","play-get-paid":"Play - Get paid.","read-more":"Read more","Amount-of-available-gigs-vary-depending-on-your-area":"Amount of available gigs vary depending on your area."}},"payments":{"card-payments":{"receive-payments":"RECEIVE PAYMENTS","card-payments":"Card payments","content":"Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.","read-more":"Read more"},"direct-payments":{"receive-payments":"RECEIVE PAYMENTS","direct-payments":"Direct payments","content":"Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.","read-more":"Read more"}},"cancelation-policy":{"feature":"FEATURE","create-your-cancelation-policy":"Create your cancelation policy","content":"Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.","read-more":"Read more","chart":{"time":{"14-days-prior":"14 days prior","30-days-prior":"30 days prior","event-start":"Event start","event-end":"Event end"},"refund":{"100%-refund":{"100%-refund":"100% Refund","100%":"100%","refund":"Refund"},"50%-refund":{"50%-refund":"50% Refund","50%":"50%","refund":"Refund"},"0%-refund":{"0%-refund":"0% Refund","0%":"0%","refund":"Refund"}}}},"available-on-iphone":{"desktop":{"available-on":"AVAILABLE ON","iphone":"iPhone","content":"Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non."},"mobile":{"available-on":"AVAILABLE ON","iphone-and-android":"iPhone & Android","content":"Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non."}},"join-thousands-of-DJs":{"join-thousands-of-DJs":"Join thousands of DJs","content":"Cueup is a growing community of DJs, a major key to success. Put it this way, it took me twenty five years to get these plants.","apply-to-become-DJ":"Apply to become DJ"}},"read-more":"Read more"},"da":{"become-dj":{"title":"Become DJ","hero":{"2020-update":"2020 UPDATE","the-only-profile-a-DJ-needs":"The only profile a DJ needs","subtitle":"As a DJ you don't want to waste time promoting yourself when you could be out playing.","apply-to-become-dj":"Ansøg om at blive DJ","get-gigs":{"get":"Get","gigs":"Gigs"},"upload-mixtapes":{"upload":"Upload","mixtapes":"Mixtapes"},"showcase-photos":{"showcase":"Showcase","photos":"Photos"},"add-reviews":{"add":"Add","reviews":"Reviews"}},"integrations":{"integrations":"INTEGRATIONS","combine-content-&-sell-yourself":"Combine all \ncontent in one place","photos":"Fotos","videos":"Videoer","mixcloud":"Mixcloud*","more":"...more","coming-soon":"* Coming soon"},"getting-gigs":{"new-gig-request":{"new-gig-request":"NEW GIG REQUEST","new-years-party":"New Years Party","in-a-month":"In a month","make-your-offer":"Make your offer","4-hours":"4 hours","200 guests":"200 guests"},"get-gigs-feature":{"feature":"FEATURE","get-gigs":"Get gigs","chat-the-organizer":"Chat the organizer.","make-your-offer":"Make your offer.","play-get-paid":"Play - Get paid.","read-more":"Read more","Amount-of-available-gigs-vary-depending-on-your-area":"Amount of available gigs vary depending on your area."}},"payments":{"card-payments":{"receive-payments":"RECEIVE PAYMENTS","card-payments":"Card payments","content":"Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.","read-more":"Read more"},"direct-payments":{"receive-payments":"RECEIVE PAYMENTS","direct-payments":"Direct payments","content":"Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.","read-more":"Read more"}},"cancelation-policy":{"feature":"FEATURE","create-your-cancelation-policy":"Create your cancelation policy","content":"Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.","read-more":"Read more","chart":{"time":{"14-days-prior":"14 days prior","30-days-prior":"30 days prior","event-start":"Event start","event-end":"Event end"},"refund":{"100%-refund":{"100%-refund":"100% Refund","100%":"100%","refund":"Refund"},"50%-refund":{"50%-refund":"50% Refund","50%":"50%","refund":"Refund"},"0%-refund":{"0%-refund":"0% Refund","0%":"0%","refund":"Refund"}}}},"available-on-iphone":{"desktop":{"available-on":"AVAILABLE ON","iphone":"iPhone","content":"Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non."},"mobile":{"available-on":"AVAILABLE ON","iphone-and-android":"iPhone & Android","content":"Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non."}},"join-thousands-of-DJs":{"join-thousands-of-DJs":"Join thousands of DJs","content":"Cueup is a growing community of DJs, a major key to success. Put it this way, it took me twenty five years to get these plants.","apply-to-become-DJ":"Apply to become DJ"}},"read-more":"Læs mere"}}
+{
+    "en": {
+        "title": "Become DJ",
+        "hero": {
+            "2020-update": "2020 UPDATE",
+            "the-only-profile-a-DJ-needs": "The only profile a DJ needs",
+            "subtitle": "As a DJ you don't want to waste time promoting yourself when you could be out playing.",
+            "apply-to-become-dj": "Apply to become DJ",
+            "get-gigs": {
+                "get": "Get",
+                "gigs": "Gigs"
+            },
+            "upload-mixtapes": {
+                "upload": "Upload",
+                "mixtapes": "Mixtapes"
+            },
+            "showcase-photos": {
+                "showcase": "Showcase",
+                "photos": "Photos"
+            },
+            "add-reviews": {
+                "add": "Add",
+                "reviews": "Reviews"
+            }
+        },
+        "integrations": {
+            "integrations": "INTEGRATIONS",
+            "combine-content-&-sell-yourself": "Combine all \ncontent in one place",
+            "photos": "Photos",
+            "videos": "Videos",
+            "mixcloud": "Mixcloud*",
+            "more": "...more",
+            "coming-soon": "* Coming soon"
+        },
+        "getting-gigs": {
+            "new-gig-request": {
+                "new-gig-request": "NEW GIG REQUEST",
+                "new-years-party": "New Years Party",
+                "in-a-month": "In a month",
+                "make-your-offer": "Make your offer",
+                "4-hours": "4 hours",
+                "200 guests": "200 guests"
+            },
+            "get-gigs-feature": {
+                "feature": "FEATURE",
+                "get-gigs": "Get gigs",
+                "chat-the-organizer": "Chat the organizer.",
+                "make-your-offer": "Make your offer.",
+                "play-get-paid": "Play - Get paid.",
+                "read-more": "Read more",
+                "Amount-of-available-gigs-vary-depending-on-your-area": "Amount of available gigs vary depending on your area."
+            }
+        },
+        "payments": {
+            "card-payments": {
+                "receive-payments": "RECEIVE PAYMENTS",
+                "card-payments": "Card payments",
+                "content": "Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.",
+                "read-more": "Read more"
+            },
+            "direct-payments": {
+                "receive-payments": "RECEIVE PAYMENTS",
+                "direct-payments": "Direct payments",
+                "content": "Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.",
+                "read-more": "Read more"
+            }
+        },
+        "cancelation-policy": {
+            "feature": "FEATURE",
+            "create-your-cancelation-policy": "Create your cancelation policy",
+            "content": "Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.",
+            "read-more": "Read more",
+            "chart": {
+                "time": {
+                    "14-days-prior": "14 days prior",
+                    "30-days-prior": "30 days prior",
+                    "event-start": "Event start",
+                    "event-end": "Event end"
+                },
+                "refund": {
+                    "100%-refund": {
+                        "100%-refund": "100% Refund",
+                        "100%": "100%",
+                        "refund": "Refund"
+                    },
+                    "50%-refund": {
+                        "50%-refund": "50% Refund",
+                        "50%": "50%",
+                        "refund": "Refund"
+                    },
+                    "0%-refund": {
+                        "0%-refund": "0% Refund",
+                        "0%": "0%",
+                        "refund": "Refund"
+                    }
+                }
+            }
+        },
+        "available-on-iphone": {
+            "desktop": {
+                "available-on": "AVAILABLE ON",
+                "iphone": "iPhone",
+                "content": "Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non."
+            },
+            "mobile": {
+                "available-on": "AVAILABLE ON",
+                "iphone-and-android": "iPhone & Android",
+                "content": "Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non."
+            }
+        },
+        "join-thousands-of-DJs": {
+            "join-thousands-of-DJs": "Join thousands of DJs",
+            "content": "Cueup is a growing community of DJs, a major key to success. Put it this way, it took me twenty five years to get these plants.",
+            "apply-to-become-DJ": "Apply to become DJ"
+        }
+    },
+    "da": {
+        "title": "Become DJ",
+        "hero": {
+            "2020-update": "2020 UPDATE",
+            "the-only-profile-a-DJ-needs": "The only profile a DJ needs",
+            "subtitle": "As a DJ you don't want to waste time promoting yourself when you could be out playing.",
+            "apply-to-become-dj": "Ansøg om at blive DJ",
+            "get-gigs": {
+                "get": "Get",
+                "gigs": "Gigs"
+            },
+            "upload-mixtapes": {
+                "upload": "Upload",
+                "mixtapes": "Mixtapes"
+            },
+            "showcase-photos": {
+                "showcase": "Showcase",
+                "photos": "Photos"
+            },
+            "add-reviews": {
+                "add": "Add",
+                "reviews": "Reviews"
+            }
+        },
+        "integrations": {
+            "integrations": "INTEGRATIONS",
+            "combine-content-&-sell-yourself": "Combine all \ncontent in one place",
+            "photos": "Fotos",
+            "videos": "Videoer",
+            "mixcloud": "Mixcloud*",
+            "more": "...more",
+            "coming-soon": "* Coming soon"
+        },
+        "getting-gigs": {
+            "new-gig-request": {
+                "new-gig-request": "NEW GIG REQUEST",
+                "new-years-party": "New Years Party",
+                "in-a-month": "In a month",
+                "make-your-offer": "Make your offer",
+                "4-hours": "4 hours",
+                "200 guests": "200 guests"
+            },
+            "get-gigs-feature": {
+                "feature": "FEATURE",
+                "get-gigs": "Get gigs",
+                "chat-the-organizer": "Chat the organizer.",
+                "make-your-offer": "Make your offer.",
+                "play-get-paid": "Play - Get paid.",
+                "read-more": "Read more",
+                "Amount-of-available-gigs-vary-depending-on-your-area": "Amount of available gigs vary depending on your area."
+            }
+        },
+        "payments": {
+            "card-payments": {
+                "receive-payments": "RECEIVE PAYMENTS",
+                "card-payments": "Card payments",
+                "content": "Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.",
+                "read-more": "Read more"
+            },
+            "direct-payments": {
+                "receive-payments": "RECEIVE PAYMENTS",
+                "direct-payments": "Direct payments",
+                "content": "Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.",
+                "read-more": "Read more"
+            }
+        },
+        "cancelation-policy": {
+            "feature": "FEATURE",
+            "create-your-cancelation-policy": "Create your cancelation policy",
+            "content": "Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur, inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.",
+            "read-more": "Read more",
+            "chart": {
+                "time": {
+                    "14-days-prior": "14 days prior",
+                    "30-days-prior": "30 days prior",
+                    "event-start": "Event start",
+                    "event-end": "Event end"
+                },
+                "refund": {
+                    "100%-refund": {
+                        "100%-refund": "100% Refund",
+                        "100%": "100%",
+                        "refund": "Refund"
+                    },
+                    "50%-refund": {
+                        "50%-refund": "50% Refund",
+                        "50%": "50%",
+                        "refund": "Refund"
+                    },
+                    "0%-refund": {
+                        "0%-refund": "0% Refund",
+                        "0%": "0%",
+                        "refund": "Refund"
+                    }
+                }
+            }
+        },
+        "available-on-iphone": {
+            "desktop": {
+                "available-on": "AVAILABLE ON",
+                "iphone": "iPhone",
+                "content": "Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non."
+            },
+            "mobile": {
+                "available-on": "AVAILABLE ON",
+                "iphone-and-android": "iPhone & Android",
+                "content": "Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non."
+            }
+        },
+        "join-thousands-of-DJs": {
+            "join-thousands-of-DJs": "Join thousands of DJs",
+            "content": "Cueup is a growing community of DJs, a major key to success. Put it this way, it took me twenty five years to get these plants.",
+            "apply-to-become-DJ": "Apply to become DJ"
+        }
+    }
+}

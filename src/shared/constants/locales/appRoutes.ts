@@ -12,6 +12,8 @@ export const routeKeys = Object.freeze({
     faq: 'faq',
     faqDj: 'faqDj',
     faqOrganizer: 'faqOrganizer',
+    notFound: 'notFound',
+    event: 'event',
 });
 
 export type RouteKeys = typeof routeKeys;

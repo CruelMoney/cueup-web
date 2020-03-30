@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { Container } from 'components/Blocks';
+import { appRoutes } from 'constants/locales/appRoutes';
 import PaymentCards from '../../../components/common/PaymentCards';
 
 const Bg = styled.div`
@@ -11,12 +13,13 @@ const Bg = styled.div`
     margin-bottom: -84px;
 `;
 
-const Payments = (props) => {
+const Payments = () => {
+    const { t } = useTranslation();
     return (
         <Bg>
             <Container>
                 <PaymentCards
-                    link="/blog/new-direct-payout-method"
+                    link={t(appRoutes.blog) + '/new-direct-payout-method'}
                     accent="RECEIVE PAYMENTS"
                     header1={'Card payments'}
                     description1={

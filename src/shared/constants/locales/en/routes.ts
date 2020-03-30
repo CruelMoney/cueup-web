@@ -6,12 +6,14 @@ const routes: RouteKeys = {
     howItWorks: '/how-it-works',
     becomeDj: '/become-dj',
     signUp: '/signup',
-    user: '/user/:username',
+    user: '/user',
     bookDj: '/book-dj',
     blog: '/blog',
     faq: '/faq',
     faqDj: '/faq/dj',
     faqOrganizer: '/faq/organizer',
+    notFound: '/not-found',
+    event: '/event',
 };
 
 export default routes;

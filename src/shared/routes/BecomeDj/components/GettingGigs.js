@@ -4,8 +4,9 @@ import { useTransition, animated, config } from 'react-spring';
 import PeopleIcon from 'react-ionicons/lib/MdPeople';
 import TimeIcon from 'react-ionicons/lib/IosTime';
 import { NavLink } from 'react-router-dom';
-import { HeaderTitle, Body, BodySmall, BodyBold } from 'components/Text';
-import { Container, Col, Row, ReadMore } from 'components/Blocks';
+import { useTranslation } from 'react-i18next';
+import { BodySmall } from 'components/Text';
+import { Container, ReadMore } from 'components/Blocks';
 import GracefullImage from 'components/GracefullImage';
 import { ResponsiveTextAccent } from '../components/blocks/TextAccent';
 import { GrayText, Header } from '../../../components/common/Text';
@@ -278,8 +279,9 @@ const AnimatedCards = () => {
     );
 };
 
-const GettingGigs = (props) => {
-    const { translate, currentLanguage } = props;
+const GettingGigs = () => {
+    const { t } = useTranslation();
+
     return (
         <Bg>
             <Container>
@@ -287,10 +289,10 @@ const GettingGigs = (props) => {
                     <AnimatedCards />
                     <TextCol>
                         <ResponsiveTextAccent>
-                            {translate('become-dj.getting-gigs.get-gigs-feature.feature')}
+                            {t('become-dj:getting-gigs.get-gigs-feature.feature')}
                         </ResponsiveTextAccent>
                         <Header bigMobile>
-                            {translate('become-dj.getting-gigs.get-gigs-feature.get-gigs')}
+                            {t('become-dj:getting-gigs.get-gigs-feature.get-gigs')}
                         </Header>
                         <GrayText>
                             At Cueup we constantly work on bringing gigs to our DJs. You just have
@@ -298,7 +300,7 @@ const GettingGigs = (props) => {
                         </GrayText>
                         <NavLink to="/blog/stop-missing-dj-gigs">
                             <ReadMore size="18px" uppercase={false}>
-                                {translate('read-more')}
+                                {t('read-more')}
                             </ReadMore>
                         </NavLink>
                     </TextCol>

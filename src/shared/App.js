@@ -7,6 +7,8 @@ import { useTranslation } from 'react-i18next';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 
 import LazyFaq from 'routes/Faq';
+import LazyBecomeDj from 'routes/BecomeDj';
+import LazyBlog from 'routes/Blog';
 import * as gtag from './utils/analytics/autotrack';
 import { Environment } from './constants/constants';
 import Home from './routes/Home';
@@ -150,26 +152,27 @@ const RouteWrapper = () => {
                     <Route exact path={[t(appRoutes.home), '/verifyEmail']} component={Home} />
                     <Route path={t(appRoutes.about)} component={About} />
                     <Route path={t(appRoutes.faq)} component={LazyFaq} />
+                    <Route path={t(appRoutes.becomeDj)} component={LazyBecomeDj} />
+                    <Route path={t(appRoutes.blog)} component={LazyBlog} />
+                    {/* 
+                    <Route path={t('routes./how-it-works')} component={LazyHowItWorks} />
+                    <Route path={t('routes./signup')} component={Signup} /> */}
 
-                    {/* <Route path={translate('routes./become-dj')} component={LazyBecomeDj} />
-                    <Route path={translate('routes./how-it-works')} component={LazyHowItWorks} />
-                    <Route path={translate('routes./signup')} component={Signup} /> */}
-
-                    {/* <Route path={[translate('routes./user/:permalink')]} component={User} />
+                    {/* <Route path={[t('routes./user/:permalink')]} component={User} />
                     <Route path={'/complete-signup'} component={CompleteSignup} />
-                    <Route path={translate('routes./terms')} component={Terms} />
+                    <Route path={t('routes./terms')} component={Terms} />
                     <Route
-                        path={translate('routes./event') + '/:id/:hash'}
+                        path={t('routes./event') + '/:id/:hash'}
                         component={CueupEvent}
                     />
-                    <Route path={translate('routes./gig') + '/:id'} component={Gig} />
+                    <Route path={t('routes./gig') + '/:id'} component={Gig} />
                     <Route
-                        path={translate('routes./book-dj') + '/:country/:city?'}
+                        path={t('routes./book-dj') + '/:country/:city?'}
                         component={LocationLanding}
                     />
-                    <Route path={translate('routes./book-dj')} component={LazyLocationsOverview} />
-                    <Route path={translate('routes./blog')} component={Blog} />
-                    <Route path={translate('routes./reset-password')} component={ResetPassword} /> */}
+                    <Route path={t('routes./book-dj')} component={LazyLocationsOverview} />
+                
+                    <Route path={t('routes./reset-password')} component={ResetPassword} /> */}
 
                     <Route component={NotFound} />
                 </Switch>

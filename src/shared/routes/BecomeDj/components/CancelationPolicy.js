@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Container, Col, Row, ReadMore } from 'components/Blocks';
 import { Header } from '../../../components/common/Text';
 import { TextAccent } from '../components/blocks/TextAccent';
@@ -92,12 +93,12 @@ const TextWrapper = styled(Row)`
 `;
 
 const CancelationPolicy = (props) => {
-    const { translate } = props;
+    const { t } = useTranslation();
     return (
         <Bg>
             <CancelationContainer>
                 <TextAccent center style={{ marginTop: '50px' }}>
-                    {translate('become-dj.cancelation-policy.feature')}
+                    {t('become-dj:cancelation-policy.feature')}
                 </TextAccent>
                 <TitleWrapper>
                     <Header white center largeMargin>
@@ -110,7 +111,7 @@ const CancelationPolicy = (props) => {
                 </CancelationSubTitle>
                 <NavLink to="/blog" style={{ marginTop: '42px' }}>
                     <ReadMore white size="18px" uppercase={false}>
-                        {translate('read-more')}
+                        {t('read-more')}
                     </ReadMore>
                 </NavLink>
                 <GraphWrapper>
@@ -122,37 +123,35 @@ const CancelationPolicy = (props) => {
                     <TextWrapper>
                         <Col middle>
                             <BarText>
-                                {translate('become-dj.cancelation-policy.chart.time.30-days-prior')}
+                                {t('become-dj:cancelation-policy.chart.time.30-days-prior')}
                             </BarText>
                             <Dot />
                             <BarText>
-                                {translate(
-                                    'become-dj.cancelation-policy.chart.refund.100%-refund.100%-refund'
+                                {t(
+                                    'become-dj:cancelation-policy.chart.refund.100%-refund.100%-refund'
                                 )}
                             </BarText>
                         </Col>
                         <Col middle>
                             <BarText>
-                                {translate('become-dj.cancelation-policy.chart.time.14-days-prior')}
+                                {t('become-dj:cancelation-policy.chart.time.14-days-prior')}
                             </BarText>
                             <Dot />
                             <BarText>
-                                {translate(
-                                    'become-dj.cancelation-policy.chart.refund.50%-refund.50%-refund'
+                                {t(
+                                    'become-dj:cancelation-policy.chart.refund.50%-refund.50%-refund'
                                 )}
                             </BarText>
                         </Col>
                         <Col middle>
                             <BarText>
-                                {translate('become-dj.cancelation-policy.chart.time.event-start')}
+                                {t('become-dj:cancelation-policy.chart.time.event-start')}
                             </BarText>
 
                             <Dot />
 
                             <BarText>
-                                {translate(
-                                    'become-dj.cancelation-policy.chart.refund.0%-refund.0%-refund'
-                                )}
+                                {t('become-dj:cancelation-policy.chart.refund.0%-refund.0%-refund')}
                             </BarText>
                         </Col>
                     </TextWrapper>

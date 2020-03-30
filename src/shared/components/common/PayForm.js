@@ -93,7 +93,7 @@ const BankPayForm = ({
                         : translate('Pay')
                 }
                 showLock={true}
-                text={chosenMethod?.description ? null : translate('event.offer.payment-info')}
+                text={chosenMethod?.description ? null : translate('event:offer.payment-info')}
             />
             {chosenMethod?.description && (
                 <>
@@ -264,7 +264,7 @@ const PaymentWrapper = (props) => {
                     </TableItem>
                 </MoneyTable>
 
-                <p className="terms_link">{translate('event.offer.terms')}</p>
+                <p className="terms_link">{translate('event:offer.terms')}</p>
             </div>
         </PayFormContainer>
     );
@@ -276,7 +276,7 @@ const LoadingPaymentInitial = ({ translate }) => {
             <TextWrapper
                 label={translate('Pay')}
                 showLock={true}
-                text={translate('event.offer.payment-info')}
+                text={translate('event:offer.payment-info')}
             />
             <Col center>
                 <LoadingIndicator label={translate('gettingPayment')} />
