@@ -234,8 +234,8 @@ const Location = (props) => {
             <Footer
                 bgColor="#FFFFFF"
                 color={secondColor}
-                firstTo={translate('routes./signup')}
-                secondTo={translate('routes./how-it-works')}
+                firstTo={translate(appRoutes.signUp)}
+                secondTo={translate(appRoutes.howItWorks)}
                 firstLabel={translate('apply-to-become-dj')}
                 secondLabel={translate('how-it-works')}
                 title={translate('are-you-a-dj-in-location', { location: title })}

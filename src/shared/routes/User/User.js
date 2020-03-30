@@ -261,7 +261,8 @@ const LoginPopup = ({ translate }) => {
     );
 };
 
-const Index = ({ translate, match, location }) => {
+const Index = ({ match, location }) => {
+    const { translate } = useTranslate();
     const [updateUser, { loading: isSaving, error }] = useMutation(UPDATE_USER);
     const [hasScrolled, setHasScrolled] = useState(false);
 
@@ -284,7 +285,7 @@ const Index = ({ translate, match, location }) => {
                             const me = data?.me;
 
                             if (!loading && !profileUser) {
-                                return <Redirect to={translate('routes./not-found')} />;
+                                return <Redirect to={translate(appRoutes.notFound)} />;
                             }
 
                             let user = profileUser;

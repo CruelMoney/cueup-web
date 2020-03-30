@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { appRoutes } from 'constants/locales/appRoutes';
 import {
     Col,
     keyframeFadeIn,
@@ -65,7 +66,7 @@ const Offer = ({ offer, gig, hasMessage, translate }) => {
             <Buttons>
                 <NavLink
                     to={{
-                        pathname: `${translate('routes./gig')}/${id}`,
+                        pathname: `${translate(appRoutes.gig)}/${id}`,
                     }}
                 >
                     <TeritaryButton>Read more</TeritaryButton>

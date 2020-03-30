@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import useTranslate from 'components/hooks/useTranslate';
 
+import { appRoutes } from 'constants/locales/appRoutes';
 import Footer from '../../components/common/Footer';
 
 import Map from '../../components/common/Map';
@@ -82,8 +83,8 @@ const Location = () => {
             <Footer
                 noSkew
                 color={secondColor}
-                firstTo={translate('routes./signup')}
-                secondTo={translate('routes./how-it-works')}
+                firstTo={translate(appRoutes.becomeDj)}
+                secondTo={translate(appRoutes.howItWorks)}
                 firstLabel={translate('become-dj')}
                 secondLabel={translate('how-it-works')}
                 title={translate('are-you-a-dj', { location: title })}

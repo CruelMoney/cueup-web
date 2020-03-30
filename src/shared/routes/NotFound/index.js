@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { withTranslation } from 'react-i18next';
+import { appRoutes } from 'constants/locales/appRoutes';
 import EmptyPage from '../../components/common/EmptyPage';
 import Footer from '../../components/common/Footer';
 
@@ -28,8 +29,8 @@ class NotFound extends Component {
                 <Footer
                     color={'#31DAFF'}
                     noSkew={true}
-                    firstTo={t('routes./')}
-                    secondTo={t('routes./signup')}
+                    firstTo={t(appRoutes.home)}
+                    secondTo={t(appRoutes.becomeDj)}
                     firstLabel={t('arrange-event')}
                     secondLabel={t('apply-to-become-dj')}
                     title={t('ready-to-get-started')}

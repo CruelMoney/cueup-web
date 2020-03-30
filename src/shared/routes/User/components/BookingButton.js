@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useQuery } from 'react-apollo';
 import { NavLink } from 'react-router-dom';
 import queryString from 'query-string';
+import { appRoutes } from 'constants/locales/appRoutes';
+import { eventRoutes } from 'routes/Event/routes';
+import useTranslate from 'components/hooks/useTranslate';
 import { CTAButton } from '../../../components/Sidebar';
 import PayForm from '../../../components/common/PayForm.js';
 import Popup from '../../../components/common/Popup';
@@ -10,7 +13,8 @@ import { LoadingIndicator } from '../../../components/Blocks';
 import Chat from '../../../components/common/Chat';
 import EmptyPage from '../../../components/common/EmptyPage';
 
-const BookingButton = ({ user, gig, event, hash, offer, translate, showPaymentForm }) => {
+const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
+    const { translate } = useTranslate();
     const [showPopup, setShowPopup] = useState(false);
 
     const canBePaid = gig && gig.offer && gig.status === 'ACCEPTED' && event.status === 'ACCEPTED';
@@ -31,12 +35,7 @@ const BookingButton = ({ user, gig, event, hash, offer, translate, showPaymentFo
 
     if (canBeReviewd) {
         return (
-            <NavLink
-                to={translate('routes./event/:id/:hash/review', {
-                    id: event.id,
-                    hash,
-                })}
-            >
+            <NavLink to={`${translate(appRoutes.event)}/${event.id}/${hash}${eventRoutes.review}`}>
                 <CTAButton>REVIEW</CTAButton>
             </NavLink>
         );
