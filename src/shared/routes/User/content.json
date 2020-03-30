@@ -1,0 +1,68 @@
+{
+    "en": {
+        "notifications": {
+            "email": "You won't receive any gigs before you have confirmed your email-address.",
+            "standby": "You are currently on standby and can not be booked.",
+            "standby-public": "This DJ is currently on standby and can not be booked.",
+            "picture": "You should update your profile picture.",
+            "empty": "You don't have any new notifications.",
+            "Book other DJs": "Book other DJs"
+        },
+        "preferences": {
+            "delete-warning": "Are you sure you want to delete? All future gigs, events and payments will be lost.",
+            "payout-info": "To get paid, you need to set up a payout method. Cueup releases payouts about 24 hours after a job is finished.",
+            "card-info": "Last 4 digits of current account number",
+            "currency": "What currency do you wish to have prices shown in?",
+            "email": "What kind of notifications do you wish to receive?",
+            "cancelation": "How many days notice do you allow for cancelations? If the organizer wants to cancel the event within less days, the percentage specified below will be refunded. The organizer will have to agree to this policy when confirming your offer.",
+            "refund": "How many percentage of the offer should be returned if the organizer cancels within less days than your minimum notice?",
+            "refunded": "<span>${ percentage }% </span> will be refunded.",
+            "standby": "Are you unavailable to play at the moment? You will not receive requests if you're unavailable.",
+            "permalink": "What URL do you want people to find you at.",
+            "password": "Request an email to change your password.",
+            "email-verification": "Request an email to verify your email.",
+            "login": "Login to see your preferences."
+        },
+        "name": "Your full name. We only show your first name.",
+        "email": "Updating your email means you have to confirm it again.",
+        "phone": "We only share your phone number with people you contact through Cueup.",
+        "genres": "The kind of music you play.",
+        "bio": "Please tell us a bit about yourself. What kind of DJ are you? What is your level of experience? What kind of events do you usually play at?",
+        "refer-1-description": "At Cueup you can get more money by referring people to the site. The link below is used to book you directly. In case someone books you using your link, the Cueup fee will be removed from the gig, and you will get the full payout.",
+        "refer-2-description": "At Cueup you can get points for referring other DJs to the site. The link below is used for referring DJs to the site. In case a DJ signs up using your link, you will get a Cueup point whenever the referred DJ makes his or hers first offer. Cueup points are used when making an offer to remove the Cueup fee.",
+        "location": "This is the area where you will receive gigs. To edit the location or radius, click the edit information button, and drag in the points that appear on the circle."
+    },
+    "da": {
+        "notifications": {
+            "email": "Du vil ikke modtage gigs før du har bekræftet din email.",
+            "standby": "Du er på standby og kan ikke blive booket.",
+            "standby-public": "Denne DJ er på standby og kan ikke bookes.",
+            "picture": "Du bør opdatere dit profilbillede.",
+            "empty": "Du har ingen nye notifikation.",
+            "Book other DJs": "Book andre DJs"
+        },
+        "preferences": {
+            "delete-warning": "Er du sikker på at du vil slette din profil? Alle fremtidige gigs, begivenheder og udbetalinger vil blive tabt.",
+            "payout-info": "For at blive betalt, skal du udfylde din udbetalingsmetode. Cueup frigøre udbetalinger 24 timer efter et job er udført.",
+            "card-info": "De sidste 4 cifre af dit nuværende kontonummer",
+            "currency": "Hvilken valuta ønsker du at vise priser i?",
+            "email": "Hvilke slags notifikationer ønsker du at modtage?",
+            "cancelation": "Hvor mange dages varsel tillader du for aflysninger? Hvis kunden vil aflyse begivenheden inden for færre dage, vil den angivne procentdel blive refunderet. Kunder vil blive bedt om at acceptere denne politik, når de bekræfter dit tilbud.",
+            "refund": "Hvor mange procent af tilbuddet skal refunderes hvis kunden aflyser inden for færre dage end hvad du tillader.",
+            "refunded": "<span>${ percentage }% </span> vil blive refunderet.",
+            "standby": "Er du ikke ledig til at spille for tiden? Du vil ikke modtage nogle gigs hvis du er utilgængelig.",
+            "permalink": "Hvilken URL skal din profil kunne findes på?",
+            "password": "Anmod om en email til at ændre dit password.",
+            "email-verification": "Anmod om en email til at verificere din email.",
+            "login": "Log ind for at se dine indstillinger."
+        },
+        "name": "Dit fulde navn. Vi viser kun dit fornavn.",
+        "email": "Opdaterer du din email, skal du verificere den igen.",
+        "phone": "Vi deler kun dit telefonnummer med personer du kontakter gennem Cueup.",
+        "genres": "Hvilke genrer spiller du?",
+        "bio": "Fortæl os om dig selv. Hvilken slags DJ er du, hvor erfaren er du, hvilken slags events spiller du normalt?",
+        "refer-1-description": "Hos Cueup kan du få udbetalt mere hvis du henviser folk til sitet. Linket kan bruges til at booke dig direkte. Hvis nogen booker dig ved brug af linket, vil Cueup gebyret blive fjernet fra eventet, og du vil få udbetalt mere.",
+        "refer-2-description": "Hos Cueup kan du optjene point ved at henvise andre DJs. Linket kan bruges til at henvise en DJ til tilmeldingen. Når en DJ tilmelder sig ved hjælp af dit link, vil du modage et Cueup point når end den nye DJ afgiver sit første tilbud. Cueup point kan bruges til at fjerne DJ gebyret når du afgiver et tilbud.",
+        "location": "Du vil modtage gigs i dette område. For at ændre din lokation eller radius, tryk rediger information til venstre, og hiv i punkterne der fremkommer om cirklen."
+    }
+}

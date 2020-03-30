@@ -10,6 +10,7 @@ import AddCircle from 'react-ionicons/lib/MdAddCircle';
 import { Helmet } from 'react-helmet-async';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
+import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import Sidebar, { SidebarContent } from '../../components/Sidebar';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col, Divider } from '../../components/Blocks';
@@ -42,6 +43,7 @@ import { USER, UPDATE_USER } from './gql';
 import BackToEvent from './components/BackToEvent';
 import Header from './components/Header';
 import { Stats, MobileBookingButton, IconRow, CertifiedVerified } from './components/Common';
+import content from './content.json';
 
 const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
     const { userMetadata = {}, appMetadata = {}, playingLocation } = user || {};
@@ -262,7 +264,7 @@ const LoginPopup = ({ translate }) => {
 };
 
 const Index = ({ match, location }) => {
-    const { translate } = useTranslate();
+    const { translate } = useNamespaceContent(content, 'user');
     const [updateUser, { loading: isSaving, error }] = useMutation(UPDATE_USER);
     const [hasScrolled, setHasScrolled] = useState(false);
 

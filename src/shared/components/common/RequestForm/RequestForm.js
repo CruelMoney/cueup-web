@@ -7,6 +7,7 @@ import { LabelHalf, InputRow } from 'components/FormComponents';
 import { BodySmall, TitleClean } from 'components/Text';
 import { useCreateEvent } from 'actions/EventActions';
 import { useForm } from 'components/hooks/useForm';
+import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import Login from '../Login';
 import ErrorMessageApollo from '../ErrorMessageApollo';
 import usePushNotifications from '../../hooks/usePushNotifications';
@@ -16,9 +17,10 @@ import Step2 from './Step2';
 import Step3 from './Step3';
 import Step4 from './Step4';
 import Step5 from './Step5';
+import content from './content.json';
 
 const MainForm = ({ initialCity, countries }) => {
-    const { t } = useTranslation();
+    const { translate } = useNamespaceContent(content, 'requestForm');
     const [activeStep, setActiveStep] = useState(1);
     const [showLogin, setShowLogin] = useState(false);
     const { pushShouldBeEnabled } = usePushNotifications();
@@ -82,7 +84,9 @@ const MainForm = ({ initialCity, countries }) => {
                         {showLogin && (
                             <>
                                 <TitleClean center>Login</TitleClean>
-                                <BodySmall>{t('request-form.email-exists-message')}</BodySmall>
+                                <BodySmall>
+                                    {translate('requestForm:email-exists-message')}
+                                </BodySmall>
                                 <Login
                                     redirect={false}
                                     onLogin={() => {
@@ -96,7 +100,7 @@ const MainForm = ({ initialCity, countries }) => {
 
                         {!showLogin && activeStep === 1 && (
                             <Step1
-                                translate={t}
+                                translate={translate}
                                 form={form}
                                 handleChange={handleChange}
                                 runValidations={runValidations}
@@ -108,7 +112,7 @@ const MainForm = ({ initialCity, countries }) => {
                         )}
                         {!showLogin && activeStep === 2 && (
                             <Step2
-                                translate={t}
+                                translate={translate}
                                 form={form}
                                 handleChange={handleChange}
                                 runValidations={runValidations}
@@ -121,7 +125,7 @@ const MainForm = ({ initialCity, countries }) => {
 
                         {!showLogin && activeStep === 3 && (
                             <Step3
-                                translate={t}
+                                translate={translate}
                                 form={form}
                                 handleChange={handleChange}
                                 runValidations={runValidations}
@@ -134,7 +138,7 @@ const MainForm = ({ initialCity, countries }) => {
 
                         {!showLogin && activeStep === 4 && (
                             <Step4
-                                translate={t}
+                                translate={translate}
                                 form={form}
                                 handleChange={handleChange}
                                 runValidations={runValidations}
@@ -148,7 +152,7 @@ const MainForm = ({ initialCity, countries }) => {
 
                         {!showLogin && activeStep === 5 && (
                             <Step5
-                                translate={t}
+                                translate={translate}
                                 form={form}
                                 handleChange={handleChange}
                                 runValidations={runValidations}
@@ -180,7 +184,7 @@ const MainForm = ({ initialCity, countries }) => {
                             style={{ textAlign: 'center', marginTop: '12px' }}
                             className="terms_link"
                         >
-                            {t('terms-message-event')}
+                            {translate('terms-message-event')}
                         </BodySmall>
                     </Wrapper>
                 )}

@@ -17,31 +17,6 @@
       "second": "Tilmeld dig som DJ, eller se hvordan det virker."
     }
   },
-  "user": {
-    "notifications": {
-      "email": "Du vil ikke modtage gigs før du har bekræftet din email.",
-      "standby": "Du er på standby og kan ikke blive booket.",
-      "standby-public": "Denne DJ er på standby og kan ikke bookes.",
-      "picture": "Du bør opdatere dit profilbillede.",
-      "empty": "Du har ingen nye notifikation.",
-      "Book other DJs": "Book andre DJs"
-    },
-    "preferences": {
-      "delete-warning": "Er du sikker på at du vil slette din profil? Alle fremtidige gigs, begivenheder og udbetalinger vil blive tabt.",
-      "payout-info": "For at blive betalt, skal du udfylde din udbetalingsmetode. Cueup frigøre udbetalinger 24 timer efter et job er udført.",
-      "card-info": "De sidste 4 cifre af dit nuværende kontonummer",
-      "currency": "Hvilken valuta ønsker du at vise priser i?",
-      "email": "Hvilke slags notifikationer ønsker du at modtage?",
-      "cancelation": "Hvor mange dages varsel tillader du for aflysninger? Hvis kunden vil aflyse begivenheden inden for færre dage, vil den angivne procentdel blive refunderet. Kunder vil blive bedt om at acceptere denne politik, når de bekræfter dit tilbud.",
-      "refund": "Hvor mange procent af tilbuddet skal refunderes hvis kunden aflyser inden for færre dage end hvad du tillader.",
-      "refunded": "<span>${ percentage }% </span> vil blive refunderet.",
-      "standby": "Er du ikke ledig til at spille for tiden? Du vil ikke modtage nogle gigs hvis du er utilgængelig.",
-      "permalink": "Hvilken URL skal din profil kunne findes på?",
-      "password": "Anmod om en email til at ændre dit password.",
-      "email-verification": "Anmod om en email til at verificere din email.",
-      "login": "Log ind for at se dine indstillinger."
-    }
-  },
   "gig": {
     "messages": {
       "expired": "Gig er udløbet 😑",
@@ -81,16 +56,6 @@
       "decline-warning": "Er du sikker på at du vil afslå gigget?",
       "cancel-warning": "Er du sikker på at du vil aflyse gigget? Hele beløbet vil refunderes til kunden."
     }
-  },
-  "profile": {
-    "name": "Dit fulde navn. Vi viser kun dit fornavn.",
-    "email": "Opdaterer du din email, skal du verificere den igen.",
-    "phone": "Vi deler kun dit telefonnummer med personer du kontakter gennem Cueup.",
-    "genres": "Hvilke genrer spiller du?",
-    "bio": "Fortæl os om dig selv. Hvilken slags DJ er du, hvor erfaren er du, hvilken slags events spiller du normalt?",
-    "refer-1-description": "Hos Cueup kan du få udbetalt mere hvis du henviser folk til sitet. Linket kan bruges til at booke dig direkte. Hvis nogen booker dig ved brug af linket, vil Cueup gebyret blive fjernet fra eventet, og du vil få udbetalt mere.",
-    "refer-2-description": "Hos Cueup kan du optjene point ved at henvise andre DJs. Linket kan bruges til at henvise en DJ til tilmeldingen. Når en DJ tilmelder sig ved hjælp af dit link, vil du modage et Cueup point når end den nye DJ afgiver sit første tilbud. Cueup point kan bruges til at fjerne DJ gebyret når du afgiver et tilbud.",
-    "location": "Du vil modtage gigs i dette område. For at ændre din lokation eller radius, tryk rediger information til venstre, og hiv i punkterne der fremkommer om cirklen."
   },
   "common": {
     "currency": "Valuta",

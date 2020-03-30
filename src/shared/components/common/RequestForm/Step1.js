@@ -54,7 +54,7 @@ const Step1 = ({
 
                 //not available
             } else {
-                setMessage(translate('request-form.no-djs-message'));
+                setMessage(translate('requestForm:no-djs-message'));
             }
         }
     };
@@ -62,7 +62,7 @@ const Step1 = ({
     const eventDateString = form.date.format('dddd Do, MMMM YYYY');
     return (
         <form name="requestForm-step-1" onSubmit={submit}>
-            <h3 className="center">{translate('request-form.step-1.header')}</h3>
+            <h3 className="center">{translate('requestForm:step-1.header')}</h3>
 
             {showDatePickter ? (
                 <DatePicker dark initialDate={form.date} handleChange={dateChanged} />
@@ -74,7 +74,7 @@ const Step1 = ({
                             countries={countries}
                             forceHeight
                             name="locationName"
-                            label={translate('request-form.step-1.event-location')}
+                            label={translate('requestForm:step-1.event-location')}
                             placeholder={translate(
                                 'request-form.step-1.event-location-placeholder'
                             )}
@@ -85,7 +85,7 @@ const Step1 = ({
                             defaultValue={form.locationName}
                         >
                             <BodySmall>
-                                {translate('request-form.step-1.event-location-description')}
+                                {translate('requestForm:step-1.event-location-description')}
                             </BodySmall>
                         </LocationSelector>
                     </RequestSection>
@@ -98,7 +98,7 @@ const Step1 = ({
                         <Input
                             type="text"
                             name="date"
-                            label={translate('request-form.step-1.event-date')}
+                            label={translate('requestForm:step-1.event-date')}
                             disabled
                             style={{ pointerEvents: 'none', zIndex: 2, position: 'relative' }}
                             value={eventDateString}
@@ -107,7 +107,7 @@ const Step1 = ({
                             unregisterValidation={unregisterValidation('date')}
                         >
                             <BodySmall>
-                                {translate('request-form.step-1.event-date-description')}
+                                {translate('requestForm:step-1.event-date-description')}
                             </BodySmall>
                         </Input>
                     </RequestSection>

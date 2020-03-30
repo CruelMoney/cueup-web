@@ -318,7 +318,7 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                     {(deleteUser) => {
                         const doMutate = () => {
                             const confirmed = window.confirm(
-                                translate('user.preferences.delete-warning')
+                                translate('user:preferences.delete-warning')
                             );
                             if (!confirmed) {
                                 return;
