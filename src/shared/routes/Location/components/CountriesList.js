@@ -17,9 +17,9 @@ const CountriesList = ({ countries }) => {
                         {cities.map((city, idx) => (
                             <li key={idx}>
                                 <NavLink
-                                    to={`${translate(appRoutes.bookDj)}/${countrySlug}/${
-                                        city.slug
-                                    }`}
+                                    to={`${translate(appRoutes.bookDj)
+                                        .replace(':city?', city.slug)
+                                        .replace(':country', countrySlug)}`}
                                 >
                                     <Body>DJs in {city.cityascii}</Body>
                                 </NavLink>

@@ -105,13 +105,6 @@ const App = ({ location }) => {
         <ErrorHandling>
             <Helmet>
                 <html lang={i18n.language} xmlLang={i18n.language} />
-                {/* 
-                    TODO
-                    <link
-                        rel="alternate"
-                        href={altLangURL}
-                        hrefLang={translate('hreflang.' + activeLanguage)}
-                    /> */}
 
                 <title>{title}</title>
 
@@ -171,11 +164,8 @@ const RouteWrapper = () => {
                     <Route path={t(appRoutes.terms)} component={LazyTerms} />
                     <Route path={t(appRoutes.event) + '/:id/:hash'} component={LazyEvent} />
                     <Route path={t(appRoutes.gig) + '/:id'} component={LazyGig} />
-                    <Route
-                        path={t(appRoutes.bookDj) + '/:country/:city?'}
-                        component={LazyLocation}
-                    />
-                    <Route path={t(appRoutes.bookDj)} component={LazyLocationsOverview} />
+                    <Route path={t(appRoutes.bookDj)} component={LazyLocation} />
+                    <Route path={t(appRoutes.bookDjOverview)} component={LazyLocationsOverview} />
 
                     <Route path={t(appRoutes.resetPassword)} component={ResetPassword} />
 
