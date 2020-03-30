@@ -2,12 +2,15 @@ import React, { useState, createContext } from 'react';
 import ReactDOM from 'react-dom';
 
 import { Query } from 'react-apollo';
+import { appRoutes } from 'constants/locales/appRoutes';
+import { userRoutes } from 'routes/User/routes';
 import Navlink from './common/Navlink';
 import Popup from './common/Popup';
 import Login from './common/Login';
 import { ME } from './gql';
 import { TitleClean } from './Text';
 import { useLogout } from './hooks/useLogout';
+import useTranslate from './hooks/useTranslate';
 
 const initialContext = {
     registerRoutes: (routes) => {},
@@ -18,7 +21,8 @@ const initialContext = {
 
 export const MobileMenuContext = createContext(initialContext);
 
-const MobileMenu = ({ isHome, translate }) => {
+const MobileMenu = ({ isHome }) => {
+    const { translate } = useTranslate();
     const [show, setShow] = useState(false);
     const [loginExpanded, setLoginExpanded] = useState(false);
     const logout = useLogout();
@@ -99,7 +103,7 @@ const Content = ({
                             <Navlink
                                 onClick={() => setShow(false)}
                                 buttonLook={true}
-                                to={translate('routes./how-it-works')}
+                                to={translate(appRoutes.howItWorks)}
                                 label={translate('how-it-works')}
                             />
                         </li>
@@ -110,7 +114,9 @@ const Content = ({
                             <Navlink
                                 onClick={() => setShow(false)}
                                 userNavigation={true}
-                                to={`${translate('routes./user')}/${user.permalink}/profile`}
+                                to={`${translate(appRoutes.user)}/${user.permalink}${
+                                    userRoutes.overview
+                                }`}
                                 label={translate('profile')}
                             />
                         </li>
@@ -121,7 +127,9 @@ const Content = ({
                             <Navlink
                                 onClick={() => setShow(false)}
                                 userNavigation={true}
-                                to={`${translate('routes./user')}/${user.permalink}/gigs`}
+                                to={`${translate(appRoutes.user)}/${user.permalink}/${
+                                    userRoutes.gigs
+                                }`}
                                 label="Gigs"
                             />
                         </li>
@@ -132,7 +140,9 @@ const Content = ({
                             <Navlink
                                 onClick={() => setShow(false)}
                                 userNavigation={true}
-                                to={`${translate('routes./user')}/${user.permalink}/settings`}
+                                to={`${translate(appRoutes.user)}/${user.permalink}/${
+                                    userRoutes.settings
+                                }`}
                                 label={translate('preferences')}
                             />
                         </li>
@@ -142,7 +152,7 @@ const Content = ({
                         <li>
                             <Navlink
                                 buttonLook={true}
-                                to="/"
+                                to={appRoutes.home}
                                 onClick={logout}
                                 label={translate('log-out')}
                             />
@@ -153,7 +163,7 @@ const Content = ({
                             <Navlink
                                 onClick={() => setShow(false)}
                                 buttonLook={true}
-                                to={translate('routes./become-dj')}
+                                to={translate(appRoutes.becomeDj)}
                                 label={translate('become-dj')}
                                 important={true}
                             />
@@ -164,7 +174,7 @@ const Content = ({
                             <Navlink
                                 onClick={() => setShow(false)}
                                 buttonLook={true}
-                                to={translate('routes./signup')}
+                                to={translate(appRoutes.signUp)}
                                 label={translate('sign up')}
                                 important={true}
                             />

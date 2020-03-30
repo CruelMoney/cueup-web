@@ -45,8 +45,8 @@ class Faq extends Component {
                 </div>
                 <Footer
                     color={this.themeColor}
-                    firstTo={t('routes./')}
-                    secondTo={t('routes./signup')}
+                    firstTo={t(appRoutes.home)}
+                    secondTo={t(appRoutes.signUp)}
                     firstLabel={t('arrange-event')}
                     secondLabel={t('apply-to-become-dj')}
                     title={t('ready-to-get-started')}

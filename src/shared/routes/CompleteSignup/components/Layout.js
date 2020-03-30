@@ -4,6 +4,8 @@ import { NavLink } from 'react-router-dom';
 import { Row, Container, Col, ReadMore, LoadingIndicator } from 'components/Blocks';
 import { TextAccent } from 'routes/BecomeDj/components/blocks/TextAccent';
 import { Body } from 'components/Text';
+import useTranslate from 'components/hooks/useTranslate';
+import { appRoutes } from 'constants/locales/appRoutes';
 import Footer from '../../../components/common/Footer';
 import appStoreBadge from '../../../assets/app-store-badge.svg';
 import SignUpForm from '../../Signup/components/SignUpForm';
@@ -18,7 +20,8 @@ const Header = styled.header`
     }
 `;
 
-const Layout = ({ loading, user, translate }) => {
+const Layout = ({ loading, user }) => {
+    const { translate } = useTranslate();
     return (
         <>
             <Header>
@@ -86,8 +89,8 @@ const Layout = ({ loading, user, translate }) => {
             </div>
             <Footer
                 noSkew
-                firstTo={translate('routes./how-it-works')}
-                secondTo={translate('routes./')}
+                firstTo={translate(appRoutes.howItWorks)}
+                secondTo={translate(appRoutes.home)}
                 firstLabel={translate('how-it-works')}
                 secondLabel={translate('arrange-event')}
                 title={translate('Wonder how it works?')}

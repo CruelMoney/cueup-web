@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
-import { userRoutes } from 'routes/User/routes/index.ts';
+import { userRoutes } from 'routes/User/routes';
 import { Container, Row, ReadMore } from '../../../components/Blocks';
 
 const BackToProfile = ({ permalink }) => {

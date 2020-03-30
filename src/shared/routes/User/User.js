@@ -8,7 +8,8 @@ import Pin from 'react-ionicons/lib/MdPin';
 import moment from 'moment';
 import AddCircle from 'react-ionicons/lib/MdAddCircle';
 import { Helmet } from 'react-helmet-async';
-import requestformContent from '../../components/common/RequestForm/content.json';
+import { appRoutes } from 'constants/locales/appRoutes';
+import useTranslate from 'components/hooks/useTranslate';
 import Sidebar, { SidebarContent } from '../../components/Sidebar';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col, Divider } from '../../components/Blocks';
@@ -25,7 +26,18 @@ import SavingIndicator from '../../components/SavingIndicator';
 import useLogActivity, { ACTIVITY_TYPES } from '../../components/hooks/useLogActivity';
 import BookingButton from './components/BookingButton';
 import ProfileProgress from './components/ProfileProgress';
-import { Overview, Settings, Reviews, Gigs, Events, Booking, Photos, Sounds } from './routes';
+import {
+    Overview,
+    Settings,
+    Reviews,
+    Gigs,
+    Events,
+    Booking,
+    Photos,
+    Sounds,
+    userRoutes,
+} from './routes';
+
 import { USER, UPDATE_USER } from './gql';
 import BackToEvent from './components/BackToEvent';
 import Header from './components/Header';
@@ -338,8 +350,8 @@ const Index = ({ translate, match, location }) => {
 
                                     <Footer
                                         noSkew
-                                        firstTo={translate('routes./')}
-                                        secondTo={translate('routes./how-it-works')}
+                                        firstTo={translate(appRoutes.home)}
+                                        secondTo={translate(appRoutes.howItWorks)}
                                         firstLabel={translate('how-it-works')}
                                         secondLabel={translate('arrange-event')}
                                         title={translate('Wonder how it works?')}
@@ -357,7 +369,9 @@ const Index = ({ translate, match, location }) => {
     );
 };
 
-const UserRoutes = ({ match, user, loading, translate, updateUser, location }) => {
+const UserRoutes = ({ match, user, loading, updateUser, location }) => {
+    const { translate } = useTranslate();
+
     useLogActivity({
         type: ACTIVITY_TYPES.PROFILE_VIEW,
         subjectId: user && user.id,
@@ -367,7 +381,7 @@ const UserRoutes = ({ match, user, loading, translate, updateUser, location }) =
     return (
         <Switch>
             <Route
-                path={match.path + '/booking'}
+                path={match.path + userRoutes.booking}
                 render={(props) => (
                     <Booking {...props} user={user} loading={loading} translate={translate} />
                 )}
