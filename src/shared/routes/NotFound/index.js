@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { withTranslation } from 'react-i18next';
 import EmptyPage from '../../components/common/EmptyPage';
 import Footer from '../../components/common/Footer';
 
@@ -13,9 +14,9 @@ class NotFound extends Component {
     }
 
     render() {
-        const { translate } = this.props;
-        const siteTitle = translate('not-found-title');
-        const siteDescription = translate('not-found-description');
+        const { t } = this.props;
+        const siteTitle = t('not-found-title');
+        const siteDescription = t('not-found-description');
 
         return (
             <div className="not-found-screen">
@@ -34,16 +35,16 @@ class NotFound extends Component {
                 <Footer
                     color={'#31DAFF'}
                     noSkew={true}
-                    firstTo={translate('routes./')}
-                    secondTo={translate('routes./signup')}
-                    firstLabel={translate('arrange-event')}
-                    secondLabel={translate('apply-to-become-dj')}
-                    title={translate('ready-to-get-started')}
-                    subTitle={translate('arrange-event-or-become-dj')}
+                    firstTo={t('routes./')}
+                    secondTo={t('routes./signup')}
+                    firstLabel={t('arrange-event')}
+                    secondLabel={t('apply-to-become-dj')}
+                    title={t('ready-to-get-started')}
+                    subTitle={t('arrange-event-or-become-dj')}
                 />
             </div>
         );
     }
 }
 
-export default NotFound;
+export default withTranslation()(NotFound);

@@ -6,6 +6,7 @@ import { renderToStringWithData } from '@apollo/react-ssr';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 import { ChunkExtractorManager } from '@loadable/server';
 import { ApolloProvider } from 'react-apollo';
+import { I18nextProvider } from 'react-i18next';
 import App from '../../shared/App';
 import Html from '../components/HTML';
 
@@ -16,17 +17,19 @@ const serverRenderer = () => async (req, res) => {
     const helmetContext = {};
 
     const Content = (
-        <ApolloProvider client={res.locals.apolloClient}>
-            <ChunkExtractorManager extractor={res.locals.chunkExtractor}>
-                <StyleSheetManager sheet={sheet.instance}>
-                    <StaticRouter location={req.url} context={routerContext}>
-                        <HelmetProvider context={helmetContext}>
-                            <App />
-                        </HelmetProvider>
-                    </StaticRouter>
-                </StyleSheetManager>
-            </ChunkExtractorManager>
-        </ApolloProvider>
+        <I18nextProvider i18n={req.i18n}>
+            <ApolloProvider client={res.locals.apolloClient}>
+                <ChunkExtractorManager extractor={res.locals.chunkExtractor}>
+                    <StyleSheetManager sheet={sheet.instance}>
+                        <StaticRouter location={req.url} context={routerContext}>
+                            <HelmetProvider context={helmetContext}>
+                                <App />
+                            </HelmetProvider>
+                        </StaticRouter>
+                    </StyleSheetManager>
+                </ChunkExtractorManager>
+            </ApolloProvider>
+        </I18nextProvider>
     );
 
     let content = null;
@@ -43,8 +46,6 @@ const serverRenderer = () => async (req, res) => {
     const styleTags = sheet.getStyleElement();
     sheet.seal();
 
-    const state = res.locals.store.getState();
-
     const scriptTags = res.locals.chunkExtractor.getScriptElements();
     const linkTags = res.locals.chunkExtractor.getLinkElements();
     const cssTags = res.locals.chunkExtractor.getStyleElements();
@@ -52,7 +53,6 @@ const serverRenderer = () => async (req, res) => {
     const html = renderToString(
         <Html
             helmetContext={helmetContext}
-            state={JSON.stringify(state).replace(/</g, '\\u003c')}
             apolloState={JSON.stringify(apolloState).replace(/</g, '\\u003c')}
             styleTags={[...styleTags, ...cssTags]}
             scriptTags={[...scriptTags, ...linkTags]}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Query } from 'react-apollo';
+import { useTranslation } from 'react-i18next';
 import { notificationService } from '../utils/NotificationService';
 import Navlink from './common/Navlink';
 import UserMenuItem from './common/UserMenuItem';
@@ -15,12 +16,12 @@ import InstagramConnect from './InstagramConnect';
 import { useLogout } from './hooks/useLogout';
 import { LoadingIndicator } from './Blocks';
 
-const Menu = ({ translate, history }) => {
+const Menu = () => {
+    const { t } = useTranslation();
     const [loginExpanded, setLoginExpanded] = useState(false);
     const logout = useLogout();
 
     const doLogout = () => {
-        history.push(translate('routes./'));
         logout();
     };
 
@@ -55,7 +56,7 @@ const Menu = ({ translate, history }) => {
                             <div className={'nav-container location_'}>
                                 <nav className="navigation">
                                     <div className="logo-area">
-                                        <Navlink to={translate('routes./')}>
+                                        <Navlink to={t('routes./')}>
                                             <Logo />
                                         </Navlink>
                                         <BreadCrumbs />
@@ -66,8 +67,8 @@ const Menu = ({ translate, history }) => {
                                         <li>
                                             <Navlink
                                                 buttonLook={true}
-                                                to={translate('routes./how-it-works')}
-                                                label={translate('how-it-works')}
+                                                to={t('routes./how-it-works')}
+                                                label={t('how-it-works')}
                                                 important={true}
                                             />
                                         </li>
@@ -76,8 +77,8 @@ const Menu = ({ translate, history }) => {
                                             <li>
                                                 <Navlink
                                                     buttonLook={true}
-                                                    to={translate('routes./become-dj')}
-                                                    label={translate('become-a-dj')}
+                                                    to={t('routes./become-dj')}
+                                                    label={t('become-a-dj')}
                                                     important={true}
                                                 />
                                             </li>
@@ -86,8 +87,8 @@ const Menu = ({ translate, history }) => {
                                             <li>
                                                 <Navlink
                                                     buttonLook={true}
-                                                    to={translate('routes./signup')}
-                                                    label={translate('sign up')}
+                                                    to={t('routes./signup')}
+                                                    label={t('sign up')}
                                                     important={true}
                                                 />
                                             </li>
@@ -96,9 +97,9 @@ const Menu = ({ translate, history }) => {
                                             <li>
                                                 <Navlink
                                                     buttonLook={true}
-                                                    to={translate('routes./')}
+                                                    to={t('routes./')}
                                                     onClick={doLogout}
-                                                    label={translate('log-out')}
+                                                    label={t('log-out')}
                                                     activeClassName=""
                                                 />
                                             </li>
@@ -110,7 +111,7 @@ const Menu = ({ translate, history }) => {
                                                     className="link-look"
                                                     onClick={() => setLoginExpanded((s) => !s)}
                                                 >
-                                                    {translate('login')}
+                                                    {t('login')}
                                                 </button>
                                                 <Popup
                                                     width={'568px'}
@@ -129,12 +130,9 @@ const Menu = ({ translate, history }) => {
                                             <li>
                                                 <Navlink
                                                     buttonLook={true}
-                                                    to={translate(
-                                                        'routes./user/:username/profile',
-                                                        {
-                                                            username: user.permalink,
-                                                        }
-                                                    )}
+                                                    to={t('routes./user/:username/profile', {
+                                                        username: user.permalink,
+                                                    })}
                                                     important={true}
                                                 >
                                                     <UserMenuItem

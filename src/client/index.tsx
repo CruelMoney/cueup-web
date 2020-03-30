@@ -5,6 +5,7 @@ import { loadableReady } from '@loadable/component';
 // import * as serviceWorker from './serviceWorker';
 import Router from './BrowserRouter';
 import './polyfills';
+import './i18next';
 
 const production = process.env.NODE_ENV === 'production';
 

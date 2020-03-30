@@ -16,7 +16,6 @@ const HTML = ({
     styleTags = [],
     scriptTags = [],
     scripts = [],
-    state = '{}',
     apolloState,
     helmetContext: { helmet },
 }: Props) => (
@@ -66,7 +65,6 @@ const HTML = ({
                     // see: https://twitter.com/HenrikJoreteg/status/1143953338284703744
                     __html: `
                     window.__APOLLO_STATE__ = ${apolloState};
-                    window.__PRELOADED_STATE__ = ${state};
                     `,
                 }}
             />

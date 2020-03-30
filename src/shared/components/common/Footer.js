@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink as Link, withRouter } from 'react-router-dom';
+import { withTranslation } from 'react-i18next';
 import * as c from '../../constants/constants';
 import { getTranslatedURL } from '../../utils/HelperFunctions';
 import InstagramLogo from '../../assets/InstagramLogo';
@@ -7,18 +8,18 @@ import InstagramLogo from '../../assets/InstagramLogo';
 import languageIcon from '../../assets/icons/language.svg';
 import ButtonLink from './ButtonLink';
 
-class footer extends Component {
+class Footer extends Component {
     static defaultProps = {
         color: '#31DAFF',
         bgColor: '#F6F9FC',
     };
 
     setActiveLanguage = (code) => {
-        const { history, translate } = this.props;
+        const { history, t } = this.props;
         this.props.setActiveLanguage(code);
         let url = history.location.pathname;
 
-        url = getTranslatedURL(url, code, translate);
+        url = getTranslatedURL(url, code, t);
 
         localStorage.language = code;
 
@@ -26,7 +27,7 @@ class footer extends Component {
     };
 
     render() {
-        const { translate } = this.props;
+        const { t } = this.props;
 
         return (
             <div id="preFooter-wrapper" style={{ order: '10' }}>
@@ -224,16 +225,16 @@ class footer extends Component {
                         </div>
 
                         <div>
-                            <h4>{translate('top-locations')}</h4>
+                            <h4>{t('top-locations')}</h4>
                             <ul>
                                 <li>
                                     <Link to={'/book-dj/united-states/los-angeles'}>
-                                        {translate('Los Angeles')}
+                                        {t('Los Angeles')}
                                     </Link>
                                 </li>
                                 <li>
                                     <Link to={'/book-dj/denmark/copenhagen'}>
-                                        {translate('copenhagen')}
+                                        {t('copenhagen')}
                                     </Link>
                                 </li>
 
@@ -242,50 +243,46 @@ class footer extends Component {
                                 </li>
 
                                 <li>
-                                    <Link to={translate('routes./book-dj')}>More places</Link>
+                                    <Link to={t('routes./book-dj')}>More places</Link>
                                 </li>
                             </ul>
                         </div>
                         <div>
-                            <h4>{translate('company')}</h4>
+                            <h4>{t('company')}</h4>
                             <ul>
                                 <li>
-                                    <Link to={translate('routes./about')}>
-                                        {translate('about')}
-                                    </Link>
+                                    <Link to={t('routes./about')}>{t('about')}</Link>
                                 </li>
                                 <li>
                                     <a
                                         className="link-look"
                                         href={'mailto:chris@cueup.io?subject=Job inquiry'}
                                     >
-                                        {translate('Jobs')}
+                                        {t('Jobs')}
                                     </a>
                                 </li>
                                 <li>
-                                    <Link to={translate('routes./become-dj')}>
-                                        {translate('Become DJ')}
-                                    </Link>
+                                    <Link to={t('routes./become-dj')}>{t('Become DJ')}</Link>
                                 </li>
                                 <li>
-                                    <Link to={translate('routes./terms/agreements')}>
-                                        {translate('privacy-and-terms')}
+                                    <Link to={t('routes./terms/agreements')}>
+                                        {t('privacy-and-terms')}
                                     </Link>
                                 </li>
                             </ul>
                         </div>
                         <div>
-                            <h4>{translate('resources')}</h4>
+                            <h4>{t('resources')}</h4>
                             <ul>
                                 <li>
-                                    <Link to={translate('routes./faq/dj')}>Help center</Link>
+                                    <Link to={t('routes./faq/dj')}>Help center</Link>
                                 </li>
                                 <li>
                                     <a
                                         className="link-look"
                                         onClick={() => window.olark('api.box.expand')}
                                     >
-                                        {translate('contact')}
+                                        {t('contact')}
                                     </a>
                                 </li>
                                 <li>
@@ -293,18 +290,18 @@ class footer extends Component {
                                         className="link-look"
                                         onClick={() => window.olark('api.box.expand')}
                                     >
-                                        {translate('Feedback')}
+                                        {t('Feedback')}
                                     </a>
                                 </li>
                                 <li>
-                                    <Link to={translate('routes./blog')}>Blog</Link>
+                                    <Link to={t('routes./blog')}>Blog</Link>
                                 </li>
                                 <li>
                                     <a
                                         className="link-look"
                                         href={'mailto:chris@cueup.io?subject=Press inquiry'}
                                     >
-                                        {translate('Press')}
+                                        {t('Press')}
                                     </a>
                                 </li>
                             </ul>
@@ -317,4 +314,4 @@ class footer extends Component {
     }
 }
 
-export default footer;
+export default withTranslation()(Footer);
