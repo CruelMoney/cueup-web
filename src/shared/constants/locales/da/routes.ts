@@ -14,6 +14,10 @@ const routes: RouteKeys = {
     faqOrganizer: '/da/faq/arrangoer',
     notFound: '/da/ikke-fundet',
     event: '/da/event',
+    completeSignup: '/da/completeSignup',
+    terms: '/da/terms',
+    gig: '/da/gig',
+    resetPassword: '/da/resetPassword',
 };
 
 export default routes;

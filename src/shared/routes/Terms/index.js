@@ -8,8 +8,8 @@ const Loader = () => (
     </div>
 );
 
-const AsyncTerms = loadable(() => import('./Terms'), {
+const Lazyterms = loadable(() => import('./Terms'), {
     fallback: <Loader />,
 });
 
-export default AsyncTerms;
+export default Lazyterms;

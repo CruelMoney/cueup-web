@@ -14,6 +14,10 @@ export const routeKeys = Object.freeze({
     faqOrganizer: 'faqOrganizer',
     notFound: 'notFound',
     event: 'event',
+    completeSignup: 'completeSignup',
+    terms: 'terms',
+    gig: 'gig',
+    resetPassword: 'resetPassword',
 });
 
 export type RouteKeys = typeof routeKeys;

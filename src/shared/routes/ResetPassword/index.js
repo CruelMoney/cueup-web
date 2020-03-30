@@ -11,7 +11,7 @@ import ErrorMessageApollo from '../../components/common/ErrorMessageApollo';
 import { RESET_PASSWORD } from '../../components/gql';
 import { validators, useForm } from '../../components/hooks/useForm';
 
-const NotFound = ({ translate }) => {
+const ResetPassword = ({ translate }) => {
     useEffect(() => {
         document.body.classList.add('not-found');
 
@@ -149,4 +149,4 @@ const NotFound = ({ translate }) => {
     );
 };
 
-export default NotFound;
+export default ResetPassword;

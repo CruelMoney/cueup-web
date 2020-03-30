@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { Header } from 'routes/BecomeDj/components/blocks/Text';
 import { Body } from '../../../components/Text';
 
 const CardWrapper = styled.div`

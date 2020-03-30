@@ -5,10 +5,19 @@ import { Helmet } from 'react-helmet-async';
 import ReactPixel from 'react-facebook-pixel';
 import { useTranslation } from 'react-i18next';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
+import LazySignup from 'routes/Signup';
+import LazyUser from 'routes/User';
+import LazyCompleteSignup from 'routes/CompleteSignup';
+import LazyTerms from 'routes/Terms';
+import LazyEvent from 'routes/Event';
+import ResetPassword from 'routes/ResetPassword';
+import LazyLocation, { LazyLocationsOverview } from 'routes/Location';
+import LazyGig from 'routes/Gig';
 
 import LazyFaq from 'routes/Faq';
 import LazyBecomeDj from 'routes/BecomeDj';
 import LazyBlog from 'routes/Blog';
+import LazyHowItWorks from 'routes/HowItWorks';
 import * as gtag from './utils/analytics/autotrack';
 import { Environment } from './constants/constants';
 import Home from './routes/Home';
@@ -20,7 +29,6 @@ import Navigation from './components/Navigation';
 import { MobileMenuContext } from './components/MobileMenu';
 import './css/style.css';
 
-// check if route exists
 const compareRoutes = (r1 = [], r2 = [], key = 'route') => {
     // eslint-disable-next-line security/detect-object-injection
     return r1.every((v, idx) => r2[idx] && v[key] === r2[idx][key]);
@@ -154,25 +162,22 @@ const RouteWrapper = () => {
                     <Route path={t(appRoutes.faq)} component={LazyFaq} />
                     <Route path={t(appRoutes.becomeDj)} component={LazyBecomeDj} />
                     <Route path={t(appRoutes.blog)} component={LazyBlog} />
-                    {/* 
-                    <Route path={t('routes./how-it-works')} component={LazyHowItWorks} />
-                    <Route path={t('routes./signup')} component={Signup} /> */}
 
-                    {/* <Route path={[t('routes./user/:permalink')]} component={User} />
-                    <Route path={'/complete-signup'} component={CompleteSignup} />
-                    <Route path={t('routes./terms')} component={Terms} />
+                    <Route path={t(appRoutes.howItWorks)} component={LazyHowItWorks} />
+                    <Route path={t(appRoutes.signUp)} component={LazySignup} />
+
+                    <Route path={t(appRoutes.user) + '/:permalink'} component={LazyUser} />
+                    <Route path={t(appRoutes.completeSignup)} component={LazyCompleteSignup} />
+                    <Route path={t(appRoutes.terms)} component={LazyTerms} />
+                    <Route path={t(appRoutes.event) + '/:id/:hash'} component={LazyEvent} />
+                    <Route path={t(appRoutes.gig) + '/:id'} component={LazyGig} />
                     <Route
-                        path={t('routes./event') + '/:id/:hash'}
-                        component={CueupEvent}
+                        path={t(appRoutes.bookDj) + '/:country/:city?'}
+                        component={LazyLocation}
                     />
-                    <Route path={t('routes./gig') + '/:id'} component={Gig} />
-                    <Route
-                        path={t('routes./book-dj') + '/:country/:city?'}
-                        component={LocationLanding}
-                    />
-                    <Route path={t('routes./book-dj')} component={LazyLocationsOverview} />
-                
-                    <Route path={t('routes./reset-password')} component={ResetPassword} /> */}
+                    <Route path={t(appRoutes.bookDj)} component={LazyLocationsOverview} />
+
+                    <Route path={t(appRoutes.resetPassword)} component={ResetPassword} />
 
                     <Route component={NotFound} />
                 </Switch>
