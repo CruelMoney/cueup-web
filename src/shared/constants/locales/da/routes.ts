@@ -1,14 +1,14 @@
 import { RouteKeys } from '../appRoutes';
 
 const routes: RouteKeys = {
-    home: '/',
-    about: '/om',
-    howItWorks: '/hvordan-det-virker',
-    becomeDj: '/bliv-dj',
-    signUp: '/tilmeld',
-    user: '/user/:username',
-    bookDj: '/lej-dj',
-    blog: '/blog',
+    home: '/da',
+    about: '/da/om',
+    howItWorks: '/da/hvordan-det-virker',
+    becomeDj: '/da/bliv-dj',
+    signUp: '/da/tilmeld',
+    user: '/da/user/:username',
+    bookDj: '/da/lej-dj',
+    blog: '/da/blog',
 };
 
 export default routes;

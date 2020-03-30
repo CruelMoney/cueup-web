@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router';
 import { Helmet } from 'react-helmet-async';
+import i18next from 'i18next';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Terms from './components/Terms';
 import Agreements from './routes/Agreements';

@@ -6,6 +6,7 @@ import ReactPixel from 'react-facebook-pixel';
 import { useTranslation, useSSR } from 'react-i18next';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 
+import { languagesArray } from 'constants/locales/languages';
 import * as gtag from './utils/analytics/autotrack';
 import { Environment } from './constants/constants';
 import Home from './routes/Home';
@@ -144,7 +145,6 @@ const App = ({ location }) => {
 
 const RouteWrapper = () => {
     const { t } = useTranslation();
-
     return (
         <>
             <div id="content">
@@ -174,7 +174,6 @@ const RouteWrapper = () => {
 
                     <Route component={NotFound} />
                 </Switch>
-
                 {/* 
                 TODO add as portal
                 <BottomPlayer /> 
