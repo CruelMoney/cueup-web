@@ -3,6 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import ReactModal from 'react-modal';
+import { useSSR } from 'react-i18next';
 import useExternals from 'External';
 import App from '../shared/App';
 import ApolloProvider from '../shared/ApolloProvider';
@@ -11,6 +12,12 @@ ReactModal.setAppElement('#app');
 
 const BrowserRouter = () => {
     useExternals();
+
+    const { store, initialLanguage } = window.i18nState;
+
+    console.log(JSON.stringify({ store, initialLanguage }));
+
+    useSSR(store, initialLanguage);
 
     return (
         <ApolloProvider>

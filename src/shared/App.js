@@ -24,8 +24,7 @@ const compareRoutes = (r1 = [], r2 = [], key = 'route') => {
     return r1.every((v, idx) => r2[idx] && v[key] === r2[idx][key]);
 };
 
-const App = ({ location, initialI18nStore, initialLanguage }) => {
-    useSSR(initialI18nStore, initialLanguage);
+const App = ({ location }) => {
     const { t } = useTranslation();
 
     const [state, setState] = useState({
