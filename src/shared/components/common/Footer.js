@@ -229,18 +229,18 @@ class Footer extends Component {
                             <h4>{t('top-locations')}</h4>
                             <ul>
                                 <li>
-                                    <Link to={appRoutes.bookDj + '/united-states/los-angeles'}>
+                                    <Link to={t(appRoutes.bookDj) + '/united-states/los-angeles'}>
                                         {t('Los Angeles')}
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to={appRoutes.bookDj + '/denmark/copenhagen'}>
+                                    <Link to={t(appRoutes.bookDj) + '/denmark/copenhagen'}>
                                         {t('copenhagen')}
                                     </Link>
                                 </li>
 
                                 <li>
-                                    <Link to={appRoutes.bookDj + '/indonesia/bali'}>Bali</Link>
+                                    <Link to={t(appRoutes.bookDj) + '/indonesia/bali'}>Bali</Link>
                                 </li>
 
                                 <li>

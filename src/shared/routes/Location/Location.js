@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import useScript from '@charlietango/use-script';
 import GeoCoder from 'utils/GeoCoder';
 import { PrimaryButton, Row } from 'components/Blocks';
+import { appRoutes } from 'constants/locales/appRoutes';
+import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import Footer from '../../components/common/Footer';
 import MoneyIcon from '../../components/graphics/Money';
 import NoteIcon from '../../components/graphics/Note';
@@ -18,12 +20,15 @@ import FloatingDJs from './components/FloatingCards';
 import './index.css';
 import { countries } from './locations';
 import { CitiesList } from './components/CountriesList';
+import content from './content.json';
 
 const Location = (props) => {
     const secondColor = '#25F4D2';
     const themeColor = '#31DAFF';
     const requestForm = useRef();
     const [isMobile, setIsMobile] = useState(false);
+
+    const { translate } = useNamespaceContent(content, 'location');
 
     useEffect(() => {
         setIsMobile(window.innerWidth < 768);
@@ -37,7 +42,7 @@ const Location = (props) => {
         });
     };
 
-    const { match, translate } = props;
+    const { match } = props;
     const { city, country } = match.params;
     let location = null;
     let initialCoordinates = null;
@@ -73,22 +78,23 @@ const Location = (props) => {
 
     // Redirect
     if (!location) {
-        return <Redirect to={translate('routes./not-found')} />;
+        return <Redirect to={translate(appRoutes.notFound)} />;
     }
 
     const radius = city ? 25000 : isMobile ? 200000 : 100000;
 
-    const siteDescription = translate('location.description', {
+    const siteDescription = translate('location:description', {
         location: title,
     });
 
-    const siteTitle = translate('location.title', { location: title });
+    const siteTitle = translate('location:title', { location: title });
     const thumb = Environment.CALLBACK_DOMAIN + (location.image || defaultImage);
 
     return (
         <div className="locations-page">
             <Helmet>
                 <title>{siteTitle + ' | Cueup'}</title>
+                <body className="book-dj-location white-theme" />
                 <meta name="description" content={siteDescription} />
 
                 <meta property="og:title" content={siteTitle + ' | Cueup'} />
@@ -140,9 +146,14 @@ const Location = (props) => {
                             <div className="row">
                                 <div className="col-md-5 col-sm-6">
                                     <div className="card">
-                                        <h1 key="title">
-                                            {translate('location.title-2', { location: title })}
-                                        </h1>
+                                        <h1
+                                            key="title"
+                                            dangerouslySetInnerHTML={{
+                                                __html: translate('location:title-2', {
+                                                    location: title,
+                                                }),
+                                            }}
+                                        />
                                         <p key="paragraph">{siteDescription}</p>
 
                                         <div style={{ float: 'left', marginTop: '20px' }}>
@@ -194,10 +205,10 @@ const Location = (props) => {
                             <div className="card">
                                 <NoteIcon altGradient={false} />
                                 <h2 style={{ color: themeColor }}>
-                                    {translate('location.sections.left.header')}
+                                    {translate('location:sections.left.header')}
                                 </h2>
                                 <p>
-                                    {translate('location.sections.left.content', {
+                                    {translate('location:sections.left.content', {
                                         location: title,
                                     })}
                                 </p>
@@ -207,10 +218,10 @@ const Location = (props) => {
                             <div className="card">
                                 <MoneyIcon altGradient={false} />
                                 <h2 style={{ color: themeColor }}>
-                                    {translate('location.sections.right.header')}
+                                    {translate('location:sections.right.header')}
                                 </h2>
                                 <p>
-                                    {translate('location.sections.right.content', {
+                                    {translate('location:sections.right.content', {
                                         location: title,
                                     })}
                                 </p>
@@ -227,7 +238,7 @@ const Location = (props) => {
                 secondTo={translate('routes./how-it-works')}
                 firstLabel={translate('apply-to-become-dj')}
                 secondLabel={translate('how-it-works')}
-                title={translate('are-you-a-dj-in-:location', { location: title })}
+                title={translate('are-you-a-dj-in-location', { location: title })}
                 subTitle={translate('apply-to-become-dj-or-see-how-it-works')}
             />
         </div>

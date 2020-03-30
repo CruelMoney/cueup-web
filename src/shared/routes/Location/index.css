@@ -1,23 +1,22 @@
-.location_book-dj {
-    overflow: hidden;
+.book-dj-location {
     position: relative;
 }
-.location_book-dj #content {
+.book-dj-location #content {
     margin: 0;
     padding: 0;
 }
-.location_book-dj #content > div,
-.location_book-dj header {
+.book-dj-location #content > div,
+.book-dj-location header {
     color: #111111;
     padding: 0;
     position: relative;
 }
 
-.location_book-dj .breadcrumbs {
+.book-dj-location .breadcrumbs {
     display: block;
 }
 
-.location_book-dj .menu-wrapper > .container {
+.book-dj-location .menu-wrapper > .container {
     background: rgba(255, 255, 255, 0.96);
     height: 80px;
     left: 0;
@@ -27,18 +26,18 @@
     z-index: 4;
 }
 
-.location_book-dj .menu-wrapper > .container:after,
-.location_book-dj .menu-wrapper > .container:before {
+.book-dj-location .menu-wrapper > .container:after,
+.book-dj-location .menu-wrapper > .container:before {
     background: rgba(255, 255, 255, 0.96);
     height: 100%;
     position: absolute;
     width: 100%;
 }
 
-.location_book-dj .menu-wrapper > .container:after {
+.book-dj-location .menu-wrapper > .container:after {
     right: -90%;
 }
-.location_book-dj .menu-wrapper > .container:before {
+.book-dj-location .menu-wrapper > .container:before {
     left: -90%;
 }
 
@@ -158,23 +157,23 @@
     .gm-style a img {
         display: block;
     }
-    .location_book-dj header .container.fix-top-mobile {
+    .book-dj-location header .container.fix-top-mobile {
         display: block;
         margin: 0;
         padding: 0;
         width: 100vw;
     }
 
-    .location_book-dj header .container.fix-top-mobile > .row {
+    .book-dj-location header .container.fix-top-mobile > .row {
         margin: 0;
         width: 100vw;
     }
 
-    .location_book-dj header .container.fix-top-mobile > .row > div {
+    .book-dj-location header .container.fix-top-mobile > .row > div {
         width: 100vw;
     }
 
-    .location_book-dj header .card {
+    .book-dj-location header .card {
         align-items: flex-end;
         background: rgba(255, 255, 255, 0.96);
         display: flex;
@@ -187,16 +186,16 @@
         width: 100vw;
     }
 
-    .location_book-dj h1 {
+    .book-dj-location h1 {
         font-size: 24px;
         line-height: 1.2em;
     }
 
-    .location_book-dj header .card p {
+    .book-dj-location header .card p {
         display: none;
     }
 
-    .location_book-dj header .card * {
+    .book-dj-location header .card * {
         margin: 0 !important;
     }
 
@@ -228,7 +227,7 @@
 
 /* Mobile */
 @media only screen and (max-width: 420px) {
-    .location_book-dj header button > div {
+    .book-dj-location header button > div {
         width: 110px !important;
     }
 }

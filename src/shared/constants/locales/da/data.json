@@ -99,7 +99,7 @@
     "become-a-dj": "Bliv DJ",
     "get-offers": "Få tilbud",
     "are-you-a-dj": "Er du DJ?",
-    "are-you-a-dj-in-:location": "Er du DJ i ${ location }?",
+    "are-you-a-dj-in-location": "Er du DJ i {{location}}?",
     "apply-to-become-dj": "Ansøg om at blive DJ",
     "apply-to-become-dj-or-see-how-it-works": "Ansøg om at blive DJ eller se hvordan det virker.",
     "how-it-works": "Hvordan det virker",

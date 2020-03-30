@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import useTranslate from 'components/hooks/useTranslate';
 
 import Footer from '../../components/common/Footer';
 
@@ -10,12 +11,10 @@ import './index.css';
 import { countries } from './locations';
 import CountriesList from './components/CountriesList';
 
-const Location = (props) => {
+const Location = () => {
     const themeColor = '#31DAFF';
     const secondColor = '#25F4D2';
-
-    const { match, translate } = props;
-    const isMobile = false;
+    const { translate } = useTranslate();
     const title = translate('locationsOverview.title');
     const description = translate('locationsOverview.description');
 
@@ -26,6 +25,8 @@ const Location = (props) => {
     return (
         <div className="locations-page">
             <Helmet>
+                <body className="book-dj-location white-theme" />
+
                 <title>{title + ' | Cueup'}</title>
                 <meta name="description" content={description} />
 

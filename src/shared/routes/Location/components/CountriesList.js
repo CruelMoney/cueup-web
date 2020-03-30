@@ -3,17 +3,24 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { Title, Body, TitleClean } from 'components/Text';
 import { Col } from 'components/Blocks';
+import useTranslate from 'components/hooks/useTranslate';
+import { appRoutes } from 'constants/locales/appRoutes';
 
 const CountriesList = ({ countries }) => {
+    const { translate } = useTranslate();
     return (
         <FormRow middle center>
             <Overview>
-                {Object.entries(countries).map(([countrySlug, { cities, name }], idx) => (
+                {Object.entries(countries).map(([countrySlug, { cities, name }], _idx) => (
                     <ul key={countrySlug}>
                         <Title style={{ textTransform: 'capitalize' }}>{name}</Title>
                         {cities.map((city, idx) => (
                             <li key={idx}>
-                                <NavLink to={`/book-dj/${countrySlug}/${city.slug}`}>
+                                <NavLink
+                                    to={`${translate(appRoutes.bookDj)}/${countrySlug}/${
+                                        city.slug
+                                    }`}
+                                >
                                     <Body>DJs in {city.cityascii}</Body>
                                 </NavLink>
                             </li>

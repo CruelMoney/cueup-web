@@ -372,102 +372,33 @@ li .link-look {
 .logo {
     fill: #ffffff;
 }
-.location_terms,
-.location_betingelser,
-.location_book-dj,
-.location_locations,
-.location_faq,
-.white-theme,
-.location_om,
-.location_blog,
-.not-found {
+.white-theme {
     .main-menu a,
     .main-menu .link-look {
         color: #32325d;
     }
 }
-.location_terms .navigation .logo,
-.location_betingelser .navigation .logo,
-.location_book-dj .navigation .logo,
-.location_locations .navigation .logo,
-.location_faq .navigation .logo,
-.white-theme .navigation .logo,
-.location_om .navigation .logo,
-.location_blog .navigation .logo,
-.not-found .navigation .logo {
+.white-theme .navigation .logo {
     color: #32325d;
     fill: #32325d;
 }
-.location_terms .mobileMenuButton h2,
-.location_terms .mobileMenuButton h2:after,
-.location_terms .mobileMenuButton h2:before,
-.location_betingelser .mobileMenuButton h2,
-.location_betingelser .mobileMenuButton h2:after,
-.location_betingelser .mobileMenuButton h2:before,
-.location_book-dj .mobileMenuButton h2,
-.location_book-dj .mobileMenuButton h2:after,
-.location_book-dj .mobileMenuButton h2:before,
-.location_locations .mobileMenuButton h2,
-.location_locations .mobileMenuButton h2:after,
-.location_locations .mobileMenuButton h2:before,
-.location_faq .mobileMenuButton h2,
-.location_faq .mobileMenuButton h2:after,
-.location_faq .mobileMenuButton h2:before,
-.location_blog .mobileMenuButton h2,
-.location_blog .mobileMenuButton h2:after,
-.location_blog .mobileMenuButton h2:before,
 .white-theme .mobileMenuButton h2,
 .white-theme .mobileMenuButton h2:after,
-.white-theme .mobileMenuButton h2:before,
-.location_om .mobileMenuButton h2,
-.location_om .mobileMenuButton h2:after,
-.location_om .mobileMenuButton h2:before {
+.white-theme .mobileMenuButton h2:before {
     background: #32325d;
 }
 
-.location_terms .buttonFixed .mobileMenuButton h2,
-.location_terms .buttonFixed .mobileMenuButton h2:after,
-.location_terms .buttonFixed .mobileMenuButton h2:before,
-.location_betingelser .buttonFixed .mobileMenuButton h2,
-.location_betingelser .buttonFixed .mobileMenuButton h2:after,
-.location_betingelser .buttonFixed .mobileMenuButton h2:before,
-.location_book-dj .buttonFixed .mobileMenuButton h2,
-.location_book-dj .buttonFixed .mobileMenuButton h2:after,
-.location_book-dj .buttonFixed .mobileMenuButton h2:before,
-.location_locations .buttonFixed .mobileMenuButton h2,
-.location_locations .buttonFixed .mobileMenuButton h2:after,
-.location_locations .buttonFixed .mobileMenuButton h2:before,
-.location_faq .buttonFixed .mobileMenuButton h2,
-.location_faq .buttonFixed .mobileMenuButton h2:after,
-.location_faq .buttonFixed .mobileMenuButton h2:before,
-.location_blog .buttonFixed .mobileMenuButton h2,
-.location_blog .buttonFixed .mobileMenuButton h2:after,
-.location_blog .buttonFixed .mobileMenuButton h2:before,
 .white-theme .buttonFixed .mobileMenuButton h2,
 .white-theme .buttonFixed .mobileMenuButton h2:after,
-.white-theme .buttonFixed .mobileMenuButton h2:before,
-.location_om .buttonFixed .mobileMenuButton h2,
-.location_om .buttonFixed .mobileMenuButton h2:after,
-.location_om .buttonFixed .mobileMenuButton h2:before {
+.white-theme .buttonFixed .mobileMenuButton h2:before {
     background: white;
 }
 
-.location_terms nav,
-.location_betingelser nav,
-.location_faq nav,
-.location_blog nav,
-.white-theme nav,
-.location_om nav {
+.white-theme nav {
     border-bottom: 1px solid #f6f9fc;
 }
 
-.location_terms,
-.location_betingelser,
-.location_faq,
-.location_blog,
-.white-theme,
-.location_om,
-.not-found {
+.white-theme {
     #content {
         padding-top: 90px;
     }
