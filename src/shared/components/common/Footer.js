@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink as Link, withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
+import { appRoutes } from 'constants/locales/appRoutes.ts';
 import * as c from '../../constants/constants';
 import { getTranslatedURL } from '../../utils/HelperFunctions';
 import InstagramLogo from '../../assets/InstagramLogo';
@@ -228,22 +229,22 @@ class Footer extends Component {
                             <h4>{t('top-locations')}</h4>
                             <ul>
                                 <li>
-                                    <Link to={'/book-dj/united-states/los-angeles'}>
+                                    <Link to={appRoutes.bookDj + '/united-states/los-angeles'}>
                                         {t('Los Angeles')}
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to={'/book-dj/denmark/copenhagen'}>
+                                    <Link to={appRoutes.bookDj + '/denmark/copenhagen'}>
                                         {t('copenhagen')}
                                     </Link>
                                 </li>
 
                                 <li>
-                                    <Link to={'/book-dj/indonesia/bali'}>Bali</Link>
+                                    <Link to={appRoutes.bookDj + '/indonesia/bali'}>Bali</Link>
                                 </li>
 
                                 <li>
-                                    <Link to={t('routes./book-dj')}>More places</Link>
+                                    <Link to={t(appRoutes.bookDj)}>More places</Link>
                                 </li>
                             </ul>
                         </div>
@@ -251,7 +252,7 @@ class Footer extends Component {
                             <h4>{t('company')}</h4>
                             <ul>
                                 <li>
-                                    <Link to={t('routes./about')}>{t('about')}</Link>
+                                    <Link to={t(appRoutes.about)}>{t('about')}</Link>
                                 </li>
                                 <li>
                                     <a
@@ -262,7 +263,7 @@ class Footer extends Component {
                                     </a>
                                 </li>
                                 <li>
-                                    <Link to={t('routes./become-dj')}>{t('Become DJ')}</Link>
+                                    <Link to={t(appRoutes.becomeDj)}>{t('Become DJ')}</Link>
                                 </li>
                                 <li>
                                     <Link to={t('routes./terms/agreements')}>
@@ -294,7 +295,7 @@ class Footer extends Component {
                                     </a>
                                 </li>
                                 <li>
-                                    <Link to={t('routes./blog')}>Blog</Link>
+                                    <Link to={t(appRoutes.blog)}>Blog</Link>
                                 </li>
                                 <li>
                                     <a

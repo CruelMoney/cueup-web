@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Query } from 'react-apollo';
 import { useTranslation } from 'react-i18next';
+import { appRoutes } from 'constants/locales/appRoutes.ts';
 import { notificationService } from '../utils/NotificationService';
 import Navlink from './common/Navlink';
 import UserMenuItem from './common/UserMenuItem';
@@ -56,7 +57,7 @@ const Menu = () => {
                             <div className={'nav-container location_'}>
                                 <nav className="navigation">
                                     <div className="logo-area">
-                                        <Navlink to={t('routes./')}>
+                                        <Navlink to={t(appRoutes.home)}>
                                             <Logo />
                                         </Navlink>
                                         <BreadCrumbs />
@@ -67,7 +68,7 @@ const Menu = () => {
                                         <li>
                                             <Navlink
                                                 buttonLook={true}
-                                                to={t('routes./how-it-works')}
+                                                to={t(appRoutes.howItWorks)}
                                                 label={t('how-it-works')}
                                                 important={true}
                                             />
@@ -77,7 +78,7 @@ const Menu = () => {
                                             <li>
                                                 <Navlink
                                                     buttonLook={true}
-                                                    to={t('routes./become-dj')}
+                                                    to={t(appRoutes.becomeDj)}
                                                     label={t('become-a-dj')}
                                                     important={true}
                                                 />
@@ -87,7 +88,7 @@ const Menu = () => {
                                             <li>
                                                 <Navlink
                                                     buttonLook={true}
-                                                    to={t('routes./signup')}
+                                                    to={t(appRoutes.signUp)}
                                                     label={t('sign up')}
                                                     important={true}
                                                 />
@@ -97,7 +98,7 @@ const Menu = () => {
                                             <li>
                                                 <Navlink
                                                     buttonLook={true}
-                                                    to={t('routes./')}
+                                                    to={t(appRoutes.home)}
                                                     onClick={doLogout}
                                                     label={t('log-out')}
                                                     activeClassName=""
@@ -130,7 +131,7 @@ const Menu = () => {
                                             <li>
                                                 <Navlink
                                                     buttonLook={true}
-                                                    to={t('routes./user/:username/profile', {
+                                                    to={t(appRoutes.user, {
                                                         username: user.permalink,
                                                     })}
                                                     important={true}

@@ -35,7 +35,7 @@ class ErrorPage extends Component {
                                         window.location = document.referrer;
                                     }}
                                 >
-                                    Go back
+                                    Reload
                                 </SecondaryButton>
                             </span>
                         }

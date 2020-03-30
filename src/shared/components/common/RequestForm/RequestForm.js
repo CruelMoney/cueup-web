@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import moment from 'moment-timezone';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { Card, CardShadow, Col, Hr, LinkButton } from 'components/Blocks';
 import { LabelHalf, InputRow } from 'components/FormComponents';
 import { BodySmall, TitleClean } from 'components/Text';
@@ -16,7 +17,8 @@ import Step3 from './Step3';
 import Step4 from './Step4';
 import Step5 from './Step5';
 
-const MainForm = ({ translate, initialCity, countries }) => {
+const MainForm = ({ initialCity, countries }) => {
+    const { t } = useTranslation();
     const [activeStep, setActiveStep] = useState(1);
     const [showLogin, setShowLogin] = useState(false);
     const { pushShouldBeEnabled } = usePushNotifications();
@@ -80,9 +82,7 @@ const MainForm = ({ translate, initialCity, countries }) => {
                         {showLogin && (
                             <>
                                 <TitleClean center>Login</TitleClean>
-                                <BodySmall>
-                                    {translate('request-form.email-exists-message')}
-                                </BodySmall>
+                                <BodySmall>{t('request-form.email-exists-message')}</BodySmall>
                                 <Login
                                     redirect={false}
                                     onLogin={() => {
@@ -96,6 +96,7 @@ const MainForm = ({ translate, initialCity, countries }) => {
 
                         {!showLogin && activeStep === 1 && (
                             <Step1
+                                translate={t}
                                 form={form}
                                 handleChange={handleChange}
                                 runValidations={runValidations}
@@ -107,6 +108,7 @@ const MainForm = ({ translate, initialCity, countries }) => {
                         )}
                         {!showLogin && activeStep === 2 && (
                             <Step2
+                                translate={t}
                                 form={form}
                                 handleChange={handleChange}
                                 runValidations={runValidations}
@@ -119,6 +121,7 @@ const MainForm = ({ translate, initialCity, countries }) => {
 
                         {!showLogin && activeStep === 3 && (
                             <Step3
+                                translate={t}
                                 form={form}
                                 handleChange={handleChange}
                                 runValidations={runValidations}
@@ -131,6 +134,7 @@ const MainForm = ({ translate, initialCity, countries }) => {
 
                         {!showLogin && activeStep === 4 && (
                             <Step4
+                                translate={t}
                                 form={form}
                                 handleChange={handleChange}
                                 runValidations={runValidations}
@@ -144,6 +148,7 @@ const MainForm = ({ translate, initialCity, countries }) => {
 
                         {!showLogin && activeStep === 5 && (
                             <Step5
+                                translate={t}
                                 form={form}
                                 handleChange={handleChange}
                                 runValidations={runValidations}
@@ -175,7 +180,7 @@ const MainForm = ({ translate, initialCity, countries }) => {
                             style={{ textAlign: 'center', marginTop: '12px' }}
                             className="terms_link"
                         >
-                            {translate('terms-message-event')}
+                            {t('terms-message-event')}
                         </BodySmall>
                     </Wrapper>
                 )}

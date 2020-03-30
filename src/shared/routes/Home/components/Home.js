@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { withTranslation } from 'react-i18next';
 import { PrimaryButton } from 'components/Blocks';
 import Footer from '../../../components/common/Footer';
 import padlock from '../../../assets/padlock.svg';
@@ -32,7 +33,7 @@ class Home extends Component {
     };
 
     render() {
-        const { translate } = this.props;
+        const { t } = this.props;
 
         return (
             <div className="header-wrapper pull-up">
@@ -41,8 +42,8 @@ class Home extends Component {
                     <div className="container">
                         <div className="row">
                             <div className="col-md-5">
-                                <h1 key="title">{translate('home.title')}</h1>
-                                <p key="paragraph">{translate('home.introduction')}</p>
+                                <h1 key="title">{t('home.title')}</h1>
+                                <p key="paragraph">{t('home.introduction')}</p>
 
                                 <div style={{ float: 'left', marginTop: '42px' }}>
                                     <PrimaryButton
@@ -50,12 +51,12 @@ class Home extends Component {
                                         onClick={this.handleButtonClick}
                                         data-cy="cta"
                                     >
-                                        {translate('find-djs')}
+                                        {t('find-djs')}
                                     </PrimaryButton>
                                 </div>
                             </div>
                             <div className="col-md-8 dj-cards-wrapper">
-                                <DJCards {...translate(['copenhagen', 'denmark'])} />
+                                <DJCards {...t(['copenhagen', 'denmark'])} />
                             </div>
                         </div>
                     </div>
@@ -73,18 +74,18 @@ class Home extends Component {
                                 <div className="card">
                                     <img suppressHydrationWarning={true} src={padlock} alt="icon" />
                                     <h2 style={{ color: this.themeColor }}>
-                                        {translate('home.sections.left.title')}
+                                        {t('home.sections.left.title')}
                                     </h2>
-                                    <p>{translate('home.sections.left.content')}</p>
+                                    <p>{t('home.sections.left.content')}</p>
                                 </div>
                             </div>
                             <div className="col-sm-6 col-md-5 col-md-push-1">
                                 <div className="card">
                                     <img suppressHydrationWarning={true} src={note} alt="icon" />
                                     <h2 style={{ color: this.themeColor }}>
-                                        {translate('home.sections.right.title')}
+                                        {t('home.sections.right.title')}
                                     </h2>
-                                    <p>{translate('home.sections.right.content')}</p>
+                                    <p>{t('home.sections.right.content')}</p>
                                 </div>
                             </div>
                         </div>
@@ -94,12 +95,12 @@ class Home extends Component {
                 <Footer
                     bgColor="#FFFFFF"
                     color={this.secondColor}
-                    firstTo={translate('routes./signup')}
-                    secondTo={translate('routes./how-it-works')}
-                    firstLabel={translate('apply-to-become-dj')}
-                    secondLabel={translate('how-it-works')}
-                    title={translate('home.footer.first')}
-                    subTitle={translate('home.footer.second')}
+                    firstTo={t('routes./signup')}
+                    secondTo={t('routes./how-it-works')}
+                    firstLabel={t('apply-to-become-dj')}
+                    secondLabel={t('how-it-works')}
+                    title={t('home.footer.first')}
+                    subTitle={t('home.footer.second')}
                 />
             </div>
         );
@@ -110,4 +111,4 @@ Home.childContextTypes = {
     color: PropTypes.string,
 };
 
-export default Home;
+export default withTranslation()(Home);
