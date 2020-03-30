@@ -1,22 +1,20 @@
 /* eslint-disable import/first */
-import React, { memo, useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import ReactPixel from 'react-facebook-pixel';
-import { useTranslation, useSSR } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 
-import { languagesArray } from 'constants/locales/languages';
+import LazyFaq from 'routes/Faq';
 import * as gtag from './utils/analytics/autotrack';
 import { Environment } from './constants/constants';
 import Home from './routes/Home';
 import About from './routes/About';
 import NotFound from './routes/NotFound';
 import defaultImage from './assets/images/default.png';
-import defaultImageDa from './assets/images/default_da.png';
 import ErrorHandling from './components/common/ErrorPage';
 import Navigation from './components/Navigation';
-import { getTranslatedURL } from './utils/HelperFunctions';
 import { MobileMenuContext } from './components/MobileMenu';
 import './css/style.css';
 
@@ -151,13 +149,14 @@ const RouteWrapper = () => {
                 <Switch>
                     <Route exact path={[t(appRoutes.home), '/verifyEmail']} component={Home} />
                     <Route path={t(appRoutes.about)} component={About} />
+                    <Route path={t(appRoutes.faq)} component={LazyFaq} />
+
                     {/* <Route path={translate('routes./become-dj')} component={LazyBecomeDj} />
                     <Route path={translate('routes./how-it-works')} component={LazyHowItWorks} />
                     <Route path={translate('routes./signup')} component={Signup} /> */}
 
                     {/* <Route path={[translate('routes./user/:permalink')]} component={User} />
                     <Route path={'/complete-signup'} component={CompleteSignup} />
-                    <Route path={translate('routes./faq')} component={Faq} />
                     <Route path={translate('routes./terms')} component={Terms} />
                     <Route
                         path={translate('routes./event') + '/:id/:hash'}

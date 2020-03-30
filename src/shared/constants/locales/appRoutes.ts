@@ -9,17 +9,15 @@ export const routeKeys = Object.freeze({
     user: 'user',
     bookDj: 'bookDj',
     blog: 'blog',
+    faq: 'faq',
+    faqDj: 'faqDj',
+    faqOrganizer: 'faqOrganizer',
 });
 
 export type RouteKeys = typeof routeKeys;
 
-export const appRoutes: RouteKeys = Object.freeze({
-    home: 'routes:home',
-    about: 'routes:about',
-    howItWorks: 'routes:howItWorks',
-    becomeDj: 'routes:becomeDj',
-    signUp: 'routes:signup',
-    user: 'routes:user',
-    bookDj: 'routes:bookDj',
-    blog: 'routes:blog',
-});
+// routes with namespace appended
+export const appRoutes: RouteKeys = Object.keys(routeKeys).reduce(
+    (acc, k) => ({ ...acc, [k]: 'routes:' + k }),
+    { ...routeKeys }
+);

@@ -276,7 +276,7 @@ class Footer extends Component {
                             <h4>{t('resources')}</h4>
                             <ul>
                                 <li>
-                                    <Link to={t('routes./faq/dj')}>Help center</Link>
+                                    <Link to={t(appRoutes.faq)}>Help center</Link>
                                 </li>
                                 <li>
                                     <a

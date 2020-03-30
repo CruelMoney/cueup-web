@@ -9,6 +9,9 @@ const routes: RouteKeys = {
     user: '/da/user/:username',
     bookDj: '/da/lej-dj',
     blog: '/da/blog',
+    faq: '/faq',
+    faqDj: '/faq/dj',
+    faqOrganizer: '/faq/arrangoer',
 };
 
 export default routes;
