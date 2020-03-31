@@ -7,11 +7,9 @@ const Stripe = loadable(() => import('./stripe'));
 const useExternals = () => {
     useEffect(() => {
         Stripe.preload();
-        if (process.env.NODE_ENV === 'production') {
-            setTimeout(() => {
-                Olark.preload();
-            }, 4000);
-        }
+        setTimeout(() => {
+            Olark.preload();
+        }, 4000);
     }, []);
 };
 

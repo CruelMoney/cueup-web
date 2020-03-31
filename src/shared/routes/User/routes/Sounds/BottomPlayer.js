@@ -217,6 +217,7 @@ const AnimatingWrapper = animated(Wrapper);
 
 const AnimationWrapper = () => {
     const { track, next, previous } = useCurrentDeck();
+
     const transitions = useTransition(!!track, null, {
         from: {
             transform: 'translate3d(0, 100%,0)',
@@ -224,6 +225,17 @@ const AnimationWrapper = () => {
         enter: { transform: 'translate3d(0,0,0)' },
         leave: { transform: 'translate3d(0,100%,0)' },
     });
+
+    useEffect(() => {
+        if (!track && window.olark) {
+            window.olark('api.box.show');
+        } else {
+            window.olark('api.box.hide');
+            return () => {
+                window.olark('api.box.show');
+            };
+        }
+    }, [track]);
 
     return transitions.map(
         ({ item, key, props }) =>
