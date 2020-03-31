@@ -44,7 +44,7 @@ const ConnectSoundCloud = ({ soundCloudConnected, userId }) => {
 
 export default ConnectSoundCloud;
 
-export const useConnectSoundCloud = ({ soundCloudConnected, userId }) => {
+const useConnectSoundCloud = ({ soundCloudConnected, userId }) => {
     const [connected, setConencted] = useState(soundCloudConnected);
 
     const [connect, { loading, ...rest }] = useMutation(CONNECT_SOUNDCLOUD, {

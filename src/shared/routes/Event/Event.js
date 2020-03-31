@@ -242,5 +242,5 @@ const AnimationWrapper = styled.div`
         width: 100%;
     }
 `;
-
+// eslint-disable-next-line import/no-unused-modules
 export default Index;

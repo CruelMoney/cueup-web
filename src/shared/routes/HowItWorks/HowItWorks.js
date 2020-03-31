@@ -163,5 +163,5 @@ const Index = () => {
     );
 };
 
-// export default Index;
+// eslint-disable-next-line import/no-unused-modules
 export default Index;

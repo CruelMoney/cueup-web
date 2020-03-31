@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Switch, Route } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
@@ -43,4 +43,5 @@ const Index = () => {
     );
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export default Index;

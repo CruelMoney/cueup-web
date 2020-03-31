@@ -434,4 +434,5 @@ const mergeObjects = (o1, o2) => {
     return o2;
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export default Index;

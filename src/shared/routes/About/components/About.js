@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import Footer from '../../../components/common/Footer';

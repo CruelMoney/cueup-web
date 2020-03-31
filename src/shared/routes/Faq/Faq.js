@@ -39,5 +39,5 @@ const Index = (props) => {
         </Faq>
     );
 };
-
+// eslint-disable-next-line import/no-unused-modules
 export default withTranslation()(Index);

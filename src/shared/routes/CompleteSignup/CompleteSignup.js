@@ -44,5 +44,5 @@ const Index = () => {
         </div>
     );
 };
-
+// eslint-disable-next-line import/no-unused-modules
 export default Index;

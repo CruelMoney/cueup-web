@@ -34,7 +34,6 @@ module.exports = {
         'react/no-unused-prop-types': 1,
         'react/jsx-indent': 1,
         'import/namespace': 1,
-        'import/no-unused-modules': [0, { unusedExports: true }],
     },
     overrides: [
         {

@@ -26,7 +26,7 @@ import NotFound from './routes/NotFound';
 import defaultImage from './assets/images/default.png';
 import ErrorHandling from './components/common/ErrorPage';
 import Navigation from './components/Navigation';
-import { MobileMenuContext, ProvideMobileMenu } from './components/MobileMenu';
+import { ProvideMobileMenu } from './components/MobileMenu';
 import './css/style.css';
 
 const App = ({ location }) => {
@@ -93,7 +93,6 @@ const App = ({ location }) => {
 
 const RouteWrapper = () => {
     const { t } = useTranslation();
-    console.log('route');
     return (
         <div id="content">
             <Switch>

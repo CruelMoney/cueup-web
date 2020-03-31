@@ -427,5 +427,5 @@ const GigContainer = styled(Container)`
         padding: 0;
     }
 `;
-
+// eslint-disable-next-line import/no-unused-modules
 export default Index;

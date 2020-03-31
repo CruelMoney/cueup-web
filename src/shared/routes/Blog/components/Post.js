@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Disqus from 'disqus-react';
 import { useServerContext } from 'components/hooks/useServerContext';
@@ -6,7 +6,6 @@ import posts from '../posts.json';
 import Formatter from '../../../utils/Formatter';
 import Sharing from '../../../components/common/Sharing-v2';
 import ButtonLink from '../../../components/common/ButtonLink';
-import OnlyClientSide from '../../../components/higher-order/onlyClientSide';
 import NewsletterSignup from './NewsletterSignup';
 
 const Post = ({ match }) => {
@@ -80,9 +79,6 @@ const Post = ({ match }) => {
                     <Sharing shareUrl={url} title={post.title} />
                     <CallToBlock category={post.category} />
                     <hr />
-                    <OnlyClientSide>
-                        <Disqus.DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
-                    </OnlyClientSide>
                 </div>
             </main>
             <footer className="newsletter-signup">
