@@ -14,7 +14,6 @@ if (production) {
     Sentry.init({
         enabled: production,
         dsn: 'https://800ac4dbef6c44bcb65af9fddad9f964@sentry.io/1490082',
-        environment: process.env.REACT_APP_CUEUP_DEV_CALLBACK_DOMAIN,
     });
 }
 

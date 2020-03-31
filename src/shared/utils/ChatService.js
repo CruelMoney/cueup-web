@@ -1,12 +1,10 @@
-import { Environment } from '../constants/constants';
-
 export default class ChatService {
     constructor(chatId, token, senderId) {
-        console.log('connecting to: ', Environment.CHAT_DOMAIN + '?room=' + chatId);
-        this.domain = Environment.CHAT_DOMAIN;
-        this.chatId = chatId;
-        this.token = token;
-        this.senderId = senderId;
+        // console.log('connecting to: ', Environment.CHAT_DOMAIN + '?room=' + chatId);
+        // this.domain = Environment.CHAT_DOMAIN;
+        // this.chatId = chatId;
+        // this.token = token;
+        // this.senderId = senderId;
     }
 
     init({ showPersonalInformation }) {

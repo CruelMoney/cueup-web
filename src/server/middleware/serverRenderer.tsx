@@ -8,8 +8,25 @@ import { ChunkExtractorManager } from '@loadable/server';
 import { ApolloProvider } from 'react-apollo';
 import { I18nextProvider } from 'react-i18next';
 import { languagesArray } from 'constants/locales/languages';
+import { ServerContextProvider } from 'components/hooks/useServerContext';
+import { Environment } from 'global';
 import App from '../../shared/App';
 import Html from '../components/HTML';
+
+const production = process.env.NODE_ENV === 'production';
+
+const environment: Environment = {
+    STRIPE_PUBLIC_KEY: process.env.REACT_APP_STRIPE_PUB_KEY!,
+    CALLBACK_DOMAIN: process.env.REACT_APP_CUEUP_CALLBACK_DOMAIN!,
+    GQL_DOMAIN: process.env.REACT_APP_CUEUP_GQL_DOMAIN!,
+    CHAT_DOMAIN: process.env.REACT_APP_CUEUP_CHAT_DOMAIN!,
+    FACEBOOK_ID: process.env.REACT_APP_CUEUP_FB_ID!,
+    PIXEL_ID: '1461498583979582',
+    XENDIT_PUB_KEY: process.env.REACT_APP_XENDIT_PUB_KEY!,
+    GOOGLE_API_KEY: production
+        ? 'AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ'
+        : 'AIzaSyDYsMT5dhTnBLMcAetq4NGVWUyijkrVSHs',
+};
 
 const serverRenderer = () => async (req, res) => {
     const sheet = new ServerStyleSheet();
@@ -19,22 +36,24 @@ const serverRenderer = () => async (req, res) => {
     const helmetContext = {};
 
     const Content = (
-        <I18nextProvider i18n={req.i18n}>
-            <ApolloProvider client={res.locals.apolloClient}>
-                <ChunkExtractorManager extractor={res.locals.chunkExtractor}>
-                    <StyleSheetManager sheet={sheet.instance}>
-                        <StaticRouter location={req.url} context={routerContext}>
-                            <HelmetProvider context={helmetContext}>
-                                <App />
-                            </HelmetProvider>
-                        </StaticRouter>
-                    </StyleSheetManager>
-                </ChunkExtractorManager>
-            </ApolloProvider>
-        </I18nextProvider>
+        <StaticRouter location={req.url} context={routerContext}>
+            <ServerContextProvider environment={environment}>
+                <I18nextProvider i18n={req.i18n}>
+                    <ApolloProvider client={res.locals.apolloClient}>
+                        <ChunkExtractorManager extractor={res.locals.chunkExtractor}>
+                            <StyleSheetManager sheet={sheet.instance}>
+                                <HelmetProvider context={helmetContext}>
+                                    <App />
+                                </HelmetProvider>
+                            </StyleSheetManager>
+                        </ChunkExtractorManager>
+                    </ApolloProvider>
+                </I18nextProvider>
+            </ServerContextProvider>
+        </StaticRouter>
     );
 
-    let content = null;
+    let content = '';
 
     let apolloState = {};
     try {
@@ -81,11 +100,11 @@ const serverRenderer = () => async (req, res) => {
             styleTags={[...styleTags, ...cssTags]}
             scriptTags={[...scriptTags, ...linkTags]}
             i18nState={i18nState}
+            environment={environment}
         >
             {content}
         </Html>
     );
-    console.log('sending');
 
     return res.send('<!doctype html>' + html);
 };

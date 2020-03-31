@@ -7,12 +7,12 @@ import GeoCoder from 'utils/GeoCoder';
 import { PrimaryButton, Row } from 'components/Blocks';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
+import { useServerContext } from 'components/hooks/useServerContext';
 import Footer from '../../components/common/Footer';
 import MoneyIcon from '../../components/graphics/Money';
 import NoteIcon from '../../components/graphics/Note';
 import Map from '../../components/common/Map';
 import citySvg from '../../assets/City.svg';
-import { Environment } from '../../constants/constants';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import AsyncRequestForm from '../../components/common/RequestForm';
 import defaultImage from '../../assets/images/cities/default.png';
@@ -29,6 +29,7 @@ const Location = (props) => {
     const [isMobile, setIsMobile] = useState(false);
 
     const { translate } = useNamespaceContent(content, 'location');
+    const { environment } = useServerContext();
 
     useEffect(() => {
         setIsMobile(window.innerWidth < 768);
@@ -88,7 +89,7 @@ const Location = (props) => {
     });
 
     const siteTitle = translate('location:title', { location: title });
-    const thumb = Environment.CALLBACK_DOMAIN + (location.image || defaultImage);
+    const thumb = environment.CALLBACK_DOMAIN + (location.image || defaultImage);
 
     return (
         <div className="locations-page">

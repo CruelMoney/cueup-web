@@ -1,19 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import { useQuery } from 'react-apollo';
 import { Redirect } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { ME } from 'components/gql';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
+import { useServerContext } from 'components/hooks/useServerContext';
 import thumbEn from '../../assets/images/signup.png';
 import thumbDa from '../../assets/images/signup_da.png';
-import { Environment } from '../../constants/constants';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Layout from './components/Layout';
 
 const Index = () => {
+    const { environment } = useServerContext();
+
     const { data, loading } = useQuery(ME);
     const { t, currentLanguage } = useTranslate();
 
@@ -22,7 +23,7 @@ const Index = () => {
     }
 
     const title = t('apply-to-become-dj') + ' | Cueup';
-    const thumb = Environment.CALLBACK_DOMAIN + (currentLanguage === 'da' ? thumbDa : thumbEn);
+    const thumb = environment.CALLBACK_DOMAIN + (currentLanguage === 'da' ? thumbDa : thumbEn);
 
     return (
         <div>

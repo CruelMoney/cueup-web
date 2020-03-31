@@ -10,47 +10,47 @@ import {
     EmailIcon,
 } from 'react-share';
 import ShareIcon from 'react-ionicons/lib/MdShareAlt';
-import { Environment } from '../../constants/constants';
+import { useServerContext } from 'components/hooks/useServerContext';
 
-class Sharing extends Component {
-    render() {
-        const { shareUrl, title } = this.props;
-        let url = String(Environment.CALLBACK_DOMAIN);
-        url += String(shareUrl);
+const Sharing = (shareUrl, title) => {
+    const { environment } = useServerContext();
+    let url = String(environment.CALLBACK_DOMAIN);
+    url += String(shareUrl);
 
-        return (
-            <div className="share-buttons">
-                <FacebookShareButton url={url} className="share-button" quote={title}>
-                    <FacebookIcon size={32} round />
-                    <span>Share</span>
-                </FacebookShareButton>
-                <TwitterShareButton url={url} className="share-button" title={title}>
-                    <TwitterIcon size={32} round />
-                    <span>Tweet</span>
-                </TwitterShareButton>
-                <LinkedinShareButton
-                    url={url}
-                    className="share-button"
-                    title={title}
-                    windowWidth={750}
-                    windowHeight={600}
-                >
-                    <LinkedinIcon size={32} round />
-                    <span>Share</span>
-                </LinkedinShareButton>
-                <EmailShareButton url={url} className="share-button" subject={title} body={url}>
-                    <EmailIcon size={32} round />
-                    <span>Email</span>
-                </EmailShareButton>
-            </div>
-        );
-    }
-}
+    return (
+        <div className="share-buttons">
+            <FacebookShareButton url={url} className="share-button" quote={title}>
+                <FacebookIcon size={32} round />
+                <span>Share</span>
+            </FacebookShareButton>
+            <TwitterShareButton url={url} className="share-button" title={title}>
+                <TwitterIcon size={32} round />
+                <span>Tweet</span>
+            </TwitterShareButton>
+            <LinkedinShareButton
+                url={url}
+                className="share-button"
+                title={title}
+                windowWidth={750}
+                windowHeight={600}
+            >
+                <LinkedinIcon size={32} round />
+                <span>Share</span>
+            </LinkedinShareButton>
+            <EmailShareButton url={url} className="share-button" subject={title} body={url}>
+                <EmailIcon size={32} round />
+                <span>Email</span>
+            </EmailShareButton>
+        </div>
+    );
+};
 
 export default Sharing;
 
 const SimpleSharing = ({ shareUrl, title, style, label = 'Share profile' }) => {
-    let url = String(Environment.CALLBACK_DOMAIN);
+    const { environment } = useServerContext();
+
+    let url = String(environment.CALLBACK_DOMAIN);
     url += String(shareUrl);
 
     const share = () => {

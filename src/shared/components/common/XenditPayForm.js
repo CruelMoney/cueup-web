@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { Input, LabelHalf, InputRow } from 'components/FormComponents';
 import { SmartButton, inputStyle, RowMobileCol, TeritaryButton } from 'components/Blocks';
 import { useForm, validators } from 'components/hooks/useForm';
+import { useServerContext } from 'components/hooks/useServerContext';
 import { PAY_EVENT } from '../gql';
 import Popup from './Popup';
 import CountrySelector from './CountrySelector';
@@ -169,11 +170,12 @@ const PaymentRow = styled(InputRow)`
     }
 `;
 
-const ConnectedCard = ({ refForward, onSave }) => {
+const ConnectedCard = ({ onSave }) => {
     const [loaded] = useScript('https://js.xendit.co/v1/xendit.min.js');
+    const { environment } = useServerContext();
 
     if (loaded) {
-        window.Xendit.setPublishableKey(process.env.REACT_APP_XENDIT_PUB_KEY);
+        window.Xendit.setPublishableKey(environment.XENDIT_PUB_KEY);
     }
 
     const cardReducer = (state, action) => {

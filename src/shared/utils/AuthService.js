@@ -14,7 +14,7 @@ class AuthService extends EventEmitter {
         // Clear access token and ID token from local storage
         localStorage.removeItem('token');
         document.cookie = 'x-token=; path=/; expires = Thu, 01 Jan 1970 00:00:00 GMT';
-        window.location.href = process.env.REACT_APP_CUEUP_GQL_DOMAIN + '/logout';
+        window.location.href = window.__ENVIRONMENT__.REACT_APP_CUEUP_GQL_DOMAIN + '/logout';
     }
 
     loggedIn() {

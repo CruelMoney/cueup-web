@@ -6,88 +6,76 @@ import { onError } from 'apollo-link-error';
 import { ApolloLink } from 'apollo-link';
 import { setContext } from 'apollo-link-context';
 import { createUploadLink } from 'apollo-upload-client';
+import { useServerContext } from 'components/hooks/useServerContext';
 import introspectionQueryResultData from '../../fragmentTypes.json';
-import { Environment } from './constants/constants';
 import resolvers from './actions/resolvers';
 import { authService } from './utils/AuthService';
 import customFetch from './utils/uploadProgress';
 
-const fragmentMatcher = new IntrospectionFragmentMatcher({
-    introspectionQueryResultData,
-});
+const APIProvider = ({ children }) => {
+    const { environment } = useServerContext();
 
-// custome error handling, only logging errors atm
-const errorLink = onError(({ graphQLErrors, networkError, operation, forward, response }) => {
-    if (graphQLErrors) {
-        // do something with graphql error
-        graphQLErrors.map(({ message, path }) =>
-            console.log(`[GraphQL error]: Message: ${message}, Path: ${path}`)
-        );
+    const fragmentMatcher = new IntrospectionFragmentMatcher({
+        introspectionQueryResultData,
+    });
 
-        for (const err of graphQLErrors) {
-            // handle errors differently based on its error code
-            switch (err.extensions.code) {
-                case 'UNAUTHENTICATED':
-                    authService.logout();
-                    break;
+    // custome error handling, only logging errors atm
+    const errorLink = onError(({ graphQLErrors, networkError }) => {
+        if (graphQLErrors) {
+            // do something with graphql error
+            graphQLErrors.map(({ message, path }) =>
+                console.log(`[GraphQL error]: Message: ${message}, Path: ${path}`)
+            );
 
-                // handle other errors
-                default:
-                    break;
+            for (const err of graphQLErrors) {
+                // handle errors differently based on its error code
+                switch (err.extensions.code) {
+                    case 'UNAUTHENTICATED':
+                        authService.logout();
+                        break;
+
+                    // handle other errors
+                    default:
+                        break;
+                }
             }
         }
-    }
 
-    if (networkError) {
-        // do something with network error
-        console.warn({ networkError });
-    }
-});
+        if (networkError) {
+            // do something with network error
+            console.warn({ networkError });
+        }
+    });
 
-const withToken = setContext(async (_, { headers }) => {
-    const userToken = authService.getToken();
+    const withToken = setContext(async (_, { headers }) => {
+        const userToken = authService.getToken();
 
-    return {
-        headers: {
-            ...headers,
-            'x-token': userToken ? `${userToken}` : '',
-        },
-    };
-});
+        return {
+            headers: {
+                ...headers,
+                'x-token': userToken ? `${userToken}` : '',
+            },
+        };
+    });
 
-const cache = new InMemoryCache({ fragmentMatcher }).restore(window.__APOLLO_STATE__);
+    const cache = new InMemoryCache({ fragmentMatcher }).restore(window.__APOLLO_STATE__);
 
-const uploadLink = createUploadLink({
-    uri: Environment.GQL_DOMAIN,
-    credentials: 'include',
-    fetch: customFetch,
-});
+    const uploadLink = createUploadLink({
+        uri: environment.GQL_DOMAIN,
+        credentials: 'include',
+        fetch: customFetch,
+    });
 
-const link = ApolloLink.from([errorLink, withToken, uploadLink]);
+    const link = ApolloLink.from([errorLink, withToken, uploadLink]);
 
-const client = new ApolloClient({
-    cache,
-    link,
-    connectToDevTools: true,
-    resolvers,
-});
+    const client = new ApolloClient({
+        cache,
+        link,
+        connectToDevTools: true,
+        resolvers,
+    });
 
-const reset = async () => {
-    authService.logout();
-    await client.resetStore();
+    return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };
 
-class APIProvider extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { isHydratingStore: false };
-    }
-
-    render() {
-        return <ApolloProvider client={client}>{this.props.children}</ApolloProvider>;
-    }
-}
-
 export default APIProvider;
-
-export { reset };

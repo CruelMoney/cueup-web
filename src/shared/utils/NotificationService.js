@@ -1,10 +1,8 @@
-import { Environment } from '../constants/constants';
-
 export default class NotificationService {
     constructor() {
-        this.domain = Environment.CHAT_DOMAIN;
-        this.notificationHandlers = [];
-        this.onInitialized = [];
+        // this.domain = Environment.CHAT_DOMAIN;
+        // this.notificationHandlers = [];
+        // this.onInitialized = [];
     }
 
     init(userId) {

@@ -1,10 +1,11 @@
 import { useRouteMatch } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { languagesArray, languageObjects } from 'constants/locales/languages';
-import { Environment } from 'constants/constants';
+import { useServerContext } from './useServerContext';
 
 const useAlternativePages = () => {
     // get route key by reverse matching
+    const { environment } = useServerContext();
 
     const match = useRouteMatch();
     const { i18n, t } = useTranslation();
@@ -26,7 +27,7 @@ const useAlternativePages = () => {
             return {
                 ...languageObjects[lng],
                 route,
-                url: Environment.CALLBACK_DOMAIN + route,
+                url: environment.CALLBACK_DOMAIN + route,
                 active: lng === i18n.language,
             };
         })

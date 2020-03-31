@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet-async';
 import { NavLink } from 'react-router-dom';
@@ -9,9 +9,9 @@ import JoinThousands from 'components/common/JoinThousands';
 import { Header } from 'components/common/Text';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
+import { useServerContext } from 'components/hooks/useServerContext';
 import thumbEn from '../../assets/images/signup.png';
 import thumbDa from '../../assets/images/signup_da.png';
-import { Environment } from '../../constants/constants';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Hero from '../../components/common/Hero';
 import { SubTitle } from '../../components/common/SubTitle';
@@ -51,10 +51,12 @@ const CustomCol = styled(Col)`
     margin-bottom: -60px;
 `;
 const Index = () => {
+    const { environment } = useServerContext();
+
     const { currentLanguage, translate } = useTranslate();
 
     const title = 'How it works | Cueup';
-    const thumb = Environment.CALLBACK_DOMAIN + (currentLanguage === 'da' ? thumbDa : thumbEn);
+    const thumb = environment.CALLBACK_DOMAIN + (currentLanguage === 'da' ? thumbDa : thumbEn);
     const themeColor = '#00d1ff';
     return (
         <>

@@ -56,11 +56,23 @@ declare module '*.css' {
 declare const __BROWSER__: boolean;
 declare const __SERVER__: boolean;
 
-interface Window {
+export interface Environment {
+    STRIPE_PUBLIC_KEY: ?string;
+    CALLBACK_DOMAIN: ?string;
+    GQL_DOMAIN: ?string;
+    CHAT_DOMAIN: ?string;
+    FACEBOOK_ID: ?string;
+    PIXEL_ID: ?string;
+    GOOGLE_API_KEY: ?string;
+    XENDIT_PUB_KEY: ?string;
+}
+
+interface CustomWindow extends Window {
     browserHistory: any;
     store: any;
-    __PRELOADED_STATE__: any;
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+    __ENVIRONMENT__: Environment;
+    google: any;
 }
 
 declare module 'express-manifest-helpers';

@@ -3,23 +3,21 @@ import React from 'react';
 type Props = {
     children: any;
     helmetContext: any;
-    scripts: string[];
-    state: string;
     apolloState: string;
-    headerChildren: any;
     styleTags: any[];
     scriptTags: any[];
     i18nState: any;
+    environment: any;
 };
 
 const HTML = ({
     children,
     styleTags = [],
     scriptTags = [],
-    scripts = [],
     apolloState,
     helmetContext: { helmet },
     i18nState,
+    environment,
 }: Props) => {
     const htmlAttrs = helmet.htmlAttributes.toComponent();
     const bodyAttrs = helmet.bodyAttributes.toComponent();
@@ -72,6 +70,10 @@ const HTML = ({
                         __html: `
                     window.__APOLLO_STATE__ = ${apolloState};
                     window.i18nState = ${JSON.stringify(i18nState).replace(/</g, '\\u003c')};
+                    window.__ENVIRONMENT__ = ${JSON.stringify(environment).replace(
+                        /</g,
+                        '\\u003c'
+                    )};
                     `,
                     }}
                 />
@@ -79,9 +81,6 @@ const HTML = ({
             <body {...bodyAttrs}>
                 {/* eslint-disable-next-line react/no-danger */}
                 <div id="app" dangerouslySetInnerHTML={{ __html: children }} />
-                {scripts.filter(Boolean).map((src) => (
-                    <script key={src} src={src} />
-                ))}
                 {scriptTags.filter(Boolean).map((tag) => tag)}
 
                 <div id="tooltip-portal" />

@@ -5,9 +5,9 @@ import { Helmet } from 'react-helmet-async';
 import Footer from 'components/common/Footer';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { appRoutes } from 'constants/locales/appRoutes';
+import { useServerContext } from 'components/hooks/useServerContext';
 import thumbEn from '../../assets/images/signup.png';
 import thumbDa from '../../assets/images/signup_da.png';
-import { Environment } from '../../constants/constants';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Hero from '../../components/common/Hero';
 import JoinThousands from '../../components/common/JoinThousands';
@@ -25,10 +25,11 @@ const Bg = styled.div`
 `;
 
 const Index = () => {
+    const { environment } = useServerContext();
     const { translate, currentLanguage } = useNamespaceContent(content, 'become-dj');
 
     const title = translate('become-dj:title') + ' | Cueup';
-    const thumb = Environment.CALLBACK_DOMAIN + (currentLanguage === 'da' ? thumbDa : thumbEn);
+    const thumb = environment.CALLBACK_DOMAIN + (currentLanguage === 'da' ? thumbDa : thumbEn);
     const themeColor = '#00d1ff';
     return (
         <>

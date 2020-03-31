@@ -1,5 +1,3 @@
-const production = process.env.NODE_ENV === 'production';
-
 export const eventStates = {
     INITIAL: 'INITIAL',
     CANCELLED: 'CANCELLED',
@@ -20,19 +18,6 @@ export const gigStates = {
     DECLINED: 'DECLINED',
     LOST: 'LOST',
     ORGANIZER_DECLINED: 'ORGANIZER_DECLINED',
-};
-
-export const Environment = {
-    STRIPE_PUBLIC_KEY: process.env.REACT_APP_STRIPE_PUB_KEY,
-    CALLBACK_DOMAIN: process.env.REACT_APP_CUEUP_CALLBACK_DOMAIN,
-    GQL_DOMAIN: process.env.REACT_APP_CUEUP_GQL_DOMAIN,
-    CHAT_DOMAIN: process.env.REACT_APP_CUEUP_CHAT_DOMAIN,
-    FACEBOOK_ID: process.env.REACT_APP_CUEUP_FB_ID,
-    PIXEL_ID: '1461498583979582',
-    OPENEXCHANGERATE_APP_ID: 'e0937d01cc734837bba7f1bfb6887c2a',
-    GOOGLE_API_KEY: production
-        ? 'AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ'
-        : 'AIzaSyDYsMT5dhTnBLMcAetq4NGVWUyijkrVSHs',
 };
 
 export const Currencies = ['DKK', 'EUR', 'GBP', 'NOK', 'SEK', 'USD', 'IDR'];
@@ -104,7 +89,6 @@ export const EDIT_STATUS = {
 };
 
 const all = {
-    Environment,
     Currencies,
     CUSTOMER_NOTIFICATIONS,
     NOTIFICATIONS,

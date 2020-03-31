@@ -11,19 +11,12 @@ import styled from 'styled-components';
 import * as Sentry from '@sentry/browser';
 import { Input, InputRow, LabelHalf } from 'components/FormComponents';
 import { validators, useForm } from 'components/hooks/useForm';
-import {
-    inputStyle,
-    SmartButton,
-    Row,
-    SecondaryButton,
-    TeritaryButton,
-    RowMobileCol,
-} from 'components/Blocks';
-import { Environment } from '../../constants/constants';
+import { inputStyle, SmartButton, TeritaryButton, RowMobileCol } from 'components/Blocks';
+import { useServerContext } from 'components/hooks/useServerContext';
 import CountrySelector from './CountrySelector';
 import ErrorMessageApollo from './ErrorMessageApollo';
 
-const StripeForm = ({ translate, stripe, paymentIntent, onPaymentConfirmed, goBack }) => {
+const StripeForm = ({ translate, stripe, onPaymentConfirmed, goBack }) => {
     const cardElement = useRef();
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
@@ -227,22 +220,21 @@ const PaymentRequestBtn = injectStripe(PaymentRequestButtonWrapper);
 
 const SmartForm = injectStripe(StripeForm);
 
-class StripeFormWrapper extends PureComponent {
-    render() {
-        return (
-            <StripeProvider apiKey={Environment.STRIPE_PUBLIC_KEY}>
-                <>
-                    <Elements>
-                        <PaymentRequestBtn {...this.props} />
-                    </Elements>
-                    <Elements>
-                        <SmartForm {...this.props} />
-                    </Elements>
-                </>
-            </StripeProvider>
-        );
-    }
-}
+const StripeFormWrapper = (props) => {
+    const { environment } = useServerContext();
+    return (
+        <StripeProvider apiKey={environment.STRIPE_PUBLIC_KEY}>
+            <>
+                <Elements>
+                    <PaymentRequestBtn {...props} />
+                </Elements>
+                <Elements>
+                    <SmartForm {...props} />
+                </Elements>
+            </>
+        </StripeProvider>
+    );
+};
 
 const ConnectedCard = ({ refForward, onSave }) => {
     const [error, setError] = useState();

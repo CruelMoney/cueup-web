@@ -4,7 +4,6 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import ReactPixel from 'react-facebook-pixel';
 import { useTranslation } from 'react-i18next';
-import { useRouteMatch } from 'react-router';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 import LazySignup from 'routes/Signup';
 import LazyUser from 'routes/User';
@@ -14,13 +13,13 @@ import LazyEvent from 'routes/Event';
 import ResetPassword from 'routes/ResetPassword';
 import LazyLocation, { LazyLocationsOverview } from 'routes/Location';
 import LazyGig from 'routes/Gig';
+import { useServerContext } from 'components/hooks/useServerContext.tsx';
 
 import LazyFaq from 'routes/Faq';
 import LazyBecomeDj from 'routes/BecomeDj';
 import LazyBlog from 'routes/Blog';
 import LazyHowItWorks from 'routes/HowItWorks';
 import * as gtag from './utils/analytics/autotrack';
-import { Environment } from './constants/constants';
 import Home from './routes/Home';
 import About from './routes/About';
 import NotFound from './routes/NotFound';
@@ -36,6 +35,7 @@ const compareRoutes = (r1 = [], r2 = [], key = 'route') => {
 };
 
 const App = ({ location }) => {
+    const { environment } = useServerContext();
     const { t, i18n } = useTranslation();
 
     const [state, setState] = useState({
@@ -46,7 +46,7 @@ const App = ({ location }) => {
         // Setup custom analytics
         if (process.env.NODE_ENV !== 'development') {
             gtag.init();
-            ReactPixel.init(Environment.PIXEL_ID);
+            ReactPixel.init(environment.PIXEL_ID);
         }
     }, []);
 
@@ -100,7 +100,7 @@ const App = ({ location }) => {
     const title = t('Book DJs with ease') + ' | Cueup';
     const description = t('site-description');
 
-    const pageURL = Environment.CALLBACK_DOMAIN + location.pathname;
+    const pageURL = environment.CALLBACK_DOMAIN + location.pathname;
     return (
         <ErrorHandling>
             <Helmet>
@@ -115,7 +115,7 @@ const App = ({ location }) => {
                 />
 
                 <meta property="og:url" content={pageURL} />
-                <meta property="fb:app_id" content={Environment.FACEBOOK_ID} />
+                <meta property="fb:app_id" content={environment.FACEBOOK_ID} />
                 <meta property="og:title" content={title} />
                 <meta property="og:description" content={description} />
                 <meta property="og:image" content={thumb} />

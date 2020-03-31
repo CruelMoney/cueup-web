@@ -1,4 +1,6 @@
-import { Environment } from '../constants/constants';
+import { CustomWindow } from 'global';
+
+declare let window: CustomWindow;
 
 export default {
     codeAddress: function (address, callback) {
@@ -21,7 +23,7 @@ export default {
             fetch(
                 `https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lng}&timestamp=${
                     Date.now() / 1000
-                }&key=${Environment.GOOGLE_API_KEY}`
+                }&key=${window.__ENVIRONMENT__.GOOGLE_API_KEY}`
             )
                 .then((res) => {
                     if (res.ok) {
