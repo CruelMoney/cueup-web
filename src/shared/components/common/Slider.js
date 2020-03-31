@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import RCSlider, { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
@@ -8,15 +7,6 @@ import 'rc-slider/assets/index.css';
  * obtained through the value parameter fired on an onChange event.
  */
 class Slider extends Component {
-    static propTypes = {
-        name: PropTypes.string,
-        value: PropTypes.arrayOf(PropTypes.number),
-        range: PropTypes.object,
-        step: PropTypes.number,
-        handleChange: PropTypes.func,
-        format: PropTypes.object,
-    };
-
     constructor(props) {
         super(props);
         // Range should be an object consisting of at least min & max
@@ -141,9 +131,5 @@ class Slider extends Component {
         );
     }
 }
-
-Slider.contextTypes = {
-    color: PropTypes.string,
-};
 
 export default Slider;
