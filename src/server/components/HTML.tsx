@@ -58,9 +58,9 @@ const HTML = ({
                     }}
                 />
 
-                {helmet.base.toComponent()}
                 {helmet.title.toComponent()}
                 {helmet.meta.toComponent()}
+                {helmet.base.toComponent()}
                 {helmet.link.toComponent()}
                 {helmet.script.toComponent()}
                 {styleTags.filter(Boolean).map((tag) => tag)}
