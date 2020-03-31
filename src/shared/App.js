@@ -28,6 +28,7 @@ import defaultImage from './assets/images/default.png';
 import ErrorHandling from './components/common/ErrorPage';
 import Navigation from './components/Navigation';
 import { MobileMenuContext } from './components/MobileMenu';
+import './css/style.css';
 
 const compareRoutes = (r1 = [], r2 = [], key = 'route') => {
     // eslint-disable-next-line security/detect-object-injection
