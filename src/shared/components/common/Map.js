@@ -84,7 +84,6 @@ class SimpleMap extends Component {
                     if (r) {
                         const div = r.getDiv();
                         div.style.paddingLeft = '100px';
-                        console.log(div);
                     }
                 }}
                 key={this.props.key}

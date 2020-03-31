@@ -255,7 +255,7 @@ const LoginPopup = ({ translate }) => {
 
 const Index = ({ match, location }) => {
     const { translate } = useNamespaceContent(content, 'user');
-    const [updateUser, { loading: isSaving, error }] = useMutation(UPDATE_USER);
+    const [updateUser, { loading: isSaving }] = useMutation(UPDATE_USER);
     const [hasScrolled, setHasScrolled] = useState(false);
 
     useEffect(() => {

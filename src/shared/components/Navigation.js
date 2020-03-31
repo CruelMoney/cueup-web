@@ -131,9 +131,7 @@ const Menu = () => {
                                             <li>
                                                 <Navlink
                                                     buttonLook={true}
-                                                    to={t(appRoutes.user, {
-                                                        username: user.permalink,
-                                                    })}
+                                                    to={t(appRoutes.user) + '/' + user.permalink}
                                                     important={true}
                                                 >
                                                     <UserMenuItem

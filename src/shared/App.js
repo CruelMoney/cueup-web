@@ -26,21 +26,12 @@ import NotFound from './routes/NotFound';
 import defaultImage from './assets/images/default.png';
 import ErrorHandling from './components/common/ErrorPage';
 import Navigation from './components/Navigation';
-import { MobileMenuContext } from './components/MobileMenu';
+import { MobileMenuContext, ProvideMobileMenu } from './components/MobileMenu';
 import './css/style.css';
-
-const compareRoutes = (r1 = [], r2 = [], key = 'route') => {
-    // eslint-disable-next-line security/detect-object-injection
-    return r1.every((v, idx) => r2[idx] && v[key] === r2[idx][key]);
-};
 
 const App = ({ location }) => {
     const { environment } = useServerContext();
     const { t, i18n } = useTranslation();
-
-    const [state, setState] = useState({
-        mobileLinks: [],
-    });
 
     useEffect(() => {
         // Setup custom analytics
@@ -48,7 +39,7 @@ const App = ({ location }) => {
             gtag.init();
             ReactPixel.init(environment.PIXEL_ID);
         }
-    }, []);
+    }, [environment]);
 
     useEffect(() => {
         if (process.env.NODE_ENV !== 'development') {
@@ -58,43 +49,6 @@ const App = ({ location }) => {
             }, 100);
         }
     }, [location.pathname]);
-
-    const registerMobileLinks = useCallback(
-        (routes, mobileLabel) => {
-            setState((state) => {
-                const { mobileLinks } = state;
-                if (!compareRoutes(routes, mobileLinks)) {
-                    let newLinks = mobileLinks.filter(
-                        (l) => !routes.map((r) => r.route).includes(l.route)
-                    );
-                    newLinks = [...newLinks, ...routes];
-
-                    return { ...state, mobileLinks: newLinks, mobileLabel };
-                }
-                return state;
-            });
-        },
-        [setState]
-    );
-
-    const unregisterMobileLinks = useCallback(
-        (routes) => {
-            setState((state) => {
-                const { mobileLinks } = state;
-                const newLinks = mobileLinks.filter(
-                    (l) => !routes.map((r) => r.route).includes(l.route)
-                );
-                if (!compareRoutes(mobileLinks, newLinks)) {
-                    return {
-                        ...state,
-                        mobileLinks: newLinks,
-                    };
-                }
-                return state;
-            });
-        },
-        [setState]
-    );
 
     const thumb = defaultImage;
     const title = t('Book DJs with ease') + ' | Cueup';
@@ -128,17 +82,10 @@ const App = ({ location }) => {
                 <meta name="twitter:image" content={thumb} />
                 <meta name="twitter:url" content={pageURL} />
             </Helmet>
-            <MobileMenuContext.Provider
-                value={{
-                    routes: state.mobileLinks,
-                    unregisterRoutes: unregisterMobileLinks,
-                    registerRoutes: registerMobileLinks,
-                    label: state.mobileLabel,
-                }}
-            >
+            <ProvideMobileMenu>
                 <Navigation />
                 <RouteWrapper />
-            </MobileMenuContext.Provider>
+            </ProvideMobileMenu>
             <div id="popup-container" />
         </ErrorHandling>
     );
@@ -146,6 +93,7 @@ const App = ({ location }) => {
 
 const RouteWrapper = () => {
     const { t } = useTranslation();
+    console.log('route');
     return (
         <div id="content">
             <Switch>
