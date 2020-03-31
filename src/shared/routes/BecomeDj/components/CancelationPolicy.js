@@ -93,7 +93,7 @@ const TextWrapper = styled(Row)`
     transform: translateY(-50%);
 `;
 
-const CancelationPolicy = (props) => {
+const CancelationPolicy = () => {
     const { t } = useTranslation();
     return (
         <Bg>
