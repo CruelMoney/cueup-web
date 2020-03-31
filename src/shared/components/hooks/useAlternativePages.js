@@ -13,6 +13,8 @@ const useAlternativePages = () => {
     const routes = i18n.getResourceBundle(i18n.language, 'routes');
     const [routeKey] = Object.entries(routes).find(([_key, val]) => val === match.path) || [];
 
+    console.log({ routeKey, match: match.path, routes });
+
     if (!routeKey) {
         return [];
     }

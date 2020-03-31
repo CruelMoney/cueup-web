@@ -227,13 +227,15 @@ const AnimationWrapper = () => {
     });
 
     useEffect(() => {
-        if (!track && window.olark) {
-            window.olark('api.box.show');
-        } else {
-            window.olark('api.box.hide');
-            return () => {
+        if (window.olark) {
+            if (!track) {
                 window.olark('api.box.show');
-            };
+            } else {
+                window.olark('api.box.hide');
+                return () => {
+                    window.olark('api.box.show');
+                };
+            }
         }
     }, [track]);
 
