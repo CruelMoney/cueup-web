@@ -10,6 +10,7 @@ const initialEnvironment: Environment = {
     PIXEL_ID: null,
     GOOGLE_API_KEY: null,
     XENDIT_PUB_KEY: null,
+    WEBSITE_URL: null,
 };
 
 const ServerContext = createContext({ environment: initialEnvironment });
