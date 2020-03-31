@@ -8,7 +8,7 @@ import Pin from 'react-ionicons/lib/MdPin';
 import moment from 'moment';
 import AddCircle from 'react-ionicons/lib/MdAddCircle';
 import { Helmet } from 'react-helmet-async';
-import { appRoutes } from 'constants/locales/appRoutes';
+import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import Sidebar, { SidebarContent } from '../../components/Sidebar';
@@ -27,17 +27,7 @@ import SavingIndicator from '../../components/SavingIndicator';
 import useLogActivity, { ACTIVITY_TYPES } from '../../components/hooks/useLogActivity';
 import BookingButton from './components/BookingButton';
 import ProfileProgress from './components/ProfileProgress';
-import {
-    Overview,
-    Settings,
-    Reviews,
-    Gigs,
-    Events,
-    Booking,
-    Photos,
-    Sounds,
-    userRoutes,
-} from './routes';
+import { Overview, Settings, Reviews, Gigs, Events, Booking, Photos, Sounds } from './routes';
 
 import { USER, UPDATE_USER } from './gql';
 import BackToEvent from './components/BackToEvent';

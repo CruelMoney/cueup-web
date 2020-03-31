@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import AddCircle from 'react-ionicons/lib/MdAddCircle';
+import { userRoutes } from 'constants/locales/appRoutes';
 import { Title, Citation, Cite, Body } from '../../../components/Text';
 import ReadMoreExpander from '../../../components/ReadMoreExpander';
 import { Col, Row, ReadMore, Show, InfoBox } from '../../../components/Blocks';
@@ -12,7 +13,6 @@ import { LoadingPlaceholder2 } from '../../../components/common/LoadingPlacehold
 import GracefullImage from '../../../components/GracefullImage';
 import GracefullVideo from '../../../components/GracefullVideo';
 import Sound from './Sounds/Sound';
-import { userRoutes } from '.';
 
 const ColumnLayout = styled.section`
     width: 100%;

@@ -5,10 +5,8 @@ import MailIcon from 'react-ionicons/lib/MdMail';
 import { NavLink } from 'react-router-dom';
 import { useMutation } from 'react-apollo';
 import ReactPixel from 'react-facebook-pixel';
-import { userRoutes } from 'routes/User/routes';
 import useTranslate from 'components/hooks/useTranslate';
-import { appRoutes } from 'constants/locales/appRoutes';
-import { eventRoutes } from 'routes/Event/routes';
+import { appRoutes, userRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import {
     Col,
     keyframeFadeIn,

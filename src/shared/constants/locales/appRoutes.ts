@@ -23,6 +23,23 @@ export const routeKeys = Object.freeze({
     resetPassword: 'resetPassword',
 });
 
+export const userRoutes = {
+    gigs: 'gigs',
+    overview: 'overview',
+    reviews: 'reviews',
+    booking: 'booking',
+    sounds: 'sounds',
+    events: 'events',
+    settings: 'settings',
+    photos: 'photos',
+};
+
+export const eventRoutes = {
+    requirements: 'requirements',
+    overview: 'overview',
+    review: 'review',
+};
+
 export type RouteKeys = typeof routeKeys;
 
 // routes with namespace appended

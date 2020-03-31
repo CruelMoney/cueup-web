@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { useQuery } from 'react-apollo';
 import { NavLink } from 'react-router-dom';
 import queryString from 'query-string';
-import { appRoutes } from 'constants/locales/appRoutes';
-import { eventRoutes } from 'routes/Event/routes';
+import { appRoutes, userRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import { CTAButton } from '../../../components/Sidebar';
 import PayForm from '../../../components/common/PayForm.js';
@@ -12,7 +11,6 @@ import { GIG } from '../gql';
 import { LoadingIndicator } from '../../../components/Blocks';
 import Chat from '../../../components/common/Chat';
 import EmptyPage from '../../../components/common/EmptyPage';
-import { userRoutes } from '../routes';
 
 const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
     const { translate } = useTranslate();
