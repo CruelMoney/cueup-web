@@ -107,9 +107,7 @@ const Login = ({ redirect = true, error, onLogin }) => {
         e.preventDefault();
         setSocialLoading(social);
         const redirect = '?redirect=' + window.location.href;
-        window.location.replace(
-            process.env.REACT_APP_CUEUP_GQL_DOMAIN + '/auth/' + social + redirect
-        );
+        window.location.replace(environment.GQL_DOMAIN + '/auth/' + social + redirect);
     };
 
     const { loading } = state;
