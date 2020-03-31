@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { Row, Container, Col, ReadMore, LoadingIndicator } from 'components/Blocks';
@@ -36,7 +36,7 @@ const Layout = ({ loading, user }) => {
                         </Col>
                     </Row>
                     <Row center style={{ margin: '24px 0' }}>
-                        <NavLink to={appRoutes.becomeDj}>
+                        <NavLink to={translate(appRoutes.becomeDj)}>
                             <ReadMore size={'18px'} center white uppercase={false}>
                                 Read more
                             </ReadMore>

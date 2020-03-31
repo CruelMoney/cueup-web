@@ -213,7 +213,7 @@ const Content = ({
                         <li>
                             <Navlink
                                 buttonLook={true}
-                                to={appRoutes.home}
+                                to={translate(appRoutes.home)}
                                 onClick={logout}
                                 label={translate('log-out')}
                             />
