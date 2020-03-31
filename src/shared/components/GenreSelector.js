@@ -5,9 +5,14 @@ import { Row, TeritaryButton, PrimaryButton } from './Blocks';
 import Popup from './common/Popup';
 import { ToggleButtonHandler } from './common/ToggleButtonHandler';
 
-const GenreSelector = ({ initialGenres = [], save, half, isActive }) => {
+const GenreSelector = ({ initialGenres = [], save, half, isActive, onClose }) => {
     const [genres, setGenres] = useState(initialGenres);
     const [showing, setShowing] = useState(isActive);
+
+    const closeModal = () => {
+        setShowing(false);
+        onClose && onClose();
+    };
 
     return (
         <>
@@ -18,7 +23,7 @@ const GenreSelector = ({ initialGenres = [], save, half, isActive }) => {
                 label="Genres"
                 buttonText={<ButtonText>{initialGenres.join(', ')}</ButtonText>}
             />
-            <Popup showing={showing} onClickOutside={(_) => setShowing(false)} width={'520px'}>
+            <Popup showing={showing} onClickOutside={(_) => closeModal()} width={'520px'}>
                 <ToggleButtonHandler
                     enableAdditions
                     color={'#50E3C2'}
@@ -29,13 +34,13 @@ const GenreSelector = ({ initialGenres = [], save, half, isActive }) => {
                 />
 
                 <Row style={{ marginTop: '15px' }} right>
-                    <TeritaryButton type="button" onClick={(_) => setShowing(false)}>
+                    <TeritaryButton type="button" onClick={(_) => closeModal()}>
                         Cancel
                     </TeritaryButton>
                     <PrimaryButton
                         type="button"
                         onClick={() => {
-                            setShowing(false);
+                            closeModal();
                             save(genres);
                         }}
                     >

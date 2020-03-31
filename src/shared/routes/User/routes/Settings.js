@@ -109,7 +109,6 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
         userSettings,
         email,
         artistName,
-        picture,
         permalink,
         isDj,
         payoutMethods,
@@ -215,12 +214,14 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                         isActive={locationModal}
                         initialLocation={playingLocation}
                         save={(playingLocation) => saveData({ playingLocation })}
+                        onClose={onModalClose}
                     />
 
                     <GenreSelector
                         isActive={genresModal}
                         initialGenres={genres}
                         save={(genres) => saveData({ genres })}
+                        onClose={onModalClose}
                     />
                     <CancelationPolicyPopup
                         isActive={cancelationPolicyModal}
@@ -232,6 +233,7 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                             })
                         }
                         translate={translate}
+                        onClose={onModalClose}
                     />
                     <TextAreaPopup
                         isActive={bioModal}
@@ -243,6 +245,7 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                             })
                         }
                         error={editsMap.bio?.message}
+                        onClose={onModalClose}
                         displayError
                     />
 
@@ -372,6 +375,7 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                     user={user}
                     identityVerified={identityVerified}
                     initialShowing={verifyIdentity}
+                    onClose={onModalClose}
                 />
                 <LabelHalf />
             </SettingsSection>
@@ -410,8 +414,13 @@ const PayoutPopup = ({ user, hasPayout, isActive = false, onClose }) => {
     );
 };
 
-const VerifyIdentityPopup = ({ user, identityVerified, initialShowing = false }) => {
+const VerifyIdentityPopup = ({ user, onClose, identityVerified, initialShowing = false }) => {
     const [showing, setShowing] = useState(initialShowing);
+
+    const closeModal = () => {
+        setShowing(false);
+        onClose && onClose();
+    };
 
     return (
         <>
@@ -426,13 +435,13 @@ const VerifyIdentityPopup = ({ user, identityVerified, initialShowing = false })
             />
             <Popup
                 showing={showing}
-                onClickOutside={(_) => setShowing(false)}
+                onClickOutside={(_) => closeModal()}
                 style={{ maxWidth: '1000px' }}
             >
                 <VerifyIdentity
                     isUpdate={identityVerified}
                     user={user}
-                    onCancel={(_) => setShowing(false)}
+                    onCancel={(_) => closeModal()}
                 />
             </Popup>
         </>

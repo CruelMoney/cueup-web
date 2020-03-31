@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import ArrowIcon from 'react-ionicons/lib/MdArrowRoundForward';
 import SuggestionList from 'components/SuggestionList';
-import { Input, Label } from '../../../components/FormComponents';
+import { Input } from '../../../components/FormComponents';
 import { Row, TeritaryButton, PrimaryButton } from '../../../components/Blocks';
 import Popup from '../../../components/common/Popup';
 import Slider from '../../../components/common/Slider';
 import { Stat, StatUnit, BodySmall } from '../../../components/Text';
 
-const CancelationPolicyPopup = ({ initialValue, save, translate, isActive }) => {
+const CancelationPolicyPopup = ({ initialValue, onClose, save, translate, isActive }) => {
     const [cancelationPolicy, setCancelationPolicy] = useState(initialValue);
     const [showing, setShowing] = useState(isActive);
+
+    const closeModal = () => {
+        setShowing(false);
+        onClose && onClose();
+    };
 
     return (
         <>
@@ -22,7 +27,7 @@ const CancelationPolicyPopup = ({ initialValue, save, translate, isActive }) => 
                 onClick={(_) => setShowing(true)}
             />
 
-            <Popup showing={showing} onClickOutside={(_) => setShowing(false)} width={'520px'}>
+            <Popup showing={showing} onClickOutside={closeModal} width={'520px'}>
                 <div
                     style={{
                         marginBottom: '24px',
@@ -86,13 +91,13 @@ const CancelationPolicyPopup = ({ initialValue, save, translate, isActive }) => 
                 />
 
                 <Row style={{ marginTop: '15px' }} right>
-                    <TeritaryButton type="button" onClick={(_) => setShowing(false)}>
+                    <TeritaryButton type="button" onClick={closeModal}>
                         Cancel
                     </TeritaryButton>
                     <PrimaryButton
                         type="button"
                         onClick={() => {
-                            setShowing(false);
+                            closeModal();
                             save(cancelationPolicy);
                         }}
                     >

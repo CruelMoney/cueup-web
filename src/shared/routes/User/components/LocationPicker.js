@@ -7,7 +7,7 @@ import Popup from '../../../components/common/Popup';
 import Map from '../../../components/common/Map';
 import GeoCoder from '../../../utils/GeoCoder';
 
-const LocationPicker = ({ initialLocation, save, isActive }) => {
+const LocationPicker = ({ initialLocation, save, isActive, onClose }) => {
     const [location, setLocation] = useState(
         initialLocation
             ? {
@@ -20,6 +20,11 @@ const LocationPicker = ({ initialLocation, save, isActive }) => {
     );
     const [error, setError] = useState(null);
     const [showing, setShowing] = useState(isActive);
+
+    const closeModal = () => {
+        setShowing(false);
+        onClose && onClose();
+    };
 
     const updateMap = debounce((location) => {
         if (location) {
@@ -56,7 +61,7 @@ const LocationPicker = ({ initialLocation, save, isActive }) => {
             setError('No location selected');
             return;
         }
-        setShowing(false);
+        closeModal();
         save({
             name: location.name,
             radius: location.radius,
@@ -73,7 +78,7 @@ const LocationPicker = ({ initialLocation, save, isActive }) => {
                 label="Location"
                 buttonText={initialLocation ? initialLocation.name : 'Update location'}
             />
-            <Popup showing={showing} onClickOutside={(_) => setShowing(false)} width={'520px'}>
+            <Popup showing={showing} onClickOutside={(_) => closeModal()} width={'520px'}>
                 <LocationSelector
                     big
                     autocomplete="off"
@@ -99,7 +104,7 @@ const LocationPicker = ({ initialLocation, save, isActive }) => {
                 ) : null}
 
                 <Row style={{ marginTop: '15px' }} right>
-                    <TeritaryButton type="button" onClick={(_) => setShowing(false)}>
+                    <TeritaryButton type="button" onClick={(_) => closeModal()}>
                         Cancel
                     </TeritaryButton>
                     <PrimaryButton type="button" onClick={onSave}>
