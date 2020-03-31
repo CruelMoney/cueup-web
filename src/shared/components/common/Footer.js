@@ -1,18 +1,17 @@
 import React from 'react';
 import { NavLink as Link } from 'react-router-dom';
-import { useRouteMatch } from 'react-router';
+import { useRouteMatch, useHistory, useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 import useTranslate from 'components/hooks/useTranslate';
-import { authService } from 'utils/AuthService';
-import { languagesArray } from 'constants/locales/languages';
+import { languagesArray, languageObjects } from 'constants/locales/languages';
 import * as c from '../../constants/constants';
 import InstagramLogo from '../../assets/InstagramLogo';
 // eslint-disable-next-line no-unused-vars
 import languageIcon from '../../assets/icons/language.svg';
 import ButtonLink from './ButtonLink';
 
-const useCurrentPageAlt = () => {
+const useCurrentPageLanguages = () => {
     // get route key by reverse matching
     const match = useRouteMatch();
 
@@ -21,13 +20,24 @@ const useCurrentPageAlt = () => {
     const routes = i18n.getResourceBundle(i18n.language, 'routes');
     const [routeKey] = Object.entries(routes).find(([_key, val]) => val === match.path) || [];
 
-    console.log(routeKey);
+    if (!routeKey) {
+        return [];
+    }
 
-    languagesArray.forEach((lng) => {
-        const altRoute = t('routes:' + routeKey, { lng, defaultValue: null });
-        console.log({ altRoute });
-    });
-    //
+    return languagesArray
+        .map((lng) => {
+            const route = t('routes:' + routeKey, { lng, defaultValue: null });
+            if (!route) {
+                return null;
+            }
+
+            return {
+                ...languageObjects[lng],
+                route,
+                active: lng === i18n.language,
+            };
+        })
+        .filter(Boolean);
 };
 
 const Footer = ({
@@ -42,13 +52,14 @@ const Footer = ({
     secondTo,
 }) => {
     const { translate, currentLanguage } = useTranslate();
-    useCurrentPageAlt();
+    const langaugePages = useCurrentPageLanguages();
+
     const setActiveLanguage = (code) => {
-        // setActiveLanguage(code);
-        // let url = history.location.pathname;
-        // url = getTranslatedURL(url, code, t);
-        // localStorage.language = code;
-        // history.replace(url);
+        const newPage = langaugePages.find((p) => p.code === code);
+        if (newPage) {
+            window.history.pushState({}, '', newPage.route);
+            window.location.reload();
+        }
     };
 
     return (
@@ -105,8 +116,11 @@ const Footer = ({
                                         onChange={(e) => setActiveLanguage(e.target.value)}
                                         value={currentLanguage || undefined}
                                     >
-                                        <option value={'en'}>English</option>
-                                        <option value={'da'}>Dansk</option>
+                                        {langaugePages.map(({ code, label }) => (
+                                            <option key={code} value={code}>
+                                                {label}
+                                            </option>
+                                        ))}
                                     </select>
                                 </div>
                             </li>

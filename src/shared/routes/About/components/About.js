@@ -50,10 +50,10 @@ export default () => {
                 color={themeColor}
                 firstTo={translate(appRoutes.home)}
                 secondTo={translate(appRoutes.signUp)}
-                firstLabel="Arrange event"
-                secondLabel="Become DJ"
-                title="Ready to get started?"
-                subTitle="Arrange an event, or apply to become DJ."
+                firstLabel={translate('Arrange event')}
+                secondLabel={translate('Become DJ')}
+                title={translate('Ready to get started?')}
+                subTitle={translate('Arrange an event, or apply to become DJ.')}
             />
         </div>
     );
