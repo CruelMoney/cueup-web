@@ -1,30 +1,47 @@
-import { useRouteMatch } from 'react-router';
+import { useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
+import { match, compile } from 'path-to-regexp';
 import { languagesArray, languageObjects } from 'constants/locales/languages';
 import { useServerContext } from './useServerContext';
 
 const useAlternativePages = () => {
-    // get route key by reverse matching
     const { environment } = useServerContext();
-
-    const match = useRouteMatch();
+    const location = useLocation();
     const { i18n, t } = useTranslation();
-
     const routes = i18n.getResourceBundle(i18n.language, 'routes');
-    const [routeKey] = Object.entries(routes).find(([_key, val]) => val === match.path) || [];
 
-    console.log({ routeKey, match: match.path, routes });
+    // get route key by reverse matching
+    let routeMatch;
+    Object.entries(routes).find(([key, val]) => {
+        const m = match(val)(location.pathname);
+        if (!m) {
+            return false;
+        }
 
-    if (!routeKey) {
+        routeMatch = {
+            key,
+            params: m.params,
+        };
+        return true;
+    });
+
+    if (!routeMatch) {
         return [];
     }
 
+    // replace params in route
+    const { key, params } = routeMatch;
+
     const alternatePages = languagesArray
         .map((lng) => {
-            const route = t('routes:' + routeKey, { lng, defaultValue: null });
+            let route = t('routes:' + key, { lng, defaultValue: null });
             if (!route) {
                 return null;
             }
+
+            // make it back to real url with params
+            const toPath = compile(route);
+            route = toPath(params);
 
             return {
                 ...languageObjects[lng],

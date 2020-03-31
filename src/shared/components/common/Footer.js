@@ -99,7 +99,7 @@ const Footer = ({
                                         className="dropdown-selector"
                                         name="language-selector"
                                         onChange={(e) => setActiveLanguage(e.target.value)}
-                                        value={currentLanguage || undefined}
+                                        defaultValue={currentLanguage}
                                     >
                                         {langaugePages.map(({ code, label }) => (
                                             <option key={code} value={code}>
