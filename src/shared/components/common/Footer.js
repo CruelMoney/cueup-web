@@ -1,44 +1,13 @@
 import React from 'react';
 import { NavLink as Link } from 'react-router-dom';
-import { useRouteMatch, useHistory, useLocation } from 'react-router';
-import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 import useTranslate from 'components/hooks/useTranslate';
-import { languagesArray, languageObjects } from 'constants/locales/languages';
-import * as c from '../../constants/constants';
+import useAlternativePages from 'components/hooks/useAlternativePages';
 import InstagramLogo from '../../assets/InstagramLogo';
 // eslint-disable-next-line no-unused-vars
 import languageIcon from '../../assets/icons/language.svg';
 import ButtonLink from './ButtonLink';
-
-const useCurrentPageLanguages = () => {
-    // get route key by reverse matching
-    const match = useRouteMatch();
-
-    const { i18n, t } = useTranslation();
-
-    const routes = i18n.getResourceBundle(i18n.language, 'routes');
-    const [routeKey] = Object.entries(routes).find(([_key, val]) => val === match.path) || [];
-
-    if (!routeKey) {
-        return [];
-    }
-
-    return languagesArray
-        .map((lng) => {
-            const route = t('routes:' + routeKey, { lng, defaultValue: null });
-            if (!route) {
-                return null;
-            }
-
-            return {
-                ...languageObjects[lng],
-                route,
-                active: lng === i18n.language,
-            };
-        })
-        .filter(Boolean);
-};
 
 const Footer = ({
     color = '#31DAFF',
@@ -52,7 +21,8 @@ const Footer = ({
     secondTo,
 }) => {
     const { translate, currentLanguage } = useTranslate();
-    const langaugePages = useCurrentPageLanguages();
+
+    const langaugePages = useAlternativePages();
 
     const setActiveLanguage = (code) => {
         const newPage = langaugePages.find((p) => p.code === code);
@@ -64,6 +34,21 @@ const Footer = ({
 
     return (
         <div id="preFooter-wrapper" style={{ order: '10' }}>
+            <Helmet>
+                {/*  
+                    this is a bit out of place here,
+                    ideally would be higher in the app, 
+                    but the full route match is only available this deep
+                */}
+                {langaugePages.map(({ active, url, code }) => (
+                    <link
+                        key={code}
+                        href={url}
+                        hrefLang={code}
+                        rel={active ? 'canonical' : 'alternate'}
+                    />
+                ))}
+            </Helmet>
             <div
                 style={{ backgroundColor: bgColor }}
                 className={noSkew ? 'noSkew' : ''}

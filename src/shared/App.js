@@ -4,6 +4,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import ReactPixel from 'react-facebook-pixel';
 import { useTranslation } from 'react-i18next';
+import { useRouteMatch } from 'react-router';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 import LazySignup from 'routes/Signup';
 import LazyUser from 'routes/User';
@@ -100,7 +101,6 @@ const App = ({ location }) => {
     const description = t('site-description');
 
     const pageURL = Environment.CALLBACK_DOMAIN + location.pathname;
-
     return (
         <ErrorHandling>
             <Helmet>
