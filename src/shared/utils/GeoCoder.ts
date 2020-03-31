@@ -38,7 +38,7 @@ export default {
                         reject('Could not get timezone: ' + data.status);
                     }
                 })
-                .catch((err) => {
+                .catch(() => {
                     reject('Could not get timezone');
                 });
         });
