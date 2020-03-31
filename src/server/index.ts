@@ -10,6 +10,7 @@ import addLoadableExtractor from 'middleware/addLoadableExtractor';
 import addRedis, { cache } from 'middleware/addRedis';
 import addSitemap from 'middleware/addSitemap';
 import { addLanguage } from 'middleware/i18next';
+import addLogging from 'middleware/addLogging';
 import paths from '../../config/paths';
 import errorHandler from './middleware/errorHandler';
 import serverRenderer from './middleware/serverRenderer';
@@ -18,6 +19,8 @@ require('dotenv').config();
 
 const app: Application = express();
 const isDevelopment = process.env.NODE_ENV === 'development';
+
+app.use(addLogging);
 
 // Use Nginx or Apache to serve static assets in production or remove the if() around the following
 // lines to use the express.static middleware to serve assets for production (not recommended!)

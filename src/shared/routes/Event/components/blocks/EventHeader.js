@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { eventRoutes } from 'routes/Event/routes';
+import { eventRoutes } from 'constants/locales/appRoutes';
 import Navigation from '../../../../components/SubNavigation';
 import { Container, FullWidthCol, Row, Col, GradientBg } from '../../../../components/Blocks';
 import { HeaderTitle, BodyBold } from '../../../../components/Text';

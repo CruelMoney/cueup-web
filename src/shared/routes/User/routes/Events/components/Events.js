@@ -1,8 +1,7 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { Query } from 'react-apollo';
 import useTranslate from 'components/hooks/useTranslate';
-import { appRoutes } from 'constants/locales/appRoutes';
-import { eventRoutes } from 'routes/Event/routes';
+import { appRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import Formatter from '../../../../../utils/Formatter';
 import NavLink from '../../../../../components/common/Navlink';
 import LoadingPlaceholder from '../../../../../components/common/LoadingPlaceholder';

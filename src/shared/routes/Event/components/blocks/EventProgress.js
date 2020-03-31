@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 import { NavLink } from 'react-router-dom';
-import { eventRoutes } from 'routes/Event/routes';
+import { eventRoutes } from 'constants/locales/appRoutes';
 import checkmark from '../../../../assets/checkmark.svg';
 import { EVENT_GIGS } from '../../gql';
 import ConditionalWrap from '../../../../components/ConditionalWrap';

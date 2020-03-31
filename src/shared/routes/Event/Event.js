@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { useTransition, animated } from 'react-spring';
 import { useMeasure } from '@softbind/hook-use-measure';
 import { useRouteMatch } from 'react-router';
-import { appRoutes } from 'constants/locales/appRoutes';
+import { appRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
@@ -17,7 +17,6 @@ import EventHeader from './components/blocks/EventHeader.js';
 import Overview from './routes/Overview';
 import Requirements from './routes/Requirements';
 import Review from './routes/Review';
-import { eventRoutes } from './routes';
 import content from './content.json';
 
 const Index = () => {
