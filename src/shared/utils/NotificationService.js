@@ -6,22 +6,17 @@ export default class NotificationService {
     }
 
     init(userId) {
-        throw new Error('Missing implementation');
-
+        // throw new Error('Missing implementation');
         // if (!this.socket && userId) {
         //     store.dispatch(actions.fetchingNotifications());
-
         //     console.log('connecting to: ', Environment.CHAT_DOMAIN + '?userId=' + userId);
-
         //     this.socket = io(Environment.CHAT_DOMAIN + '?userId=' + userId);
-
         //     this.socket.on('initialize notifications', (notifications) => {
         //         store.dispatch(actions.fetchedNotifications(notifications));
         //         this.onInitialized.reduce((_, fn) => {
         //             return fn();
         //         }, 0);
         //     });
-
         //     this.socket.on('new notification', (notification) => {
         //         store.dispatch(actions.newNotification(notification));
         //         this.notificationHandlers.reduce((acc, fn) => {

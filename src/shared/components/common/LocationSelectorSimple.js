@@ -27,8 +27,6 @@ const LocationSelector = ({ placeholder, countries = [], ...props }) => {
         }
     }, [loaded]);
 
-    console.log({ loaded });
-
     const updateSuggestions = (predictions, _status) => {
         const li = [];
 
