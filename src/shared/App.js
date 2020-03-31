@@ -125,4 +125,5 @@ const RouteWrapper = () => {
     );
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export default withRouter(App);

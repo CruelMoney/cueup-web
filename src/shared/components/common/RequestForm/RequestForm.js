@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import moment from 'moment-timezone';
 import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
 import { Card, CardShadow, Col, Hr, LinkButton } from 'components/Blocks';
 import { LabelHalf, InputRow } from 'components/FormComponents';
 import { BodySmall, TitleClean } from 'components/Text';
@@ -228,4 +227,5 @@ export const RequestSection = styled.section`
     }
 `;
 
+// eslint-disable-next-line import/no-unused-modules
 export default MainForm;

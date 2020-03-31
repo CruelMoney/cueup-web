@@ -37,4 +37,3 @@ const GenreChooser = ({ letCueupDecide, setLetcueupDecide, chooseLabel, cueupDec
 };
 
 export default GenreChooser;
-export { GenreChooser as DisconnectedGenreChooser };
