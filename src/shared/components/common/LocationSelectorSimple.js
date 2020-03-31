@@ -27,11 +27,9 @@ const LocationSelector = ({ placeholder, countries = [], ...props }) => {
         }
     }, [loaded]);
 
-    if (!loaded) {
-        return <SuggestionList {...props} disabled placeholder="loading" />;
-    }
+    console.log({ loaded });
 
-    const updateSuggestions = (predictions, status) => {
+    const updateSuggestions = (predictions, _status) => {
         const li = [];
 
         if (predictions) {
@@ -64,10 +62,11 @@ const LocationSelector = ({ placeholder, countries = [], ...props }) => {
         <>
             <SuggestionList
                 onChange={onChangeHandler}
-                placeholder={placeholder || 'City'}
+                placeholder={!loaded ? 'loading' : placeholder || 'City'}
                 suggestions={dataSource}
                 onFocus={() => setFocus(true)}
                 onBlur={() => setFocus(false)}
+                disableInput={!loaded}
                 {...props}
             />
             {focus && (
