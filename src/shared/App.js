@@ -117,10 +117,6 @@ const RouteWrapper = () => {
 
                 <Route component={NotFound} />
             </Switch>
-            {/* 
-                TODO add as portal
-                <BottomPlayer /> 
-                */}
         </div>
     );
 };

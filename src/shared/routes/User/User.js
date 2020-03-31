@@ -34,6 +34,7 @@ import BackToEvent from './components/BackToEvent';
 import Header from './components/Header';
 import { Stats, MobileBookingButton, IconRow, CertifiedVerified } from './components/Common';
 import content from './content.json';
+import BottomPlayer from './routes/Sounds/BottomPlayer';
 
 const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
     const { userMetadata = {}, appMetadata = {}, playingLocation } = user || {};
@@ -230,6 +231,7 @@ const Content = React.memo(({ match, ...userProps }) => {
                     </Col>
                 </Row>
             </UserContainer>
+            <BottomPlayer />
         </div>
     );
 });

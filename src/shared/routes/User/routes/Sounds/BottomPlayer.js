@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useTransition, animated } from 'react-spring';
+import { createPortal } from 'react-dom';
 import { Container, Row, Col, ReadMoreText, HideBelow } from '../../../../components/Blocks';
 import PlayIcon from '../../../../assets/icons/PlayIcon';
 import PauseIcon from '../../../../assets/icons/PauseIcon';
@@ -9,7 +10,7 @@ import useSoundPlayer, { useCurrentDeck, playerStates } from './useSoundPlayer';
 import useScanning from './useScanning';
 import SoundBars from './SoundBars';
 
-const BottomPlayer = ({ track, next, previous }) => {
+const InnerBottomPlayer = ({ track, next, previous }) => {
     const { progress, state, jumpTo, pause, play } = useSoundPlayer({
         track: track,
         src: track ? (track.file ? track.file.path : '') : '',
@@ -229,11 +230,30 @@ const AnimationWrapper = () => {
             item && (
                 <AnimatingWrapper key={key} style={props}>
                     <Container style={{ height: '60px' }}>
-                        {track && <BottomPlayer track={track} next={next} previous={previous} />}
+                        {track && (
+                            <InnerBottomPlayer track={track} next={next} previous={previous} />
+                        )}
                     </Container>
                 </AnimatingWrapper>
             )
     );
 };
+
+const BottomPlayer = (props) => {
+    const [show, setShow] = useState(false);
+    const portal = useRef();
+
+    useEffect(() => {
+        portal.current = document.querySelector('#player-portal');
+        setShow(true);
+    }, []);
+
+    if (!show || !portal.current) {
+        return null;
+    }
+
+    return createPortal(<AnimationWrapper {...props} />, portal.current);
+};
+
 // eslint-disable-next-line import/no-unused-modules
-export default AnimationWrapper;
+export default BottomPlayer;
