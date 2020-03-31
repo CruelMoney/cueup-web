@@ -16,6 +16,7 @@ import Html from '../components/HTML';
 const production = process.env.NODE_ENV === 'production';
 
 const environment: Environment = {
+    WEBSITE_URL: process.env.WEBSITE_URL!,
     STRIPE_PUBLIC_KEY: process.env.REACT_APP_STRIPE_PUB_KEY!,
     CALLBACK_DOMAIN: process.env.REACT_APP_CUEUP_CALLBACK_DOMAIN!,
     GQL_DOMAIN: process.env.REACT_APP_CUEUP_GQL_DOMAIN!,

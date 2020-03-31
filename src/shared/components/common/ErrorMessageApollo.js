@@ -1,5 +1,6 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
+import { useServerContext } from 'components/hooks/useServerContext';
 import { REQUEST_EMAIL_VERIFICATION } from '../gql';
 import c from '../../constants/constants';
 
@@ -63,12 +64,14 @@ const ErrorMessageApollo = ({ style, error, center, email, onFoundCode }) => {
 };
 
 const ResendVerificationEmail = ({ email }) => {
+    const { environment } = useServerContext();
+
     return (
         <Mutation
             mutation={REQUEST_EMAIL_VERIFICATION}
             variables={{
                 email,
-                redirectLink: c.Environment.CALLBACK_DOMAIN,
+                redirectLink: environment.CALLBACK_DOMAIN,
             }}
         >
             {(mutate, { loading, data, error }) => {

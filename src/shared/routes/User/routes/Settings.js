@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import emailValidator from 'email-validator';
 import { Mutation, useQuery } from 'react-apollo';
 import { useConnectInstagram } from 'components/hooks/useConnectInstagram';
+import { useServerContext } from 'components/hooks/useServerContext';
 import {
     SettingsSection,
     Input,
     DeleteFileButton,
     LabelHalf,
 } from '../../../components/FormComponents';
-import constants, { PAYOUT_TYPES } from '../../../constants/constants';
 import ImageUploader from '../../../components/ImageInput';
 import PasswordChanger from '../components/PasswordChanger';
 import DatePickerPopup from '../../../components/DatePicker';
@@ -40,6 +40,8 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
     const locationModal = modal === 'location';
     const cancelationPolicyModal = modal === 'cancelationPolicy';
 
+    const { environment } = useServerContext();
+
     const { data } = useQuery(USER_EDITS);
     const editsMap = data?.me?.editsMap || {};
 
@@ -58,7 +60,7 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
             await updateUser({
                 variables: {
                     id: user.id,
-                    redirectLink: constants.Environment.CALLBACK_DOMAIN,
+                    redirectLink: environment.CALLBACK_DOMAIN,
                     ...data,
                 },
             });

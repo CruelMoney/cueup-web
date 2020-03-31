@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import emailValidator from 'email-validator';
 
-import { withRouter } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import styled from 'styled-components';
 import { SmartButton, RowWrap, Hr, Col } from 'components/Blocks';
@@ -9,6 +8,7 @@ import { BodySmall } from 'components/Text';
 import useOnLoggedIn from 'components/hooks/useOnLoggedIn';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
+import { useServerContext } from 'components/hooks/useServerContext';
 import { LOGIN, REQUEST_PASSWORD_RESET } from '../../gql';
 import * as c from '../../../constants/constants';
 import { Input } from '../../FormComponents';
@@ -39,6 +39,8 @@ const LoginStyle = styled.div`
 `;
 
 const Login = ({ redirect = true, error, onLogin }) => {
+    const { environment } = useServerContext();
+
     const { translate } = useTranslate();
     const [state, setState] = useState({
         email: '',
@@ -68,7 +70,7 @@ const Login = ({ redirect = true, error, onLogin }) => {
         }
     }, [setStateValue]);
 
-    const onRequestChangePassword = (mutate) => async (form, callback) => {
+    const onRequestChangePassword = (mutate) => async (_form, _callback) => {
         const { email } = state;
 
         if (!email) {
@@ -76,7 +78,7 @@ const Login = ({ redirect = true, error, onLogin }) => {
         }
 
         try {
-            const redirectLink = c.Environment.CALLBACK_DOMAIN + translate(appRoutes.resetPassword);
+            const redirectLink = environment.CALLBACK_DOMAIN + translate(appRoutes.resetPassword);
             await mutate({ variables: { email, redirectLink } });
             setStateValue({ message: translate('reset-password-msg') });
         } catch (error) {

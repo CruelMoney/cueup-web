@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Elements, StripeProvider, injectStripe } from 'react-stripe-elements';
-import { Query, Mutation, useMutation, useQuery } from 'react-apollo';
+import { useMutation, useQuery } from 'react-apollo';
 import { Title, BodySmall } from 'components/Text';
 import { Input, InputRow, Label } from 'components/FormComponents';
 import CurrencySelector from 'components/CurrencySelector';
 import { SmartButton, Row, TeritaryButton, LoadingIndicator } from 'components/Blocks';
 import { useForm } from 'components/hooks/useForm';
 import { ME } from 'components/gql';
-import {
-    Environment,
-    AllCurrencies,
-    PAYMENT_PROVIDERS,
-    PAYOUT_TYPES,
-} from '../../../constants/constants';
+import { useServerContext } from 'components/hooks/useServerContext';
+import { AllCurrencies, PAYMENT_PROVIDERS, PAYOUT_TYPES } from '../../../constants/constants';
 import CountrySelector, { BankSelector } from '../CountrySelector';
 import ErrorMessageApollo, { getErrorMessage } from '../ErrorMessageApollo';
 import PhoneInput from '../PhoneInput';
@@ -344,10 +340,11 @@ const Injected = injectStripe(PayoutForm);
 
 const StripeWrapper = (props) => {
     const [stripe, setStripe] = useState(null);
+    const { environment } = useServerContext();
 
     useEffect(() => {
         if (window.Stripe) {
-            setStripe(window.Stripe(Environment.STRIPE_PUBLIC_KEY));
+            setStripe(window.Stripe(environment.STRIPE_PUBLIC_KEY));
         }
     }, []);
 

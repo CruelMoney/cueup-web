@@ -69,7 +69,7 @@ const HTML = ({
                         // see: https://twitter.com/HenrikJoreteg/status/1143953338284703744
                         __html: `
                     window.__APOLLO_STATE__ = ${apolloState};
-                    window.i18nState = ${JSON.stringify(i18nState).replace(/</g, '\\u003c')};
+                    window.__I18N_STATE__ = ${JSON.stringify(i18nState).replace(/</g, '\\u003c')};
                     window.__ENVIRONMENT__ = ${JSON.stringify(environment).replace(
                         /</g,
                         '\\u003c'

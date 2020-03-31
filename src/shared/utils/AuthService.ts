@@ -1,5 +1,8 @@
 import { EventEmitter } from 'events';
 import moment from 'moment';
+import { CustomWindow } from 'global';
+
+declare let window: CustomWindow;
 
 class AuthService extends EventEmitter {
     setSession(token) {
@@ -14,7 +17,7 @@ class AuthService extends EventEmitter {
         // Clear access token and ID token from local storage
         localStorage.removeItem('token');
         document.cookie = 'x-token=; path=/; expires = Thu, 01 Jan 1970 00:00:00 GMT';
-        window.location.href = window.__ENVIRONMENT__.REACT_APP_CUEUP_GQL_DOMAIN + '/logout';
+        window.location.href = window.__ENVIRONMENT__.GQL_DOMAIN + '/logout';
     }
 
     loggedIn() {

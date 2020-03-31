@@ -65,13 +65,14 @@ export interface Environment {
     PIXEL_ID: ?string;
     GOOGLE_API_KEY: ?string;
     XENDIT_PUB_KEY: ?string;
+    WEBSITE_URL: ?string;
 }
 
 interface CustomWindow extends Window {
     browserHistory: any;
-    store: any;
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
     __ENVIRONMENT__: Environment;
+    __I18N_STATE__: any;
     google: any;
 }
 

@@ -6,15 +6,18 @@ import ReactModal from 'react-modal';
 import { useSSR } from 'react-i18next';
 import useExternals from 'External';
 import { ServerContextProvider } from 'components/hooks/useServerContext';
+import { CustomWindow } from 'global';
 import App from '../shared/App';
 import ApolloProvider from '../shared/ApolloProvider';
 
 ReactModal.setAppElement('#app');
 
+declare let window: CustomWindow;
+
 const BrowserRouter = () => {
     useExternals();
 
-    const { store, initialLanguage } = window.i18nState;
+    const { store, initialLanguage } = window.__I18N_STATE__;
     useSSR(store, initialLanguage);
 
     return (

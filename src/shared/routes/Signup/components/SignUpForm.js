@@ -14,6 +14,7 @@ import { trackSignup } from 'utils/analytics/autotrack';
 import { authService } from 'utils/AuthService';
 import useOnLoggedIn from 'components/hooks/useOnLoggedIn';
 import { UPDATE_USER } from 'routes/User/gql';
+import { useServerContext } from 'components/hooks/useServerContext';
 import NumberedList from '../../../components/common/NumberedList';
 import c from '../../../constants/constants';
 import GeoCoder from '../../../utils/GeoCoder';
@@ -25,6 +26,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 
 const SignupForm = ({ translate, user }) => {
     const onLoggedIn = useOnLoggedIn();
+    const { environment } = useServerContext();
 
     const [loading, setLoading] = useState(false);
     const [mutate, { error }] = useMutation(user ? UPDATE_USER : CREATE_USER);
@@ -75,7 +77,7 @@ const SignupForm = ({ translate, user }) => {
 
             const variables = {
                 ...state,
-                redirectLink: c.Environment.CALLBACK_DOMAIN,
+                redirectLink: environment.CALLBACK_DOMAIN,
             };
 
             if (playingLocation) {
