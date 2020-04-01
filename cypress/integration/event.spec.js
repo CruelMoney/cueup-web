@@ -33,7 +33,7 @@ describe('Event', () => {
             fillOuteventForm();
         });
 
-        it.only('Post from direct booking page', () => {
+        it('Post from direct booking page', () => {
             cy.request('POST', '/test/clearDB');
             cy.request('POST', '/test/seed/djs');
             cy.visit('/user/dj-lolbox-1/overview');
@@ -49,6 +49,28 @@ describe('Event', () => {
             cy.get('input[name=contactEmail]').type('organizer@email.com');
             cy.get('.sidebar button').contains('BOOK NOW').click();
             cy.get('h3').should('contain', 'Thanks');
+        });
+    });
+
+    describe('Managing', () => {
+        it.only('Shows DJs', () => {
+            cy.request('POST', '/test/clearDB');
+            cy.request('POST', '/test/seed/djs');
+
+            const eventData = {
+                customerUserId: 1,
+                djIds: [4, 5, 6],
+            };
+
+            cy.request('POST', '/test/seed/event', eventData).then((response) => {
+                const theEvent = response.body.event;
+                console.log({ theEvent });
+
+                expect(theEvent).to.not.eq(null);
+                cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
+
+                cy.get('[data-cy=event-dj]').should('exist');
+            });
         });
     });
 });

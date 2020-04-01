@@ -175,7 +175,7 @@ const GigRoutes = forwardRef((props, ref) => {
         <animated.div style={style} ref={ref}>
             <Switch location={item}>
                 <Route
-                    path={appRoutes.event}
+                    path={match.path + '/' + eventRoutes.overview}
                     render={(navProps) => <Overview {...navProps} {...props} {...eventProps} />}
                 />
                 <Route

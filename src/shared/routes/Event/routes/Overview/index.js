@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-apollo';
 import { captureException } from '@sentry/core';
 import useTranslate from 'components/hooks/useTranslate';
+import { useServerContext } from 'components/hooks/useServerContext';
 import { Title, Body, HeaderTitle } from '../../../../components/Text';
 import { Col } from '../../../../components/Blocks';
 import DjCard from '../../components/blocks/DJCard';
@@ -13,6 +14,8 @@ import { gigStates } from '../../../../constants/constants';
 
 const EventGigs = React.forwardRef(
     ({ theEvent = {}, loading: loadingEvent, translate, currency }, ref) => {
+        const { environment } = useServerContext();
+
         const { status } = theEvent;
 
         const [gigMessages, setGigMessages] = useState([]);
@@ -28,7 +31,7 @@ const EventGigs = React.forwardRef(
         useEffect(() => {
             const connect = async () => {
                 try {
-                    notificationService.init(theEvent.organizer.id);
+                    notificationService.init(theEvent.organizer.id, environment.CHAT_DOMAIN);
                     const res = await notificationService.getChatStatus();
                     setGigMessages(res);
                 } catch (error) {
@@ -81,19 +84,21 @@ const EventGigs = React.forwardRef(
             <Col ref={ref}>
                 <Title>{getTitle(status)}</Title>
                 <Body>{getText(status)}</Body>
-                {gigs
-                    .sort((g1, g2) => getPriority(g2) - getPriority(g1))
-                    .map((gig, idx) => (
-                        <DjCard
-                            hasMessage={gig.hasMessage}
-                            onOpenChat={readRoom}
-                            key={gig.id}
-                            idx={idx}
-                            gig={gig}
-                            translate={translate}
-                            theEvent={theEvent}
-                        />
-                    ))}
+                <div data-cy="event-djs">
+                    {gigs
+                        .sort((g1, g2) => getPriority(g2) - getPriority(g1))
+                        .map((gig, idx) => (
+                            <DjCard
+                                hasMessage={gig.hasMessage}
+                                onOpenChat={readRoom}
+                                key={gig.id}
+                                idx={idx}
+                                gig={gig}
+                                translate={translate}
+                                theEvent={theEvent}
+                            />
+                        ))}
+                </div>
             </Col>
         );
     }
@@ -122,6 +127,7 @@ const getTitle = (status) => {
 const Overview = (props) => {
     const { translate } = useTranslate();
     const { theEvent, loading } = props;
+
     if (loading) {
         return <LoadingPlaceholder2 />;
     }

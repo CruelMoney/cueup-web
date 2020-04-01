@@ -56,7 +56,7 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat }) => {
 
     return (
         <LogActivityInView type={ACTIVITY_TYPES.GIG_VIEWED_BY_ORGANIZER} subjectId={gig.id}>
-            <Wrapper idx={idx}>
+            <Wrapper idx={idx} data-cy="event-dj">
                 <Card style={style}>
                     <ImageWrapper>
                         <StyledImage src={dj.picture.path} />

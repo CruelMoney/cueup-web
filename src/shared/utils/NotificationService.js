@@ -1,12 +1,11 @@
 import io from 'socket.io-client';
 
 export default class NotificationService {
-    constructor(domain) {
-        this.domain = domain;
+    constructor() {
         this.notificationHandlers = [];
     }
 
-    init = (userId) => {
+    init = (userId, domain) => {
         return new Promise((resolve, reject) => {
             if (this.socket) {
                 return reject('Already initialized');
@@ -14,9 +13,9 @@ export default class NotificationService {
             if (!userId) {
                 return reject('No userId');
             }
-            console.log('connecting to: ', this.domain + '?userId=' + userId);
+            console.log('connecting to: ', domain + '?userId=' + userId);
 
-            this.socket = io(this.domain + '?userId=' + userId, {});
+            this.socket = io(domain + '?userId=' + userId, {});
 
             this.socket.on('initialize notifications', (notifications) => {
                 resolve(notifications);
