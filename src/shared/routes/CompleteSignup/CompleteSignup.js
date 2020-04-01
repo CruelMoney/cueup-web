@@ -5,24 +5,25 @@ import { useQuery } from 'react-apollo';
 import { Redirect } from 'react-router-dom';
 import { ME } from 'components/gql';
 import { appRoutes } from 'constants/locales/appRoutes';
-import useTranslate from 'components/hooks/useTranslate';
 import { useServerContext } from 'components/hooks/useServerContext';
+import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import thumbEn from '../../assets/images/signup.png';
 import thumbDa from '../../assets/images/signup_da.png';
 import ScrollToTop from '../../components/common/ScrollToTop';
+import content from '../Signup/content.json';
 import Layout from './components/Layout';
 
 const Index = () => {
     const { environment } = useServerContext();
 
     const { data, loading } = useQuery(ME);
-    const { t, currentLanguage } = useTranslate();
+    const { translate, currentLanguage } = useNamespaceContent(content, 'signup');
 
     if (!loading && !data?.me) {
-        return <Redirect to={t(appRoutes.signUp)} />;
+        return <Redirect to={translate(appRoutes.signUp)} />;
     }
 
-    const title = t('apply-to-become-dj') + ' | Cueup';
+    const title = translate('apply-to-become-dj') + ' | Cueup';
     const thumb = environment.CALLBACK_DOMAIN + (currentLanguage === 'da' ? thumbDa : thumbEn);
 
     return (
@@ -40,7 +41,7 @@ const Index = () => {
                 />
             </Helmet>
             <ScrollToTop />
-            <Layout translate={t} user={data?.me} loading={loading} />
+            <Layout translate={translate} user={data?.me} loading={loading} />
         </div>
     );
 };
