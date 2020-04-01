@@ -6,6 +6,11 @@ describe('Update User', () => {
             password: 't5e3s4t5i8n18g12',
             firstName: 'Christopher',
             lastName: 'Dengsø',
+            playingLocation: {
+                name: 'Copenhagen',
+                latitude: 55.6760968,
+                longitude: 12.5683372,
+            },
             phone: '12345678',
             bio:
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id suscipit eros. Suspendisse at quam ac nisi aliquet pulvinar vel sit amet odio. Nulla interdum vulputate dolor, nec imperdiet purus cursus a.',
@@ -20,7 +25,7 @@ describe('Update User', () => {
 
         cy.get('[data-cy=menu-user-link]').click();
 
-        cy.url().should('include', '/complete-signup');
+        cy.url().should('include', '/user');
 
         // cy.get('input[name=email]').type(user.email);
 
