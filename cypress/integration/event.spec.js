@@ -53,7 +53,7 @@ describe('Event', () => {
     });
 
     describe('Managing', () => {
-        it.only('Shows DJs', () => {
+        it('Shows DJs', () => {
             cy.request('POST', '/test/clearDB');
             cy.request('POST', '/test/seed/djs');
 
