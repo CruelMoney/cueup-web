@@ -1,13 +1,13 @@
-import fetch from 'node-fetch';
+import { createProxyMiddleware } from 'http-proxy-middleware';
+import express from 'express';
 
-const clearDB = async (_req, res) => {
-    const API_URL = process.env.REACT_APP_CUEUP_GQL_DOMAIN;
-    await fetch(API_URL + '/clearDB', { method: 'POST' });
-    return res.sendStatus(200);
-};
+const API_URL = process.env.REACT_APP_CUEUP_GQL_DOMAIN;
+const target = API_URL;
+console.log({ target });
+const apiProxy = createProxyMiddleware({ target });
 
 const addTestEndpoints = (app) => {
-    app.post('/test/clearDB', clearDB);
+    app.use('/test', apiProxy);
 };
 
 export default addTestEndpoints;

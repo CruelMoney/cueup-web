@@ -105,6 +105,7 @@ const start = async () => {
             '**/locales',
             '**/tmp',
             '*.spec.*',
+            'cypress',
         ],
         delay: 200,
     });

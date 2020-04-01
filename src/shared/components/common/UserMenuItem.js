@@ -31,7 +31,7 @@ class UserMenuItem extends Component {
         };
 
         return (
-            <div className="menu-user" style={styles.flex}>
+            <div className="menu-user" style={styles.flex} data-cy="menu-user-link">
                 <div style={styles.image}>
                     {this.props.notifications > 0 ? (
                         <div className={'notification-bubble'}>{this.props.notifications}</div>

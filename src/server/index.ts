@@ -23,6 +23,8 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 
 app.use(addLogging);
 
+addTestEndpoints(app);
+
 // Use Nginx or Apache to serve static assets in production or remove the if() around the following
 // lines to use the express.static middleware to serve assets for production (not recommended!)
 app.use('/', express.static(path.join(paths.clientBuild), { maxAge: '365 days' }));
@@ -46,7 +48,6 @@ app.use(addApollo);
 app.use(addLoadableExtractor);
 
 addSitemap(app);
-addTestEndpoints(app);
 
 app.use(addLanguage);
 
