@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
-describe('Update User', () => {
-    it('Updates permalink', () => {
+describe('Login', () => {
+    it('Logs in with email', () => {
         const user = {
             email: 'chrdengso@gmail.com',
             password: 't5e3s4t5i8n18g12',
@@ -17,18 +17,17 @@ describe('Update User', () => {
         };
 
         cy.request('POST', '/test/clearDB');
-        cy.request('POST', '/test/seed/user', user).then((response) =>
-            cy.setCookie('x-token', response.body.token)
-        );
+        cy.request('POST', '/test/seed/user', user);
 
-        cy.getCookie('x-token').should('exist');
         cy.visit('/');
-        cy.get('[data-cy=menu-user-link]').click();
+
+        cy.get('[data-cy=login-button]').click();
+        cy.get('input[name=email]').type(user.email);
+        cy.get('input[name=password]').type(user.password + '{enter}');
         cy.url().should('include', '/user');
-        cy.get('.card.popup.active *[data-cy=close-popup-button]').click();
-        cy.get('[data-cy=navbutton-settings]').click();
-        cy.get('input[name=permalink]').clear().type('new-permalink{enter}');
-        cy.get('[data-cy=menu-user-link]').click();
-        cy.url().should('include', 'new-permalink');
+        // our auth cookie should be present
+        cy.getCookie('x-token').should('exist');
+        // // UI should reflect this user being logged in
+        cy.get('h1').should('contain', user.firstName);
     });
 });

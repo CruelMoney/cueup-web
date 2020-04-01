@@ -110,6 +110,7 @@ const Menu = () => {
                                             <li>
                                                 <button
                                                     className="link-look"
+                                                    data-cy="login-button"
                                                     onClick={() => setLoginExpanded((s) => !s)}
                                                 >
                                                     {t('login')}

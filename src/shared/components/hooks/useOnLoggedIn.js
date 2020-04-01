@@ -4,29 +4,33 @@ import { ME } from 'components/gql';
 import { authService } from 'utils/AuthService';
 
 const useOnLoggedIn = ({ onLoggedIn, redirect = true } = {}) => {
-    const { refetch } = useQuery(ME);
+    const { refetch } = useQuery(ME, { fetchPolicy: 'network-only', skip: true });
     const history = useHistory();
 
     const fun = async ({ token }) => {
-        if (token) {
-            authService.setSession(token);
+        try {
+            if (token) {
+                authService.setSession(token);
 
-            const { data } = await refetch();
+                const { data } = await refetch();
 
-            if (onLoggedIn) {
-                await onLoggedIn(data);
-            }
+                if (onLoggedIn) {
+                    await onLoggedIn(data);
+                }
 
-            if (data?.me && redirect) {
-                const onboarded = data?.me?.appMetadata?.onboarded;
-                const permalink = data?.me?.permalink;
+                if (data?.me && redirect) {
+                    const onboarded = data?.me?.appMetadata?.onboarded;
+                    const permalink = data?.me?.permalink;
 
-                if (onboarded) {
-                    history.push('user/' + permalink + '/overview');
-                } else {
-                    history.push('/complete-signup');
+                    if (onboarded) {
+                        history.push('user/' + permalink + '/overview');
+                    } else {
+                        history.push('/complete-signup');
+                    }
                 }
             }
+        } catch (err) {
+            console.log({ err });
         }
     };
 

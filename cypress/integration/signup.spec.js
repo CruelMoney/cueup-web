@@ -36,7 +36,9 @@ describe('Signup', () => {
     it('Goes to complete signup if no location', () => {
         const { playingLocation, ...userNoLoation } = user;
         cy.request('POST', '/test/clearDB');
-        cy.request('POST', '/test/seed/user', userNoLoation);
+        cy.request('POST', '/test/seed/user', userNoLoation).then((response) =>
+            cy.setCookie('x-token', response.body.token)
+        );
         cy.getCookie('x-token').should('exist');
         cy.visit('/');
         cy.get('[data-cy=menu-user-link]').click();
@@ -46,7 +48,9 @@ describe('Signup', () => {
     it('Can complete signup', () => {
         const { playingLocation, ...userNoLoation } = user;
         cy.request('POST', '/test/clearDB');
-        cy.request('POST', '/test/seed/user', userNoLoation);
+        cy.request('POST', '/test/seed/user', userNoLoation).then((response) =>
+            cy.setCookie('x-token', response.body.token)
+        );
         cy.getCookie('x-token').should('exist');
         cy.visit('/');
         cy.get('[data-cy=menu-user-link]').click();
