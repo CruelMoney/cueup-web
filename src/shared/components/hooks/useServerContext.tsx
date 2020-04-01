@@ -11,6 +11,7 @@ const initialEnvironment: Environment = {
     GOOGLE_API_KEY: null,
     XENDIT_PUB_KEY: null,
     WEBSITE_URL: null,
+    SETTINGS: 'development',
 };
 
 const ServerContext = createContext({ environment: initialEnvironment });

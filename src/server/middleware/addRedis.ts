@@ -1,7 +1,5 @@
-import path from 'path';
 import { URL } from 'url';
 import redis from 'express-redis-cache';
-import paths from '../../../config/paths';
 
 //  REDIS_URL=redis://lolipop:SOME_PASSWORD@dokku-redis-lolipop:6379
 const REDIS_URL = process.env.REDIS_URL;

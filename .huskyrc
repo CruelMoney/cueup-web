@@ -1,6 +1,6 @@
 {
   "hooks": {
     "post-merge": "install-deps-postmerge",
-    "pre-commit": "lint-staged"
+    "pre-commit": "tsc --noEmit && lint-staged"
   }
 }

@@ -66,7 +66,18 @@ declare module '*.css' {
 declare const __BROWSER__: boolean;
 declare const __SERVER__: boolean;
 
-export interface Environment extends ProcessEnv {}
+export interface Environment {
+    STRIPE_PUBLIC_KEY: ?string;
+    CALLBACK_DOMAIN: ?string;
+    GQL_DOMAIN: ?string;
+    CHAT_DOMAIN: ?string;
+    FACEBOOK_ID: ?string;
+    PIXEL_ID: ?string;
+    GOOGLE_API_KEY: ?string;
+    XENDIT_PUB_KEY: ?string;
+    WEBSITE_URL: ?string;
+    SETTINGS: any;
+}
 
 interface CustomWindow extends Window {
     browserHistory: any;
