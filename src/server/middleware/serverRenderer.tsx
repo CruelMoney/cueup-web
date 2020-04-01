@@ -62,6 +62,7 @@ const serverRenderer = () => async (req, res) => {
         apolloState = res.locals.apolloClient.extract();
     } catch (error) {
         console.log({ error });
+        content = renderToString(Content);
     }
 
     const styleTags = sheet.getStyleElement();
