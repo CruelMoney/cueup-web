@@ -205,6 +205,7 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                         label="URL"
                         placeholder="https://cueup.io/"
                         type="formatted-text"
+                        name="permalink"
                         defaultValue={permalink}
                         onSave={async (permalink) => {
                             saveData({ permalink: permalink.trim() });

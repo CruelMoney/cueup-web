@@ -104,6 +104,7 @@ const Popup = memo((props) => {
                             }}
                         >
                             <span
+                                data-cy="close-popup-button"
                                 style={{
                                     color: '#aaaaaa',
                                     fontSize: '28px',

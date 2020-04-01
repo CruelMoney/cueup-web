@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 describe('Update User', () => {
-    it('Goes to complete signup if no location', () => {
+    it('Updates permalink', () => {
         const user = {
             email: 'chrdengso@gmail.com',
             password: 't5e3s4t5i8n18g12',
@@ -18,39 +18,14 @@ describe('Update User', () => {
 
         cy.request('POST', '/test/clearDB');
         cy.request('POST', '/test/seed/user', user);
-
         cy.getCookie('x-token').should('exist');
-
         cy.visit('/');
-
         cy.get('[data-cy=menu-user-link]').click();
-
         cy.url().should('include', '/user');
-
-        // cy.get('input[name=email]').type(user.email);
-
-        // cy.get('input[name=password]').type(user.password);
-
-        // cy.get('input[name=name]').type(user.firstName + ' ' + user.lastName);
-
-        // cy.get('input[name=phone]').type(user.phone);
-
-        // cy.get('input[name=playingLocation]').type(user.playingLocation);
-
-        // cy.get('button').contains('house').click();
-
-        // const picturePath = 'images/steve_jobs.jpg';
-        // cy.get('input[name=picture]').attachFile({ filePath: picturePath });
-
-        // cy.get('textarea[name=bio]').type(user.bio);
-
-        // cy.get('button[name=signup]').click();
-
-        // cy.url().should('include', '/user');
-
-        // // our auth cookie should be present
-        // cy.getCookie('x-token').should('exist');
-
-        // // // UI should reflect this user being logged in
+        cy.get('.card.popup.active *[data-cy=close-popup-button]').click();
+        cy.get('[data-cy=navbutton-settings]').click();
+        cy.get('input[name=permalink]').clear().type('new-permalink{enter}');
+        cy.get('[data-cy=menu-user-link]').click();
+        cy.url().should('include', 'new-permalink');
     });
 });

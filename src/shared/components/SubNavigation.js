@@ -112,6 +112,7 @@ const Navigation = memo((props) => {
                         onMouseEnter={({ target }) => setActiveIndicatorFromElement(target)}
                         indicateActive={active}
                         className={className}
+                        data-cy={'navbutton-' + label}
                     >
                         {label}
                     </StyledLink>
