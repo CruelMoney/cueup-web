@@ -82,6 +82,7 @@ workflows:
             branches:
               only: 
                 - master
+                - staging
       - deploy-staging:
           filters:
             branches:
