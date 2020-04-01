@@ -85,7 +85,7 @@ workflows:
                 - staging
       - deploy-staging:
           requires:
-            - lint-and-test
+            - cypress/run
           filters:
             branches:
               only: staging
