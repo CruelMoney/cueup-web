@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom';
 import { Query } from 'react-apollo';
 import { useTranslation } from 'react-i18next';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
-import { notificationService } from '../utils/NotificationService';
 import Navlink from './common/Navlink';
 import UserMenuItem from './common/UserMenuItem';
 import Login from './common/Login';
@@ -36,14 +35,8 @@ const Menu = () => {
     }, [setLoginExpanded]);
 
     return (
-        <Query
-            query={ME}
-            onError={console.log}
-            onCompleted={({ me }) => {
-                me && notificationService.init(me.id);
-            }}
-        >
-            {({ refetch, loading, data = {} }) => {
+        <Query query={ME} onError={console.log}>
+            {({ loading, data = {} }) => {
                 const { me: user } = data;
 
                 const loggedIn = !!user;

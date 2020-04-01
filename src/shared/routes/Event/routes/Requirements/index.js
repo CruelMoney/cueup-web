@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation, useQuery } from 'react-apollo';
 import emailValidator from 'email-validator';
+import useTranslate from 'components/hooks/useTranslate';
 import { Col, Row, TeritaryButton, SmartButton } from '../../../../components/Blocks';
 import { SettingsSection, Input } from '../../../../components/FormComponents';
 
@@ -17,7 +18,9 @@ import { eventStates } from '../../../../constants/constants';
 
 const required = (msg) => (val) => (!val ? msg : null);
 
-const Requirements = React.forwardRef(({ theEvent, translate, history, pathname }, ref) => {
+const Requirements = React.forwardRef(({ theEvent, history, pathname }, ref) => {
+    const { translate } = useTranslate();
+
     const [update, { loading }] = useMutation(UPDATE_EVENT);
     const [cancelationPopup, setCancelationPopup] = useState();
 

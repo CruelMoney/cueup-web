@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-apollo';
 import { captureException } from '@sentry/core';
+import useTranslate from 'components/hooks/useTranslate';
 import { Title, Body, HeaderTitle } from '../../../../components/Text';
 import { Col } from '../../../../components/Blocks';
 import DjCard from '../../components/blocks/DJCard';
@@ -119,7 +120,8 @@ const getTitle = (status) => {
 };
 
 const Overview = (props) => {
-    const { theEvent, loading, translate } = props;
+    const { translate } = useTranslate();
+    const { theEvent, loading } = props;
     if (loading) {
         return <LoadingPlaceholder2 />;
     }

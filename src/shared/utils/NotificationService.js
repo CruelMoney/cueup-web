@@ -1,62 +1,66 @@
+import io from 'socket.io-client';
+
 export default class NotificationService {
-    constructor() {
-        // this.domain = Environment.CHAT_DOMAIN;
-        // this.notificationHandlers = [];
-        // this.onInitialized = [];
+    constructor(domain) {
+        this.domain = domain;
+        this.notificationHandlers = [];
     }
 
-    init(userId) {
-        // throw new Error('Missing implementation');
-        // if (!this.socket && userId) {
-        //     store.dispatch(actions.fetchingNotifications());
-        //     console.log('connecting to: ', Environment.CHAT_DOMAIN + '?userId=' + userId);
-        //     this.socket = io(Environment.CHAT_DOMAIN + '?userId=' + userId);
-        //     this.socket.on('initialize notifications', (notifications) => {
-        //         store.dispatch(actions.fetchedNotifications(notifications));
-        //         this.onInitialized.reduce((_, fn) => {
-        //             return fn();
-        //         }, 0);
-        //     });
-        //     this.socket.on('new notification', (notification) => {
-        //         store.dispatch(actions.newNotification(notification));
-        //         this.notificationHandlers.reduce((acc, fn) => {
-        //             return fn(notification);
-        //         }, 0);
-        //     });
-        // }
-    }
+    init = (userId) => {
+        return new Promise((resolve, reject) => {
+            if (this.socket) {
+                return reject('Already initialized');
+            }
+            if (!userId) {
+                return reject('No userId');
+            }
+            console.log('connecting to: ', this.domain + '?userId=' + userId);
 
-    // addNotificationHandler = (handler) => {
-    //     this.notificationHandlers.push(handler);
-    // };
+            this.socket = io(this.domain + '?userId=' + userId, {});
 
-    // // Not mutation safe
-    // removeNotificationHandler = (handler) => {
-    //     const idx = this.notificationHandlers.indexOf(handler);
-    //     this.notificationHandlers.splice(idx, 1);
-    // };
+            this.socket.on('initialize notifications', (notifications) => {
+                resolve(notifications);
+            });
 
-    // reset = () => {
-    //     this.notificationHandlers = [];
-    // };
+            this.socket.on('new notification', (notification) => {
+                this.notificationHandlers.reduce((acc, fn) => {
+                    return fn(notification);
+                }, 0);
+            });
+        });
+    };
 
-    // getChatStatus = () => {
-    //     return new Promise((resolve, reject) => {
-    //         const chatFetcher = () => {
-    //             this.socket.emit('get chat status', (response) => {
-    //                 if (response.error) {
-    //                     return reject(response);
-    //                 }
-    //                 return resolve(response);
-    //             });
-    //         };
-    //         if (this.socket) {
-    //             chatFetcher();
-    //         } else {
-    //             this.onInitialized.push(chatFetcher);
-    //         }
-    //     });
-    // };
+    addNotificationHandler = (handler) => {
+        this.notificationHandlers.push(handler);
+    };
+
+    // Not mutation safe
+    removeNotificationHandler = (handler) => {
+        const idx = this.notificationHandlers.indexOf(handler);
+        this.notificationHandlers.splice(idx, 1);
+    };
+
+    reset = () => {
+        this.notificationHandlers = [];
+    };
+
+    getChatStatus = () => {
+        return new Promise((resolve, reject) => {
+            const chatFetcher = () => {
+                this.socket.emit('get chat status', (response) => {
+                    if (response.error) {
+                        return reject(response);
+                    }
+                    return resolve(response);
+                });
+            };
+            if (this.socket) {
+                chatFetcher();
+            } else {
+                this.onInitializedHandlers.push(chatFetcher);
+            }
+        });
+    };
 }
 
 // Singleton pattern

@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
-import { notificationService } from '../../utils/NotificationService';
 import { Avatar } from '../Blocks';
 
 class UserMenuItem extends Component {
-    constructor(props) {
-        super(props);
-        notificationService.init(props.userId);
-    }
-
     render() {
         //Cut length if too long
         function getLabel(name) {

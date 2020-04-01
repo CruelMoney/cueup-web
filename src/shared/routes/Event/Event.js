@@ -19,11 +19,11 @@ import Requirements from './routes/Requirements';
 import Review from './routes/Review';
 import content from './content.json';
 
-const Index = () => {
+const Index = ({ location }) => {
     const match = useRouteMatch();
     const { translate } = useNamespaceContent(content, 'event');
     const { id, hash } = match.params;
-    const { data = {}, loading } = useQuery(EVENT, {
+    const { data, loading } = useQuery(EVENT, {
         skip: !id || !hash,
         variables: {
             id,
@@ -31,7 +31,7 @@ const Index = () => {
         },
     });
 
-    const { event: theEvent } = data;
+    const { event: theEvent } = data || {};
 
     if (!loading && !theEvent) {
         return <Redirect to={translate(appRoutes.notFound)} />;

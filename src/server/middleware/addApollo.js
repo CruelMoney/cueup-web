@@ -29,6 +29,12 @@ const addApollo = (_req, res, next) => {
         headers,
     });
 
+    // Ignore errors
+    const errorLink = onError(({ graphQLErrors, operation, forward }) => {
+        console.log({ graphQLErrors });
+        return forward(operation);
+    });
+
     const link = ApolloLink.from([errorLink, httpLink]);
 
     const apolloClient = new ApolloClient({
@@ -42,11 +48,5 @@ const addApollo = (_req, res, next) => {
 
     next();
 };
-
-// Ignore errors
-const errorLink = onError(({ graphQLErrors, operation, forward }) => {
-    console.log({ graphQLErrors });
-    return forward(operation);
-});
 
 export default addApollo;
