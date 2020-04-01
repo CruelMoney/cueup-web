@@ -247,8 +247,8 @@ const Footer = ({
                             <li>
                                 <Link
                                     to={translate(appRoutes.bookDj)
-                                        .replace(':city?', 'denmark')
-                                        .replace(':country', 'copenhagen')}
+                                        .replace(':city?', 'copenhagen')
+                                        .replace(':country', 'denmark')}
                                 >
                                     {translate('copenhagen')}
                                 </Link>

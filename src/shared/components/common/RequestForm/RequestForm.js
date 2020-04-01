@@ -181,9 +181,8 @@ const MainForm = ({ initialCity, countries }) => {
                         <BodySmall
                             style={{ textAlign: 'center', marginTop: '12px' }}
                             className="terms_link"
-                        >
-                            {translate('terms-message-event')}
-                        </BodySmall>
+                            dangerouslySetInnerHTML={{ __html: translate('terms-message-event') }}
+                        />
                     </Wrapper>
                 )}
             </div>

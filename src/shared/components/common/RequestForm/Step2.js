@@ -45,6 +45,7 @@ const Step2 = ({
             <h3>{translate('requestForm:step-2.header')}</h3>
             <RequestSection>
                 <Input
+                    name="eventName"
                     label={translate('requestForm:step-2.event-name')}
                     onSave={(name) => handleChange({ name })}
                     validation={(v) => (v ? null : 'Please write a name')}

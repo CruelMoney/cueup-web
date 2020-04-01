@@ -73,7 +73,7 @@ const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
 
     return (
         <NavLink to={userRoutes.booking}>
-            <CTAButton>REQUEST BOOKING</CTAButton>
+            <CTAButton data-cy="booking-button">REQUEST BOOKING</CTAButton>
         </NavLink>
     );
 };

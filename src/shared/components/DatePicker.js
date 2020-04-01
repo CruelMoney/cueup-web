@@ -46,6 +46,7 @@ const DatePickerPopup = ({
                 error={error}
                 half={half}
                 type="button"
+                name="date"
                 onClick={() => {
                     setShowing(true);
                 }}

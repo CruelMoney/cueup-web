@@ -153,6 +153,7 @@ const EventForm = ({
                     <Input
                         half
                         type="text"
+                        name="eventName"
                         label="Event Name"
                         placeholder="Add a short, clear name"
                         onSave={setValue('name')}
@@ -239,6 +240,7 @@ const EventForm = ({
                     <Input
                         type="text-area"
                         label={'Description'}
+                        name="description"
                         placeholder={translate('event-description-placeholder')}
                         style={{
                             height: '200px',
@@ -261,6 +263,7 @@ const EventForm = ({
                         type="text"
                         label="Contact Name"
                         autoComplete="name"
+                        name="contactName"
                         placeholder="First Last"
                         validation={(v) => {
                             if (!v) {
@@ -281,6 +284,7 @@ const EventForm = ({
                         placeholder="mail@email.com"
                         type="email"
                         autoComplete="email"
+                        name="contactEmail"
                         label="Contact Email"
                         validation={(v) =>
                             emailValidator.validate(v) ? null : 'Not a valid email'
@@ -294,6 +298,7 @@ const EventForm = ({
                         placeholder="+123456789"
                         type="tel"
                         autoComplete="tel"
+                        name="contactPhone"
                         onSave={setValue('contactPhone')}
                     />
                 </SettingsSection>
@@ -347,6 +352,7 @@ const BookingSidebar = ({ loading, values, requestBooking, showLogin, eventCreat
 
             <MobileBookingButton>
                 <CTAButton
+                    type="submit"
                     disabled={createLoading || eventCreated}
                     loading={createLoading}
                     onClick={requestBooking(create)}
