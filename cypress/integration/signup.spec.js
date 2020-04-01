@@ -61,7 +61,7 @@ describe('Signup', () => {
         cy.get('button').contains('house').click();
         const picturePath = 'images/steve_jobs.jpg';
         cy.get('input[name=picture]').attachFile({ filePath: picturePath });
-        cy.get('textarea[name=bio]').type(user.bio);
+        cy.get('textarea[name=bio]').clear().type(user.bio);
         cy.get('button[name=signup]').click();
         cy.url().should('include', '/user');
         // // UI should reflect this user being logged in

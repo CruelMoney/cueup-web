@@ -21,7 +21,9 @@ require('dotenv').config();
 const app: Application = express();
 const isDevelopment = process.env.NODE_ENV === 'development';
 
-app.use(addLogging);
+if (isDevelopment) {
+    app.use(addLogging);
+}
 
 addTestEndpoints(app);
 

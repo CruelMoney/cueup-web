@@ -63,7 +63,7 @@ executors:
       - image: cypress/base:12.6.0
       - image: circleci/redis      
     environment:
-      CYPRESS_BASE_URL: http://localhost:3000
+      CYPRESS_BASE_URL: http://localhost:8500
 
 workflows:
   build-deploy:
@@ -75,7 +75,7 @@ workflows:
           record: true
           build: yarn build
           start: yarn start
-          wait-on: http://localhost:3000
+          wait-on: http://localhost:8500
           requires:
             - lint-and-test
           filters:
@@ -84,6 +84,8 @@ workflows:
                 - master
                 - staging
       - deploy-staging:
+          requires:
+            - lint-and-test
           filters:
             branches:
               only: staging
