@@ -154,7 +154,7 @@ const OfferForm = ({ gig, profileCurrency, payoutInfoValid, showPopup, showDecli
         [gigStates.REQUESTED, gigStates.ACCEPTED].includes(gig.status);
 
     return (
-        <div>
+        <div data-cy="make-offer-section">
             <Body>
                 {!payoutInfoValid
                     ? translate('gig:offer.update-payout')
@@ -211,7 +211,7 @@ const OfferForm = ({ gig, profileCurrency, payoutInfoValid, showPopup, showDecli
             ) : null}
 
             {!!canUpdatePrice && (
-                <>
+                <div data-cy="payout-options">
                     <TitleClean>Organizer payment</TitleClean>
                     <RadioSelect
                         containerStyle={{ marginBottom: '30px' }}
@@ -233,7 +233,7 @@ const OfferForm = ({ gig, profileCurrency, payoutInfoValid, showPopup, showDecli
                             },
                         ]}
                     />
-                </>
+                </div>
             )}
 
             <RowWrap style={{ marginTop: '24px' }}>
@@ -257,6 +257,7 @@ const OfferForm = ({ gig, profileCurrency, payoutInfoValid, showPopup, showDecli
                         loading={submitLoading}
                         success={submitted}
                         onClick={updateOffer}
+                        data-cy="submit-offer-button"
                     >
                         {submitted
                             ? 'Updated'

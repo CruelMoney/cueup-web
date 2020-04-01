@@ -8,6 +8,7 @@ import { SmartButton, Row, TeritaryButton, LoadingIndicator } from 'components/B
 import { useForm } from 'components/hooks/useForm';
 import { ME } from 'components/gql';
 import { useServerContext } from 'components/hooks/useServerContext';
+import useTranslate from 'components/hooks/useTranslate';
 import { AllCurrencies, PAYMENT_PROVIDERS, PAYOUT_TYPES } from '../../../constants/constants';
 import CountrySelector, { BankSelector } from '../CountrySelector';
 import ErrorMessageApollo, { getErrorMessage } from '../ErrorMessageApollo';
@@ -132,7 +133,10 @@ const PayoutForm = ({
 
             <div className="row center">
                 <div className="col-xs-10">
-                    <p className="terms_link text-center">{translate('payout.terms')}</p>
+                    <p
+                        className="terms_link text-center"
+                        dangerouslySetInnerHTML={{ __html: translate('payout.terms') }}
+                    />
                 </div>
             </div>
         </>
@@ -358,7 +362,7 @@ const StripeWrapper = (props) => {
 };
 
 const DataWrapper = (props) => {
-    const { translate } = props;
+    const { translate } = useTranslate();
 
     const { loading, data } = useQuery(USER_PAYOUT_METHOD, {
         variables: { id: props.id },
@@ -380,6 +384,7 @@ const DataWrapper = (props) => {
             <StripeWrapper
                 {...props}
                 loading={loading || loadingUserData}
+                translate={translate}
                 bankAccount={bankAccount}
                 isUpdate={props.id}
                 availableBankCountries={

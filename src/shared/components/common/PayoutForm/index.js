@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 
 import { Title, Body } from 'components/Text';
 import RadioSelect from 'components/RadioSelect';
+import useTranslate from 'components/hooks/useTranslate';
 import { PAYOUT_TYPES } from '../../../constants/constants';
 
 import StripeWrapper from './BankAccount';
 import DirectPayout from './Direct';
 
 const PayoutComponent = (props) => {
-    const { translate, user } = props;
+    const { translate } = useTranslate();
+    const { user } = props;
     const { payoutMethods } = user;
     const bankAccount = payoutMethods.find((p) => p.payoutType === PAYOUT_TYPES.BANK);
     const direct = payoutMethods.find((p) => p.payoutType === PAYOUT_TYPES.DIRECT);

@@ -33,5 +33,19 @@ describe('Gig', () => {
         cy.get('.card.popup.active *[data-cy=close-popup-button]').click();
         cy.get('[data-cy=navbutton-gigs]').click();
         cy.get('[data-cy=gig-read-more]').click();
+        cy.get('[data-cy=navbutton-offer]').click();
+        cy.get('button').contains('Update payout info').click();
+        cy.get('[name=DIRECT]').click();
+        cy.get('[name=direct-description]').type('Hey ho lets go');
+
+        cy.get('.payout-form button[type="submit"]').click();
+        cy.get('.card.popup.active *[data-cy=close-popup-button]').click();
+
+        cy.get('[data-cy=payout-options] *[name=DIRECT]').click();
+
+        cy.get('[name=amount]').clear().type('500');
+        cy.get('[data-cy=submit-offer-button]').click();
+
+        cy.get('[data-cy=submit-offer-button]').should('contain', 'Updated');
     });
 });

@@ -264,7 +264,10 @@ const PaymentWrapper = (props) => {
                     </TableItem>
                 </MoneyTable>
 
-                <p className="terms_link">{translate('event:offer.terms')}</p>
+                <p
+                    className="terms_link"
+                    dangerouslySetInnerHTML={{ __html: translate('event:offer.terms') }}
+                />
             </div>
         </PayFormContainer>
     );
