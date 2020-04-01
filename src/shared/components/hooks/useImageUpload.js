@@ -12,10 +12,10 @@ const useImageUpload = ({ onCompleted, initialPreview } = {}) => {
     });
     const [preview, setPreview] = useState(initialPreview);
 
-    const beginUpload = async (file) => {
+    const beginUpload = async (ogFile) => {
         try {
             setLoading(true);
-            const { imageData: base64 } = await ImageCompressor(file, true, {
+            const { imageData: base64, file } = await ImageCompressor(ogFile, true, {
                 maxWidth: 1000,
                 maxHeight: 1000,
             });

@@ -11,6 +11,7 @@ import addRedis, { cache } from 'middleware/addRedis';
 import addSitemap from 'middleware/addSitemap';
 import { addLanguage } from 'middleware/i18next';
 import addLogging from 'middleware/addLogging';
+import addTestEndpoints from 'middleware/addTestEndpoints';
 import paths from '../../config/paths';
 import errorHandler from './middleware/errorHandler';
 import serverRenderer from './middleware/serverRenderer';
@@ -45,6 +46,7 @@ app.use(addApollo);
 app.use(addLoadableExtractor);
 
 addSitemap(app);
+addTestEndpoints(app);
 
 app.use(addLanguage);
 

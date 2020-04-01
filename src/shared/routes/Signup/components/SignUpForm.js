@@ -96,7 +96,8 @@ const SignupForm = ({ translate, user }) => {
             }
 
             if (profilePicture) {
-                const { id: pictureId } = await profilePicture;
+                const pictureData = await profilePicture;
+                const { id: pictureId } = pictureData;
                 variables.profilePicture = pictureId;
             }
 
@@ -202,10 +203,7 @@ const SignupForm = ({ translate, user }) => {
                         defaultValue={state.name}
                         placeholder={translate('first-last')}
                         onSave={(name) => setValue({ name })}
-                        validation={[
-                            !isDevelopment && validators.required,
-                            !isDevelopment && validators.lastName,
-                        ].filter(Boolean)}
+                        validation={[validators.required, validators.lastName].filter(Boolean)}
                         registerValidation={registerValidation('name')}
                         unregisterValidation={unregisterValidation('name')}
                     />
@@ -240,7 +238,7 @@ const SignupForm = ({ translate, user }) => {
                         autoComplete="tel"
                         defaultValue={state.phone}
                         onSave={(phone) => setValue({ phone })}
-                        validation={[!isDevelopment && validators.required].filter(Boolean)}
+                        validation={[validators.required].filter(Boolean)}
                         registerValidation={registerValidation('phone')}
                         unregisterValidation={unregisterValidation('phone')}
                     />
@@ -323,9 +321,7 @@ const SignupForm = ({ translate, user }) => {
                             onSave={(profilePicture) =>
                                 setValue({ profilePicture: beginUpload(profilePicture) })
                             }
-                            validation={[
-                                !isDevelopment && !user?.picture && validators.required,
-                            ].filter(Boolean)}
+                            validation={[!user?.picture && validators.required].filter(Boolean)}
                             registerValidation={registerValidation('profilePicture')}
                             unregisterValidation={unregisterValidation('profilePicture')}
                         />
