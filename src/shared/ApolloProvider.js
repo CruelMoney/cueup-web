@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
@@ -31,7 +31,6 @@ const APIProvider = ({ children }) => {
                 // handle errors differently based on its error code
                 switch (err.extensions.code) {
                     case 'UNAUTHENTICATED':
-                        authService.logout();
                         break;
 
                     // handle other errors

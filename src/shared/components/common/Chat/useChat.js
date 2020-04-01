@@ -32,14 +32,14 @@ const useChat = ({ sender, receiver, id, showPersonalInformation, data }) => {
     useEffect(() => {
         if (id && senderId) {
             chat.current = new ChatService(id, auth.getToken(), senderId);
-            chat.current.init({ showPersonalInformation }).then((messages) => {
-                setMessages(messages);
-                setReady(true);
-                onNewContent.current && onNewContent.current();
-            });
-            return () => {
-                chat.current.dispose();
-            };
+            // chat.current.init({ showPersonalInformation }).then((messages) => {
+            //     setMessages(messages);
+            //     setReady(true);
+            //     onNewContent.current && onNewContent.current();
+            // });
+            // return () => {
+            //     chat.current.dispose();
+            // };
         }
     }, [id, senderId, showPersonalInformation]);
 

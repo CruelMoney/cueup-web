@@ -23,7 +23,7 @@ const getPriority = (gig) => {
 };
 
 const Gigs = (props) => {
-    const { translate, notifications, user, currentLanguage, loading: loadingUser } = props;
+    const { translate, notifications = [], user, currentLanguage, loading: loadingUser } = props;
 
     const approved = user?.appMetadata?.approved;
 

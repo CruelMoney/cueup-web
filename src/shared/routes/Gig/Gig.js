@@ -1,12 +1,10 @@
 import React, { useRef, useEffect, useState, useCallback, forwardRef } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Route, Redirect, Switch, useRouteMatch } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-apollo';
 import styled from 'styled-components';
 import { useTransition, animated } from 'react-spring';
 import { useMeasure } from '@softbind/hook-use-measure';
-import { useHistory } from 'react-router';
-import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import ScrollToTop from '../../components/common/ScrollToTop';
@@ -31,10 +29,8 @@ import GigReview from './routes/GigReview';
 import MobileChat from './routes/MobileChat';
 import content from './content.json';
 
-const Index = () => {
+const Index = ({ location, match, history }) => {
     const { translate } = useNamespaceContent(content, 'gig');
-    const match = useRouteMatch();
-    const history = useHistory();
 
     const {
         params: { id },
@@ -207,6 +203,7 @@ const Content = React.memo((props) => {
 
 const MainContent = (props) => {
     const { location, setPopup } = props;
+    console.log({ location });
     const [height, setHeight] = useState('auto');
     const direction = getDirection(location.pathname);
     const [ssr, setSsr] = useState(true);
