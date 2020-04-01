@@ -32,6 +32,15 @@ import content from './content.json';
 const Index = ({ location, match, history }) => {
     const { translate } = useNamespaceContent(content, 'gig');
 
+    useEffect(() => {
+        if (window.olark) {
+            window.olark('api.box.hide');
+            return () => {
+                window.olark('api.box.show');
+            };
+        }
+    }, []);
+
     const {
         params: { id },
     } = match;
@@ -203,7 +212,6 @@ const Content = React.memo((props) => {
 
 const MainContent = (props) => {
     const { location, setPopup } = props;
-    console.log({ location });
     const [height, setHeight] = useState('auto');
     const direction = getDirection(location.pathname);
     const [ssr, setSsr] = useState(true);

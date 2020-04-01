@@ -69,7 +69,7 @@ const Offer = ({ offer, gig, hasMessage, translate }) => {
                         pathname: `${translate(appRoutes.gig)}/${id}`,
                     }}
                 >
-                    <TeritaryButton>Read more</TeritaryButton>
+                    <TeritaryButton data-cy="gig-read-more">Read more</TeritaryButton>
                 </NavLink>
                 {hasMessage && (
                     <span>

@@ -29,5 +29,9 @@ describe('Gig', () => {
         cy.request('POST', '/test/seed/event', event);
 
         cy.visit('/');
+        cy.get('[data-cy=menu-user-link]').click();
+        cy.get('.card.popup.active *[data-cy=close-popup-button]').click();
+        cy.get('[data-cy=navbutton-gigs]').click();
+        cy.get('[data-cy=gig-read-more]').click();
     });
 });

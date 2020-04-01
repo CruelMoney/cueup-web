@@ -8,7 +8,9 @@ const useExternals = () => {
     useEffect(() => {
         Stripe.preload();
         setTimeout(() => {
-            Olark.preload();
+            if (!window.location.pathname.includes('gig')) {
+                Olark.preload();
+            }
         }, 4000);
     }, []);
 };

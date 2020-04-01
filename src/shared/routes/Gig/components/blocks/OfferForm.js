@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import debounce from 'lodash/debounce';
 import { useMutation } from 'react-apollo';
 import RadioSelect from 'components/RadioSelect';
+import useTranslate from 'components/hooks/useTranslate';
 import { GET_OFFER, MAKE_OFFER, GIG } from '../../gql';
 import ErrorMessageApollo from '../../../../components/common/ErrorMessageApollo';
 import { gigStates, PAYOUT_TYPES } from '../../../../constants/constants';
@@ -18,15 +19,8 @@ import { Input, InputRow } from '../../../../components/FormComponents';
 import CurrencySelector from '../../../../components/CurrencySelector';
 import { Body, BodyBold, TitleClean } from '../../../../components/Text';
 
-const OfferForm = ({
-    gig,
-    profileCurrency,
-    translate,
-    payoutInfoValid,
-    showPopup,
-    showDecline,
-    user,
-}) => {
+const OfferForm = ({ gig, profileCurrency, payoutInfoValid, showPopup, showDecline, user }) => {
+    const { translate } = useTranslate();
     const initOffer = gig.offer || {
         offer: { amount: 0, formatted: 0 },
         serviceFee: { amount: 0, formatted: 0 },
