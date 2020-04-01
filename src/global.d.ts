@@ -2,6 +2,16 @@ declare namespace NodeJS {
     interface ProcessEnv {
         NODE_ENV: 'development' | 'production' | 'test';
         PUBLIC_URL: string;
+        STRIPE_PUBLIC_KEY: ?string;
+        CALLBACK_DOMAIN: ?string;
+        GQL_DOMAIN: ?string;
+        CHAT_DOMAIN: ?string;
+        FACEBOOK_ID: ?string;
+        PIXEL_ID: ?string;
+        GOOGLE_API_KEY: ?string;
+        XENDIT_PUB_KEY: ?string;
+        WEBSITE_URL: ?string;
+        SETTINGS: ?('staging' | 'development' | 'production' | 'test');
     }
 }
 
@@ -56,17 +66,7 @@ declare module '*.css' {
 declare const __BROWSER__: boolean;
 declare const __SERVER__: boolean;
 
-export interface Environment {
-    STRIPE_PUBLIC_KEY: ?string;
-    CALLBACK_DOMAIN: ?string;
-    GQL_DOMAIN: ?string;
-    CHAT_DOMAIN: ?string;
-    FACEBOOK_ID: ?string;
-    PIXEL_ID: ?string;
-    GOOGLE_API_KEY: ?string;
-    XENDIT_PUB_KEY: ?string;
-    WEBSITE_URL: ?string;
-}
+export interface Environment extends ProcessEnv {}
 
 interface CustomWindow extends Window {
     browserHistory: any;

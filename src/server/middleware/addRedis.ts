@@ -4,10 +4,14 @@ import redis from 'express-redis-cache';
 import paths from '../../../config/paths';
 
 //  REDIS_URL=redis://lolipop:SOME_PASSWORD@dokku-redis-lolipop:6379
-let redisUrl = process.env.REDIS_URL;
-const options = {};
-if (redisUrl) {
-    redisUrl = new URL(redisUrl);
+const REDIS_URL = process.env.REDIS_URL;
+const options = {
+    host: '',
+    port: '',
+    auth_pass: '',
+};
+if (REDIS_URL) {
+    const redisUrl = new URL(REDIS_URL);
     options.host = redisUrl.hostname;
     options.port = redisUrl.port;
     options.auth_pass = redisUrl.password;
@@ -15,7 +19,7 @@ if (redisUrl) {
 
 const cache = redis(options);
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.SETTINGS === 'development') {
     cache.on('message', console.log);
 }
 

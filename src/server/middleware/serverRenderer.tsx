@@ -27,6 +27,7 @@ const environment: Environment = {
     GOOGLE_API_KEY: production
         ? 'AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ'
         : 'AIzaSyDYsMT5dhTnBLMcAetq4NGVWUyijkrVSHs',
+    SETTINGS: process.env.SETTINGS || 'development',
 };
 
 const serverRenderer = () => async (req, res) => {
