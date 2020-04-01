@@ -34,7 +34,7 @@ describe('Gig', () => {
         cy.get('[data-cy=navbutton-gigs]').click();
         cy.get('[data-cy=gig-read-more]').click();
         cy.get('[data-cy=navbutton-offer]').click();
-        cy.get('button').contains('Update payout info').click();
+        cy.get('[name=show-payout-popup]').click();
         cy.get('[name=DIRECT]').click();
         cy.get('[name=direct-description]').type('Hey ho lets go');
 
