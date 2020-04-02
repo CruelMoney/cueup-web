@@ -22,7 +22,7 @@ const BrowserRouter = () => {
 
     return (
         <Router>
-            <ServerContextProvider environment={window.__ENVIRONMENT__}>
+            <ServerContextProvider environment={window.__ENVIRONMENT__} isSSR={false}>
                 <ApolloProvider>
                     <HelmetProvider>
                         <App />

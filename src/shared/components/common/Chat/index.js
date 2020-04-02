@@ -93,6 +93,7 @@ export const MessageComposer = ({ chat, placeholder, autoFocus }) => (
                 maxRows={5}
                 placeholder={placeholder}
                 className="message-input"
+                name="chat-input"
                 value={chat.newMessage}
                 onChange={(e) => {
                     chat.handleChange(e.target.value);

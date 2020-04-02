@@ -39,7 +39,7 @@ const serverRenderer = () => async (req, res) => {
 
     const Content = (
         <StaticRouter location={req.url} context={routerContext}>
-            <ServerContextProvider environment={environment}>
+            <ServerContextProvider environment={environment} isSSR={true}>
                 <I18nextProvider i18n={req.i18n}>
                     <ApolloProvider client={res.locals.apolloClient}>
                         <ChunkExtractorManager extractor={res.locals.chunkExtractor}>

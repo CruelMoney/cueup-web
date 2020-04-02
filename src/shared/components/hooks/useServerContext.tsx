@@ -14,13 +14,20 @@ const initialEnvironment: Environment = {
     SETTINGS: 'development',
 };
 
-const ServerContext = createContext({ environment: initialEnvironment });
-
-export const useServerContext = () => {
-    const { environment } = useContext(ServerContext);
-    return { environment };
+const initial = {
+    environment: initialEnvironment,
+    isSSR: false,
 };
 
-export const ServerContextProvider = ({ children, environment }) => {
-    return <ServerContext.Provider value={{ environment }}>{children}</ServerContext.Provider>;
+const ServerContext = createContext(initial);
+
+export const useServerContext = () => {
+    const { environment, isSSR } = useContext(ServerContext);
+    return { environment, isSSR };
+};
+
+export const ServerContextProvider = ({ children, environment, isSSR }) => {
+    return (
+        <ServerContext.Provider value={{ environment, isSSR }}>{children}</ServerContext.Provider>
+    );
 };

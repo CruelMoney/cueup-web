@@ -8,6 +8,7 @@ import { useMeasure } from '@softbind/hook-use-measure';
 import { useRouteMatch } from 'react-router';
 import { appRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
+import { useServerContext } from 'components/hooks/useServerContext';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col } from '../../components/Blocks';
@@ -106,11 +107,7 @@ const Content = React.memo((props) => {
     const { theEvent, loading } = eventProps;
     const [height, setHeight] = useState('auto');
     const direction = getDirection(location.pathname);
-    const [ssr, setSsr] = useState(true);
-
-    useEffect(() => {
-        setSsr(false);
-    }, []);
+    const { isSSR } = useServerContext();
 
     const transitions = useTransition(location, (location) => location.pathname, {
         config: {
@@ -142,7 +139,7 @@ const Content = React.memo((props) => {
                             {transitions.map(({ item, props, key }) => (
                                 <SSRComponent
                                     item={item}
-                                    ssr={ssr}
+                                    ssr={isSSR}
                                     style={props}
                                     key={key}
                                     match={match}
@@ -171,6 +168,7 @@ const SSRComponent = ({ ssr, ...props }) => {
 
 const GigRoutes = forwardRef((props, ref) => {
     const { style, item, match, eventProps } = props;
+
     return (
         <animated.div style={style} ref={ref}>
             <Switch location={item}>

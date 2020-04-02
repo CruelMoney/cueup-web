@@ -43,6 +43,13 @@ export default class NotificationService {
         this.notificationHandlers = [];
     };
 
+    dispose = () => {
+        console.log('Disposing');
+        if (this.socket) {
+            return this.socket.close();
+        }
+    };
+
     getChatStatus = () => {
         return new Promise((resolve, reject) => {
             const chatFetcher = () => {

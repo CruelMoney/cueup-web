@@ -46,7 +46,6 @@ const usePushNotifications = (options = {}) => {
         document.cookie = `${DISABLE_NOTIFICATIONS_COOKIE}=true; path=/; expires = ${expire}`;
         setPushShouldBeEnabled(false);
     };
-    console.log({ hasOptedOut, pushShouldBeEnabled });
 
     return { pushIsEnabled, pushShouldBeEnabled, showPrompt, optOut, loading };
 };

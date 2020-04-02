@@ -41,8 +41,9 @@ const EventGigs = React.forwardRef(
             };
             if (theEvent && theEvent.organizer) {
                 connect();
+                return notificationService.dispose;
             }
-        }, [theEvent]);
+        }, [theEvent, environment]);
 
         const readRoom = () => setGigMessages([]);
 

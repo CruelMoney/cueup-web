@@ -72,7 +72,10 @@ describe('Event', () => {
                 cy.get('[data-cy=event-dj]').should('exist');
 
                 // try chatting
+                const message = 'Testing chat 🤓';
                 cy.get('[data-cy=message-dj-button]').first().click();
+                cy.get('[name=chat-input]').type(message);
+                cy.get('.speech-bubble').should('contain', message);
             });
         });
     });
