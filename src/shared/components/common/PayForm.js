@@ -115,9 +115,17 @@ const BankPayForm = ({
 };
 
 const PaymentWrapper = (props) => {
-    const { onPaymentConfirmed, currency, id, event, gig, currentLanguage, changeCurrency } = props;
+    const {
+        onPaymentConfirmed,
+        currency,
+        id,
+        event,
+        gig,
+        currentLanguage,
+        changeCurrency,
+        translate,
+    } = props;
     const div = useRef();
-    const { translate } = useTranslate();
     const size = useComponentSize(div);
     const [isPaid, setIsPaid] = useState(false);
     const [requestPaymentIntent, { loading, data }] = useLazyQuery(REQUEST_PAYMENT_INTENT);
@@ -198,8 +206,6 @@ const PaymentWrapper = (props) => {
             captureException(error);
         }
     };
-
-    console.log({ paymentIntent, paymentType });
 
     if (isPaid) {
         return <ThankYouContent style={size} translate={translate} />;
@@ -344,4 +350,10 @@ const ThankYouContent = ({ translate, style }) => {
     );
 };
 
-export default PaymentWrapper;
+const WithProps = (props) => {
+    const { translate } = useTranslate();
+
+    return <PaymentWrapper {...props} translate={translate} />;
+};
+
+export default WithProps;

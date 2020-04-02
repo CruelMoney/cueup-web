@@ -13,10 +13,12 @@ import { Input, InputRow, LabelHalf } from 'components/FormComponents';
 import { validators, useForm } from 'components/hooks/useForm';
 import { inputStyle, SmartButton, TeritaryButton, RowMobileCol } from 'components/Blocks';
 import { useServerContext } from 'components/hooks/useServerContext';
+import useTranslate from 'components/hooks/useTranslate';
 import CountrySelector from './CountrySelector';
 import ErrorMessageApollo from './ErrorMessageApollo';
 
-const StripeForm = ({ translate, stripe, onPaymentConfirmed, goBack }) => {
+const StripeForm = ({ stripe, onPaymentConfirmed, goBack }) => {
+    const { translate } = useTranslate();
     const cardElement = useRef();
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);

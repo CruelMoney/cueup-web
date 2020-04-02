@@ -6,6 +6,7 @@ describe('Payment', () => {
 
         const eventData = {
             customerUserId: 1,
+            status: 'ACCEPTED',
             gigs: [
                 { djId: 4 },
                 {
@@ -15,6 +16,7 @@ describe('Payment', () => {
                     offerAmount: 50000,
                     serviceFeeAmount: 10000,
                     currency: 'USD',
+                    enableDirectPayout: true,
                 },
                 { djId: 6 },
             ],
@@ -36,7 +38,7 @@ describe('Payment', () => {
         throw new Error('Not implemented');
     });
 
-    it('Works with bank payout method', () => {
+    it('Works with only bank payout method', () => {
         throw new Error('Not implemented');
     });
 

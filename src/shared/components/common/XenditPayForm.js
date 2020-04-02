@@ -9,12 +9,14 @@ import { Input, LabelHalf, InputRow } from 'components/FormComponents';
 import { SmartButton, inputStyle, RowMobileCol, TeritaryButton } from 'components/Blocks';
 import { useForm, validators } from 'components/hooks/useForm';
 import { useServerContext } from 'components/hooks/useServerContext';
+import useTranslate from 'components/hooks/useTranslate';
 import { PAY_EVENT } from '../gql';
 import Popup from './Popup';
 import CountrySelector from './CountrySelector';
 import ErrorMessageApollo, { getErrorMessage } from './ErrorMessageApollo';
 
-const XenditForm = ({ translate, paymentIntent, onPaymentConfirmed, client, goBack }) => {
+const XenditForm = ({ paymentIntent, onPaymentConfirmed, goBack }) => {
+    const { translate } = useTranslate();
     const [reviewPopup, setReviewPopup] = useState();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState();
