@@ -21,7 +21,7 @@ const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
     if (canBePaid) {
         return (
             <>
-                <CTAButton onClick={() => showPaymentForm(true)}>
+                <CTAButton data-cy="profile-cta" onClick={() => showPaymentForm(true)}>
                     BOOK {offer.offer.formatted}
                 </CTAButton>
             </>
@@ -35,10 +35,12 @@ const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
     if (canBeReviewd) {
         return (
             <NavLink to={`${translate(appRoutes.event)}/${event.id}/${hash}/${eventRoutes.review}`}>
-                <CTAButton>REVIEW</CTAButton>
+                <CTAButton data-cy="profile-cta">REVIEW</CTAButton>
             </NavLink>
         );
     }
+
+    console.log({ event });
 
     const canBeChatted =
         (event && event.organizer && ['ACCEPTED', 'OFFERING'].includes(event.status)) ||
@@ -48,7 +50,9 @@ const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
         const { organizer } = event;
         return (
             <>
-                <CTAButton onClick={() => setShowPopup(true)}>SEND MESSAGE</CTAButton>
+                <CTAButton data-cy="profile-cta" onClick={() => setShowPopup(true)}>
+                    SEND MESSAGE
+                </CTAButton>
                 <Popup noPadding showing={showPopup} onClickOutside={() => setShowPopup(false)}>
                     <Chat
                         showPersonalInformation={false}
@@ -105,7 +109,7 @@ const Wrapper = (props) => {
 
     if (loading) {
         return (
-            <CTAButton disabled>
+            <CTAButton disabled data-cy="profile-cta">
                 <LoadingIndicator />
             </CTAButton>
         );
@@ -113,7 +117,10 @@ const Wrapper = (props) => {
 
     if (user.isOwn) {
         return (
-            <CTAButton onClick={() => window.alert('Are you trying to book yourself? 🧐')}>
+            <CTAButton
+                onClick={() => window.alert('Are you trying to book yourself? 🧐')}
+                data-cy="profile-cta"
+            >
                 REQUEST BOOKING
             </CTAButton>
         );

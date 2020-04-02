@@ -56,6 +56,9 @@ const resolvers = {
             const fragment = gql`
                 fragment confirmEvent on Event {
                     status
+                    chosenGig {
+                        id
+                    }
                     gigs {
                         id
                         status
@@ -65,16 +68,21 @@ const resolvers = {
             `;
             const event = cache.readFragment({ fragment, id });
             let { gigs } = event;
-            gigs = gigs.map((g) =>
-                g.id === gigId
-                    ? {
-                          ...g,
-                          status: 'CONFIRMED',
-                          tempPaidIndicator: true,
-                      }
-                    : { ...g, status: 'LOST' }
-            );
-            const data = { ...event, gigs, status: 'CONFIRMED' };
+            let chosenGig = null;
+            gigs = gigs.map((g) => {
+                const isChosen = g.id === gigId;
+                if (!isChosen) {
+                    return { ...g, status: 'LOST' };
+                }
+
+                chosenGig = {
+                    ...g,
+                    status: 'CONFIRMED',
+                    tempPaidIndicator: true,
+                };
+                return chosenGig;
+            });
+            const data = { ...event, chosenGig, gigs, status: 'CONFIRMED' };
             cache.writeData({ id, data });
 
             return null;
