@@ -2,7 +2,7 @@
 describe('Login', () => {
     it('Logs in with email', () => {
         const user = {
-            email: 'chrdengso@gmail.com',
+            email: 'test@email.com',
             password: 't5e3s4t5i8n18g12',
             firstName: 'Christopher',
             lastName: 'Dengsø',

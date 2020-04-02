@@ -1,4 +1,7 @@
 function getCookie(name) {
+    if (typeof window !== 'object') {
+        return null;
+    }
     const nameEQ = name + '=';
     const ca = document.cookie.split(';');
     for (let c of ca) {

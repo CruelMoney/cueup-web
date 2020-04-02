@@ -1,7 +1,7 @@
 /// <reference types="Cypress" />
 describe('Gig', () => {
     const dj = {
-        email: 'chrdengso@gmail.com',
+        email: 'test@email.com',
         password: 't5e3s4t5i8n18g12',
         firstName: 'Christopher',
         lastName: 'Dengsø',
@@ -24,7 +24,7 @@ describe('Gig', () => {
 
         const event = {
             customerUserId: 1,
-            djIds: [11],
+            gigs: [{ djId: 11 }],
         };
         cy.request('POST', '/test/seed/event', event);
 
@@ -47,5 +47,6 @@ describe('Gig', () => {
         cy.get('[data-cy=submit-offer-button]').click();
 
         cy.get('[data-cy=submit-offer-button]').should('contain', 'Updated');
+        cy.get('[data-cy=gig-status]').should('contain', 'Waiting on confirmation from organizer');
     });
 });

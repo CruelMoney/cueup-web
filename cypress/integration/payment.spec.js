@@ -16,6 +16,7 @@ describe('Event', () => {
         cy.get('button[type=submit]').click({ force: true });
         cy.get('.request-form').should('contain', 'Thanks');
     };
+
     describe('Creating', () => {
         it('Post event from front page', () => {
             cy.request('POST', '/test/clearDB');

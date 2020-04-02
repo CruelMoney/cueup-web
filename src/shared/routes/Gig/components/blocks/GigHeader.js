@@ -45,7 +45,6 @@ const HeaderWrapper = styled.div`
 const Content = ({ theEvent, statusHumanized }) => {
     const { name, start, location } = theEvent || {};
 
-    console.log({ location });
     return (
         <HeaderWrapper>
             {theEvent && (
@@ -57,7 +56,7 @@ const Content = ({ theEvent, statusHumanized }) => {
                             {'  ·  '}
                             {start.formattedDate}
                         </BodyBold>
-                        <BodyBold white opacity={0.75} style={{ margin: 0 }}>
+                        <BodyBold data-cy="gig-status" white opacity={0.75} style={{ margin: 0 }}>
                             {statusHumanized}
                         </BodyBold>
                     </Col>
