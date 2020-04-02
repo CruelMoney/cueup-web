@@ -320,7 +320,9 @@ const Status = ({ sending, message }) => {
 };
 
 const WithNotificationMessage = ({ systemMessages = [], ...props }) => {
-    const { pushShouldBeEnabled, showPrompt } = usePushNotifications({ userId: props?.sender.id });
+    const { pushShouldBeEnabled, showPrompt, optOut } = usePushNotifications({
+        userId: props?.sender.id,
+    });
 
     let newSystemMessages = systemMessages;
     if (pushShouldBeEnabled) {
@@ -331,6 +333,10 @@ const WithNotificationMessage = ({ systemMessages = [], ...props }) => {
                 createdAt: new Date(),
                 content: 'Do you want to enable browser notifications when you get a new message?',
                 actions: [
+                    {
+                        label: 'No thanks',
+                        action: optOut,
+                    },
                     {
                         label: 'Enable',
                         action: showPrompt,

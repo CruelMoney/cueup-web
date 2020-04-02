@@ -1,6 +1,7 @@
 import { EventEmitter } from 'events';
 import moment from 'moment';
 import { CustomWindow } from 'global';
+import getCookie from './getCookie';
 
 declare let window: CustomWindow;
 
@@ -34,20 +35,6 @@ class AuthService extends EventEmitter {
     getToken() {
         return this.getAccessToken();
     }
-}
-
-function getCookie(name) {
-    const nameEQ = name + '=';
-    const ca = document.cookie.split(';');
-    for (let c of ca) {
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1, c.length);
-        }
-        if (c.indexOf(nameEQ) == 0) {
-            return c.substring(nameEQ.length, c.length);
-        }
-    }
-    return null;
 }
 
 export const authService = new AuthService();

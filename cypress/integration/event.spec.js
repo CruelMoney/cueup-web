@@ -53,7 +53,7 @@ describe('Event', () => {
     });
 
     describe('Managing', () => {
-        it('Shows DJs', () => {
+        it.only('Shows DJs', () => {
             cy.request('POST', '/test/clearDB');
             cy.request('POST', '/test/seed/djs');
 
@@ -70,6 +70,9 @@ describe('Event', () => {
                 cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
                 cy.get('[data-cy=event-dj]').should('exist');
+
+                // try chatting
+                cy.get('[data-cy=message-dj-button]').first().click();
             });
         });
     });

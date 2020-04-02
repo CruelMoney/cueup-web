@@ -72,6 +72,7 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat }) => {
                                     {!finished && (
                                         <SecondaryButton
                                             small
+                                            data-cy="message-dj-button"
                                             style={{ position: 'relative', overflow: 'visible' }}
                                             onClick={() => {
                                                 setShowChat(true);
