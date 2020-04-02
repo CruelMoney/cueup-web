@@ -9,6 +9,7 @@ import { LoadingIndicator, Col, RowMobileCol, SmartButton } from 'components/Blo
 import RadioSelect from 'components/RadioSelect';
 import { PAYOUT_TYPES, PAYMENT_PROVIDERS } from 'constants/constants';
 import { Body, SmallHeader } from 'components/Text';
+import useTranslate from 'components/hooks/useTranslate';
 import { REQUEST_PAYMENT_INTENT, PAYMENT_CONFIRMED } from '../../routes/Event/gql';
 import * as tracker from '../../utils/analytics/autotrack';
 import TextWrapper from './TextElement';
@@ -32,7 +33,7 @@ const BankPayForm = ({
 }) => {
     useEffect(() => {
         try {
-            tracker.pageView('cofirm-booking/' + paymentIntent.paymentProvider);
+            tracker.pageView('confirm-booking/' + paymentIntent.paymentProvider);
         } catch (error) {
             captureException(error);
         }
@@ -114,17 +115,9 @@ const BankPayForm = ({
 };
 
 const PaymentWrapper = (props) => {
-    const {
-        translate,
-        onPaymentConfirmed,
-        currency,
-        id,
-        event,
-        gig,
-        currentLanguage,
-        changeCurrency,
-    } = props;
+    const { onPaymentConfirmed, currency, id, event, gig, currentLanguage, changeCurrency } = props;
     const div = useRef();
+    const { translate } = useTranslate();
     const size = useComponentSize(div);
     const [isPaid, setIsPaid] = useState(false);
     const [requestPaymentIntent, { loading, data }] = useLazyQuery(REQUEST_PAYMENT_INTENT);
@@ -185,7 +178,7 @@ const PaymentWrapper = (props) => {
 
     useEffect(() => {
         try {
-            tracker.pageView('cofirm-booking');
+            tracker.pageView('confirm-booking');
         } catch (error) {
             captureException(error);
         }
@@ -205,6 +198,8 @@ const PaymentWrapper = (props) => {
             captureException(error);
         }
     };
+
+    console.log({ paymentIntent, paymentType });
 
     if (isPaid) {
         return <ThankYouContent style={size} translate={translate} />;
@@ -335,7 +330,7 @@ const PayFormContainer = styled.div`
 const ThankYouContent = ({ translate, style }) => {
     useEffect(() => {
         try {
-            tracker.pageView('cofirm-booking/success');
+            tracker.pageView('confirm-booking/success');
         } catch (error) {
             captureException(error);
         }

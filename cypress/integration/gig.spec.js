@@ -49,4 +49,8 @@ describe('Gig', () => {
         cy.get('[data-cy=submit-offer-button]').should('contain', 'Updated');
         cy.get('[data-cy=gig-status]').should('contain', 'Waiting on confirmation from organizer');
     });
+
+    it('Shows up correctly after confirmed', () => {
+        throw new Error('Not implemented');
+    });
 });

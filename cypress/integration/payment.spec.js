@@ -1,88 +1,50 @@
 /// <reference types="Cypress" />
-describe('Event', () => {
-    const fillOuteventForm = () => {
-        // FILL OUT EVENT FORM
-        cy.get('input[name=locationName]').type('Copenhagen, Denmark', { force: true });
-        cy.get('button[type=submit]').click({ force: true });
-        cy.get('input[name=eventName]').type('Test event', { force: true });
-        cy.get('button[name=cueup]').click({ force: true });
-        cy.get('button').contains('Continue').click({ force: true });
-        cy.get('textarea[name=description]').type('Test event description', { force: true });
-        cy.get('button').contains('Continue').click({ force: true });
-        cy.get('input[name=contactName]').type('Test organizer', { force: true });
-        cy.get('input[name=contactPhone]').type('24658061', { force: true });
-        cy.get('input[name=contactEmail]').type('organizer@email.com', { force: true });
-        cy.get('input[name=contactEmailConfirm]').type('organizer@email.com', { force: true });
-        cy.get('button[type=submit]').click({ force: true });
-        cy.get('.request-form').should('contain', 'Thanks');
-    };
+describe('Payment', () => {
+    it.only('Shows necessary info afterwards', () => {
+        cy.request('POST', '/test/clearDB');
+        cy.request('POST', '/test/seed/djs');
 
-    describe('Creating', () => {
-        it('Post event from front page', () => {
-            cy.request('POST', '/test/clearDB');
-            cy.request('POST', '/test/seed/djs');
-            cy.visit('/');
+        const eventData = {
+            customerUserId: 1,
+            gigs: [
+                { djId: 4 },
+                {
+                    djId: 5,
+                    status: 'ACCEPTED',
+                    djFeeAmount: 1500,
+                    offerAmount: 50000,
+                    serviceFeeAmount: 10000,
+                    currency: 'USD',
+                },
+                { djId: 6 },
+            ],
+        };
 
-            fillOuteventForm();
-        });
+        cy.request('POST', '/test/seed/event', eventData).then((response) => {
+            const theEvent = response.body.event;
 
-        it('Post event from location page', () => {
-            cy.request('POST', '/test/clearDB');
-            cy.request('POST', '/test/seed/djs');
-            cy.visit('/book-dj/denmark/copenhagen');
+            expect(theEvent).to.not.eq(null);
+            cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
-            fillOuteventForm();
-        });
-
-        it('Post from direct booking page', () => {
-            cy.request('POST', '/test/clearDB');
-            cy.request('POST', '/test/seed/djs');
-            cy.visit('/user/dj-lolbox-1/overview');
-
-            cy.get('.sidebar button[data-cy=booking-button]').click();
-
-            cy.get('input[name=eventName]').type('Test event');
-            cy.get('button[name=date]').click();
-            cy.get('.react-datepicker__day--selected').click();
-            cy.get('textarea[name=description]').type('Test event description');
-            cy.get('input[name=contactName]').type('Test organizer');
-            cy.get('input[name=contactPhone]').type('24658061');
-            cy.get('input[name=contactEmail]').type('organizer@email.com');
-            cy.get('.sidebar button').contains('BOOK NOW').click();
-            cy.get('h3').should('contain', 'Thanks');
+            cy.get('[data-cy=event-dj]').should('exist');
+            cy.get('[data-cy=offer-price]').should('contain', 'USD500.00');
+            cy.get('[data-cy=book-dj-button]').click();
         });
     });
 
-    describe('Managing', () => {
-        it.only('Shows DJs', () => {
-            cy.request('POST', '/test/clearDB');
-            cy.request('POST', '/test/seed/djs');
+    it('Works with 2factor auth card', () => {
+        throw new Error('Not implemented');
+    });
 
-            const eventData = {
-                customerUserId: 1,
-                gigs: [{ djId: 4 }, { djId: 5 }, { djId: 6 }],
-            };
+    it('Works with bank payout method', () => {
+        throw new Error('Not implemented');
+    });
 
-            cy.request('POST', '/test/seed/event', eventData).then((response) => {
-                const theEvent = response.body.event;
+    it('Works when choosing between payout methods', () => {
+        throw new Error('Not implemented');
+    });
 
-                expect(theEvent).to.not.eq(null);
-                cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
-
-                cy.get('[data-cy=event-dj]').should('exist');
-
-                // try chatting
-                const message = 'Testing chat 🤓' + Math.random();
-                cy.get('[data-cy=message-dj-button]').first().click().wait(500);
-                cy.get('[name=chat-input]').type(message + '{enter}');
-                cy.get('.message-wrapper.send').last().should('contain', message);
-                cy.get('.message-wrapper.send').next().should('contain', 'Delivered');
-                cy.get('.card.popup.active *[data-cy=close-popup-button]').click();
-
-                // try visit profile
-                cy.get('[data-cy=dj-profile-button]').first().click();
-                cy.get('h1').should('contain', 'Dj lolbox');
-            });
-        });
+    it('Fails gracefully if card declined', () => {
+        throw new Error('Not implemented');
     });
 });
