@@ -260,7 +260,11 @@ const PaymentWrapper = (props) => {
                             {offer.totalPayout?.formatted}
                         </TableItem>
                     )}
-                    <TableItem label={payLater ? 'Payment now' : 'Total'} bold>
+                    <TableItem
+                        data-cy="payment-amount"
+                        label={payLater ? 'Payment now' : 'Total'}
+                        bold
+                    >
                         {amount ? amount.formatted : offer.totalPayment.formatted}
                     </TableItem>
                 </MoneyTable>
@@ -318,6 +322,7 @@ const PaymentMethodSelect = (props) => {
             <RowMobileCol right>
                 <SmartButton
                     level="primary"
+                    data-cy="continue-button"
                     loading={loading}
                     onClick={() => setPaymentType(chosen)}
                 >
