@@ -131,6 +131,7 @@ const SuggestionList = ({
                     {suggestions.map((s, idx) => (
                         <Suggestion
                             key={idx}
+                            data-cy="suggestion-list-item"
                             active={suggestionCursor === idx}
                             onMouseEnter={() => setSuggestionCursor(idx)}
                             onMouseDown={() => handleChange(s, true)}

@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { PureComponent, useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     CardElement,
     injectStripe,
@@ -17,7 +17,7 @@ import useTranslate from 'components/hooks/useTranslate';
 import CountrySelector from './CountrySelector';
 import ErrorMessageApollo from './ErrorMessageApollo';
 
-const StripeForm = ({ stripe, onPaymentConfirmed, goBack }) => {
+const StripeForm = ({ stripe, onPaymentConfirmed, goBack, paymentIntent }) => {
     const { translate } = useTranslate();
     const cardElement = useRef();
     const [error, setError] = useState();
@@ -46,6 +46,7 @@ const StripeForm = ({ stripe, onPaymentConfirmed, goBack }) => {
             });
             return false;
         } catch (error) {
+            console.log(error);
             Sentry.captureException(error);
             setError(error.message);
         } finally {
@@ -74,12 +75,11 @@ const StripeForm = ({ stripe, onPaymentConfirmed, goBack }) => {
             cardElement.current,
             options
         );
-        const { error, paymentIntent } = result;
-        if (error) {
+        if (result.error) {
             throw new Error(error.message || 'Something went wrong');
         }
         onPaymentConfirmed();
-        return paymentIntent;
+        return result.paymentIntent;
     };
 
     return (

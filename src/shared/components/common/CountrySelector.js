@@ -6,7 +6,7 @@ import { AVAILABLE_BANKS } from './PayoutForm/gql';
 
 const countries = getData().map(({ code, name }) => ({ label: name, value: code }));
 const CountrySelector = (props) => {
-    return <SearchableSuggestionList {...props} suggestions={countries} />;
+    return <SearchableSuggestionList name="country-selector" {...props} suggestions={countries} />;
 };
 
 export default CountrySelector;

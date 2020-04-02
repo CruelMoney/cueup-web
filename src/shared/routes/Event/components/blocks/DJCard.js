@@ -206,12 +206,16 @@ const Offer = ({
         <OfferRow middle>
             <OfferTextWrapper>
                 {!confirmed && (
-                    <OfferText muted={!offer}>{offer ? offer.formatted : 'No offer yet'}</OfferText>
+                    <OfferText data-cy="offer-price" muted={!offer}>
+                        {offer ? offer.formatted : 'No offer yet'}
+                    </OfferText>
                 )}
                 {tempPaidIndicator && <OfferText muted={true}>Paid and confirmed</OfferText>}
                 {confirmed && !tempPaidIndicator && (
                     <>
-                        <OfferText muted={!offer}>{amountPaid?.formatted}</OfferText>
+                        <OfferText data-cy="offer-price" muted={!offer}>
+                            {amountPaid?.formatted}
+                        </OfferText>
                         <OfferText muted={true}>Paid and confirmed</OfferText>
                         {amountLeft?.amount ? (
                             <OfferText muted>{amountLeft.formatted} remaining</OfferText>
@@ -232,7 +236,9 @@ const Offer = ({
                     </SmartButton>
                 )}
                 {['ACCEPTED'].includes(status) && (
-                    <PrimaryButton onClick={initiateBooking}>Book {name}</PrimaryButton>
+                    <PrimaryButton data-cy="book-dj-button" onClick={initiateBooking}>
+                        Book {name}
+                    </PrimaryButton>
                 )}
                 {['CONFIRMED', 'FINISHED'].includes(status) && (
                     <NavLink to={eventRoutes.review}>

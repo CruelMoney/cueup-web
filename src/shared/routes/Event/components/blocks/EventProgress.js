@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
 import { NavLink } from 'react-router-dom';
 import { eventRoutes } from 'constants/locales/appRoutes';
+import { eventStates } from 'constants/constants';
 import checkmark from '../../../../assets/checkmark.svg';
 import { EVENT_GIGS } from '../../gql';
 import ConditionalWrap from '../../../../components/ConditionalWrap';
@@ -26,7 +27,10 @@ const EventProgress = ({ theEvent = {} }) => {
         <Wrapper>
             <ProgressStep label={'Create event'} completed />
             <ProgressStep label={'Get offers from DJs'} completed={accepted} />
-            <ProgressStep label={'Confirm and pay'} completed={!!theEvent.chosenGig} />
+            <ProgressStep
+                label={'Confirm and pay'}
+                completed={theEvent?.status === eventStates.CONFIRMED}
+            />
             <ProgressStep
                 label={'Review'}
                 completed={theEvent && theEvent.review}
@@ -70,7 +74,10 @@ const ProgressStep = ({ label, completed, to }) => {
                 to ? <NavLink to={to}>{children}</NavLink> : <div>{children}</div>
             }
         >
-            <Step completed={completed}>
+            <Step
+                completed={completed}
+                data-cy={completed ? 'progress-step-complete' : 'progress-step-incomplete'}
+            >
                 {completed && <img src={checkmark} alt="Checkmark" />}
                 {label}
             </Step>
