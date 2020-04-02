@@ -73,6 +73,7 @@ workflows:
           executor: with-redis
           yarn: true
           record: true
+          no-workspace: true
           build: yarn build
           start: yarn start
           wait-on: http://localhost:8500
