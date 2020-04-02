@@ -12,5 +12,6 @@ module.exports = {
         'react-router-dom': require.resolve('react-router-dom'),
         'react-i18next': require.resolve('react-i18next'),
         'i18next': require.resolve('i18next'),
+        'styled-components': require.resolve('styled-components'),
     },
 };

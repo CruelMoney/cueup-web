@@ -99,7 +99,7 @@ export const MessageComposer = ({ chat, placeholder, autoFocus }) => (
                     chat.handleChange(e.target.value);
                 }}
                 onKeyPress={(event) => {
-                    if (event.which === 13 && !event.shiftKey) {
+                    if (event.which === 13 && !event.shiftKey && !event.altKey) {
                         event.preventDefault();
                         chat.sendMessage();
                     }

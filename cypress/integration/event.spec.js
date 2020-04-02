@@ -64,7 +64,6 @@ describe('Event', () => {
 
             cy.request('POST', '/test/seed/event', eventData).then((response) => {
                 const theEvent = response.body.event;
-                console.log({ theEvent });
 
                 expect(theEvent).to.not.eq(null);
                 cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
@@ -72,10 +71,16 @@ describe('Event', () => {
                 cy.get('[data-cy=event-dj]').should('exist');
 
                 // try chatting
-                const message = 'Testing chat 🤓';
-                cy.get('[data-cy=message-dj-button]').first().click();
-                cy.get('[name=chat-input]').type(message);
-                cy.get('.speech-bubble').should('contain', message);
+                const message = 'Testing chat 🤓' + Math.random();
+                cy.get('[data-cy=message-dj-button]').first().click().wait(500);
+                cy.get('[name=chat-input]').type(message + '{enter}');
+                cy.get('.message-wrapper.send').last().should('contain', message);
+                cy.get('.message-wrapper.send').next().should('contain', 'Delivered');
+                cy.get('.card.popup.active *[data-cy=close-popup-button]').click();
+
+                // try visit profile
+                cy.get('[data-cy=dj-profile-button]').first().click();
+                cy.get('h1').should('contain', 'Dj lolbox');
             });
         });
     });

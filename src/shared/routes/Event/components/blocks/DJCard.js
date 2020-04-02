@@ -95,9 +95,13 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat }) => {
                                         }}
                                     >
                                         {finished ? (
-                                            <SecondaryButton small>See profile</SecondaryButton>
+                                            <SecondaryButton data-cy="dj-profile-button" small>
+                                                See profile
+                                            </SecondaryButton>
                                         ) : (
-                                            <TeritaryButton small>See profile</TeritaryButton>
+                                            <TeritaryButton data-cy="dj-profile-button" small>
+                                                See profile
+                                            </TeritaryButton>
                                         )}
                                     </NavLink>
                                 </RowWrap>
@@ -224,7 +228,7 @@ const Offer = ({
                         warning={translate('decline-warning')}
                         level="tertiary"
                     >
-                        Decline
+                        Reject DJ
                     </SmartButton>
                 )}
                 {['ACCEPTED'].includes(status) && (
