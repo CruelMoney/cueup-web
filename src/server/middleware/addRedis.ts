@@ -22,8 +22,6 @@ if (process.env.SETTING === 'development') {
 }
 
 const addRedis = (app) => {
-    console.log('adding redis');
-
     const disableForLoggedIn = (req, res, next) => {
         // Use only cache if user not signed in
         const xToken = req.cookies['x-token'];
@@ -31,12 +29,20 @@ const addRedis = (app) => {
         next();
     };
 
+    const disable = (_req, res, next) => {
+        res.use_express_redis_cache = false;
+        next();
+    };
+
     app.get('*', disableForLoggedIn);
+
+    // disabled routes
+    app.get(['/event', '/event*'], disable);
+    app.get(['/gig', '/gig*'], disable);
+    app.get(['/user', '/user*'], disable);
+
+    // otherwise cache forever
     app.get('*', cache.route({ expire: -1 }));
-    // expire after 60 seconds
-    app.get('/user/*', cache.route({ expire: 60 }));
-    app.get('/event/*', cache.route({ expire: 60 }));
-    app.get('/gig/*', cache.route({ expire: 60 }));
 };
 
 export default addRedis;

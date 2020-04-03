@@ -40,8 +40,6 @@ const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
         );
     }
 
-    console.log({ event });
-
     const canBeChatted =
         (event && event.organizer && ['ACCEPTED', 'OFFERING'].includes(event.status)) ||
         (isChosenGig && ['CONFIRMED'].includes(event.status));

@@ -19,7 +19,7 @@ import serverRenderer from './middleware/serverRenderer';
 require('dotenv').config();
 
 const app: Application = express();
-const isProduction = process.env.SETTING === 'production';
+const isProduction = process.env.NODE_ENV === 'production';
 
 console.log(process.env.NODE_ENV, process.env.SETTING);
 
