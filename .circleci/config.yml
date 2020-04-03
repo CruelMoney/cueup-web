@@ -96,6 +96,7 @@ workflows:
       - deploy: 
           requires:
             - e2e
+            - lint-and-test
           filters:
             tags:
               only: /^v.*/
