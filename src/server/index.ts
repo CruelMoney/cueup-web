@@ -19,9 +19,11 @@ import serverRenderer from './middleware/serverRenderer';
 require('dotenv').config();
 
 const app: Application = express();
-const isDevelopment = process.env.NODE_ENV === 'development';
+const isProduction = process.env.SETTING === 'production';
 
-if (isDevelopment) {
+console.log(process.env.NODE_ENV, process.env.SETTING);
+
+if (!isProduction) {
     app.use(addLogging);
 }
 
@@ -45,7 +47,7 @@ app.use(
     })
 );
 
-!isDevelopment && addRedis(app);
+isProduction && addRedis(app);
 app.use(addApollo);
 app.use(addLoadableExtractor);
 

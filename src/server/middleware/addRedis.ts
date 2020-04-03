@@ -17,7 +17,7 @@ if (REDIS_URL) {
 
 const cache = redis(options);
 
-if (process.env.SETTINGS === 'development') {
+if (process.env.SETTING === 'development') {
     cache.on('message', console.log);
 }
 

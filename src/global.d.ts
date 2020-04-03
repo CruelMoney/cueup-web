@@ -11,7 +11,7 @@ declare namespace NodeJS {
         GOOGLE_API_KEY: ?string;
         XENDIT_PUB_KEY: ?string;
         WEBSITE_URL: ?string;
-        SETTINGS: ?('staging' | 'development' | 'production' | 'test');
+        SETTING: ?('staging' | 'development' | 'production' | 'test');
     }
 }
 
@@ -76,7 +76,7 @@ export interface Environment {
     GOOGLE_API_KEY: ?string;
     XENDIT_PUB_KEY: ?string;
     WEBSITE_URL: ?string;
-    SETTINGS: any;
+    SETTING: any;
 }
 
 interface CustomWindow extends Window {
