@@ -50,7 +50,6 @@ jobs:
   e2e:
     executor: with-redis
     steps:
-      - run-backend
       - checkout
       - cypress/setup:
           executor: with-redis
