@@ -13,8 +13,8 @@ executors:
 
     environment:
       CYPRESS_BASE_URL: http://localhost:8500
-      MYSQL_DATABASE: cueup
-      DB_NAME: cueup
+      MYSQL_DATABASE: circle_test
+      DB_NAME: circle_test
       DB_USERNAME: root
       DB_HOST: "127.0.0.1"
       DB_PORT: "3306"
