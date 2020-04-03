@@ -79,7 +79,8 @@ jobs:
       - run:
           name: Add production remote git
           command: git remote add production dokku@cueup.io:cueup
-      - run: git push << pipeline.git.branch >>
+
+      - run: git push << pipeline.git.branch >> << pipeline.git.branch >>:master
 
 
 workflows:
