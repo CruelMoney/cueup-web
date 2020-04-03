@@ -8,7 +8,7 @@ executors:
     docker:
       - image: cypress/base:12.6.0
       - image: circleci/redis 
-      - image: circleci/mysql
+      - image: circleci/mysql:5.7-ram
       - image: circleci/mongo
 
     environment:
@@ -60,6 +60,7 @@ jobs:
       - cypress/setup:
           executor: with-redis
           yarn: true
+          install-command: yarn --production=false 
           build: 
               - run: yarn build
       - run: yarn e2e
