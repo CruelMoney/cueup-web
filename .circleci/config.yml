@@ -97,6 +97,8 @@ workflows:
           requires:
             - e2e
           filters:
+            tags:
+              only: /^v.*/
             branches:
               only: 
                 - master
