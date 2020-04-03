@@ -237,7 +237,7 @@ describe('Payment', () => {
         });
     });
 
-    it.only('Works with xendit', () => {
+    it('Works with xendit', () => {
         cy.request('POST', '/test/clearDB');
         cy.request('POST', '/test/seed/djs');
 

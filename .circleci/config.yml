@@ -26,9 +26,7 @@ commands:
 
 jobs:
   lint-and-test: 
-    executor:
-      name: node/default
-      tag: "10.17.0"
+    executor: with-redis
     steps:
       - checkout
       - node/install-packages:
