@@ -15,9 +15,7 @@ commands:
   run-backend: 
     description: "Clone and start backend in test mode in the background"
     steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "d7:5c:27:fe:e4:93:28:a7:e6:dd:7b:b0:b6:d9:cf:67"
+      - add_ssh_keys
       - run: ssh-keyscan github.com >>  ~/.ssh/known_hosts
       - run: git clone -b << pipeline.git.branch >> git@github.com:CruelMoney/gql-cueup.git  ~/backend
       - run: echo $PWD
