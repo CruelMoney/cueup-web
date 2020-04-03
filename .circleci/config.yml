@@ -85,9 +85,20 @@ jobs:
 workflows:
   build-deploy:
     jobs:
-      - e2e:
+      - lint-and-test: 
           filters:
             branches:
               only: 
                 - master
                 - staging
+      - e2e:
+          requires:
+              - lint-and-test
+          filters:
+            branches:
+              only: 
+                - master
+                - staging
+      - deploy: 
+          requires:
+            - e2e
