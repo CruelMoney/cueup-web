@@ -14,6 +14,7 @@ executors:
 commands:
   run-backend: 
     description: "Clone and start backend in test mode in the background"
+    working_directory: ~/backend
     steps:
       - add_ssh_keys:
           fingerprints:
