@@ -9,6 +9,8 @@ executors:
       - image: cypress/base:12.6.0
       - image: circleci/redis 
       - image: circleci/mysql
+      - image: circleci/mongo
+      
     environment:
       CYPRESS_BASE_URL: http://localhost:8500
       MYSQL_USER: root
