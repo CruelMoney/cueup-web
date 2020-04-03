@@ -25,7 +25,16 @@ commands:
     steps:
       - run: ssh-keyscan github.com >>  ~/.ssh/known_hosts
       - run: git clone -b << pipeline.git.branch >> git@github.com:CruelMoney/gql-cueup.git  ~/backend
-      - run: cd ~/backend; yarn --production=false
+      - restore_cache:
+          name: Restore Backend modules
+          keys:
+            - v1-backend-{{ checksum "~/backend/yarn.lock" }}
+      - run: cd ~/backend; yarn --frozen-lockfile --production=false
+      - save_cache:
+          name: Save Backend modules
+          key: v1-backend-{{ checksum "~/backend/yarn.lock" }}
+          paths:
+            - ~/backend/node_modules
       - run: 
           command: cd ~/backend; yarn test:run-server
           background: true
@@ -35,15 +44,16 @@ commands:
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
-            - node_modules-{{ checksum "yarn.lock" }}
+            - v1-node_modules-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile --production=false
       - save_cache:
           name: Save Yarn Package Cache
-          key: node_modules-{{ checksum "yarn.lock" }}
+          key: v1-node_modules-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
+            - /root/.cache
 
 
 
