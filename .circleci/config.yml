@@ -4,7 +4,7 @@ orbs:
   cypress: cypress-io/cypress@1.19.1
 
 executors:
-  with-redis:
+  with-redis-mysql-mongo:
     docker:
       - image: cypress/base:12.6.0
       - image: circleci/redis 
@@ -32,10 +32,11 @@ commands:
 
 jobs:
   lint-and-test: 
-    executor: with-redis
+    executor: with-redis-mysql-mongo
     steps:
       - checkout
       - node/install-packages:
+          override-ci: yarn install --frozen-lockfile --production=false
           pkg-manager: yarn
           cache-key: yarn.lock
 
@@ -52,11 +53,12 @@ jobs:
           command: yarn test
 
   e2e:
-    executor: with-redis
+    executor: with-redis-mysql-mongo
     steps:
       - checkout
       - run-backend
       - node/install-packages:
+          override-ci: yarn install --frozen-lockfile --production=false
           pkg-manager: yarn
           cache-key: yarn.lock
       - run: yarn build
