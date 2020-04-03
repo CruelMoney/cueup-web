@@ -56,15 +56,11 @@ jobs:
     steps:
       - checkout
       - run-backend
-      - cypress/setup:
-          executor: with-redis
-          yarn: true
-          install-command: yarn --production=false 
-          build: 
-              - run: yarn build
+      - node/install-packages:
+          pkg-manager: yarn
+          cache-key: yarn.lock
+      - run: yarn build
       - run: yarn e2e
-    
-          
 
   deploy-staging:
     docker:
