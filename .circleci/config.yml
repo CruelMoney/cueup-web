@@ -13,13 +13,9 @@ executors:
 
     environment:
       CYPRESS_BASE_URL: http://localhost:8500
-      MYSQL_USER: cueup
-      MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: cueup
       DB_NAME: cueup
-      DB_USERNAME: cueup
-      DB_PASSWORD: password
+      DB_USERNAME: root
       DB_HOST: "127.0.0.1"
       DB_PORT: "3306"
 
