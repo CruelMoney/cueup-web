@@ -45,6 +45,8 @@ commands:
           paths:
             - ~/.cache/yarn
 
+
+
 jobs:
   lint-and-test: 
     executor: with-redis-mysql-mongo
@@ -72,9 +74,9 @@ jobs:
       - run: yarn build
       - run: yarn e2e
 
-  deploy-staging:
-    docker:
-      - image: alpine/git
+  deploy: 
+    executor: with-redis-mysql-mongo
+    description: Deploy using Dokku
     steps:
       - checkout
       - add_ssh_keys:
@@ -82,28 +84,12 @@ jobs:
             - "f7:9c:16:2f:55:98:08:cb:6d:38:b0:9d:83:ed:e1:e4"
       - run: ssh-keyscan cueup.io >>  ~/.ssh/known_hosts
       - run:
-          name: Add remote git
+          name: Add staging remote git
           command: git remote add staging dokku@cueup.io:staging.cueup
-      - deploy: 
-          name: Deploy staging  
-          command: git push staging master
-
-  deploy-production:
-    docker:
-      - image: alpine/git
-    steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "f7:9c:16:2f:55:98:08:cb:6d:38:b0:9d:83:ed:e1:e4"
-      - run: ssh-keyscan cueup.io >> ~/.ssh/known_hosts
       - run:
-          name: Add remote git
+          name: Add production remote git
           command: git remote add production dokku@cueup.io:cueup
-      - deploy: 
-          name: Deploy production  
-          command: git push production master
-
+      - run: git push << pipeline.git.branch >>
 
 
 workflows:
