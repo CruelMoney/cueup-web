@@ -7,7 +7,7 @@ executors:
   with-redis:
     docker:
       - image: cypress/base:12.6.0
-      - image: circleci/redis      
+      - image: circleci/redis 
     environment:
       CYPRESS_BASE_URL: http://localhost:8500
 
@@ -15,6 +15,9 @@ commands:
   run-backend: 
     description: "Clone and start backend in test mode in the background"
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "d7:5c:27:fe:e4:93:28:a7:e6:dd:7b:b0:b6:d9:cf:67"
       - run: git clone git@github.com:CruelMoney/gql-cueup.git
 
 jobs:
