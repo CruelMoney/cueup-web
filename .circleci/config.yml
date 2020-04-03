@@ -38,8 +38,7 @@ commands:
   
 jobs:
   lint-and-test: 
-    docker: 
-      - image: circleci/node:12.6.0
+    executor: with-redis-mysql-mongo
     steps:
       - checkout
       - yarn-install
