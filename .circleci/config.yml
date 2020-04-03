@@ -11,6 +11,12 @@ executors:
     environment:
       CYPRESS_BASE_URL: http://localhost:8500
 
+commands:
+  run-backend: 
+    description: "Clone and start backend in test mode in the background"
+    steps:
+      - run: git clone git@github.com:CruelMoney/gql-cueup.git
+
 jobs:
   lint-and-test: 
     executor:
@@ -37,6 +43,7 @@ jobs:
   e2e:
     executor: with-redis
     steps:
+      - run-backend
       - checkout
       - cypress/setup:
           executor: with-redis
