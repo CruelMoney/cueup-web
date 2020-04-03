@@ -18,7 +18,7 @@ commands:
       - add_ssh_keys:
           fingerprints:
             - "d7:5c:27:fe:e4:93:28:a7:e6:dd:7b:b0:b6:d9:cf:67"
-      - run: ssh-keyscan github.bom >>  ~/.ssh/known_hosts
+      - run: ssh-keyscan github.com >>  ~/.ssh/known_hosts
       - run: git clone git@github.com:CruelMoney/gql-cueup.git
 
 jobs:
