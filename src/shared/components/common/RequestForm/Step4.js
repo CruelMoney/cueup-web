@@ -23,7 +23,7 @@ const Step4 = ({
     return (
         <div>
             <form onSubmit={submit}>
-                <h3>{translate('requestForm:step-4.header')}</h3>
+                <h3 dangerouslySetInnerHTML={{ __html: translate('requestForm:step-4.header') }} />
                 <RequestSection>
                     <Input
                         label={translate('requestForm:step-4.contact-name')}

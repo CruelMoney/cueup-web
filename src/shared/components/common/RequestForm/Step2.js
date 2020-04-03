@@ -42,7 +42,7 @@ const Step2 = ({
 
     return (
         <form name="requestForm-step-2">
-            <h3>{translate('requestForm:step-2.header')}</h3>
+            <h3 dangerouslySetInnerHTML={{ __html: translate('requestForm:step-2.header') }} />
             <RequestSection>
                 <Input
                     name="eventName"

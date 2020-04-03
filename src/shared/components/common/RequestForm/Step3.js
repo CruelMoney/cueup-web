@@ -18,7 +18,8 @@ const Step3 = ({
 }) => {
     return (
         <form>
-            <h3>{translate('requestForm:step-3.header')}</h3>
+            <h3 dangerouslySetInnerHTML={{ __html: translate('requestForm:step-3.header') }} />
+
             <RequestSection>
                 <Label style={{ marginBottom: '12px', display: 'block' }}>
                     {translate('requestForm:step-3.music-duration')}
@@ -58,12 +59,16 @@ const Step3 = ({
                         })}
                     />
                 </div>
-                <BodySmall style={{ marginTop: '15px' }}>
-                    {translate('requestForm:step-3.guests-description', {
-                        prefix: form.guestsCount === 1000 ? translate('over') : translate('around'),
-                        amount: form.guestsCount,
-                    })}
-                </BodySmall>
+                <BodySmall
+                    style={{ marginTop: '15px' }}
+                    dangerouslySetInnerHTML={{
+                        __html: translate('requestForm:step-3.guests-description', {
+                            prefix:
+                                form.guestsCount === 1000 ? translate('over') : translate('around'),
+                            amount: form.guestsCount,
+                        }),
+                    }}
+                />
             </RequestSection>
             <RequestSection>
                 <Input

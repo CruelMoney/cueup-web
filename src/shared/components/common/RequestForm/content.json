@@ -24,7 +24,7 @@
             "header": "Thanks! <span>Please tell us a bit more.</span>",
             "music-duration": "Music duration",
             "guests": "Guests",
-            "guests-description": "${ prefix } <span>${ amount } people</span> attending the event.",
+            "guests-description": "{{prefix}} <span>{{amount}} people</span> attending the event.",
             "event-description": "Description"
         },
         "step-4": {
@@ -65,7 +65,7 @@
             "header": "Tak! <span>Fortæl os en smule mere.</span>",
             "music-duration": "Musik varighed",
             "guests": "Gæster",
-            "guests-description": "${ prefix } <span>${ amount } gæster</span> til begivenheden.",
+            "guests-description": "{{prefix}} <span>{{amount}} gæster</span> til begivenheden.",
             "event-description": "Beskrivelse"
         },
         "step-4": {

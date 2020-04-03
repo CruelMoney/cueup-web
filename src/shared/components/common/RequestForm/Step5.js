@@ -9,7 +9,7 @@ const Step5 = ({ translate, pushShouldBeEnabled, userId }) => {
 
     return (
         <div>
-            <h3>{translate('requestForm:step-5.header')}</h3>
+            <h3 dangerouslySetInnerHTML={{ __html: translate('requestForm:step-5.header') }} />
             <RequestSection>
                 <Body center>{translate('post-event-succes-message')}</Body>
             </RequestSection>
