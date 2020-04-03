@@ -13,7 +13,7 @@ describe('Event', () => {
         cy.get('input[name=contactPhone]').type('24658061', { force: true });
         cy.get('input[name=contactEmail]').type('organizer@email.com', { force: true });
         cy.get('input[name=contactEmailConfirm]').type('organizer@email.com', { force: true });
-        cy.get('button[type=submit]').click({ force: true });
+        cy.get('[data-cy=submit-event]').click({ force: true });
         cy.get('.request-form').should('contain', 'Thanks');
     };
     describe('Creating', () => {
