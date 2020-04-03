@@ -8,6 +8,7 @@ executors:
     docker:
       - image: cypress/base:12.6.0
       - image: circleci/redis 
+      - image: circleci/mysql
     environment:
       CYPRESS_BASE_URL: http://localhost:8500
 
@@ -56,6 +57,12 @@ jobs:
           yarn: true
           build: 
               - run: yarn build
+      - cypress/test:
+          executor: with-redis
+          yarn: true
+          build: 
+            - run: yarn build
+      - run: yarn e2e
     
           
 
