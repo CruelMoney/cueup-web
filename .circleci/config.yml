@@ -37,10 +37,10 @@ jobs:
   e2e:
     executor: with-redis
     steps:
+      - checkout
       - cypress/setup:
           executor: with-redis
           yarn: true
-          cache-key: 'yarn.lock'
           build: 
               - run: yarn build
     
