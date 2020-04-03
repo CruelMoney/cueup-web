@@ -85,6 +85,8 @@ describe('Payment', () => {
         cy.request('POST', '/test/seed/event', eventData).then((response) => {
             const theEvent = response.body.event;
 
+            cy.wait(1000);
+
             expect(theEvent).to.not.eq(null);
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
@@ -126,6 +128,7 @@ describe('Payment', () => {
 
         cy.request('POST', '/test/seed/event', eventData).then((response) => {
             const theEvent = response.body.event;
+            cy.wait(1000);
 
             expect(theEvent).to.not.eq(null);
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
@@ -168,6 +171,7 @@ describe('Payment', () => {
 
         cy.request('POST', '/test/seed/event', eventData).then((response) => {
             const theEvent = response.body.event;
+            cy.wait(1000);
 
             expect(theEvent).to.not.eq(null);
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
@@ -212,6 +216,7 @@ describe('Payment', () => {
 
         cy.request('POST', '/test/seed/event', eventData).then((response) => {
             const theEvent = response.body.event;
+            cy.wait(1000);
 
             expect(theEvent).to.not.eq(null);
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
@@ -232,7 +237,7 @@ describe('Payment', () => {
         });
     });
 
-    it('Works with xendit', () => {
+    it.only('Works with xendit', () => {
         cy.request('POST', '/test/clearDB');
         cy.request('POST', '/test/seed/djs');
 
@@ -257,6 +262,7 @@ describe('Payment', () => {
 
         cy.request('POST', '/test/seed/event', eventData).then((response) => {
             const theEvent = response.body.event;
+            cy.wait(1000);
 
             expect(theEvent).to.not.eq(null);
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
@@ -298,6 +304,7 @@ describe('Payment', () => {
 
         cy.request('POST', '/test/seed/event', eventData).then((response) => {
             const theEvent = response.body.event;
+            cy.wait(1000);
 
             expect(theEvent).to.not.eq(null);
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
@@ -339,6 +346,7 @@ describe('Payment', () => {
 
         cy.request('POST', '/test/seed/event', eventData).then((response) => {
             const theEvent = response.body.event;
+            cy.wait(1000);
 
             expect(theEvent).to.not.eq(null);
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
@@ -383,6 +391,7 @@ describe('Payment', () => {
 
         cy.request('POST', '/test/seed/event', eventData).then((response) => {
             const theEvent = response.body.event;
+            cy.wait(1000);
 
             expect(theEvent).to.not.eq(null);
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');

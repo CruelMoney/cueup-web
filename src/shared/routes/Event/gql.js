@@ -208,7 +208,6 @@ const REQUEST_PAYMENT_INTENT = gql`
         requestPaymentIntent(gigId: $id, currency: $currency, paymentType: $paymentType) {
             __typename
             gigId
-            recommendedCurrency
             paymentProvider
             token {
                 token

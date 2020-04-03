@@ -134,7 +134,7 @@ const PaymentWrapper = (props) => {
     const { offer: gigOffer } = gig ?? {};
     const { requestPaymentIntent: paymentIntent } = data ?? {};
 
-    const { recommendedCurrency, amount, offer: paymentOffer } = paymentIntent ?? {};
+    const { amount, offer: paymentOffer } = paymentIntent ?? {};
 
     const offer = {
         ...gigOffer,
@@ -142,7 +142,6 @@ const PaymentWrapper = (props) => {
     };
 
     const canBePaid = offer.daysUntilPaymentPossible < 1;
-    const showCurrencyChange = recommendedCurrency && currency && recommendedCurrency !== currency;
     // can be paid direct
     if (availablePayoutMethods.some((pm) => pm.payoutType === PAYOUT_TYPES.DIRECT) && !canBePaid) {
         availablePayoutMethods = availablePayoutMethods.filter(
@@ -238,21 +237,6 @@ const PaymentWrapper = (props) => {
             </div>
 
             <div className="right">
-                {!loading && showCurrencyChange && (
-                    <p className="notice">
-                        This DJ uses a different currency, you might getter a better deal by paying
-                        in {recommendedCurrency}.{' '}
-                        <a
-                            href="#recommended"
-                            onClick={(_) => {
-                                changeCurrency(recommendedCurrency);
-                            }}
-                        >
-                            Change to {recommendedCurrency}
-                        </a>
-                    </p>
-                )}
-
                 <MoneyTable>
                     <TableItem label={translate('DJ price')}>{offer.offer?.formatted}</TableItem>
                     {!!payLater && (

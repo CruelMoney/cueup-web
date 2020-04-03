@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { useQuery } from 'react-apollo';
 import styled from 'styled-components';
-import { useTransition, animated } from 'react-spring';
+import { useTransition, animated, Globals } from 'react-spring';
 import { useMeasure } from '@softbind/hook-use-measure';
 import { useRouteMatch } from 'react-router';
 import { appRoutes, eventRoutes } from 'constants/locales/appRoutes';
@@ -105,7 +105,7 @@ const getDirection = (newPath) => {
 const Content = React.memo((props) => {
     const { match, location, ...eventProps } = props;
     const { theEvent, loading } = eventProps;
-    const [height, setHeight] = useState('auto');
+    const [height, setHeight] = useState('600px');
     const direction = getDirection(location.pathname);
     const { isSSR } = useServerContext();
 
@@ -115,6 +115,7 @@ const Content = React.memo((props) => {
             friction: 40,
             precision: 0.001,
         },
+        immediate: isSSR,
         from: {
             opacity: 0,
             transform: `translateX(${direction === 'back' ? '-100px' : '100px'}`,
@@ -124,6 +125,7 @@ const Content = React.memo((props) => {
             opacity: 0,
             transform: `translateX(${direction === 'back' ? '100px' : '-100px'}`,
         },
+        initial: null, // don't animate on first mount
     });
 
     return (
@@ -134,12 +136,12 @@ const Content = React.memo((props) => {
 
             <Container>
                 <ContainerRow>
-                    <BorderCol style={{ height: height || 'auto' }}>
+                    <BorderCol style={{ height }}>
                         <AnimationWrapper>
                             {transitions.map(({ item, props, key }) => (
-                                <SSRComponent
+                                <TransitionComponent
+                                    {...props}
                                     item={item}
-                                    ssr={isSSR}
                                     style={props}
                                     key={key}
                                     match={match}
@@ -157,14 +159,6 @@ const Content = React.memo((props) => {
         </div>
     );
 });
-
-const SSRComponent = ({ ssr, ...props }) => {
-    if (ssr) {
-        return <GigRoutes {...props} />;
-    }
-
-    return <TransitionComponent {...props} />;
-};
 
 const GigRoutes = forwardRef((props, ref) => {
     const { style, item, match, eventProps } = props;

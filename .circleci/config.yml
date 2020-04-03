@@ -2,6 +2,15 @@ version: 2.1
 orbs:
   node: circleci/node@2.0.0
   cypress: cypress-io/cypress@1.19.1
+
+executors:
+  with-redis:
+    docker:
+      - image: cypress/base:12.6.0
+      - image: circleci/redis      
+    environment:
+      CYPRESS_BASE_URL: http://localhost:8500
+
 jobs:
   lint-and-test: 
     executor:
@@ -24,6 +33,18 @@ jobs:
       - run:
           name: Run tests
           command: yarn test
+
+  e2e:
+    docker:
+      - image: alpine/git
+    steps:
+      - cypress/setup:
+          executor: with-redis
+          yarn: true
+          build: 
+              - run: yarn build
+    
+          
 
   deploy-staging:
     docker:
@@ -57,26 +78,13 @@ jobs:
           name: Deploy production  
           command: git push production master
 
-executors:
-  with-redis:
-    docker:
-      - image: cypress/base:12.6.0
-      - image: circleci/redis      
-    environment:
-      CYPRESS_BASE_URL: http://localhost:8500
+
 
 workflows:
   build-deploy:
     jobs:
       - lint-and-test
-      - cypress/run:
-          executor: with-redis
-          yarn: true
-          record: true
-          no-workspace: true
-          build: yarn build
-          start: yarn start
-          wait-on: http://localhost:8500
+      - e2e:
           requires:
             - lint-and-test
           filters:
@@ -86,13 +94,13 @@ workflows:
                 - staging
       - deploy-staging:
           requires:
-            - cypress/run
+            - e2e
           filters:
             branches:
               only: staging
       - deploy-production:
           requires:
-            - cypress/run
+            - e2e
           filters:
             branches:
               only: master

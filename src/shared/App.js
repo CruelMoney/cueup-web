@@ -1,5 +1,5 @@
 /* eslint-disable import/first */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import ReactPixel from 'react-facebook-pixel';

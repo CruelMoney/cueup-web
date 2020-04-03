@@ -53,7 +53,7 @@ describe('Event', () => {
     });
 
     describe('Managing', () => {
-        it.only('Shows DJs', () => {
+        it('Shows DJs', () => {
             cy.request('POST', '/test/clearDB');
             cy.request('POST', '/test/seed/djs');
 
@@ -72,7 +72,7 @@ describe('Event', () => {
 
                 // try chatting
                 const message = 'Testing chat 🤓' + Math.random();
-                cy.get('[data-cy=message-dj-button]').first().click().wait(500);
+                cy.get('[data-cy=message-dj-button]').first().click().wait(2000);
                 cy.get('[name=chat-input]').type(message + '{enter}');
                 cy.get('.message-wrapper.send').last().should('contain', message);
                 cy.get('.message-wrapper.send').next().should('contain', 'Delivered');

@@ -42,6 +42,11 @@ const checks = [
         check: (u) => !!u.payoutMethods?.length,
         linkTo: 'settings?modal=payoutMethods',
     },
+    {
+        label: 'Write a bio',
+        check: (u) => !!u.userMetadata.bio,
+        linkTo: 'settings?modal=bio',
+    },
 ];
 
 const ProgressItemText = styled(SmallHeader)`
