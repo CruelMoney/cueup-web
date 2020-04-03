@@ -19,7 +19,7 @@ commands:
       - run: ssh-keyscan github.com >>  ~/.ssh/known_hosts
       - run: git clone -b << pipeline.git.branch >> git@github.com:CruelMoney/gql-cueup.git  ~/backend
       - run: echo $PWD
-      - run: cd gql-cueup; yarn
+      - run: cd ~/backend; yarn
       - run: 
           command: yarn start
           background: true
