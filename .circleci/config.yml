@@ -35,8 +35,7 @@ jobs:
           command: yarn test
 
   e2e:
-    docker:
-      - image: alpine/git
+    executor: with-redis
     steps:
       - cypress/setup:
           executor: with-redis
