@@ -15,7 +15,6 @@ commands:
   run-backend: 
     description: "Clone and start backend in test mode in the background"
     steps:
-      - add_ssh_keys
       - run: ssh-keyscan github.com >>  ~/.ssh/known_hosts
       - run: git clone -b << pipeline.git.branch >> git@github.com:CruelMoney/gql-cueup.git  ~/backend
       - run: echo $PWD
@@ -51,6 +50,7 @@ jobs:
     executor: with-redis
     steps:
       - checkout
+      - run-backend
       - cypress/setup:
           executor: with-redis
           yarn: true
