@@ -7,9 +7,9 @@ executors:
   with-redis-mysql-mongo:
     docker:
       - image: cypress/base:12.6.0
-      - image: circleci/redis 
+      - image: circleci/redis:5.0.5
       - image: circleci/mysql:5.7-ram
-      - image: circleci/mongo
+      - image: circleci/mongo:3.2
 
     environment:
       CYPRESS_BASE_URL: http://localhost:8500
@@ -38,7 +38,8 @@ commands:
   
 jobs:
   lint-and-test: 
-    executor: with-redis-mysql-mongo
+    docker: 
+      - image: circleci/node:12.6.0
     steps:
       - checkout
       - yarn-install
@@ -85,15 +86,8 @@ jobs:
 workflows:
   build-deploy:
     jobs:
-      - lint-and-test: 
-          filters:
-            branches:
-              only: 
-                - master
-                - staging
+      - lint-and-test
       - e2e:
-          requires:
-              - lint-and-test
           filters:
             branches:
               only: 
@@ -102,3 +96,8 @@ workflows:
       - deploy: 
           requires:
             - e2e
+          filters:
+            branches:
+              only: 
+                - master
+                - staging
