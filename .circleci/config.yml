@@ -21,7 +21,7 @@ commands:
       - run: echo $PWD
       - run: cd ~/backend; yarn
       - run: 
-          command: yarn start
+          command: cd ~/backend; yarn start
           background: true
 
 jobs:
