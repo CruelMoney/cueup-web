@@ -109,7 +109,11 @@ const Content = React.forwardRef(
                 <CustomLabel>
                     <TitleClean>Get in touch with {contactName}</TitleClean>
 
-                    <BodySmall>Information will be available when the gig is confirmed.</BodySmall>
+                    {!showInfo && (
+                        <BodySmall>
+                            Information will be available when the gig is confirmed.
+                        </BodySmall>
+                    )}
                     <RowWrap>
                         <ContactPills
                             email={contactEmail}

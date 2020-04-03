@@ -50,7 +50,39 @@ describe('Gig', () => {
         cy.get('[data-cy=gig-status]').should('contain', 'Waiting on confirmation from organizer');
     });
 
-    it('Shows up correctly after confirmed', () => {
-        throw new Error('Not implemented');
+    it.only('Shows up correctly after confirmed', () => {
+        cy.request('POST', '/test/clearDB');
+        cy.request('POST', '/test/seed/djs', { count: 10 });
+        cy.request('POST', '/test/seed/user', dj).then((response) => {
+            cy.setCookie('x-token', response.body.token);
+        });
+
+        const event = {
+            customerUserId: 1,
+            status: 'CONFIRMED',
+            gigs: [
+                {
+                    djId: 11,
+                    status: 'CONFIRMED',
+                    djFeeAmount: 1500,
+                    offerAmount: 50000,
+                    serviceFeeAmount: 10000,
+                    currency: 'USD',
+                    enableBankPayout: true,
+                    enableDirectPayout: true,
+                },
+            ],
+        };
+        cy.request('POST', '/test/seed/event', event);
+
+        cy.visit('/');
+        cy.get('[data-cy=menu-user-link]').click();
+        cy.get('.card.popup.active *[data-cy=close-popup-button]').click();
+        cy.get('[data-cy=navbutton-gigs]').click();
+        cy.get('[data-cy=gig-read-more]').click();
+
+        cy.get('[data-cy=gig-status]').should('contain', 'Confirmed. Get ready to play');
+
+        cy.get('a[href="mailto:contactEmail@email.com"]').should('exist');
     });
 });
