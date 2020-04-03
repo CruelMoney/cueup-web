@@ -19,7 +19,7 @@ commands:
           fingerprints:
             - "d7:5c:27:fe:e4:93:28:a7:e6:dd:7b:b0:b6:d9:cf:67"
       - run: ssh-keyscan github.com >>  ~/.ssh/known_hosts
-      - run: git clone -b {{ .Branch }} git@github.com:CruelMoney/gql-cueup.git 
+      - run: git clone -b << pipeline.git.branch >> git@github.com:CruelMoney/gql-cueup.git ../gql-backend
       - run: cd ..; cd gql-backend
       - run: yarn
       - run: 
