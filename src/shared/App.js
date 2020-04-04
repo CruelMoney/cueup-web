@@ -4,6 +4,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import ReactPixel from 'react-facebook-pixel';
 import { useTranslation } from 'react-i18next';
+import * as Sentry from '@sentry/browser';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 import LazySignup from 'routes/Signup';
 import LazyUser from 'routes/User';
@@ -32,6 +33,13 @@ import './css/style.css';
 const App = ({ location }) => {
     const { environment } = useServerContext();
     const { t, i18n } = useTranslation();
+
+    useEffect(() => {
+        Sentry.init({
+            enabled: environment.SETTING === 'production',
+            dsn: 'https://800ac4dbef6c44bcb65af9fddad9f964@sentry.io/1490082',
+        });
+    }, [environment.SETTING]);
 
     useEffect(() => {
         // Setup custom analytics
