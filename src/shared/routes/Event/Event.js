@@ -139,8 +139,9 @@ const Content = React.memo((props) => {
                     <BorderCol style={{ height }}>
                         <AnimationWrapper>
                             {transitions.map(({ item, props, key }) => (
-                                <TransitionComponent
+                                <SSRComponent
                                     {...props}
+                                    ssr={isSSR}
                                     item={item}
                                     style={props}
                                     key={key}
@@ -159,6 +160,14 @@ const Content = React.memo((props) => {
         </div>
     );
 });
+
+const SSRComponent = ({ ssr, ...props }) => {
+    if (ssr) {
+        return <GigRoutes {...props} />;
+    }
+
+    return <TransitionComponent {...props} />;
+};
 
 const GigRoutes = forwardRef((props, ref) => {
     const { style, item, match, eventProps } = props;

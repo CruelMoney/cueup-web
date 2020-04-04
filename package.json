@@ -30,7 +30,9 @@
     "update:blog": "babel-node scripts/update-blogposts.js",
     "cy:open": "cypress open",
     "cy:run": "cypress run --record",
-    "e2e": "start-server-and-test start http://localhost:8500 cy:run"
+    "e2e": "start-server-and-test start http://localhost:8500 cy:run",
+    "cy:run:local": "cypress run",
+    "e2e:local": "start-server-and-test start http://localhost:8500 cy:run:local"
   },
   "dependencies": {
     "@apollo/react-ssr": "^3.1.3",
