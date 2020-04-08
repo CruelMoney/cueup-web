@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Body } from 'components/Text';
+import useTranslate from 'components/hooks/useTranslate';
 import Svg404 from '../graphics/404';
 
-const EmptyPage = ({ message, title, translate }) => {
+const EmptyPage = ({ message, title }) => {
+    const { translate } = useTranslate();
     const renderTitle = title ? title : translate('empty-page-message');
 
     return (

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Query } from 'react-apollo';
 import usePushNotifications from 'components/hooks/usePushNotifications';
+import useTranslate from 'components/hooks/useTranslate';
 import EmptyPage from '../../../../../components/common/EmptyPage';
 import { LoadingPlaceholder2 } from '../../../../../components/common/LoadingPlaceholder';
 import { MY_GIGS } from '../../../../../components/gql';
@@ -23,7 +24,8 @@ const getPriority = (gig) => {
 };
 
 const Gigs = (props) => {
-    const { translate, notifications = [], user, currentLanguage, loading: loadingUser } = props;
+    const { translate } = useTranslate();
+    const { notifications = [], user, currentLanguage, loading: loadingUser } = props;
 
     const approved = user?.appMetadata?.approved;
 
