@@ -8,17 +8,14 @@ import { Col } from '../../../../components/Blocks';
 import DjCard from '../../components/blocks/DJCard';
 import { EVENT_GIGS } from '../../gql';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
-import { notificationService } from '../../../../utils/NotificationService';
+import { notificationService, useNotifications } from '../../../../utils/NotificationService';
 import EmptyPage from '../../../../components/common/EmptyPage';
 import { gigStates } from '../../../../constants/constants';
 
 const EventGigs = React.forwardRef(
     ({ theEvent = {}, loading: loadingEvent, translate, currency }, ref) => {
-        const { environment } = useServerContext();
-
         const { status } = theEvent;
 
-        const [gigMessages, setGigMessages] = useState([]);
         const { data = {}, loading: loadingGigs } = useQuery(EVENT_GIGS, {
             skip: !theEvent.id,
             variables: {
@@ -28,30 +25,11 @@ const EventGigs = React.forwardRef(
             },
         });
 
-        useEffect(() => {
-            const connect = async () => {
-                try {
-                    console.log('init');
+        const [notifications, clearNotifications] = useNotifications({
+            userId: theEvent.organizer.id,
+        });
 
-                    notificationService.init(theEvent.organizer.id, environment.CHAT_DOMAIN);
-                    const res = await notificationService.getChatStatus();
-                    console.log({ res });
-                    setGigMessages(res);
-                } catch (error) {
-                    console.log(error);
-                    captureException(error);
-                }
-            };
-            if (theEvent && theEvent.organizer) {
-                connect();
-                return () => {
-                    console.log('dispose');
-                    notificationService.dispose();
-                };
-            }
-        }, [theEvent, environment]);
-
-        const readRoom = () => setGigMessages([]);
+        const readRoom = () => clearNotifications();
 
         const loading = loadingEvent || loadingGigs;
 
@@ -64,7 +42,7 @@ const EventGigs = React.forwardRef(
             .filter((g) => g.status !== 'LOST')
             .map((g) => {
                 g.hasMessage =
-                    gigMessages[g.id] && gigMessages[g.id].read < gigMessages[g.id].total;
+                    notifications[g.id] && notifications[g.id].read < notifications[g.id].total;
                 return g;
             });
 

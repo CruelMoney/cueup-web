@@ -1,4 +1,6 @@
 import io from 'socket.io-client';
+import { useEffect, useState } from 'react';
+import { useServerContext } from 'components/hooks/useServerContext';
 
 export default class NotificationService {
     constructor() {
@@ -66,6 +68,29 @@ export default class NotificationService {
         });
     };
 }
+
+export const useNotifications = ({ userId }) => {
+    const [notifications, setNotifications] = useState([]);
+    const { environment } = useServerContext();
+
+    useEffect(() => {
+        const connect = async () => {
+            notificationService.init(userId, environment.CHAT_DOMAIN);
+            const nn = await notificationService.getChatStatus();
+            setNotifications(nn);
+        };
+        if (userId) {
+            connect();
+            return () => {
+                notificationService.dispose();
+            };
+        }
+    }, [userId, environment]);
+
+    const clearNotifications = () => setNotifications([]);
+
+    return [notifications, clearNotifications];
+};
 
 // Singleton pattern
 export const notificationService = new NotificationService();
