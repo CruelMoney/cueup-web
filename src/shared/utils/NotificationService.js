@@ -1,4 +1,6 @@
 import io from 'socket.io-client';
+import { useEffect, useState } from 'react';
+import { useServerContext } from 'components/hooks/useServerContext';
 
 export default class NotificationService {
     constructor() {
@@ -7,15 +9,12 @@ export default class NotificationService {
 
     init = (userId, domain) => {
         return new Promise((resolve, reject) => {
-            if (this.socket) {
-                return reject('Already initialized');
+            if (!this.socket) {
+                this.socket = io(domain + '?userId=' + userId, {});
             }
             if (!userId) {
                 return reject('No userId');
             }
-            console.log('connecting to: ', domain + '?userId=' + userId);
-
-            this.socket = io(domain + '?userId=' + userId, {});
 
             this.socket.on('initialize notifications', (notifications) => {
                 resolve(notifications);
@@ -46,7 +45,8 @@ export default class NotificationService {
     dispose = () => {
         console.log('Disposing');
         if (this.socket) {
-            return this.socket.close();
+            this.socket.close();
+            this.socket = null;
         }
     };
 
@@ -68,6 +68,29 @@ export default class NotificationService {
         });
     };
 }
+
+export const useNotifications = ({ userId }) => {
+    const [notifications, setNotifications] = useState([]);
+    const { environment } = useServerContext();
+
+    useEffect(() => {
+        const connect = async () => {
+            notificationService.init(userId, environment.CHAT_DOMAIN);
+            const nn = await notificationService.getChatStatus();
+            setNotifications(nn);
+        };
+        if (userId) {
+            connect();
+            return () => {
+                notificationService.dispose();
+            };
+        }
+    }, [userId, environment]);
+
+    const clearNotifications = () => setNotifications([]);
+
+    return [notifications, clearNotifications];
+};
 
 // Singleton pattern
 export const notificationService = new NotificationService();

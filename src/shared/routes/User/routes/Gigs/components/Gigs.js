@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Query } from 'react-apollo';
 import usePushNotifications from 'components/hooks/usePushNotifications';
+import useTranslate from 'components/hooks/useTranslate';
+import { useNotifications } from 'utils/NotificationService';
 import EmptyPage from '../../../../../components/common/EmptyPage';
 import { LoadingPlaceholder2 } from '../../../../../components/common/LoadingPlaceholder';
 import { MY_GIGS } from '../../../../../components/gql';
@@ -23,7 +25,10 @@ const getPriority = (gig) => {
 };
 
 const Gigs = (props) => {
-    const { translate, notifications = [], user, currentLanguage, loading: loadingUser } = props;
+    const { translate } = useTranslate();
+    const { user, currentLanguage, loading: loadingUser } = props;
+
+    const [notifications] = useNotifications({ userId: user?.id });
 
     const approved = user?.appMetadata?.approved;
 
@@ -45,10 +50,9 @@ const Gigs = (props) => {
                     (filter.length === 0 || filter.includes(status))
             )
             .map((gig) => {
-                const notification = notifications.find((noti) => {
-                    return String(noti.room) === String(gig.id);
-                });
-                gig.hasMessage = notification;
+                gig.hasMessage =
+                    notifications[gig.id] &&
+                    notifications[gig.id].read < notifications[gig.id].total;
                 return gig;
             })
             .sort((g1, g2) => getPriority(g1) - getPriority(g2));

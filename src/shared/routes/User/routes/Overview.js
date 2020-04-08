@@ -334,16 +334,23 @@ const PhotosArea = ({ media, isOwn }) => {
 
     return (
         <PhotoGridWrapper>
-            <PhotoGrid>
-                {renderItems.map((m, idx) => (
-                    <li key={m.id}>
-                        {m.type === 'VIDEO' ? (
-                            <GracefullVideo src={m.path} loop autoPlay muted playsInline animate />
-                        ) : (
-                            <GracefullImage src={m.path} animate />
-                        )}
-                        {idx === renderItems.length - 1 && (
-                            <Link to={'photos'}>
+            <Link to={'photos'}>
+                <PhotoGrid>
+                    {renderItems.map((m, idx) => (
+                        <li key={m.id}>
+                            {m.type === 'VIDEO' ? (
+                                <GracefullVideo
+                                    src={m.path}
+                                    loop
+                                    autoPlay
+                                    muted
+                                    playsInline
+                                    animate
+                                />
+                            ) : (
+                                <GracefullImage src={m.path} animate />
+                            )}
+                            {idx === renderItems.length - 1 && (
                                 <ReadMore
                                     color="#fff"
                                     style={{
@@ -367,11 +374,11 @@ const PhotosArea = ({ media, isOwn }) => {
                                         </span>
                                     )}
                                 </ReadMore>
-                            </Link>
-                        )}
-                    </li>
-                ))}
-            </PhotoGrid>
+                            )}
+                        </li>
+                    ))}
+                </PhotoGrid>
+            </Link>
         </PhotoGridWrapper>
     );
 };
