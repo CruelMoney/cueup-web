@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useQuery } from 'react-apollo';
-import { captureException } from '@sentry/core';
 import useTranslate from 'components/hooks/useTranslate';
-import { useServerContext } from 'components/hooks/useServerContext';
 import { Title, Body, HeaderTitle } from '../../../../components/Text';
 import { Col } from '../../../../components/Blocks';
 import DjCard from '../../components/blocks/DJCard';
 import { EVENT_GIGS } from '../../gql';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
-import { notificationService, useNotifications } from '../../../../utils/NotificationService';
+import { useNotifications } from '../../../../utils/NotificationService';
 import EmptyPage from '../../../../components/common/EmptyPage';
 import { gigStates } from '../../../../constants/constants';
 
