@@ -481,6 +481,7 @@ const Images = ({ renderMedia, isOwn, deleteFile, updateFilesOrder, children }) 
                             autoPlay
                             muted
                             playsInline
+                            canBeUnMuted
                         />
                     )}
                     {isOwn && file.id && (
