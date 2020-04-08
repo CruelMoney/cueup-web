@@ -31,8 +31,11 @@ const EventGigs = React.forwardRef(
         useEffect(() => {
             const connect = async () => {
                 try {
+                    console.log('init');
+
                     notificationService.init(theEvent.organizer.id, environment.CHAT_DOMAIN);
                     const res = await notificationService.getChatStatus();
+                    console.log({ res });
                     setGigMessages(res);
                 } catch (error) {
                     console.log(error);
@@ -41,7 +44,10 @@ const EventGigs = React.forwardRef(
             };
             if (theEvent && theEvent.organizer) {
                 connect();
-                return notificationService.dispose;
+                return () => {
+                    console.log('dispose');
+                    notificationService.dispose();
+                };
             }
         }, [theEvent, environment]);
 

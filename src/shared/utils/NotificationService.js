@@ -7,15 +7,12 @@ export default class NotificationService {
 
     init = (userId, domain) => {
         return new Promise((resolve, reject) => {
-            if (this.socket) {
-                return reject('Already initialized');
+            if (!this.socket) {
+                this.socket = io(domain + '?userId=' + userId, {});
             }
             if (!userId) {
                 return reject('No userId');
             }
-            console.log('connecting to: ', domain + '?userId=' + userId);
-
-            this.socket = io(domain + '?userId=' + userId, {});
 
             this.socket.on('initialize notifications', (notifications) => {
                 resolve(notifications);
@@ -46,7 +43,8 @@ export default class NotificationService {
     dispose = () => {
         console.log('Disposing');
         if (this.socket) {
-            return this.socket.close();
+            this.socket.close();
+            this.socket = null;
         }
     };
 
