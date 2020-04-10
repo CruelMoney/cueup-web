@@ -12,6 +12,7 @@ import addSitemap from 'middleware/addSitemap';
 import { addLanguage } from 'middleware/i18next';
 import addLogging from 'middleware/addLogging';
 import addTestEndpoints from 'middleware/addTestEndpoints';
+import addSocialImages from 'middleware/addSocialImages';
 import paths from '../../config/paths';
 import errorHandler from './middleware/errorHandler';
 import serverRenderer from './middleware/serverRenderer';
@@ -28,6 +29,7 @@ if (!isProduction) {
 }
 
 addTestEndpoints(app);
+addSocialImages(app);
 
 // Use Nginx or Apache to serve static assets in production or remove the if() around the following
 // lines to use the express.static middleware to serve assets for production (not recommended!)
