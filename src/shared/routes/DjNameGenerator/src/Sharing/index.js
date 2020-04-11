@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { FacebookShareButton, TwitterShareButton, FacebookIcon, TwitterIcon } from 'react-share';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { useServerContext } from 'components/hooks/useServerContext';
 
 const Sharing = ({ url }) => {
+    const { environment } = useServerContext();
     const [copied, setCopied] = useState(false);
 
     useEffect(() => {
@@ -13,15 +15,17 @@ const Sharing = ({ url }) => {
         }
     }, [copied]);
 
+    const finalUrl = url ?? environment.WEBSITE_URL;
+
     return (
         <div className="share-options">
-            <FacebookShareButton url={url}>
+            <FacebookShareButton url={finalUrl}>
                 <FacebookIcon size={32} round={true} />
             </FacebookShareButton>
-            <TwitterShareButton url={url}>
+            <TwitterShareButton url={finalUrl}>
                 <TwitterIcon size={32} round={true} />
             </TwitterShareButton>
-            <CopyToClipboard text={url} onCopy={() => setCopied(true)}>
+            <CopyToClipboard text={finalUrl} onCopy={() => setCopied(true)}>
                 <button className="clipboard-icon">
                     <svg
                         version="1.1"

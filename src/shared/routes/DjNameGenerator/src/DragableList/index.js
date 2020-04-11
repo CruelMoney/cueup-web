@@ -1,10 +1,10 @@
 // Original: https://github.com/chenglou/react-motion/tree/master/demos/demo8-draggable-list
 
 import React, { useRef } from 'react';
-import clamp from 'lodash-es/clamp';
+import clamp from 'lodash/clamp';
 import swap from 'lodash-move';
 import { useDrag } from 'react-use-gesture';
-import { useSprings, animated } from 'react-spring';
+import { useSprings, animated, interpolate } from 'react-spring';
 
 const ITEM_HEIGHT = 100;
 const GAP = 10;
@@ -60,12 +60,14 @@ function DraggableList({ items, onOrderChanged }) {
                         className={'dragable-card' + (!items[i].enabled ? ' inactive' : '')}
                         style={{
                             zIndex,
-                            boxShadow: shadow.to(
+                            height: ITEM_HEIGHT,
+                            boxShadow: shadow.interpolate(
                                 (s) => `rgba(0, 0, 0, 0.15) 0px ${s}px ${2 * s}px 0px`
                             ),
-                            y,
-                            scale,
-                            height: ITEM_HEIGHT,
+                            transform: interpolate(
+                                [y, scale],
+                                (y, s) => `translate3d(0,${y}px,0) scale(${s})`
+                            ),
                         }}
                     >
                         {items[i].Component}

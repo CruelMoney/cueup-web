@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useServerContext } from 'components/hooks/useServerContext';
+
 import useGenerateName, { TYPES } from './useGenerateName';
 import DraggableList from './DragableList';
 import ToggleSwitch from './ToggleSwitch';
@@ -6,10 +8,10 @@ import Button from './Button';
 import Logo from './Logo';
 import AnimatedText from './AnimatedName';
 import { ReactComponent as ReorderIcon } from './reorder-four.svg';
-import './index.css';
 import Sharing from './Sharing';
 import ContinueButton from './ContinueButton';
 import TextInput from './TextInput';
+import './index.css';
 
 const CATEGORIES = [
     {
@@ -35,6 +37,8 @@ const CATEGORIES = [
 ];
 
 function App() {
+    const { environment } = useServerContext();
+
     const [categories, setCategories] = useState([
         { type: TYPES.ADJECTIVES, enabled: true, order: 0 },
         { type: TYPES.HIPHOP, enabled: true, order: 1 },
@@ -138,7 +142,7 @@ function App() {
                     <p className="counter">
                         <span>{count}</span> DJ names generated
                     </p>
-                    <Sharing url={window.location.href} />
+                    <Sharing />
                 </div>
 
                 <div className={'dj-name-wrapper' + (hasGenerated ? ' active' : '')}>
@@ -147,7 +151,9 @@ function App() {
                     </h1>
                     <div className="actions">
                         <Sharing
-                            url={`http://localhost:8500/sharing-previews/dj-name-generator.png?name=${encodeURIComponent(
+                            url={`${
+                                environment.WEBSITE_URL
+                            }/sharing-previews/dj-name-generator.png?name=${encodeURIComponent(
                                 name
                             )}`}
                         />
