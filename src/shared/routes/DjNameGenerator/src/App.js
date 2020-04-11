@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router';
 import { useServerContext } from 'components/hooks/useServerContext';
-
 import useGenerateName, { TYPES } from './useGenerateName';
 import DraggableList from './DragableList';
 import ToggleSwitch from './ToggleSwitch';
@@ -105,6 +106,7 @@ function App() {
                     </p>
                 </div>
 
+                <div style={{ flex: 1 }} />
                 <div>
                     <DraggableList
                         onOrderChanged={onOrderChanged}
@@ -132,7 +134,7 @@ function App() {
                         />
                     </div>
                 </div>
-                <div style={{ flex: 1 }} />
+                <div style={{ flex: 2 }} />
                 <Button onClick={clickHandler} disabled={!categories.some((c) => c.enabled)}>
                     Generate
                 </Button>
@@ -142,7 +144,11 @@ function App() {
                     <p className="counter">
                         <span>{count}</span> DJ names generated
                     </p>
-                    <Sharing />
+                    <Sharing
+                        url={`/dj-name-generator${
+                            hasGenerated ? '?name=' + encodeURIComponent(name) : ''
+                        }`}
+                    />
                 </div>
 
                 <div className={'dj-name-wrapper' + (hasGenerated ? ' active' : '')}>
@@ -185,7 +191,39 @@ const Category = ({ enabled, c, toggleCategory, setName }) => {
 };
 
 const AppWithMeta = () => {
-    return <App />;
+    const location = useLocation();
+    const { environment } = useServerContext();
+    const title = 'DJ Name Generator | Cueup';
+    const description = 'Find your DJ name from 19 billion possibilities.';
+    const thumb =
+        environment.WEBSITE_URL + '/sharing-previews/dj-name-generator.png' + location.search;
+
+    return (
+        <>
+            <Helmet>
+                <title>{title}</title>
+
+                <meta name="description" content={description} />
+                <meta
+                    name="keywords"
+                    content="dj, book, rent, copenhagen, cueup, music, events, party, wedding, birthday"
+                />
+
+                <meta property="og:title" content={title} />
+                <meta property="og:description" content={description} />
+                <meta property="og:image" content={thumb} />
+
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:site" content="@@CueupDK" />
+                <meta name="twitter:creator" content="@@CueupDK" />
+                <meta name="twitter:title" content={title} />
+                <meta name="twitter:description" content={description} />
+                <meta name="twitter:image" content={thumb} />
+            </Helmet>
+
+            <App />
+        </>
+    );
 };
 
 export default AppWithMeta;
