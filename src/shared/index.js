@@ -48,7 +48,7 @@ const Setup = ({ location }) => {
     const title = t('Book DJs with ease') + ' | Cueup';
     const description = t('site-description');
 
-    const pageURL = environment.CALLBACK_DOMAIN + location.pathname;
+    const pageURL = environment.WEBSITE_URL + location.pathname;
     return (
         <ErrorHandling>
             <Helmet>
@@ -75,6 +75,8 @@ const Setup = ({ location }) => {
                 <meta name="twitter:description" content={description} />
                 <meta name="twitter:image" content={thumb} />
                 <meta name="twitter:url" content={pageURL} />
+
+                <script async src="https://www.googletagmanager.com/gtag/js?id=UA-59876038-4" />
             </Helmet>
 
             <Switch>

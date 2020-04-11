@@ -28,6 +28,7 @@ const environment: Environment = {
         ? 'AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ'
         : 'AIzaSyDYsMT5dhTnBLMcAetq4NGVWUyijkrVSHs',
     SETTING: process.env.SETTING || 'development',
+    ONE_SIGNAL_KEY: process.env.REACT_APP_ONE_SIGNAL_APP_ID!,
 };
 
 const serverRenderer = () => async (req, res) => {

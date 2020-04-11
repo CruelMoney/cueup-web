@@ -330,9 +330,12 @@ const Footer = ({
                                 </a>
                             </li>
                             <li>
-                                <Link to={translate(appRoutes.djNameGenerator)}>
+                                <a
+                                    className="link-look"
+                                    href={translate(appRoutes.djNameGenerator)}
+                                >
                                     DJ name generator
-                                </Link>
+                                </a>
                             </li>
                         </ul>
                     </div>

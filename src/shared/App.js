@@ -2,6 +2,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 import LazySignup from 'routes/Signup';
 import LazyUser from 'routes/User';
@@ -10,6 +11,7 @@ import LazyTerms from 'routes/Terms';
 import LazyEvent from 'routes/Event';
 import ResetPassword from 'routes/ResetPassword';
 import LazyLocation, { LazyLocationsOverview } from 'routes/Location';
+import { useServerContext } from 'components/hooks/useServerContext';
 import LazyGig from 'routes/Gig';
 
 import LazyFaq from 'routes/Faq';
@@ -24,8 +26,35 @@ import { ProvideMobileMenu } from './components/MobileMenu';
 import './css/style.css';
 
 const App = () => {
+    const { environment } = useServerContext();
+
     return (
         <>
+            <Helmet>
+                <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async />
+                <script
+                    // eslint-disable-next-line react/no-danger
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                    var OneSignal = window.OneSignal || [];
+                    OneSignal.push(function() {
+                        OneSignal.init({
+                        appId: "${environment.ONE_SIGNAL_KEY}",
+                        autoResubscribe: true,
+                        notifyButton: {
+                            enable: false,
+                        },
+                        welcomeNotification: {
+                            disable: true
+                        },
+                        allowLocalhostAsSecureOrigin: true,
+
+                        });
+                    });
+                `,
+                    }}
+                />
+            </Helmet>
             <ProvideMobileMenu>
                 <Navigation />
                 <RouteWrapper />

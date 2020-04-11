@@ -10,6 +10,7 @@ declare namespace NodeJS {
         PIXEL_ID: ?string;
         GOOGLE_API_KEY: ?string;
         XENDIT_PUB_KEY: ?string;
+        ONE_SIGNAL_KEY: ?string;
         WEBSITE_URL: ?string;
         SETTING: ?('staging' | 'development' | 'production' | 'test');
     }
@@ -77,6 +78,7 @@ export interface Environment {
     XENDIT_PUB_KEY: ?string;
     WEBSITE_URL: ?string;
     SETTING: any;
+    ONE_SIGNAL_KEY: ?string;
 }
 
 interface CustomWindow extends Window {
