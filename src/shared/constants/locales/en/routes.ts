@@ -29,6 +29,7 @@ const routes: RouteKeys = {
     termsPrivacy: '/terms/privacy',
     gig: '/gig',
     resetPassword: '/resetPassword',
+    djNameGenerator: '/dj-name-generator',
 };
 
 export default routes;

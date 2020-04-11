@@ -109,6 +109,7 @@
     "react-spring": "^8.0.27",
     "react-stripe-elements": "^5.0.1",
     "react-tag-input": "^6.4.2",
+    "sanitize": "^2.1.0",
     "slugify": "^1.4.0",
     "smoothscroll-polyfill": "^0.4.4",
     "socket.io-client": "^2.3.0",

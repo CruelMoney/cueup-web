@@ -1,12 +1,14 @@
 import renderSocialImage from 'puppeteer-social-image';
 import express from 'express';
+import { middleware as sanitize } from 'sanitize';
 
 const router = express.Router();
 const { readFileSync } = require('fs');
 
 const djNameGenerator = async (req, res) => {
-    const { name } = req.query;
     try {
+        const name = req.queryString('name');
+
         if (!name) {
             throw new Error('name not included');
         }
@@ -93,6 +95,10 @@ const djNameGenerator = async (req, res) => {
                 font-size: 2em;
                 line-height: 1.2em;
                 letter-spacing: 5px;
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
             }
 
             .button{
@@ -149,11 +155,13 @@ const djNameGenerator = async (req, res) => {
         res.send(img);
     } catch (error) {
         // fallback image
+        console.log(error);
         res.redirect('/images/dj-name-generator.png');
     }
 };
 
 const addSocialImages = (app) => {
+    router.use(sanitize);
     router.get('/dj-name-generator.png', djNameGenerator);
 
     app.use('/sharing-previews', router);
