@@ -7,7 +7,7 @@ import { useSSR } from 'react-i18next';
 import useExternals from 'External';
 import { ServerContextProvider } from 'components/hooks/useServerContext';
 import { CustomWindow } from 'global';
-import App from '../shared/App';
+import App from '../shared';
 import ApolloProvider from '../shared/ApolloProvider';
 
 ReactModal.setAppElement('#app');

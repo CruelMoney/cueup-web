@@ -9,6 +9,7 @@ import loadable from '@loadable/component';
 import { useServerContext } from 'components/hooks/useServerContext.tsx';
 
 import { appRoutes } from 'constants/locales/appRoutes';
+import LazyDjNameGenerator from 'routes/DjNameGenerator';
 import * as gtag from './utils/analytics/autotrack';
 import defaultImage from './assets/images/default.png';
 import ErrorHandling from './components/common/ErrorPage';
@@ -78,7 +79,7 @@ const Setup = ({ location }) => {
 
             <Switch>
                 {/* Here we can add routes that are seperate from the rest of the site */}
-                <Route path={t(appRoutes.djNameGenerator)} component={null} />
+                <Route path={t(appRoutes.djNameGenerator)} component={LazyDjNameGenerator} />
                 <Route component={LazyApp} />
             </Switch>
         </ErrorHandling>

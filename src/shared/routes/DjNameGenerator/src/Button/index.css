@@ -1,0 +1,33 @@
+.btn {
+    background: rgb(49, 218, 255);
+    border: none;
+    border-radius: 15px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    display: block;
+    font-size: 1em;
+    font-weight: 700;
+    height: 50px;
+    letter-spacing: 1px;
+    line-height: 50px;
+    margin: 0px auto;
+    outline: none;
+    overflow: hidden;
+    padding: 0;
+    padding: 0px 1em;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition-duration: 250ms;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.btn:hover {
+    background: rgb(0, 209, 255);
+}
+.btn:disabled {
+    cursor: default;
+    opacity: 0.5;
+}

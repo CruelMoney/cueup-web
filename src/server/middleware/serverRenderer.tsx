@@ -10,7 +10,7 @@ import { I18nextProvider } from 'react-i18next';
 import { languagesArray } from 'constants/locales/languages';
 import { ServerContextProvider } from 'components/hooks/useServerContext';
 import { Environment } from 'global';
-import App from '../../shared/App';
+import App from '../../shared';
 import Html from '../components/HTML';
 
 const production = process.env.NODE_ENV === 'production';

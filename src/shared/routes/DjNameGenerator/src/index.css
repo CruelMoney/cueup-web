@@ -1,0 +1,408 @@
+@font-face {
+    font-family: 'HangTheDj';
+    font-style: normal;
+    src: url('./HANGTHEDJ.ttf') format('truetype');
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    align-items: center;
+    background: #f0f0f0;
+    color: rgb(77, 100, 128);
+    display: flex;
+    font-family: 'system', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
+    height: 100%;
+    justify-content: center;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    text-rendering: optimizelegibility;
+    width: 100%;
+}
+
+.app,
+#root {
+    height: 100%;
+    width: 100%;
+}
+
+.app {
+    display: flex;
+    padding: 2em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: rgb(18, 43, 72);
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0;
+}
+h1 {
+    font-size: 2.85em;
+    margin-left: -3px;
+}
+h2 {
+    margin-bottom: 0.2em;
+}
+
+p {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.5em;
+    margin-bottom: 0;
+    margin-top: 0;
+    opacity: 0.75;
+}
+
+.instructions {
+    margin-bottom: 30px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.content {
+    background: linear-gradient(
+        to bottom,
+        rgba(213, 222, 231, 0.5) 0%,
+        rgba(232, 235, 242, 0.5) 50%,
+        rgba(226, 231, 237, 0.5) 100%
+    );
+    background-blend-mode: normal, color-burn;
+    border-radius: 24px;
+    box-sizing: border-box;
+    padding: 10px;
+    position: relative;
+    width: 100%;
+}
+
+.dragable-card {
+    border-radius: 15px;
+    color: white;
+    overflow: visible;
+    overflow: hidden;
+    padding: 1em;
+    pointer-events: auto;
+    position: absolute;
+    transform-origin: 50% 50% 0px;
+    width: calc(100% - 20px);
+}
+
+.reorder-icon {
+    cursor: move;
+    height: 2.5em;
+    opacity: 0.75;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.5em;
+}
+
+.dragable-card:nth-child(1) {
+    background: linear-gradient(135deg, #f46b45 0%, #eea849 100%);
+}
+.dragable-card:nth-child(2) {
+    background-image: linear-gradient(135deg, #f77062 0%, #fe5196 100%);
+}
+.dragable-card:nth-child(3) {
+    background-image: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+.dragable-card:nth-child(4) {
+    background-image: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.dragable-card .inactive-overlay {
+    background-color: rgba(255, 255, 255, 0.5);
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    -webkit-transition: all 0.4s ease;
+    z-index: 1;
+}
+
+.dragable-card.inactive .inactive-overlay {
+    opacity: 1;
+}
+
+/* Toggles */
+.dragable-card .tgl-btn {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+.dragable-card.inactive .tgl-btn {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+.dragable-card .tgl-light:checked + .tgl-btn {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.category-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    position: relative;
+    user-select: none;
+    z-index: 2;
+}
+
+.category-content h4 {
+    color: #fff;
+    font-family: 'HangTheDj', sans-serif;
+    font-size: 1.5em;
+    letter-spacing: 2px;
+    margin-bottom: 0.5em;
+    text-transform: uppercase;
+}
+
+.category-content .row {
+    display: flex;
+}
+
+.category-content p {
+    font-size: 0.8em;
+    opacity: 0.75;
+}
+
+.options {
+    margin-top: 1em;
+}
+
+.options .tgl-wrapper {
+    justify-content: center;
+}
+
+.left-area {
+    background-color: #fff;
+    border-radius: 30px;
+    box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.006), 0 6.7px 5.3px rgba(0, 0, 0, 0.008),
+        0 12.5px 10px rgba(0, 0, 0, 0.01), 0 22.3px 17.9px rgba(0, 0, 0, 0.012),
+        0 41.8px 33.4px rgba(0, 0, 0, 0.014), 0 100px 80px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+    min-width: 500px;
+    padding: 2em;
+    width: 500px;
+    z-index: 2;
+}
+
+.right-area {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2em;
+    position: relative;
+    width: 100%;
+}
+
+.created-by {
+    align-items: flex-end;
+    bottom: 0em;
+    display: flex;
+    opacity: 0.2;
+    position: absolute;
+    right: 0em;
+}
+.created-by:hover {
+    opacity: 1;
+}
+
+svg.logo {
+    bottom: -10px;
+    fill: #32325d;
+    margin-left: 1em;
+    position: relative;
+    stroke: #32325d;
+    width: 4em;
+}
+.logo-wrapper {
+    position: relative;
+}
+.logo-wrapper:after {
+    bottom: -1em;
+    color: #32325d;
+    content: 'DJ BOOKING';
+    font-size: 0.6em;
+    font-weight: 700;
+    position: absolute;
+    right: 0.2em;
+    text-decoration: none !important;
+}
+
+.dj-name-wrapper {
+    border-radius: 30px;
+    overflow: hidden;
+    padding: 2em;
+    padding-bottom: 1em;
+    text-decoration: none;
+    transition: all 1000ms ease;
+    will-change: transform, box-shadow;
+}
+
+.dj-name-wrapper.active {
+    cursor: pointer;
+}
+.dj-name-wrapper.active:hover {
+    background-color: #fff;
+    box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.006), 0 6.7px 5.3px rgba(0, 0, 0, 0.008),
+        0 12.5px 10px rgba(0, 0, 0, 0.01), 0 22.3px 17.9px rgba(0, 0, 0, 0.012),
+        0 41.8px 33.4px rgba(0, 0, 0, 0.014), 0 100px 80px rgba(0, 0, 0, 0.02);
+    transform: scale(1.05);
+}
+
+.dj-name {
+    font-family: 'HangTheDj', sans-serif;
+    font-size: 1em;
+    text-align: center;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+    margin-top: 2em;
+    position: relative;
+}
+
+.actions button {
+    opacity: 0;
+    transition: opacity 500ms ease;
+}
+
+.dj-name-wrapper.active:hover .actions button {
+    transition-delay: 0ms;
+}
+.dj-name-wrapper.active:hover .actions button:nth-child(2) {
+    transition-delay: 100ms;
+}
+.dj-name-wrapper.active:hover .actions button:nth-child(3) {
+    transition-delay: 200ms;
+}
+.dj-name-wrapper.active:hover .actions button:nth-child(4) {
+    transition-delay: 300ms;
+}
+
+.dj-name-wrapper.active:hover button {
+    opacity: 1;
+}
+
+.clipboard-icon {
+    align-items: center;
+    background-color: #111;
+    border: medium none;
+    border-radius: 50%;
+    color: inherit;
+    cursor: pointer;
+    display: inline-block;
+    display: flex;
+    font: inherit;
+    height: 32px;
+    justify-content: center;
+    margin: 0;
+    padding: 0px;
+    position: relative;
+    width: 32px;
+}
+.clipboard-icon svg {
+    height: 18px;
+    width: 18px;
+}
+.clipboard-icon:hover {
+    background-color: #11111199;
+    opacity: 1 !important;
+}
+
+.share-options {
+    display: flex;
+    height: 32px;
+}
+
+.share-options button {
+    margin-right: 0.25em;
+}
+
+.share-options button:hover {
+    opacity: 0.75;
+    transition: none;
+}
+
+.tooltip {
+    background: #111;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 0.8em;
+    left: 50%;
+    padding: 5px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    transform: translate(-50%, -110%);
+    width: 130px;
+}
+
+.continue-button {
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    transform: scale(1.3) translateX(calc(-50% + 20px));
+    transition: opacity, transform 500ms ease;
+    width: 100%;
+    will-change: opacity, transform;
+}
+.continue-button svg {
+    fill: #111;
+    height: 40px;
+    margin: -3px;
+    margin-left: 0.5em;
+    width: 40px;
+}
+.continue-button h4 {
+    opacity: 0;
+    transition: opacity 500ms ease;
+}
+.continue-button.active {
+    opacity: 1;
+    transition: opacity 500ms ease 500ms, transform 500ms ease;
+}
+.dj-name-wrapper.active:hover .continue-button {
+    transform: none;
+}
+
+.dj-name-wrapper.active:hover .continue-button h4 {
+    opacity: 1;
+}
+
+.menu {
+    align-items: center;
+    display: flex;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.counter {
+    font-weight: 600;
+    margin-right: 1em;
+}
+.counter span {
+    font-size: 1.3em;
+    font-weight: 900;
+    margin-right: 5px;
+}
