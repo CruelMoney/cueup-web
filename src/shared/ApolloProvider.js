@@ -1,11 +1,14 @@
 import React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
+import { split, ApolloLink } from 'apollo-link';
+import { getMainDefinition } from 'apollo-utilities';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import { onError } from 'apollo-link-error';
-import { ApolloLink } from 'apollo-link';
+
 import { setContext } from 'apollo-link-context';
 import { createUploadLink } from 'apollo-upload-client';
+import { WebSocketLink } from 'apollo-link-ws';
 import { useServerContext } from 'components/hooks/useServerContext';
 import introspectionQueryResultData from '../../fragmentTypes.json';
 import resolvers from './actions/resolvers';
@@ -65,7 +68,31 @@ const APIProvider = ({ children }) => {
         fetch: customFetch,
     });
 
-    const link = ApolloLink.from([errorLink, withToken, uploadLink]);
+    const httpLink = ApolloLink.from([errorLink, withToken, uploadLink]);
+
+    const domain = environment.GQL_DOMAIN.split('://').pop();
+    const uri = 'ws://' + domain + '/graphql';
+
+    const wsLink = new WebSocketLink({
+        uri,
+        options: {
+            reconnect: true,
+        },
+    });
+
+    // using the ability to split links, you can send data to each link
+    // depending on what kind of operation is being sent
+    const link = split(
+        // split based on operation type
+        ({ query }) => {
+            const definition = getMainDefinition(query);
+            return (
+                definition.kind === 'OperationDefinition' && definition.operation === 'subscription'
+            );
+        },
+        wsLink,
+        httpLink
+    );
 
     const client = new ApolloClient({
         cache,

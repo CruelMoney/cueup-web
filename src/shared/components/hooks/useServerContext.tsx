@@ -12,6 +12,7 @@ const initialEnvironment: Environment = {
     XENDIT_PUB_KEY: null,
     WEBSITE_URL: null,
     SETTING: 'development',
+    ONE_SIGNAL_KEY: null,
 };
 
 const initial = {

@@ -278,6 +278,14 @@ const Footer = ({
                             <li>
                                 <a
                                     className="link-look"
+                                    onClick={() => window.olark('api.box.expand')}
+                                >
+                                    {translate('contact')}
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    className="link-look"
                                     href={'mailto:chris@cueup.io?subject=Job inquiry'}
                                 >
                                     {translate('Jobs')}
@@ -301,14 +309,7 @@ const Footer = ({
                             <li>
                                 <Link to={translate(appRoutes.faq)}>Help center</Link>
                             </li>
-                            <li>
-                                <a
-                                    className="link-look"
-                                    onClick={() => window.olark('api.box.expand')}
-                                >
-                                    {translate('contact')}
-                                </a>
-                            </li>
+
                             <li>
                                 <a
                                     className="link-look"
@@ -326,6 +327,14 @@ const Footer = ({
                                     href={'mailto:chris@cueup.io?subject=Press inquiry'}
                                 >
                                     {translate('Press')}
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    className="link-look"
+                                    href={translate(appRoutes.djNameGenerator)}
+                                >
+                                    DJ name generator
                                 </a>
                             </li>
                         </ul>

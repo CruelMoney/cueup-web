@@ -4,11 +4,16 @@ import { useEffect } from 'react';
 const Olark = loadable(() => import('./olark'));
 const Stripe = loadable(() => import('./stripe'));
 
+const excludedOlarkRoutes = ['gig', 'dj-name-generator'];
+const excludedStripeRoutes = ['dj-name-generator'];
+
 const useExternals = () => {
     useEffect(() => {
-        Stripe.preload();
+        if (!excludedStripeRoutes.some((s) => window.location.pathname.includes(s))) {
+            Stripe.preload();
+        }
         setTimeout(() => {
-            if (!window.location.pathname.includes('gig')) {
+            if (!excludedOlarkRoutes.some((s) => window.location.pathname.includes(s))) {
                 Olark.preload();
             }
         }, 4000);
