@@ -1,10 +1,10 @@
 # specify the node base image with your desired version node:<version>
-FROM node:12-alpine as builder
+FROM node:12-slim as builder
 WORKDIR /usr/src/app
 COPY package*.json  yarn.lock ./
 RUN yarn install
 
-FROM node:12-alpine
+FROM node:12-slim
 WORKDIR /usr/src/app
 COPY --from=builder /usr/src/app/ /usr/src/app/
 COPY . .
