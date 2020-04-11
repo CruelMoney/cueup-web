@@ -29,7 +29,7 @@ const routes: RouteKeys = {
     resetPassword: '/da/resetPassword',
     termsAgreements: '/da/betingelser/aftaler',
     termsPrivacy: '/da/betingelser/privatliv',
-    djNameGenerator: '/dj-name-generator',
+    djNameGenerator: '/da/dj-name-generator',
 };
 
 export default routes;
