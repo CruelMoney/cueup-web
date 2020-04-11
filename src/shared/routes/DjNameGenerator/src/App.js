@@ -150,13 +150,7 @@ function App() {
                         <AnimatedText content={name} onAnimated={setAnimated} />
                     </h1>
                     <div className="actions">
-                        <Sharing
-                            url={`${
-                                environment.WEBSITE_URL
-                            }/sharing-previews/dj-name-generator.png?name=${encodeURIComponent(
-                                name
-                            )}`}
-                        />
+                        <Sharing url={`/dj-name-generator?name=${encodeURIComponent(name)}`} />
                         <ContinueButton show={hasGenerated && animated} />
                     </div>
                 </div>
@@ -190,4 +184,8 @@ const Category = ({ enabled, c, toggleCategory, setName }) => {
     );
 };
 
-export default App;
+const AppWithMeta = () => {
+    return <App />;
+};
+
+export default AppWithMeta;

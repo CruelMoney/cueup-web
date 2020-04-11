@@ -15,7 +15,7 @@ const Sharing = ({ url }) => {
         }
     }, [copied]);
 
-    const finalUrl = url ?? environment.WEBSITE_URL;
+    const finalUrl = environment.WEBSITE_URL + (url || '');
 
     return (
         <div className="share-options">
