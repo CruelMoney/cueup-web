@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router';
+import { useMutation } from 'react-apollo';
 import { useServerContext } from 'components/hooks/useServerContext';
 import useGenerateName, { TYPES } from './useGenerateName';
 import DraggableList from './DragableList';
@@ -13,6 +14,8 @@ import Sharing from './Sharing';
 import ContinueButton from './ContinueButton';
 import TextInput from './TextInput';
 import './index.css';
+import Counter from './Counter';
+import { NAME_GENERATED } from './gql';
 
 const CATEGORIES = [
     {
@@ -38,7 +41,7 @@ const CATEGORIES = [
 ];
 
 function App() {
-    const { environment } = useServerContext();
+    const [mutate] = useMutation(NAME_GENERATED);
 
     const [categories, setCategories] = useState([
         { type: TYPES.ADJECTIVES, enabled: true, order: 0 },
@@ -48,7 +51,7 @@ function App() {
     ]);
     const [alliterate, setAlliterate] = useState(true);
     const mounted = useRef(false);
-    const [count] = useState(113);
+
     const [nameText, setName] = useState();
     const categoryKeys = categories
         .filter((c) => c.enabled)
@@ -62,6 +65,12 @@ function App() {
         sameFirst: alliterate,
         nameText,
     });
+
+    useEffect(() => {
+        if (hasGenerated) {
+            mutate({ variables: { name } });
+        }
+    }, [name, mutate, hasGenerated]);
 
     const innerGenerate = useCallback(() => {
         setGenerated(true);
@@ -141,9 +150,7 @@ function App() {
             </div>
             <div className="right-area">
                 <div className="menu">
-                    <p className="counter">
-                        <span>{count}</span> DJ names generated
-                    </p>
+                    <Counter />
                     <Sharing
                         url={`/dj-name-generator${
                             hasGenerated ? '?name=' + encodeURIComponent(name) : ''

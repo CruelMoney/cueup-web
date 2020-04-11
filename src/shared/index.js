@@ -75,8 +75,6 @@ const Setup = ({ location }) => {
                 <meta name="twitter:description" content={description} />
                 <meta name="twitter:image" content={thumb} />
                 <meta name="twitter:url" content={pageURL} />
-
-                <script async src="https://www.googletagmanager.com/gtag/js?id=UA-59876038-4" />
             </Helmet>
 
             <Switch>

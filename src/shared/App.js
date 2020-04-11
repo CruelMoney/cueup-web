@@ -26,35 +26,8 @@ import { ProvideMobileMenu } from './components/MobileMenu';
 import './css/style.css';
 
 const App = () => {
-    const { environment } = useServerContext();
-
     return (
         <>
-            <Helmet>
-                <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async />
-                <script
-                    // eslint-disable-next-line react/no-danger
-                    dangerouslySetInnerHTML={{
-                        __html: `
-                    var OneSignal = window.OneSignal || [];
-                    OneSignal.push(function() {
-                        OneSignal.init({
-                        appId: "${environment.ONE_SIGNAL_KEY}",
-                        autoResubscribe: true,
-                        notifyButton: {
-                            enable: false,
-                        },
-                        welcomeNotification: {
-                            disable: true
-                        },
-                        allowLocalhostAsSecureOrigin: true,
-
-                        });
-                    });
-                `,
-                    }}
-                />
-            </Helmet>
             <ProvideMobileMenu>
                 <Navigation />
                 <RouteWrapper />

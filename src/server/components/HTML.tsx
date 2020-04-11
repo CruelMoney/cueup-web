@@ -30,6 +30,32 @@ const HTML = ({
                     name="viewport"
                     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
                 />
+                <script async src="https://www.googletagmanager.com/gtag/js?id=UA-59876038-4" />
+
+                <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async />
+                <script
+                    // eslint-disable-next-line react/no-danger
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                    var OneSignal = window.OneSignal || [];
+                    OneSignal.push(function() {
+                        OneSignal.init({
+                        appId: "${process.env.REACT_APP_ONE_SIGNAL_APP_ID}",
+                        autoResubscribe: true,
+                        notifyButton: {
+                            enable: false,
+                        },
+                        welcomeNotification: {
+                            disable: true
+                        },
+                        allowLocalhostAsSecureOrigin: true,
+
+                        });
+                    });
+                `,
+                    }}
+                />
+
                 {helmet.title.toComponent()}
                 {helmet.meta.toComponent()}
                 {helmet.base.toComponent()}
