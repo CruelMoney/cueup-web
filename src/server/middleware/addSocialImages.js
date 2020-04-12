@@ -7,16 +7,24 @@ const { readFileSync } = require('fs');
 
 const djNameGenerator = async (req, res) => {
     try {
-        const name = req.queryString('name');
+        let name = req.path.split('/').pop();
 
         if (!name) {
             throw new Error('name not included');
         }
+
+        name = decodeURIComponent(name);
+
+        const puppeteerArgs = {
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        };
+
+        if (process.env.NODE_ENV !== 'development') {
+            puppeteerArgs.executablePath = '/usr/bin/chromium-browser';
+        }
+
         const img = await renderSocialImage({
-            puppeteerArgs: {
-                executablePath: '/usr/bin/chromium-browser',
-                args: ['--no-sandbox', '--disable-setuid-sandbox'],
-            },
+            puppeteerArgs,
             templateBody: `
             <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@900&display=swap" rel="stylesheet"> 
                 <div class="main">
@@ -166,7 +174,7 @@ const djNameGenerator = async (req, res) => {
 
 const addSocialImages = (app) => {
     router.use(sanitize);
-    router.get('/dj-name-generator.png', djNameGenerator);
+    router.get('/dj-name-generator/*', djNameGenerator);
 
     app.use('/sharing-previews', router);
 };

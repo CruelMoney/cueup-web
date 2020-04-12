@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useLocation } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import { useMutation } from 'react-apollo';
 import { useServerContext } from 'components/hooks/useServerContext';
 import useGenerateName, { TYPES } from './useGenerateName';
@@ -197,13 +197,20 @@ const Category = ({ enabled, c, toggleCategory, setName }) => {
     );
 };
 
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+}
+
 const AppWithMeta = () => {
-    const location = useLocation();
+    const params = useQuery();
+    const name = params.get('name');
     const { environment } = useServerContext();
     const title = 'DJ Name Generator | Cueup';
     const description = 'Find your DJ name from 19 billion possibilities.';
     const thumb =
-        environment.WEBSITE_URL + '/sharing-previews/dj-name-generator.png' + location.search;
+        environment.WEBSITE_URL +
+        '/sharing-previews/dj-name-generator/' +
+        (name ? encodeURIComponent(name) : '');
 
     return (
         <>
