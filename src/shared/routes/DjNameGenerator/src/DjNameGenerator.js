@@ -203,6 +203,7 @@ function useQuery() {
 
 const AppWithMeta = () => {
     const params = useQuery();
+    const location = useLocation();
     const name = params.get('name');
     const { environment } = useServerContext();
     const title = 'DJ Name Generator | Cueup';
@@ -211,6 +212,8 @@ const AppWithMeta = () => {
         environment.WEBSITE_URL +
         '/sharing-previews/dj-name-generator/' +
         (name ? encodeURIComponent(name) : '');
+
+    const pageURL = environment.WEBSITE_URL + location.pathname + location.search;
 
     return (
         <>
@@ -226,6 +229,7 @@ const AppWithMeta = () => {
                 <meta property="og:title" content={title} />
                 <meta property="og:description" content={description} />
                 <meta property="og:image" content={thumb} />
+                <meta property="og:url" content={pageURL} />
 
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:site" content="@@CueupDK" />
@@ -233,6 +237,7 @@ const AppWithMeta = () => {
                 <meta name="twitter:title" content={title} />
                 <meta name="twitter:description" content={description} />
                 <meta name="twitter:image" content={thumb} />
+                <meta name="twitter:url" content={pageURL} />
             </Helmet>
 
             <App />

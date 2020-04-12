@@ -67,6 +67,7 @@ const Setup = ({ location }) => {
                 <meta property="og:title" content={title} />
                 <meta property="og:description" content={description} />
                 <meta property="og:image" content={thumb} />
+                <meta property="og:type" content={'website'} />
 
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:site" content="@@CueupDK" />

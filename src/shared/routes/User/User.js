@@ -317,6 +317,8 @@ const Index = ({ match, location }) => {
                                             <meta property="og:image" content={thumb} />
                                             <meta name="twitter:image" content={thumb} />
 
+                                            <meta property="og:type" content={'profile'} />
+
                                             <meta name="description" content={description} />
                                             <meta
                                                 name="twitter:description"
