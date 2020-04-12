@@ -3,7 +3,7 @@ import { useSubscription, useQuery } from 'react-apollo';
 import { COUNT_UPDATED_SUB, GET_GENERATED_NAMES_COUNT } from '../gql';
 
 const Counter = () => {
-    const { data: countData } = useQuery(GET_GENERATED_NAMES_COUNT);
+    const { data: countData } = useQuery(GET_GENERATED_NAMES_COUNT, { ssr: false });
 
     const { data } = useSubscription(COUNT_UPDATED_SUB);
 
