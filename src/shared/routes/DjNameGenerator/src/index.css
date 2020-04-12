@@ -18,7 +18,6 @@ body {
     font-family: 'Source Sans Pro', sans-serif;
     height: 100%;
     margin: 0;
-    overflow: hidden;
     padding: 0;
     text-rendering: optimizelegibility;
     width: 100%;
@@ -210,6 +209,10 @@ a {
     z-index: 2;
 }
 
+.left-area button {
+    width: calc(100% - 1em);
+}
+
 .right-area {
     align-items: center;
     display: flex;
@@ -368,14 +371,14 @@ svg.logo {
 .tooltip {
     background: #111;
     border-radius: 3px;
+    bottom: 0;
     color: #fff;
     font-size: 0.8em;
     left: 50%;
     padding: 5px;
     position: absolute;
     text-align: center;
-    top: 0;
-    transform: translate(-50%, -110%);
+    transform: translate(-50%, 110%);
     width: 130px;
 }
 
@@ -448,6 +451,7 @@ svg.logo {
     .menu {
         justify-content: space-between;
         padding: 0.5em;
+        padding-right: 0;
         width: 100%;
     }
     .created-by {
@@ -479,6 +483,7 @@ svg.logo {
     .left-area {
         background-color: #fff;
         border-radius: 0;
+        -webkit-overflow-scrolling: touch;
         overflow-y: scroll;
         padding: 0.5em;
         width: 100vw;
@@ -544,6 +549,9 @@ svg.logo {
     }
     .dj-name-wrapper.active:hover button {
         opacity: 0;
+    }
+    .dj-name-wrapper .share-options {
+        pointer-events: none;
     }
 }
 

@@ -79,10 +79,10 @@ function App() {
     const innerGenerate = useCallback(() => {
         setGenerated(true);
         generate();
-        setSidebar(false);
     }, [generate]);
 
     const clickHandler = () => {
+        setSidebar(false);
         innerGenerate();
     };
 

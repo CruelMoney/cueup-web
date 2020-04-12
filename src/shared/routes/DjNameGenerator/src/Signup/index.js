@@ -38,87 +38,89 @@ export const Signup = ({ active, close, name }) => {
 
     return (
         <div className="signup-wrapper">
-            <div onClick={close} className="close-button">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="512"
-                    height="512"
-                    viewBox="0 0 512 512"
-                >
-                    <path d="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48Zm75.31,260.69a16,16,0,1,1-22.62,22.62L256,278.63l-52.69,52.68a16,16,0,0,1-22.62-22.62L233.37,256l-52.68-52.69a16,16,0,0,1,22.62-22.62L256,233.37l52.69-52.68a16,16,0,0,1,22.62,22.62L278.63,256Z" />
-                </svg>
-            </div>
-            {transitions.map(
-                ({ item, key, props: style }) =>
-                    item && (
-                        <animated.div key={key} style={style} className="card">
-                            <div className="signup-header">
-                                <span className="adjecent">signup</span>
-                                <h2>
-                                    Apply to become DJ at Cueup.
-                                    <span>Get more gigs.</span>
-                                </h2>
+            <div className="inner-content">
+                <div onClick={close} className="close-button">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="512"
+                        height="512"
+                        viewBox="0 0 512 512"
+                    >
+                        <path d="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48Zm75.31,260.69a16,16,0,1,1-22.62,22.62L256,278.63l-52.69,52.68a16,16,0,0,1-22.62-22.62L233.37,256l-52.68-52.69a16,16,0,0,1,22.62-22.62L256,233.37l52.69-52.68a16,16,0,0,1,22.62,22.62L278.63,256Z" />
+                    </svg>
+                </div>
+                {transitions.map(
+                    ({ item, key, props: style }) =>
+                        item && (
+                            <animated.div key={key} style={style} className="card">
+                                <div className="signup-header">
+                                    <span className="adjecent">signup</span>
+                                    <h2>
+                                        Apply to become DJ at Cueup.
+                                        <span>Get more gigs.</span>
+                                    </h2>
 
-                                <a href={'/become-dj'}>
-                                    Read more
-                                    <svg
-                                        fill="#111"
-                                        width="18px"
-                                        height="18px"
-                                        viewBox="0 0 1024 1024"
-                                        rotate="0"
+                                    <a href={'/become-dj'}>
+                                        Read more
+                                        <svg
+                                            fill="#111"
+                                            width="18px"
+                                            height="18px"
+                                            viewBox="0 0 1024 1024"
+                                            rotate="0"
+                                        >
+                                            <path d="M569.8 825.2l276.2-268c12-11.6 18-27.4 18-44.8v-0.8c0-17.4-6-33.2-18-44.8l-276.2-268c-24-25-62.6-25-86.4 0s-23.8 65.4 0 90.4l166 158.8h-428c-34-0-61.4 28.6-61.4 64 0 36 27.4 64 61.2 64h428l-166 158.8c-23.8 25-23.8 65.4 0 90.4 24 25 62.6 25 86.6 0z" />
+                                        </svg>
+                                    </a>
+                                </div>
+
+                                <div>
+                                    <SignupForm name={name} />
+                                    <Hr />
+
+                                    <SmartButton
+                                        level="secondary"
+                                        onClick={onPressSocial('facebook')}
+                                        loading={socialLoading === 'facebook'}
                                     >
-                                        <path d="M569.8 825.2l276.2-268c12-11.6 18-27.4 18-44.8v-0.8c0-17.4-6-33.2-18-44.8l-276.2-268c-24-25-62.6-25-86.4 0s-23.8 65.4 0 90.4l166 158.8h-428c-34-0-61.4 28.6-61.4 64 0 36 27.4 64 61.2 64h428l-166 158.8c-23.8 25-23.8 65.4 0 90.4 24 25 62.6 25 86.6 0z" />
-                                    </svg>
-                                </a>
-                            </div>
+                                        <img src={fbLogo} alt="facebook logo" />
+                                        Continue with Facebook
+                                    </SmartButton>
 
-                            <div>
-                                <SignupForm name={name} />
-                                <Hr />
+                                    <SmartButton
+                                        level="secondary"
+                                        onClick={onPressSocial('google')}
+                                        loading={socialLoading === 'google'}
+                                    >
+                                        <img src={googleLogo} alt="google logo" />
+                                        Continue with Google
+                                    </SmartButton>
+                                </div>
+                            </animated.div>
+                        )
+                )}
 
-                                <SmartButton
-                                    level="secondary"
-                                    onClick={onPressSocial('facebook')}
-                                    loading={socialLoading === 'facebook'}
-                                >
-                                    <img src={fbLogo} alt="facebook logo" />
-                                    Continue with Facebook
-                                </SmartButton>
-
-                                <SmartButton
-                                    level="secondary"
-                                    onClick={onPressSocial('google')}
-                                    loading={socialLoading === 'google'}
-                                >
-                                    <img src={googleLogo} alt="google logo" />
-                                    Continue with Google
-                                </SmartButton>
-                            </div>
-                        </animated.div>
-                    )
-            )}
-
-            <div className="app-buttons">
-                <a href="https://play.google.com/store/apps/details?id=io.cueup.gigs&utm_source=website&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
-                    <img
-                        style={{
-                            height: '60px',
-                        }}
-                        alt="Get it on Google Play"
-                        src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
-                    />
-                </a>
-                <a href="https://apps.apple.com/us/app/cueup-gigs/id1458267647?mt=8">
-                    <img
-                        style={{
-                            top: '-9px',
-                            marginRight: '18px',
-                        }}
-                        alt="Get it on App store"
-                        src={appStoreBadge}
-                    />
-                </a>
+                <div className="app-buttons">
+                    <a href="https://play.google.com/store/apps/details?id=io.cueup.gigs&utm_source=website&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+                        <img
+                            style={{
+                                height: '60px',
+                            }}
+                            alt="Get it on Google Play"
+                            src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
+                        />
+                    </a>
+                    <a href="https://apps.apple.com/us/app/cueup-gigs/id1458267647?mt=8">
+                        <img
+                            style={{
+                                top: '-9px',
+                                marginRight: '18px',
+                            }}
+                            alt="Get it on App store"
+                            src={appStoreBadge}
+                        />
+                    </a>
+                </div>
             </div>
         </div>
     );
