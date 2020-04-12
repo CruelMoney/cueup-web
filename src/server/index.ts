@@ -49,7 +49,7 @@ app.use(
     })
 );
 
-isProduction && addRedis(app);
+addRedis(app);
 app.use(addApollo);
 app.use(addLoadableExtractor);
 
