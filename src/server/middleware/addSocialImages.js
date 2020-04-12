@@ -1,6 +1,6 @@
-import renderSocialImage from 'puppeteer-social-image';
 import express from 'express';
 import { middleware as sanitize } from 'sanitize';
+import renderSocialImage from '../socialImage/src';
 
 const router = express.Router();
 const { readFileSync } = require('fs');
