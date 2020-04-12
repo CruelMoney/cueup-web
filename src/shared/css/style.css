@@ -3403,7 +3403,8 @@ ol.breadcrumbs a {
     }
     .footer-columns > div {
         margin-bottom: 30px;
-        margin-right: 20px;
+        margin-right: 0;
+        width: 50%;
     }
     footer {
         align-items: flex-start;

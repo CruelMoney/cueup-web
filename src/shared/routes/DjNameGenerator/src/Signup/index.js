@@ -113,7 +113,8 @@ export const Signup = ({ active, close, name }) => {
                     <a href="https://apps.apple.com/us/app/cueup-gigs/id1458267647?mt=8">
                         <img
                             style={{
-                                top: '-9px',
+                                height: '40px',
+                                top: '-10px',
                                 marginRight: '18px',
                             }}
                             alt="Get it on App store"
