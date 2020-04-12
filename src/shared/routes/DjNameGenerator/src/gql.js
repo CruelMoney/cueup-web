@@ -18,4 +18,22 @@ const GET_GENERATED_NAMES_COUNT = gql`
     }
 `;
 
-export { NAME_GENERATED, COUNT_UPDATED_SUB, GET_GENERATED_NAMES_COUNT };
+const SLIM_SIGNUP = gql`
+    mutation CreateUser(
+        $email: EmailAddress!
+        $password: String!
+        $artistName: String
+        $redirectLink: String!
+    ) {
+        signUpToken(
+            email: $email
+            password: $password
+            redirectLink: $redirectLink
+            artistName: $artistName
+        ) {
+            token
+        }
+    }
+`;
+
+export { NAME_GENERATED, COUNT_UPDATED_SUB, GET_GENERATED_NAMES_COUNT, SLIM_SIGNUP };

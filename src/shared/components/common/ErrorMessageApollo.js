@@ -2,7 +2,14 @@ import React from 'react';
 import { Mutation } from 'react-apollo';
 import { useServerContext } from 'components/hooks/useServerContext';
 import { REQUEST_EMAIL_VERIFICATION } from '../gql';
-import c from '../../constants/constants';
+
+export const handleError = (error) => {
+    const msg = getErrorMessage(error);
+
+    if (msg) {
+        window.alert(msg);
+    }
+};
 
 export const getErrorMessage = (error) => {
     let msgs = 'There was an error';

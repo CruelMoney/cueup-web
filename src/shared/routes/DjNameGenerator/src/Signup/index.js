@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import { animated, useTransition } from 'react-spring';
 import emailValidator from 'email-validator';
+import { useMutation } from 'react-apollo';
+import * as Sentry from '@sentry/browser';
+import { trackSignup } from 'utils/analytics/autotrack';
 import { Input } from 'components/FormComponents';
 import { SmartButton } from 'components/Blocks';
 import useSocialLogin from 'components/hooks/useSocialLogin';
+import useOnLoggedIn from 'components/hooks/useOnLoggedIn';
+import { useServerContext } from 'components/hooks/useServerContext';
+import { useForm } from 'components/hooks/useForm';
+import { handleError } from 'components/common/ErrorMessageApollo';
 import appStoreBadge from '../../../../assets/app-store-badge.svg';
-import Button from '../Button';
+
 import fbLogo from '../../../../assets/icons/fb.svg';
 import googleLogo from '../../../../assets/icons/google.svg';
+import { SLIM_SIGNUP } from '../gql';
+
 import './index.css';
 
 export const Signup = ({ active, close, name }) => {
@@ -112,11 +121,55 @@ export const Signup = ({ active, close, name }) => {
 };
 
 const SignupForm = ({ name }) => {
+    const onLoggedIn = useOnLoggedIn();
+    const { environment } = useServerContext();
     const [form, setForm] = useState({ artistName: name });
     const updateForm = (data) => setForm((ff) => ({ ...ff, ...data }));
 
+    const [loading, setLoading] = useState(false);
+
+    const [mutate] = useMutation(SLIM_SIGNUP, {
+        onError: handleError,
+    });
+
+    const { registerValidation, unregisterValidation, runValidations } = useForm(form);
+
+    const signup = async (e) => {
+        e.preventDefault();
+
+        const errors = runValidations(true);
+
+        if (errors?.length) {
+            return;
+        }
+        try {
+            setLoading(true);
+            const variables = {
+                ...form,
+                redirectLink: environment.WEBSITE_URL,
+            };
+
+            // can be update or signup
+            const { data } = await mutate({ variables });
+
+            let token = null;
+
+            trackSignup();
+            token = data?.signUpToken?.token;
+
+            if (token) {
+                onLoggedIn({ token });
+            }
+        } catch (err) {
+            console.log(err);
+            Sentry.captureException(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
-        <form>
+        <form onSubmit={signup}>
             <Input
                 blurOnEnter={false}
                 label="Email"
@@ -126,6 +179,8 @@ const SignupForm = ({ name }) => {
                 name="email"
                 onChange={(email) => updateForm({ email: email.trim() })}
                 validation={(v) => (emailValidator.validate(v) ? null : 'Not a valid email')}
+                registerValidation={registerValidation('email')}
+                unregisterValidation={unregisterValidation('email')}
             />
             <Input
                 blurOnEnter={false}
@@ -140,6 +195,8 @@ const SignupForm = ({ name }) => {
                         return 'Please enter password';
                     }
                 }}
+                registerValidation={registerValidation('password')}
+                unregisterValidation={unregisterValidation('password')}
             />
             <Input
                 blurOnEnter={false}
@@ -149,7 +206,9 @@ const SignupForm = ({ name }) => {
                 value={form.artistName}
                 onChange={(artistName) => updateForm({ artistName })}
             />
-            <Button>Continue</Button>
+            <SmartButton loading={loading} type="submit">
+                Continue
+            </SmartButton>
         </form>
     );
 };
