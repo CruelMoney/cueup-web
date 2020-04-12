@@ -93,6 +93,7 @@ a {
 .dragable-card {
     border-radius: 15px;
     color: white;
+    height: 100px;
     overflow: visible;
     overflow: hidden;
     padding: 1em;
@@ -104,13 +105,13 @@ a {
 
 .reorder-icon {
     cursor: move;
-    height: 2.5em;
+    height: 2em;
     opacity: 0.75;
     position: absolute;
-    right: 10px;
+    right: 0px;
     top: 50%;
     transform: translateY(-50%);
-    width: 2.5em;
+    width: 2em;
 }
 
 .dragable-card:nth-child(1) {
@@ -201,6 +202,7 @@ a {
 .left-area {
     display: flex;
     flex-direction: column;
+    height: 100%;
     min-width: 500px;
     width: 500px;
     z-index: 2;
@@ -212,6 +214,7 @@ a {
     flex: 1;
     flex-direction: column;
     justify-content: center;
+    overflow: hidden;
     padding: 2em;
     position: relative;
     width: 100%;
@@ -219,11 +222,12 @@ a {
 
 .created-by {
     align-items: flex-end;
-    bottom: 0em;
+    bottom: 2em;
     display: flex;
+    font-size: 16px;
     opacity: 0.2;
     position: absolute;
-    right: 0em;
+    right: 2em;
 }
 .created-by:hover {
     opacity: 1;
@@ -421,4 +425,61 @@ svg.logo {
     font-size: 1.3em;
     font-weight: 900;
     margin-right: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+    .left-area {
+        max-width: 100%;
+        min-width: 0px;
+    }
+}
+
+@media only screen and (max-width: 420px) {
+    body {
+        background-color: #fff;
+    }
+
+    .menu {
+        justify-content: space-between;
+        width: 100%;
+    }
+    .instructions {
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+    .app {
+        flex-direction: column-reverse;
+        padding: 0.5em;
+    }
+    .card {
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+    }
+    .right-area {
+        display: flex;
+    }
+
+    .dj-name-wrapper {
+        font-size: 10px;
+    }
+
+    .left-area {
+        background-color: #fff;
+        border-radius: 0;
+        display: none;
+        overflow-y: scroll;
+    }
+    .dragable-card {
+        height: 80px;
+    }
+    .dragable-card h4 {
+        font-size: 1.2em;
+    }
+    .instructions p {
+        font-size: 1em;
+    }
+    .options {
+        font-size: 0.9em;
+    }
 }

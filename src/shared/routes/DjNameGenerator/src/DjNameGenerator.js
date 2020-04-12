@@ -174,12 +174,12 @@ function App() {
                     </div>
                 </div>
 
-                <div className="created-by">
-                    <h4>Created by</h4>
-                    <Logo />
-                </div>
-
                 <Signup active={signup} close={() => setSignup(false)} name={name} />
+            </div>
+
+            <div className="created-by">
+                <h4>Created by</h4>
+                <Logo />
             </div>
         </div>
     );

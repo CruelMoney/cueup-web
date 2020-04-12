@@ -23,6 +23,7 @@
     position: absolute;
     right: 2em;
     top: 2em;
+    z-index: 3;
 }
 .close-button svg {
     height: 42px;
@@ -75,7 +76,7 @@
 
 .signup-wrapper button {
     border-radius: 15px;
-    height: 50px;
+    height: 3em;
     margin-bottom: 12px;
     max-width: 100%;
     width: 100%;

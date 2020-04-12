@@ -176,6 +176,14 @@ const SignupForm = ({ name }) => {
         <form onSubmit={signup}>
             <Input
                 blurOnEnter={false}
+                label="DJ name"
+                placeholder="DJ Name Generator"
+                name="aristName"
+                value={form.artistName}
+                onChange={(artistName) => updateForm({ artistName })}
+            />
+            <Input
+                blurOnEnter={false}
                 label="Email"
                 placeholder="mail@email.com"
                 type="email"
@@ -202,14 +210,7 @@ const SignupForm = ({ name }) => {
                 registerValidation={registerValidation('password')}
                 unregisterValidation={unregisterValidation('password')}
             />
-            <Input
-                blurOnEnter={false}
-                label="DJ name"
-                placeholder="DJ Name Generator"
-                name="aristName"
-                value={form.artistName}
-                onChange={(artistName) => updateForm({ artistName })}
-            />
+
             <SmartButton loading={loading} type="submit">
                 Continue
             </SmartButton>
