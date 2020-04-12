@@ -83,15 +83,12 @@ const SimpleSharing = ({ shareUrl, title, style, label = 'Share profile' }) => {
             >
                 {label}
             </p>
-            <TwitterShareButton
-                style={{ background: 'transparent', width: 24 }}
-                url={url}
-                title={title}
-            >
+            <TwitterShareButton url={url} title={title}>
                 <TwitterIcon
                     size={32}
-                    iconBgStyle={{ fill: 'transparent' }}
-                    logoFillColor="#98A4B3"
+                    enableBackground={false}
+                    bgStyle={{ fill: 'transparent' }}
+                    iconFillColor="#98A4B3"
                 />
             </TwitterShareButton>
             <FacebookShareButton
@@ -101,12 +98,13 @@ const SimpleSharing = ({ shareUrl, title, style, label = 'Share profile' }) => {
             >
                 <FacebookIcon
                     size={32}
-                    iconBgStyle={{ fill: 'transparent' }}
-                    logoFillColor="#98A4B3"
+                    enableBackground={false}
+                    bgStyle={{ fill: 'transparent' }}
+                    iconFillColor="#98A4B3"
                 />
             </FacebookShareButton>
             <button onClick={share}>
-                <ShareIcon color={'#98A4B3'} style={{ marginLeft: '5px' }} />
+                <ShareIcon color={'#98A4B3'} style={{ marginLeft: '10px' }} />
             </button>
         </div>
     );
