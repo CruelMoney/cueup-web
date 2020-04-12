@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router';
 import { useMutation } from 'react-apollo';
+import { useSpring, animated } from 'react-spring';
 import { useServerContext } from 'components/hooks/useServerContext';
 import useGenerateName, { TYPES } from './useGenerateName';
 import DraggableList from './DragableList';
@@ -12,11 +13,13 @@ import AnimatedText from './AnimatedName';
 import { ReactComponent as ReorderIcon } from './reorder-four.svg';
 import Sharing from './Sharing';
 import ContinueButton from './ContinueButton';
+import ShowOptionsButton from './ShowOptionsButton';
 import TextInput from './TextInput';
 import './index.css';
 import Counter from './Counter';
 import { NAME_GENERATED } from './gql';
 import { Signup } from './Signup';
+import RefreshButton from './RefreshButton';
 
 const CATEGORIES = [
     {
@@ -59,7 +62,7 @@ function App() {
         .sort((a, b) => a.order - b.order)
         .map((c) => c.type);
     const [hasGenerated, setGenerated] = useState(false);
-    const [animated, setAnimated] = useState(false);
+    const [hasAnimated, setAnimated] = useState(false);
 
     const [generate, { name }] = useGenerateName({
         categories: categoryKeys,
@@ -76,6 +79,7 @@ function App() {
     const innerGenerate = useCallback(() => {
         setGenerated(true);
         generate();
+        setSidebar(false);
     }, [generate]);
 
     const clickHandler = () => {
@@ -105,9 +109,14 @@ function App() {
     };
 
     const [signup, setSignup] = useState(false);
+    const [sidebarActive, setSidebar] = useState(false);
+
+    const appStyle = useSpring({
+        transform: sidebarActive ? 'translateX(50%)' : 'translateX(0%)',
+    });
 
     return (
-        <div className="app">
+        <animated.div className="app" style={appStyle}>
             <div className="left-area card">
                 <div className="instructions">
                     <h2>Instructions</h2>
@@ -170,7 +179,9 @@ function App() {
                     </h1>
                     <div className="actions">
                         <Sharing url={`/dj-name-generator?name=${encodeURIComponent(name)}`} />
-                        <ContinueButton show={hasGenerated && animated} />
+                        <ContinueButton show={hasGenerated && hasAnimated}>
+                            {hasGenerated ? 'Become DJ' : "Let's go"}
+                        </ContinueButton>
                     </div>
                 </div>
 
@@ -181,7 +192,12 @@ function App() {
                 <h4>Created by</h4>
                 <Logo />
             </div>
-        </div>
+
+            <div className={'mobile-action-buttons ' + (!hasGenerated ? ' hide' : '')}>
+                <ShowOptionsButton onClick={() => setSidebar(true)} />
+                <RefreshButton onClick={() => innerGenerate()} />
+            </div>
+        </animated.div>
     );
 }
 

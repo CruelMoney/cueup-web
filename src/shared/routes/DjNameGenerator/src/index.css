@@ -427,6 +427,10 @@ svg.logo {
     margin-right: 5px;
 }
 
+.mobile-action-buttons {
+    display: none;
+}
+
 @media only screen and (max-width: 768px) {
     .left-area {
         max-width: 100%;
@@ -453,8 +457,9 @@ svg.logo {
         margin-top: 10px;
     }
     .app {
+        left: -100%;
         padding: 0em;
-        transform: translateX(-50%);
+        position: relative;
         width: 200vw;
     }
     .card {
@@ -497,7 +502,29 @@ svg.logo {
     .continue-button {
         justify-content: center;
         margin-top: 1em;
-        opacity: 1;
         transform: scale(1.2);
+    }
+
+    .mobile-action-buttons {
+        bottom: 0.5em;
+        display: block;
+        display: flex;
+        left: 101vw;
+        position: absolute;
+    }
+
+    .show-options-button svg,
+    .refresh-button svg {
+        fill: rgb(49, 218, 255);
+        height: 60px;
+        width: 60px;
+    }
+
+    .show-options-button svg {
+        transform: rotate(180deg);
+    }
+
+    .mobile-action-buttons.hide {
+        display: none;
     }
 }
