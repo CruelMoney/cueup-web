@@ -34,6 +34,7 @@ body {
 .app {
     display: flex;
     padding: 2em;
+    padding-right: 0;
 }
 
 h1,
@@ -349,11 +350,14 @@ svg.logo {
 
 .share-options {
     display: flex;
-    height: 32px;
+    height: 35px;
+    margin-right: 2em;
 }
 
 .share-options button {
+    height: 35px;
     margin-right: 0.25em;
+    width: 35px;
 }
 
 .share-options button:hover {
@@ -459,6 +463,9 @@ svg.logo {
         padding: 0em;
         position: relative;
         width: 200vw;
+    }
+    .share-options {
+        margin-right: 1em;
     }
     .card {
         background: transparent;

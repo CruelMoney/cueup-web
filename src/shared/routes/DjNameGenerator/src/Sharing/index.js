@@ -20,10 +20,10 @@ const Sharing = ({ url }) => {
     return (
         <div className="share-options">
             <FacebookShareButton url={finalUrl}>
-                <FacebookIcon size={32} round={true} />
+                <FacebookIcon size={35} round={true} />
             </FacebookShareButton>
             <TwitterShareButton url={finalUrl}>
-                <TwitterIcon size={32} round={true} />
+                <TwitterIcon size={35} round={true} />
             </TwitterShareButton>
             <CopyToClipboard text={finalUrl} onCopy={() => setCopied(true)}>
                 <button className="clipboard-icon">
