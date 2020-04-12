@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useLocation, useParams } from 'react-router';
+import { useLocation } from 'react-router';
 import { useMutation } from 'react-apollo';
 import { useServerContext } from 'components/hooks/useServerContext';
 import useGenerateName, { TYPES } from './useGenerateName';
@@ -16,6 +16,7 @@ import TextInput from './TextInput';
 import './index.css';
 import Counter from './Counter';
 import { NAME_GENERATED } from './gql';
+import { Signup } from './Signup';
 
 const CATEGORIES = [
     {
@@ -103,9 +104,11 @@ function App() {
         setCategories(withOrder);
     };
 
+    const [signup, setSignup] = useState(true);
+
     return (
         <div className="app">
-            <div className="left-area">
+            <div className="left-area card">
                 <div className="instructions">
                     <h2>Instructions</h2>
                     <p>
@@ -158,7 +161,10 @@ function App() {
                     />
                 </div>
 
-                <div className={'dj-name-wrapper' + (hasGenerated ? ' active' : '')}>
+                <div
+                    className={'dj-name-wrapper' + (hasGenerated ? ' active' : '')}
+                    onClick={() => hasGenerated && setSignup(true)}
+                >
                     <h1 className="dj-name">
                         <AnimatedText content={name} onAnimated={setAnimated} />
                     </h1>
@@ -172,6 +178,8 @@ function App() {
                     <h4>Created by</h4>
                     <Logo />
                 </div>
+
+                <Signup active={signup} close={() => setSignup(false)} />
             </div>
         </div>
     );
@@ -214,8 +222,6 @@ const AppWithMeta = () => {
         (name ? encodeURIComponent(name) : '');
 
     const pageURL = environment.WEBSITE_URL + location.pathname + location.search;
-
-    console.log('render');
 
     return (
         <>

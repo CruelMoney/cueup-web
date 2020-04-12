@@ -1,0 +1,102 @@
+.signup-wrapper {
+    align-items: center;
+    background: #f0f0f0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    left: 0;
+    padding: 1em;
+    perspective: 1000px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    will-change: opacity;
+    z-index: 3;
+}
+.signup-wrapper img {
+    display: inline-block;
+    position: relative;
+}
+.close-button {
+    cursor: pointer;
+    position: absolute;
+    right: 2em;
+    top: 2em;
+}
+.close-button svg {
+    height: 42px;
+    width: 42px;
+}
+
+.app-buttons {
+    margin-top: 1em;
+}
+.signup-header {
+    margin-bottom: 2em;
+    text-align: center;
+}
+
+.adjecent {
+    color: rgb(49, 218, 255);
+    display: block;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 0.5em;
+    text-transform: uppercase;
+}
+
+.signup-header h2 {
+    font-size: 2.5em;
+}
+
+.signup-header h2 span {
+    display: block;
+    font-weight: 400;
+}
+
+.signup-header a {
+    color: #4d6480;
+    display: block;
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-top: 1em;
+}
+.signup-header a svg {
+    fill: #4d6480;
+    margin-left: 5px;
+    position: relative;
+    top: 3px;
+}
+
+.signup-wrapper label {
+    font-weight: 500;
+}
+
+.signup-wrapper button {
+    border-radius: 15px;
+    height: 50px;
+    margin-bottom: 12px;
+    max-width: 100%;
+    width: 100%;
+}
+
+.signup-wrapper button > span {
+    position: relative;
+    width: 100%;
+}
+
+.signup-wrapper button > span:nth-child(2) {
+    position: absolute;
+    right: 1em;
+    width: auto;
+}
+
+.signup-wrapper button img {
+    height: 20px;
+    left: 0px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+}

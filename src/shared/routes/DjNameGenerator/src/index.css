@@ -64,6 +64,11 @@ p {
     opacity: 0.75;
 }
 
+a {
+    color: #111;
+    text-decoration: none;
+}
+
 .instructions {
     margin-bottom: 30px;
     margin-top: 10px;
@@ -184,16 +189,19 @@ p {
     justify-content: center;
 }
 
-.left-area {
+.card {
     background-color: #fff;
     border-radius: 30px;
     box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.006), 0 6.7px 5.3px rgba(0, 0, 0, 0.008),
         0 12.5px 10px rgba(0, 0, 0, 0.01), 0 22.3px 17.9px rgba(0, 0, 0, 0.012),
         0 41.8px 33.4px rgba(0, 0, 0, 0.014), 0 100px 80px rgba(0, 0, 0, 0.02);
+    padding: 2em;
+}
+
+.left-area {
     display: flex;
     flex-direction: column;
     min-width: 500px;
-    padding: 2em;
     width: 500px;
     z-index: 2;
 }

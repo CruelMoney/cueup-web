@@ -70,8 +70,9 @@ const APIProvider = ({ children }) => {
 
     const httpLink = ApolloLink.from([errorLink, withToken, uploadLink]);
 
+    const protocol = process.env.NODE_ENV === 'development' ? 'ws://' : 'wss://';
     const domain = environment.GQL_DOMAIN.split('://').pop();
-    const uri = 'wss://' + domain + '/graphql';
+    const uri = protocol + domain + '/graphql';
 
     const wsLink = new WebSocketLink({
         uri,

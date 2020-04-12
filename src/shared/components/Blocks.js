@@ -331,6 +331,8 @@ const ButtonTextStyle = css`
     line-height: 20px;
     background: transparent;
     border-radius: 4px;
+    border: none;
+    cursor: pointer;
     min-width: ${({ small }) => (small ? '130px' : '150px')};
     padding: 0 1em;
     height: ${({ small }) => (small ? '30px' : '40px')};

@@ -9,12 +9,12 @@ import useOnLoggedIn from 'components/hooks/useOnLoggedIn';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import { useServerContext } from 'components/hooks/useServerContext';
+import useSocialLogin from 'components/hooks/useSocialLogin';
 import { LOGIN, REQUEST_PASSWORD_RESET } from '../../gql';
-import * as c from '../../../constants/constants';
 import { Input } from '../../FormComponents';
 import ErrorMessageApollo, { getErrorMessage } from '../ErrorMessageApollo';
-import fbLogo from './fb.svg';
-import googleLogo from './google.svg';
+import fbLogo from '../../../assets/icons/fb.svg';
+import googleLogo from '../../../assets/icons/google.svg';
 
 const LoginStyle = styled.div`
     button {
@@ -57,8 +57,6 @@ const Login = ({ redirect = true, error, onLogin }) => {
     };
 
     const onLoggedIn = useOnLoggedIn({ onLoggedIn: callback, redirect });
-
-    const [socialLoading, setSocialLoading] = useState(null);
 
     const setStateValue = useCallback((data) => setState((s) => ({ ...s, ...data })), [setState]);
 
@@ -103,12 +101,7 @@ const Login = ({ redirect = true, error, onLogin }) => {
         return !!email && !!password;
     };
 
-    const onPressSocial = (social) => (e) => {
-        e.preventDefault();
-        setSocialLoading(social);
-        const redirect = '?redirect=' + window.location.href;
-        window.location.replace(environment.GQL_DOMAIN + '/auth/' + social + redirect);
-    };
+    const [onPressSocial, { socialLoading }] = useSocialLogin();
 
     const { loading } = state;
 
