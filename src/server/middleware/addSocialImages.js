@@ -13,6 +13,10 @@ const djNameGenerator = async (req, res) => {
             throw new Error('name not included');
         }
         const img = await renderSocialImage({
+            puppeteerArgs: {
+                executablePath: '/usr/bin/chromium-browser',
+                args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            },
             templateBody: `
             <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@900&display=swap" rel="stylesheet"> 
                 <div class="main">

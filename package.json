@@ -84,7 +84,7 @@
     "node-fetch": "^2.6.0",
     "path-to-regexp": "^6.1.0",
     "puppeteer": "1.19.0",
-    "puppeteer-social-image": "^0.6.0",
+    "puppeteer-social-image": "https://github.com/CruelMoney/puppeteer-social-image.git",
     "query-string": "^6.8.3",
     "rc-slider": "^8.6.13",
     "react": "^16.13.1",

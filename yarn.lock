@@ -13114,10 +13114,9 @@ punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
-puppeteer-social-image@^0.6.0:
+"puppeteer-social-image@https://github.com/CruelMoney/puppeteer-social-image.git":
   version "0.6.0"
-  resolved "https://registry.yarnpkg.com/puppeteer-social-image/-/puppeteer-social-image-0.6.0.tgz#6aa50036c6cb41a1af3bbe912c85f76a5c45d125"
-  integrity sha512-JjaZvM1zzbamsto1qeNxAuuthFHr2rwpoe1e1vRXTIbhHSIlU/brE4xQvAyDNZpyU2YdblucAJqGVObLDgGfHw==
+  resolved "https://github.com/CruelMoney/puppeteer-social-image.git#4dbe6e59b77582d4ef8b4496ca9a8bc8df736e04"
   dependencies:
     "@babel/polyfill" "^7.4.4"
     handlebars "^4.1.2"
