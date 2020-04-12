@@ -441,34 +441,41 @@ svg.logo {
 
     .menu {
         justify-content: space-between;
+        padding: 0.5em;
         width: 100%;
+    }
+    .created-by {
+        bottom: 1em;
+        right: 0.5em;
     }
     .instructions {
         margin-bottom: 10px;
         margin-top: 10px;
     }
     .app {
-        flex-direction: column-reverse;
-        padding: 0.5em;
+        padding: 0em;
+        transform: translateX(-50%);
+        width: 200vw;
     }
     .card {
         background: transparent;
         box-shadow: none;
         padding: 0;
     }
-    .right-area {
-        display: flex;
-    }
 
     .dj-name-wrapper {
-        font-size: 10px;
+        font-size: 7px;
     }
 
+    .right-area {
+        width: 100vw;
+    }
     .left-area {
         background-color: #fff;
         border-radius: 0;
-        display: none;
         overflow-y: scroll;
+        padding: 0.5em;
+        width: 100vw;
     }
     .dragable-card {
         height: 80px;
@@ -481,5 +488,16 @@ svg.logo {
     }
     .options {
         font-size: 0.9em;
+    }
+    .continue-button h4 {
+        font-size: 2em;
+        opacity: 1;
+    }
+
+    .continue-button {
+        justify-content: center;
+        margin-top: 1em;
+        opacity: 1;
+        transform: scale(1.2);
     }
 }
