@@ -215,6 +215,8 @@ const AppWithMeta = () => {
 
     const pageURL = environment.WEBSITE_URL + location.pathname + location.search;
 
+    console.log('render');
+
     return (
         <>
             <Helmet>
