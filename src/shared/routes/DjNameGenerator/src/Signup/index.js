@@ -20,13 +20,17 @@ import { SLIM_SIGNUP } from '../gql';
 import './index.css';
 
 export const Signup = ({ active, close, name }) => {
+    const { environment } = useServerContext();
+
     const transitions = useTransition(active, null, {
         from: { opacity: 0, transform: 'translateY(-40px) scale(0.9) rotateX(-10deg)' },
         enter: { opacity: 1, transform: 'translateY(0px) scale(1) rotateX(0deg)' },
         leave: { opacity: 0, transform: 'translateY(-40px) scale(0.9) rotateX(-10deg)' },
     });
 
-    const [onPressSocial, { socialLoading }] = useSocialLogin();
+    const [onPressSocial, { socialLoading }] = useSocialLogin({
+        redirect: environment.WEBSITE_URL + '/complete-signup',
+    });
 
     if (!active) {
         return null;
