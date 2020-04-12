@@ -12,6 +12,7 @@
     letter-spacing: 1px;
     line-height: 3em;
     margin: 0px auto;
+    min-height: 3em;
     outline: none;
     overflow: hidden;
     padding: 0;
