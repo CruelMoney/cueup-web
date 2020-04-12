@@ -1,13 +1,7 @@
 # specify the node base image with your desired version node:<version>
 FROM node:12-alpine as builder
-WORKDIR /usr/src/app
-COPY package*.json  yarn.lock ./
-RUN yarn install
 
-FROM node:12-alpine
-WORKDIR /usr/src/app
-COPY --from=builder /usr/src/app/ /usr/src/app/
-COPY . .
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
 # Installs latest Chromium (77) package.
 RUN apk add --no-cache \
@@ -19,14 +13,11 @@ RUN apk add --no-cache \
       ca-certificates \
       ttf-freefont 
 
+WORKDIR /usr/src/app
+COPY package*.json  yarn.lock ./
+RUN yarn install
 
-# Add user so we don't need --no-sandbox.
-# same layer as npm install to keep re-chowned files from using up several hundred MBs more space
-RUN yarn build \
-     && groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
-     && mkdir -p /home/pptruser/Downloads \
-     && chown -R pptruser:pptruser /home/pptruser \
-     && chown -R pptruser:pptruser /usr/src/app
+RUN yarn build
 
 # Run everything after as non-privileged user.
 RUN addgroup -S pptruser && adduser -S -g pptruser pptruser \
