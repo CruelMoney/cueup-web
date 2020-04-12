@@ -158,7 +158,7 @@ const SignupForm = ({ name }) => {
             token = data?.signUpToken?.token;
 
             if (token) {
-                onLoggedIn({ token });
+                await onLoggedIn({ token });
             }
         } catch (err) {
             console.log(err);
