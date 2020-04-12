@@ -284,16 +284,16 @@ const Index = ({ match, location }) => {
 
                             let user = profileUser;
 
-                            if (user && data && data.me) {
-                                user.isOwn = user.isOwn || data.me.id === user.id;
+                            if (user && data && me) {
+                                user.isOwn = user.isOwn || me.id === user.id;
                             }
 
                             if (me && !me.appMetadata.onboarded && user?.isOwn) {
                                 return <Redirect to={'/complete-signup'} />;
                             }
 
-                            if (user && user.isOwn && data && data.me) {
-                                user = mergeObjects(user, data.me);
+                            if (user && user.isOwn && me) {
+                                user = mergeObjects(user, me);
                             }
 
                             const title = user
@@ -431,7 +431,7 @@ const mergeObjects = (o1, o2) => {
             };
         }, {});
     }
-    if (!o2) {
+    if (o2 === undefined || o2 === null) {
         return o1;
     }
 
