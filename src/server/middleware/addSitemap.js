@@ -36,6 +36,7 @@ const getPublicUrls = () => {
         '/about',
         '/faq/dj',
         '/faq/organizer',
+        '/dj-name-generator',
     ];
     return urls;
 };
