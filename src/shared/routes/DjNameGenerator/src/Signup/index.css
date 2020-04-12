@@ -1,19 +1,22 @@
 .signup-wrapper {
     align-items: center;
     background: #f0f0f0;
-    bottom: 0;
     display: flex;
+    flex-flow: row wrap;
     flex-direction: column;
+    height: 100vh;
     justify-content: center;
     left: 0;
+    max-height: 100vh;
     padding: 1em;
     perspective: 1000px;
     position: fixed;
-    right: 0;
     top: 0;
+    width: 100vw;
     will-change: opacity;
     z-index: 3;
 }
+
 .signup-wrapper img {
     display: inline-block;
     position: relative;
@@ -104,4 +107,56 @@
 
 .signup-wrapper button:last-child {
     margin-bottom: 0;
+}
+
+.divider {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 2em 0;
+    width: 100%;
+}
+.divider hr {
+    border-top: 1px solid #e9ecf0;
+    color: #fff;
+    margin: 0;
+    width: 100%;
+}
+
+.divider p {
+    background-color: #fff;
+    margin: 0;
+    margin-top: -5px;
+    opacity: 1;
+    padding: 0 1em;
+    position: absolute;
+    text-transform: lowercase;
+    z-index: 1;
+}
+
+@media only screen and (max-width: 420px) {
+    .signup-wrapper {
+        background-color: #fff;
+        overflow-y: scroll;
+        padding: 1em;
+    }
+    .signup-header {
+        font-size: 10px;
+    }
+    .signup-wrapper label {
+        margin-bottom: 12px;
+    }
+    .divider {
+        margin: 1em 0;
+    }
+    .signup-wrapper button {
+        margin-bottom: 6px;
+    }
+    .close-button {
+        right: 0;
+        top: 0;
+    }
+    .signup-wrapper .card {
+        flex: 1;
+    }
 }

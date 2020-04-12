@@ -427,7 +427,7 @@ svg.logo {
     margin-right: 5px;
 }
 
-.mobile-action-buttons {
+.mobile-only {
     display: none;
 }
 
@@ -478,6 +478,7 @@ svg.logo {
     .left-area {
         background-color: #fff;
         border-radius: 0;
+        flex-flow: column wrap;
         overflow-y: scroll;
         padding: 0.5em;
         width: 100vw;
@@ -507,7 +508,6 @@ svg.logo {
 
     .mobile-action-buttons {
         bottom: 0.5em;
-        display: block;
         display: flex;
         left: 101vw;
         position: absolute;
@@ -526,5 +526,24 @@ svg.logo {
 
     .mobile-action-buttons.hide {
         display: none;
+    }
+
+    .mobile-only {
+        display: flex;
+    }
+    .continue-button.mobile-only {
+        display: none;
+        pointer-events: all;
+    }
+    .continue-button.mobile-only.active {
+        display: flex;
+    }
+    .dj-name-wrapper.active:hover {
+        background-color: transparent;
+        box-shadow: none;
+        transform: none;
+    }
+    .dj-name-wrapper.active:hover button {
+        opacity: 0;
     }
 }

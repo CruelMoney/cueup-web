@@ -210,7 +210,7 @@ const SignupForm = ({ name }) => {
                 registerValidation={registerValidation('password')}
                 unregisterValidation={unregisterValidation('password')}
             />
-
+            <div style={{ flex: 1 }} />
             <SmartButton loading={loading} type="submit">
                 Continue
             </SmartButton>
@@ -220,37 +220,9 @@ const SignupForm = ({ name }) => {
 
 const Hr = () => {
     return (
-        <div
-            style={{
-                width: '100%',
-                margin: '2em 0',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-            }}
-        >
-            <hr
-                style={{
-                    borderTop: '1px solid #e9ecf0',
-                    margin: '0',
-                    width: '100%',
-                    color: '#fff',
-                }}
-            />
-            <p
-                style={{
-                    margin: 0,
-                    padding: '0 1em',
-                    backgroundColor: '#fff',
-                    position: 'absolute',
-                    zIndex: 1,
-                    textTransform: 'lowercase',
-                    opacity: 1,
-                    marginTop: '-5px',
-                }}
-            >
-                OR
-            </p>
+        <div className="divider">
+            <hr />
+            <p>OR</p>
         </div>
     );
 };

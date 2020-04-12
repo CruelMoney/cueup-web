@@ -116,88 +116,102 @@ function App() {
     });
 
     return (
-        <animated.div className="app" style={appStyle}>
-            <div className="left-area card">
-                <div className="instructions">
-                    <h2>Instructions</h2>
-                    <p>
-                        Find your next DJ name by clicking GENERATE. Toggle the categories to
-                        customize the name - best to only use 2 at a time. There are 19 billion
-                        possibilities, so play around until you find a suitable name.
-                    </p>
-                </div>
+        <>
+            <animated.div className="app" style={appStyle}>
+                <div className="left-area card">
+                    <div className="instructions">
+                        <h2>Instructions</h2>
+                        <p>
+                            Find your next DJ name by clicking GENERATE. Toggle the categories to
+                            customize the name - best to only use 2 at a time. There are 19 billion
+                            possibilities, so play around until you find a suitable name.
+                        </p>
+                    </div>
 
-                <div style={{ flex: 1 }} />
-                <div>
-                    <DraggableList
-                        onOrderChanged={onOrderChanged}
-                        items={CATEGORIES.map((c) => {
-                            const enabled = categories.find((el) => el.type === c.key)?.enabled;
-                            return {
-                                enabled,
-                                Component: (
-                                    <Category
-                                        c={c}
-                                        enabled={enabled}
-                                        toggleCategory={toggleCategory}
-                                        setName={setName}
-                                    />
-                                ),
-                            };
-                        })}
-                    />
-                    <div className="options">
-                        <ToggleSwitch
-                            checked={alliterate}
-                            onChange={(e) => setAlliterate(e.target.checked)}
-                            name="first-letter"
-                            label="Alliteration (same start letter for each word)"
+                    <div style={{ flex: 1 }} />
+                    <div>
+                        <DraggableList
+                            onOrderChanged={onOrderChanged}
+                            items={CATEGORIES.map((c) => {
+                                const enabled = categories.find((el) => el.type === c.key)?.enabled;
+                                return {
+                                    enabled,
+                                    Component: (
+                                        <Category
+                                            c={c}
+                                            enabled={enabled}
+                                            toggleCategory={toggleCategory}
+                                            setName={setName}
+                                        />
+                                    ),
+                                };
+                            })}
+                        />
+                        <div className="options">
+                            <ToggleSwitch
+                                checked={alliterate}
+                                onChange={(e) => setAlliterate(e.target.checked)}
+                                name="first-letter"
+                                label="Alliteration (same start letter for each word)"
+                            />
+                        </div>
+                    </div>
+                    <div style={{ flex: 2 }} />
+                    <Button onClick={clickHandler} disabled={!categories.some((c) => c.enabled)}>
+                        Generate
+                    </Button>
+                </div>
+                <div className="right-area">
+                    <div className="menu">
+                        <Counter />
+                        <Sharing
+                            url={`/dj-name-generator${
+                                hasGenerated ? '?name=' + encodeURIComponent(name) : ''
+                            }`}
                         />
                     </div>
+
+                    <div
+                        className={'dj-name-wrapper' + (hasGenerated ? ' active' : '')}
+                        onClick={() => hasGenerated && setSignup(true)}
+                    >
+                        <h1 className="dj-name">
+                            <AnimatedText content={name} onAnimated={setAnimated} />
+                        </h1>
+                        <div className="actions">
+                            <Sharing url={`/dj-name-generator?name=${encodeURIComponent(name)}`} />
+                            <ContinueButton show={hasGenerated && hasAnimated}>
+                                Become DJ
+                            </ContinueButton>
+
+                            <ContinueButton
+                                show={!hasGenerated}
+                                className={'mobile-only'}
+                                onClick={() => setSidebar(true)}
+                            >
+                                Let's go
+                            </ContinueButton>
+                        </div>
+                    </div>
                 </div>
-                <div style={{ flex: 2 }} />
-                <Button onClick={clickHandler} disabled={!categories.some((c) => c.enabled)}>
-                    Generate
-                </Button>
-            </div>
-            <div className="right-area">
-                <div className="menu">
-                    <Counter />
-                    <Sharing
-                        url={`/dj-name-generator${
-                            hasGenerated ? '?name=' + encodeURIComponent(name) : ''
-                        }`}
-                    />
+
+                <div className="created-by">
+                    <h4>Created by</h4>
+                    <Logo />
                 </div>
 
                 <div
-                    className={'dj-name-wrapper' + (hasGenerated ? ' active' : '')}
-                    onClick={() => hasGenerated && setSignup(true)}
+                    className={
+                        'mobile-action-buttons mobile-only ' + (!hasGenerated ? ' hide' : '')
+                    }
                 >
-                    <h1 className="dj-name">
-                        <AnimatedText content={name} onAnimated={setAnimated} />
-                    </h1>
-                    <div className="actions">
-                        <Sharing url={`/dj-name-generator?name=${encodeURIComponent(name)}`} />
-                        <ContinueButton show={hasGenerated && hasAnimated}>
-                            {hasGenerated ? 'Become DJ' : "Let's go"}
-                        </ContinueButton>
-                    </div>
+                    <ShowOptionsButton onClick={() => setSidebar(true)} />
+                    <RefreshButton onClick={() => innerGenerate()} />
                 </div>
+            </animated.div>
 
-                <Signup active={signup} close={() => setSignup(false)} name={name} />
-            </div>
-
-            <div className="created-by">
-                <h4>Created by</h4>
-                <Logo />
-            </div>
-
-            <div className={'mobile-action-buttons ' + (!hasGenerated ? ' hide' : '')}>
-                <ShowOptionsButton onClick={() => setSidebar(true)} />
-                <RefreshButton onClick={() => innerGenerate()} />
-            </div>
-        </animated.div>
+            <Signup active={signup} close={() => setSignup(false)} name={name} />
+        </>
     );
 }
 
