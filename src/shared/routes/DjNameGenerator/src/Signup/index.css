@@ -100,3 +100,7 @@
     transform: translateY(-50%);
     width: 20px;
 }
+
+.signup-wrapper button:last-child {
+    margin-bottom: 0;
+}

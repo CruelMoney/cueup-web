@@ -104,7 +104,7 @@ function App() {
         setCategories(withOrder);
     };
 
-    const [signup, setSignup] = useState(true);
+    const [signup, setSignup] = useState(false);
 
     return (
         <div className="app">
@@ -179,7 +179,7 @@ function App() {
                     <Logo />
                 </div>
 
-                <Signup active={signup} close={() => setSignup(false)} />
+                <Signup active={signup} close={() => setSignup(false)} name={name} />
             </div>
         </div>
     );

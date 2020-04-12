@@ -10,16 +10,12 @@ import fbLogo from '../../../../assets/icons/fb.svg';
 import googleLogo from '../../../../assets/icons/google.svg';
 import './index.css';
 
-export const Signup = ({ active, close }) => {
-    const [form, setForm] = useState({});
-
+export const Signup = ({ active, close, name }) => {
     const transitions = useTransition(active, null, {
         from: { opacity: 0, transform: 'translateY(-40px) scale(0.9) rotateX(-10deg)' },
         enter: { opacity: 1, transform: 'translateY(0px) scale(1) rotateX(0deg)' },
         leave: { opacity: 0, transform: 'translateY(-40px) scale(0.9) rotateX(-10deg)' },
     });
-
-    const updateForm = (data) => setForm((ff) => ({ ...ff, ...data }));
 
     const [onPressSocial, { socialLoading }] = useSocialLogin();
 
@@ -65,43 +61,9 @@ export const Signup = ({ active, close }) => {
                             </div>
 
                             <div>
-                                <form>
-                                    <Input
-                                        blurOnEnter={false}
-                                        label="Email"
-                                        placeholder="mail@email.com"
-                                        type="email"
-                                        autoComplete="email"
-                                        name="email"
-                                        onChange={(email) => updateForm({ email: email.trim() })}
-                                        validation={(v) =>
-                                            emailValidator.validate(v) ? null : 'Not a valid email'
-                                        }
-                                    />
-                                    <Input
-                                        blurOnEnter={false}
-                                        label="Password"
-                                        placeholder="min. 6 characters"
-                                        type="password"
-                                        autoComplete="password"
-                                        name="password"
-                                        onChange={(password) => updateForm({ password })}
-                                        validation={(v) => {
-                                            if (!v) {
-                                                return 'Please enter password';
-                                            }
-                                        }}
-                                    />
-                                    <Input
-                                        blurOnEnter={false}
-                                        label="DJ name"
-                                        placeholder="DJ Name Generator"
-                                        name="dj-name"
-                                        onChange={(artistName) => updateForm({ artistName })}
-                                    />
-                                    <Button>Continue</Button>
-                                    <Hr />
-                                </form>
+                                <SignupForm name={name} />
+                                <Hr />
+
                                 <SmartButton
                                     level="secondary"
                                     onClick={onPressSocial('facebook')}
@@ -146,6 +108,49 @@ export const Signup = ({ active, close }) => {
                 </a>
             </div>
         </div>
+    );
+};
+
+const SignupForm = ({ name }) => {
+    const [form, setForm] = useState({ artistName: name });
+    const updateForm = (data) => setForm((ff) => ({ ...ff, ...data }));
+
+    return (
+        <form>
+            <Input
+                blurOnEnter={false}
+                label="Email"
+                placeholder="mail@email.com"
+                type="email"
+                autoComplete="email"
+                name="email"
+                onChange={(email) => updateForm({ email: email.trim() })}
+                validation={(v) => (emailValidator.validate(v) ? null : 'Not a valid email')}
+            />
+            <Input
+                blurOnEnter={false}
+                label="Password"
+                placeholder="min. 6 characters"
+                type="password"
+                autoComplete="password"
+                name="password"
+                onChange={(password) => updateForm({ password })}
+                validation={(v) => {
+                    if (!v) {
+                        return 'Please enter password';
+                    }
+                }}
+            />
+            <Input
+                blurOnEnter={false}
+                label="DJ name"
+                placeholder="DJ Name Generator"
+                name="aristName"
+                value={form.artistName}
+                onChange={(artistName) => updateForm({ artistName })}
+            />
+            <Button>Continue</Button>
+        </form>
     );
 };
 
