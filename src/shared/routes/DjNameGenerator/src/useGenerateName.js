@@ -50,6 +50,7 @@ function* getParts(lists = [], startLetter) {
     const count = lists.length;
     for (let i = 0; i < count; i += 1) {
         const list = lists?.[i] ?? lists[0] ?? WORD_LISTS.ARTISTS;
+        console.log({ list, lists, startLetter });
         const idx = Math.floor(Math.random() * list.length);
 
         if (startLetter) {
@@ -91,9 +92,11 @@ const useGenerateName = ({ categories = [], sameFirst, nameText }) => {
             return 'DJ Name Generator';
         }
 
+        const filteredParts = parts.filter((p) => !!p.value);
+
         // order based on categories
         const ordered = categories.reduce((acc, c) => {
-            const el = parts.find(({ type }) => type === c);
+            const el = filteredParts.find(({ type }) => type === c);
             return el ? [...acc, el] : acc;
         }, []);
 
@@ -119,10 +122,31 @@ const useGenerateName = ({ categories = [], sameFirst, nameText }) => {
             parts.push({ value: nameText, type: TYPES.NAME });
         }
 
-        setParts(parts.filter((p) => !!p.value));
+        setParts(parts);
     }, [sameFirst, nameText]);
 
-    return [generate, { name: getName() }];
+    const refreshCategory = (type) => {
+        let startLetter;
+
+        if (sameFirst) {
+            startLetter = parts[0]?.value?.charAt(0);
+
+            if (!startLetter) {
+                startLetter = characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            if (startLetter) {
+                startLetter = startLetter.toUpperCase();
+            }
+        }
+
+        const [part] = [...getParts([WORD_LISTS[type]], startLetter)];
+
+        if (part) {
+            setParts((pp) => pp.map((p) => (p.type === type ? { ...part, type } : p)));
+        }
+    };
+
+    return [generate, { name: getName(), refreshCategory }];
 };
 
 export default useGenerateName;

@@ -66,7 +66,7 @@ function App({ match, history }) {
     const [hasGenerated, setGenerated] = useState(false);
     const [hasAnimated, setAnimated] = useState(false);
 
-    const [generate, { name }] = useGenerateName({
+    const [generate, { name, refreshCategory }] = useGenerateName({
         categories: categoryKeys,
         sameFirst: alliterate,
         nameText,
@@ -136,8 +136,10 @@ function App({ match, history }) {
                                     Component: (
                                         <Category
                                             c={c}
+                                            hasGenerated={hasGenerated}
                                             enabled={enabled}
                                             toggleCategory={toggleCategory}
+                                            refreshCategory={refreshCategory}
                                             setName={setName}
                                         />
                                     ),
@@ -215,7 +217,7 @@ function App({ match, history }) {
     );
 }
 
-const Category = ({ enabled, c, toggleCategory, setName }) => {
+const Category = ({ enabled, c, toggleCategory, setName, hasGenerated, refreshCategory }) => {
     const withInput = c.key === TYPES.NAME;
 
     return (
@@ -230,7 +232,9 @@ const Category = ({ enabled, c, toggleCategory, setName }) => {
                 />
                 <p>{c.description}</p>
             </div>
-            <RefreshButtonNaked />
+            {hasGenerated && !withInput && (
+                <RefreshButtonNaked onClick={() => refreshCategory(c.key)} />
+            )}
         </div>
     );
 };
