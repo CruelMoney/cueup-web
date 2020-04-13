@@ -21,6 +21,9 @@ import { NAME_GENERATED } from './gql';
 import { Signup } from './Signup';
 import RefreshButton from './RefreshButton';
 
+const description =
+    "Are you even a real DJ if you don't have a name? Find your next DJ name by clicking generate. Toggle the categories to customize the name, best to only use 2 at a time, unless you like it wild. There's 19 billion possibilities - how much time do you have to waste?";
+
 const CATEGORIES = [
     {
         key: TYPES.ADJECTIVES,
@@ -121,11 +124,7 @@ function App() {
                 <div className="left-area card">
                     <div className="instructions">
                         <h2>Instructions</h2>
-                        <p>
-                            Find your next DJ name by clicking GENERATE. Toggle the categories to
-                            customize the name - best to only use 2 at a time. There are 19 billion
-                            possibilities, so play around until you find a suitable name.
-                        </p>
+                        <p>{description}</p>
                     </div>
 
                     <div style={{ flex: 1 }} />
@@ -245,7 +244,6 @@ const AppWithMeta = () => {
     const name = params.get('name');
     const { environment } = useServerContext();
     const title = 'DJ Name Generator | Cueup';
-    const description = 'Find your DJ name from 19 billion possibilities.';
     const thumb =
         environment.WEBSITE_URL +
         '/sharing-previews/dj-name-generator/' +
@@ -259,10 +257,7 @@ const AppWithMeta = () => {
                 <title>{title}</title>
 
                 <meta name="description" content={description} />
-                <meta
-                    name="keywords"
-                    content="dj, book, rent, copenhagen, cueup, music, events, party, wedding, birthday"
-                />
+                <meta name="keywords" content="dj name generator" />
 
                 <meta property="og:title" content={title} />
                 <meta property="og:description" content={description} />

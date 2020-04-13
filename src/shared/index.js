@@ -54,6 +54,8 @@ const Setup = ({ location }) => {
             <Helmet>
                 <html lang={i18n.language} xmlLang={i18n.language} />
 
+                {environment.SETTING !== 'production' && <meta name="robots" content="noindex" />}
+
                 <title>{title}</title>
 
                 <meta name="description" content={description} />
