@@ -2,7 +2,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Helmet } from 'react-helmet-async';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 import LazySignup from 'routes/Signup';
 import LazyUser from 'routes/User';
@@ -11,7 +10,6 @@ import LazyTerms from 'routes/Terms';
 import LazyEvent from 'routes/Event';
 import ResetPassword from 'routes/ResetPassword';
 import LazyLocation, { LazyLocationsOverview } from 'routes/Location';
-import { useServerContext } from 'components/hooks/useServerContext';
 import LazyGig from 'routes/Gig';
 
 import LazyFaq from 'routes/Faq';

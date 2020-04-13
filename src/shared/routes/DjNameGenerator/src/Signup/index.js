@@ -19,10 +19,10 @@ import { SLIM_SIGNUP } from '../gql';
 
 import './index.css';
 
-export const Signup = ({ active, close, name }) => {
+export const Signup = ({ name, history }) => {
     const { environment } = useServerContext();
 
-    const transitions = useTransition(active, null, {
+    const transitions = useTransition(true, null, {
         from: { opacity: 0, transform: 'translateY(-40px) scale(0.9) rotateX(-10deg)' },
         enter: { opacity: 1, transform: 'translateY(0px) scale(1) rotateX(0deg)' },
         leave: { opacity: 0, transform: 'translateY(-40px) scale(0.9) rotateX(-10deg)' },
@@ -32,14 +32,10 @@ export const Signup = ({ active, close, name }) => {
         redirect: environment.WEBSITE_URL + '/complete-signup',
     });
 
-    if (!active) {
-        return null;
-    }
-
     return (
         <div className="signup-wrapper">
             <div className="inner-content">
-                <div onClick={close} className="close-button">
+                <div onClick={() => history.goBack()} className="close-button">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="512"

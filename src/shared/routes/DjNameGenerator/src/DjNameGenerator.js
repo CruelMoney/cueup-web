@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useLocation } from 'react-router';
+import { useLocation, Route } from 'react-router';
 import { useMutation } from 'react-apollo';
 import { useSpring, animated } from 'react-spring';
 import { useServerContext } from 'components/hooks/useServerContext';
@@ -28,12 +28,17 @@ const CATEGORIES = [
     {
         key: TYPES.ADJECTIVES,
         label: 'Spicyness',
-        description: 'Spice up the name with a hot word.',
+        description: 'Spice up the name with an adjective.',
     },
     {
         key: TYPES.HIPHOP,
-        label: 'HipHopify',
+        label: "HipHop'ify",
         description: 'Add words from the hip hop culture.',
+    },
+    {
+        key: TYPES.EDM,
+        label: "EDM'ify",
+        description: 'Steal parts of your name from a celebrity.',
     },
     {
         key: TYPES.NAME,
@@ -43,11 +48,11 @@ const CATEGORIES = [
     {
         key: TYPES.ARTISTS,
         label: 'Fame',
-        description: 'Steal parts of you rname from a celebrity.',
+        description: 'Steal parts of your name from a celebrity.',
     },
 ];
 
-function App() {
+function App({ match, history }) {
     const [mutate] = useMutation(NAME_GENERATED);
 
     const [categories, setCategories] = useState([
@@ -111,7 +116,6 @@ function App() {
         setCategories(withOrder);
     };
 
-    const [signup, setSignup] = useState(false);
     const [sidebarActive, setSidebar] = useState(false);
 
     const appStyle = useSpring({
@@ -151,7 +155,7 @@ function App() {
                                 checked={alliterate}
                                 onChange={(e) => setAlliterate(e.target.checked)}
                                 name="first-letter"
-                                label="Alliteration (same start letter for each word)"
+                                label="Same with same letter for each word"
                             />
                         </div>
                     </div>
@@ -172,7 +176,7 @@ function App() {
 
                     <div
                         className={'dj-name-wrapper' + (hasGenerated ? ' active' : '')}
-                        onClick={() => hasGenerated && setSignup(true)}
+                        onClick={() => hasGenerated && history.push(match.url + '/signup')}
                     >
                         <h1 className="dj-name">
                             <AnimatedText content={name} onAnimated={setAnimated} />
@@ -209,7 +213,10 @@ function App() {
                 </div>
             </animated.div>
 
-            <Signup active={signup} close={() => setSignup(false)} name={name} />
+            <Route
+                path={match.url + '/signup'}
+                render={(props) => <Signup name={name} {...props} />}
+            />
         </>
     );
 }
@@ -238,7 +245,7 @@ function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
 
-const AppWithMeta = () => {
+const AppWithMeta = (props) => {
     const params = useQuery();
     const location = useLocation();
     const name = params.get('name');
@@ -275,7 +282,7 @@ const AppWithMeta = () => {
                 <meta name="twitter:url" content={pageURL} />
             </Helmet>
 
-            <App />
+            <App {...props} />
         </>
     );
 };

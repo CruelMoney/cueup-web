@@ -18,12 +18,14 @@ const WORD_LISTS = Object.freeze({
     ADJECTIVES: shuffle(adjectives),
     ARTISTS: shuffle(splittedArtists),
     HIPHOP: shuffle(splittedHipHop),
+    EDM: shuffle(splittedHipHop),
 });
 
 export const TYPES = Object.freeze({
     ADJECTIVES: 'ADJECTIVES',
     ARTISTS: 'ARTISTS',
     HIPHOP: 'HIPHOP',
+    EDM: 'EDM',
     NAME: 'NAME',
 });
 
