@@ -32,10 +32,10 @@ function AnimatedText({ content, onAnimated }) {
     });
 
     return (
-        <div className="trails-container">
-            <div>
+        <span className="trails-container">
+            <span>
                 {trail.map(({ x, height, ...rest }, index) => (
-                    <animated.div
+                    <animated.span
                         key={index}
                         className="trails-text"
                         style={{
@@ -43,11 +43,11 @@ function AnimatedText({ content, onAnimated }) {
                             transform: x.interpolate((x) => `translate3d(0,${x}px,0)`),
                         }}
                     >
-                        <animated.div style={{ height }}>{items[index]}</animated.div>
-                    </animated.div>
+                        <animated.span style={{ height }}>{items[index]}</animated.span>
+                    </animated.span>
                 ))}
-            </div>
-        </div>
+            </span>
+        </span>
     );
 }
 

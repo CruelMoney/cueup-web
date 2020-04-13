@@ -237,7 +237,7 @@ const Category = ({ enabled, c, toggleCategory, setName, hasGenerated, refreshCa
                 />
                 <p>{c.description}</p>
             </div>
-            {hasGenerated && !withInput && (
+            {hasGenerated && !withInput && enabled && (
                 <RefreshButtonNaked onClick={() => refreshCategory(c.key)} />
             )}
         </div>

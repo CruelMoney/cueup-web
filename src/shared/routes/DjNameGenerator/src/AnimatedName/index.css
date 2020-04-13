@@ -10,6 +10,7 @@
 
 .trails-text {
     color: #111;
+    display: block;
     font-size: 6em;
     font-weight: 800;
     height: 1em;
@@ -21,7 +22,8 @@
     will-change: transform, opacity;
 }
 
-.trails-text > div {
+.trails-text > span {
+    display: block;
     overflow: hidden;
-    padding-right: 0.2em;
+    padding: 0 0.2em;
 }
