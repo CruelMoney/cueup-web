@@ -69,9 +69,11 @@ const Post = ({ match }) => {
                 <h1>{post.title}</h1>
             </header>
             <main>
-                <div className="img-wrapper">
-                    <img src={post.thumbnail_url} alt={post.thumbnail_alt} />
-                </div>
+                {!post.hide_image && (
+                    <div className="img-wrapper">
+                        <img src={post.thumbnail_url} alt={post.thumbnail_alt} />
+                    </div>
+                )}
                 <div className="container">
                     <div
                         className="post-content"
