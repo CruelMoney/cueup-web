@@ -95,6 +95,7 @@ a {
 .dragable-card {
     border-radius: 15px;
     color: white;
+    cursor: move;
     height: 100px;
     overflow: hidden;
     padding: 1em;
@@ -102,7 +103,6 @@ a {
     position: absolute;
     transform-origin: 50% 50% 0px;
     width: calc(100% - 20px);
-    cursor: move;
 }
 
 .dragable-card:nth-child(1) {
@@ -173,9 +173,11 @@ a {
 
 .category-content p {
     font-size: 0.8em;
+    font-weight: 600;
     opacity: 0.75;
 }
 .category-content svg {
+    cursor: pointer;
     fill: #fff;
     height: 2em;
     opacity: 0.75;
@@ -184,7 +186,6 @@ a {
     top: 50%;
     transform: translateY(-50%);
     width: 2em;
-    cursor: pointer;
 }
 
 .options {

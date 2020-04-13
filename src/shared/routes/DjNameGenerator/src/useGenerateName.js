@@ -5,7 +5,14 @@ import adjectives from './adjectives.json';
 import blacklist from './blacklist.json';
 
 const splittedArtists = artists
-    .flatMap((artist) => artist.split(' ')) // split artist names
+    .flatMap((artist) => {
+        const names = artist.split(' ');
+        // only use last name
+        if (names.length === 2) {
+            return [names[1]];
+        }
+        return names;
+    }) // split artist names
     .filter((a) => !blacklist.includes(a.toUpperCase())); // filter normal words
 
 const splittedHipHop = hiphop
