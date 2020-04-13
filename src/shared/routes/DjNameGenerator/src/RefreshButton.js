@@ -10,4 +10,33 @@ const RefreshButton = ({ show, onClick }) => {
     );
 };
 
+export const RefreshButtonNaked = ({ show, onClick }) => {
+    return (
+        <div onClick={onClick} className={'refresh-button ' + (show ? 'active' : '')}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+                <path
+                    d="M320,146s24.36-12-64-12A160,160,0,1,0,416,294"
+                    style={{
+                        fill: 'none',
+                        stroke: '#fff',
+                        strokeLinecap: 'round',
+                        strokeMiterlimit: 10,
+                        strokeWidth: '42px',
+                    }}
+                />
+                <polyline
+                    points="256 58 336 138 256 218"
+                    style={{
+                        fill: 'none',
+                        stroke: '#fff',
+                        strokeLinecap: 'round',
+                        strokeLinejoin: 'round',
+                        strokeWidth: '42px',
+                    }}
+                />
+            </svg>
+        </div>
+    );
+};
+
 export default RefreshButton;

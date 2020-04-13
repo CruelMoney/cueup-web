@@ -35,7 +35,7 @@ export const Signup = ({ name, history }) => {
     return (
         <div className="signup-wrapper">
             <div className="inner-content">
-                <div onClick={() => history.goBack()} className="close-button">
+                <div onClick={() => history.replace('/dj-name-generator')} className="close-button">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="512"

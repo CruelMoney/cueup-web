@@ -10,7 +10,6 @@ import ToggleSwitch from './ToggleSwitch';
 import Button from './Button';
 import Logo from './Logo';
 import AnimatedText from './AnimatedName';
-import { ReactComponent as ReorderIcon } from './reorder-four.svg';
 import Sharing from './Sharing';
 import ContinueButton from './ContinueButton';
 import ShowOptionsButton from './ShowOptionsButton';
@@ -19,7 +18,7 @@ import './index.css';
 import Counter from './Counter';
 import { NAME_GENERATED } from './gql';
 import { Signup } from './Signup';
-import RefreshButton from './RefreshButton';
+import RefreshButton, { RefreshButtonNaked } from './RefreshButton';
 
 const description =
     "Are you even a real DJ if you don't have a name? Find your next DJ name by clicking generate. Toggle the categories to customize the name, best to only use 2 at a time, unless you like it wild. There's 19 billion possibilities - how much time do you have to waste?";
@@ -33,12 +32,7 @@ const CATEGORIES = [
     {
         key: TYPES.HIPHOP,
         label: "HipHop'ify",
-        description: 'Add words from the hip hop culture.',
-    },
-    {
-        key: TYPES.EDM,
-        label: "EDM'ify",
-        description: 'Steal parts of your name from a celebrity.',
+        description: 'Are you the realest DJ in the hood?',
     },
     {
         key: TYPES.NAME,
@@ -155,7 +149,7 @@ function App({ match, history }) {
                                 checked={alliterate}
                                 onChange={(e) => setAlliterate(e.target.checked)}
                                 name="first-letter"
-                                label="Same with same letter for each word"
+                                label="Start with same letter for each word"
                             />
                         </div>
                     </div>
@@ -236,7 +230,7 @@ const Category = ({ enabled, c, toggleCategory, setName }) => {
                 />
                 <p>{c.description}</p>
             </div>
-            <ReorderIcon />
+            <RefreshButtonNaked />
         </div>
     );
 };
