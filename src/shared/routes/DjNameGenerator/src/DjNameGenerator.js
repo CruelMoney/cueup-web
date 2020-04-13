@@ -116,6 +116,11 @@ function App({ match, history }) {
         transform: sidebarActive ? 'translateX(50%)' : 'translateX(0%)',
     });
 
+    const onRefreshCategory = (c) => {
+        refreshCategory(c);
+        setSidebar(false);
+    };
+
     return (
         <>
             <animated.div className="app" style={appStyle}>
@@ -139,7 +144,7 @@ function App({ match, history }) {
                                             hasGenerated={hasGenerated}
                                             enabled={enabled}
                                             toggleCategory={toggleCategory}
-                                            refreshCategory={refreshCategory}
+                                            refreshCategory={onRefreshCategory}
                                             setName={setName}
                                         />
                                     ),
