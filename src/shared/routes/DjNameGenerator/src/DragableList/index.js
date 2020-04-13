@@ -44,8 +44,11 @@ function DraggableList({ items, onOrderChanged }) {
 
     const [springs, setSprings] = useSprings(items.length, fn(order.current), [items]); // Create springs, each corresponds to an item, controlling its transform, scale, etc.
 
+    let scrollAbleArea = null;
+
     const bind = useDrag(
-        ({ args: [originalIndex], down, last, movement: [x, y] }) => {
+        ({ args: [originalIndex], down, last, first, movement: [x, y] }) => {
+            scrollAbleArea = scrollAbleArea ? scrollAbleArea : document.querySelector('.left-area');
             const curIndex = order.current.indexOf(originalIndex);
             const curRow = clamp(Math.round((curIndex * SPACE + y) / SPACE), 0, items.length - 1);
             const newOrder = swap(order.current, curIndex, curRow);
@@ -53,8 +56,12 @@ function DraggableList({ items, onOrderChanged }) {
             if (!down) {
                 order.current = newOrder;
             }
+            if (first) {
+                scrollAbleArea.style.overflowY = 'hidden';
+            }
             if (last) {
                 onOrderChanged(newOrder);
+                scrollAbleArea.style.overflowY = 'scroll';
             }
         },
         {

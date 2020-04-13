@@ -14,7 +14,11 @@
 }
 
 .signup-wrapper .inner-content {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
     height: 100%;
+    justify-content: center;
     perspective: 1000px;
 }
 
@@ -142,6 +146,9 @@
 @media only screen and (max-width: 768px) {
     .signup-wrapper {
         background-color: #fff;
+    }
+    .signup-wrapper .inner-content {
+        display: block;
     }
 }
 
