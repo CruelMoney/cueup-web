@@ -108,7 +108,7 @@ function App() {
         setCategories(withOrder);
     };
 
-    const [signup, setSignup] = useState(false);
+    const [signup, setSignup] = useState(true);
     const [sidebarActive, setSidebar] = useState(false);
 
     const appStyle = useSpring({

@@ -114,7 +114,6 @@ export const Signup = ({ active, close, name }) => {
                         <img
                             style={{
                                 height: '40px',
-                                top: '-10px',
                                 marginRight: '18px',
                             }}
                             alt="Get it on App store"

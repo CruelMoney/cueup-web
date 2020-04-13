@@ -4,8 +4,8 @@
     height: 100%;
     left: 0;
     max-width: 100vw;
+    overflow: scroll;
     -webkit-overflow-scrolling: touch;
-    overflow-y: scroll;
     padding: 1em;
     position: fixed;
     top: 0;
@@ -14,11 +14,7 @@
 }
 
 .signup-wrapper .inner-content {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
     height: 100%;
-    justify-content: center;
     perspective: 1000px;
 }
 
@@ -39,15 +35,14 @@
 }
 
 .app-buttons {
+    align-items: center;
+    display: flex;
+    justify-content: center;
     margin-top: 1em;
 }
 .signup-header {
-    align-items: center;
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    justify-content: center;
     margin-bottom: 2em;
+    min-height: 100px;
     text-align: center;
 }
 
@@ -173,13 +168,7 @@
         right: 0;
         top: 0;
     }
-    .signup-wrapper .card {
-        align-items: center;
-        display: flex;
-        flex: 1;
-        flex-direction: column;
-        justify-content: center;
-    }
+
     .signup-wrapper .inner-content {
         height: auto;
         padding-top: 20px;
