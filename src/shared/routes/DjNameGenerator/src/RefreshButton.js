@@ -12,7 +12,7 @@ const RefreshButton = ({ show, onClick }) => {
 
 export const RefreshButtonNaked = ({ show, onClick }) => {
     return (
-        <div onClick={onClick} className={'refresh-button ' + (show ? 'active' : '')}>
+        <div onClick={onClick} className={'refresh-button-naked ' + (show ? 'active' : '')}>
             <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
                 <path
                     d="M320,146s24.36-12-64-12A160,160,0,1,0,416,294"
