@@ -7831,6 +7831,11 @@ hmac-drbg@^1.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
+hoist-non-react-statics@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
+  integrity sha1-qkSM8JhtVcxAdzsXF0t90GbLfPs=
+
 hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
@@ -10001,6 +10006,11 @@ lodash.templatesettings@^3.0.0:
   dependencies:
     lodash._reinterpolate "^3.0.0"
     lodash.escape "^3.0.0"
+
+lodash.throttle@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
+  integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
 
 lodash.topairs@^4.3.0:
   version "4.3.0"
@@ -12711,6 +12721,14 @@ react-tag-input@^6.4.2:
     core-js "~2.6.5"
     lodash "~4.17.12"
     prop-types "~15.7.0"
+
+react-throttle-render@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-throttle-render/-/react-throttle-render-2.0.0.tgz#9c2b9ead37fb2fa4db477d4e9031a91162683750"
+  integrity sha1-nCuerTf7L6TbR31OkDGpEWJoN1A=
+  dependencies:
+    hoist-non-react-statics "^1.2.0"
+    lodash.throttle "^4.1.1"
 
 react-use-gesture@^7.0.13:
   version "7.0.13"

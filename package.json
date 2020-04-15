@@ -112,6 +112,7 @@
     "react-spring": "^8.0.27",
     "react-stripe-elements": "^5.0.1",
     "react-tag-input": "^6.4.2",
+    "react-throttle-render": "^2.0.0",
     "react-use-gesture": "^7.0.13",
     "sanitize": "^2.1.0",
     "slugify": "^1.4.0",
