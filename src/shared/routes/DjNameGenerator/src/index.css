@@ -232,15 +232,23 @@ a {
     position: relative;
     width: 100%;
 }
+.bottom-right {
+    bottom: 2em;
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    right: 2em;
+}
+.bottom-right .ph-widget {
+    margin-left: 1em;
+}
 
 .created-by {
     align-items: flex-end;
-    bottom: 2em;
     display: flex;
     font-size: 16px;
+    height: 2.4em;
     opacity: 0.2;
-    position: absolute;
-    right: 2em;
 }
 .created-by:hover {
     opacity: 1;
@@ -462,9 +470,22 @@ svg.logo {
         padding-right: 0;
         width: 100%;
     }
-    .created-by {
+    .bottom-right {
         bottom: 1em;
+        flex-direction: column;
         right: 0.5em;
+    }
+    .created-by {
+        bottom: 0.6em;
+        justify-content: flex-end;
+        position: relative;
+        right: 0.9em;
+    }
+    .ph-widget {
+        bottom: -0.2em;
+        position: relative;
+        right: -0.8em;
+        transform: scale(0.8);
     }
     .instructions {
         margin-bottom: 10px;
