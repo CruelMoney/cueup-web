@@ -455,6 +455,26 @@ svg.logo {
     display: none;
 }
 
+.instagram-filter-link {
+    align-items: center;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 0.5px 2.7px rgba(0, 0, 0, 0.017), 0 1.3px 6.5px rgba(0, 0, 0, 0.024),
+        0 2.4px 12.3px rgba(0, 0, 0, 0.03), 0 4.2px 21.9px rgba(0, 0, 0, 0.036),
+        0 7.9px 40.9px rgba(0, 0, 0, 0.043), 0 19px 98px rgba(0, 0, 0, 0.06);
+    color: #111;
+    display: flex;
+    fill: #e1306c;
+    justify-content: center;
+    padding: 1em;
+    position: relative;
+    svg {
+        height: 24px;
+        margin-left: 10px;
+        width: 24px;
+    }
+}
+
 @media only screen and (max-width: 768px) {
     .left-area {
         max-width: 100%;

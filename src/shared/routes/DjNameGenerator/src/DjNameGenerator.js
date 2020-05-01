@@ -19,6 +19,7 @@ import Counter from './Counter';
 import { NAME_GENERATED } from './gql';
 import { Signup } from './Signup';
 import RefreshButton, { RefreshButtonNaked } from './RefreshButton';
+import InstagramWidget from './InstagramWidget';
 
 const description =
     "Are you even a real DJ if you don't have a name? Find your next DJ name by clicking generate. Toggle the categories to customize the name, best to only use 2 at a time, unless you like it wild. There's 19 billion possibilities - how much time do you have to waste?";
@@ -204,6 +205,7 @@ function App({ match, history }) {
                         <h4>Created by</h4>
                         <Logo />
                     </div>
+                    <InstagramWidget />
                 </div>
 
                 <div
