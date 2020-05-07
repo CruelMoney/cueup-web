@@ -24,11 +24,13 @@ const Bg = styled.div`
 `;
 
 const Index = () => {
+    const { environment } = useServerContext();
     const { translate } = useNamespaceContent(content, 'become-dj');
 
     const title = translate('become-dj:title') + ' | Cueup';
-    const thumb = thumbSrc;
+    const thumb = environment.CALLBACK_DOMAIN + thumbSrc;
     const themeColor = '#00d1ff';
+
     return (
         <>
             <Helmet>
