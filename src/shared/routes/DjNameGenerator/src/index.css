@@ -475,6 +475,19 @@ svg.logo {
     }
 }
 
+@media only screen and (max-width: 1440px) {
+    body {
+        font-size: 0.9em;
+    }
+    .left-area {
+        min-width: 450px;
+        width: 450px;
+    }
+    .dragable-card {
+        height: 80px;
+    }
+}
+
 @media only screen and (max-width: 768px) {
     .left-area {
         max-width: 100%;
@@ -609,18 +622,5 @@ svg.logo {
 
     .continue-button {
         transform: none;
-    }
-}
-
-@media only screen and (max-width: 1440px) {
-    body {
-        font-size: 0.9em;
-    }
-    .left-area {
-        min-width: 450px;
-        width: 450px;
-    }
-    .dragable-card {
-        height: 80px;
     }
 }
