@@ -6,12 +6,11 @@ import Footer from 'components/common/Footer';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { appRoutes } from 'constants/locales/appRoutes';
 import { useServerContext } from 'components/hooks/useServerContext';
-import thumbEn from '../../assets/images/signup.png';
-import thumbDa from '../../assets/images/signup_da.png';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Hero from '../../components/common/Hero';
 import JoinThousands from '../../components/common/JoinThousands';
 import HighlightsLaptop from '../../components/common/HighlightsLaptop';
+import thumbSrc from './assets/become-dj.png';
 import Integrations from './components/Integrations';
 import GettingGigs from './components/GettingGigs';
 import Payments from './components/Payments';
@@ -25,11 +24,10 @@ const Bg = styled.div`
 `;
 
 const Index = () => {
-    const { environment } = useServerContext();
-    const { translate, currentLanguage } = useNamespaceContent(content, 'become-dj');
+    const { translate } = useNamespaceContent(content, 'become-dj');
 
     const title = translate('become-dj:title') + ' | Cueup';
-    const thumb = environment.CALLBACK_DOMAIN + (currentLanguage === 'da' ? thumbDa : thumbEn);
+    const thumb = thumbSrc;
     const themeColor = '#00d1ff';
     return (
         <>
