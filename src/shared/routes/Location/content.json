@@ -6,11 +6,11 @@
         "sections": {
             "left": {
                 "header": "Have the music your way",
-                "content": "With Cueup you can easily hire a DJ in {{location}}. You can tell us exactly what music you want, and we'll have local DJs specialising in that music contacting you within a day. <br/>No matter if you're looking to hire a DJ for a wedding, birthday or an office party, the professional DJs at Cueup will help making your event unforgettable."
+                "content": "With Cueup you can easily hire a DJ in {{location}}. You can tell us exactly what music you want, and we'll have local DJs specialising in that music contacting you within a day. No matter if you're looking to hire a DJ for a wedding, birthday or an office party, the professional DJs at Cueup will help making your event unforgettable."
             },
             "right": {
                 "header": "Compare DJ prices",
-                "content": "You will receive offers from various DJs that are suitable to play at your event. Our partners ranges from professional DJs with decades of experience to novice DJs with cheap prices - allowing you to get the best price without compromising quality. <br/>If you're planning an event on a budget, put it in your description, and get offers within your budget."
+                "content": "You will receive offers from various DJs that are suitable to play at your event. Our partners ranges from professional DJs with decades of experience to novice DJs with cheap prices - allowing you to get the best price without compromising quality. If you're planning an event on a budget, put it in your description, and get offers within your budget."
             }
         }
     },
@@ -21,7 +21,7 @@
         "sections": {
             "left": {
                 "header": "Musik som du ønsker det",
-                "content": "Med Cueup kan du nemt leje en DJ i {{location}}. Du kan fortælle os præcis hvilket musik du ønsker, og vil lokale DJs specialiserede inden for dine ønsker kontakte dig. <br/>Lige meget om du leder efter en DJ til bryllup, fødselsdag eller firmafest, vil de profesionelle DJs hos Cueup hjælpe dig med at gøre din fest uforglemmelig."
+                "content": "Med Cueup kan du nemt leje en DJ i {{location}}. Du kan fortælle os præcis hvilket musik du ønsker, og vil lokale DJs specialiserede inden for dine ønsker kontakte dig. Lige meget om du leder efter en DJ til bryllup, fødselsdag eller firmafest, vil de profesionelle DJs hos Cueup hjælpe dig med at gøre din fest uforglemmelig."
             },
             "right": {
                 "header": "Sammenlign DJ priser",
