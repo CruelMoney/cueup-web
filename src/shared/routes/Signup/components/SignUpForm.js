@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import debounce from 'lodash/debounce';
 import { useMutation } from 'react-apollo';
 import * as Sentry from '@sentry/browser';
+import ReactPixel from 'react-facebook-pixel';
 import { SmartButton, Avatar, Col } from 'components/Blocks';
 import { Input, InputRow } from 'components/FormComponents';
 import { useForm, validators, useValidation } from 'components/hooks/useForm';
@@ -113,6 +114,7 @@ const SignupForm = ({ translate, user }) => {
 
             if (!user) {
                 trackSignup();
+                ReactPixel.track('CompleteRegistration');
                 token = data?.signUpToken?.token;
             } else {
                 token = authService.getAccessToken();
