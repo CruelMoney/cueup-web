@@ -38,7 +38,12 @@ import BottomPlayer from './routes/Sounds/BottomPlayer';
 
 const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
     const { userMetadata = {}, appMetadata = {}, playingLocation } = user || {};
-    const { experience, followers, createdAt, certified, identityVerified } = appMetadata;
+    let { followers } = appMetadata;
+    const { experience, createdAt, certified, identityVerified } = appMetadata;
+
+    if (followers && followers.total < 500) {
+        followers = false;
+    }
 
     const memberSince = moment(createdAt).format('MMMM YYYY');
     return (
