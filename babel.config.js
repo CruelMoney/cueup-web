@@ -12,8 +12,11 @@ module.exports = (api) => {
                 '@babel/env',
                 {
                     modules: false,
-                    useBuiltIns: 'entry',
-                    corejs: 3.6,
+                    useBuiltIns: 'usage',
+                    corejs: {
+                        version: 3,
+                        proposals: true,
+                    },
                     ...(isTargetWeb === false && {
                         targets: {
                             node: 'current',
@@ -29,7 +32,9 @@ module.exports = (api) => {
             '@babel/proposal-object-rest-spread',
             '@babel/proposal-class-properties',
             '@babel/proposal-optional-chaining',
+            '@babel/plugin-proposal-nullish-coalescing-operator',
             '@babel/syntax-dynamic-import',
+            // '@babel/plugin-transform-runtime',
             'babel-plugin-styled-components',
             'macros',
             isDev && isTargetWeb && 'react-refresh/babel',

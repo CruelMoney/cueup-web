@@ -37,9 +37,9 @@ export const client = [
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new ManifestPlugin({ fileName: 'manifest.json' }),
     isProfilerEnabled() && new webpack.debug.ProfilingPlugin(),
-    new TypedCssModulesPlugin({
-        globPattern: 'src/**/*.css',
-    }),
+    // new TypedCssModulesPlugin({
+    //     globPattern: 'src/**/*.css',
+    // }),
     isDev() &&
         new ReactRefreshWebpackPlugin({
             overlay: {
