@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { useQuery } from 'react-apollo';
 import { useHistory } from 'react-router';
 import Popup from 'components/common/Popup';
-import Navigation from '../../../components/SubNavigation';
+import Navigation from '../../../components/Navigation/SubNavigation';
 import Rating from '../../../components/common/Rating';
 import VerifiedBadge from '../../../components/graphics/VerifiedBadge';
 import Tooltip from '../../../components/Tooltip';

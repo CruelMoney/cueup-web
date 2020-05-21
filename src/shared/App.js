@@ -20,7 +20,7 @@ import Home from './routes/Home';
 import About from './routes/About';
 import NotFound from './routes/NotFound';
 import Navigation from './components/Navigation';
-import { ProvideMobileMenu } from './components/MobileMenu';
+import { ProvideMobileMenu } from './components/Navigation/MobileMenu';
 import './css/style.css';
 
 const App = () => {

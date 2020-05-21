@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom';
 
 import { Query } from 'react-apollo';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
-import Navlink from './common/Navlink';
-import Popup from './common/Popup';
-import Login from './common/Login';
-import { ME } from './gql';
-import { TitleClean } from './Text';
-import { useLogout } from './hooks/useLogout';
-import useTranslate from './hooks/useTranslate';
+import Navlink from '../common/Navlink';
+import Popup from '../common/Popup';
+import Login from '../common/Login';
+import { ME } from '../gql';
+import { TitleClean } from '../Text';
+import { useLogout } from '../hooks/useLogout';
+import useTranslate from '../hooks/useTranslate';
 
 const initialContext = {
     registerRoutes: (_routes) => {},
