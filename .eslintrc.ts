@@ -36,6 +36,7 @@ export default {
         'react/no-unused-prop-types': 1,
         'react/jsx-indent': 1,
         'import/namespace': 1,
+        'react/no-multi-comp': 0,
     },
     // overrides: [
     //     {
