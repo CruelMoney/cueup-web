@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { renderToString } from 'react-dom/server';
+import { renderToString, renderToNodeStream } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { renderToStringWithData } from '@apollo/react-ssr';
@@ -97,7 +97,7 @@ const serverRenderer = () => async (req, res) => {
         );
     }
 
-    const html = renderToString(
+    renderToNodeStream(
         <Html
             helmetContext={helmetContext}
             apolloState={apolloState}
@@ -108,9 +108,7 @@ const serverRenderer = () => async (req, res) => {
         >
             {content}
         </Html>
-    );
-
-    return res.send('<!doctype html>' + html);
+    ).pipe(res);
 };
 
 export default serverRenderer;
