@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
-import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
+import styled from 'styled-components';
 import { PrimaryButton } from 'components/Blocks';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
@@ -10,6 +10,24 @@ import note from '../../../assets/note.svg';
 import RequestForm from '../../../components/common/RequestForm';
 import content from '../content.json';
 import DJCards from './djCards';
+
+const TextContent = styled.div`
+    max-width: 430px;
+    padding: 0 15px;
+`;
+
+const CardsWrapper = styled.div`
+    display: none;
+
+    @media screen and (min-width: 500px) {
+        display: block;
+    }
+
+    @media screen and (max-width: 900px) {
+        margin-left: -160px;
+        margin-top: 60px;
+    }
+`;
 
 const Home = () => {
     const requestForm = useRef();
@@ -31,7 +49,7 @@ const Home = () => {
                 <div id="stripes" className="v1" />
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-5">
+                        <TextContent>
                             <h1 key="title">{translate('home:title')}</h1>
                             <p key="paragraph">{translate('home:introduction')}</p>
 
@@ -40,10 +58,10 @@ const Home = () => {
                                     {translate('find-djs')}
                                 </PrimaryButton>
                             </div>
-                        </div>
-                        <div className="col-md-8 dj-cards-wrapper">
+                        </TextContent>
+                        <CardsWrapper>
                             <DJCards />
-                        </div>
+                        </CardsWrapper>
                     </div>
                 </div>
             </header>
