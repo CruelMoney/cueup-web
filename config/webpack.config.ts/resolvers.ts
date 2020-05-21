@@ -25,5 +25,6 @@ export default {
         'react-router-dom': getDependencyPath('react-router-dom'),
         'react-i18next': getDependencyPath('react-i18next'),
         'i18next': getDependencyPath('i18next'),
+        'styled-components': getDependencyPath('styled-components'),
     },
 };
