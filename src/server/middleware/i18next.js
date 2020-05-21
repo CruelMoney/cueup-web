@@ -1,4 +1,4 @@
-import middleware from 'i18next-express-middleware';
+import middleware from 'i18next-http-middleware';
 import i18next from 'i18next';
 import config from 'constants/locales/config';
 import en from 'constants/locales/en';

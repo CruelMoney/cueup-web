@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { WithContext as ReactTags } from 'react-tag-input';
-import './TagInput.css';
+// import { WithContext as ReactTags } from 'react-tag-input';
+// import './TagInput.css';
 
 const KeyCodes = {
     comma: 188,
@@ -40,20 +40,19 @@ const TagInput = ({ defaultValue = [], placeholder, onChange, ...props }) => {
         handleChange(newTags);
     };
 
-    return (
-        <ReactTags
-            tags={tags}
-            handleDelete={handleDelete}
-            handleAddition={handleAddition}
-            handleInputBlur={(text) => !!text.trim() && handleAddition({ text: text, id: text })}
-            handleDrag={handleDrag}
-            delimiters={delimiters}
-            autofocus={false}
-            maxLength="24"
-            placeholder={tags.length > 0 ? '' : placeholder}
-            {...props}
-        />
-    );
+    return null;
+    // <ReactTags
+    //     tags={tags}
+    //     handleDelete={handleDelete}
+    //     handleAddition={handleAddition}
+    //     handleInputBlur={(text) => !!text.trim() && handleAddition({ text: text, id: text })}
+    //     handleDrag={handleDrag}
+    //     delimiters={delimiters}
+    //     autofocus={false}
+    //     maxLength="24"
+    //     placeholder={tags.length > 0 ? '' : placeholder}
+    //     {...props}
+    // />
 };
 
 export default TagInput;
