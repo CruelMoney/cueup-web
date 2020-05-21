@@ -1,9 +1,10 @@
 import React from 'react';
+import jsesc from 'jsesc';
 
 type Props = {
     children: any;
     helmetContext: any;
-    apolloState: string;
+    apolloState: any;
     styleTags: any[];
     scriptTags: any[];
     i18nState: any;
@@ -21,6 +22,19 @@ const HTML = ({
 }: Props) => {
     const htmlAttrs = helmet.htmlAttributes.toComponent();
     const bodyAttrs = helmet.bodyAttributes.toComponent();
+
+    const apolloString = jsesc(JSON.stringify(apolloState), {
+        json: true,
+        isScriptContext: true,
+    });
+    const environmentString = jsesc(JSON.stringify(environment), {
+        json: true,
+        isScriptContext: true,
+    });
+    const i18nString = jsesc(JSON.stringify(i18nState), {
+        json: true,
+        isScriptContext: true,
+    });
 
     return (
         <html {...htmlAttrs}>
@@ -65,15 +79,12 @@ const HTML = ({
                 <script
                     // eslint-disable-next-line react/no-danger
                     dangerouslySetInnerHTML={{
-                        // TODO: Add jsesc/stringify here
+                        // jsesc/stringify here
                         // see: https://twitter.com/HenrikJoreteg/status/1143953338284703744
                         __html: `
-                    window.__APOLLO_STATE__ = ${apolloState};
-                    window.__I18N_STATE__ = ${JSON.stringify(i18nState).replace(/</g, '\\u003c')};
-                    window.__ENVIRONMENT__ = ${JSON.stringify(environment).replace(
-                        /</g,
-                        '\\u003c'
-                    )};
+                    window.__APOLLO_STATE__ = JSON.parse(${apolloString});
+                    window.__I18N_STATE__ = JSON.parse(${i18nString});
+                    window.__ENVIRONMENT__ =  JSON.parse(${environmentString});
                     `,
                     }}
                 />

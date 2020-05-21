@@ -100,7 +100,7 @@ const serverRenderer = () => async (req, res) => {
     const html = renderToString(
         <Html
             helmetContext={helmetContext}
-            apolloState={JSON.stringify(apolloState).replace(/</g, '\\u003c')}
+            apolloState={apolloState}
             styleTags={[...styleTags, ...cssTags]}
             scriptTags={[...scriptTags, ...linkTags]}
             i18nState={i18nState}

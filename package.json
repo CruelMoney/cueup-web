@@ -76,6 +76,7 @@
     "i18next": "^19.4.4",
     "i18next-http-middleware": "^1.2.0",
     "intersection-observer": "^0.10.0",
+    "jsesc": "^3.0.1",
     "kute.js": "^1.6.6",
     "load-js": "^3.0.3",
     "lodash": "^4.17.15",
