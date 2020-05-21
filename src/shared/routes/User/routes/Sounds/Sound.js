@@ -149,8 +149,11 @@ const SoundCloudLogo = styled.div`
     width: 78px;
     height: 12px;
     margin-top: 8px;
-    background-color: #98a4b3;
-    -webkit-mask-box-image: url(${soundcloudLogo});
+    background: url(${soundcloudLogo});
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+    filter: invert(0.5);
 `;
 
 const Container = styled.article`
