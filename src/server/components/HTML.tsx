@@ -28,7 +28,7 @@ const HTML = ({
                 <meta charSet="utf-8" />
                 <meta
                     name="viewport"
-                    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+                    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
                 />
                 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-59876038-4" />
 

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { IbanElement } from 'react-stripe-elements';
-import './index.css';
 import styled from 'styled-components';
 import { inputStyle } from 'components/Blocks';
 import { InputLabel } from '../../FormComponents';
+import './index.css';
 
 const IbanField = ({ onChange, label, children, onReady }) => {
     const [errors, setErrors] = useState([]);

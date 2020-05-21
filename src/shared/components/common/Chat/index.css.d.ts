@@ -1,0 +1,24 @@
+declare const styles: {
+    readonly 'avatar': string;
+    readonly 'chat': string;
+    readonly 'content': string;
+    readonly 'flex': string;
+    readonly 'input-wrapper': string;
+    readonly 'message': string;
+    readonly 'message-actions': string;
+    readonly 'message-composer': string;
+    readonly 'message-info': string;
+    readonly 'message-input': string;
+    readonly 'message-wrapper': string;
+    readonly 'messages': string;
+    readonly 'messages-date': string;
+    readonly 'popup': string;
+    readonly 'received': string;
+    readonly 'send': string;
+    readonly 'sender-group': string;
+    readonly 'service-message': string;
+    readonly 'speech-bubble': string;
+    readonly 'timestamp': string;
+    readonly 'typing-indicator': string;
+};
+export = styles;

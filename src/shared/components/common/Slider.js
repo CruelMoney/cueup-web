@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import RCSlider, { Range } from 'rc-slider';
-import 'rc-slider/assets/index.css';
+// import 'rc-slider/assets/index.css';
 
 /**
  * The slider bar can have a set minimum and maximum, and the value can be

@@ -5,4 +5,4 @@ require('@babel/register')({
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
 });
 
-module.exports = require('./postcss.config.ts').default;
+module.exports = require('./storybook.ts').default;

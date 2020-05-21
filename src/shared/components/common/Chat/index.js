@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-import './index.css';
 import moment from 'moment';
 import SendIcon from 'react-ionicons/lib/MdSend';
 import TextareaAutosize from 'react-autosize-textarea';
@@ -7,6 +6,8 @@ import usePushNotifications from 'components/hooks/usePushNotifications';
 import LoadingPlaceholder from '../LoadingPlaceholder';
 import { Avatar } from '../../Blocks';
 import useChat from './useChat';
+
+import './index.css';
 
 const Chat = ({
     sender,
