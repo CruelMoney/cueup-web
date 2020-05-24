@@ -13,13 +13,16 @@ const useExternals = () => {
         );
 
         setTimeout(() => {
+            loadGoogleAnalytics();
+        }, 2000);
+
+        setTimeout(() => {
             if (!excludedOlarkRoutes.some((s) => window.location.pathname.includes(s))) {
                 loadOlark();
             }
             if (!excludeScripts) {
                 loadOneSignal();
             }
-            loadGoogleAnalytics();
         }, 4000);
     }, []);
 };
