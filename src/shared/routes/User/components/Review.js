@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useMutation } from 'react-apollo';
 
 import styled from 'styled-components';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import ReactDOM from 'react-dom';
 import { Popper } from 'react-popper';
 import Rating from '../../../components/common/RatingNew';

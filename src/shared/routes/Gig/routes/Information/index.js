@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import { gigStates } from 'constants/constants';
 import {
     Col,

@@ -5,7 +5,7 @@ import { Query, useMutation } from 'react-apollo';
 import queryString from 'query-string';
 
 import Pin from 'react-ionicons/lib/MdPin';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import AddCircle from 'react-ionicons/lib/MdAddCircle';
 import { Helmet } from 'react-helmet-async';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';

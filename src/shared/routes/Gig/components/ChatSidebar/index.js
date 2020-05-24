@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useCallback, useLayoutEffect, memo } from 'react';
 import styled from 'styled-components';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import Sidebar, { SidebarContent } from '../../../../components/Sidebar';
 import { Title, Body } from '../../../../components/Text';
 import { Col, RowWrap } from '../../../../components/Blocks';

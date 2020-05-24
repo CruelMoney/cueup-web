@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import SendIcon from 'react-ionicons/lib/MdSend';
 import TextareaAutosize from 'react-autosize-textarea';
 import usePushNotifications from 'components/hooks/usePushNotifications';
