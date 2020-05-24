@@ -3,6 +3,7 @@ import ReactPixel from 'react-facebook-pixel';
 import { loadGoogleAnalytics } from './ga';
 import { loadOlark } from './olark';
 import { loadOneSignal } from './oneSignal';
+import { loadStripe } from './stripe';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -20,6 +21,7 @@ const useExternals = () => {
                 loadGoogleAnalytics();
                 ReactPixel.init(window.__ENVIRONMENT__.PIXEL_ID);
                 ReactPixel.pageView();
+                loadStripe();
             }
         }, 2000);
 
