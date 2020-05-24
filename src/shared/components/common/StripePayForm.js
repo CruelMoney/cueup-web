@@ -169,35 +169,37 @@ const PaymentRequestButtonWrapper = ({ paymentIntent, onPaymentConfirmed }) => {
     useEffect(() => {
         // For full documentation of the available paymentRequest options, see:
         // https://stripe.com/docs/stripe.js#the-payment-request-object
-        paymentRequest.current = stripe.paymentRequest({
-            currency: offer.totalPayment.currency.toLowerCase(),
-            country: 'DK',
-            total: {
-                label: 'Total',
-                amount: offer.totalPayment.amount,
-            },
-            displayItems: [
-                {
-                    label: 'DJ offer',
-                    amount: offer.offer.amount,
+        if (stripe) {
+            paymentRequest.current = stripe.paymentRequest({
+                currency: offer.totalPayment.currency.toLowerCase(),
+                country: 'DK',
+                total: {
+                    label: 'Total',
+                    amount: offer.totalPayment.amount,
                 },
-                {
-                    label: 'Service fee',
-                    amount: offer.serviceFee.amount,
-                },
-            ],
-            requestPayerName: true,
-            requestPayerEmail: true,
-        });
+                displayItems: [
+                    {
+                        label: 'DJ offer',
+                        amount: offer.offer.amount,
+                    },
+                    {
+                        label: 'Service fee',
+                        amount: offer.serviceFee.amount,
+                    },
+                ],
+                requestPayerName: true,
+                requestPayerEmail: true,
+            });
 
-        paymentRequest.current.on('paymentmethod', confirmPaymentRequest);
+            paymentRequest.current.on('paymentmethod', confirmPaymentRequest);
 
-        paymentRequest.current.canMakePayment().then((result) => {
-            setCanMakePayment(!!result);
-        });
-    }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+            paymentRequest.current.canMakePayment().then((result) => {
+                setCanMakePayment(!!result);
+            });
+        }
+    }, [stripe]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-    if (!canMakePayment || !paymentRequest.current) {
+    if (!canMakePayment || !paymentRequest.current || !stripe) {
         return null;
     }
 
@@ -240,20 +242,24 @@ const ConnectedCard = ({ refForward, onSave }) => {
         <LabelHalf>
             <Wrapper error={error}>
                 <CardElement
-                    style={{
-                        base: {
-                            'color': '#32325d',
-                            'fontFamily': 'Open Sans, Segoe UI, Helvetica, sans-serif',
-                            'fontSmoothing': 'antialiased',
-                            'fontSize': '18px',
-                            'lineHeight': '40px',
-                            '::placeholder': {
-                                color: '#98a4b3',
+                    options={{
+                        style: {
+                            base: {
+                                'color': '#32325d',
+                                'fontFamily':
+                                    'Avenir Next, Open Sans, Segoe UI, Helvetica, sans-serif',
+                                'fontSmoothing': 'antialiased',
+                                'fontWeight': '400',
+                                'fontSize': '18px',
+                                'lineHeight': '40px',
+                                '::placeholder': {
+                                    color: '#98a4b3',
+                                },
                             },
-                        },
-                        invalid: {
-                            color: '#f44336',
-                            iconColor: '#f44336',
+                            invalid: {
+                                color: '#f44336',
+                                iconColor: '#f44336',
+                            },
                         },
                     }}
                     onReady={(el) => {
