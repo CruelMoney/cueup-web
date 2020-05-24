@@ -2612,9 +2612,6 @@ header .info-boxes {
     position: relative;
 }
 .payout-form {
-    button {
-        margin: 1em 0;
-    }
     .text-element-wrapper {
         margin-bottom: 0;
     }

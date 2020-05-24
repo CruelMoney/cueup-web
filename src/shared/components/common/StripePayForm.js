@@ -2,11 +2,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
     CardElement,
-    injectStripe,
     Elements,
-    StripeProvider,
     PaymentRequestButtonElement,
-} from 'react-stripe-elements';
+    useStripe,
+} from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
 import styled from 'styled-components';
 import * as Sentry from '@sentry/browser';
 import { Input, InputRow, LabelHalf } from 'components/FormComponents';
@@ -17,7 +18,8 @@ import useTranslate from 'components/hooks/useTranslate';
 import CountrySelector from './CountrySelector';
 import ErrorMessageApollo from './ErrorMessageApollo';
 
-const StripeForm = ({ stripe, onPaymentConfirmed, goBack, paymentIntent }) => {
+const StripeForm = ({ onPaymentConfirmed, goBack, paymentIntent }) => {
+    const stripe = useStripe();
     const { translate } = useTranslate();
     const cardElement = useRef();
     const [error, setError] = useState();
@@ -133,7 +135,8 @@ const StripeForm = ({ stripe, onPaymentConfirmed, goBack, paymentIntent }) => {
     );
 };
 
-const PaymentRequestButtonWrapper = ({ paymentIntent, stripe, onPaymentConfirmed }) => {
+const PaymentRequestButtonWrapper = ({ paymentIntent, onPaymentConfirmed }) => {
+    const stripe = useStripe();
     const { offer } = paymentIntent;
 
     const [canMakePayment, setCanMakePayment] = useState(false);
@@ -218,23 +221,16 @@ const PaymentRequestButtonWrapper = ({ paymentIntent, stripe, onPaymentConfirmed
     );
 };
 
-const PaymentRequestBtn = injectStripe(PaymentRequestButtonWrapper);
-
-const SmartForm = injectStripe(StripeForm);
-
 const StripeFormWrapper = (props) => {
     const { environment } = useServerContext();
+
+    const stripePromise = loadStripe(environment.STRIPE_PUBLIC_KEY);
+
     return (
-        <StripeProvider apiKey={environment.STRIPE_PUBLIC_KEY}>
-            <>
-                <Elements>
-                    <PaymentRequestBtn {...props} />
-                </Elements>
-                <Elements>
-                    <SmartForm {...props} />
-                </Elements>
-            </>
-        </StripeProvider>
+        <Elements stripe={stripePromise}>
+            <PaymentRequestButtonWrapper {...props} />
+            <StripeForm {...props} />
+        </Elements>
     );
 };
 

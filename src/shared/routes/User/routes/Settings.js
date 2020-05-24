@@ -402,7 +402,7 @@ const PayoutPopup = ({ user, hasPayout, isActive = false, onClose }) => {
                 label="Payout methods"
                 buttonText={'update'}
             />
-            <Popup showing={showing} onClickOutside={close} width={'500px'}>
+            <Popup showing={showing} onClickOutside={close} width={'600px'}>
                 <PayoutForm
                     color={'#31daff'}
                     isUpdate={hasPayout}

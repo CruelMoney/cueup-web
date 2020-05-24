@@ -47,7 +47,7 @@ const PayoutForm = ({ loading, onSubmitted, translate, ...props }) => {
             <MainForm submit={submit} {...props} loading={submitting} translate={translate} />
             <ErrorMessageApollo error={error || localError} />
 
-            <div className="row center">
+            <div className="row center" style={{ marginTop: '12px' }}>
                 <div className="col-xs-10">
                     <p
                         className="terms_link text-center"
