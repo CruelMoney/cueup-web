@@ -6,7 +6,9 @@ export const useLazyLoadScript = (src) => {
     const [scriptUrl, setScriptUrl] = useState();
     const [loaded] = useScript(scriptUrl);
     const startLoadingScript = () => {
-        setScriptUrl(src);
+        if (!scriptUrl) {
+            setScriptUrl(src);
+        }
     };
 
     return [startLoadingScript, { started: !!scriptUrl, loaded }];

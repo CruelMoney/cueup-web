@@ -4,18 +4,25 @@ declare let window: CustomWindow;
 
 export default {
     codeAddress: function (address, callback) {
-        const geocoder = new window.google.maps.Geocoder();
-        geocoder.geocode({ address: address }, (results, status) => {
-            if (status === window.google.maps.GeocoderStatus.OK) {
-                const lat = results[0].geometry.location.lat();
-                const lng = results[0].geometry.location.lng();
-                return callback({ error: null, position: { lat: lat, lng: lng } });
-            }
+        try {
+            const geocoder = new window.google.maps.Geocoder();
+            geocoder.geocode({ address: address }, (results, status) => {
+                if (status === window.google.maps.GeocoderStatus.OK) {
+                    const lat = results[0].geometry.location.lat();
+                    const lng = results[0].geometry.location.lng();
+                    return callback({ error: null, position: { lat: lat, lng: lng } });
+                }
+                return callback({
+                    error: 'Geocode was not successful for the following reason: ' + status,
+                    position: null,
+                });
+            });
+        } catch (error) {
             return callback({
-                error: 'Geocode was not successful for the following reason: ' + status,
+                error: 'Geocode was not successful',
                 position: null,
             });
-        });
+        }
     },
 
     getTimeZone: function ({ lng, lat }) {

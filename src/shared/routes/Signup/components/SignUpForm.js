@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import debounce from 'lodash/debounce';
 import { useMutation } from 'react-apollo';
 import * as Sentry from '@sentry/browser';
@@ -16,6 +16,7 @@ import { authService } from 'utils/AuthService';
 import useOnLoggedIn from 'components/hooks/useOnLoggedIn';
 import { UPDATE_USER } from 'routes/User/gql';
 import { useServerContext } from 'components/hooks/useServerContext';
+import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
 import NumberedList from '../../../components/common/NumberedList';
 import c from '../../../constants/constants';
 import GeoCoder from '../../../utils/GeoCoder';
@@ -32,6 +33,10 @@ const SignupForm = ({ translate, user }) => {
     const [loading, setLoading] = useState(false);
     const [mutate, { error }] = useMutation(user ? UPDATE_USER : CREATE_USER);
     const genreRef = useRef();
+
+    const [loadMaps, { loaded }] = useLazyLoadScript(
+        'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
+    );
 
     const initialState = {};
 
@@ -134,21 +139,36 @@ const SignupForm = ({ translate, user }) => {
     };
 
     const updateMap = debounce((location) => {
-        //Getting the coordinates of the playing location
-        GeoCoder.codeAddress(location, (geoResult) => {
-            if (geoResult.error) {
-                setValue({
-                    locationErr: translate('City not found'),
-                    location: null,
-                });
-            } else {
-                setValue({
-                    locationName: location,
-                    playingLocation: geoResult.position,
-                });
-            }
-        });
+        if (loaded) {
+            //Getting the coordinates of the playing location
+            GeoCoder.codeAddress(location, (geoResult) => {
+                console.log({ geoResult, location });
+                if (geoResult.error) {
+                    setValue({
+                        locationErr: translate('City not found'),
+                        location: null,
+                    });
+                } else {
+                    setValue({
+                        locationName: location,
+                        playingLocation: geoResult.position,
+                    });
+                }
+            });
+        } else {
+            loadMaps();
+            setValue({
+                locationName: location,
+            });
+        }
     }, 500);
+
+    // updated map once loaded
+    useEffect(() => {
+        if (loaded) {
+            updateMap(state.locationName);
+        }
+    }, [loaded]);
 
     return (
         <form name={'signup-form'} onSubmit={signup}>
@@ -247,6 +267,7 @@ const SignupForm = ({ translate, user }) => {
                 </RegistrationElement>
 
                 <RegistrationElement
+                    onMouseOver={loadMaps}
                     name="location"
                     label={translate('Location') + '*'}
                     active={true}
