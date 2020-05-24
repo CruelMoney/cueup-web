@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import wNumb from 'wnumb';
 import moment from 'moment-timezone';
-import Slider from './Slider';
+import Slider from '../Slider/Slider';
 
 const TimeSlider = ({
     onChange,

@@ -6,6 +6,8 @@ import { CHECK_DJ_AVAILABILITY, CREATE_EVENT } from 'components/common/RequestFo
 import GeoCoder from '../utils/GeoCoder';
 import * as tracker from '../utils/analytics/autotrack';
 
+const isDevelopment = process.env.NODE_ENV === 'development';
+
 export const getLocation = (location) => {
     return new Promise((resolve, reject) => {
         if (location.toUpperCase() === 'CURRENT LOCATION') {
@@ -51,7 +53,7 @@ export const useCheckDjAvailability = ({ locationName, date }) => {
     const check = async () => {
         try {
             setLoading(true);
-            if (!__DEV__) {
+            if (!isDevelopment) {
                 try {
                     tracker.trackCheckAvailability();
                     ReactPixel.track('Search');
@@ -98,7 +100,7 @@ export const useCreateEvent = (theEvent) => {
 
     const doMutate = async (variables) => {
         try {
-            if (!__DEV__) {
+            if (!isDevelopment) {
                 tracker.trackEventPosted();
                 ReactPixel.track('Lead');
             }
