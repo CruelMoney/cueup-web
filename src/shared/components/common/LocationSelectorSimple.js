@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import useScript from '@charlietango/use-script';
+import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
 import SuggestionList from '../SuggestionList';
 import poweredByGoogle from '../../assets/powered_by_google.png';
 
@@ -17,14 +18,9 @@ const LocationSelector = ({ placeholder, countries = [], ...props }) => {
     const [focus, setFocus] = useState(false);
     const locationService = useRef();
 
-    // we only want to load when starting search
-    const [scriptUrl, setScriptUrl] = useState();
-    const [loaded] = useScript(scriptUrl);
-    const startLoadingScript = () => {
-        setScriptUrl(
-            'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
-        );
-    };
+    const [startLoadingScript, { started, loaded }] = useLazyLoadScript(
+        'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
+    );
 
     useEffect(() => {
         if (loaded && !locationService.current) {
@@ -45,7 +41,7 @@ const LocationSelector = ({ placeholder, countries = [], ...props }) => {
     };
 
     const onChangeHandler = (v) => {
-        if (!scriptUrl) {
+        if (!started) {
             startLoadingScript();
         }
 

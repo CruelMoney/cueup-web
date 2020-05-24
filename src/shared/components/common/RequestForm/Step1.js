@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useCheckDjAvailability } from 'actions/EventActions';
 import { BodySmall } from 'components/Text';
+import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
 import { Row, SmartButton } from '../../Blocks';
 import { Input } from '../../FormComponents';
 import LocationSelector from '../LocationSelectorSimple';
@@ -22,6 +23,10 @@ const Step1 = ({
     const [message, setMessage] = useState();
     const [check, { loading, error }] = useCheckDjAvailability(form);
 
+    const [loadGoogleMaps, { started, loaded }] = useLazyLoadScript(
+        'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
+    );
+
     const dateChanged = (date) => {
         handleChange({ date });
         setShowDatePickter(false);
@@ -32,17 +37,19 @@ const Step1 = ({
         const errors = runValidations();
 
         if (errors.length === 0) {
+            const moment = await import('moment-timezone');
+
+            const momentDate = moment.default(form.date);
+
             const { result, data } = await check({
                 ...form,
-                date: form.date.toDate(),
+                date: momentDate.toDate(),
             });
             if (result === true) {
                 const { timeZoneId, location } = data;
 
-                const moment = await import('moment-timezone');
-
                 const newMoment = moment.tz(
-                    form.date.format('YYYY-MM-DDTHH:mm:ss'),
+                    momentDate.format('YYYY-MM-DDTHH:mm:ss'),
                     'YYYY-MM-DDTHH:mm:ss',
                     timeZoneId
                 );
@@ -75,7 +82,14 @@ const Step1 = ({
             {showDatePickter ? (
                 <DatePicker dark initialDate={form.date} handleChange={dateChanged} />
             ) : (
-                <div onMouseOver={() => DatePicker.preload()}>
+                <div
+                    onMouseOver={() => {
+                        DatePicker.preload();
+                        if (!started) {
+                            loadGoogleMaps();
+                        }
+                    }}
+                >
                     <RequestSection style={{ position: 'relative', zIndex: 5 }}>
                         <LocationSelector
                             noShadow
