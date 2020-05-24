@@ -97,7 +97,9 @@ const serverRenderer = () => async (req, res) => {
         );
     }
 
-    renderToNodeStream(
+    res.write('<!DOCTYPE html>');
+
+    return renderToNodeStream(
         <Html
             helmetContext={helmetContext}
             apolloState={apolloState}
