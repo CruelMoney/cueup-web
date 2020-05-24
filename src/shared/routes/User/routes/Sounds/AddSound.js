@@ -55,7 +55,7 @@ const AddSound = (props) => {
         setFileId(singleUpload.id);
     };
 
-    const showForm = sound || (uploadProgress !== null && metadata.common);
+    const showForm = true || sound || (uploadProgress !== null && metadata.common);
     return (
         <>
             {!showForm ? (

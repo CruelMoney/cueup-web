@@ -112,6 +112,7 @@
     "react-share": "^4.1.0",
     "react-spring": "^8.0.27",
     "react-stripe-elements": "^5.0.1",
+    "react-tag-autocomplete": "^6.0.0-beta.6",
     "react-throttle-render": "^2.0.0",
     "react-use-gesture": "^7.0.15",
     "sanitize": "^2.1.0",

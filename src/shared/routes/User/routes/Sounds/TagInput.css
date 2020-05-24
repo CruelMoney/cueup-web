@@ -1,10 +1,11 @@
-.ReactTags__tags {
+.react-tags {
     -webkit-appearance: none;
     background: #f6f8f9;
     border: none;
     border-radius: 4px;
     box-shadow: none;
     color: #122b48;
+
     display: block;
     display: flex;
     flex-direction: row;
@@ -13,63 +14,77 @@
     margin-top: 6px;
     outline: none;
     padding: 9px;
-    text-indent: 9px;
-    width: 100%;
+    padding-left: 4px;
+    position: relative;
 }
-.ReactTags__tags:focus {
+.react-tags.is-focused {
     background: #e9ecf0;
 }
-.ReactTags__selected {
+.react-tags__selected-tag {
     align-items: center;
     display: flex;
     flex: 1;
     flex-wrap: wrap;
 }
-.ReactTags__selected .ReactTags__tag {
+.react-tags.is-focused .react-tags__selected-tag {
+    background-color: #f6f8f9;
+}
+.react-tags__selected-tag {
     background-color: #e9ecf0;
     border-radius: 33px;
     color: #4d6480;
     display: inline-block;
-    font-size: 9px;
-    font-weight: 700;
-    height: 18px;
+    font-size: 12px;
+    font-weight: 600;
+    height: 25px;
     letter-spacing: 0.75px;
     line-height: 18px;
-    margin: 3px 0;
-    margin-right: 3px;
-    padding: 0 6px;
+    margin: 3px;
+    padding: 0 8px;
     text-align: center;
-    text-transform: uppercase;
-}
-.ReactTags__selected .ReactTags__tag a {
-    float: right;
-    margin-left: 3px;
-}
-.ReactTags__tagInput {
-    display: inline-block;
-    flex: 1;
-}
-.ReactTags__tagInput::placeholder,
-.ReactTags__tagInput::-webkit-input-placeholder,
-.ReactTags__tagInput:-ms-input-placeholder {
-    color: #98a4b3;
 }
 
-.ReactTags__tagInputField {
+.react-tags__search-input {
     background: none;
     border: none;
     float: left;
+    margin-left: 5px;
     outline: none;
     width: 100%;
 }
-.ReactTags__suggestions {
-    color: #4d6480;
-    float: left;
-    font-size: 9px;
-    font-weight: 700;
 
-    height: 18px;
-    letter-spacing: 0.75px;
+.react-tags__suggestions {
+    background: white;
+    bottom: 0px;
+    left: 0;
+    max-height: 9999px;
+    min-height: 0px;
+    position: absolute;
+    right: 0;
+    transform: translateY(100%);
+    width: 100%;
+    z-index: 2;
+}
+
+.react-tags__suggestions li {
+    border-radius: 3px;
+    cursor: pointer;
+    height: 42px;
+    padding-left: 9px;
+    position: relative;
+    width: 100%;
+}
+
+.react-tags__suggestions li:hover {
+    background-color: #f6f8f9;
+}
+
+.react-tags__suggestions span {
+    color: #122b48;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 42px;
+    margin: 3px 0;
+    margin-right: 3px;
     text-align: left;
-    text-transform: uppercase;
 }

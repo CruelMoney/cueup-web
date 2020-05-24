@@ -12619,6 +12619,11 @@ react-stripe-elements@^5.0.1:
   dependencies:
     prop-types "15.7.2"
 
+react-tag-autocomplete@^6.0.0-beta.6:
+  version "6.0.0-beta.6"
+  resolved "https://registry.yarnpkg.com/react-tag-autocomplete/-/react-tag-autocomplete-6.0.0-beta.6.tgz#a1cdb7c3014650fa0ee717754a56ea7cc313a61f"
+  integrity sha512-wHtTIjo5nmfIRB5ymPoq98TvNfZx61qJ01v2eLMvPTIDgQjcGhtPy2TVmAdybRfPTVcTs+8CY7oE4ErBDle3+A==
+
 react-throttle-render@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-throttle-render/-/react-throttle-render-2.0.0.tgz#9c2b9ead37fb2fa4db477d4e9031a91162683750"
