@@ -6,7 +6,6 @@
     box-shadow: none;
     color: #122b48;
 
-    display: block;
     display: flex;
     flex-direction: row;
     font-size: 18px;
@@ -20,6 +19,7 @@
 .react-tags.is-focused {
     background: #e9ecf0;
 }
+
 .react-tags__selected-tag {
     align-items: center;
     display: flex;
@@ -50,7 +50,11 @@
     float: left;
     margin-left: 5px;
     outline: none;
-    width: 100%;
+    width: 100% !important;
+}
+.react-tags__search {
+    flex-grow: 1;
+    width: auto !important;
 }
 
 .react-tags__suggestions {
