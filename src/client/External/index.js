@@ -1,21 +1,25 @@
-import loadable from '@loadable/component';
 import { useEffect } from 'react';
-
-const Olark = loadable(() => import('./olark'));
-const Stripe = loadable(() => import('./stripe'));
+import { loadGoogleAnalytics } from './ga';
+import { loadOlark } from './olark';
+import { loadOneSignal } from './oneSignal';
 
 const excludedOlarkRoutes = ['gig', 'dj-name-generator'];
-const excludedStripeRoutes = ['dj-name-generator'];
+const excludedScriptsRoutes = ['dj-name-generator'];
 
 const useExternals = () => {
     useEffect(() => {
-        if (!excludedStripeRoutes.some((s) => window.location.pathname.includes(s))) {
-            Stripe.preload();
-        }
+        const excludeScripts = excludedScriptsRoutes.some((s) =>
+            window.location.pathname.includes(s)
+        );
+
         setTimeout(() => {
             if (!excludedOlarkRoutes.some((s) => window.location.pathname.includes(s))) {
-                Olark.preload();
+                loadOlark();
             }
+            if (!excludeScripts) {
+                loadOneSignal();
+            }
+            loadGoogleAnalytics();
         }, 4000);
     }, []);
 };

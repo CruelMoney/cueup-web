@@ -15,7 +15,7 @@ ReactModal.setAppElement('#app');
 declare let window: CustomWindow;
 
 const BrowserRouter = () => {
-    // useExternals();
+    useExternals();
 
     const { store, initialLanguage } = window.__I18N_STATE__;
     useSSR(store, initialLanguage);
