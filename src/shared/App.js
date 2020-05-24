@@ -16,27 +16,32 @@ import LazyFaq from 'routes/Faq';
 import LazyBecomeDj from 'routes/BecomeDj';
 import LazyBlog from 'routes/Blog';
 import LazyHowItWorks from 'routes/HowItWorks';
+import { ProvideAppState, useAppState } from './components/hooks/useAppState';
 import Home from './routes/Home';
 import About from './routes/About';
 import NotFound from './routes/NotFound';
 import Navigation from './components/Navigation';
 import { ProvideMobileMenu } from './components/Navigation/MobileMenu';
+import BottomPlayer from './routes/User/routes/Sounds/BottomPlayer';
+
 import './css/style.css';
 
 const App = () => {
     return (
-        <>
+        <ProvideAppState>
             <ProvideMobileMenu>
                 <Navigation />
                 <RouteWrapper />
             </ProvideMobileMenu>
             <div id="popup-container" />
-        </>
+        </ProvideAppState>
     );
 };
 
 const RouteWrapper = () => {
     const { t } = useTranslation();
+    const { showBottomPlayer } = useAppState();
+
     return (
         <div id="content">
             <Switch>
@@ -61,6 +66,7 @@ const RouteWrapper = () => {
 
                 <Route component={NotFound} />
             </Switch>
+            {showBottomPlayer && <BottomPlayer />}
         </div>
     );
 };

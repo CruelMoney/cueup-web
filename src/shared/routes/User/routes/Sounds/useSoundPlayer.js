@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Howl } from 'howler';
+import { useAppState } from 'components/hooks/useAppState';
 import useLogActivity, { ACTIVITY_TYPES } from '../../../../components/hooks/useLogActivity';
 
 export const playerStates = Object.freeze({
@@ -16,6 +17,7 @@ let globalUpdate = () => {};
 const useSoundPlayer = ({ track, src, duration }) => {
     const soundId = track.id;
     const sound = useHowlWrapper(src, soundId, track);
+    const { setAppState } = useAppState();
 
     // recreate state
     let initPos = 0;
@@ -39,6 +41,7 @@ const useSoundPlayer = ({ track, src, duration }) => {
 
         const step = () => {
             setProgress(sound.progress());
+            globalUpdate(track);
         };
 
         const startInterval = () => {
@@ -54,6 +57,7 @@ const useSoundPlayer = ({ track, src, duration }) => {
             setState(playerStates.PLAYING);
             setError(null);
             startInterval();
+            setAppState({ showBottomPlayer: true });
         };
         const onPause = () => {
             setState(playerStates.PAUSED);
