@@ -6,7 +6,7 @@ import CountrySelector from 'components/common/CountrySelector';
 import PhoneInput from 'components/common/PhoneInput';
 import StateSelector from 'components/common/StateSelector';
 import { Input, InputRow } from '../../../components/FormComponents';
-import DatePickerPopup from '../../../components/DatePicker';
+import DatePickerPopup from '../../../components/DatePickerPopup';
 import ImageUploader from '../../../components/ImageInput';
 import { VERIFY_STATUS, REQUEST_VERIFICATION } from '../gql';
 import { LoadingPlaceholder2 } from '../../../components/common/LoadingPlaceholder';

@@ -3,7 +3,7 @@ import moment from 'moment-timezone';
 import { Input } from '../components/FormComponents';
 
 import Popup from './common/Popup';
-import DatePicker from './common/Datepicker';
+import DatePicker from './common/DatePicker';
 import { useValidation } from './hooks/useForm';
 
 const DatePickerPopup = ({

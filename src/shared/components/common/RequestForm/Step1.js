@@ -5,7 +5,7 @@ import { BodySmall } from 'components/Text';
 import { Row, SmartButton } from '../../Blocks';
 import { Input } from '../../FormComponents';
 import LocationSelector from '../LocationSelectorSimple';
-import DatePicker from '../Datepicker';
+import DatePicker from '../DatePicker';
 import ErrorMessageApollo from '../ErrorMessageApollo';
 import { RequestSection } from './RequestForm';
 
@@ -67,7 +67,7 @@ const Step1 = ({
             {showDatePickter ? (
                 <DatePicker dark initialDate={form.date} handleChange={dateChanged} />
             ) : (
-                <div>
+                <div onMouseOver={() => DatePicker.preload()}>
                     <RequestSection style={{ position: 'relative', zIndex: 5 }}>
                         <LocationSelector
                             noShadow

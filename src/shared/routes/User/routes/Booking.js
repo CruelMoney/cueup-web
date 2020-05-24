@@ -8,7 +8,7 @@ import { useCreateEvent } from 'actions/EventActions';
 import { useForm } from 'components/hooks/useForm';
 import usePushNotifications from 'components/hooks/usePushNotifications';
 import { SettingsSection, Input, Label } from '../../../components/FormComponents';
-import DatePickerPopup from '../../../components/DatePicker';
+import DatePickerPopup from '../../../components/DatePickerPopup';
 import { Row, Container, Col, GradientBg, PrimaryButton, Card } from '../../../components/Blocks';
 import Sidebar, { SidebarContent, CTAButton } from '../../../components/Sidebar';
 import ScrollToTop from '../../../components/common/ScrollToTop';

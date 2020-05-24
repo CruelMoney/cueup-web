@@ -18,6 +18,7 @@
     color: white;
     line-height: 0px;
     margin: 0 !important;
+    outline: none;
     padding-bottom: 17px;
     padding-top: 17px;
     transition: all 0.1s;

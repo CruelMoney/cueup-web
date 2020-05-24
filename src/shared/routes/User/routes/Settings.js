@@ -11,7 +11,7 @@ import {
 } from '../../../components/FormComponents';
 import ImageUploader from '../../../components/ImageInput';
 import PasswordChanger from '../components/PasswordChanger';
-import DatePickerPopup from '../../../components/DatePicker';
+import DatePickerPopup from '../../../components/DatePickerPopup';
 import LocationPicker from '../components/LocationPicker';
 import NotificationPreferences from '../components/NotificationPreferences';
 import GenreSelector from '../../../components/GenreSelector';
