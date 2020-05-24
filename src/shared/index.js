@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { withRouter, Switch, Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-// import ReactPixel from 'react-facebook-pixel';
+import ReactPixel from 'react-facebook-pixel';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/browser';
 import loadable from '@loadable/component';
@@ -31,7 +31,6 @@ const Setup = ({ location }) => {
         // Setup custom analytics
         if (process.env.NODE_ENV !== 'development') {
             gtag.init();
-            // ReactPixel.init(environment.PIXEL_ID);
         }
     }, [environment]);
 
@@ -39,7 +38,7 @@ const Setup = ({ location }) => {
         if (process.env.NODE_ENV !== 'development') {
             setTimeout(() => {
                 gtag.pageView(location.pathname);
-                // ReactPixel.pageView();
+                ReactPixel.pageView();
             }, 100);
         }
     }, [location.pathname]);

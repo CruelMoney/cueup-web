@@ -1,4 +1,4 @@
-// import ReactPixel from 'react-facebook-pixel';
+import ReactPixel from 'react-facebook-pixel';
 import * as Sentry from '@sentry/browser';
 import { useMutation } from 'react-apollo';
 import { useState } from 'react';
@@ -56,7 +56,7 @@ export const useCheckDjAvailability = ({ locationName, date }) => {
             if (!isDevelopment) {
                 try {
                     tracker.trackCheckAvailability();
-                    // ReactPixel.track('Search');
+                    ReactPixel.track('Search');
                 } catch (error) {
                     Sentry.captureException(error);
                 }
@@ -102,7 +102,7 @@ export const useCreateEvent = (theEvent) => {
         try {
             if (!isDevelopment) {
                 tracker.trackEventPosted();
-                // ReactPixel.track('Lead');
+                ReactPixel.track('Lead');
             }
             return await mutate({
                 variables: {
