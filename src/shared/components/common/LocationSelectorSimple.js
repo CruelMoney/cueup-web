@@ -17,9 +17,14 @@ const LocationSelector = ({ placeholder, countries = [], ...props }) => {
     const [focus, setFocus] = useState(false);
     const locationService = useRef();
 
-    const [loaded] = useScript(
-        'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
-    );
+    // we only want to load when starting search
+    const [scriptUrl, setScriptUrl] = useState();
+    const [loaded] = useScript(scriptUrl);
+    const startLoadingScript = () => {
+        setScriptUrl(
+            'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
+        );
+    };
 
     useEffect(() => {
         if (loaded && !locationService.current) {
@@ -40,9 +45,13 @@ const LocationSelector = ({ placeholder, countries = [], ...props }) => {
     };
 
     const onChangeHandler = (v) => {
+        if (!scriptUrl) {
+            startLoadingScript();
+        }
+
         const value = toTitleCase(v);
 
-        if (value && value.trim()) {
+        if (value && value.trim() && locationService.current) {
             locationService.current.getPlacePredictions(
                 {
                     input: value,
@@ -60,11 +69,11 @@ const LocationSelector = ({ placeholder, countries = [], ...props }) => {
         <>
             <SuggestionList
                 onChange={onChangeHandler}
-                placeholder={!loaded ? 'loading' : placeholder || 'City'}
+                placeholder={placeholder || 'City'}
                 suggestions={dataSource}
                 onFocus={() => setFocus(true)}
                 onBlur={() => setFocus(false)}
-                disableInput={!loaded}
+                disableInput={false}
                 {...props}
             />
             {focus && (
