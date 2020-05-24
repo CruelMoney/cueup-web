@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import moment from 'moment-timezone';
 import { useCheckDjAvailability } from 'actions/EventActions';
 import { BodySmall } from 'components/Text';
 import { Row, SmartButton } from '../../Blocks';
@@ -39,6 +38,9 @@ const Step1 = ({
             });
             if (result === true) {
                 const { timeZoneId, location } = data;
+
+                const moment = await import('moment-timezone');
+
                 const newMoment = moment.tz(
                     form.date.format('YYYY-MM-DDTHH:mm:ss'),
                     'YYYY-MM-DDTHH:mm:ss',
@@ -59,7 +61,13 @@ const Step1 = ({
         }
     };
 
-    const eventDateString = form.date.format('dddd Do, MMMM YYYY');
+    // handle both moment and js date
+    const eventDateString =
+        typeof form.date.format === 'function'
+            ? form.date.format('dddd Do, MMMM YYYY')
+            : typeof form.date.toLocaleDateString === 'function'
+            ? form.date.toLocaleDateString()
+            : null;
     return (
         <form name="requestForm-step-1" onSubmit={submit}>
             <h3 className="center">{translate('requestForm:step-1.header')}</h3>

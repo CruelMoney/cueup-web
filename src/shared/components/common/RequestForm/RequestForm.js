@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import moment from 'moment-timezone';
 import styled from 'styled-components';
 import { Card, CardShadow, Col, Hr, LinkButton } from 'components/Blocks';
 import { LabelHalf, InputRow } from 'components/FormComponents';
@@ -27,7 +26,7 @@ const MainForm = ({ initialCity, countries }) => {
 
     // defaults
     const [form, setForm] = useState({
-        date: moment(),
+        date: new Date(),
         locationName: initialCity,
         startMinute: 21 * 60,
         endMinute: 27 * 60,
