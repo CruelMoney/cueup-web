@@ -141,7 +141,6 @@ const SignupForm = ({ translate, user }) => {
         if (loaded) {
             //Getting the coordinates of the playing location
             GeoCoder.codeAddress(location, (geoResult) => {
-                console.log({ geoResult, location });
                 if (geoResult.error) {
                     setValue({
                         locationErr: translate('City not found'),
@@ -158,16 +157,15 @@ const SignupForm = ({ translate, user }) => {
             setValue({
                 locationName: location,
             });
-            loadMaps();
         }
     }, 500);
 
     // updated map once loaded
     useEffect(() => {
-        if (loaded) {
+        if (loaded && state.locationName && !state.playingLocation) {
             updateMap(state.locationName);
         }
-    }, [loaded]);
+    }, [loaded, state, updateMap]);
 
     return (
         <form name={'signup-form'} onSubmit={signup}>
