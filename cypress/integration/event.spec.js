@@ -1,8 +1,9 @@
 /// <reference types="Cypress" />
+
 describe('Event', () => {
     const fillOuteventForm = () => {
         // FILL OUT EVENT FORM
-        cy.get('input[name=locationName]').type('Copenhagen, Denmark', { force: true });
+        cy.get('input[name=locationName]').type('Copenhagen, Denmark', { force: true }).wait(1000);
         cy.get('button[type=submit]').click({ force: true });
         cy.get('input[name=eventName]').type('Test event', { force: true });
         cy.get('button[name=cueup]').click({ force: true });
@@ -43,10 +44,12 @@ describe('Event', () => {
             cy.get('input[name=eventName]').type('Test event');
             cy.get('button[name=date]').click();
             cy.get('.react-datepicker__day--selected').click();
-            cy.get('textarea[name=description]').type('Test event description');
-            cy.get('input[name=contactName]').type('Test organizer');
-            cy.get('input[name=contactPhone]').type('24658061');
-            cy.get('input[name=contactEmail]').type('organizer@email.com');
+            cy.get('textarea[name=description]')
+                .type('Test event description', { force: true })
+                .wait(1000);
+            cy.get('input[name=contactName]').type('Test organizer', { force: true });
+            cy.get('input[name=contactPhone]').type('24658061', { force: true });
+            cy.get('input[name=contactEmail]').type('organizer@email.com', { force: true });
             cy.get('.sidebar button').contains('BOOK NOW').click();
             cy.get('h3').should('contain', 'Thanks');
         });

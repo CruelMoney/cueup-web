@@ -6,10 +6,13 @@ export default {
         '@werkzeugkiste/eslint-config/react',
         '@werkzeugkiste/eslint-config/typescript',
         '@werkzeugkiste/eslint-config/node',
+        'plugin:cypress/recommended',
     ],
+    plugins: ['cypress'],
     globals: {
-        __BROWSER__: true,
-        __SERVER__: true,
+        '__BROWSER__': true,
+        '__SERVER__': true,
+        'cypress/globals': true,
     },
     settings: {
         'import/resolver': {
@@ -37,6 +40,7 @@ export default {
         'react/jsx-indent': 1,
         'import/namespace': 1,
         'react/no-multi-comp': 0,
+        'cypress/no-unnecessary-waiting': 1,
     },
     // overrides: [
     //     {

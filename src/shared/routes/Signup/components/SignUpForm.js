@@ -7,7 +7,6 @@ import { SmartButton, Avatar, Col } from 'components/Blocks';
 import { Input, InputRow } from 'components/FormComponents';
 import { useForm, validators, useValidation } from 'components/hooks/useForm';
 import RegistrationElement from 'components/common/RegistrationElement';
-import LocationSelector from 'components/common/LocationSelectorSimple';
 import ToggleButtonHandler from 'components/common/ToggleButtonHandler';
 import ImageUploader from 'components/ImageInput';
 import useImageUpload from 'components/hooks/useImageUpload';
@@ -156,10 +155,10 @@ const SignupForm = ({ translate, user }) => {
                 }
             });
         } else {
-            loadMaps();
             setValue({
                 locationName: location,
             });
+            loadMaps();
         }
     }, 500);
 
@@ -273,11 +272,13 @@ const SignupForm = ({ translate, user }) => {
                     active={true}
                     text={translate('signup:location')}
                 >
-                    <LocationSelector
+                    <Input
                         big
                         name="playingLocation"
                         autoComplete="shipping locality"
+                        placeholder="City"
                         onChange={updateMap}
+                        onSave={updateMap}
                         validation={[validators.required]}
                         registerValidation={registerValidation('playingLocation')}
                         unregisterValidation={unregisterValidation('playingLocation')}
