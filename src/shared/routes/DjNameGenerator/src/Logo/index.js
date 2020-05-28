@@ -6,7 +6,7 @@ const Logo = () => {
     const { translate } = useTranslate();
 
     return (
-        <a href={translate(appRoutes.becomeDj)}>
+        <a href={translate(appRoutes.becomeDj) + '?ref=dj-name-generator'}>
             <div className="logo-wrapper">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
