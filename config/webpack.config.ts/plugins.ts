@@ -48,12 +48,9 @@ export const client = [
             },
         }),
     new LoadablePlugin(),
-    new CopyPlugin([
-        {
-            from: paths.public,
-            to: paths.clientBuild,
-        },
-    ]),
+    new CopyPlugin({
+        patterns: [{ from: paths.public, to: paths.clientBuild }],
+    }),
 ].filter(Boolean);
 
 export const server = [
