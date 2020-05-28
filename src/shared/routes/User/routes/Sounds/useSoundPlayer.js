@@ -22,7 +22,7 @@ const useSoundPlayer = ({ track, src, duration }) => {
 
     // recreate state
     let initPos = 0;
-    let initState = playerStates.STOPPED;
+    let initState = onDeck?.id === soundId ? playerStates.LOADING : playerStates.STOPPED;
     try {
         initState = sound.playing() ? playerStates.PLAYING : initState;
         initPos = sound.progress();
@@ -42,7 +42,6 @@ const useSoundPlayer = ({ track, src, duration }) => {
 
         const step = () => {
             setProgress(sound.progress());
-            globalUpdate(track);
         };
 
         const startInterval = () => {
@@ -59,6 +58,7 @@ const useSoundPlayer = ({ track, src, duration }) => {
             setError(null);
             startInterval();
             setAppState({ showBottomPlayer: true });
+            globalUpdate(track);
         };
         const onPause = () => {
             setState(playerStates.PAUSED);
@@ -100,7 +100,7 @@ const useSoundPlayer = ({ track, src, duration }) => {
             sound.unsubscribeOnloaderror(onLoadError);
             clearInterval(intervalRef);
         };
-    }, [duration, sound, setAppState, track]);
+    }, [duration, sound]);
 
     const jumpTo = (s) => {
         setProgress(s);

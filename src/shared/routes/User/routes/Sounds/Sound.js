@@ -196,7 +196,6 @@ const StyledStateButton = styled.button`
     }
 `;
 const PlayPauseButton = ({ state, ...props }) => {
-    console.log({ state });
     return (
         <StyledStateButton {...props}>
             {![playerStates.PLAYING, playerStates.LOADING].includes(state) ? (
