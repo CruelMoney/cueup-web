@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Howl } from 'howler';
 import { useAppState } from 'components/hooks/useAppState';
 import useLogActivity, { ACTIVITY_TYPES } from '../../../../components/hooks/useLogActivity';
@@ -7,6 +7,7 @@ export const playerStates = Object.freeze({
     PLAYING: 'PLAYING',
     PAUSED: 'PAUSED',
     STOPPED: 'STOPPED',
+    LOADING: 'LOADING',
 });
 
 //{id: howl}[]
@@ -99,21 +100,29 @@ const useSoundPlayer = ({ track, src, duration }) => {
             sound.unsubscribeOnloaderror(onLoadError);
             clearInterval(intervalRef);
         };
-    }, [duration, sound]);
+    }, [duration, sound, setAppState, track]);
 
     const jumpTo = (s) => {
         setProgress(s);
         sound.progress(s);
     };
 
+    const play = useCallback(() => {
+        setState(playerStates.LOADING);
+        setAppState({ showBottomPlayer: true });
+        globalUpdate(track);
+
+        sound.play();
+    }, [sound, setAppState, track]);
+
     return {
-        play: sound.play,
+        play,
         pause: sound.pause,
         jumpTo,
-        state,
+        state: state,
         error,
         progress,
-        loading: sound.current && sound.current.howl.state() === 'loading',
+        loading: state === playerStates.LOADING,
     };
 };
 

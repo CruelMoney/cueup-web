@@ -196,9 +196,14 @@ const StyledStateButton = styled.button`
     }
 `;
 const PlayPauseButton = ({ state, ...props }) => {
+    console.log({ state });
     return (
         <StyledStateButton {...props}>
-            {state !== playerStates.PLAYING ? <PlayIcon /> : <PauseIcon />}
+            {![playerStates.PLAYING, playerStates.LOADING].includes(state) ? (
+                <PlayIcon />
+            ) : (
+                <PauseIcon />
+            )}
         </StyledStateButton>
     );
 };
