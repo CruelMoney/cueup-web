@@ -29,6 +29,7 @@ const InnerBottomPlayer = ({ track, next, previous }) => {
         return null;
     }
 
+    console.log({ state });
     return (
         <PlayerRow middle center>
             <PlayerSpacing>

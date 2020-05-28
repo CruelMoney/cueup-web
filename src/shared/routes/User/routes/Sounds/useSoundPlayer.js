@@ -23,6 +23,7 @@ const useSoundPlayer = ({ track, src, duration }) => {
     // recreate state
     let initPos = 0;
     let initState = onDeck?.id === soundId ? playerStates.LOADING : playerStates.STOPPED;
+
     try {
         initState = sound.playing() ? playerStates.PLAYING : initState;
         initPos = sound.progress();
@@ -201,9 +202,9 @@ const useHowlWrapper = (src, soundId, data) => {
 
     const play = () => {
         if (!howl.playing()) {
-            howl.play();
             onDeck = track;
             globalUpdate(data);
+            howl.play();
         }
     };
 
