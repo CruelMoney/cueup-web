@@ -17,14 +17,26 @@ const DownloadAppPopup = ({ isActive, close }) => {
                     <HeaderTitle dark divider>
                         Get Cueup Gigs
                     </HeaderTitle>
-                    <DownloadButton>
-                        <AppIcon src="https://is5-ssl.mzstatic.com/image/thumb/Purple123/v4/d1/7e/47/d17e4708-f5f4-f7da-95b7-c1ce274fb5e0/AppIcon-1x_U007emarketing-0-7-0-0-85-220.png/246x0w.png" />
-                        <span>Android</span>
-                    </DownloadButton>
-                    <DownloadButton>
-                        <AppIcon src="https://is5-ssl.mzstatic.com/image/thumb/Purple123/v4/d1/7e/47/d17e4708-f5f4-f7da-95b7-c1ce274fb5e0/AppIcon-1x_U007emarketing-0-7-0-0-85-220.png/246x0w.png" />
-                        <span>iPhone</span>
-                    </DownloadButton>
+                    <a
+                        href="https://play.google.com/store/apps/details?id=io.cueup.gigs&utm_source=website"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <DownloadButton>
+                            <AppIcon src="https://is5-ssl.mzstatic.com/image/thumb/Purple123/v4/d1/7e/47/d17e4708-f5f4-f7da-95b7-c1ce274fb5e0/AppIcon-1x_U007emarketing-0-7-0-0-85-220.png/246x0w.png" />
+                            <span>Android</span>
+                        </DownloadButton>
+                    </a>
+                    <a
+                        href="https://apps.apple.com/us/app/cueup-gigs/id1458267647?mt=8"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <DownloadButton>
+                            <AppIcon src="https://is5-ssl.mzstatic.com/image/thumb/Purple123/v4/d1/7e/47/d17e4708-f5f4-f7da-95b7-c1ce274fb5e0/AppIcon-1x_U007emarketing-0-7-0-0-85-220.png/246x0w.png" />
+                            <span>iPhone</span>
+                        </DownloadButton>
+                    </a>
                 </Wrapper>
                 <Wrapper>
                     <GracefullImage src={mobileIphone} style={{ height: '400px' }} />
@@ -52,7 +64,6 @@ const DownloadButton = styled(SecondaryButton)`
     max-width: 100%;
     width: 100%;
     border-radius: 20px;
-    background-color: #f6f8f9;
     text-align: left;
     padding-left: 30px;
     font-size: 24px;

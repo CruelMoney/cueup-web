@@ -52,7 +52,7 @@ const MenuButton = styled(TeritaryButton)`
     text-align: left;
     color: #32325d;
     font-weight: 300;
-    font-size: 15px;
+    font-size: 16px;
     width: 100%;
     max-width: 100%;
     transition: none;
@@ -180,8 +180,8 @@ const MenuList = styled.ul`
     }
 
     .active ${MenuButton} {
-        color: #00d1ff;
         font-weight: 600;
+        background: #f6f8f9;
     }
 `;
 

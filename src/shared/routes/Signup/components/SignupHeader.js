@@ -50,7 +50,7 @@ const SignupHeader = () => {
                     }}
                 >
                     <div className="col-xs-12 center">
-                        <a href="https://play.google.com/store/apps/details?id=io.cueup.gigs&utm_source=website&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+                        <a href="https://play.google.com/store/apps/details?id=io.cueup.gigs&utm_source=website">
                             <img
                                 style={{
                                     height: '60px',
