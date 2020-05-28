@@ -1,7 +1,10 @@
 import React from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import Arrow from 'react-ionicons/lib/MdArrowRoundForward';
-import ArrowBack from 'react-ionicons/lib/MdArrowRoundBack';
+// npm install --save-dev @iconify/react @iconify/icons-ion
+import { Icon, InlineIcon } from '@iconify/react';
+import arrowForward from '@iconify/icons-ion/arrow-forward';
+import arrowBack from '@iconify/icons-ion/arrow-back';
+
 import GracefullImage from './GracefullImage';
 
 export const Hr = styled.hr`
@@ -177,11 +180,19 @@ export const ReadMore = ({
             {!back && children}
             {back ? (
                 <ButtonIconBack>
-                    <ArrowBack fontSize={size ?? '15px'} color={color || '#4d6480'} />
+                    <Icon
+                        icon={arrowBack}
+                        style={{ fontSize: size ?? '15px' }}
+                        color={color || '#4d6480'}
+                    />
                 </ButtonIconBack>
             ) : (
                 <ButtonIcon>
-                    <Arrow fontSize={size ?? '15px'} color={color || '#4d6480'} />{' '}
+                    <Icon
+                        icon={arrowForward}
+                        style={{ fontSize: size ?? '15px' }}
+                        color={color || '#4d6480'}
+                    />
                 </ButtonIcon>
             )}
             {back && children}

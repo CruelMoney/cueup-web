@@ -2,7 +2,10 @@ import React, { useRef, useState, useEffect } from 'react';
 import useComponentSize from '@rehooks/component-size';
 import { useMutation, useLazyQuery } from 'react-apollo';
 import ReactPixel from 'react-facebook-pixel';
-import Checkmark from 'react-ionicons/lib/IosCheckmarkCircle';
+// npm install --save-dev @iconify/react @iconify/icons-ion
+import { Icon, InlineIcon } from '@iconify/react';
+import checkmarkCircle from '@iconify/icons-ion/checkmark-circle';
+
 import styled from 'styled-components';
 import { captureException } from '@sentry/core';
 import { LoadingIndicator, Col, RowMobileCol, SmartButton } from 'components/Blocks';
@@ -333,7 +336,7 @@ const ThankYouContent = ({ translate, style }) => {
 
     return (
         <div className="payment-confirmation" style={style}>
-            <Checkmark color={'#50E3C2'} fontSize="42px" />
+            <Icon icon={checkmarkCircle} style={{ fontSize: '42px' }} />
             <h3>{translate('payment-succes-message')}</h3>
         </div>
     );

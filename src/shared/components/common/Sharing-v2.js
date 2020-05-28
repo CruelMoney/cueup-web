@@ -9,7 +9,10 @@ import {
     LinkedinIcon,
     EmailIcon,
 } from 'react-share';
-import ShareIcon from 'react-ionicons/lib/MdShareAlt';
+// npm install --save-dev @iconify/react @iconify/icons-ion
+import { Icon, InlineIcon } from '@iconify/react';
+import arrowRedo from '@iconify/icons-ion/arrow-redo';
+
 import { useServerContext } from 'components/hooks/useServerContext';
 
 const Sharing = (shareUrl, title) => {
@@ -94,7 +97,11 @@ const SimpleSharing = ({ shareUrl, title, style, label = 'Share profile' }) => {
                 <FacebookIcon size={32} bgStyle={{ fill: 'transparent' }} iconFillColor="#98A4B3" />
             </FacebookShareButton>
             <button onClick={share}>
-                <ShareIcon color={'#98A4B3'} style={{ marginLeft: '10px' }} />
+                <Icon
+                    icon={arrowRedo}
+                    color={'#98A4B3'}
+                    style={{ marginLeft: '14px', marginBottom: '3px', fontSize: '18px' }}
+                />
             </button>
         </div>
     );

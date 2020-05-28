@@ -47,8 +47,10 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat }) => {
         return null;
     }
     const { userMetadata = {}, artistName, email } = dj;
-    const { bio = '', firstName, phone } = userMetadata;
-    const shouldTruncate = bio.length > 100;
+    const { firstName, phone } = userMetadata;
+    let { bio } = userMetadata;
+    bio = bio ? bio : '';
+    const shouldTruncate = bio?.length > 100;
     const truncatedBio = shouldTruncate ? bio.substring(0, 100) + '...' : bio;
     const name = artistName || firstName;
     const showInfo = status === 'CONFIRMED';

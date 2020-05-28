@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import MuteIcon from 'react-ionicons/lib/MdVolumeOff';
-import UnmuteIcon from 'react-ionicons/lib/MdVolumeUp';
+
+import { Icon as IconWrap } from '@iconify/react';
+import volumeMute from '@iconify/icons-ion/volume-mute';
+import volumeHigh from '@iconify/icons-ion/volume-high';
 import { LoadingIndicator } from './Blocks';
 
 const Wrapper = styled.div`
@@ -46,9 +48,9 @@ const GracefullVideo = ({ src, muted, canBeUnMuted, ...props }) => {
             {canBeUnMuted && (
                 <Icon>
                     {isMuted ? (
-                        <UnmuteIcon color="#fff" fontSize={'2em'} />
+                        <IconWrap icon={volumeMute} color="#fff" style={{ fontSize: '2em' }} />
                     ) : (
-                        <MuteIcon color="#fff" fontSize={'2em'} />
+                        <IconWrap icon={volumeHigh} color="#fff" style={{ fontSize: '2em' }} />
                     )}
                 </Icon>
             )}
