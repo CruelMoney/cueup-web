@@ -37,6 +37,9 @@
   "dependencies": {
     "@apollo/react-ssr": "^3.1.5",
     "@charlietango/use-script": "^2.1.0",
+    "@iconify/icons-ion": "^1.0.12",
+    "@iconify/icons-simple-line-icons": "^1.0.3",
+    "@iconify/react": "^1.1.3",
     "@loadable/component": "^5.12.0",
     "@loadable/server": "^5.12.0",
     "@rehooks/component-size": "^1.0.3",

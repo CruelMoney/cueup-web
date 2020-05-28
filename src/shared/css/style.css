@@ -340,17 +340,16 @@ body.pre-header-content .navigation {
     padding: 0;
 }
 
-.main-menu li {
+.main-menu > li {
     margin-left: 30px;
     position: relative;
-    text-align: right;
 }
 .main-menu .redirect-button {
     height: 20px !important;
     width: 20px !important;
 }
 
-.main-menu li:last-child {
+.main-menu > li:last-child {
     margin-left: 30px;
 }
 
@@ -619,7 +618,7 @@ nav a {
 nav .main-menu a:hover {
     text-decoration: underline;
 }
-nav .main-menu a.active {
+nav .main-menu > li a.active {
     text-decoration: underline;
 }
 a:focus {

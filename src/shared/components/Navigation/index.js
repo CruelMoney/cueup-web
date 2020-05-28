@@ -4,7 +4,6 @@ import { Query } from 'react-apollo';
 import { useTranslation } from 'react-i18next';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 import Navlink from '../common/Navlink';
-import UserMenuItem from '../common/UserMenuItem';
 import Login from '../common/Login';
 import Logo from '../common/Logo';
 import BreadCrumbs from '../BreadCrumbs';
@@ -12,18 +11,13 @@ import EmailVerifier from '../EmailVerifier';
 import { ME } from '../gql';
 import Popup from '../common/Popup';
 import InstagramConnect from '../InstagramConnect';
-import { useLogout } from '../hooks/useLogout';
 import { LoadingIndicator } from '../Blocks';
+import DesktopMenu from './DesktopMenu';
 import MobileMenu from './MobileMenu';
 
 const Menu = () => {
     const { t } = useTranslation();
     const [loginExpanded, setLoginExpanded] = useState(false);
-    const logout = useLogout();
-
-    const doLogout = () => {
-        logout();
-    };
 
     useEffect(() => {
         const parsedUrl = new URL(window.location.href);
@@ -87,17 +81,6 @@ const Menu = () => {
                                                 />
                                             </li>
                                         )}
-                                        {loggedIn ? (
-                                            <li>
-                                                <Navlink
-                                                    buttonLook={true}
-                                                    to={t(appRoutes.home)}
-                                                    onClick={doLogout}
-                                                    label={t('log-out')}
-                                                    activeClassName=""
-                                                />
-                                            </li>
-                                        ) : null}
 
                                         {!loggedIn && !loading ? (
                                             <li>
@@ -123,16 +106,7 @@ const Menu = () => {
 
                                         {loggedIn ? (
                                             <li>
-                                                <Navlink
-                                                    buttonLook={true}
-                                                    to={t(appRoutes.user) + '/' + user.permalink}
-                                                    important={true}
-                                                >
-                                                    <UserMenuItem
-                                                        name={user.userMetadata.firstName}
-                                                        picture={user.picture && user.picture.path}
-                                                    />
-                                                </Navlink>
+                                                <DesktopMenu user={user} />
                                             </li>
                                         ) : null}
 
