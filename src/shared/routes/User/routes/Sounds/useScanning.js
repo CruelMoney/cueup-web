@@ -15,9 +15,7 @@ const useScanning = ({ duration, loading, progress = 0 }) => {
     const scanInSeconds = scanningPosition * totalSeconds;
 
     const durationFormatted = formatTime(totalSeconds);
-    const progressFormatted = loading
-        ? 'Loading...'
-        : formatTime(scanningPosition ? scanInSeconds : progress);
+    const progressFormatted = formatTime(scanningPosition ? scanInSeconds : progress);
 
     return {
         scanInSeconds,

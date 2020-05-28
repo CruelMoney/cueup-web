@@ -46,7 +46,7 @@ const useSoundPlayer = ({ track, src, duration }) => {
 
         const startInterval = () => {
             clearInterval(intervalRef);
-            intervalRef = setInterval(step, 250);
+            intervalRef = setInterval(step, 500);
         };
 
         if (sound.playing()) {

@@ -153,7 +153,11 @@ const PlayPauseButton = ({ state, onClick, previous, next }) => {
         <>
             <SkipButton style={{ transform: 'rotate(180deg)' }} onClick={previous} />
             <StyledStateButton onClick={onClick}>
-                {state === playerStates.PLAYING ? <PauseIcon /> : <PlayIcon />}
+                {![playerStates.PLAYING, playerStates.LOADING].includes(state) ? (
+                    <PlayIcon />
+                ) : (
+                    <PauseIcon />
+                )}
             </StyledStateButton>
             <SkipButton onClick={next} />
         </>

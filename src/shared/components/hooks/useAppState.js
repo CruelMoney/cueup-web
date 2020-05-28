@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState } from 'react';
 const defaultState = {
     showBottomPlayer: false,
     setAppState: () => {},
+    onDeck: null,
 };
 export const AppContext = createContext(defaultState);
 
