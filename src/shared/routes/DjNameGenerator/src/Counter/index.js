@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useSubscription, useQuery } from 'react-apollo';
 import throttle from 'react-throttle-render';
 import { COUNT_UPDATED_SUB, GET_GENERATED_NAMES_COUNT } from '../gql';
@@ -6,7 +6,7 @@ import { COUNT_UPDATED_SUB, GET_GENERATED_NAMES_COUNT } from '../gql';
 const Counter = ({ count }) => {
     return (
         <p className="counter">
-            <span>{count}</span> DJ names generated
+            <span>{count.toLocaleString()}</span> DJ names generated
         </p>
     );
 };
@@ -24,7 +24,7 @@ const DataWrapper = () => {
         return null;
     }
 
-    return <DebouncedCounter count={count} />;
+    return <DebouncedCounter count={107678} />;
 };
 
 export default DataWrapper;
