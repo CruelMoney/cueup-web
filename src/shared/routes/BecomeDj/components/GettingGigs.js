@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useTransition, animated, config } from 'react-spring';
-import PeopleIcon from 'react-ionicons/lib/MdPeople';
-import TimeIcon from 'react-ionicons/lib/IosTime';
+
+import { Icon, InlineIcon } from '@iconify/react';
+import peopleIcon from '@iconify/icons-ion/people';
+import timeIcon from '@iconify/icons-ion/time';
+
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { BodySmall } from 'components/Text';
@@ -210,11 +213,11 @@ const Gig = ({ name, img, date, status, duration, guests }) => {
                     <div style={{ flex: 1 }} />
                     <div className="bottom">
                         <div style={{ marginRight: '2em' }}>
-                            <TimeIcon fontSize="1.2em" color="#98A4B3" />
+                            <Icon icon={timeIcon} style={{ fontSize: '1.2em' }} color="#98A4B3" />
                             <BodySmall>{duration}</BodySmall>
                         </div>
                         <div>
-                            <PeopleIcon fontSize="1.2em" color="#98A4B3" />
+                            <Icon icon={peopleIcon} style={{ fontSize: '1.2em' }} color="#98A4B3" />
                             <BodySmall>{guests}</BodySmall>
                         </div>
                     </div>

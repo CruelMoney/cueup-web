@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import PhoneIcon from 'react-ionicons/lib/IosCall';
-import MailIcon from 'react-ionicons/lib/MdMail';
+
+import { Icon } from '@iconify/react';
+import mailIcon from '@iconify/icons-ion/mail';
+import phoneIcon from '@iconify/icons-ion/call';
+
 import { NavLink } from 'react-router-dom';
 import { useMutation } from 'react-apollo';
 import ReactPixel from 'react-facebook-pixel';
@@ -117,7 +120,11 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat }) => {
                                         )}
                                     >
                                         <InfoPill>
-                                            <MailIcon fontSize="15px" color="#98A4B3" />
+                                            <Icon
+                                                icon={mailIcon}
+                                                style={{ fontSize: '15px' }}
+                                                color="#98A4B3"
+                                            />
                                             <span>{showInfo ? email : hiddenEmail}</span>
                                         </InfoPill>
                                     </ConditionalWrap>
@@ -128,7 +135,11 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat }) => {
                                         wrap={(children) => <a href={'tel:' + phone}>{children}</a>}
                                     >
                                         <InfoPill>
-                                            <PhoneIcon fontSize="18px" color="#98A4B3" />
+                                            <Icon
+                                                icon={phoneIcon}
+                                                style={{ fontSize: '15px' }}
+                                                color="#98A4B3"
+                                            />
                                             <span>{showInfo ? phone : hiddenNumber}</span>
                                         </InfoPill>
                                     </ConditionalWrap>

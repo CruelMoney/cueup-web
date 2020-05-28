@@ -4,9 +4,12 @@ import styled from 'styled-components';
 import { Query, useMutation } from 'react-apollo';
 import queryString from 'query-string';
 
-import Pin from 'react-ionicons/lib/MdPin';
 import moment from 'moment-timezone';
-import AddCircle from 'react-ionicons/lib/MdAddCircle';
+
+import { Icon, InlineIcon } from '@iconify/react';
+import pinIcon from '@iconify/icons-ion/location-sharp';
+import addCircleIcon from '@iconify/icons-ion/add-circle';
+
 import { Helmet } from 'react-helmet-async';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
@@ -82,12 +85,20 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                         }}
                     >
                         <IconRow className="iconRow">
-                            <AddCircle color={'#98a4b3'} style={{ marginRight: '15px' }} />
+                            <Icon
+                                icon={addCircleIcon}
+                                color={'#98a4b3'}
+                                style={{ marginRight: '15px', fontSize: '24px' }}
+                            />
                             Member since {memberSince}
                         </IconRow>
                         {playingLocation && (
                             <IconRow>
-                                <Pin color={'#98a4b3'} style={{ marginRight: '15px' }} />
+                                <Icon
+                                    icon={pinIcon}
+                                    color={'#98a4b3'}
+                                    style={{ marginRight: '15px', fontSize: '24px' }}
+                                />
                                 {playingLocation.name}
                             </IconRow>
                         )}
