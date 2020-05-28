@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import AddCircle from 'react-ionicons/lib/MdAddCircle';
+import { Icon, InlineIcon } from '@iconify/react';
+import addCircleIcon from '@iconify/icons-ion/add-circle';
+
 import { userRoutes } from 'constants/locales/appRoutes';
 import { Title, Citation, Cite, Body } from '../../../components/Text';
 import ReadMoreExpander from '../../../components/ReadMoreExpander';
@@ -390,7 +392,7 @@ const AddBlockPlaceholder = ({ label, directions, to }) => {
             <LeftItem>
                 <Title>{label}</Title>
                 <Body>{directions}</Body>
-                <AddCircle color={'#50e3c2'} fontSize={'30px'} />
+                <Icon icon={addCircleIcon} color={'#50e3c2'} style={{ fontSize: '30px' }} />
             </LeftItem>
         </Link>
     );

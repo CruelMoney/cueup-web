@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useQuery, useMutation } from 'react-apollo';
-import RemoveButton from 'react-ionicons/lib/MdRemoveCircle';
+
+import { Icon, InlineIcon } from '@iconify/react';
+import removeCircle from '@iconify/icons-ion/remove-circle';
+
 import { useInView } from 'react-intersection-observer';
 import { useConnectInstagram } from 'components/hooks/useConnectInstagram';
 import GracefullImage from '../../../components/GracefullImage';
@@ -427,11 +430,11 @@ const LoadMoreButtonWrapper = styled.div`
 const RemoveImageButton = ({ deleteImage }) => {
     return (
         <RemoveImageWrapper>
-            <RemoveButton
+            <Icon
+                icon={removeCircle}
                 onClick={deleteImage}
                 color="#fff"
-                style={{ cursor: 'pointer' }}
-                fontSize="36px"
+                style={{ cursor: 'pointer', fontSize: '36px' }}
             />
         </RemoveImageWrapper>
     );
