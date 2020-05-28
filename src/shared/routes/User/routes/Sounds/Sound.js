@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
+import { Label } from 'components/FormComponents';
 import { Title, BodySmall, SmallBold } from '../../../../components/Text';
 import { Row, Pill, SecondaryButton, SmartButton, Col } from '../../../../components/Blocks';
 import PlayIcon from '../../../../assets/icons/PlayIcon';
@@ -18,6 +19,7 @@ import SoundBars from './SoundBars';
 
 const Sound = ({
     title,
+    createdAt,
     tags,
     duration,
     player,
@@ -99,6 +101,7 @@ const Sound = ({
                             />
                         )}
                         <div style={{ flex: 1 }} />
+                        <MonthYearDisplayer createdAt={createdAt} />
                         <Genres>
                             {tags.map((g) => (
                                 <Pill key={g}>{g}</Pill>
@@ -143,6 +146,19 @@ const Sound = ({
             )}
         </Container>
     );
+};
+
+const MonthYearDisplayer = ({ createdAt }) => {
+    if (!createdAt) {
+        return null;
+    }
+
+    const formatted = new Date(createdAt).toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'long',
+    });
+
+    return <SmallBold style={{ marginTop: 2, marginRight: 6 }}>{formatted}</SmallBold>;
 };
 
 const SoundCloudLogo = styled.div`

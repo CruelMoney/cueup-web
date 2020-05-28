@@ -7,6 +7,7 @@ const USER_SOUNDS = gql`
                 id
                 title
                 description
+                createdAt
                 samples
                 tags
                 source
