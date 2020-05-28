@@ -87,7 +87,10 @@ const DropDownMenu = ({ user, ...props }) => {
         <>
             <MenuList>
                 <li>
-                    <NavLink to={t(appRoutes.user) + '/' + user.permalink}>
+                    <NavLink
+                        to={t(appRoutes.user) + '/' + user.permalink}
+                        data-cy="menu-profile-link"
+                    >
                         <UserMenuItem isInMenu {...{ user, ...props }} />
                     </NavLink>
                 </li>

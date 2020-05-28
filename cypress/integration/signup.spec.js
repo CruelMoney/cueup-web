@@ -42,6 +42,7 @@ describe('Signup', () => {
         cy.getCookie('x-token').should('exist');
         cy.visit('/');
         cy.get('[data-cy=menu-user-link]').click();
+        cy.get('[data-cy=menu-profile-link]').click();
         cy.url().should('include', '/complete-signup');
     });
 
@@ -54,6 +55,7 @@ describe('Signup', () => {
         cy.getCookie('x-token').should('exist');
         cy.visit('/');
         cy.get('[data-cy=menu-user-link]').click();
+        cy.get('[data-cy=menu-profile-link]').click();
         cy.url().should('include', '/complete-signup');
 
         // real test begins
