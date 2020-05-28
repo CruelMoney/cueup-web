@@ -1,6 +1,9 @@
 import React, { useRef, useEffect } from 'react';
 import moment from 'moment-timezone';
-import SendIcon from 'react-ionicons/lib/MdSend';
+// npm install --save-dev @iconify/react @iconify/icons-ion
+import { Icon, InlineIcon } from '@iconify/react';
+import sendIcon from '@iconify/icons-ion/send';
+
 import TextareaAutosize from 'react-autosize-textarea';
 import usePushNotifications from 'components/hooks/usePushNotifications';
 import LoadingPlaceholder from '../LoadingPlaceholder';
@@ -115,7 +118,7 @@ export const MessageComposer = ({ chat, placeholder, autoFocus }) => (
             disabled={chat.sending}
             type="submit"
         >
-            <SendIcon fontSize="28px" color="#03d1ff" />
+            <Icon color="#03d1ff" icon={sendIcon} style={{ fontSize: '28px' }} />
         </button>
     </form>
 );
