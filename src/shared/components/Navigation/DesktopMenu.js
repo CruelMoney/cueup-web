@@ -54,6 +54,7 @@ const MenuButton = styled(TeritaryButton)`
     font-weight: 300;
     font-size: 15px;
     width: 100%;
+    max-width: 100%;
     transition: none;
     border-radius: 12px;
     line-height: 24px;
@@ -186,10 +187,10 @@ const MenuList = styled.ul`
 
 const Wrapper = styled.div`
     position: relative;
-    color: white;
-    fill: white;
+    /* color: white;
+    fill: white; */
 
-    &.white-bg {
+    &.white-bg a {
         color: #32325d;
         fill: #32325d;
     }

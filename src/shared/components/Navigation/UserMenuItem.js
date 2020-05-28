@@ -51,7 +51,7 @@ class UserMenuItem extends Component {
     }
 }
 
-const MenuUser = styled.div`
+const MenuUser = styled.a`
     color: inherit;
     cursor: pointer;
     font-size: 17px;

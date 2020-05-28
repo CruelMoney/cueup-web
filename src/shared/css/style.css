@@ -355,8 +355,9 @@ body.pre-header-content .navigation {
 
 .main-menu a,
 .main-menu .link-look {
-    color: #ffffff;
+    color: #fff;
     cursor: pointer;
+    fill: #fff;
     font-size: 17px;
     /* Login: */
     font-weight: 600;
@@ -375,6 +376,7 @@ li .link-look {
     .main-menu a,
     .main-menu .link-look {
         color: #32325d;
+        fill: #32325d;
     }
 }
 .white-theme .navigation .logo {
