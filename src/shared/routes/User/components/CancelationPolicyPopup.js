@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import ArrowIcon from 'react-ionicons/lib/MdArrowRoundForward';
+import { Icon, InlineIcon } from '@iconify/react';
+import arrowForward from '@iconify/icons-ion/arrow-forward';
 import SuggestionList from 'components/SuggestionList';
 import { Input } from '../../../components/FormComponents';
 import { Row, TeritaryButton, PrimaryButton } from '../../../components/Blocks';
@@ -122,9 +123,9 @@ export const PolicyDisplayer = ({ cancelationPolicy, style, explanationText }) =
             }}
         >
             <Stat label={'MIN. NOTICE'} value={cancelationPolicy.days + ' days'} />
-            <ArrowIcon color={'#98a4b3'} fontSize={'18px'} />
+            <Icon icon={arrowForward} color={'#98a4b3'} style={{ fontSize: '18px' }} />
             <StatUnit>OR ELSE</StatUnit>
-            <ArrowIcon color={'#98a4b3'} fontSize={'18px'} />
+            <Icon icon={arrowForward} color={'#98a4b3'} style={{ fontSize: '18px' }} />
 
             <Stat label={'REFUNDED'} value={cancelationPolicy.percentage + '%'} />
         </Row>
