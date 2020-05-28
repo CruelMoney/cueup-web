@@ -100,7 +100,7 @@ const VenueListItem = styled.li`
 
 const Cta = ({ onClick }) => (
     <>
-        <Body style={{ maxWidth: 300 }}>
+        <Body style={{ maxWidth: 300, marginBottom: '15px' }}>
             Add a testimonial to display something for the organizers
         </Body>
         <PrimaryButton onClick={onClick}>Add testimonial</PrimaryButton>
