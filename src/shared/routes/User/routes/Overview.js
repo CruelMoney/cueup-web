@@ -12,6 +12,7 @@ import { PolicyDisplayer } from '../components/CancelationPolicyPopup';
 import { LoadingPlaceholder2 } from '../../../components/common/LoadingPlaceholder';
 import GracefullImage from '../../../components/GracefullImage';
 import GracefullVideo from '../../../components/GracefullVideo';
+import DownloadAppPopup from '../components/DownloadAppPopup';
 import Sound from './Sounds/Sound';
 
 const ColumnLayout = styled.section`
@@ -400,10 +401,18 @@ const MobileExpandWidth = styled.div`
     margin-right: -15px;
 `;
 
-const Overview = ({ user, loading }) => {
+const Overview = ({ user, loading, location, history }) => {
     if (loading) {
         return <LoadingPlaceholder2 />;
     }
+    const params = new URLSearchParams(location.search);
+    const modal = params.get('modal');
+    const appPopup = modal === 'app';
+
+    const onModalClose = () => {
+        history.replace(location.pathname);
+    };
+
     const {
         userMetadata,
         genres,
@@ -426,6 +435,7 @@ const Overview = ({ user, loading }) => {
 
     return (
         <ColumnLayout>
+            <DownloadAppPopup isActive={appPopup} close={onModalClose} />
             <Row>
                 <HalfColLeft>
                     <Bio isOwn={isOwn} firstName={firstName} bio={bio} style={bioStyle} />

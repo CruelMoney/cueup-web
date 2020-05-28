@@ -1,5 +1,7 @@
 import React, { useEffect, useState, memo } from 'react';
 import Modal from 'react-modal';
+import styled from 'styled-components';
+import { TeritaryButton } from 'components/Blocks';
 
 const Popup = memo((props) => {
     const {
@@ -103,18 +105,12 @@ const Popup = memo((props) => {
                                 width: '100%',
                             }}
                         >
-                            <span
+                            <ClosePopupButton
                                 data-cy="close-popup-button"
-                                style={{
-                                    color: '#aaaaaa',
-                                    fontSize: '28px',
-                                    fontWeight: 'bold',
-                                    cursor: 'pointer',
-                                }}
                                 onClick={(_) => onClickOutside && onClickOutside()}
                             >
                                 ×
-                            </span>
+                            </ClosePopupButton>
                         </div>
                     ) : null}
                     {!lazy || showingChildren ? <div>{children}</div> : null}
@@ -123,5 +119,23 @@ const Popup = memo((props) => {
         </Modal>
     );
 });
+
+const ClosePopupButton = styled(TeritaryButton)`
+    font-size: 28px;
+    color: #aaaaaa !important;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 20px;
+    min-height: 40px;
+    min-width: 40px;
+    max-height: 40px;
+    max-width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin-left: auto;
+    right: -10px;
+`;
 
 export default Popup;

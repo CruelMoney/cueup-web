@@ -35,7 +35,7 @@ const checks = [
     {
         label: 'Download the app',
         check: (u) => !!u.appMetadata.hasInstalledApp,
-        linkTo: '/signup',
+        linkTo: 'overview?modal=app',
     },
     {
         label: 'Add payout methods',

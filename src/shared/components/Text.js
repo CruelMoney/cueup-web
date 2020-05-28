@@ -128,7 +128,7 @@ export const Cite = styled.cite`
 
 export const HeaderTitle = styled.h1`
     font-size: 36px;
-    color: #fff;
+    color: ${({ dark }) => (dark ? 'inherit' : '#fff')};
     margin-bottom: 0.3em;
     line-height: 1.2em;
     display: inline-block;
@@ -141,6 +141,20 @@ export const HeaderTitle = styled.h1`
             display: none;
         }
     }
+    ${({ divider }) =>
+        divider &&
+        css`
+            margin-bottom: 1.5em !important;
+            :after {
+                content: '';
+                width: 60px;
+                border-bottom: 3px solid #50e3c2;
+                color: #50e3c2;
+                position: absolute;
+                bottom: -15px;
+                left: 0;
+            }
+        `}
 `;
 
 export const PageTitle = styled.h1`

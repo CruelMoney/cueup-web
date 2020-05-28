@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet-async';
 // import { findByLabelText } from '@testing-library/react';
@@ -10,6 +10,7 @@ import ScrollToTop from '../../components/common/ScrollToTop';
 import Hero from '../../components/common/Hero';
 import JoinThousands from '../../components/common/JoinThousands';
 import HighlightsLaptop from '../../components/common/HighlightsLaptop';
+import Signup from '../Signup';
 import thumbSrc from './assets/become-dj.png';
 import Integrations from './components/Integrations';
 import GettingGigs from './components/GettingGigs';
@@ -30,6 +31,11 @@ const Index = () => {
     const title = translate('become-dj:title') + ' | Cueup';
     const thumb = environment.CALLBACK_DOMAIN + thumbSrc;
     const themeColor = '#00d1ff';
+
+    // preload signup page
+    useEffect(() => {
+        Signup.preload();
+    }, []);
 
     return (
         <>
