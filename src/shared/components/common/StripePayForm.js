@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
     CardElement,
     Elements,
@@ -139,81 +139,89 @@ const PaymentRequestButtonWrapper = ({ paymentIntent, onPaymentConfirmed }) => {
     const stripe = useStripe();
     const { offer } = paymentIntent;
 
-    const [canMakePayment, setCanMakePayment] = useState(false);
-    const paymentRequest = useRef();
+    const [paymentRequest, setPaymentRequest] = useState(null);
 
-    const confirmPaymentRequest = async ({ complete, paymentMethod }) => {
-        try {
-            const { token } = paymentIntent;
-            const PAYMENT_INTENT_CLIENT_SECRET = token.token;
+    const confirmPaymentRequest = useCallback(
+        async ({ complete, paymentMethod }) => {
+            try {
+                const { token } = paymentIntent;
+                const PAYMENT_INTENT_CLIENT_SECRET = token.token;
 
-            complete('success');
-            const result = await stripe.handleCardPayment(PAYMENT_INTENT_CLIENT_SECRET, {
-                payment_method: paymentMethod.id,
-            });
-            const { error } = result;
-            if (error) {
+                complete('success');
+                const result = await stripe.handleCardPayment(PAYMENT_INTENT_CLIENT_SECRET, {
+                    payment_method: paymentMethod.id,
+                });
+                const { error } = result;
+                if (error) {
+                    console.log({ error });
+                    throw new Error(error.message || 'Something went wrong');
+                }
+                onPaymentConfirmed(true);
+            } catch (error) {
+                setTimeout(() => {
+                    alert(error.message);
+                }, 1000);
                 console.log({ error });
-                throw new Error(error.message || 'Something went wrong');
+                complete('fail');
             }
-            onPaymentConfirmed(true);
-        } catch (error) {
-            setTimeout(() => {
-                alert(error.message);
-            }, 1000);
-            console.log({ error });
-            complete('fail');
-        }
-    };
+        },
+        [stripe, onPaymentConfirmed, paymentIntent]
+    );
 
     useEffect(() => {
         // For full documentation of the available paymentRequest options, see:
         // https://stripe.com/docs/stripe.js#the-payment-request-object
-        if (stripe) {
-            paymentRequest.current = stripe.paymentRequest({
-                currency: offer.totalPayment.currency.toLowerCase(),
+        if (stripe && offer) {
+            const { totalPayment, serviceFee, offer: innerOffer } = offer;
+            const pmRq = stripe.paymentRequest({
+                currency: totalPayment.currency.toLowerCase(),
                 country: 'DK',
                 total: {
                     label: 'Total',
-                    amount: offer.totalPayment.amount,
+                    amount: totalPayment.amount,
                 },
                 displayItems: [
                     {
                         label: 'DJ offer',
-                        amount: offer.offer.amount,
+                        amount: innerOffer.amount,
                     },
                     {
                         label: 'Service fee',
-                        amount: offer.serviceFee.amount,
+                        amount: serviceFee.amount,
                     },
                 ],
                 requestPayerName: true,
                 requestPayerEmail: true,
             });
 
-            paymentRequest.current.on('paymentmethod', confirmPaymentRequest);
+            pmRq.on('paymentmethod', confirmPaymentRequest);
 
-            paymentRequest.current.canMakePayment().then((result) => {
-                setCanMakePayment(!!result);
+            // Check the availability of the Payment Request API.
+            pmRq.canMakePayment().then((result) => {
+                if (result) {
+                    setPaymentRequest(pmRq);
+                }
             });
         }
-    }, [stripe]); /* eslint-disable-line react-hooks/exhaustive-deps */
+    }, [stripe, offer, confirmPaymentRequest]);
 
-    if (!canMakePayment || !paymentRequest.current || !stripe) {
+    if (!paymentRequest || !stripe) {
         return null;
     }
 
     return (
         <>
             <PaymentRequestButtonElement
-                paymentRequest={paymentRequest.current}
-                className="PaymentRequestButton"
-                style={{
-                    paymentRequestButton: {
-                        theme: 'dark',
-                        height: '40px',
+                options={{
+                    paymentRequest,
+                    style: {
+                        paymentRequestButton: {
+                            theme: 'dark',
+                            height: '40px',
+                        },
                     },
                 }}
+                className="PaymentRequestButton"
             />
             <div className="or-divider">
                 <hr />

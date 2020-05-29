@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import useComponentSize from '@rehooks/component-size';
 import { useMutation, useLazyQuery } from 'react-apollo';
 import ReactPixel from 'react-facebook-pixel';
@@ -194,7 +194,7 @@ const PaymentWrapper = (props) => {
         }
     }, []);
 
-    const paymentConfirmed = () => {
+    const paymentConfirmed = useCallback(() => {
         setPaymentConfirmed();
         onPaymentConfirmed && onPaymentConfirmed();
         setIsPaid(true);
@@ -207,7 +207,7 @@ const PaymentWrapper = (props) => {
         } catch (error) {
             captureException(error);
         }
-    };
+    }, [amount, onPaymentConfirmed, setPaymentConfirmed, currency]);
 
     if (isPaid) {
         return <ThankYouContent style={size} translate={translate} />;
