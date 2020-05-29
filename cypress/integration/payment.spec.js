@@ -415,4 +415,52 @@ describe('Payment', () => {
             cy.get('.sidebar [data-cy=profile-cta]').should('contain', 'MESSAGE');
         });
     });
+
+    it('Direct booking using cash', () => {
+        cy.request('POST', '/test/clearDB');
+        cy.request('POST', '/test/seed/djs');
+
+        const eventData = {
+            customerUserId: 1,
+            status: 'ACCEPTED',
+            gigs: [
+                {
+                    djId: 5,
+                    status: 'ACCEPTED',
+                    djFeeAmount: 15000,
+                    offerAmount: 500000,
+                    serviceFeeAmount: 0,
+                    currency: 'DKK',
+                    enableDirectPayout: true,
+                    referred: true,
+                },
+            ],
+        };
+
+        cy.request('POST', '/test/seed/event', eventData).then((response) => {
+            const theEvent = response.body.event;
+            cy.wait(1000);
+
+            expect(theEvent).to.not.eq(null);
+            cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
+
+            cy.get('[data-cy=event-dj]').should('exist');
+            cy.get('[data-cy=progress-step-incomplete]')
+                .contains('Confirm and pay')
+                .should('exist');
+            cy.get('[data-cy=offer-price]').should('contain', 'DKK5,000.00');
+            cy.get('[data-cy=dj-profile-button]').first().click();
+            cy.get('.sidebar [data-cy=profile-cta]').should('contain', 'BOOK');
+            cy.get('.sidebar [data-cy=profile-cta]').click();
+
+            cy.completePayment();
+            cy.get('h3').should(
+                'contain',
+                'The DJ has been booked, and you will receive a receipt on email.'
+            );
+            cy.get('.card.popup.active *[data-cy=close-popup-button]').click();
+
+            cy.get('.sidebar [data-cy=profile-cta]').should('contain', 'MESSAGE');
+        });
+    });
 });
