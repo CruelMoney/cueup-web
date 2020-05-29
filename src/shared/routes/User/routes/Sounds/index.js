@@ -3,7 +3,7 @@ import { useQuery } from 'react-apollo';
 import { Helmet } from 'react-helmet-async';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
 import Popup from '../../../../components/common/Popup';
-import { Col, SecondaryButton, Row } from '../../../../components/Blocks';
+import { Col, SecondaryButton, Row, PrimaryButton } from '../../../../components/Blocks';
 import EmptyPage from '../../../../components/common/EmptyPage';
 import { Body } from '../../../../components/Text';
 import ConnectSounCloud from '../../components/ConnectSoundCloud';
@@ -42,17 +42,19 @@ const Sounds = ({ user, location, match, setShowPopup }) => {
                 message={
                     isOwn ? (
                         <>
-                            <Body>Showcase your mixes or productions</Body>
+                            <Body style={{ marginBottom: 15 }}>
+                                Showcase your mixes or productions
+                            </Body>
                             <ConnectSounCloud
                                 userId={user.id}
                                 soundCloudConnected={appMetadata.soundCloudConnected}
                             />
-                            <SecondaryButton
-                                style={{ marginTop: '9px' }}
+                            <PrimaryButton
+                                style={{ marginTop: '9px', width: '100%', maxWidth: '100%' }}
                                 onClick={() => setShowPopup(true)}
                             >
                                 Upload track
-                            </SecondaryButton>
+                            </PrimaryButton>
                         </>
                     ) : (
                         ''
