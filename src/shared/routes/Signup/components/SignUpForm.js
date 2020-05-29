@@ -284,7 +284,6 @@ const SignupForm = ({ translate, user }) => {
 
                     {state.playingLocation ? (
                         <SimpleMap
-                            key={state.locationName}
                             radius={25000}
                             name={'playingLocation'}
                             value={state.playingLocation}

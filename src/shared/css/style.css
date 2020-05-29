@@ -2067,6 +2067,9 @@ table {
     white-space: pre-line;
     z-index: 1;
 }
+.gm-style-pbt {
+    color: #fff !important;
+}
 .signup li label,
 .signup li .toggle-button-handler {
     display: block;

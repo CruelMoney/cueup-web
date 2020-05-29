@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import useScript from '@charlietango/use-script';
 import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
 import SuggestionList from '../SuggestionList';
 import poweredByGoogle from '../../assets/powered_by_google.png';
