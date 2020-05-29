@@ -21,15 +21,17 @@ const BrowserRouter = () => {
     useSSR(store, initialLanguage);
 
     return (
-        <Router>
-            <ServerContextProvider environment={window.__ENVIRONMENT__} isSSR={false}>
-                <ApolloProvider>
-                    <HelmetProvider>
-                        <App />
-                    </HelmetProvider>
-                </ApolloProvider>
-            </ServerContextProvider>
-        </Router>
+        <React.StrictMode>
+            <Router>
+                <ServerContextProvider environment={window.__ENVIRONMENT__} isSSR={false}>
+                    <ApolloProvider>
+                        <HelmetProvider>
+                            <App />
+                        </HelmetProvider>
+                    </ApolloProvider>
+                </ServerContextProvider>
+            </Router>
+        </React.StrictMode>
     );
 };
 

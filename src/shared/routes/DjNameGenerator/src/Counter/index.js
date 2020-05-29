@@ -24,7 +24,7 @@ const DataWrapper = () => {
         return null;
     }
 
-    return <DebouncedCounter count={107678} />;
+    return <DebouncedCounter count={count} />;
 };
 
 export default DataWrapper;
