@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useTransition, animated } from 'react-spring';
-import { createPortal } from 'react-dom';
 import useSoundPlayer, { useCurrentDeck, playerStates } from '../useSoundPlayer';
 import useScanning from '../useScanning';
 import SoundBars from '../SoundBars';

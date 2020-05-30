@@ -7,6 +7,7 @@ const Popup = memo((props) => {
     const {
         showing,
         onClickOutside,
+        onClose,
         noPadding,
         width,
         hideClose,
@@ -107,7 +108,13 @@ const Popup = memo((props) => {
                         >
                             <ClosePopupButton
                                 data-cy="close-popup-button"
-                                onClick={(_) => onClickOutside && onClickOutside()}
+                                onClick={(_) => {
+                                    if (onClose) {
+                                        onClose();
+                                        return;
+                                    }
+                                    onClickOutside && onClickOutside();
+                                }}
                             >
                                 ×
                             </ClosePopupButton>

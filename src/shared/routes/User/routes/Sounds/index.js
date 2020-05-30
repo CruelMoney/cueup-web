@@ -123,13 +123,10 @@ const Wrapper = (props) => {
         <>
             <Sounds {...props} setShowPopup={setShowPopup} />
             {isOwn && (
-                <Popup
-                    showing={showPopup}
-                    onClickOutside={() => setShowPopup(false)}
-                    width={'750px'}
-                >
+                <Popup showing={showPopup} onClose={() => setShowPopup(false)} width={'750px'}>
                     <AddSound
                         userId={user.id}
+                        soundCloudConnected={user?.appMetadata?.soundCloudConnected}
                         closeModal={() => setShowPopup(false)}
                         onCancel={() => setShowPopup(false)}
                     />

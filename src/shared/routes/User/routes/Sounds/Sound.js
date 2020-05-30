@@ -19,7 +19,7 @@ import SoundBars from './SoundBars';
 
 const Sound = ({
     title,
-    createdAt,
+    date,
     tags,
     duration,
     player,
@@ -35,7 +35,6 @@ const Sound = ({
     source,
 }) => {
     const isSoundcloud = source === 'soundcloud';
-
     const [showChildren, setShowChild] = useState(false);
 
     // Wait until after client-side hydration to show
@@ -101,7 +100,7 @@ const Sound = ({
                             />
                         )}
                         <div style={{ flex: 1 }} />
-                        <MonthYearDisplayer createdAt={createdAt} />
+                        <MonthYearDisplayer date={date} />
                         <Genres>
                             {tags.map((g) => (
                                 <Pill key={g}>{g}</Pill>
@@ -148,12 +147,17 @@ const Sound = ({
     );
 };
 
-const MonthYearDisplayer = ({ createdAt }) => {
-    if (!createdAt) {
+const MonthYearDisplayer = ({ date }) => {
+    if (!date) {
         return null;
     }
 
-    const formatted = new Date(createdAt).toLocaleDateString(undefined, {
+    // this date is in utc, but we are only interested in year and month so convert
+    const dateObject = new Date(date);
+    const year = dateObject.getUTCFullYear();
+    const month = dateObject.getUTCMonth();
+
+    const formatted = new Date(year, month).toLocaleDateString(undefined, {
         year: 'numeric',
         month: 'long',
     });

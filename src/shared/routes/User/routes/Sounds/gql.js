@@ -7,7 +7,7 @@ const USER_SOUNDS = gql`
                 id
                 title
                 description
-                createdAt
+                date
                 samples
                 tags
                 source
@@ -37,6 +37,7 @@ const UPDATE_SOUND = gql`
     mutation UpdateSound(
         $id: ID!
         $title: String
+        $date: DateTime
         $description: String
         $tags: [String!]
         $file: ID
@@ -45,6 +46,7 @@ const UPDATE_SOUND = gql`
         updateSound(
             id: $id
             title: $title
+            date: $date
             description: $description
             tags: $tags
             file: $file
@@ -53,6 +55,7 @@ const UPDATE_SOUND = gql`
             id
             title
             description
+            date
             samples
             tags
             duration {
@@ -74,6 +77,7 @@ const ADD_SOUND = gql`
     mutation AddSound(
         $title: String!
         $description: String
+        $date: DateTime
         $tags: [String!]
         $file: ID!
         $image: ID
@@ -84,6 +88,7 @@ const ADD_SOUND = gql`
             title: $title
             description: $description
             tags: $tags
+            date: $date
             file: $file
             imageId: $image
             addToSoundCloud: $addToSoundCloud
@@ -91,6 +96,7 @@ const ADD_SOUND = gql`
         ) {
             id
             title
+            date
             description
             samples
             tags

@@ -3,7 +3,9 @@ import { useMutation } from 'react-apollo';
 import styled from 'styled-components';
 import * as Sentry from '@sentry/browser';
 import { useForm } from 'components/hooks/useForm';
-import { Input, InputRow, InputLabel } from '../../../../components/FormComponents';
+import useConnectSoundCloud from 'components/hooks/useConnectSoundcloud';
+import DateInput from 'components/DateInput';
+import { Input, InputRow, InputLabel, Checkbox } from '../../../../components/FormComponents';
 import { Title, Body, BodySmall, InlineLink } from '../../../../components/Text';
 import {
     Row,
@@ -22,11 +24,12 @@ import { ADD_SOUND, UPDATE_SOUND, USER_SOUNDS } from './gql';
 import useSongMetadata from './useSongMetadata';
 
 const AddSound = (props) => {
-    const { sound } = props;
+    const { sound, soundCloudConnected, userId } = props;
     const [uploadProgress, setuploadProgress] = useState(sound ? 1 : null);
     const abortUpload = useRef();
     const [file, setFile] = useState();
     const [fileId, setFileId] = useState();
+    const [addToSoundCloud, setAddToSoundcloud] = useState(false);
 
     const [upload, { loading: uploading, error: uploadError }] = useMutation(UPLOAD_FILE);
     const [uploadImage] = useMutation(UPLOAD_FILE);
@@ -59,13 +62,19 @@ const AddSound = (props) => {
     return (
         <>
             {!showForm ? (
-                <FileChooser onChange={startUpload} />
+                <FileChooser
+                    onChange={startUpload}
+                    userId={userId}
+                    soundCloudConnected={soundCloudConnected}
+                    setAddToSoundcloud={setAddToSoundcloud}
+                />
             ) : (
                 <DataForm
                     {...props}
                     sound={{
                         ...metadata.common,
                         tags: metadata.common && metadata.common.genre,
+                        addToSoundCloud,
                         ...sound,
                     }}
                     uploadImage={uploadImage}
@@ -94,41 +103,54 @@ const AddSound = (props) => {
     );
 };
 
-const FileChooser = ({ onChange }) => (
-    <Col middle>
-        <Body style={{ textAlign: 'center', maxWidth: '500px' }}>
-            For the best result upload in wav or m4a. <br />
-            The file will be optimised for streaming at 256 kbps.
-        </Body>
-        <ImageUploader
-            style={{
-                background: '#31daff',
-                color: 'white',
-                width: '250px',
-                margin: 'auto',
-                marginTop: '24px',
-            }}
-            name="sound"
-            accept="audio/*"
-            onSave={onChange}
-        >
-            Choose file
-        </ImageUploader>
-        {/* <Row style={{ margin: "6px 0 24px 0" }}>
-      <span style={{ marginRight: "24px" }}>
-        <Checkbox label={"Add to SoundCloud"} />
-      </span>
-      <Checkbox label={"Add to Mixcloud"} />
-    </Row> */}
-        <BodySmall style={{ textAlign: 'center', maxWidth: '500px' }}>
-            By uploading, you confirm that your sounds comply with our{' '}
-            <InlineLink href="/terms/agreements" target="_blank">
-                Terms of Service
-            </InlineLink>{' '}
-            and that you don't infringe anyone else's rights.
-        </BodySmall>
-    </Col>
-);
+const FileChooser = ({ onChange, soundCloudConnected, userId, setAddToSoundcloud }) => {
+    const [connect, { loading }] = useConnectSoundCloud({ userId, soundCloudConnected });
+
+    return (
+        <Col middle>
+            <Body style={{ textAlign: 'center', maxWidth: '500px' }}>
+                For the best result upload in wav or m4a. <br />
+                The file will be optimised for streaming at 256 kbps.
+            </Body>
+            <Row style={{ margin: '24px 0 6px 0' }}>
+                <span style={{ marginRight: '24px' }}>
+                    <Checkbox
+                        label={'Add to your Soundcloud'}
+                        onChange={(checked) => {
+                            if (checked && !soundCloudConnected && !loading) {
+                                connect();
+                            }
+                            setAddToSoundcloud(checked);
+                        }}
+                    />
+                </span>
+                {/* <Checkbox label={"Add to Mixcloud"} /> */}
+            </Row>
+            <ImageUploader
+                style={{
+                    background: '#31daff',
+                    color: 'white',
+                    width: '250px',
+                    margin: 'auto',
+                    marginTop: '24px',
+                }}
+                name="sound"
+                accept="audio/*"
+                onSave={onChange}
+            >
+                Choose file
+            </ImageUploader>
+
+            <BodySmall style={{ textAlign: 'center', maxWidth: '500px' }}>
+                By uploading, you confirm that your sounds comply with our{' '}
+                <InlineLink href="/terms/agreements" target="_blank">
+                    Terms of Service
+                </InlineLink>{' '}
+                and that you don't infringe anyone else's rights.
+            </BodySmall>
+        </Col>
+    );
+};
 
 const DataForm = ({
     formDisabled,
@@ -177,7 +199,9 @@ const DataForm = ({
                     title: form.title,
                     description: form.description,
                     tags: form.tags,
+                    addToSoundCloud: form.addToSoundCloud,
                     file,
+                    date: form.date,
                 };
 
                 if (imageUpload) {
@@ -207,7 +231,7 @@ const DataForm = ({
         [setImageUpload, uploadImage]
     );
 
-    const { title, tags, description, year, image, imageFile } = form || {};
+    const { title, tags, description, date, image, imageFile } = form || {};
 
     return (
         <form onSubmit={updateSound}>
@@ -239,13 +263,13 @@ const DataForm = ({
                             registerValidation={registerValidation('title')}
                             unregisterValidation={unregisterValidation('title')}
                         />
-                        <Input
-                            label="Year"
-                            defaultValue={year || new Date().getFullYear()}
-                            placeholder="When was this released"
+                        <DateInput
+                            label="Release date"
+                            defaultValue={date || (form.id ? null : new Date())}
+                            placeholder="MM-YYYY"
                             type="text"
-                            name="year"
-                            onSave={onChange('year')}
+                            name="date"
+                            onSave={onChange('date')}
                             disabled={formDisabled}
                         />
                         <InputLabel>
