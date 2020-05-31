@@ -458,12 +458,13 @@ export const SecondaryButtonLink = styled.a`
 export const PrimaryButton = styled.button.attrs(({ loading, ...props }) => props)`
     ${ButtonTextStyle}
     color: ${({ invert }) => (invert ? '#31daff' : '#fff')};
-    background:  ${({ invert }) => (invert ? '#fff' : '#31daff')}; 
+    background:  ${({ invert, warning }) => (invert ? '#fff' : warning ? '#D0021B' : '#31daff')}; 
     opacity: ${({ loading }) => (loading ? 0.5 : 1)};
     pointer-events: ${({ loading }) => (loading ? 'none' : 'auto')};
     :hover {
         color: ${({ invert }) => (invert ? '#31daff' : '#fff')};
-        background-color: ${({ invert }) => (invert ? '#fff' : '#00d1ff')};
+        background-color: ${({ invert, warning }) =>
+            invert ? '#fff' : warning ? '#b6051a' : '#00d1ff'};
     }
     ${({ disabled }) => (disabled ? 'opacity: 0.5;' : '')}
 `;

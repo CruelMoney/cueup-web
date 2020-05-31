@@ -171,7 +171,7 @@ const DataForm = ({
         updateOnMixcloud: true,
         ...sound,
     });
-    console.log({ sound });
+
     const [imageUpload, setImageUpload] = useState();
     const [submitting, setSubmitting] = useState(false);
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);
@@ -248,9 +248,7 @@ const DataForm = ({
 
     return (
         <form onSubmit={updateSound}>
-            <Title style={{ marginBottom: '39px' }}>
-                {sound.id ? 'Update sound' : 'Add sound'}
-            </Title>
+            <Title>{sound.id ? 'Update sound' : 'Add sound'}</Title>
 
             {!form.id && (
                 <>
@@ -277,7 +275,7 @@ const DataForm = ({
                     onChange={startUploadImage}
                 />
                 <Col>
-                    <InputRow style={{ marginTop: '15px' }}>
+                    <InputRow>
                         <Input
                             label="Title"
                             defaultValue={title}
@@ -317,22 +315,36 @@ const DataForm = ({
                     </InputRow>
                     {sound.soundcloudId && (
                         <Checkbox
-                            label="Update entry on Soundcloud"
+                            label="Update entry on your Soundcloud"
                             defaultValue={form.updateOnSoundCloud}
                             onChange={onChange('updateOnSoundCloud')}
                         />
                     )}
                     {sound.mixcloudId && (
                         <Checkbox
-                            label="Update entry on mixcloud"
+                            label="Update entry on your mixcloud"
                             defaultValue={form.updateOnMixcloud}
                             onChange={onChange('updateOnMixcloud')}
+                        />
+                    )}
+                    {!form.id && (
+                        <Checkbox
+                            label="Add to your Soundcloud"
+                            defaultValue={form.addToSoundCloud}
+                            onChange={onChange('addToSoundCloud')}
+                        />
+                    )}
+                    {!form.id && (
+                        <Checkbox
+                            label="Add to your Mixcloud"
+                            defaultValue={form.addToMixcloud}
+                            onChange={onChange('addToMixcloud')}
                         />
                     )}
                 </Col>
             </Row>
             {uploadProgress !== null && (
-                <Row right>
+                <Row right style={{ marginTop: 24 }}>
                     <TeritaryButton type="button" onClick={onCancel}>
                         Cancel
                     </TeritaryButton>

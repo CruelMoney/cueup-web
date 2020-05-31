@@ -16,6 +16,7 @@ import { DELETE_SOUND, USER_SOUNDS } from './gql';
 import AddSound from './AddSound';
 import useScanning from './useScanning';
 import SoundBars from './SoundBars';
+import RemoveSound from './RemoveSound';
 
 const Sound = ({
     title,
@@ -232,19 +233,14 @@ const Wrapper = (props) => {
         track: props,
     });
     const [showPopup, setShowPopup] = useState(false);
+    const [removePopup, setShowRemove] = useState(false);
 
-    const [deleteSound, { loading: loadingRemove }] = useMutation(DELETE_SOUND, {
-        variables: { id },
-        refetchQueries: [{ query: USER_SOUNDS, variables: { userId } }],
-        awaitRefetchQueries: true,
-    });
     return (
         <>
             <Sound
                 {...props}
-                deleteSound={deleteSound}
-                loadingRemove={loadingRemove}
                 player={player}
+                deleteSound={() => setShowRemove(true)}
                 onEdit={() => setShowPopup(true)}
             />
             {isOwn && (
@@ -264,6 +260,26 @@ const Wrapper = (props) => {
                         }}
                         onCancel={() => setShowPopup(false)}
                         closeModal={() => setShowPopup(false)}
+                    />
+                </Popup>
+            )}
+            {isOwn && (
+                <Popup
+                    showing={removePopup}
+                    onClickOutside={() => setShowRemove(false)}
+                    width={'500px'}
+                >
+                    <RemoveSound
+                        userId={userId}
+                        sound={props}
+                        initialData={{
+                            id,
+                            title,
+                            description,
+                            tags,
+                        }}
+                        onCancel={() => setShowRemove(false)}
+                        closeModal={() => setShowRemove(false)}
                     />
                 </Popup>
             )}
