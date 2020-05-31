@@ -166,7 +166,12 @@ const DataForm = ({
     closeModal,
     userId,
 }) => {
-    const [form, setForm] = useState(sound);
+    const [form, setForm] = useState({
+        updateOnSoundCloud: true,
+        updateOnMixcloud: true,
+        ...sound,
+    });
+    console.log({ sound });
     const [imageUpload, setImageUpload] = useState();
     const [submitting, setSubmitting] = useState(false);
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);
@@ -174,15 +179,19 @@ const DataForm = ({
     const onChange = (key) => (val) => {
         setForm((form) => ({ ...form, [key]: val }));
     };
-    const [mutate, { error }] = useMutation(form.id ? UPDATE_SOUND : ADD_SOUND, {
-        refetchQueries: [
-            {
-                query: USER_SOUNDS,
-                variables: {
-                    userId,
-                },
+
+    const refetchQueries = [];
+    if (!form.id) {
+        refetchQueries.push({
+            query: USER_SOUNDS,
+            variables: {
+                userId,
             },
-        ],
+        });
+    }
+
+    const [mutate, { error }] = useMutation(form.id ? UPDATE_SOUND : ADD_SOUND, {
+        refetchQueries,
         awaitRefetchQueries: true,
         onCompleted: closeModal,
     });
@@ -202,6 +211,8 @@ const DataForm = ({
                     addToSoundCloud: form.addToSoundCloud,
                     file,
                     date: form.date,
+                    updateOnSoundCloud: form.updateOnSoundCloud,
+                    updateOnMixcloud: form.updateOnMixcloud,
                 };
 
                 if (imageUpload) {
@@ -237,27 +248,35 @@ const DataForm = ({
 
     return (
         <form onSubmit={updateSound}>
+            <Title style={{ marginBottom: '39px' }}>
+                {sound.id ? 'Update sound' : 'Add sound'}
+            </Title>
+
+            {!form.id && (
+                <>
+                    {uploadingStatus}
+                    <ProgressBar progress={uploadProgress} />
+                </>
+            )}
+            {isSoundcloud && (
+                <Body>
+                    This will update the sound on Soundcloud. Changes might take some time to take
+                    effect.
+                </Body>
+            )}
+            {isMixcloud && (
+                <Body>
+                    This will update the sound on Mixcloud. Changes might take some time to take
+                    effect.
+                </Body>
+            )}
             <Row style={{ marginTop: '30px' }}>
                 <CoverPicture
                     url={image ? image.path : null}
                     imageFile={imageFile}
                     onChange={startUploadImage}
                 />
-
                 <Col>
-                    <Title style={{ marginBottom: '39px' }}>
-                        {sound.id ? 'Update sound' : 'Add sound'}
-                    </Title>
-
-                    {!form.id && (
-                        <>
-                            {uploadingStatus}
-                            <ProgressBar progress={uploadProgress} />
-                        </>
-                    )}
-                    {isSoundcloud && <Body>This will update the sound on Soundcloud.</Body>}
-                    {isMixcloud && <Body>This will update the sound on Mixcloud.</Body>}
-
                     <InputRow style={{ marginTop: '15px' }}>
                         <Input
                             label="Title"
@@ -296,8 +315,20 @@ const DataForm = ({
                             onSave={onChange('description')}
                         />
                     </InputRow>
-                    {sound.soundcloudId && <Checkbox label="Update entry on Soundcloud" />}
-                    {sound.mixcloudId && <Checkbox label="Update entry on mixcloud" />}
+                    {sound.soundcloudId && (
+                        <Checkbox
+                            label="Update entry on Soundcloud"
+                            defaultValue={form.updateOnSoundCloud}
+                            onChange={onChange('updateOnSoundCloud')}
+                        />
+                    )}
+                    {sound.mixcloudId && (
+                        <Checkbox
+                            label="Update entry on mixcloud"
+                            defaultValue={form.updateOnMixcloud}
+                            onChange={onChange('updateOnMixcloud')}
+                        />
+                    )}
                 </Col>
             </Row>
             {uploadProgress !== null && (

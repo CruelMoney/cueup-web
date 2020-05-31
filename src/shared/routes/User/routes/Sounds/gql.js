@@ -44,6 +44,8 @@ const UPDATE_SOUND = gql`
         $tags: [String!]
         $file: ID
         $image: ID
+        $updateOnSoundCloud: Boolean
+        $updateOnMixcloud: Boolean
     ) {
         updateSound(
             id: $id
@@ -53,6 +55,8 @@ const UPDATE_SOUND = gql`
             tags: $tags
             file: $file
             imageId: $image
+            updateOnSoundCloud: $updateOnSoundCloud
+            updateOnMixcloud: $updateOnMixcloud
         ) {
             id
             title
@@ -71,6 +75,8 @@ const UPDATE_SOUND = gql`
                 id
                 path
             }
+            soundcloudId
+            mixcloudId
         }
     }
 `;
@@ -120,8 +126,12 @@ const ADD_SOUND = gql`
 `;
 
 const DELETE_SOUND = gql`
-    mutation DeleteSound($id: ID!) {
-        removeSound(id: $id)
+    mutation DeleteSound($id: ID!, $removeOnSoundCloud: Boolean, $removeOnMixcloud: Boolean) {
+        removeSound(
+            id: $id
+            removeOnSoundCloud: $removeOnSoundCloud
+            removeOnMixcloud: $removeOnMixcloud
+        )
     }
 `;
 
