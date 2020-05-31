@@ -76,7 +76,7 @@ const Sound = ({
         <Container small={small}>
             <Row>
                 {!small && image && <AlbumCoverMobile src={image.path} />}
-                <Title style={{ marginBottom: '39px' }}>{small ? 'Selected Sound' : title}</Title>
+                <Title style={{ marginBottom: '39px' }}>{small ? 'Latest Sound' : title}</Title>
             </Row>
             <Row>
                 {!small && image && <AlbumCover src={image.path} />}
