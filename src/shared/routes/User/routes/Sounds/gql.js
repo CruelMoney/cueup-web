@@ -22,6 +22,8 @@ const USER_SOUNDS = gql`
                     id
                     path
                 }
+                soundcloudId
+                mixcloudId
             }
             pageInfo {
                 page
@@ -111,6 +113,8 @@ const ADD_SOUND = gql`
                 id
                 path
             }
+            soundcloudId
+            mixcloudId
         }
     }
 `;

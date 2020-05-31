@@ -231,26 +231,34 @@ const DataForm = ({
         [setImageUpload, uploadImage]
     );
 
-    const { title, tags, description, date, image, imageFile } = form || {};
+    const { title, tags, description, date, image, imageFile, source } = form || {};
+    const isSoundcloud = source === 'soundcloud';
+    const isMixcloud = source === 'mixcloud';
 
     return (
         <form onSubmit={updateSound}>
-            <Title style={{ marginBottom: '39px' }}>Add sound</Title>
-
-            {!form.id && (
-                <>
-                    {uploadingStatus}
-                    <ProgressBar progress={uploadProgress} />
-                </>
-            )}
             <Row style={{ marginTop: '30px' }}>
                 <CoverPicture
                     url={image ? image.path : null}
                     imageFile={imageFile}
                     onChange={startUploadImage}
                 />
+
                 <Col>
-                    <InputRow>
+                    <Title style={{ marginBottom: '39px' }}>
+                        {sound.id ? 'Update sound' : 'Add sound'}
+                    </Title>
+
+                    {!form.id && (
+                        <>
+                            {uploadingStatus}
+                            <ProgressBar progress={uploadProgress} />
+                        </>
+                    )}
+                    {isSoundcloud && <Body>This will update the sound on Soundcloud.</Body>}
+                    {isMixcloud && <Body>This will update the sound on Mixcloud.</Body>}
+
+                    <InputRow style={{ marginTop: '15px' }}>
                         <Input
                             label="Title"
                             defaultValue={title}
@@ -288,6 +296,8 @@ const DataForm = ({
                             onSave={onChange('description')}
                         />
                     </InputRow>
+                    {sound.soundcloudId && <Checkbox label="Update entry on Soundcloud" />}
+                    {sound.mixcloudId && <Checkbox label="Update entry on mixcloud" />}
                 </Col>
             </Row>
             {uploadProgress !== null && (
@@ -302,7 +312,7 @@ const DataForm = ({
                         onClick={updateSound}
                         type="submit"
                     >
-                        {uploading ? 'Uploading...' : form.id ? 'Update track' : 'Add track'}
+                        {uploading ? 'Uploading...' : sound.id ? 'Update sound' : 'Add sound'}
                     </SmartButton>
                 </Row>
             )}

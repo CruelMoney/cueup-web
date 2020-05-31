@@ -128,19 +128,17 @@ const Sound = ({
                 </Col>
             </Row>
             {!small && (
-                <Row right style={{ marginTop: '15px' }}>
+                <Row right middle style={{ marginTop: '15px' }}>
                     <SimpleSharing shareUrl={link} label={null} />
                     {<div style={{ flex: 1 }} />}
+                    {isSoundcloud && <SoundCloudLogo />}
 
-                    {isOwn && !isSoundcloud && (
+                    {isOwn && (
                         <SmartButton loading={loadingRemove} onClick={deleteSound} level="tertiary">
                             Remove
                         </SmartButton>
                     )}
-                    {isOwn && !isSoundcloud && (
-                        <SecondaryButton onClick={onEdit}>Edit</SecondaryButton>
-                    )}
-                    {isSoundcloud && <SoundCloudLogo />}
+                    {isOwn && <SecondaryButton onClick={onEdit}>Edit</SecondaryButton>}
                 </Row>
             )}
         </Container>
@@ -168,7 +166,6 @@ const MonthYearDisplayer = ({ date }) => {
 const SoundCloudLogo = styled.div`
     width: 78px;
     height: 12px;
-    margin-top: 8px;
     background: url(${soundcloudLogo});
     background-repeat: no-repeat;
     background-size: contain;
