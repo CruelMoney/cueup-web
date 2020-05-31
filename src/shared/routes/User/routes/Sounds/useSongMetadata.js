@@ -18,11 +18,15 @@ const useSongMetadata = ({ file }) => {
             try {
                 if (parser.current && file) {
                     const data = await parser.current.parseBlob(file);
-                    const { picture } = data.common;
+                    const { picture, date } = data.common;
                     if (picture) {
                         data.common.imageFile = new Blob([picture[0].data], {
                             type: picture[0].format,
                         });
+                    }
+
+                    if (date) {
+                        data.common.date = new Date(Date.UTC(date));
                     }
 
                     setMetadata(data);
