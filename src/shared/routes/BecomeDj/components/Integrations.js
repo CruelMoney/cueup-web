@@ -121,12 +121,9 @@ const Integrations = () => {
                         <p>{t('become-dj:integrations.photos')}</p>
                         <p>{t('become-dj:integrations.videos')}</p>
                         <p>Mixtapes</p>
-                        <p>Mixcloud*</p>
+                        <p>Mixcloud</p>
                         <p>{t('become-dj:integrations.more')}</p>
                     </IntegrationsText>
-                    <IntegrationsTextStarred>
-                        <p>{t('become-dj:integrations.coming-soon')}</p>
-                    </IntegrationsTextStarred>
                 </IntegrationsCol>
             </IntegrationsWrapper>
         </Container>
