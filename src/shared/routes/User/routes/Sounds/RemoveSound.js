@@ -34,7 +34,7 @@ const RemoveSound = ({ sound = {}, onCancel, closeModal, userId }) => {
     return (
         <div>
             <Title>Remove sound</Title>
-            {isCueup && <Body>This will remove the sound. This cannot be undone.</Body>}
+            {isCueup && <Body>This will remove the sound from Cueup, and cannot be undone.</Body>}
             {isSoundcloud && (
                 <Body>
                     This will remove the sound from Soundcloud and Cueup. This cannot be undone.
@@ -48,14 +48,14 @@ const RemoveSound = ({ sound = {}, onCancel, closeModal, userId }) => {
             <div style={{ marginTop: '24px' }}>
                 {sound.soundcloudId && (
                     <Checkbox
-                        label="Remove the entry from your Soundcloud"
+                        label="Remove from your Soundcloud"
                         defaultValue={form.removeOnSoundCloud}
                         onChange={onChange('removeOnSoundCloud')}
                     />
                 )}
                 {sound.mixcloudId && (
                     <Checkbox
-                        label="Remove the entry from your mixcloud"
+                        label="Remove from your mixcloud"
                         defaultValue={form.removeOnMixcloud}
                         onChange={onChange('removeOnMixcloud')}
                     />
