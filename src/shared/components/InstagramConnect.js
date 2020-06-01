@@ -15,9 +15,9 @@ const InstagramConnect = () => {
         setState({ isInstagramConnect, code });
     }, []);
 
-    const { code } = state;
+    const { code, isInstagramConnect } = state;
 
-    if (!code) {
+    if (!code || !isInstagramConnect) {
         return null;
     }
 

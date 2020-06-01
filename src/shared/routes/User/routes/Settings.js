@@ -24,6 +24,7 @@ import TextAreaPopup from '../../../components/TextAreaPopup';
 import VerifyIdentity from '../components/VerifyIdentity';
 import ConnectSoundCloud from '../components/ConnectSoundCloud';
 import CurrencySelector from '../../../components/CurrencySelector';
+import ConnectMixcloudButton from '../components/ConnectMixcloud';
 
 const hasChanges = (o1, o2) => {
     const keys = Object.keys(o1);
@@ -115,7 +116,13 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
     } = user;
     const { firstName, lastName, phone, birthday, bio } = userMetadata;
     const { cancelationPolicy, currency, notifications } = userSettings;
-    const { roles, instagramConnected, identityVerified, soundCloudConnected } = appMetadata;
+    const {
+        roles,
+        instagramConnected,
+        identityVerified,
+        soundCloudConnected,
+        mixcloudConnected,
+    } = appMetadata;
 
     return (
         <>
@@ -354,15 +361,6 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                     }
                 />
 
-                <Input
-                    half
-                    loading={instaLoading}
-                    type="button"
-                    warning={instagramConnected ? 'Are you sure?' : false}
-                    label={'Connect Instagram'}
-                    onClick={() => (instagramConnected ? disconnect() : connectInstagram())}
-                    buttonText={instagramConnected ? 'disconnect' : 'connect'}
-                />
                 {isDj && (
                     <LabelHalf>
                         Connect SoundCloud
@@ -372,6 +370,24 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                         />
                     </LabelHalf>
                 )}
+                {isDj && (
+                    <LabelHalf>
+                        Connect Mixcloud
+                        <ConnectMixcloudButton
+                            mixcloudConnected={mixcloudConnected}
+                            userId={user.id}
+                        />
+                    </LabelHalf>
+                )}
+                <Input
+                    half
+                    loading={instaLoading}
+                    type="button"
+                    warning={instagramConnected ? 'Are you sure?' : false}
+                    label={'Connect Instagram'}
+                    onClick={() => (instagramConnected ? disconnect() : connectInstagram())}
+                    buttonText={instagramConnected ? 'disconnect' : 'connect'}
+                />
                 <VerifyIdentityPopup
                     user={user}
                     identityVerified={identityVerified}

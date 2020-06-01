@@ -115,8 +115,13 @@ const Sounds = ({ user, location, match, setShowPopup }) => {
 };
 
 const Wrapper = (props) => {
-    const { user } = props;
-    const [showPopup, setShowPopup] = useState(false);
+    const { user, location } = props;
+
+    const params = new URLSearchParams(location.search);
+    const modal = params.get('modal');
+    const initialPopup = modal === 'addSound';
+
+    const [showPopup, setShowPopup] = useState(initialPopup);
     const { isOwn } = user || {};
 
     return (
@@ -127,6 +132,7 @@ const Wrapper = (props) => {
                     <AddSound
                         userId={user.id}
                         soundCloudConnected={user?.appMetadata?.soundCloudConnected}
+                        mixcloudConnected={user?.appMetadata?.mixcloudConnected}
                         closeModal={() => setShowPopup(false)}
                         onCancel={() => setShowPopup(false)}
                     />

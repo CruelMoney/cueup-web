@@ -28,6 +28,7 @@ const ME = gql`
                 hasInstalledApp
                 instagramConnected
                 soundCloudConnected
+                mixcloudConnected
                 earned {
                     amount
                     currency

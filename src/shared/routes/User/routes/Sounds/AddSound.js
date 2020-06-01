@@ -5,6 +5,7 @@ import * as Sentry from '@sentry/browser';
 import { useForm } from 'components/hooks/useForm';
 import useConnectSoundCloud from 'components/hooks/useConnectSoundcloud';
 import DateInput from 'components/DateInput';
+import useConnectMixcloud from 'components/hooks/useConnectMixcloud';
 import { Input, InputRow, InputLabel, Checkbox } from '../../../../components/FormComponents';
 import { Title, Body, BodySmall, InlineLink } from '../../../../components/Text';
 import {
@@ -13,6 +14,7 @@ import {
     SmartButton,
     Col,
     SecondaryButton,
+    RowWrap,
 } from '../../../../components/Blocks';
 import ErrorMessageApollo from '../../../../components/common/ErrorMessageApollo';
 import ImageUploader from '../../../../components/ImageInput';
@@ -24,12 +26,13 @@ import { ADD_SOUND, UPDATE_SOUND, USER_SOUNDS } from './gql';
 import useSongMetadata from './useSongMetadata';
 
 const AddSound = (props) => {
-    const { sound, soundCloudConnected, userId } = props;
+    const { sound, soundCloudConnected, mixcloudConnected, userId } = props;
     const [uploadProgress, setuploadProgress] = useState(sound ? 1 : null);
     const abortUpload = useRef();
     const [file, setFile] = useState();
     const [fileId, setFileId] = useState();
     const [addToSoundCloud, setAddToSoundcloud] = useState(false);
+    const [addToMixcloud, setAddToMixcloud] = useState(false);
 
     const [upload, { loading: uploading, error: uploadError }] = useMutation(UPLOAD_FILE);
     const [uploadImage] = useMutation(UPLOAD_FILE);
@@ -67,6 +70,8 @@ const AddSound = (props) => {
                     userId={userId}
                     soundCloudConnected={soundCloudConnected}
                     setAddToSoundcloud={setAddToSoundcloud}
+                    mixcloudConnected={mixcloudConnected}
+                    setAddToMixcloud={setAddToMixcloud}
                 />
             ) : (
                 <DataForm
@@ -75,6 +80,7 @@ const AddSound = (props) => {
                         ...metadata.common,
                         tags: metadata.common && metadata.common.genre,
                         addToSoundCloud,
+                        addToMixcloud,
                         ...sound,
                     }}
                     uploadImage={uploadImage}
@@ -103,8 +109,19 @@ const AddSound = (props) => {
     );
 };
 
-const FileChooser = ({ onChange, soundCloudConnected, userId, setAddToSoundcloud }) => {
+const FileChooser = ({
+    onChange,
+    soundCloudConnected,
+    mixcloudConnected,
+    userId,
+    setAddToSoundcloud,
+    setAddToMixcloud,
+}) => {
     const [connect, { loading }] = useConnectSoundCloud({ userId, soundCloudConnected });
+    const [connectMixcloud, { loading: loadingMixcloud }] = useConnectMixcloud({
+        userId,
+        mixcloudConnected,
+    });
 
     return (
         <Col middle>
@@ -112,20 +129,27 @@ const FileChooser = ({ onChange, soundCloudConnected, userId, setAddToSoundcloud
                 For the best result upload in wav or m4a. <br />
                 The file will be optimised for streaming at 256 kbps.
             </Body>
-            <Row style={{ margin: '24px 0 6px 0' }}>
-                <span style={{ marginRight: '24px' }}>
-                    <Checkbox
-                        label={'Add to your Soundcloud'}
-                        onChange={(checked) => {
-                            if (checked && !soundCloudConnected && !loading) {
-                                connect();
-                            }
-                            setAddToSoundcloud(checked);
-                        }}
-                    />
-                </span>
-                {/* <Checkbox label={"Add to Mixcloud"} /> */}
-            </Row>
+            <Col style={{ margin: '24px 0 6px 0' }}>
+                <Checkbox
+                    label={'Add to your Soundcloud'}
+                    onChange={(checked) => {
+                        if (checked && !soundCloudConnected && !loading) {
+                            connect();
+                        }
+                        setAddToSoundcloud(checked);
+                    }}
+                />
+
+                <Checkbox
+                    label={'Add to your Mixcloud'}
+                    onChange={(checked) => {
+                        if (checked && !mixcloudConnected && !loadingMixcloud) {
+                            connectMixcloud();
+                        }
+                        setAddToMixcloud(checked);
+                    }}
+                />
+            </Col>
             <ImageUploader
                 style={{
                     background: '#31daff',
@@ -209,6 +233,7 @@ const DataForm = ({
                     description: form.description,
                     tags: form.tags,
                     addToSoundCloud: form.addToSoundCloud,
+                    addToMixcloud: form.addToMixcloud,
                     file,
                     date: form.date,
                     updateOnSoundCloud: form.updateOnSoundCloud,

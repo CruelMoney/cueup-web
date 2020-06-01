@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { useQuery } from 'react-apollo';
@@ -181,6 +181,18 @@ const UserContent = ({ user }) => {
 
     const [showing, setShowing] = useState(!approved && user.isOwn);
 
+    useEffect(() => {
+        const dismissed = sessionStorage.getItem('dismissed-approval-modal');
+        if (dismissed) {
+            setShowing(false);
+        }
+    }, []);
+
+    const dismissApprovalModal = () => {
+        setShowing(false);
+        sessionStorage.setItem('dismissed-approval-modal', true);
+    };
+
     return (
         <>
             <ConditionalWrap
@@ -262,11 +274,11 @@ const UserContent = ({ user }) => {
                 </HeaderWrapper>
             </ConditionalWrap>
             {user.isDj && (
-                <Popup showing={showing} onClickOutside={() => setShowing(false)} width={'500px'}>
+                <Popup showing={showing} onClickOutside={dismissApprovalModal} width={'500px'}>
                     <EditPopup
                         profileStatus={profileStatus}
                         approvedKey={approvedKey}
-                        close={() => setShowing(false)}
+                        close={dismissApprovalModal}
                         user={user}
                     />
                 </Popup>
