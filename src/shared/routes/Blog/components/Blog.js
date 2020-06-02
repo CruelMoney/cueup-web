@@ -36,7 +36,7 @@ const Blog = () => {
                             const link = `${t(appRoutes.blog)}/${post.slug}`;
                             return (
                                 <article key={post.slug} className="post-preview card">
-                                    <div className="img-wrapper">
+                                    <div className={'img-wrapper ' + (post.thumbnail_fit || '')}>
                                         <Link to={link}>
                                             <img
                                                 src={post.thumbnail_url}

@@ -70,6 +70,15 @@ article.post-preview:hover {
     top: 0;
     width: 100%;
 }
+
+.img-wrapper.contain {
+    background: #fff;
+    height: auto;
+}
+.img-wrapper.contain img {
+    object-fit: contain;
+    position: relative;
+}
 article.post-preview > a:last-child {
     flex: 1;
 }
