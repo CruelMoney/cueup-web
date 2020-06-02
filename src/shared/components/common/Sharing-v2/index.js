@@ -70,6 +70,7 @@ const SimpleSharing = ({ shareUrl, title, style, label = 'Share profile' }) => {
     };
     return (
         <div
+            className="simple-share"
             style={{
                 display: 'flex',
                 alignItems: 'center',

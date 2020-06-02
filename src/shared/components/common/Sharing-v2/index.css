@@ -1,8 +1,8 @@
-.react-share__ShareButton {
+.simple-share .react-share__ShareButton {
     border-radius: 50%;
     height: 32px !important;
     width: 32px !important;
 }
-.react-share__ShareButton:hover {
+.simple-share .react-share__ShareButton:hover {
     background: #f6f8f9 !important;
 }
