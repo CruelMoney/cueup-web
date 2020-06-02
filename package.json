@@ -27,7 +27,7 @@
     "transpile": "yarn-or-npm babel -d build/transpiled ./src --extensions .es6,.js,.es,.jsx,.mjs,.ts,.tsx --ignore **/*.d.ts",
     "tsc": "tsc --noEmit",
     "introspect": "graphql-codegen --config codegen.yml",
-    "update:blog": "babel-node scripts/update-blogposts.js",
+    "update:blog": "ts-node scripts/update-blogposts.js",
     "cy:open": "cypress open",
     "cy:run": "cypress run --record",
     "e2e": "start-server-and-test start http://localhost:8500 cy:run",
