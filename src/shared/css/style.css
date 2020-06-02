@@ -949,9 +949,9 @@ input[type='file'] + label * {
   animationDuration: '0.5s',*/
     background-color: rgba(0, 0, 0, 0.4);
     opacity: 0;
+    perspective: 3000px;
     pointer-events: none;
     transition: opacity 0.35s;
-    perspective: 3000px;
 }
 .filter-background.active {
     opacity: 1;
