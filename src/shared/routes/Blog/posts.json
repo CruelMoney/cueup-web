@@ -1,5 +1,19 @@
 [
     {
+        "medium-guid": "https://medium.com/p/65708cd68153",
+        "title": "How to use SoundCloud and Mixcloud on your Cueup profile.",
+        "slug": "how-to-use-soundcloud-and-mixcloud-on-your-cueup-profile",
+        "excerpt": null,
+        "published_date": "2020-06-02 07:45:13",
+        "updated_date": "2020-06-02 07:45:13",
+        "author": "Christopher Dengsø",
+        "thumbnail_url": "https://cdn-images-1.medium.com/max/1024/1*eblJRWpNZfqhbrQX_Uz8cg.png",
+        "thumbnail_alt": "thumbnail",
+        "tag": "dj website mixcloud soundcloud",
+        "category": "dj",
+        "content": "\n<p>You can connect <a href=\"https://soundcloud.com/\">SoundCloud</a> and <a href=\"https://mixcloud.com/\">Mixcloud</a> to your Cueup profile, to make it a bit easier to manage your online mixtapes and tracks. Each platform works a bit differently, but we’ve made it easy to manage everything from a single place.</p>\n<h3>Displaying &amp; Playing tracks</h3>\n<p><em>Platforms: SoundCloud</em></p>\n<p>When connecting SoundCloud, Cueup automatically pulls in all your tracks from SoundClound and displays them on your profile. If you make any updates on SoundCloud, the changes will be reflected on Cueup — it might take up to a day to see the changes on Cueup.</p>\n<p>Mixcloud is not able to play songs outside of their platform, so this functionality only works with SoundCloud.</p>\n<figure><img class='contain' alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*eblJRWpNZfqhbrQX_Uz8cg.png\"><figcaption>The sound player on Cueup</figcaption></figure><h3>Uploading a Sound</h3>\n<p><em>Platforms: SoundCloud, Mixcloud</em></p>\n<p>When you upload a new sound to Cueup, you have the option to upload it to SoundCloud and Mixcloud as well. If you haven’t yet connected one of the platforms, you will be asked to do so first. Cueup will automatically optimize and encode the sound for optimal playback on all platforms.</p>\n<figure><img  class='contain' alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*wdWrRA6wyC9APhUVqLwwxw.png\"><figcaption>Uploading a sound on Cueup</figcaption></figure><h3>Updating a Sound</h3>\n<p><em>Platforms: SoundCloud, Mixcloud</em></p>\n<p>When you’ve chosen to add a sound to SoundCloud and Mixcloud, you later get the option to update the details from within Cueup. Enable “Update entry on your SoundCloud” and “Update entry on your Mixcloud” when editing a sound on Cueup, to make sure that the changes are reflecting on all platforms.</p>\n<figure><img class='contain' alt=\"\" src=\"https://cdn-images-1.medium.com/max/1024/1*38rJDCh-_A5DcTptAHNgmw.png\"><figcaption>Managing a sound on Cueup</figcaption></figure><h3>Removing a Sound</h3>\n<p><em>Platforms: SoundCloud</em></p>\n<p>When you decide to remove a sound from Cueup, you also get the option to remove it from SoundCloud. You can also choose to only remove it from Cueup and keep it on SoundCloud.</p>\n<p>Unfortunately Mixcloud is not able to delete shows from outside of their platform, so you can only remove sounds from SoundCloud.</p>\n<h3>Other Platforms or Services?</h3>\n<p>Do you have the need for connecting any other platforms? Send an email to chris@cueup.io and tell me what you need ✌️</p>\n<img src=\"https://medium.com/_/stat?event=post.clientViewed&amp;referrerSource=full_rss&amp;postId=65708cd68153\" width=\"1\" height=\"1\">\n"
+    },
+    {
         "medium-guid": "https://medium.com/p/95c522538720",
         "title": "How to come up with a DJ name.",
         "slug": "how-to-come-up-with-a-dj-name",

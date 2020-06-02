@@ -187,6 +187,9 @@ button.subscribe-newsletter {
     top: 0;
     transform: translateX(-50%);
 }
+.blog-post main .post-content img.contain {
+    max-width: 100%;
+}
 .blog-post main .post-content figure {
     margin-bottom: 1.5em;
 }
