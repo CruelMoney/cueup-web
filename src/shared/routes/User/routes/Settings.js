@@ -25,6 +25,7 @@ import VerifyIdentity from '../components/VerifyIdentity';
 import ConnectSoundCloud from '../components/ConnectSoundCloud';
 import CurrencySelector from '../../../components/CurrencySelector';
 import ConnectMixcloudButton from '../components/ConnectMixcloud';
+import ConnectInstagram from '../components/ConnectInstagram';
 
 const hasChanges = (o1, o2) => {
     const keys = Object.keys(o1);
@@ -49,8 +50,6 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
     const onModalClose = () => {
         history.replace(location.pathname);
     };
-
-    const [connectInstagram, { loading: instaLoading, disconnect }] = useConnectInstagram();
 
     const saveData = async (data) => {
         const flatUser = {
@@ -123,7 +122,7 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
         soundCloudConnected,
         mixcloudConnected,
     } = appMetadata;
-
+    console.log({ instagramConnected });
     return (
         <>
             <SettingsSection
@@ -315,9 +314,7 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
             <SettingsSection
                 id="system"
                 title={'System'}
-                description={
-                    'If you delete your user, all data will be deleted and unrecoverable. If you have any unfinished gigs, they will all be declined and cancelled.'
-                }
+                description={'Connect services to display their data on your Cueup profile.'}
             >
                 <Mutation
                     mutation={DELETE_USER}
@@ -360,6 +357,17 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                         window.alert("We'll send you an email when your data is ready.")
                     }
                 />
+                <VerifyIdentityPopup
+                    user={user}
+                    identityVerified={identityVerified}
+                    initialShowing={verifyIdentity}
+                    onClose={onModalClose}
+                />
+
+                <LabelHalf>
+                    Connect Instagram
+                    <ConnectInstagram instagramConnected={instagramConnected} />
+                </LabelHalf>
 
                 {isDj && (
                     <LabelHalf>
@@ -379,22 +387,6 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                         />
                     </LabelHalf>
                 )}
-                <Input
-                    half
-                    loading={instaLoading}
-                    type="button"
-                    warning={instagramConnected ? 'Are you sure?' : false}
-                    label={'Connect Instagram'}
-                    onClick={() => (instagramConnected ? disconnect() : connectInstagram())}
-                    buttonText={instagramConnected ? 'disconnect' : 'connect'}
-                />
-                <VerifyIdentityPopup
-                    user={user}
-                    identityVerified={identityVerified}
-                    initialShowing={verifyIdentity}
-                    onClose={onModalClose}
-                />
-                <LabelHalf />
             </SettingsSection>
         </>
     );

@@ -10,7 +10,8 @@ const InstagramConnect = () => {
     useEffect(() => {
         const parsedUrl = new URL(window.location.href);
         const code = parsedUrl.searchParams.get('code');
-        const isInstagramConnect = parsedUrl.searchParams.get('instagramConnect');
+
+        const isInstagramConnect = parsedUrl.pathname.includes('connectInstagram');
 
         setState({ isInstagramConnect, code });
     }, []);

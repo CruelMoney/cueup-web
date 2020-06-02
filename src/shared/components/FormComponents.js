@@ -347,8 +347,8 @@ const ButtonFileLabel = styled.label`
     cursor: pointer;
 `;
 
-export const ButtonFileInput = ({ children, ...props }) => (
-    <ButtonFileLabel>
+export const ButtonFileInput = ({ children, style, ...props }) => (
+    <ButtonFileLabel style={style}>
         {children}
         <FileInput {...props} />
     </ButtonFileLabel>

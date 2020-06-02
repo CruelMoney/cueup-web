@@ -33,7 +33,7 @@ export const useConnectInstagram = () => {
     const connect = useCallback(
         async (args) => {
             const { variables, ...options } = args || {};
-            const redirectLink = environment.CALLBACK_DOMAIN;
+            const redirectLink = environment.CALLBACK_DOMAIN + '/connectInstagram';
             // redirect to insta auth screen
             if (!variables || !variables.code) {
                 window.open(

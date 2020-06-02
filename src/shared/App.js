@@ -45,7 +45,11 @@ const RouteWrapper = () => {
     return (
         <div id="content">
             <Switch>
-                <Route exact path={[t(appRoutes.home), '/verifyEmail']} component={Home} />
+                <Route
+                    exact
+                    path={[t(appRoutes.home), '/verifyEmail', '/connectInstagram']}
+                    component={Home}
+                />
                 <Route path={t(appRoutes.about)} component={About} />
                 <Route path={t(appRoutes.faq)} component={LazyFaq} />
                 <Route path={t(appRoutes.becomeDj)} component={LazyBecomeDj} />

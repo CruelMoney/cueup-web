@@ -354,6 +354,8 @@ const ButtonTextStyle = css`
     text-overflow: ellipsis;
     max-width: 200px;
     position: relative;
+    transition: none;
+
     ${({ flex }) =>
         flex &&
         css`
@@ -369,7 +371,7 @@ const inputButtonStyle = css`
     font-weight: 400;
     text-align: center;
     line-height: 40px !important;
-    transition: all 200ms ease;
+    transition: none;
     cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
     pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
     display: flex;

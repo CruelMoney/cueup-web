@@ -15,8 +15,6 @@ const Index = () => {
     const { translate } = useNamespaceContent(content, 'blog');
     const title = 'Blog | Cueup';
 
-    console.log(appRoutes.blog);
-
     return (
         <div className="blog">
             <Helmet>

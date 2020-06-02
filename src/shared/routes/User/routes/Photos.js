@@ -19,6 +19,7 @@ import ReorderGrid from '../components/ReorderGrid';
 import SavingIndicator from '../../../components/SavingIndicator';
 import InstagramLogo from '../../../assets/InstagramLogo';
 import { BodySmall } from '../../../components/Text';
+import ConnectInstagram from '../components/ConnectInstagram';
 
 const LIMIT = 6;
 
@@ -524,31 +525,27 @@ const EmptyCTA = ({ uploadFiles }) => {
             <Col
                 style={{
                     marginTop: '30px',
-                    height: '100px',
                     justifyContent: 'space-between',
                 }}
             >
+                <ConnectInstagram />
+
                 <ButtonFileInput
                     accept="image/*,video/*"
                     onChange={(e) => uploadFiles(e.target.files)}
                     multiple
+                    style={{
+                        width: '100%',
+                        maxWidth: '100%',
+                        backgroundColor: '#31daff',
+                        color: '#fff',
+                        marginTop: '9px',
+                    }}
                 >
                     Add photos or videos
                 </ButtonFileInput>
-                <ConnectInstaButton />
             </Col>
         </>
-    );
-};
-
-const ConnectInstaButton = () => {
-    const [connect, { loading }] = useConnectInstagram();
-
-    return (
-        <SecondaryButton disabled={loading} onClick={connect}>
-            Connect Instagram
-            {loading && <LoadingIndicator style={{ marginLeft: '5px' }} />}
-        </SecondaryButton>
     );
 };
 
