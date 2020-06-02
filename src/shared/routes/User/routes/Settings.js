@@ -314,7 +314,9 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
             <SettingsSection
                 id="system"
                 title={'System'}
-                description={'Connect services to display their data on your Cueup profile.'}
+                description={
+                    'Connect services to display their data on your Cueup profile.\n\nConnect both Mixcloud and Soundcloud to upload and manage sounds on both platforms from Cueup.\n\nMixcloud shows cannot be displayed on Cueup.'
+                }
             >
                 <Mutation
                     mutation={DELETE_USER}

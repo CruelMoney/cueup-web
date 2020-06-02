@@ -141,7 +141,7 @@ const SettingsSection = ({ title, description, children, stickyTop = '90px', ...
         <SectionRow {...props}>
             <LeftCol stickyTop={stickyTop}>
                 <Title>{title}</Title>
-                <Body style={{ marginBottom: '24px' }}>{description}</Body>
+                <Body style={{ marginBottom: '24px', whiteSpace: 'pre-wrap' }}>{description}</Body>
             </LeftCol>
             <RightCol>{children}</RightCol>
         </SectionRow>
