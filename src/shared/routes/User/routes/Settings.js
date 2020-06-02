@@ -122,7 +122,6 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
         soundCloudConnected,
         mixcloudConnected,
     } = appMetadata;
-    console.log({ instagramConnected });
     return (
         <>
             <SettingsSection

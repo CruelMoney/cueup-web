@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
     FacebookShareButton,
     LinkedinShareButton,
@@ -9,11 +9,11 @@ import {
     LinkedinIcon,
     EmailIcon,
 } from 'react-share';
-// npm install --save-dev @iconify/react @iconify/icons-ion
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import arrowRedo from '@iconify/icons-ion/arrow-redo';
 
 import { useServerContext } from 'components/hooks/useServerContext';
+import './index.css';
 
 const Sharing = (shareUrl, title) => {
     const { environment } = useServerContext();
@@ -96,11 +96,11 @@ const SimpleSharing = ({ shareUrl, title, style, label = 'Share profile' }) => {
             >
                 <FacebookIcon size={32} bgStyle={{ fill: 'transparent' }} iconFillColor="#98A4B3" />
             </FacebookShareButton>
-            <button onClick={share}>
+            <button className="react-share__ShareButton" onClick={share}>
                 <Icon
                     icon={arrowRedo}
                     color={'#98A4B3'}
-                    style={{ marginLeft: '14px', marginBottom: '3px', fontSize: '18px' }}
+                    style={{ marginBottom: '3px', fontSize: '18px' }}
                 />
             </button>
         </div>
