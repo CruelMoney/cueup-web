@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react';
 import { withRouter, Switch, Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import ReactPixel from 'react-facebook-pixel';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/browser';
 import loadable from '@loadable/component';
@@ -10,7 +9,7 @@ import { useServerContext } from 'components/hooks/useServerContext.tsx';
 
 import { appRoutes } from 'constants/locales/appRoutes';
 import LazyDjNameGenerator from 'routes/DjNameGenerator';
-import * as gtag from './utils/analytics/autotrack';
+import { useAnalytics } from 'utils/analytics';
 import defaultImage from './assets/images/default.png';
 import ErrorHandling from './components/common/ErrorPage';
 
@@ -19,6 +18,7 @@ const LazyApp = loadable(() => import('./App'));
 const Setup = ({ location }) => {
     const { environment } = useServerContext();
     const { t, i18n } = useTranslation();
+    useAnalytics();
 
     useEffect(() => {
         Sentry.init({
@@ -26,22 +26,6 @@ const Setup = ({ location }) => {
             dsn: 'https://800ac4dbef6c44bcb65af9fddad9f964@sentry.io/1490082',
         });
     }, [environment.SETTING]);
-
-    useEffect(() => {
-        // Setup custom analytics
-        if (process.env.NODE_ENV !== 'development') {
-            gtag.init();
-        }
-    }, [environment]);
-
-    useEffect(() => {
-        if (process.env.NODE_ENV !== 'development') {
-            setTimeout(() => {
-                gtag.pageView(location.pathname);
-                ReactPixel.pageView();
-            }, 100);
-        }
-    }, [location.pathname]);
 
     const thumb = defaultImage;
     const title = t('Book DJs with ease') + ' | Cueup';

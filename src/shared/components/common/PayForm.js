@@ -1,9 +1,7 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import useComponentSize from '@rehooks/component-size';
 import { useMutation, useLazyQuery } from 'react-apollo';
-import ReactPixel from 'react-facebook-pixel';
-// npm install --save-dev @iconify/react @iconify/icons-ion
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import checkmarkCircle from '@iconify/icons-ion/checkmark-circle';
 
 import styled from 'styled-components';
@@ -13,8 +11,8 @@ import RadioSelect from 'components/RadioSelect';
 import { PAYOUT_TYPES, PAYMENT_PROVIDERS } from 'constants/constants';
 import { Body, SmallHeader } from 'components/Text';
 import useTranslate from 'components/hooks/useTranslate';
+import { trackPageView, trackEventPaid } from 'utils/analytics';
 import { REQUEST_PAYMENT_INTENT, PAYMENT_CONFIRMED } from '../../routes/Event/gql';
-import * as tracker from '../../utils/analytics/autotrack';
 import TextWrapper from './TextElement';
 import MoneyTable, { TableItem } from './MoneyTable';
 import StripeFormWrapper from './StripePayForm';
@@ -36,7 +34,7 @@ const BankPayForm = ({
 }) => {
     useEffect(() => {
         try {
-            tracker.pageView('confirm-booking/' + paymentIntent.paymentProvider);
+            trackPageView('confirm-booking/' + paymentIntent.paymentProvider);
         } catch (error) {
             captureException(error);
         }
@@ -188,7 +186,7 @@ const PaymentWrapper = (props) => {
 
     useEffect(() => {
         try {
-            tracker.pageView('confirm-booking');
+            trackPageView('confirm-booking');
         } catch (error) {
             captureException(error);
         }
@@ -199,10 +197,9 @@ const PaymentWrapper = (props) => {
         onPaymentConfirmed && onPaymentConfirmed();
         setIsPaid(true);
         try {
-            tracker.trackEventPaid(amount.amount);
-            ReactPixel.track('Purchase', {
+            trackEventPaid({
                 currency: currency,
-                value: amount.amount,
+                value: amount.amount / 100,
             });
         } catch (error) {
             captureException(error);
@@ -328,7 +325,7 @@ const PayFormContainer = styled.div`
 const ThankYouContent = ({ translate, style }) => {
     useEffect(() => {
         try {
-            tracker.pageView('confirm-booking/success');
+            trackPageView('confirm-booking/success');
         } catch (error) {
             captureException(error);
         }

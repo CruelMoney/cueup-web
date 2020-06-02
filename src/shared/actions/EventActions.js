@@ -1,10 +1,9 @@
-import ReactPixel from 'react-facebook-pixel';
 import * as Sentry from '@sentry/browser';
 import { useMutation } from 'react-apollo';
 import { useState } from 'react';
 import { CHECK_DJ_AVAILABILITY, CREATE_EVENT } from 'components/common/RequestForm/gql';
+import { trackCheckAvailability, trackEventPosted } from 'utils/analytics';
 import GeoCoder from '../utils/GeoCoder';
-import * as tracker from '../utils/analytics/autotrack';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -53,13 +52,10 @@ export const useCheckDjAvailability = ({ locationName, date }) => {
     const check = async () => {
         try {
             setLoading(true);
-            if (!isDevelopment) {
-                try {
-                    tracker.trackCheckAvailability();
-                    ReactPixel.track('Search');
-                } catch (error) {
-                    Sentry.captureException(error);
-                }
+            try {
+                trackCheckAvailability();
+            } catch (error) {
+                Sentry.captureException(error);
             }
 
             const geoResult = await getLocation(locationName);
@@ -101,8 +97,7 @@ export const useCreateEvent = (theEvent) => {
     const doMutate = async (variables) => {
         try {
             if (!isDevelopment) {
-                tracker.trackEventPosted();
-                ReactPixel.track('Lead');
+                trackEventPosted();
             }
             return await mutate({
                 variables: {

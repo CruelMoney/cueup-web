@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import debounce from 'lodash/debounce';
 import { useMutation } from 'react-apollo';
 import * as Sentry from '@sentry/browser';
-import ReactPixel from 'react-facebook-pixel';
 import { SmartButton, Avatar, Col } from 'components/Blocks';
 import { Input, InputRow } from 'components/FormComponents';
 import { useForm, validators, useValidation } from 'components/hooks/useForm';
@@ -10,20 +9,18 @@ import RegistrationElement from 'components/common/RegistrationElement';
 import ToggleButtonHandler from 'components/common/ToggleButtonHandler';
 import ImageUploader from 'components/ImageInput';
 import useImageUpload from 'components/hooks/useImageUpload';
-import { trackSignup } from 'utils/analytics/autotrack';
 import { authService } from 'utils/AuthService';
 import useOnLoggedIn from 'components/hooks/useOnLoggedIn';
 import { UPDATE_USER } from 'routes/User/gql';
 import { useServerContext } from 'components/hooks/useServerContext';
 import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
+import { trackSignup } from 'utils/analytics';
 import NumberedList from '../../../components/common/NumberedList';
 import c from '../../../constants/constants';
 import GeoCoder from '../../../utils/GeoCoder';
 import SimpleMap from '../../../components/common/Map';
 import { CREATE_USER } from '../../../components/gql';
 import ErrorMessageApollo from '../../../components/common/ErrorMessageApollo';
-
-const isDevelopment = process.env.NODE_ENV === 'development';
 
 const SignupForm = ({ translate, user }) => {
     const onLoggedIn = useOnLoggedIn();
@@ -113,12 +110,10 @@ const SignupForm = ({ translate, user }) => {
             // can be update or signup
             const { data } = await mutate({ variables });
 
-            console.log('data');
             let token = null;
 
             if (!user) {
                 trackSignup();
-                ReactPixel.track('CompleteRegistration');
                 token = data?.signUpToken?.token;
             } else {
                 token = authService.getAccessToken();

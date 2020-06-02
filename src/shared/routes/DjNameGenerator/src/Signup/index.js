@@ -3,8 +3,9 @@ import { animated, useTransition } from 'react-spring';
 import emailValidator from 'email-validator';
 import { useMutation } from 'react-apollo';
 import * as Sentry from '@sentry/browser';
-import { trackSignup } from 'utils/analytics/autotrack';
 import { Input } from 'components/FormComponents';
+import { trackSignup } from 'utils/analytics';
+
 import { SmartButton } from 'components/Blocks';
 import useSocialLogin from 'components/hooks/useSocialLogin';
 import useOnLoggedIn from 'components/hooks/useOnLoggedIn';

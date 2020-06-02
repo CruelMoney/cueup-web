@@ -7,9 +7,9 @@ import phoneIcon from '@iconify/icons-ion/call';
 
 import { NavLink } from 'react-router-dom';
 import { useMutation } from 'react-apollo';
-import ReactPixel from 'react-facebook-pixel';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes, userRoutes, eventRoutes } from 'constants/locales/appRoutes';
+import { trackCheckout } from 'utils/analytics';
 import {
     Col,
     keyframeFadeIn,
@@ -41,7 +41,7 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat }) => {
     const [showPayment, setShowPayment] = useState(false);
 
     const initiateBooking = () => {
-        ReactPixel.track('InitiateCheckout');
+        trackCheckout();
         setShowPayment(true);
     };
 
