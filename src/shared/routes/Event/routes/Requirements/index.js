@@ -64,6 +64,44 @@ const Requirements = React.forwardRef(({ theEvent, history, pathname }, ref) => 
             <SavingIndicator loading={loading} />
 
             <SettingsSection
+                title={'Contact information'}
+                description={
+                    'Enter information on the person communicating with the DJ. This information is only visible to the DJ after the DJ has been booked.'
+                }
+            >
+                <Input
+                    label="Contact name"
+                    defaultValue={contactName}
+                    placeholder="Keep it short"
+                    type="text"
+                    autoComplete="name"
+                    name="name"
+                    onSave={save('contactEmail')}
+                    validation={required('Name is needed')}
+                />
+                <Input
+                    label="Contact email"
+                    defaultValue={contactEmail}
+                    placeholder="mail@email.com"
+                    type="email"
+                    autoComplete="email"
+                    name="email"
+                    onSave={(email) => save('contactEmail')(email.trim())}
+                    validation={(v) => (emailValidator.validate(v) ? null : 'Not a valid email')}
+                />
+                <PhoneInput
+                    label="Phone"
+                    attention={!contactPhone}
+                    defaultValue={contactPhone}
+                    placeholder="+123456789"
+                    type="tel"
+                    autoComplete="tel"
+                    name="phone"
+                    onSave={(phone) => save('contactPhone')(phone.trim())}
+                />
+            </SettingsSection>
+
+            <SettingsSection
                 title={'Requirements'}
                 description={
                     'Add requirements to help us find the most qualified DJs for your event. '
@@ -127,43 +165,6 @@ const Requirements = React.forwardRef(({ theEvent, history, pathname }, ref) => 
                 />
             </SettingsSection>
 
-            <SettingsSection
-                title={'Contact information'}
-                description={
-                    'Enter information on the person communicating with the DJ. This information is only visible to the DJ after the DJ has been booked.'
-                }
-            >
-                <Input
-                    label="Contact name"
-                    defaultValue={contactName}
-                    placeholder="Keep it short"
-                    type="text"
-                    autoComplete="name"
-                    name="name"
-                    onSave={save('contactEmail')}
-                    validation={required('Name is needed')}
-                />
-                <Input
-                    label="Contact email"
-                    defaultValue={contactEmail}
-                    placeholder="mail@email.com"
-                    type="email"
-                    autoComplete="email"
-                    name="email"
-                    onSave={(email) => save('contactEmail')(email.trim())}
-                    validation={(v) => (emailValidator.validate(v) ? null : 'Not a valid email')}
-                />
-                <PhoneInput
-                    label="Phone"
-                    attention={!contactPhone}
-                    defaultValue={contactPhone}
-                    placeholder="+123456789"
-                    type="tel"
-                    autoComplete="tel"
-                    name="phone"
-                    onSave={(phone) => save('contactPhone')(phone.trim())}
-                />
-            </SettingsSection>
             <SettingsSection
                 id="system"
                 title={'System'}
