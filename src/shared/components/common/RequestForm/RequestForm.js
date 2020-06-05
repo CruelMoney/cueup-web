@@ -12,15 +12,14 @@ import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { trackPageView } from 'utils/analytics';
 import useDebounce from 'components/hooks/useDebounce';
 import { ME } from 'components/gql';
+import { appRoutes } from 'constants/locales/appRoutes';
 import Login from '../Login';
 import ErrorMessageApollo from '../ErrorMessageApollo';
-import usePushNotifications from '../../hooks/usePushNotifications';
 import Progress from './ProgressSubmit';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
 import Step4 from './Step4';
-import Step5 from './Step5';
 import content from './content.json';
 
 const formToParams = (form) => {
@@ -86,7 +85,6 @@ const MainForm = ({ initialCity, countries }) => {
 
     const [activeStep, setActiveStep] = useState(initialUrlState.current.activeStep || 1);
     const [showLogin, setShowLogin] = useState(false);
-    const { pushShouldBeEnabled } = usePushNotifications();
 
     // defaults
     const [form, setForm] = useState(initialUrlState.current);
@@ -94,7 +92,7 @@ const MainForm = ({ initialCity, countries }) => {
 
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);
     const [error, setError] = useState();
-    const [mutate, { loading, data: createdEventData }] = useCreateEvent(form);
+    const [mutate, { loading }] = useCreateEvent(form);
 
     // track progress
     useEffect(() => {
@@ -116,10 +114,12 @@ const MainForm = ({ initialCity, countries }) => {
     const createEvent = async () => {
         const errors = runValidations();
         if (errors.length === 0) {
-            const { error } = await mutate();
-            if (!error) {
-                setActiveStep((s) => s + 1);
-            } else {
+            const { error, data } = await mutate();
+            if (data?.createEvent) {
+                const { id, hash } = data?.createEvent;
+                history.push(translate(appRoutes.event) + `/${id}/${hash}/overview`);
+            }
+            if (error) {
                 setError(error);
             }
         }
@@ -221,21 +221,6 @@ const MainForm = ({ initialCity, countries }) => {
                                 back={back}
                                 loading={loading}
                                 user={userData?.me}
-                            />
-                        )}
-
-                        {!showLogin && activeStep === 5 && (
-                            <Step5
-                                translate={translate}
-                                form={form}
-                                handleChange={handleChange}
-                                runValidations={runValidations}
-                                registerValidation={registerValidation}
-                                unregisterValidation={unregisterValidation}
-                                next={next}
-                                back={back}
-                                pushShouldBeEnabled={pushShouldBeEnabled}
-                                userId={createdEventData?.createEvent?.organizer?.id}
                             />
                         )}
 

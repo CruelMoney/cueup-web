@@ -10,6 +10,7 @@ import { Col, Row, HideBelow, SecondaryButton } from '../../../../../components/
 import { Title, BodySmall } from '../../../../../components/Text';
 import Checkbox from '../../../../../components/Checkbox';
 import { gigStates } from '../../../../../constants/constants';
+import lazyGig from '../../../../Gig';
 import GigCard from './GigCard';
 
 const statusPriority = {
@@ -75,6 +76,7 @@ const Gigs = (props) => {
         }
         return renderGigs.map((gig, idx) => (
             <GigCard
+                onMouseEnter={() => lazyGig.preload()}
                 idx={idx}
                 translate={translate}
                 hasMessage={gig.hasMessage}

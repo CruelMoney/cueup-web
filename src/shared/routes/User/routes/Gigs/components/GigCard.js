@@ -13,7 +13,7 @@ import {
 } from '../../../../../components/Blocks';
 import { SmallHeader, BodySmall, BodyBold, SmallBold } from '../../../../../components/Text';
 
-const GigCard = ({ style, idx, gig, hasMessage, translate }) => {
+const GigCard = ({ style, idx, gig, hasMessage, translate, ...props }) => {
     const { event, offer } = gig;
     let { start, name, description } = event;
 
@@ -21,7 +21,7 @@ const GigCard = ({ style, idx, gig, hasMessage, translate }) => {
     description = shouldTruncate ? description.substring(0, 100) + '...' : description;
 
     return (
-        <Wrapper idx={idx}>
+        <Wrapper idx={idx} {...props}>
             <Card style={style}>
                 <Content>
                     <RowWrap style={{ marginBottom: '24px', width: '100%' }}>

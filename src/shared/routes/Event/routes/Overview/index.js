@@ -16,6 +16,7 @@ const EventGigs = React.forwardRef(
 
         const { data = {}, loading: loadingGigs } = useQuery(EVENT_GIGS, {
             skip: !theEvent.id,
+            fetchPolicy: 'cache-and-network',
             variables: {
                 id: theEvent.id,
                 hash: theEvent.hash,
