@@ -5,8 +5,9 @@ import useTranslate from 'components/hooks/useTranslate';
 import { InputRow } from 'components/FormComponents';
 import { eventRoutes } from 'constants/locales/appRoutes';
 import { REQUEST_EMAIL_VERIFICATION } from 'components/gql';
+import usePushNotifications from 'components/hooks/usePushNotifications';
 import { Title, Body, HeaderTitle, BodyBold } from '../../../../components/Text';
-import { Col, SecondaryButton } from '../../../../components/Blocks';
+import { Col, SecondaryButton, PrimaryButton } from '../../../../components/Blocks';
 import DjCard from '../../components/blocks/DJCard';
 import { EVENT_GIGS } from '../../gql';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
@@ -16,7 +17,7 @@ import { gigStates } from '../../../../constants/constants';
 
 const EventGigs = React.forwardRef(
     ({ theEvent = {}, loading: loadingEvent, translate, currency }, ref) => {
-        const { status } = theEvent;
+        const { status, organizer } = theEvent;
 
         const { data = {}, loading: loadingGigs, refetch } = useQuery(EVENT_GIGS, {
             skip: !theEvent.id,
@@ -31,7 +32,7 @@ const EventGigs = React.forwardRef(
         const [refetchTries, setRefetchTries] = useState(data?.event ? 5 : 0);
 
         const [notifications, clearNotifications] = useNotifications({
-            userId: theEvent.organizer.id,
+            userId: organizer.id,
         });
 
         const readRoom = () => clearNotifications();
@@ -69,8 +70,8 @@ const EventGigs = React.forwardRef(
             );
         }
 
-        if (theEvent && !theEvent.organizer?.appMetadata?.emailVerified) {
-            return <EmailNotVerifiedSection gigs={gigs} theEvent={theEvent} />;
+        if (theEvent && !organizer?.appMetadata?.emailVerified) {
+            return <EmailNotVerifiedSection gigs={gigs} organizer={organizer} />;
         }
 
         if (!gigs.length) {
@@ -78,7 +79,10 @@ const EventGigs = React.forwardRef(
                 <EmptyPage
                     title="Still contacting DJs"
                     message={
-                        "We are still finding DJs for you, come back later. You'll receive an email once you get an offer."
+                        <>
+                            We are still finding DJs for you. You can come back later.
+                            <NotificationButton organizer={organizer} />
+                        </>
                     }
                 />
             );
@@ -98,6 +102,8 @@ const EventGigs = React.forwardRef(
             <Col ref={ref}>
                 <Title>{getTitle(status)}</Title>
                 <Body>{getText(status)}</Body>
+                <NotificationButton organizer={organizer} />
+
                 <div data-cy="event-djs">
                     {gigs
                         .sort((g1, g2) => getPriority(g2) - getPriority(g1))
@@ -125,7 +131,7 @@ const getText = (status) => {
         case 'CONFIRMED':
             return 'Contact the DJ to make sure that all details are agreed upon.';
         default:
-            return 'The DJs have not made any offers yet. In the meantime you check out their profiles or message them. We’ll notify you by email when someone makes an offer or messages you. Once you have confirmed a DJ, you’ll be able to see additional information such as phone number.';
+            return 'The DJs have not made any offers yet. In the meantime you can check out their profiles or message them. We’ll notify you by email when someone makes an offer or messages you. Once you have confirmed a DJ, you’ll be able to see additional information such as phone number.';
     }
 };
 
@@ -180,7 +186,7 @@ const Overview = (props) => {
     return <EventGigs {...props} />;
 };
 
-const EmailNotVerifiedSection = ({ gigs, theEvent }) => {
+const EmailNotVerifiedSection = ({ gigs, organizer }) => {
     const history = useHistory();
     const foundDjs = gigs.length || 1;
 
@@ -191,7 +197,7 @@ const EmailNotVerifiedSection = ({ gigs, theEvent }) => {
     const resendLink = () => {
         request({
             variables: {
-                email: theEvent.organizer.email,
+                email: organizer.email,
                 redirectLink: window.location.href,
             },
         });
@@ -202,8 +208,8 @@ const EmailNotVerifiedSection = ({ gigs, theEvent }) => {
             <Title>Verify your email</Title>
             <Body>
                 So far we've already found {foundDjs} {foundDjs > 1 ? 'DJs' : 'DJ'} for you, but
-                first you need to verify your email <b>{theEvent.organizer?.email}</b>, so you don't
-                so you don't loose access to this page.
+                first you need to verify your email <b>{organizer?.email}</b>, so you don't so you
+                don't loose access to this page.
             </Body>
             <InputRow style={{ marginTop: '30px' }}>
                 <SecondaryButton disabled={loading || data} onClick={resendLink}>
@@ -215,6 +221,20 @@ const EmailNotVerifiedSection = ({ gigs, theEvent }) => {
                 <BodyBold style={{ marginTop: 12 }}>Email sent, remember to check spam</BodyBold>
             )}
         </Col>
+    );
+};
+
+const NotificationButton = ({ organizer }) => {
+    const { showPrompt, pushShouldBeEnabled } = usePushNotifications({ userId: organizer.id });
+
+    if (!pushShouldBeEnabled) {
+        return null;
+    }
+
+    return (
+        <PrimaryButton onClick={showPrompt} style={{ maxWidth: '100%', width: 250, marginTop: 30 }}>
+            Get notified about new DJs
+        </PrimaryButton>
     );
 };
 

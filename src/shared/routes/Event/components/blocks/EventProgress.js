@@ -4,6 +4,7 @@ import { useQuery } from 'react-apollo';
 import { NavLink } from 'react-router-dom';
 import { eventRoutes } from 'constants/locales/appRoutes';
 import { eventStates } from 'constants/constants';
+import { SecondaryButton } from 'components/Blocks';
 import checkmark from '../../../../assets/checkmark.svg';
 import { EVENT_GIGS } from '../../gql';
 import ConditionalWrap from '../../../../components/ConditionalWrap';
@@ -26,31 +27,36 @@ const EventProgress = ({ theEvent = {} }) => {
     const accepted = data?.event?.gigs.some((g) => g.offer);
 
     return (
-        <Wrapper>
-            <ProgressStep label={'Create event'} completed />
-            {!emailVerified && (
-                <ProgressStep small to={eventRoutes.requirements} label={'Verify email'} />
-            )}
-            <ProgressStep label={'Get offers from DJs'} completed={accepted} />
-            <ProgressStep
-                label={'Confirm and pay'}
-                completed={theEvent?.status === eventStates.CONFIRMED}
-            />
-            <ProgressStep
-                label={'Review'}
-                completed={theEvent && theEvent.review}
-                to={eventRoutes.review}
-            />
-        </Wrapper>
+        <Sticky>
+            <Wrapper>
+                <ProgressStep label={'Create event'} completed />
+                {!emailVerified && (
+                    <ProgressStep small to={eventRoutes.requirements} label={'Verify email'} />
+                )}
+                <ProgressStep label={'Get offers from DJs'} completed={accepted} />
+                <ProgressStep
+                    label={'Confirm and pay'}
+                    completed={theEvent?.status === eventStates.CONFIRMED}
+                />
+                <ProgressStep
+                    label={'Review'}
+                    completed={theEvent && theEvent.review}
+                    to={eventRoutes.review}
+                />
+            </Wrapper>
+        </Sticky>
     );
 };
 
-const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
+const Sticky = styled.div`
     position: sticky;
     top: 80px;
     margin-left: 42px;
+`;
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+
     > * {
         margin-bottom: 2.3em;
         &:last-child > *:after {
