@@ -59,8 +59,6 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat }) => {
     const showInfo = status === 'CONFIRMED';
     const finished = theEvent.status === 'FINISHED';
 
-    console.log({ dj });
-
     return (
         <LogActivityInView type={ACTIVITY_TYPES.GIG_VIEWED_BY_ORGANIZER} subjectId={gig.id}>
             <Wrapper idx={idx} data-cy="event-dj">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-apollo';
 import useTranslate from 'components/hooks/useTranslate';
 import { Title, Body, HeaderTitle } from '../../../../components/Text';
@@ -14,7 +14,7 @@ const EventGigs = React.forwardRef(
     ({ theEvent = {}, loading: loadingEvent, translate, currency }, ref) => {
         const { status } = theEvent;
 
-        const { data = {}, loading: loadingGigs } = useQuery(EVENT_GIGS, {
+        const { data = {}, loading: loadingGigs, refetch } = useQuery(EVENT_GIGS, {
             skip: !theEvent.id,
             fetchPolicy: 'cache-and-network',
             variables: {
@@ -24,17 +24,27 @@ const EventGigs = React.forwardRef(
             },
         });
 
+        const [refetchTries, setRefetchTries] = useState(data?.event ? 5 : 0);
+
         const [notifications, clearNotifications] = useNotifications({
             userId: theEvent.organizer.id,
         });
 
         const readRoom = () => clearNotifications();
 
-        const loading = loadingEvent || loadingGigs;
+        const loading = refetchTries < 5 || loadingEvent || loadingGigs;
 
-        if (loading) {
-            return <LoadingPlaceholder2 />;
-        }
+        // event polling for djs
+        useEffect(() => {
+            if (refetchTries < 5 && !data.event) {
+                setTimeout(() => {
+                    refetch();
+                    setRefetchTries((c) => c + 1);
+                }, 1000);
+            } else {
+                setRefetchTries(5);
+            }
+        }, [refetchTries, refetch, data]);
 
         let gigs = data.event ? data.event.gigs : [];
         gigs = gigs
@@ -45,7 +55,19 @@ const EventGigs = React.forwardRef(
                 return g;
             });
 
-        if (!loading && gigs.length === 0) {
+        if (gigs.length === 0) {
+            if (loading) {
+                return (
+                    <>
+                        <Title>
+                            {refetchTries > 3 ? 'Still looking for DJs' : 'Looking for DJs'}
+                        </Title>
+                        <Body>{'Wait a moment...'}</Body>
+                        <LoadingPlaceholder2 style={{ marginTop: 24 }} />
+                    </>
+                );
+            }
+
             return (
                 <EmptyPage
                     title="Still contacting DJs"

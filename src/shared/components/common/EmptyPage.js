@@ -4,12 +4,12 @@ import { Body } from 'components/Text';
 import useTranslate from 'components/hooks/useTranslate';
 import Svg404 from '../graphics/404';
 
-const EmptyPage = ({ message, title }) => {
+const EmptyPage = ({ message, title, style }) => {
     const { translate } = useTranslate();
     const renderTitle = title ? title : translate('empty-page-message');
 
     return (
-        <Wrapper>
+        <Wrapper style={style}>
             <Svg404 />
             <div>
                 {typeof renderTitle === 'string' ? (
