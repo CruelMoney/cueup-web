@@ -42,6 +42,7 @@ const ME = gql`
             userMetadata {
                 firstName
                 lastName
+                fullName
                 bio
                 birthday
                 phone

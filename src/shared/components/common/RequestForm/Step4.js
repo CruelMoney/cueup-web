@@ -1,13 +1,12 @@
 import React from 'react';
 import emailValidator from 'email-validator';
 import styled from 'styled-components';
-import { Row, TeritaryButton, PrimaryButton, SmartButton, Hr, Col } from 'components/Blocks';
+import { Row, TeritaryButton, SmartButton, Hr, Col } from 'components/Blocks';
 import { BodySmall } from 'components/Text';
 import { Input, InputRow } from 'components/FormComponents';
 import useSocialLogin from 'components/hooks/useSocialLogin';
 import fbLogo from '../../../assets/icons/fb.svg';
 import googleLogo from '../../../assets/icons/google.svg';
-import { RequestSection } from './RequestForm';
 
 const LoginStyle = styled.div`
     flex-direction: row;
@@ -46,6 +45,7 @@ const Step4 = ({
     registerValidation,
     unregisterValidation,
     loading,
+    user,
 }) => {
     const submit = (e) => {
         e.preventDefault();
@@ -53,51 +53,58 @@ const Step4 = ({
     };
     const [onPressSocial, { socialLoading }] = useSocialLogin();
 
+    const isLoggedIn = user;
+
     return (
         <form onSubmit={submit} style={{ width: '600px' }}>
             <h3 dangerouslySetInnerHTML={{ __html: translate('requestForm:step-4.header') }} />
 
-            <LoginStyle>
-                <SmartButton
-                    level="secondary"
-                    onClick={onPressSocial('facebook')}
-                    loading={socialLoading === 'facebook'}
-                >
-                    <img src={fbLogo} alt="facebook logo" />
-                    Continue with Facebook
-                </SmartButton>
+            {!isLoggedIn && (
+                <>
+                    <LoginStyle>
+                        <SmartButton
+                            level="secondary"
+                            onClick={onPressSocial('facebook')}
+                            loading={socialLoading === 'facebook'}
+                        >
+                            <img src={fbLogo} alt="facebook logo" />
+                            Continue with Facebook
+                        </SmartButton>
 
-                <SmartButton
-                    level="secondary"
-                    onClick={onPressSocial('google')}
-                    loading={socialLoading === 'google'}
-                >
-                    <img src={googleLogo} alt="google logo" />
-                    Continue with Google
-                </SmartButton>
-            </LoginStyle>
-            <Col
-                middle
-                center
-                style={{
-                    width: '100%',
-                    margin: '1em 0',
-                }}
-            >
-                <Hr />
-                <BodySmall
-                    style={{
-                        margin: 0,
-                        padding: '0 1em',
-                        backgroundColor: '#fff',
-                        position: 'absolute',
-                        zIndex: 1,
-                        textTransform: 'lowercase',
-                    }}
-                >
-                    {translate('or')}
-                </BodySmall>
-            </Col>
+                        <SmartButton
+                            level="secondary"
+                            onClick={onPressSocial('google')}
+                            loading={socialLoading === 'google'}
+                        >
+                            <img src={googleLogo} alt="google logo" />
+                            Continue with Google
+                        </SmartButton>
+                    </LoginStyle>
+
+                    <Col
+                        middle
+                        center
+                        style={{
+                            width: '100%',
+                            margin: '1em 0',
+                        }}
+                    >
+                        <Hr />
+                        <BodySmall
+                            style={{
+                                margin: 0,
+                                padding: '0 1em',
+                                backgroundColor: '#fff',
+                                position: 'absolute',
+                                zIndex: 1,
+                                textTransform: 'lowercase',
+                            }}
+                        >
+                            {translate('or')}
+                        </BodySmall>
+                    </Col>
+                </>
+            )}
 
             <Input
                 label={translate('requestForm:step-4.contact-name')}

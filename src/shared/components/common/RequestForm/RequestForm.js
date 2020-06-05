@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import styled from 'styled-components';
 import { useHistory, useLocation } from 'react-router';
 import { captureException } from '@sentry/core';
+import { useQuery } from 'react-apollo';
 import { Card, CardShadow, Col, Hr, LinkButton } from 'components/Blocks';
 import { LabelHalf, InputRow } from 'components/FormComponents';
 import { BodySmall, TitleClean } from 'components/Text';
@@ -10,6 +11,7 @@ import { useForm } from 'components/hooks/useForm';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { trackPageView } from 'utils/analytics';
 import useDebounce from 'components/hooks/useDebounce';
+import { ME } from 'components/gql';
 import Login from '../Login';
 import ErrorMessageApollo from '../ErrorMessageApollo';
 import usePushNotifications from '../../hooks/usePushNotifications';
@@ -33,13 +35,16 @@ const formToParams = (form) => {
     }
 };
 
-const paramsToForm = (params, initialCity) => {
+const paramsToForm = (params, initialCity, user) => {
     const form = {
         date: new Date(),
         locationName: initialCity,
         startMinute: 21 * 60,
         endMinute: 27 * 60,
         guestsCount: 100,
+        contactName: user?.userMetadata.fullName,
+        contactEmail: user?.email,
+        contactPhone: user?.userMetadata.phone,
     };
 
     try {
@@ -66,8 +71,10 @@ const MainForm = ({ initialCity, countries }) => {
 
     const initialUrlState = useRef();
 
+    const { data: userData } = useQuery(ME);
+
     if (!initialUrlState.current) {
-        initialUrlState.current = paramsToForm(location.search, initialCity);
+        initialUrlState.current = paramsToForm(location.search, initialCity, userData?.me);
     }
 
     const [activeStep, setActiveStep] = useState(initialUrlState.current.activeStep || 1);
@@ -206,6 +213,7 @@ const MainForm = ({ initialCity, countries }) => {
                                 next={createEvent}
                                 back={back}
                                 loading={loading}
+                                user={userData?.me}
                             />
                         )}
 
