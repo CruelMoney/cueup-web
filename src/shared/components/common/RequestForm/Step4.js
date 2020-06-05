@@ -1,9 +1,41 @@
 import React from 'react';
 import emailValidator from 'email-validator';
-import { Row, TeritaryButton, PrimaryButton, SmartButton } from 'components/Blocks';
+import styled from 'styled-components';
+import { Row, TeritaryButton, PrimaryButton, SmartButton, Hr, Col } from 'components/Blocks';
 import { BodySmall } from 'components/Text';
 import { Input, InputRow } from 'components/FormComponents';
+import useSocialLogin from 'components/hooks/useSocialLogin';
+import fbLogo from '../../../assets/icons/fb.svg';
+import googleLogo from '../../../assets/icons/google.svg';
 import { RequestSection } from './RequestForm';
+
+const LoginStyle = styled.div`
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    margin: 30px -5px;
+    button {
+        max-width: 100%;
+        width: 100%;
+        margin: 0 5px;
+        > span {
+            width: 100%;
+        }
+        > span:nth-child(2) {
+            width: auto;
+            position: absolute;
+            right: 1em;
+        }
+        img {
+            position: absolute;
+            left: 0px;
+            height: 20px;
+            width: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+`;
 
 const Step4 = ({
     translate,
@@ -19,85 +51,115 @@ const Step4 = ({
         e.preventDefault();
         next();
     };
+    const [onPressSocial, { socialLoading }] = useSocialLogin();
 
     return (
-        <div>
-            <form onSubmit={submit}>
-                <h3 dangerouslySetInnerHTML={{ __html: translate('requestForm:step-4.header') }} />
-                <RequestSection>
-                    <Input
-                        label={translate('requestForm:step-4.contact-name')}
-                        name="contactName"
-                        placeholder={translate('first-last')}
-                        type="text"
-                        autoComplete="name"
-                        defaultValue={form.contactName}
-                        validation={(v) => {
-                            if (!v) {
-                                return 'Please enter name';
-                            }
-                            const [firstName, ...lastName] = v.split(' ');
-                            if (!firstName || !lastName.some((s) => !!s.trim())) {
-                                return 'Please enter both first and last name';
-                            }
-                        }}
-                        onSave={(contactName) => handleChange({ contactName })}
-                        registerValidation={registerValidation('contactName')}
-                        unregisterValidation={unregisterValidation('contactName')}
-                    >
-                        <BodySmall>
-                            {translate('requestForm:step-4.contact-name-description')}
-                        </BodySmall>
-                    </Input>
-                </RequestSection>
+        <form onSubmit={submit}>
+            <h3 dangerouslySetInnerHTML={{ __html: translate('requestForm:step-4.header') }} />
 
-                <RequestSection>
-                    <Input
-                        type="tel"
-                        label={translate('requestForm:step-4.contact-phone')}
-                        placeholder={translate('optional')}
-                        name="contactPhone"
-                        defaultValue={form.contactPhone}
-                        onSave={(contactPhone) => handleChange({ contactPhone })}
-                    >
-                        <BodySmall>
-                            {translate('requestForm:step-4.contact-phone-description')}
-                        </BodySmall>
-                    </Input>
-                </RequestSection>
-                <RequestSection>
-                    <InputRow small>
-                        <Input
-                            half
-                            type="email"
-                            name="contactEmail"
-                            label={translate('requestForm:step-4.contact-email')}
-                            autoComplete="email"
-                            placeholder="Email"
-                            defaultValue={form.contactEmail}
-                            validation={(v) =>
-                                emailValidator.validate(v) ? null : 'Not a valid email'
-                            }
-                            onSave={(contactEmail) => handleChange({ contactEmail })}
-                            registerValidation={registerValidation('contactEmail')}
-                            unregisterValidation={unregisterValidation('contactEmail')}
-                        />
-                    </InputRow>
-                    <BodySmall>
-                        {translate('requestForm:step-4.contact-email-description')}
-                    </BodySmall>
-                </RequestSection>
+            <LoginStyle>
+                <SmartButton
+                    level="secondary"
+                    onClick={onPressSocial('facebook')}
+                    loading={socialLoading === 'facebook'}
+                >
+                    <img src={fbLogo} alt="facebook logo" />
+                    Continue with Facebook
+                </SmartButton>
 
-                <Row right style={{ marginTop: '12px' }}>
-                    <TeritaryButton type="button" onClick={back}>
-                        {translate('back')}
-                    </TeritaryButton>
-                    <SmartButton data-cy="submit-event" type="submit" loading={loading}>
-                        {translate('get-offers')}
-                    </SmartButton>
-                </Row>
-            </form>
-        </div>
+                <SmartButton
+                    level="secondary"
+                    onClick={onPressSocial('google')}
+                    loading={socialLoading === 'google'}
+                >
+                    <img src={googleLogo} alt="google logo" />
+                    Continue with Google
+                </SmartButton>
+            </LoginStyle>
+            <Col
+                middle
+                center
+                style={{
+                    width: '100%',
+                    margin: '1em 0',
+                }}
+            >
+                <Hr />
+                <BodySmall
+                    style={{
+                        margin: 0,
+                        padding: '0 1em',
+                        backgroundColor: '#fff',
+                        position: 'absolute',
+                        zIndex: 1,
+                        textTransform: 'lowercase',
+                    }}
+                >
+                    {translate('or')}
+                </BodySmall>
+            </Col>
+
+            <Input
+                label={translate('requestForm:step-4.contact-name')}
+                name="contactName"
+                placeholder={translate('first-last')}
+                type="text"
+                autoComplete="name"
+                defaultValue={form.contactName}
+                validation={(v) => {
+                    if (!v) {
+                        return 'Please enter name';
+                    }
+                    const [firstName, ...lastName] = v.split(' ');
+                    if (!firstName || !lastName.some((s) => !!s.trim())) {
+                        return 'Please enter both first and last name';
+                    }
+                }}
+                onSave={(contactName) => handleChange({ contactName })}
+                registerValidation={registerValidation('contactName')}
+                unregisterValidation={unregisterValidation('contactName')}
+            >
+                <BodySmall>{translate('requestForm:step-4.contact-name-description')}</BodySmall>
+            </Input>
+
+            <InputRow small>
+                <Input
+                    type="email"
+                    name="contactEmail"
+                    label={translate('requestForm:step-4.contact-email')}
+                    autoComplete="email"
+                    placeholder="Email"
+                    defaultValue={form.contactEmail}
+                    validation={(v) => (emailValidator.validate(v) ? null : 'Not a valid email')}
+                    onSave={(contactEmail) => handleChange({ contactEmail })}
+                    registerValidation={registerValidation('contactEmail')}
+                    unregisterValidation={unregisterValidation('contactEmail')}
+                />
+            </InputRow>
+            <BodySmall>{translate('requestForm:step-4.contact-email-description')}</BodySmall>
+
+            <Hr style={{ margin: '15px 0' }} />
+
+            <Input
+                type="tel"
+                label={translate('requestForm:step-4.contact-phone')}
+                placeholder={translate('optional')}
+                name="contactPhone"
+                defaultValue={form.contactPhone}
+                onSave={(contactPhone) => handleChange({ contactPhone })}
+            >
+                <BodySmall>{translate('requestForm:step-4.contact-phone-description')}</BodySmall>
+            </Input>
+
+            <Row right style={{ marginTop: '12px' }}>
+                <TeritaryButton type="button" onClick={back}>
+                    {translate('back')}
+                </TeritaryButton>
+                <SmartButton data-cy="submit-event" type="submit" loading={loading}>
+                    {translate('get-offers')}
+                </SmartButton>
+            </Row>
+        </form>
     );
 };
 

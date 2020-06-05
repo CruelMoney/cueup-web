@@ -217,9 +217,7 @@ export const RequestSection = styled.section`
     margin-bottom: 15px;
     margin-top: 15px;
     width: 100%;
-    > ${BodySmall} {
-        margin-top: 6px;
-    }
+
     ${InputRow} {
         margin-right: -10px;
     }
