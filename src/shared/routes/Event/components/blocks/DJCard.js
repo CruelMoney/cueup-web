@@ -246,7 +246,7 @@ const Offer = ({
                         warning={translate('decline-warning')}
                         level="tertiary"
                     >
-                        Reject DJ
+                        Remove DJ
                     </SmartButton>
                 )}
                 {['ACCEPTED'].includes(status) && (

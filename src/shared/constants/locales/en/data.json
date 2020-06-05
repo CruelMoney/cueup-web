@@ -207,7 +207,7 @@
         "Contact": "Contact",
         "Member for": "Member for",
         "Decline DJ": "Decline DJ",
-        "decline-warning": "Are you sure you want to decline this DJ? If you decline, the DJ will be removed, and a new DJ will be asked to make an offer. If you are dissatisfied with the price, you can message the DJ asking for a different offer.",
+        "decline-warning": "This will remove the DJ for ever, and you can't get in contact again.",
         "Phone number visible after confirmation": "Phone number visible after confirmation",
         "Email visible after confirmation": "Email visible after confirmation",
     
