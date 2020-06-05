@@ -31,6 +31,7 @@ import EmptyPage from '../../../../components/common/EmptyPage';
 import { DECLINE_DJ, EVENT_GIGS } from '../../gql';
 import PayForm from '../../../../components/common/PayForm';
 import { ACTIVITY_TYPES, LogActivityInView } from '../../../../components/hooks/useLogActivity';
+import lazyUser from '../../../User';
 
 const hiddenEmail = '12345678@1234'.replace(/\w/g, '•') + '.com';
 const hiddenNumber = '45 12 34 56 78'.replace(/\w/g, '•');
@@ -61,7 +62,7 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat }) => {
 
     return (
         <LogActivityInView type={ACTIVITY_TYPES.GIG_VIEWED_BY_ORGANIZER} subjectId={gig.id}>
-            <Wrapper idx={idx} data-cy="event-dj">
+            <Wrapper idx={idx} data-cy="event-dj" onMouseEnter={() => lazyUser.preload()}>
                 <Card style={style}>
                     <ImageWrapper>
                         <StyledImage src={dj.picture.path} />
