@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import styled from 'styled-components';
+import { useHistory, useLocation } from 'react-router';
+import { captureException } from '@sentry/core';
 import { Card, CardShadow, Col, Hr, LinkButton } from 'components/Blocks';
 import { LabelHalf, InputRow } from 'components/FormComponents';
 import { BodySmall, TitleClean } from 'components/Text';
@@ -7,6 +9,7 @@ import { useCreateEvent } from 'actions/EventActions';
 import { useForm } from 'components/hooks/useForm';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { trackPageView } from 'utils/analytics';
+import useDebounce from 'components/hooks/useDebounce';
 import Login from '../Login';
 import ErrorMessageApollo from '../ErrorMessageApollo';
 import usePushNotifications from '../../hooks/usePushNotifications';
@@ -18,30 +21,83 @@ import Step4 from './Step4';
 import Step5 from './Step5';
 import content from './content.json';
 
+const formToParams = (form) => {
+    try {
+        const searchParams = new URLSearchParams(window.location.search);
+        Object.keys(form).forEach((key) => {
+            searchParams.set(key, JSON.stringify(form[key]));
+        });
+        return searchParams;
+    } catch (error) {
+        return '';
+    }
+};
+
+const paramsToForm = (params, initialCity) => {
+    const form = {
+        date: new Date(),
+        locationName: initialCity,
+        startMinute: 21 * 60,
+        endMinute: 27 * 60,
+        guestsCount: 100,
+    };
+
+    try {
+        const searchParams = new URLSearchParams(params);
+
+        searchParams.forEach((val, key) => {
+            const value = JSON.parse(val);
+            if (key === 'date') {
+                form[key] = new Date(value);
+            } else {
+                form[key] = value;
+            }
+        });
+    } catch (error) {
+        captureException(error);
+    }
+    return form;
+};
+
 const MainForm = ({ initialCity, countries }) => {
     const { translate } = useNamespaceContent(content, 'requestForm');
+    const history = useHistory();
+    const location = useLocation();
 
-    const [activeStep, setActiveStep] = useState(4);
+    const initialUrlState = useRef();
+
+    if (!initialUrlState.current) {
+        initialUrlState.current = paramsToForm(location.search, initialCity);
+    }
+
+    const [activeStep, setActiveStep] = useState(initialUrlState.current.activeStep || 1);
     const [showLogin, setShowLogin] = useState(false);
     const { pushShouldBeEnabled } = usePushNotifications();
 
+    // defaults
+    const [form, setForm] = useState(initialUrlState.current);
+    const debouncedForm = useDebounce(form, 500);
+
+    const { registerValidation, unregisterValidation, runValidations } = useForm(form);
+    const [error, setError] = useState();
+    const [mutate, { loading, data: createdEventData }] = useCreateEvent(form);
+
+    // track progress
     useEffect(() => {
         if (activeStep > 1) {
             trackPageView('/create-event-form-' + activeStep);
         }
     }, [activeStep]);
 
-    // defaults
-    const [form, setForm] = useState({
-        date: new Date(),
-        locationName: initialCity,
-        startMinute: 21 * 60,
-        endMinute: 27 * 60,
-        guestsCount: 100,
-    });
-    const { registerValidation, unregisterValidation, runValidations } = useForm(form);
-    const [error, setError] = useState();
-    const [mutate, { loading, data: createdEventData }] = useCreateEvent(form);
+    // save state to url
+    useEffect(() => {
+        if (activeStep > 1) {
+            const searchParams = formToParams(debouncedForm);
+            searchParams.set('activeStep', activeStep);
+
+            history.push(`?${searchParams.toString()}`);
+        }
+    }, [debouncedForm, history, activeStep]);
 
     const createEvent = async () => {
         const errors = runValidations();
