@@ -27,10 +27,14 @@ const formToParams = (form) => {
     try {
         const searchParams = new URLSearchParams(window.location.search);
         Object.keys(form).forEach((key) => {
-            searchParams.set(key, JSON.stringify(form[key]));
+            const value = form[key];
+            if (value) {
+                searchParams.set(key, JSON.stringify(value));
+            }
         });
         return searchParams;
     } catch (error) {
+        console.log({ error });
         return '';
     }
 };
@@ -51,12 +55,15 @@ const paramsToForm = (params, initialCity, user) => {
         const searchParams = new URLSearchParams(params);
 
         searchParams.forEach((val, key) => {
-            const value = JSON.parse(val);
-            if (key === 'date') {
-                form[key] = new Date(value);
-            } else {
-                form[key] = value;
-            }
+            try {
+                const value = JSON.parse(val);
+
+                if (key === 'date') {
+                    form[key] = new Date(value);
+                } else {
+                    form[key] = value;
+                }
+            } catch (error) {}
         });
     } catch (error) {
         captureException(error);

@@ -127,7 +127,6 @@ const SignupForm = ({ translate, user }) => {
         } catch (err) {
             console.log(err);
             Sentry.captureException(err);
-        } finally {
             setLoading(false);
         }
     };

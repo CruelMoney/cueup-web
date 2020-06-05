@@ -47,8 +47,10 @@ const EventGigs = React.forwardRef(
         if (!loading && gigs.length === 0) {
             return (
                 <EmptyPage
-                    title="No DJs"
-                    message={'We are still finding DJs for you, come back later.'}
+                    title="Still contacting DJs"
+                    message={
+                        "We are still finding DJs for you, come back later. You'll receive an email once you get an offer."
+                    }
                 />
             );
         }

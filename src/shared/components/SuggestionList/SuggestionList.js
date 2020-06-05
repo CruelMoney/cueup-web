@@ -77,7 +77,7 @@ const SuggestionList = ({
             e.preventDefault();
             handleChange(suggestions[Math.max(suggestionCursor, 0)], true);
             setFocused(false);
-            inputRef.current.blur();
+            inputRef.current && inputRef.current.blur();
             return false;
         }
 
