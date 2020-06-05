@@ -2094,6 +2094,12 @@ table {
 p.error {
     color: #f44336 !important;
 }
+.error button {
+    color: #8998aa !important;
+}
+.error button:hover {
+    color: #32325d !important;
+}
 .event-submit-wrapper {
     margin-bottom: 20px;
     position: relative;

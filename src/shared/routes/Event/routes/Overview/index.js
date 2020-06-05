@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery } from 'react-apollo';
+import { useQuery, useMutation } from 'react-apollo';
+import { useHistory } from 'react-router';
 import useTranslate from 'components/hooks/useTranslate';
-import { Title, Body, HeaderTitle } from '../../../../components/Text';
-import { Col } from '../../../../components/Blocks';
+import { InputRow } from 'components/FormComponents';
+import { eventRoutes } from 'constants/locales/appRoutes';
+import { REQUEST_EMAIL_VERIFICATION } from 'components/gql';
+import { Title, Body, HeaderTitle, BodyBold } from '../../../../components/Text';
+import { Col, SecondaryButton } from '../../../../components/Blocks';
 import DjCard from '../../components/blocks/DJCard';
 import { EVENT_GIGS } from '../../gql';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
@@ -55,19 +59,21 @@ const EventGigs = React.forwardRef(
                 return g;
             });
 
-        if (gigs.length === 0) {
-            if (loading) {
-                return (
-                    <>
-                        <Title>
-                            {refetchTries > 3 ? 'Still looking for DJs' : 'Looking for DJs'}
-                        </Title>
-                        <Body>{'Wait a moment...'}</Body>
-                        <LoadingPlaceholder2 style={{ marginTop: 24 }} />
-                    </>
-                );
-            }
+        if (gigs.length === 0 && loading) {
+            return (
+                <>
+                    <Title>{refetchTries > 3 ? 'Still looking for DJs' : 'Looking for DJs'}</Title>
+                    <Body>{'Wait a moment...'}</Body>
+                    <LoadingPlaceholder2 style={{ marginTop: 24 }} />
+                </>
+            );
+        }
 
+        if (theEvent && !theEvent.organizer?.appMetadata?.emailVerified) {
+            return <EmailNotVerifiedSection gigs={gigs} theEvent={theEvent} />;
+        }
+
+        if (!gigs.length) {
             return (
                 <EmptyPage
                     title="Still contacting DJs"
@@ -172,6 +178,44 @@ const Overview = (props) => {
     }
 
     return <EventGigs {...props} />;
+};
+
+const EmailNotVerifiedSection = ({ gigs, theEvent }) => {
+    const history = useHistory();
+    const foundDjs = gigs.length || 1;
+
+    const navigateToRequirements = () => history.push(eventRoutes.requirements);
+
+    const [request, { loading, data }] = useMutation(REQUEST_EMAIL_VERIFICATION);
+
+    const resendLink = () => {
+        request({
+            variables: {
+                email: theEvent.organizer.email,
+                redirectLink: window.location.href,
+            },
+        });
+    };
+
+    return (
+        <Col style={{ maxWidth: 500 }}>
+            <Title>Verify your email</Title>
+            <Body>
+                So far we've already found {foundDjs} {foundDjs > 1 ? 'DJs' : 'DJ'} for you, but
+                first you need to verify your email <b>{theEvent.organizer?.email}</b>, so you don't
+                so you don't loose access to this page.
+            </Body>
+            <InputRow style={{ marginTop: '30px' }}>
+                <SecondaryButton disabled={loading || data} onClick={resendLink}>
+                    Resend link
+                </SecondaryButton>
+                <SecondaryButton onClick={navigateToRequirements}>Change email</SecondaryButton>
+            </InputRow>
+            {data && (
+                <BodyBold style={{ marginTop: 12 }}>Email sent, remember to check spam</BodyBold>
+            )}
+        </Col>
+    );
 };
 
 export default Overview;

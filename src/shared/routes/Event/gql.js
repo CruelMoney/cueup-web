@@ -34,6 +34,10 @@ const EVENT = gql`
             }
             organizer {
                 id
+                email
+                appMetadata {
+                    emailVerified
+                }
                 userMetadata {
                     firstName
                 }

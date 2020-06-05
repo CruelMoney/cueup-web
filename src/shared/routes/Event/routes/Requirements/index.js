@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useMutation, useQuery } from 'react-apollo';
 import emailValidator from 'email-validator';
 import useTranslate from 'components/hooks/useTranslate';
+import { REQUEST_EMAIL_VERIFICATION } from 'components/gql';
 import { Col, Row, TeritaryButton, SmartButton } from '../../../../components/Blocks';
 import { SettingsSection, Input } from '../../../../components/FormComponents';
 
@@ -37,6 +38,7 @@ const Requirements = React.forwardRef(({ theEvent, history, pathname }, ref) => 
         contactPhone,
         contactEmail,
         address,
+        organizer,
     } = theEvent;
 
     const save = (key, optimistic) => (val) =>
@@ -81,8 +83,13 @@ const Requirements = React.forwardRef(({ theEvent, history, pathname }, ref) => 
                 />
                 <Input
                     label="Contact email"
-                    defaultValue={contactEmail}
+                    defaultValue={organizer?.email}
                     placeholder="mail@email.com"
+                    error={
+                        !organizer?.appMetadata?.emailVerified ? (
+                            <VerifyEmailError email={organizer?.email} />
+                        ) : null
+                    }
                     type="email"
                     autoComplete="email"
                     name="email"
@@ -315,6 +322,32 @@ const CancelationConsequences = ({ offer }) => {
         <Body>
             Cancel now and receive a refund of <b>{worstCaseRefund.formatted}</b>.
         </Body>
+    );
+};
+
+const VerifyEmailError = ({ email }) => {
+    const [request, { data, loading }] = useMutation(REQUEST_EMAIL_VERIFICATION);
+
+    const handleClick = () => {
+        request({
+            variables: {
+                email,
+                redirectLink: window.location.href,
+            },
+        });
+    };
+
+    return (
+        <>
+            Email not verified -{' '}
+            {data ? (
+                <button disabled>email sent, remember to check spam</button>
+            ) : loading ? (
+                <button disabled>...</button>
+            ) : (
+                <button onClick={handleClick}>Resend link</button>
+            )}
+        </>
     );
 };
 
