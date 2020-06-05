@@ -54,7 +54,7 @@ const Step4 = ({
     const [onPressSocial, { socialLoading }] = useSocialLogin();
 
     return (
-        <form onSubmit={submit}>
+        <form onSubmit={submit} style={{ width: '600px' }}>
             <h3 dangerouslySetInnerHTML={{ __html: translate('requestForm:step-4.header') }} />
 
             <LoginStyle>
