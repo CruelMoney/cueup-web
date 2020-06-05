@@ -47,6 +47,8 @@ export const eventRoutes = {
     requirements: 'requirements',
     overview: 'overview',
     review: 'review',
+    checkout: 'overview/checkout/:gigId',
+    payment: 'overview/checkout/:gigId/payment',
 };
 
 export type RouteKeys = typeof routeKeys;

@@ -9,7 +9,6 @@ import { NavLink } from 'react-router-dom';
 import { useMutation } from 'react-apollo';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes, userRoutes, eventRoutes } from 'constants/locales/appRoutes';
-import { trackCheckout } from 'utils/analytics';
 import {
     Col,
     keyframeFadeIn,
@@ -29,22 +28,15 @@ import Popup from '../../../../components/common/Popup';
 import Chat from '../../../../components/common/Chat';
 import EmptyPage from '../../../../components/common/EmptyPage';
 import { DECLINE_DJ, EVENT_GIGS } from '../../gql';
-import PayForm from '../../../../components/common/PayForm';
 import { ACTIVITY_TYPES, LogActivityInView } from '../../../../components/hooks/useLogActivity';
 import lazyUser from '../../../User';
 
 const hiddenEmail = '12345678@1234'.replace(/\w/g, '•') + '.com';
 const hiddenNumber = '45 12 34 56 78'.replace(/\w/g, '•');
 
-const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat }) => {
+const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateBooking }) => {
     const { translate } = useTranslate();
     const [showChat, setShowChat] = useState(false);
-    const [showPayment, setShowPayment] = useState(false);
-
-    const initiateBooking = () => {
-        trackCheckout();
-        setShowPayment(true);
-    };
 
     const { dj, offer, status } = gig;
     if (!dj) {
@@ -156,7 +148,7 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat }) => {
                             gig={gig}
                             translate={translate}
                             name={name}
-                            initiateBooking={initiateBooking}
+                            initiateBooking={onInitiateBooking}
                         />
                     </Content>
                 </Card>
@@ -171,13 +163,6 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat }) => {
                     organizer={theEvent.organizer}
                     eventId={theEvent.id}
                     showInfo={showInfo}
-                    gig={gig}
-                />
-                <PayPopup
-                    showing={showPayment}
-                    translate={translate}
-                    close={() => setShowPayment(false)}
-                    theEvent={theEvent}
                     gig={gig}
                 />
             </Wrapper>
@@ -262,20 +247,6 @@ const Offer = ({
                 )}
             </ButtonsRow>
         </OfferRow>
-    );
-};
-
-const PayPopup = ({ showing, close, gig, paymentPossible, theEvent }) => {
-    return (
-        <Popup showing={showing} onClickOutside={close} noPadding>
-            <PayForm
-                paymentPossible={paymentPossible}
-                id={gig.id}
-                offer={gig.offer}
-                gig={gig}
-                event={theEvent}
-            />
-        </Popup>
     );
 };
 

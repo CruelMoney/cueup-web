@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation } from 'react-apollo';
-import { useHistory } from 'react-router';
+import { useHistory, Route } from 'react-router';
 import useTranslate from 'components/hooks/useTranslate';
 import { InputRow } from 'components/FormComponents';
 import { eventRoutes } from 'constants/locales/appRoutes';
 import { REQUEST_EMAIL_VERIFICATION } from 'components/gql';
 import usePushNotifications from 'components/hooks/usePushNotifications';
+import Popup from 'components/common/Popup';
+import PayForm from 'components/common/PayForm';
 import { Title, Body, HeaderTitle, BodyBold } from '../../../../components/Text';
 import { Col, SecondaryButton, PrimaryButton } from '../../../../components/Blocks';
 import DjCard from '../../components/blocks/DJCard';
@@ -16,9 +18,8 @@ import EmptyPage from '../../../../components/common/EmptyPage';
 import { gigStates } from '../../../../constants/constants';
 
 const EventGigs = React.forwardRef(
-    ({ theEvent = {}, loading: loadingEvent, translate, currency }, ref) => {
+    ({ theEvent = {}, loading: loadingEvent, translate, currency, match }, ref) => {
         const { status, organizer } = theEvent;
-
         const { data = {}, loading: loadingGigs, refetch } = useQuery(EVENT_GIGS, {
             skip: !theEvent.id,
             fetchPolicy: 'cache-and-network',
@@ -30,7 +31,7 @@ const EventGigs = React.forwardRef(
         });
 
         const [refetchTries, setRefetchTries] = useState(data?.event ? 5 : 0);
-
+        const history = useHistory();
         const [notifications, clearNotifications] = useNotifications({
             userId: organizer.id,
         });
@@ -116,9 +117,24 @@ const EventGigs = React.forwardRef(
                                 gig={gig}
                                 translate={translate}
                                 theEvent={theEvent}
+                                onInitiateBooking={() =>
+                                    history.push(eventRoutes.checkout.replace(':gigId', gig.id))
+                                }
                             />
                         ))}
                 </div>
+                <Route
+                    path={match.path + '/' + eventRoutes.checkout}
+                    render={(props) => (
+                        <Popup
+                            showing
+                            onClose={() => history.push(match.url + '/' + eventRoutes.overview)}
+                            noPadding
+                        >
+                            <PayForm event={theEvent} currency={currency} {...props} />
+                        </Popup>
+                    )}
+                />
             </Col>
         );
     }
