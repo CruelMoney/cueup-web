@@ -244,6 +244,7 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                     <TextAreaPopup
                         isActive={bioModal}
                         initialValue={bio || ''}
+                        attention={!bio}
                         label="Bio"
                         save={(bio) =>
                             saveData({
