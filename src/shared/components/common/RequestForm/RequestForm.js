@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Card, CardShadow, Col, Hr, LinkButton } from 'components/Blocks';
 import { LabelHalf, InputRow } from 'components/FormComponents';
@@ -6,6 +6,7 @@ import { BodySmall, TitleClean } from 'components/Text';
 import { useCreateEvent } from 'actions/EventActions';
 import { useForm } from 'components/hooks/useForm';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
+import { trackPageView } from 'utils/analytics';
 import Login from '../Login';
 import ErrorMessageApollo from '../ErrorMessageApollo';
 import usePushNotifications from '../../hooks/usePushNotifications';
@@ -20,9 +21,15 @@ import content from './content.json';
 const MainForm = ({ initialCity, countries }) => {
     const { translate } = useNamespaceContent(content, 'requestForm');
 
-    const [activeStep, setActiveStep] = useState(1);
+    const [activeStep, setActiveStep] = useState(4);
     const [showLogin, setShowLogin] = useState(false);
     const { pushShouldBeEnabled } = usePushNotifications();
+
+    useEffect(() => {
+        if (activeStep > 1) {
+            trackPageView('/create-event-form-' + activeStep);
+        }
+    }, [activeStep]);
 
     // defaults
     const [form, setForm] = useState({
@@ -55,7 +62,6 @@ const MainForm = ({ initialCity, countries }) => {
 
     const next = (data) => {
         const errors = runValidations();
-        console.log({ errors });
         if (errors.length === 0) {
             handleChange(data);
             setActiveStep((s) => s + 1);

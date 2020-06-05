@@ -19,6 +19,7 @@ const analytics = isDevelopment
           plugins: [
               googleAnalytics({
                   trackingId: 'UA-59876038-4',
+                  debug: true,
               }),
               facebookPixelPlugin({
                   pixelId: '1461498583979582',
@@ -29,6 +30,7 @@ const analytics = isDevelopment
 export const trackPageView = (url) => {
     analytics.page({
         url,
+        path: url,
     });
 };
 

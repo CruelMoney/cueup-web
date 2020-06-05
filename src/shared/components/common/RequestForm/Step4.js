@@ -82,24 +82,6 @@ const Step4 = ({
                             registerValidation={registerValidation('contactEmail')}
                             unregisterValidation={unregisterValidation('contactEmail')}
                         />
-                        <Input
-                            half
-                            type="email"
-                            name="contactEmailConfirm"
-                            label="Confirm"
-                            autoComplete="email"
-                            placeholder="Confirm Email"
-                            defaultValue={form.contactEmailConfirm}
-                            validation={(v) => {
-                                if (v?.toUpperCase() !== form.contactEmail?.toUpperCase()) {
-                                    return 'Emails not matching';
-                                }
-                                return null;
-                            }}
-                            onSave={(contactEmailConfirm) => handleChange({ contactEmailConfirm })}
-                            registerValidation={registerValidation('contactEmailConfirm')}
-                            unregisterValidation={unregisterValidation('contactEmailConfirm')}
-                        />
                     </InputRow>
                     <BodySmall>
                         {translate('requestForm:step-4.contact-email-description')}
