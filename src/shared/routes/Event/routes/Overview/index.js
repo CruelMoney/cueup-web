@@ -134,7 +134,7 @@ const getTitle = (status) => {
         case 'CONFIRMED':
             return 'The DJ has been booked';
         default:
-            return "We've found these DJs for you";
+            return "So far, we've found these DJs for you";
     }
 };
 
