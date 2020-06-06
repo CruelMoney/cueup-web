@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import moment from 'moment-timezone';
-// npm install --save-dev @iconify/react @iconify/icons-ion
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import sendIcon from '@iconify/icons-ion/send';
 
 import TextareaAutosize from 'react-autosize-textarea';
@@ -93,6 +92,7 @@ export const MessageComposer = ({ chat, placeholder, autoFocus }) => (
     <form onSubmit={chat.sendMessage} className="message-composer">
         <div className="input-wrapper">
             <TextareaAutosize
+                autoFocus
                 rows={1}
                 maxRows={5}
                 placeholder={placeholder}
@@ -255,7 +255,7 @@ const Message = (props) => {
         <>
             <div className={`message-wrapper ${isOwn ? 'send' : 'received'}`}>
                 <div className={`message ${isOwn ? 'send' : 'received'}`}>
-                    {isLast && (
+                    {isLast && !isOwn && (
                         <Avatar
                             className="avatar"
                             alt={isOwn ? 'your picture' : 'receiver picture'}

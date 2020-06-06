@@ -5,10 +5,12 @@ import { Avatar, ClosePopupButton, Row } from 'components/Blocks';
 import { EVENT_GIGS } from 'routes/Event/gql';
 import { gigStates } from 'constants/constants';
 import { BodyBold, BodySmall } from 'components/Text';
+import Chat from 'components/common/Chat';
 
-const gigToChatConfig = ({ organizer }) => (gig) => ({
+const gigToChatConfig = ({ organizer, eventId }) => (gig) => ({
     showPersonalInformation: gig.status === gigStates.CONFIRMED,
     id: gig.id,
+    chatId: gig.id,
     receiver: {
         id: gig.dj?.id,
         nickName: gig.dj?.artistName,
@@ -21,6 +23,7 @@ const gigToChatConfig = ({ organizer }) => (gig) => ({
         name: organizer.userMetadata.firstName,
         image: organizer.picture.path,
     },
+    eventId,
 });
 
 const DataWrapper = ({ event }) => {
@@ -38,9 +41,7 @@ const DataWrapper = ({ event }) => {
 
     const chats = data?.event?.gigs
         // .filter((g) => g.chatInitiated)
-        .map(gigToChatConfig({ organizer: event.organizer }));
-
-    console.log({ chats });
+        .map(gigToChatConfig({ organizer: event.organizer, eventId: event?.id }));
 
     return <SidebarChat chats={chats} />;
 };
@@ -74,35 +75,86 @@ const ChatBubble = ({ receiver, onClick, active }) => {
                 <ShadowWrapper>
                     <img src={receiver.image} />
                 </ShadowWrapper>
+                <NewMessages />
             </ChatAvatarWrapper>
 
-            <NameBox>
-                <NameBlock>
-                    {receiver.nickName || receiver.name}
-                    {receiver.nickName && <span>{receiver.name}</span>}
-                </NameBlock>
-            </NameBox>
+            {!active && (
+                <NameBox>
+                    <NameBlock>
+                        {receiver.nickName || receiver.name}
+                        {receiver.nickName && <span>{receiver.name}</span>}
+                    </NameBlock>
+                </NameBox>
+            )}
         </ChatItem>
     );
 };
 
 const ChatWrapper = ({ chat, onClose }) => {
-    const { image, name, nickName } = chat.receiver;
+    const { receiver } = chat;
     return (
         <ChatBox>
             <ChatHeader>
                 <Row>
-                    <Avatar small src={image} style={{ zIndex: 1, marginRight: '8px' }} />
+                    <Avatar small src={receiver.image} style={{ zIndex: 1, marginRight: '8px' }} />
                     <NameBlock>
-                        {nickName || name}
-                        {nickName && <span>{name}</span>}
+                        {receiver.nickName || receiver.name}
+                        {receiver.nickName && <span>{receiver.name}</span>}
                     </NameBlock>
                 </Row>
                 <ClosePopupButton small onClick={onClose} />
             </ChatHeader>
+            <div style={{ flex: 1 }} />
+            <ChatMessagesWrapper>
+                <Chat {...chat} />
+            </ChatMessagesWrapper>
         </ChatBox>
     );
 };
+
+const NewMessages = styled.div`
+    border: 2px solid #ffffff;
+    background-color: #fa383e;
+    height: 16px;
+    width: 16px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 10px;
+    text-align: center;
+    line-height: 17px;
+    font-weight: 500;
+`;
+
+const ChatMessagesWrapper = styled.div`
+    height: 100%;
+    button[type='submit'] {
+        height: 32px;
+        width: 32px;
+        border-radius: 50%;
+        margin-left: 4px;
+        > svg {
+            font-size: 24px !important;
+        }
+        &:hover {
+            background-color: #f6f8f9;
+        }
+    }
+
+    .messages {
+        padding: 1em;
+        padding-top: 60px;
+        height: 409px;
+    }
+    .messages-date {
+        font-size: 1em;
+    }
+    .message-composer {
+        padding: 0.5em;
+    }
+`;
 
 const NameBlock = styled.p`
     white-space: nowrap;
@@ -124,6 +176,13 @@ const ChatHeader = styled.div`
     background: #fff;
     border-bottom: 1px solid #ebebeb;
     align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
     @supports (backdrop-filter: none) {
         background: rgba(255, 255, 255, 0.4);
         backdrop-filter: saturate(180%) blur(20px);
@@ -138,6 +197,9 @@ const ChatBox = styled.div`
     overflow-y: hidden;
     max-height: calc(100vh - 60px - 24px);
     box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 `;
 
 const NameBox = styled.div`
