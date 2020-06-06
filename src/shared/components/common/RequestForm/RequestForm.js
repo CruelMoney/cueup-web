@@ -107,7 +107,7 @@ const MainForm = ({ initialCity, countries }) => {
             const searchParams = formToParams(debouncedForm);
             searchParams.set('activeStep', activeStep);
 
-            history.push(`?${searchParams.toString()}`);
+            history.push(`?${searchParams.toString()}#book-dj`);
         }
     }, [debouncedForm, history, activeStep]);
 

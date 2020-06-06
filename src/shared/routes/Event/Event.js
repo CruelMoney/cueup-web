@@ -18,6 +18,7 @@ import Overview from './routes/Overview';
 import Requirements from './routes/Requirements';
 import Review from './routes/Review';
 import content from './content.json';
+import SidebarChat from './components/blocks/SidebarChat';
 
 const Index = ({ location }) => {
     const match = useRouteMatch();
@@ -66,6 +67,8 @@ const Index = ({ location }) => {
                 translate={translate}
             />
 
+            <SidebarChat />
+
             <Footer
                 noSkew
                 firstTo={translate(appRoutes.howItWorks)}
@@ -77,16 +80,6 @@ const Index = ({ location }) => {
             />
         </div>
     );
-};
-
-const idxRoute = (path) => {
-    if (path.includes('review')) {
-        return 2;
-    }
-    if (path.includes('requirements')) {
-        return 1;
-    }
-    return 0;
 };
 
 const Content = React.memo((props) => {
@@ -163,16 +156,5 @@ const BorderCol = styled(Col)`
     }
 `;
 
-const AnimationWrapper = styled.div`
-    position: relative;
-    width: 100%;
-    height: 100%;
-    > div {
-        position: absolute;
-        transform-origin: center center;
-        max-width: 100%;
-        width: 100%;
-    }
-`;
 // eslint-disable-next-line import/no-unused-modules
 export default Index;

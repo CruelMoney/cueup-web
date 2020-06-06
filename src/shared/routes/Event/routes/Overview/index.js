@@ -42,6 +42,7 @@ const EventGigs = React.forwardRef((props, ref) => {
 
     // event polling for djs
     useEffect(() => {
+        console.log({ refetchTries, data });
         if (refetchTries < 15 && !data.event) {
             setTimeout(() => {
                 refetch();
@@ -66,7 +67,7 @@ const EventGigs = React.forwardRef((props, ref) => {
     if (gigs.length === 0 && loading) {
         return (
             <>
-                <Title>{refetchTries > 3 ? 'Still looking for DJs' : 'Looking for DJs'}</Title>
+                <Title>{refetchTries > 5 ? 'Still looking for DJs' : 'Looking for DJs'}</Title>
                 <Body>{'Wait a moment...'}</Body>
                 <LoadingPlaceholder2 style={{ marginTop: 24 }} />
             </>
