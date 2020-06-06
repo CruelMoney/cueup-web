@@ -17,7 +17,7 @@ describe('Payment', () => {
         });
     }
     Cypress.Commands.add('completePayment', ({ isXendit, cardNumber, withTwoFactor } = {}) => {
-        cy.get('input[name=card_country]').clear().type('Denmark');
+        cy.get('input[name=card_country]', { timeout: 10000 }).clear().type('Denmark');
         cy.get('[data-cy=suggestion-list-item]').first().click();
         cy.get('input[name=card_email]').click({ force: true }).clear().type('test@email.com');
         cy.get('input[name=card_name]').clear().type('Christopher Dengsø');
@@ -44,12 +44,11 @@ describe('Payment', () => {
                 .clear()
                 .type((cardNumber || '5200000000000056') + '1222223424242');
             cy.get('.pay-form button[type=submit]').click();
-            cy.wait(5000);
         }
     });
 
     Cypress.Commands.add('assertPaid', () => {
-        cy.get('h3').should(
+        cy.get('h3', { timeout: 10000 }).should(
             'contain',
             'The DJ has been booked, and you will receive a receipt on email.'
         );

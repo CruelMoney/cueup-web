@@ -6,8 +6,8 @@ import { InputRow } from 'components/FormComponents';
 import { eventRoutes } from 'constants/locales/appRoutes';
 import { REQUEST_EMAIL_VERIFICATION } from 'components/gql';
 import usePushNotifications from 'components/hooks/usePushNotifications';
-import Popup from 'components/common/Popup';
 import PayForm from 'components/common/PayForm';
+import useWhyDidYouUpdate from 'components/hooks/useWhyDidYouUpdate';
 import { Title, Body, HeaderTitle, BodyBold } from '../../../../components/Text';
 import { Col, SecondaryButton, PrimaryButton } from '../../../../components/Blocks';
 import DjCard from '../../components/blocks/DJCard';
@@ -17,132 +17,131 @@ import { useNotifications } from '../../../../utils/NotificationService';
 import EmptyPage from '../../../../components/common/EmptyPage';
 import { gigStates } from '../../../../constants/constants';
 
-const EventGigs = React.forwardRef(
-    ({ theEvent = {}, loading: loadingEvent, translate, currency, match }, ref) => {
-        const { status, organizer } = theEvent;
-        const { data = {}, loading: loadingGigs, refetch } = useQuery(EVENT_GIGS, {
-            skip: !theEvent.id,
-            fetchPolicy: 'cache-and-network',
-            variables: {
-                id: theEvent.id,
-                hash: theEvent.hash,
-                currency,
-            },
+const EventGigs = React.forwardRef((props, ref) => {
+    const { theEvent = {}, loading: loadingEvent, translate, currency, match } = props;
+    const { status, organizer } = theEvent;
+    const { data = {}, loading: loadingGigs, refetch } = useQuery(EVENT_GIGS, {
+        skip: !theEvent.id,
+        fetchPolicy: 'cache-and-network',
+        variables: {
+            id: theEvent.id,
+            hash: theEvent.hash,
+            currency,
+        },
+    });
+
+    const [refetchTries, setRefetchTries] = useState(data?.event ? 5 : 0);
+    const history = useHistory();
+    const [notifications, clearNotifications] = useNotifications({
+        userId: organizer.id,
+    });
+
+    const readRoom = () => clearNotifications();
+
+    const loading = refetchTries < 15 || loadingEvent || loadingGigs;
+
+    // event polling for djs
+    useEffect(() => {
+        if (refetchTries < 15 && !data.event) {
+            setTimeout(() => {
+                refetch();
+                setRefetchTries((c) => c + 1);
+            }, 1000);
+        } else {
+            setRefetchTries(15);
+        }
+    }, [refetchTries, refetch, data]);
+
+    let gigs = data.event ? data.event.gigs : [];
+    gigs = gigs
+        .filter((g) => g.status !== 'LOST')
+        .map((g) => {
+            g.hasMessage =
+                notifications[g.id] && notifications[g.id].read < notifications[g.id].total;
+            return g;
         });
 
-        const [refetchTries, setRefetchTries] = useState(data?.event ? 5 : 0);
-        const history = useHistory();
-        const [notifications, clearNotifications] = useNotifications({
-            userId: organizer.id,
-        });
+    useWhyDidYouUpdate('EventOverview', props);
 
-        const readRoom = () => clearNotifications();
-
-        const loading = refetchTries < 15 || loadingEvent || loadingGigs;
-
-        // event polling for djs
-        useEffect(() => {
-            if (refetchTries < 15 && !data.event) {
-                setTimeout(() => {
-                    refetch();
-                    setRefetchTries((c) => c + 1);
-                }, 1000);
-            } else {
-                setRefetchTries(15);
-            }
-        }, [refetchTries, refetch, data]);
-
-        let gigs = data.event ? data.event.gigs : [];
-        gigs = gigs
-            .filter((g) => g.status !== 'LOST')
-            .map((g) => {
-                g.hasMessage =
-                    notifications[g.id] && notifications[g.id].read < notifications[g.id].total;
-                return g;
-            });
-
-        if (gigs.length === 0 && loading) {
-            return (
-                <>
-                    <Title>{refetchTries > 3 ? 'Still looking for DJs' : 'Looking for DJs'}</Title>
-                    <Body>{'Wait a moment...'}</Body>
-                    <LoadingPlaceholder2 style={{ marginTop: 24 }} />
-                </>
-            );
-        }
-
-        if (theEvent && !organizer?.appMetadata?.emailVerified) {
-            return <EmailNotVerifiedSection gigs={gigs} organizer={organizer} />;
-        }
-
-        if (!gigs.length) {
-            return (
-                <EmptyPage
-                    title="Still contacting DJs"
-                    message={
-                        <>
-                            We are still finding DJs for you. You can come back later.
-                            <NotificationButton organizer={organizer} />
-                        </>
-                    }
-                />
-            );
-        }
-
-        const statusPriority = {
-            [gigStates.CONFIRMED]: 2,
-            [gigStates.ACCEPTED]: 1,
-        };
-
-        const getPriority = (gig) => {
-            const status = statusPriority[gig.status] || 0;
-            return status + (gig.hasMessage ? 2 : 0);
-        };
-
+    if (gigs.length === 0 && loading) {
         return (
-            <Col ref={ref}>
-                <Title>{getTitle(status)}</Title>
-                <Body>{getText(status)}</Body>
-                <NotificationButton organizer={organizer} />
-
-                <div data-cy="event-djs">
-                    {gigs
-                        .sort((g1, g2) => getPriority(g2) - getPriority(g1))
-                        .map((gig, idx) => (
-                            <DjCard
-                                hasMessage={gig.hasMessage}
-                                onOpenChat={readRoom}
-                                key={gig.id}
-                                idx={idx}
-                                gig={gig}
-                                translate={translate}
-                                theEvent={theEvent}
-                                onInitiateBooking={() =>
-                                    history.push(
-                                        match.url +
-                                            '/' +
-                                            eventRoutes.checkout.replace(':gigId', gig.id)
-                                    )
-                                }
-                            />
-                        ))}
-                </div>
-                <Route
-                    path={match.path + '/' + eventRoutes.checkout}
-                    render={(props) => (
-                        <PayForm
-                            onClose={() => history.push(match.url + '/' + eventRoutes.overview)}
-                            eventId={theEvent.id}
-                            eventHash={theEvent.hash}
-                            currency={currency}
-                            {...props}
-                        />
-                    )}
-                />
-            </Col>
+            <>
+                <Title>{refetchTries > 3 ? 'Still looking for DJs' : 'Looking for DJs'}</Title>
+                <Body>{'Wait a moment...'}</Body>
+                <LoadingPlaceholder2 style={{ marginTop: 24 }} />
+            </>
         );
     }
-);
+
+    if (theEvent && !organizer?.appMetadata?.emailVerified) {
+        return <EmailNotVerifiedSection gigs={gigs} organizer={organizer} />;
+    }
+
+    if (!gigs.length) {
+        return (
+            <EmptyPage
+                title="Still contacting DJs"
+                message={
+                    <>
+                        We are still finding DJs for you. You can come back later.
+                        <NotificationButton organizer={organizer} />
+                    </>
+                }
+            />
+        );
+    }
+
+    const statusPriority = {
+        [gigStates.CONFIRMED]: 2,
+        [gigStates.ACCEPTED]: 1,
+    };
+
+    const getPriority = (gig) => {
+        const status = statusPriority[gig.status] || 0;
+        return status + (gig.hasMessage ? 2 : 0);
+    };
+
+    return (
+        <Col ref={ref}>
+            <Title>{getTitle(status)}</Title>
+            <Body>{getText(status)}</Body>
+            <NotificationButton organizer={organizer} />
+
+            <div data-cy="event-djs">
+                {gigs
+                    .sort((g1, g2) => getPriority(g2) - getPriority(g1))
+                    .map((gig, idx) => (
+                        <DjCard
+                            hasMessage={gig.hasMessage}
+                            onOpenChat={readRoom}
+                            key={gig.id}
+                            idx={idx}
+                            gig={gig}
+                            translate={translate}
+                            theEvent={theEvent}
+                            onInitiateBooking={() =>
+                                history.push(
+                                    match.url + '/' + eventRoutes.checkout.replace(':gigId', gig.id)
+                                )
+                            }
+                        />
+                    ))}
+            </div>
+            <Route
+                path={match.path + '/' + eventRoutes.checkout}
+                render={(props) => (
+                    <PayForm
+                        onClose={() => history.push(match.url + '/' + eventRoutes.overview)}
+                        eventId={theEvent.id}
+                        eventHash={theEvent.hash}
+                        currency={currency}
+                        {...props}
+                    />
+                )}
+            />
+        </Col>
+    );
+});
 
 const getText = (status) => {
     switch (status) {

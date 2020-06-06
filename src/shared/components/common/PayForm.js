@@ -19,6 +19,7 @@ import { PAYOUT_TYPES, PAYMENT_PROVIDERS, gigStates } from 'constants/constants'
 import { Body, SmallHeader } from 'components/Text';
 import useTranslate from 'components/hooks/useTranslate';
 import { trackPageView, trackEventPaid } from 'utils/analytics';
+import useWhyDidYouUpdate from 'components/hooks/useWhyDidYouUpdate';
 import { REQUEST_PAYMENT_INTENT, PAYMENT_CONFIRMED, EVENT_GIGS } from '../../routes/Event/gql';
 import TextWrapper from './TextElement';
 import MoneyTable, { TableItem } from './MoneyTable';
@@ -160,7 +161,9 @@ const PaymentWrapper = (props) => {
             amountLeft: null,
         },
         onError: captureException,
-        onCompleted: () => history.push(match.url + '/thank-you'),
+        onCompleted: () => {
+            history.push(match.url + '/thank-you');
+        },
     });
 
     const handlePaymentConfirmed = useCallback(() => {
@@ -324,8 +327,6 @@ const ThankYouContent = ({ translate, style }) => {
 };
 
 const WithProps = ({ currency, location, eventId, eventHash, onClose, ...props }) => {
-    console.log({ eventId, eventHash });
-
     const { translate, currentLanguage } = useTranslate();
     const history = useHistory();
     const { gigId } = useParams();
@@ -351,19 +352,17 @@ const WithProps = ({ currency, location, eventId, eventHash, onClose, ...props }
         availablePayoutMethods[0]
     )?.payoutType;
 
-    console.log({ canSelectPayment });
     useEffect(() => {
-        if (status !== gigStates.ACCEPTED) {
+        if (status !== gigStates.ACCEPTED && status !== gigStates.CONFIRMED) {
             onClose();
-        } else {
-            // redirect to payment if only 1 option
-            if (!canSelectPayment) {
-                const searchParams = new URLSearchParams(location.search);
-                searchParams.append('type', initialMethod);
-                const redirectUrl = match.url + '/payment?' + searchParams.toString();
-                console.log({ redirectUrl });
-                history.replace(redirectUrl);
-            }
+            return;
+        }
+        // redirect to payment if only 1 option
+        if (!canSelectPayment) {
+            const searchParams = new URLSearchParams(location.search);
+            searchParams.set('type', initialMethod);
+            const redirectUrl = match.url + '/payment?' + searchParams.toString();
+            history.replace(redirectUrl);
         }
     }, [canSelectPayment, initialMethod, history]);
 

@@ -5,7 +5,6 @@ import queryString from 'query-string';
 import { appRoutes, userRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import { CTAButton } from '../../../components/Sidebar';
-import PayForm from '../../../components/common/PayForm.js';
 import Popup from '../../../components/common/Popup';
 import { GIG } from '../gql';
 import { LoadingIndicator } from '../../../components/Blocks';
@@ -81,7 +80,7 @@ const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
 };
 
 const Wrapper = (props) => {
-    const { location, user, currency } = props;
+    const { location, user } = props;
     const match = useRouteMatch();
     const history = useHistory();
 
@@ -125,43 +124,19 @@ const Wrapper = (props) => {
     const event = gig ? gig.event : null;
     const { offer } = gig || {};
 
-    console.log({ event });
-
-    console.log(match.url + '/' + userRoutes.checkout.replace(':gigId', gigId));
-    console.log(match.path + '/' + userRoutes.checkout);
-
     return (
-        <>
-            <BookingButton
-                {...props}
-                gig={gig}
-                event={event}
-                hash={hash}
-                offer={offer}
-                showPaymentForm={() =>
-                    history.push(
-                        match.url +
-                            '/' +
-                            userRoutes.checkout.replace(':gigId', gigId) +
-                            location.search
-                    )
-                }
-            />
-            <Route
-                path={match.path + '/' + userRoutes.checkout}
-                render={(props) => (
-                    <PayForm
-                        onClose={() =>
-                            history.push(match.url + '/' + userRoutes.overview + location.search)
-                        }
-                        currency={currency}
-                        eventId={event?.id}
-                        eventHash={hash}
-                        {...props}
-                    />
-                )}
-            />
-        </>
+        <BookingButton
+            {...props}
+            gig={gig}
+            event={event}
+            hash={hash}
+            offer={offer}
+            showPaymentForm={() =>
+                history.push(
+                    match.url + '/' + userRoutes.checkout.replace(':gigId', gigId) + location.search
+                )
+            }
+        />
     );
 };
 

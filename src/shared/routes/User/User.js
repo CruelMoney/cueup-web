@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Switch, Route, Redirect } from 'react-router';
+import { Switch, Route, Redirect, useHistory } from 'react-router';
 import styled from 'styled-components';
 import { Query, useMutation } from 'react-apollo';
 import queryString from 'query-string';
@@ -9,8 +9,9 @@ import moment from 'moment-timezone';
 import { Icon, InlineIcon } from '@iconify/react';
 import pinIcon from '@iconify/icons-ion/location-sharp';
 import addCircleIcon from '@iconify/icons-ion/add-circle';
-
 import { Helmet } from 'react-helmet-async';
+import PayForm from 'components/common/PayForm.js';
+
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
@@ -129,6 +130,7 @@ const Content = React.memo(({ match, ...userProps }) => {
     const { user, loading, location } = userProps;
     const showPrivateRoutes = loading || user?.isOwn;
     const bookingEnabled = user?.isDj && !user.userSettings.standby;
+    const history = useHistory();
 
     // check for event
     const queries = queryString.parse(location.search);
@@ -244,6 +246,19 @@ const Content = React.memo(({ match, ...userProps }) => {
                     </Col>
                 </Row>
             </UserContainer>
+            <Route
+                path={match.path + '/' + userRoutes.checkout}
+                render={(props) => (
+                    <PayForm
+                        onClose={() =>
+                            history.push(match.url + '/' + userRoutes.overview + location.search)
+                        }
+                        eventId={eventId}
+                        eventHash={hash}
+                        {...props}
+                    />
+                )}
+            />
         </div>
     );
 });
