@@ -67,7 +67,7 @@ const Index = ({ location }) => {
                 translate={translate}
             />
 
-            <SidebarChat />
+            <SidebarChat event={theEvent} />
 
             <Footer
                 noSkew

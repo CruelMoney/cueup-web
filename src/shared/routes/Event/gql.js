@@ -107,10 +107,12 @@ const EVENT_GIGS = gql`
             gigs {
                 id
                 status
+                chatInitiated
                 tempPaidIndicator @client
                 offer {
                     canBePaid
                     daysUntilPaymentPossible
+
                     offer(currency: $currency) {
                         amount
                         currency

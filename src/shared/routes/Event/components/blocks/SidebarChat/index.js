@@ -1,64 +1,54 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useQuery } from 'react-apollo';
 import { Avatar, ClosePopupButton, Row } from 'components/Blocks';
+import { EVENT_GIGS } from 'routes/Event/gql';
+import { gigStates } from 'constants/constants';
+import { BodyBold, BodySmall } from 'components/Text';
 
-const mockedChats = [
-    {
-        id: 1,
-        name: 'chris',
-        thumb: 'https://cueup-staging.s3-ap-southeast-1.amazonaws.com/empty_profile_picture.png',
+const gigToChatConfig = ({ organizer }) => (gig) => ({
+    showPersonalInformation: gig.status === gigStates.CONFIRMED,
+    id: gig.id,
+    receiver: {
+        id: gig.dj?.id,
+        nickName: gig.dj?.artistName,
+        name: gig.dj?.userMetadata.firstName,
+        image: gig.dj?.picture.path,
     },
-    {
-        id: 2,
-        name: 'chris',
-        thumb: 'https://cueup-staging.s3-ap-southeast-1.amazonaws.com/empty_profile_picture.png',
+    sender: {
+        id: organizer.id,
+        nickName: organizer.artistName,
+        name: organizer.userMetadata.firstName,
+        image: organizer.picture.path,
     },
-    {
-        id: 3,
-        name: 'chris',
-        thumb: 'https://cueup-staging.s3-ap-southeast-1.amazonaws.com/empty_profile_picture.png',
-    },
-    {
-        id: 4,
-        name: 'chris',
-        thumb: 'https://cueup-staging.s3-ap-southeast-1.amazonaws.com/empty_profile_picture.png',
-    },
-    {
-        id: 5,
-        name: 'chris',
-        thumb: 'https://cueup-staging.s3-ap-southeast-1.amazonaws.com/empty_profile_picture.png',
-    },
-    {
-        id: 6,
-        name: 'chris',
-        thumb: 'https://cueup-staging.s3-ap-southeast-1.amazonaws.com/empty_profile_picture.png',
-    },
-    {
-        id: 7,
-        name: 'chris',
-        thumb: 'https://cueup-staging.s3-ap-southeast-1.amazonaws.com/empty_profile_picture.png',
-    },
-    {
-        id: 8,
-        name: 'chris',
-        thumb: 'https://cueup-staging.s3-ap-southeast-1.amazonaws.com/empty_profile_picture.png',
-    },
-    {
-        id: 9,
-        name: 'chris',
-        thumb: 'https://cueup-staging.s3-ap-southeast-1.amazonaws.com/empty_profile_picture.png',
-    },
-    {
-        id: 10,
-        name: 'chris',
-        thumb: 'https://cueup-staging.s3-ap-southeast-1.amazonaws.com/empty_profile_picture.png',
-    },
-];
+});
 
-const SidebarChat = () => {
+const DataWrapper = ({ event }) => {
+    const { data } = useQuery(EVENT_GIGS, {
+        skip: !event?.id,
+        variables: {
+            id: event?.id,
+            hash: event?.hash,
+        },
+    });
+
+    if (!event) {
+        return null;
+    }
+
+    const chats = data?.event?.gigs
+        // .filter((g) => g.chatInitiated)
+        .map(gigToChatConfig({ organizer: event.organizer }));
+
+    console.log({ chats });
+
+    return <SidebarChat chats={chats} />;
+};
+
+const SidebarChat = ({ chats = [] }) => {
     const [activeChat, setActiveChat] = useState();
 
-    const activeChats = mockedChats.slice(0, 7);
+    const activeChats = chats.slice(0, 7);
 
     return (
         <FixedWrapper>
@@ -77,34 +67,56 @@ const SidebarChat = () => {
     );
 };
 
-const ChatBubble = ({ thumb, name, onClick, active }) => {
+const ChatBubble = ({ receiver, onClick, active }) => {
     return (
         <ChatItem onClick={onClick} className={active ? 'active' : ''}>
             <ChatAvatarWrapper>
                 <ShadowWrapper>
-                    <img src={thumb} />
+                    <img src={receiver.image} />
                 </ShadowWrapper>
             </ChatAvatarWrapper>
 
-            <NameBox>{name}</NameBox>
+            <NameBox>
+                <NameBlock>
+                    {receiver.nickName || receiver.name}
+                    {receiver.nickName && <span>{receiver.name}</span>}
+                </NameBlock>
+            </NameBox>
         </ChatItem>
     );
 };
 
 const ChatWrapper = ({ chat, onClose }) => {
-    const { thumb, name } = chat;
+    const { image, name, nickName } = chat.receiver;
     return (
         <ChatBox>
             <ChatHeader>
                 <Row>
-                    <Avatar small src={thumb} style={{ zIndex: 1, marginRight: '8px' }} />
-                    <p>{name}</p>
+                    <Avatar small src={image} style={{ zIndex: 1, marginRight: '8px' }} />
+                    <NameBlock>
+                        {nickName || name}
+                        {nickName && <span>{name}</span>}
+                    </NameBlock>
                 </Row>
                 <ClosePopupButton small onClick={onClose} />
             </ChatHeader>
         </ChatBox>
     );
 };
+
+const NameBlock = styled.p`
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600;
+    font-size: 1em;
+    line-height: 1.2em;
+    max-width: 220px;
+    > span {
+        font-weight: 300;
+        display: block;
+    }
+`;
 
 const ChatHeader = styled.div`
     padding: 8px;
@@ -137,7 +149,8 @@ const NameBox = styled.div`
     background-color: white;
     padding: 0.75em;
     border-radius: 8px;
-    max-width: 200px;
+    max-width: 250px;
+
     box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(0, 0, 0, 0.2) 0px 12px 28px 0px;
 `;
 
@@ -217,4 +230,4 @@ const ChatAvatarWrapper = styled.div`
     }
 `;
 
-export default SidebarChat;
+export default DataWrapper;
