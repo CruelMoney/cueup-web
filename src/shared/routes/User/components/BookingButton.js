@@ -139,9 +139,13 @@ const Wrapper = (props) => {
                 showPaymentForm={() => setShowPopup(true)}
             />
             {gig && (
-                <Popup showing={showPopup} onClickOutside={() => setShowPopup(false)} noPadding>
-                    <PayForm id={gig.id} offer={gig.offer} gig={gig} event={event} />
-                </Popup>
+                <PayForm
+                    id={gig.id}
+                    onClose={() => setShowPopup(false)}
+                    offer={gig.offer}
+                    gig={gig}
+                    event={event}
+                />
             )}
         </>
     );

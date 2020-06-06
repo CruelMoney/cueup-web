@@ -130,13 +130,12 @@ const EventGigs = React.forwardRef(
                 <Route
                     path={match.path + '/' + eventRoutes.checkout}
                     render={(props) => (
-                        <Popup
-                            showing
+                        <PayForm
                             onClose={() => history.push(match.url + '/' + eventRoutes.overview)}
-                            noPadding
-                        >
-                            <PayForm event={theEvent} currency={currency} {...props} />
-                        </Popup>
+                            event={theEvent}
+                            currency={currency}
+                            {...props}
+                        />
                     )}
                 />
             </Col>

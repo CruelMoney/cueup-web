@@ -15,7 +15,7 @@ import {
     TeritaryButton,
 } from 'components/Blocks';
 import RadioSelect from 'components/RadioSelect';
-import { PAYOUT_TYPES, PAYMENT_PROVIDERS } from 'constants/constants';
+import { PAYOUT_TYPES, PAYMENT_PROVIDERS, gigStates } from 'constants/constants';
 import { Body, SmallHeader } from 'components/Text';
 import useTranslate from 'components/hooks/useTranslate';
 import { trackPageView, trackEventPaid } from 'utils/analytics';
@@ -24,6 +24,7 @@ import TextWrapper from './TextElement';
 import MoneyTable, { TableItem } from './MoneyTable';
 import StripeFormWrapper from './StripePayForm';
 import XenditPayForm from './XenditPayForm';
+import Popup from './Popup';
 
 const BankPayForm = ({
     translate,
@@ -36,6 +37,10 @@ const BankPayForm = ({
     paymentIntent,
     chosenMethod,
 }) => {
+    if (!paymentIntent) {
+        return null;
+    }
+
     if (loading) {
         return <LoadingPaymentInitial translate={translate} />;
     }
@@ -128,7 +133,7 @@ const PaymentWrapper = (props) => {
 
     const { loading, data } = useQuery(REQUEST_PAYMENT_INTENT, {
         onError: captureException,
-        skip: !tempPayoutType || !id,
+        skip: !tempPayoutType || !id || !gigOffer.canBePaid,
         variables: {
             id,
             currency,
@@ -156,6 +161,7 @@ const PaymentWrapper = (props) => {
             amountLeft: null,
         },
         onError: captureException,
+        onCompleted: () => history.push(match.url + '/thank-you'),
     });
 
     const handlePaymentConfirmed = useCallback(() => {
@@ -318,10 +324,11 @@ const ThankYouContent = ({ translate, style }) => {
     );
 };
 
-const WithProps = ({ currency, location, ...props }) => {
+const WithProps = ({ currency, location, onClose, ...props }) => {
     const { translate, currentLanguage } = useTranslate();
     const history = useHistory();
     const { gigId, id, hash } = useParams();
+    const match = useRouteMatch();
     const { data } = useQuery(EVENT_GIGS, { variables: { id, hash, currency } });
 
     const gigs = data?.event?.gigs || [];
@@ -329,7 +336,7 @@ const WithProps = ({ currency, location, ...props }) => {
 
     // find out if payment method can be selected
     const { availablePayoutMethods = [] } = gig ?? {};
-    const { offer: gigOffer } = gig ?? {};
+    const { offer: gigOffer, status } = gig ?? {};
     const canSelectPayment = availablePayoutMethods.length > 1;
 
     // Get the current method from url
@@ -341,26 +348,32 @@ const WithProps = ({ currency, location, ...props }) => {
         availablePayoutMethods[0]
     )?.payoutType;
 
-    // redirect to payment if only 1 option
     useEffect(() => {
-        if (!canSelectPayment) {
-            history.replace(location.pathname + '/payment?type=' + initialMethod);
+        if (status !== gigStates.ACCEPTED) {
+            onClose();
+        } else {
+            // redirect to payment if only 1 option
+            if (!canSelectPayment) {
+                history.replace(match.url + '/payment?type=' + initialMethod);
+            }
         }
     }, [canSelectPayment, initialMethod, history]);
 
     return (
-        <PaymentWrapper
-            {...props}
-            id={gigId}
-            gig={gig}
-            currency={currency}
-            translate={translate}
-            currentLanguage={currentLanguage}
-            canSelectPayment={canSelectPayment}
-            availablePayoutMethods={availablePayoutMethods}
-            initialMethod={initialMethod}
-            gigOffer={gigOffer}
-        />
+        <Popup showing noPadding onClose={onClose}>
+            <PaymentWrapper
+                {...props}
+                id={gigId}
+                gig={gig}
+                currency={currency}
+                translate={translate}
+                currentLanguage={currentLanguage}
+                canSelectPayment={canSelectPayment}
+                availablePayoutMethods={availablePayoutMethods}
+                initialMethod={initialMethod}
+                gigOffer={gigOffer}
+            />
+        </Popup>
     );
 };
 
