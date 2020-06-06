@@ -495,11 +495,11 @@ const rotate = keyframes`
 `;
 
 export const LoadingIndicator = styled.span`
-    height: 24px;
-    width: 24px;
-    border: 3px solid #fff;
+    height: ${({ small }) => (small ? '15px' : '24px')};
+    width: ${({ small }) => (small ? '15px' : '24px')};
+    border: ${({ small }) => (small ? '2px' : '3px')} solid #fff;
     border-radius: 50%;
-    animation: ${rotate} 1s linear infinite;
+    animation: ${rotate} 600ms linear infinite;
     display: block;
     border-color: currentColor currentColor currentColor transparent;
 `;

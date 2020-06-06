@@ -36,8 +36,6 @@ const BankPayForm = ({
     paymentIntent,
     chosenMethod,
 }) => {
-    console.log({ chosenMethod });
-
     if (loading) {
         return <LoadingPaymentInitial translate={translate} />;
     }
@@ -119,9 +117,8 @@ const PaymentWrapper = (props) => {
     } = props;
 
     const [tempPayoutType, settempPayoutType] = useState(initialMethod);
-    const div = useRef();
+
     const history = useHistory();
-    const size = useComponentSize(div);
 
     const goBack = () => {
         history.goBack();
@@ -150,36 +147,32 @@ const PaymentWrapper = (props) => {
 
     const payLater = tempPayoutType === PAYOUT_TYPES.DIRECT;
 
-    // const [setPaymentConfirmed] = useMutation(PAYMENT_CONFIRMED, {
-    //     variables: {
-    //         gigId: id,
-    //         eventId: event.id,
-    //         amountPaid: offer.totalPayment,
-    //         amountLeft: null,
-    //     },
-    //     onError: captureException,
-    // });
+    // local state mutation
+    const [setPaymentConfirmed] = useMutation(PAYMENT_CONFIRMED, {
+        variables: {
+            gigId: id,
+            eventId: event.id,
+            amountPaid: offer.totalPayment,
+            amountLeft: null,
+        },
+        onError: captureException,
+    });
 
-    // const handlePaymentConfirmed = useCallback(() => {
-    //     setPaymentConfirmed();
-    //     onPaymentConfirmed && onPaymentConfirmed();
-    //     setIsPaid(true);
-    //     try {
-    //         trackEventPaid({
-    //             currency: currency,
-    //             value: amount.amount / 100,
-    //         });
-    //     } catch (error) {
-    //         captureException(error);
-    //     }
-    // }, [amount, onPaymentConfirmed, setPaymentConfirmed, currency]);
-
-    // if (isPaid) {
-    //     return <ThankYouContent style={size} translate={translate} />;
-    // }
+    const handlePaymentConfirmed = useCallback(() => {
+        setPaymentConfirmed();
+        onPaymentConfirmed && onPaymentConfirmed();
+        try {
+            trackEventPaid({
+                currency: currency,
+                value: amount.amount / 100,
+            });
+        } catch (error) {
+            captureException(error);
+        }
+    }, [amount, onPaymentConfirmed, setPaymentConfirmed, currency]);
 
     return (
-        <PayFormContainer className="pay-form" ref={div}>
+        <PayFormContainer className="pay-form">
             <div className="left">
                 <Switch>
                     <Route
@@ -203,42 +196,54 @@ const PaymentWrapper = (props) => {
                                 loading={loading}
                                 chosenMethod={chosenMethod}
                                 paymentIntent={paymentIntent}
-                                // onPaymentConfirmed={handlePaymentConfirmed}
+                                onPaymentConfirmed={handlePaymentConfirmed}
                                 goBack={goBack}
                             />
                         )}
                     />
+
+                    <Route
+                        path={match.path + '/thank-you'}
+                        render={() => <ThankYouContent translate={translate} />}
+                    />
                 </Switch>
             </div>
 
-            <div className="right">
-                <MoneyTable>
-                    <TableItem label={translate('DJ price')}>{offer.offer?.formatted}</TableItem>
-                    {!!payLater && (
-                        <TableItem payLater label={<span>{translate('Pay directly to DJ')}</span>}>
-                            {offer.totalPayout?.formatted}
+            <Route path={[match.path, match.path + '/payment']} exact>
+                <div className="right">
+                    <MoneyTable>
+                        <TableItem label={translate('DJ price')}>
+                            {offer.offer?.formatted}
                         </TableItem>
-                    )}
-                    <TableItem
-                        data-cy="payment-amount"
-                        label={payLater ? 'Payment now' : 'Total'}
-                        bold
-                    >
-                        {loading ? (
-                            <LoadingIndicator />
-                        ) : amount ? (
-                            amount.formatted
-                        ) : (
-                            offer.totalPayment.formatted
+                        {!!payLater && (
+                            <TableItem
+                                payLater
+                                label={<span>{translate('Pay directly to DJ')}</span>}
+                            >
+                                {offer.totalPayout?.formatted}
+                            </TableItem>
                         )}
-                    </TableItem>
-                </MoneyTable>
+                        <TableItem
+                            data-cy="payment-amount"
+                            label={payLater ? 'Payment now' : 'Total'}
+                            bold
+                        >
+                            {loading ? (
+                                <LoadingIndicator small />
+                            ) : amount ? (
+                                amount.formatted
+                            ) : (
+                                offer.totalPayment.formatted
+                            )}
+                        </TableItem>
+                    </MoneyTable>
 
-                <p
-                    className="terms_link"
-                    dangerouslySetInnerHTML={{ __html: translate('event:offer.terms') }}
-                />
-            </div>
+                    <p
+                        className="terms_link"
+                        dangerouslySetInnerHTML={{ __html: translate('event:offer.terms') }}
+                    />
+                </div>
+            </Route>
         </PayFormContainer>
     );
 };
@@ -305,14 +310,6 @@ const PayFormContainer = styled.div`
 `;
 
 const ThankYouContent = ({ translate, style }) => {
-    useEffect(() => {
-        try {
-            trackPageView('confirm-booking/success');
-        } catch (error) {
-            captureException(error);
-        }
-    }, []);
-
     return (
         <div className="payment-confirmation" style={style}>
             <Icon icon={checkmarkCircle} style={{ fontSize: '42px' }} />
