@@ -4,8 +4,8 @@ import { Avatar } from 'components/Blocks';
 
 const styles = {
     image: {
-        width: '30px',
-        height: '30px',
+        width: '32px',
+        height: '32px',
 
         position: 'relative',
     },
@@ -56,9 +56,9 @@ const MenuUser = styled.a`
     cursor: pointer;
     font-size: 17px;
     font-weight: 600;
-    height: 30px;
+    height: 32px;
     letter-spacing: 0.3px;
-    line-height: 30px;
+    line-height: 32px;
     display: flex;
     align-items: center;
     min-width: 200px;

@@ -222,16 +222,16 @@ export const ReadMoreButton = ({ children, onClick, color, style, back }) => {
 const avatarSizes = {
     extraLarge: '114px',
     large: '60px',
-    small: '30px',
+    small: '32px',
 };
 
 const AvatarWrapper = styled.div`
     box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
     border-radius: 50%;
-    width: ${({ size }) => avatarSizes[size] || '30px'};
-    min-width: ${({ size }) => avatarSizes[size] || '30px'};
-    min-height: ${({ size }) => avatarSizes[size] || '30px'};
-    height: ${({ size }) => avatarSizes[size] || '30px'};
+    width: ${({ size }) => avatarSizes[size] || '32px'};
+    min-width: ${({ size }) => avatarSizes[size] || '32px'};
+    min-height: ${({ size }) => avatarSizes[size] || '32px'};
+    height: ${({ size }) => avatarSizes[size] || '32px'};
     overflow: hidden;
     position: relative;
 `;
@@ -250,10 +250,10 @@ export const Avatar = ({ size, style, className, src, ...props }) => (
             src={src}
             style={{
                 objectFit: 'cover',
-                height: avatarSizes[size] || '30px',
-                width: avatarSizes[size] || '30px',
-                minHeight: avatarSizes[size] || '30px',
-                minWidth: avatarSizes[size] || '30px',
+                height: avatarSizes[size] || '32px',
+                width: avatarSizes[size] || '32px',
+                minHeight: avatarSizes[size] || '32px',
+                minWidth: avatarSizes[size] || '32px',
                 top: 0,
                 position: 'absolute',
                 left: 0,
@@ -714,3 +714,55 @@ export const CardShadow = styled.div`
     bottom: 10px;
     right: 10px;
 `;
+
+const ClosePopupButtonWrapper = styled(TeritaryButton)`
+    font-size: 28px;
+    color: #aaaaaa !important;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 50%;
+    min-height: 40px;
+    min-width: 40px;
+    max-height: 40px;
+    max-width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin-left: auto;
+    ${({ small }) =>
+        small &&
+        css`
+            min-height: 32px;
+            min-width: 32px;
+            max-height: 32px;
+            max-width: 32px;
+        `}
+`;
+
+export const ClosePopupButton = (props) => {
+    return (
+        <ClosePopupButtonWrapper {...props}>
+            <svg height="26px" width="26px" viewBox="-4 -4 24 24">
+                <line
+                    stroke="#bec2c9"
+                    strokeLinecap="round"
+                    strokeWidth="2"
+                    x1="2"
+                    x2="14"
+                    y1="2"
+                    y2="14"
+                />
+                <line
+                    stroke="#bec2c9"
+                    strokeLinecap="round"
+                    strokeWidth="2"
+                    x1="2"
+                    x2="14"
+                    y1="14"
+                    y2="2"
+                />
+            </svg>
+        </ClosePopupButtonWrapper>
+    );
+};

@@ -361,12 +361,12 @@ body.pre-header-content .navigation {
     font-size: 17px;
     /* Login: */
     font-weight: 600;
-    height: 30px;
+    height: 32px;
     letter-spacing: 0.3px;
-    line-height: 30px;
+    line-height: 32px;
 }
 li .link-look {
-    height: 30px;
+    height: 32px;
 }
 
 .logo {
