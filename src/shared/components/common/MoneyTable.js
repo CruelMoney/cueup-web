@@ -4,12 +4,11 @@ import InfoPopup from './InfoPopup';
 class TableItem extends Component {
     state = {};
     render() {
-        const { payLater, bold, ...props } = this.props;
+        const { payLater, bold } = this.props;
         return (
             <div
                 style={{ fontWeight: bold ? '600' : 'normal' }}
                 className={'pay-fact ' + (payLater ? 'pay-later' : '')}
-                {...props}
             >
                 <span>
                     <p style={{ float: 'left' }}>{this.props.label}</p>

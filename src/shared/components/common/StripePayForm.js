@@ -122,7 +122,7 @@ const StripeForm = ({ onPaymentConfirmed, goBack, paymentIntent }) => {
                 <RowMobileCol right reverse>
                     {goBack && (
                         <TeritaryButton onClick={goBack} type="button">
-                            Back
+                            Go Back
                         </TeritaryButton>
                     )}
                     <SmartButton type="submit" loading={loading}>

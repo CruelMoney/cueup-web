@@ -118,7 +118,11 @@ const EventGigs = React.forwardRef(
                                 translate={translate}
                                 theEvent={theEvent}
                                 onInitiateBooking={() =>
-                                    history.push(eventRoutes.checkout.replace(':gigId', gig.id))
+                                    history.push(
+                                        match.url +
+                                            '/' +
+                                            eventRoutes.checkout.replace(':gigId', gig.id)
+                                    )
                                 }
                             />
                         ))}

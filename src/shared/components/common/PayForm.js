@@ -6,7 +6,7 @@ import checkmarkCircle from '@iconify/icons-ion/checkmark-circle';
 
 import styled from 'styled-components';
 import { captureException } from '@sentry/core';
-import { useParams, Route, useHistory, Switch } from 'react-router';
+import { useParams, Route, useHistory, Switch, useRouteMatch } from 'react-router';
 import {
     LoadingIndicator,
     Col,
@@ -24,33 +24,22 @@ import TextWrapper from './TextElement';
 import MoneyTable, { TableItem } from './MoneyTable';
 import StripeFormWrapper from './StripePayForm';
 import XenditPayForm from './XenditPayForm';
-import NotifyPayment from './NotifyPayment';
 
 const BankPayForm = ({
     translate,
-    event,
     currency,
-    offer,
+    loading,
     id,
     currentLanguage,
-    paymentConfirmed,
+    onPaymentConfirmed,
+    goBack,
     paymentIntent,
-    canBePaid,
     chosenMethod,
 }) => {
-    const history = useHistory();
+    console.log({ chosenMethod });
 
-    if (!canBePaid && paymentIntent.paymentProvider === 'STRIPE') {
-        return (
-            <div style={{ padding: '2em' }}>
-                <NotifyPayment
-                    hashKey={event.hash}
-                    eventId={event.id}
-                    daysUntilPaymentPossible={offer.daysUntilPaymentPossible}
-                    translate={translate}
-                />
-            </div>
-        );
+    if (loading) {
+        return <LoadingPaymentInitial translate={translate} />;
     }
 
     const variables = {
@@ -65,23 +54,23 @@ const BankPayForm = ({
     const PayForms = {
         STRIPE: (
             <StripeFormWrapper
-                onPaymentConfirmed={paymentConfirmed}
+                onPaymentConfirmed={onPaymentConfirmed}
                 paymentIntent={paymentIntent}
-                goBack={history.goBack}
+                goBack={goBack}
             />
         ),
         XENDIT: (
             <XenditPayForm
-                onPaymentConfirmed={paymentConfirmed}
+                onPaymentConfirmed={onPaymentConfirmed}
                 paymentIntent={paymentIntent}
-                goBack={history.goBack}
+                goBack={goBack}
             />
         ),
         DIRECT: (
             <StripeFormWrapper
-                onPaymentConfirmed={paymentConfirmed}
+                onPaymentConfirmed={onPaymentConfirmed}
                 paymentIntent={paymentIntent}
-                goBack={history.goBack}
+                goBack={goBack}
             />
         ),
     };
@@ -121,129 +110,104 @@ const PaymentWrapper = (props) => {
         currency,
         id,
         event,
-        gig,
-        currentLanguage,
         translate,
         match,
-        method,
+        initialMethod,
+        availablePayoutMethods,
+        currentLanguage,
+        gigOffer,
     } = props;
 
-    let { availablePayoutMethods = [] } = gig ?? {};
-    const { offer: gigOffer } = gig ?? {};
-
+    const [tempPayoutType, settempPayoutType] = useState(initialMethod);
     const div = useRef();
     const history = useHistory();
     const size = useComponentSize(div);
-    const [isPaid, setIsPaid] = useState(false);
 
-    let initialPaymentType = method;
-    if (availablePayoutMethods.length === 1) {
-        initialPaymentType = availablePayoutMethods[0].payoutType;
-    }
-    const canSelectPayment = availablePayoutMethods.length > 1;
+    const goBack = () => {
+        history.goBack();
+    };
 
-    const [paymentType, setPaymentType] = useState(initialPaymentType);
+    const chosenMethod = availablePayoutMethods.find((pm) => pm.payoutType === tempPayoutType);
 
-    const [requestPaymentIntent, { loading, data }] = useLazyQuery(REQUEST_PAYMENT_INTENT, {
-        onCompleted: () => history.push(match.url + '/payment/' + paymentType),
+    const { loading, data } = useQuery(REQUEST_PAYMENT_INTENT, {
         onError: captureException,
+        skip: !tempPayoutType || !id,
+        variables: {
+            id,
+            currency,
+            locale: currentLanguage,
+            paymentType: tempPayoutType,
+        },
     });
 
-    const { requestPaymentIntent: paymentIntent } = data ?? {};
-
-    const { amount, offer: paymentOffer } = paymentIntent ?? {};
+    const { requestPaymentIntent: paymentIntent } = data || {};
+    const { amount, offer: paymentOffer } = paymentIntent || {};
 
     const offer = {
         ...gigOffer,
         ...paymentOffer,
     };
 
-    const canBePaid = offer.daysUntilPaymentPossible < 1;
-    // can be paid direct
-    if (availablePayoutMethods.some((pm) => pm.payoutType === PAYOUT_TYPES.DIRECT) && !canBePaid) {
-        availablePayoutMethods = availablePayoutMethods.filter(
-            (pm) => pm.payoutType === PAYOUT_TYPES.DIRECT
-        );
-    }
+    const payLater = tempPayoutType === PAYOUT_TYPES.DIRECT;
 
-    const payLater = paymentType === PAYOUT_TYPES.DIRECT;
+    // const [setPaymentConfirmed] = useMutation(PAYMENT_CONFIRMED, {
+    //     variables: {
+    //         gigId: id,
+    //         eventId: event.id,
+    //         amountPaid: offer.totalPayment,
+    //         amountLeft: null,
+    //     },
+    //     onError: captureException,
+    // });
 
-    const chosenMethod = availablePayoutMethods.find((v) => v.payoutType === paymentType);
+    // const handlePaymentConfirmed = useCallback(() => {
+    //     setPaymentConfirmed();
+    //     onPaymentConfirmed && onPaymentConfirmed();
+    //     setIsPaid(true);
+    //     try {
+    //         trackEventPaid({
+    //             currency: currency,
+    //             value: amount.amount / 100,
+    //         });
+    //     } catch (error) {
+    //         captureException(error);
+    //     }
+    // }, [amount, onPaymentConfirmed, setPaymentConfirmed, currency]);
 
-    const [setPaymentConfirmed] = useMutation(PAYMENT_CONFIRMED, {
-        variables: {
-            gigId: id,
-            eventId: event.id,
-            amountPaid: offer.totalPayment,
-            amountLeft: null,
-        },
-        onError: captureException,
-    });
-
-    useEffect(() => {
-        if (paymentType) {
-            requestPaymentIntent({
-                variables: {
-                    id,
-                    currency,
-                    locale: currentLanguage,
-                    paymentType,
-                },
-            });
-        }
-    }, [currency, currentLanguage, id, paymentType, requestPaymentIntent]);
-
-    const paymentConfirmed = useCallback(() => {
-        setPaymentConfirmed();
-        onPaymentConfirmed && onPaymentConfirmed();
-        setIsPaid(true);
-        try {
-            trackEventPaid({
-                currency: currency,
-                value: amount.amount / 100,
-            });
-        } catch (error) {
-            captureException(error);
-        }
-    }, [amount, onPaymentConfirmed, setPaymentConfirmed, currency]);
-
-    if (isPaid) {
-        return <ThankYouContent style={size} translate={translate} />;
-    }
+    // if (isPaid) {
+    //     return <ThankYouContent style={size} translate={translate} />;
+    // }
 
     return (
         <PayFormContainer className="pay-form" ref={div}>
             <div className="left">
                 <Switch>
-                    {canSelectPayment && (
-                        <Route
-                            path={match.path}
-                            exact
-                            render={() => (
-                                <PaymentMethodSelect
-                                    {...props}
-                                    setPaymentType={setPaymentType}
-                                    paymentType={paymentType}
-                                    loading={loading}
-                                />
-                            )}
-                        />
-                    )}
-                    {paymentIntent && (
-                        <Route
-                            path={match.path + '/payment/:method'}
-                            render={() => (
-                                <BankPayForm
-                                    {...props}
-                                    chosenMethod={chosenMethod}
-                                    paymentIntent={paymentIntent}
-                                    paymentConfirmed={paymentConfirmed}
-                                    canBePaid={canBePaid}
-                                />
-                            )}
-                        />
-                    )}
-                    <LoadingPaymentInitial translate={translate} />
+                    <Route
+                        path={match.path}
+                        exact
+                        render={() => (
+                            <PaymentMethodSelect
+                                {...props}
+                                tempPayoutType={tempPayoutType}
+                                settempPayoutType={settempPayoutType}
+                                loading={loading}
+                            />
+                        )}
+                    />
+
+                    <Route
+                        path={match.path + '/payment'}
+                        render={() => (
+                            <BankPayForm
+                                {...props}
+                                loading={loading}
+                                chosenMethod={chosenMethod}
+                                paymentIntent={paymentIntent}
+                                // onPaymentConfirmed={handlePaymentConfirmed}
+                                goBack={goBack}
+                            />
+                        )}
+                    />
                 </Switch>
             </div>
 
@@ -260,7 +224,13 @@ const PaymentWrapper = (props) => {
                         label={payLater ? 'Payment now' : 'Total'}
                         bold
                     >
-                        {amount ? amount.formatted : offer.totalPayment.formatted}
+                        {loading ? (
+                            <LoadingIndicator />
+                        ) : amount ? (
+                            amount.formatted
+                        ) : (
+                            offer.totalPayment.formatted
+                        )}
                     </TableItem>
                 </MoneyTable>
 
@@ -290,21 +260,21 @@ const LoadingPaymentInitial = ({ translate }) => {
 
 const PaymentMethodSelect = (props) => {
     const history = useHistory();
-    const { translate, loading, setPaymentType, paymentType } = props;
-    const [chosen, setChosen] = useState(paymentType ?? PAYOUT_TYPES.BANK);
+    const match = useRouteMatch();
+    const { translate, tempPayoutType, settempPayoutType } = props;
 
     return (
         <div>
             <TextWrapper label={translate('Pay-method')} showLock={true} />
             <RadioSelect
                 containerStyle={{ marginBottom: '30px' }}
-                setChosen={setChosen}
-                chosen={chosen}
+                setChosen={settempPayoutType}
+                chosen={tempPayoutType}
                 options={[
                     {
                         title: 'Pay now',
                         description:
-                            "Cueup will facilitate your payment. You'll pay today after completing the booking.",
+                            "Cueup will facilitate your payment. We'll keep your money safe until the DJ has played.",
                         value: PAYOUT_TYPES.BANK,
                     },
                     {
@@ -320,8 +290,7 @@ const PaymentMethodSelect = (props) => {
                 <SmartButton
                     level="primary"
                     data-cy="continue-button"
-                    loading={loading}
-                    onClick={() => setPaymentType(chosen)}
+                    onClick={() => history.push(match.url + '/payment?type=' + tempPayoutType)}
                 >
                     Continue
                 </SmartButton>
@@ -352,24 +321,48 @@ const ThankYouContent = ({ translate, style }) => {
     );
 };
 
-const WithProps = ({ currency, ...props }) => {
+const WithProps = ({ currency, location, ...props }) => {
     const { translate, currentLanguage } = useTranslate();
-    const { gigId, id, hash, method } = useParams();
-
+    const history = useHistory();
+    const { gigId, id, hash } = useParams();
     const { data } = useQuery(EVENT_GIGS, { variables: { id, hash, currency } });
 
     const gigs = data?.event?.gigs || [];
     const gig = gigs.find((g) => g.id === gigId);
+
+    // find out if payment method can be selected
+    const { availablePayoutMethods = [] } = gig ?? {};
+    const { offer: gigOffer } = gig ?? {};
+    const canSelectPayment = availablePayoutMethods.length > 1;
+
+    // Get the current method from url
+    // otherwise defaults to bank, otherwise just first one
+    const searchParams = new URLSearchParams(location.search);
+    const initialType = searchParams.get('type') || PAYOUT_TYPES.BANK;
+    const initialMethod = (
+        availablePayoutMethods.find((p) => p.payoutType === initialType) ||
+        availablePayoutMethods[0]
+    )?.payoutType;
+
+    // redirect to payment if only 1 option
+    useEffect(() => {
+        if (!canSelectPayment) {
+            history.replace(location.pathname + '/payment?type=' + initialMethod);
+        }
+    }, [canSelectPayment, initialMethod, history]);
 
     return (
         <PaymentWrapper
             {...props}
             id={gigId}
             gig={gig}
-            method={method}
             currency={currency}
             translate={translate}
             currentLanguage={currentLanguage}
+            canSelectPayment={canSelectPayment}
+            availablePayoutMethods={availablePayoutMethods}
+            initialMethod={initialMethod}
+            gigOffer={gigOffer}
         />
     );
 };

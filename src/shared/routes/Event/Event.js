@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet-async';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { useQuery } from 'react-apollo';
 import styled from 'styled-components';
-import { useTransition, animated, Globals } from 'react-spring';
 import { useMeasure } from '@softbind/hook-use-measure';
 import { useRouteMatch } from 'react-router';
 import { appRoutes, eventRoutes } from 'constants/locales/appRoutes';
@@ -90,43 +89,11 @@ const idxRoute = (path) => {
     return 0;
 };
 
-let curIdx = 0;
-
-const getDirection = (newPath) => {
-    const newIdx = idxRoute(newPath);
-    let dir = 'back';
-    if (newIdx > curIdx) {
-        dir = 'front';
-    }
-    curIdx = newIdx;
-    return dir;
-};
-
 const Content = React.memo((props) => {
-    const { match, location, ...eventProps } = props;
+    const { match, ...eventProps } = props;
     const { theEvent, loading } = eventProps;
     const [height, setHeight] = useState('600px');
-    const direction = getDirection(location.pathname);
     const { isSSR } = useServerContext();
-
-    const transitions = useTransition(location, (location) => location.pathname, {
-        config: {
-            tension: 500,
-            friction: 40,
-            precision: 0.001,
-        },
-        immediate: isSSR,
-        from: {
-            opacity: 0,
-            transform: `translateX(${direction === 'back' ? '-100px' : '100px'}`,
-        },
-        enter: { opacity: 1, transform: 'translateX(0px)' },
-        leave: {
-            opacity: 0,
-            transform: `translateX(${direction === 'back' ? '100px' : '-100px'}`,
-        },
-        initial: null, // don't animate on first mount
-    });
 
     return (
         <div>
@@ -137,20 +104,14 @@ const Content = React.memo((props) => {
             <Container>
                 <ContainerRow>
                     <BorderCol style={{ height }}>
-                        <AnimationWrapper>
-                            {transitions.map(({ item, props, key }) => (
-                                <SSRComponent
-                                    {...props}
-                                    ssr={isSSR}
-                                    item={item}
-                                    style={props}
-                                    key={key}
-                                    match={match}
-                                    eventProps={eventProps}
-                                    registerHeight={setHeight}
-                                />
-                            ))}
-                        </AnimationWrapper>
+                        <SSRComponent
+                            {...props}
+                            ssr={isSSR}
+                            style={props}
+                            match={match}
+                            eventProps={eventProps}
+                            registerHeight={setHeight}
+                        />
                     </BorderCol>
                     <Col>
                         <EventProgress theEvent={theEvent} />
@@ -173,29 +134,22 @@ const GigRoutes = forwardRef((props, ref) => {
     const { style, item, match, eventProps } = props;
 
     return (
-        <animated.div style={style} ref={ref}>
-            <Switch location={item}>
-                <Route
-                    path={match.path + '/' + eventRoutes.overview}
-                    render={(navProps) => <Overview {...navProps} {...props} {...eventProps} />}
-                />
-                <Route
-                    path={match.path + '/' + eventRoutes.requirements}
-                    render={(navProps) => (
-                        <Requirements
-                            {...navProps}
-                            {...props}
-                            {...eventProps}
-                            pathname={match.url}
-                        />
-                    )}
-                />
-                <Route
-                    path={match.path + '/' + eventRoutes.review}
-                    render={(navProps) => <Review {...navProps} {...props} {...eventProps} />}
-                />
-            </Switch>
-        </animated.div>
+        <Switch>
+            <Route
+                path={match.path + '/' + eventRoutes.overview}
+                render={(navProps) => <Overview {...navProps} {...props} {...eventProps} />}
+            />
+            <Route
+                path={match.path + '/' + eventRoutes.requirements}
+                render={(navProps) => (
+                    <Requirements {...navProps} {...props} {...eventProps} pathname={match.url} />
+                )}
+            />
+            <Route
+                path={match.path + '/' + eventRoutes.review}
+                render={(navProps) => <Review {...navProps} {...props} {...eventProps} />}
+            />
+        </Switch>
     );
 });
 

@@ -152,7 +152,7 @@ const XenditForm = ({ paymentIntent, onPaymentConfirmed, goBack }) => {
                     <RowMobileCol right reverse>
                         {goBack && (
                             <TeritaryButton onClick={goBack} type="button">
-                                Back
+                                Go Back
                             </TeritaryButton>
                         )}
                         <SmartButton type="submit" loading={loading}>
