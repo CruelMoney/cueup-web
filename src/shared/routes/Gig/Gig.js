@@ -130,28 +130,6 @@ const Index = ({ location, match, history }) => {
     );
 };
 
-const idxRoute = (path) => {
-    if (path.includes('review')) {
-        return 2;
-    }
-    if (path.includes('offer')) {
-        return 1;
-    }
-    return 0;
-};
-
-let curIdx = 0;
-
-const getDirection = (newPath) => {
-    const newIdx = idxRoute(newPath);
-    let dir = 'back';
-    if (newIdx > curIdx) {
-        dir = 'front';
-    }
-    curIdx = newIdx;
-    return dir;
-};
-
 const Content = React.memo((props) => {
     const { theEvent, loading, gig, history, me } = props;
     const { organizer } = theEvent || {};
@@ -213,83 +191,48 @@ const Content = React.memo((props) => {
 const MainContent = (props) => {
     const { location, setPopup } = props;
     const [height, setHeight] = useState('auto');
-    const direction = getDirection(location.pathname);
     const [ssr, setSsr] = useState(true);
 
     useEffect(() => {
         setSsr(false);
     }, []);
 
-    const transitions = useTransition(location, (location) => location.pathname, {
-        config: {
-            tension: 500,
-            friction: 40,
-            precision: 0.001,
-        },
-        from: {
-            opacity: 0,
-            transform: `translateX(${direction === 'back' ? '-100px' : '100px'}`,
-        },
-        enter: { opacity: 1, transform: 'translateX(0px)' },
-        leave: {
-            opacity: 0,
-            transform: `translateX(${direction === 'back' ? '100px' : '-100px'}`,
-        },
-    });
-
     return (
         <BorderCol style={{ height: height || 'auto' }}>
             <Switch>
                 <Redirect exact from={'/gig/:id'} to={'/gig/:id/information'} />
             </Switch>
-            <AnimationWrapper>
-                {transitions.map(({ item, props: style, key }) => (
-                    <SSRComponent
-                        key={key}
-                        {...props}
-                        ssr={ssr}
-                        item={item}
-                        style={style}
-                        registerHeight={setHeight}
-                        showDecline={() => setPopup(true)}
-                    />
-                ))}
-            </AnimationWrapper>
+            <GigRoutes
+                {...props}
+                ssr={ssr}
+                registerHeight={setHeight}
+                showDecline={() => setPopup(true)}
+            />
         </BorderCol>
     );
 };
 
-const SSRComponent = ({ ssr, ...props }) => {
-    if (ssr) {
-        return <GigRoutes {...props} />;
-    }
-
-    return <TransitionComponent {...props} />;
-};
-
 const GigRoutes = forwardRef((props, ref) => {
-    const { style, item, match } = props;
+    const { match } = props;
     return (
-        <animated.div style={style} ref={ref}>
-            <Switch location={item}>
-                <Route
-                    path={match.path + '/information'}
-                    render={(navProps) => <Information {...navProps} {...props} />}
-                />
-                <Route
-                    path={match.path + '/offer'}
-                    render={(navProps) => <Offer {...navProps} {...props} />}
-                />
-                <Route
-                    path={match.path + '/review'}
-                    render={(navProps) => <GigReview {...navProps} {...props} />}
-                />
-                <Route
-                    path={match.path + '/chat'}
-                    render={(navProps) => <MobileChat {...navProps} {...props} />}
-                />
-            </Switch>
-        </animated.div>
+        <Switch>
+            <Route
+                path={match.path + '/information'}
+                render={(navProps) => <Information {...navProps} {...props} />}
+            />
+            <Route
+                path={match.path + '/offer'}
+                render={(navProps) => <Offer {...navProps} {...props} />}
+            />
+            <Route
+                path={match.path + '/review'}
+                render={(navProps) => <GigReview {...navProps} {...props} />}
+            />
+            <Route
+                path={match.path + '/chat'}
+                render={(navProps) => <MobileChat {...navProps} {...props} />}
+            />
+        </Switch>
     );
 });
 

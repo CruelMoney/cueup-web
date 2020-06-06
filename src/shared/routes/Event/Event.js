@@ -92,7 +92,6 @@ const idxRoute = (path) => {
 const Content = React.memo((props) => {
     const { match, ...eventProps } = props;
     const { theEvent, loading } = eventProps;
-    const [height, setHeight] = useState('600px');
     const { isSSR } = useServerContext();
 
     return (
@@ -103,14 +102,13 @@ const Content = React.memo((props) => {
 
             <Container>
                 <ContainerRow>
-                    <BorderCol style={{ height }}>
-                        <SSRComponent
+                    <BorderCol>
+                        <GigRoutes
                             {...props}
                             ssr={isSSR}
                             style={props}
                             match={match}
                             eventProps={eventProps}
-                            registerHeight={setHeight}
                         />
                     </BorderCol>
                     <Col>
@@ -122,16 +120,8 @@ const Content = React.memo((props) => {
     );
 });
 
-const SSRComponent = ({ ssr, ...props }) => {
-    if (ssr) {
-        return <GigRoutes {...props} />;
-    }
-
-    return <TransitionComponent {...props} />;
-};
-
 const GigRoutes = forwardRef((props, ref) => {
-    const { style, item, match, eventProps } = props;
+    const { match, eventProps } = props;
 
     return (
         <Switch>
@@ -152,19 +142,6 @@ const GigRoutes = forwardRef((props, ref) => {
         </Switch>
     );
 });
-
-const TransitionComponent = ({ registerHeight, ...props }) => {
-    const ref = useRef(null);
-    const { bounds } = useMeasure(ref, 'bounds');
-
-    useEffect(() => {
-        if (bounds) {
-            registerHeight(bounds.height);
-        }
-    }, [bounds, registerHeight]);
-
-    return <GigRoutes ref={ref} {...props} />;
-};
 
 const ContainerRow = styled(Row)`
     align-items: stretch;

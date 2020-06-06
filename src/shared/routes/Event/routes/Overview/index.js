@@ -38,17 +38,17 @@ const EventGigs = React.forwardRef(
 
         const readRoom = () => clearNotifications();
 
-        const loading = refetchTries < 5 || loadingEvent || loadingGigs;
+        const loading = refetchTries < 15 || loadingEvent || loadingGigs;
 
         // event polling for djs
         useEffect(() => {
-            if (refetchTries < 5 && !data.event) {
+            if (refetchTries < 15 && !data.event) {
                 setTimeout(() => {
                     refetch();
                     setRefetchTries((c) => c + 1);
                 }, 1000);
             } else {
-                setRefetchTries(5);
+                setRefetchTries(15);
             }
         }, [refetchTries, refetch, data]);
 
@@ -132,7 +132,8 @@ const EventGigs = React.forwardRef(
                     render={(props) => (
                         <PayForm
                             onClose={() => history.push(match.url + '/' + eventRoutes.overview)}
-                            event={theEvent}
+                            eventId={theEvent.id}
+                            eventHash={theEvent.hash}
                             currency={currency}
                             {...props}
                         />

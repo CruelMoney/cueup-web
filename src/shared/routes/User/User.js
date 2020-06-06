@@ -165,9 +165,7 @@ const Content = React.memo(({ match, ...userProps }) => {
                     >
                         <Switch location={location}>
                             <Route
-                                strict
-                                exact
-                                path={match.url + '/overview'}
+                                path={[match.url + '/overview', match.url + '/checkout']}
                                 render={(props) =>
                                     overviewIsEvents ? (
                                         <Events {...props} {...userProps} />

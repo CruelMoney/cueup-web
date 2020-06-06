@@ -37,12 +37,11 @@ const BankPayForm = ({
     paymentIntent,
     chosenMethod,
 }) => {
-    if (!paymentIntent) {
-        return null;
-    }
-
     if (loading) {
         return <LoadingPaymentInitial translate={translate} />;
+    }
+    if (!paymentIntent) {
+        return null;
     }
 
     const variables = {
@@ -112,7 +111,7 @@ const PaymentWrapper = (props) => {
         onPaymentConfirmed,
         currency,
         id,
-        event,
+        eventId,
         translate,
         match,
         initialMethod,
@@ -156,7 +155,7 @@ const PaymentWrapper = (props) => {
     const [setPaymentConfirmed] = useMutation(PAYMENT_CONFIRMED, {
         variables: {
             gigId: id,
-            eventId: event.id,
+            eventId: eventId,
             amountPaid: offer.totalPayment,
             amountLeft: null,
         },
@@ -324,12 +323,16 @@ const ThankYouContent = ({ translate, style }) => {
     );
 };
 
-const WithProps = ({ currency, location, onClose, ...props }) => {
+const WithProps = ({ currency, location, eventId, eventHash, onClose, ...props }) => {
+    console.log({ eventId, eventHash });
+
     const { translate, currentLanguage } = useTranslate();
     const history = useHistory();
-    const { gigId, id, hash } = useParams();
+    const { gigId } = useParams();
     const match = useRouteMatch();
-    const { data } = useQuery(EVENT_GIGS, { variables: { id, hash, currency } });
+    const { data } = useQuery(EVENT_GIGS, {
+        variables: { id: eventId, hash: eventHash, currency },
+    });
 
     const gigs = data?.event?.gigs || [];
     const gig = gigs.find((g) => g.id === gigId);
@@ -348,13 +351,18 @@ const WithProps = ({ currency, location, onClose, ...props }) => {
         availablePayoutMethods[0]
     )?.payoutType;
 
+    console.log({ canSelectPayment });
     useEffect(() => {
         if (status !== gigStates.ACCEPTED) {
             onClose();
         } else {
             // redirect to payment if only 1 option
             if (!canSelectPayment) {
-                history.replace(match.url + '/payment?type=' + initialMethod);
+                const searchParams = new URLSearchParams(location.search);
+                searchParams.append('type', initialMethod);
+                const redirectUrl = match.url + '/payment?' + searchParams.toString();
+                console.log({ redirectUrl });
+                history.replace(redirectUrl);
             }
         }
     }, [canSelectPayment, initialMethod, history]);
@@ -365,6 +373,7 @@ const WithProps = ({ currency, location, onClose, ...props }) => {
                 {...props}
                 id={gigId}
                 gig={gig}
+                eventId={eventId}
                 currency={currency}
                 translate={translate}
                 currentLanguage={currentLanguage}

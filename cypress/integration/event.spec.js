@@ -13,9 +13,7 @@ describe('Event', () => {
         cy.get('input[name=contactName]').type('Test organizer', { force: true });
         cy.get('input[name=contactPhone]').type('24658061', { force: true });
         cy.get('input[name=contactEmail]').type('organizer@email.com', { force: true });
-        cy.get('input[name=contactEmailConfirm]').type('organizer@email.com', { force: true });
         cy.get('[data-cy=submit-event]').click({ force: true });
-        cy.get('.request-form').should('contain', 'Thanks');
     };
     describe('Creating', () => {
         it('Post event from front page', () => {
@@ -24,6 +22,9 @@ describe('Event', () => {
             cy.visit('/');
 
             fillOuteventForm();
+
+            cy.url().should('include', '/event');
+            cy.get('h1').contains('Test event');
         });
 
         it('Post event from location page', () => {
@@ -32,6 +33,9 @@ describe('Event', () => {
             cy.visit('/book-dj/denmark/copenhagen');
 
             fillOuteventForm();
+
+            cy.url().should('include', '/event');
+            cy.get('h1').contains('Test event');
         });
 
         it('Post from direct booking page', () => {

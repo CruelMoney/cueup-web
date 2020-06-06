@@ -41,6 +41,7 @@ export const userRoutes = {
     events: 'events',
     settings: 'settings',
     photos: 'photos',
+    checkout: 'overview/checkout/:gigId',
 };
 
 export const eventRoutes = {
@@ -48,7 +49,6 @@ export const eventRoutes = {
     overview: 'overview',
     review: 'review',
     checkout: 'overview/checkout/:gigId',
-    payment: 'overview/checkout/:gigId/payment',
 };
 
 export type RouteKeys = typeof routeKeys;

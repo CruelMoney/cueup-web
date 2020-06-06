@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useQuery } from 'react-apollo';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useRouteMatch, useHistory, Route } from 'react-router-dom';
 import queryString from 'query-string';
 import { appRoutes, userRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
@@ -81,17 +81,14 @@ const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
 };
 
 const Wrapper = (props) => {
-    const { location, user } = props;
-    const [showPopup, setShowPopup] = useState(false);
+    const { location, user, currency } = props;
+    const match = useRouteMatch();
+    const history = useHistory();
 
-    // check for gigId
-    const queries = queryString.parse(location.search);
-    let { gigId, hash } = queries;
-
-    if (!gigId && location && location.state && !hash) {
-        gigId = location.state.gigId;
-        hash = location.state.hash;
-    }
+    // check for gigId, and save even though url changes
+    const { gigId, hash } = useMemo(() => {
+        return queryString.parse(location.search);
+    }, []);
 
     const { data = {}, loading } = useQuery(GIG, {
         skip: !gigId || !hash,
@@ -128,6 +125,11 @@ const Wrapper = (props) => {
     const event = gig ? gig.event : null;
     const { offer } = gig || {};
 
+    console.log({ event });
+
+    console.log(match.url + '/' + userRoutes.checkout.replace(':gigId', gigId));
+    console.log(match.path + '/' + userRoutes.checkout);
+
     return (
         <>
             <BookingButton
@@ -136,17 +138,29 @@ const Wrapper = (props) => {
                 event={event}
                 hash={hash}
                 offer={offer}
-                showPaymentForm={() => setShowPopup(true)}
+                showPaymentForm={() =>
+                    history.push(
+                        match.url +
+                            '/' +
+                            userRoutes.checkout.replace(':gigId', gigId) +
+                            location.search
+                    )
+                }
             />
-            {gig && (
-                <PayForm
-                    id={gig.id}
-                    onClose={() => setShowPopup(false)}
-                    offer={gig.offer}
-                    gig={gig}
-                    event={event}
-                />
-            )}
+            <Route
+                path={match.path + '/' + userRoutes.checkout}
+                render={(props) => (
+                    <PayForm
+                        onClose={() =>
+                            history.push(match.url + '/' + userRoutes.overview + location.search)
+                        }
+                        currency={currency}
+                        eventId={event?.id}
+                        eventHash={hash}
+                        {...props}
+                    />
+                )}
+            />
         </>
     );
 };
