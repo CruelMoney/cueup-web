@@ -59,7 +59,10 @@ const ChatSidebar = (props) => {
     useLayoutEffect(adjustPadding);
 
     return (
-        <Content>
+        <Content
+            onMouseEnter={() => (document.body.style.overflowY = 'hidden')}
+            onMouseLeave={() => (document.body.style.overflowY = '')}
+        >
             <InnerContent>
                 <Header>
                     <SidebarContent>

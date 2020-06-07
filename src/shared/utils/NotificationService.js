@@ -105,13 +105,8 @@ export const useNotifications = ({ userId }) => {
     const readRoom = useCallback(
         (id) => {
             setNotifications((nn) => {
-                const existing = nn[id];
-                let notifications = nn;
-                if (existing) {
-                    existing.read = existing.total;
-                    notifications = { ...nn, [id]: existing };
-                }
-                return { notifications };
+                delete nn[id];
+                return { ...nn };
             });
         },
         [setNotifications]

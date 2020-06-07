@@ -12,7 +12,6 @@ import { Col, SecondaryButton, PrimaryButton } from '../../../../components/Bloc
 import DjCard from '../../components/blocks/DJCard';
 import { EVENT_GIGS } from '../../gql';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
-import { useNotifications } from '../../../../utils/NotificationService';
 import EmptyPage from '../../../../components/common/EmptyPage';
 import { gigStates } from '../../../../constants/constants';
 
@@ -24,6 +23,7 @@ const EventGigs = React.forwardRef((props, ref) => {
         currency,
         match,
         notifications,
+        setActiveChat,
     } = props;
     const { status, organizer } = theEvent;
     const { data = {}, loading: loadingGigs, refetch } = useQuery(EVENT_GIGS, {
@@ -123,6 +123,7 @@ const EventGigs = React.forwardRef((props, ref) => {
                                     match.url + '/' + eventRoutes.checkout.replace(':gigId', gig.id)
                                 )
                             }
+                            onOpenChat={() => setActiveChat(gig.id)}
                         />
                     ))}
             </div>
@@ -163,7 +164,7 @@ const getTitle = (status) => {
 };
 
 const Overview = (props) => {
-    const { translate } = useTranslate();
+    const { translate, setActiveChat } = useTranslate();
     const { theEvent, loading } = props;
 
     if (loading) {
@@ -187,6 +188,7 @@ const Overview = (props) => {
                         gig={chosenGig}
                         translate={translate}
                         theEvent={theEvent}
+                        onOpenChat={() => setActiveChat(chosenGig.id)}
                     />
                 )}
             </Col>

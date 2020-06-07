@@ -8,7 +8,6 @@ import { gigStates } from 'constants/constants';
 import Chat from 'components/common/Chat';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
-import { useNotifications } from 'utils/NotificationService';
 
 const gigToChatConfig = ({ organizer, eventId, notifications }) => (gig) => ({
     ...gig,
@@ -31,7 +30,7 @@ const gigToChatConfig = ({ organizer, eventId, notifications }) => (gig) => ({
     eventId,
 });
 
-const DataWrapper = ({ event, readRoom, notifications }) => {
+const DataWrapper = ({ event, activeChat, setActiveChat, notifications }) => {
     const { data } = useQuery(EVENT_GIGS, {
         skip: !event?.id,
         variables: {
@@ -39,14 +38,6 @@ const DataWrapper = ({ event, readRoom, notifications }) => {
             hash: event?.hash,
         },
     });
-
-    const [activeChat, setActiveChat] = useState();
-
-    useEffect(() => {
-        if (activeChat) {
-            readRoom(activeChat.id);
-        }
-    }, [readRoom, activeChat, notifications]);
 
     if (!event) {
         return null;
@@ -68,18 +59,17 @@ const DataWrapper = ({ event, readRoom, notifications }) => {
 
 const SidebarChat = ({ chats = [], event, activeChat, setActiveChat }) => {
     const activeChats = chats.slice(0, 7);
+    const chat = chats.find((c) => c.id === activeChat);
 
     return (
         <FixedWrapper>
-            {activeChat && (
-                <ChatWrapper chat={activeChat} event={event} onClose={() => setActiveChat(null)} />
-            )}
+            {chat && <ChatWrapper chat={chat} event={event} onClose={() => setActiveChat(null)} />}
             <ChatList>
                 {activeChats.map((c) => (
                     <ChatBubble
-                        active={c.id === activeChat?.id}
+                        active={c.id === activeChat}
                         key={c.id}
-                        onClick={() => setActiveChat(c)}
+                        onClick={() => setActiveChat(c.id)}
                         {...c}
                     />
                 ))}

@@ -39,6 +39,15 @@ const Index = ({ location }) => {
         userId: theEvent?.organizer?.id,
     });
 
+    const [activeChat, setActiveChat] = useState();
+
+    useEffect(() => {
+        const hasNoti = notifications[activeChat?.id];
+        if (activeChat && hasNoti) {
+            readRoom(activeChat.id);
+        }
+    }, [readRoom, activeChat, notifications]);
+
     if (!loading && !theEvent) {
         return <Redirect to={translate(appRoutes.notFound)} />;
     }
@@ -71,9 +80,15 @@ const Index = ({ location }) => {
                 loading={loading}
                 translate={translate}
                 notifications={notifications}
+                setActiveChat={setActiveChat}
             />
 
-            <SidebarChat event={theEvent} notifications={notifications} readRoom={readRoom} />
+            <SidebarChat
+                event={theEvent}
+                notifications={notifications}
+                setActiveChat={setActiveChat}
+                activeChat={activeChat}
+            />
 
             <Footer
                 noSkew

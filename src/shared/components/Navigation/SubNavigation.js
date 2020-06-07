@@ -54,7 +54,7 @@ const ActiveIndicator = styled.span`
     transition: transform 200ms cubic-bezier(0.075, 0.82, 0.165, 1);
 `;
 
-const Navigation = memo((props) => {
+const Navigation = (props) => {
     const { routes, location, registerRoutes, unregisterRoutes, showMobile } = props;
     const { pathname } = location;
     const navRef = useRef();
@@ -81,7 +81,7 @@ const Navigation = memo((props) => {
         };
     }, [routes, registerRoutes, unregisterRoutes]);
 
-    useEffect(resetIndicator, [routes]);
+    useEffect(resetIndicator, [routes, resetIndicator]);
 
     // change active indicator if navigated
     useEffect(() => {
@@ -123,7 +123,7 @@ const Navigation = memo((props) => {
             ))}
         </StyledNav>
     );
-});
+};
 
 const Wrapper = (props) => {
     const { registerRoutes, unregisterRoutes } = useContext(MobileMenuContext);
