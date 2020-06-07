@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useEffect } from 'react';
 import { useQuery } from 'react-apollo';
 import { NavLink } from 'react-router-dom';
 import { Avatar, ClosePopupButton, Row, TeritaryButton } from 'components/Blocks';
@@ -8,6 +7,20 @@ import { gigStates } from 'constants/constants';
 import Chat from 'components/common/Chat';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
+import {
+    ShadowWrapper,
+    ExtraChatsLayover,
+    ChatMessagesWrapper,
+    FixedWrapper,
+    ChatAvatarWrapper,
+    ChatList,
+    ChatBox,
+    ChatHeader,
+    ChatItem,
+    NameBlock,
+    NameBox,
+    NewMessagesIndicator,
+} from './blocks';
 
 const gigToChatConfig = ({ organizer, eventId, notifications }) => (gig) => ({
     ...gig,
@@ -44,7 +57,7 @@ const DataWrapper = ({ event, activeChat, setActiveChat, notifications }) => {
     }
 
     const chats = data?.event?.gigs
-        // .filter((g) => g.chatInitiated)
+        .filter((g) => g.chatInitiated || notifications[g.id] || activeChat === g.id)
         .map(gigToChatConfig({ notifications, organizer: event.organizer, eventId: event?.id }));
 
     return (
@@ -58,7 +71,9 @@ const DataWrapper = ({ event, activeChat, setActiveChat, notifications }) => {
 };
 
 const SidebarChat = ({ chats = [], event, activeChat, setActiveChat }) => {
-    const activeChats = chats.slice(0, 7);
+    const doesOverflow = chats.length > 7;
+    const activeChats = chats.slice(0, doesOverflow ? 6 : 7);
+    const remainingChats = chats.slice(6);
     const chat = chats.find((c) => c.id === activeChat);
 
     return (
@@ -73,8 +88,48 @@ const SidebarChat = ({ chats = [], event, activeChat, setActiveChat }) => {
                         {...c}
                     />
                 ))}
+
+                {doesOverflow && (
+                    <ExtraChats
+                        setActiveChat={setActiveChat}
+                        chats={remainingChats}
+                        active={remainingChats.some((c) => c.id === activeChat)}
+                    />
+                )}
             </ChatList>
         </FixedWrapper>
+    );
+};
+
+const ExtraChats = ({ chats, active, setActiveChat }) => {
+    const hasMessage = chats.some((c) => c.hasMessage);
+
+    return (
+        <ChatItem className={active ? 'active' : ''}>
+            <ChatAvatarWrapper>
+                <ShadowWrapper>
+                    <img src={chats[0].receiver.image} />
+                    <ExtraChatsLayover>+ {chats.length}</ExtraChatsLayover>
+                </ShadowWrapper>
+                {hasMessage && <NewMessagesIndicator />}
+            </ChatAvatarWrapper>
+
+            <NameBox style={{ top: '100%', transform: 'translate(-100%, -100%)' }}>
+                {chats.map((c) => (
+                    <TeritaryButton
+                        key={c.id}
+                        style={{
+                            height: '30px',
+                            textAlign: 'left',
+                        }}
+                        onClick={() => setActiveChat(c.id)}
+                    >
+                        <NameBlock>{c.receiver.nickeName || c.receiver.name}</NameBlock>
+                        {c.hasMessage && <NewMessagesIndicator style={{ left: -2, top: 6 }} />}
+                    </TeritaryButton>
+                ))}
+            </NameBox>
+        </ChatItem>
     );
 };
 
@@ -147,190 +202,5 @@ const ChatWrapper = ({ chat, event, onClose }) => {
         </ChatBox>
     );
 };
-
-const NewMessagesIndicator = styled.div`
-    border: 2px solid #ffffff;
-    background-color: #fa383e;
-    height: 16px;
-    width: 16px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    color: #fff;
-    border-radius: 50%;
-    font-size: 10px;
-    text-align: center;
-    line-height: 17px;
-    font-weight: 500;
-`;
-
-const ChatMessagesWrapper = styled.div`
-    height: 100%;
-    button[type='submit'] {
-        height: 32px;
-        width: 32px;
-        border-radius: 50%;
-        margin-left: 4px;
-        > svg {
-            font-size: 24px !important;
-        }
-        &:hover {
-            background-color: #f6f8f9;
-        }
-    }
-
-    img {
-        opacity: 1;
-        z-index: 1 !important;
-    }
-
-    .messages {
-        padding: 1em;
-        padding-top: 60px;
-        height: 409px;
-    }
-    .messages-date {
-        font-size: 1em;
-    }
-    .message-composer {
-        padding: 0.5em;
-    }
-`;
-
-const NameBlock = styled.p`
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: 600;
-    font-size: 1em;
-    line-height: 1.2em;
-    max-width: 220px;
-    > span {
-        font-weight: 300;
-        display: block;
-    }
-`;
-
-const ChatHeader = styled.div`
-    padding: 8px;
-    display: flex;
-    background: #fff;
-    border-bottom: 1px solid #ebebeb;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 2;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    @supports (backdrop-filter: none) {
-        background: rgba(255, 255, 255, 0.4);
-        backdrop-filter: saturate(180%) blur(20px);
-    }
-`;
-
-const ChatBox = styled.div`
-    border-radius: 8px;
-    background-color: #fff;
-    height: 455px;
-    width: 328px;
-    overflow-y: hidden;
-    max-height: calc(100vh - 60px - 24px);
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-`;
-
-const NameBox = styled.div`
-    display: none;
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translate(-100%, -50%);
-    background-color: white;
-    padding: 0.75em;
-    border-radius: 8px;
-    max-width: 250px;
-
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(0, 0, 0, 0.2) 0px 12px 28px 0px;
-`;
-
-const FixedWrapper = styled.div`
-    position: fixed;
-    bottom: 70px;
-    right: 0;
-    z-index: 10;
-    display: flex;
-    align-items: flex-end;
-`;
-
-const ChatList = styled.ul`
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    justify-content: flex-end;
-    margin: 0;
-`;
-
-const ShadowWrapper = styled.div`
-    transition-duration: 0.05s, 0.1s;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(0, 0, 0, 0.2) 0px 12px 28px 0px;
-    height: 48px;
-    width: 48px;
-    border-radius: 50%;
-`;
-
-const ChatItem = styled.li`
-    cursor: pointer;
-    list-style: none;
-    width: 90px;
-    height: 58px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    &.active:before,
-    :hover:before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 50%;
-        transform: translate(-50%, -50%) rotate(45deg);
-        height: 1em;
-        width: 1em;
-        background-color: #fff;
-        border-top-right-radius: 3px;
-        z-index: 10;
-    }
-    &:hover {
-        ${NameBox} {
-            display: block;
-        }
-        ${ShadowWrapper} {
-            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 4px 0px, rgba(0, 0, 0, 0.2) 0px 16px 28px 0px;
-        }
-    }
-`;
-
-const ChatAvatarWrapper = styled.div`
-    cursor: pointer;
-    touch-action: manipulation;
-    height: 48px;
-    width: 48px;
-    border-radius: 50%;
-
-    position: relative;
-    z-index: 0;
-    background-color: white;
-
-    img {
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-    }
-`;
 
 export default DataWrapper;

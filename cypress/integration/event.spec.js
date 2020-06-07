@@ -83,11 +83,45 @@ describe('Event', () => {
                 cy.get('[name=chat-input]').type(message + '{enter}');
                 cy.get('.message-wrapper.send').last().should('contain', message);
                 cy.get('.message-wrapper.send').next().should('contain', 'Delivered');
-                cy.get('.card.popup.active *[data-cy=close-popup-button]').click();
+                // cy.get('.card.popup.active *[data-cy=close-popup-button]').click();
 
                 // try visit profile
                 cy.get('[data-cy=dj-profile-button]').first().click();
                 cy.get('h1').should('contain', 'Dj lolbox');
+            });
+        });
+
+        it.only('Handles many DJs', () => {
+            cy.request('POST', '/test/clearDB');
+            cy.request('POST', '/test/seed/djs');
+
+            const eventData = {
+                customerUserId: 1,
+                gigs: [
+                    { djId: 4 },
+                    { djId: 5 },
+                    { djId: 6 },
+                    { djId: 7 },
+                    { djId: 8 },
+                    { djId: 9 },
+                    { djId: 10 },
+                    { djId: 11 },
+                ],
+            };
+
+            cy.request('POST', '/test/seed/event', eventData).then((response) => {
+                const theEvent = response.body.event;
+
+                expect(theEvent).to.not.eq(null);
+                cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
+
+                cy.get('[data-cy=event-dj]').should('exist');
+
+                // try chatting
+
+                // try visit profile
+                // cy.get('[data-cy=dj-profile-button]').first().click();
+                // cy.get('h1').should('contain', 'Dj lolbox');
             });
         });
     });
