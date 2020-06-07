@@ -363,6 +363,14 @@ const ButtonTextStyle = css`
             justify-content: center;
             align-items: center;
         `}
+
+    ${({ isWrapper }) =>
+        isWrapper &&
+        css`
+            text-align: left;
+            max-width: 100%;
+            padding: 0 6px;
+        `}
 `;
 
 const inputButtonStyle = css`

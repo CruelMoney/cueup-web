@@ -7,7 +7,6 @@ import { eventRoutes } from 'constants/locales/appRoutes';
 import { REQUEST_EMAIL_VERIFICATION } from 'components/gql';
 import usePushNotifications from 'components/hooks/usePushNotifications';
 import PayForm from 'components/common/PayForm';
-import useWhyDidYouUpdate from 'components/hooks/useWhyDidYouUpdate';
 import { Title, Body, HeaderTitle, BodyBold } from '../../../../components/Text';
 import { Col, SecondaryButton, PrimaryButton } from '../../../../components/Blocks';
 import DjCard from '../../components/blocks/DJCard';
@@ -32,11 +31,9 @@ const EventGigs = React.forwardRef((props, ref) => {
 
     const [refetchTries, setRefetchTries] = useState(data?.event ? 5 : 0);
     const history = useHistory();
-    const [notifications, clearNotifications] = useNotifications({
+    const [notifications] = useNotifications({
         userId: organizer.id,
     });
-
-    const readRoom = () => clearNotifications();
 
     const loading = refetchTries < 15 || loadingEvent || loadingGigs;
 
@@ -61,8 +58,6 @@ const EventGigs = React.forwardRef((props, ref) => {
                 notifications[g.id] && notifications[g.id].read < notifications[g.id].total;
             return g;
         });
-
-    useWhyDidYouUpdate('EventOverview', props);
 
     if (gigs.length === 0 && loading) {
         return (
@@ -114,7 +109,6 @@ const EventGigs = React.forwardRef((props, ref) => {
                     .map((gig, idx) => (
                         <DjCard
                             hasMessage={gig.hasMessage}
-                            onOpenChat={readRoom}
                             key={gig.id}
                             idx={idx}
                             gig={gig}

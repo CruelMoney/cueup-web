@@ -36,7 +36,6 @@ const hiddenNumber = '45 12 34 56 78'.replace(/\w/g, '•');
 
 const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateBooking }) => {
     const { translate } = useTranslate();
-    const [showChat, setShowChat] = useState(false);
 
     const { dj, offer, status } = gig;
     if (!dj) {
@@ -73,13 +72,12 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
                                             data-cy="message-dj-button"
                                             style={{ position: 'relative', overflow: 'visible' }}
                                             onClick={() => {
-                                                setShowChat(true);
                                                 onOpenChat();
                                             }}
                                         >
                                             Message
                                             {hasMessage && (
-                                                <div className="notification-bubble">1</div>
+                                                <div className="notification-bubble">!</div>
                                             )}
                                         </SecondaryButton>
                                     )}
@@ -155,7 +153,7 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
 
                 <Shadow />
 
-                <ChatPopup
+                {/* <ChatPopup
                     showing={showChat}
                     translate={translate}
                     close={() => setShowChat(false)}
@@ -164,7 +162,7 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
                     eventId={theEvent.id}
                     showInfo={showInfo}
                     gig={gig}
-                />
+                /> */}
             </Wrapper>
         </LogActivityInView>
     );

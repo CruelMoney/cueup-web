@@ -80,10 +80,7 @@ const ChatSidebar = (props) => {
                 {gig && gig.isActionable && (
                     <MessageComposerContainer style={{ zIndex: 1 }}>
                         {chat && organizer && (
-                            <MessageComposer
-                                chat={chat}
-                                placeholder={`Message ${receiver.name}...`}
-                            />
+                            <MessageComposer chat={chat} placeholder={`Message ${receiver.name}`} />
                         )}
                         {!organizer && !loading && <Body>Organizer not found</Body>}
                     </MessageComposerContainer>

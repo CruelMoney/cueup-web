@@ -1,21 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
-import { Avatar, ClosePopupButton, Row } from 'components/Blocks';
+import { NavLink } from 'react-router-dom';
+import { Avatar, ClosePopupButton, Row, TeritaryButton } from 'components/Blocks';
 import { EVENT_GIGS } from 'routes/Event/gql';
 import { gigStates } from 'constants/constants';
-import { BodyBold, BodySmall } from 'components/Text';
 import Chat from 'components/common/Chat';
+import useTranslate from 'components/hooks/useTranslate';
+import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
+import { useNotifications } from 'utils/NotificationService';
 
-const gigToChatConfig = ({ organizer, eventId }) => (gig) => ({
+const gigToChatConfig = ({ organizer, eventId, notifications }) => (gig) => ({
+    ...gig,
     showPersonalInformation: gig.status === gigStates.CONFIRMED,
-    id: gig.id,
     chatId: gig.id,
     receiver: {
         id: gig.dj?.id,
         nickName: gig.dj?.artistName,
         name: gig.dj?.userMetadata.firstName,
         image: gig.dj?.picture.path,
+        permalink: gig.dj?.permalink,
     },
     sender: {
         id: organizer.id,
@@ -23,10 +27,11 @@ const gigToChatConfig = ({ organizer, eventId }) => (gig) => ({
         name: organizer.userMetadata.firstName,
         image: organizer.picture.path,
     },
+    hasMessage: notifications[gig.id] && notifications[gig.id].read < notifications[gig.id].total,
     eventId,
 });
 
-const DataWrapper = ({ event }) => {
+const DataWrapper = ({ event, userId }) => {
     const { data } = useQuery(EVENT_GIGS, {
         skip: !event?.id,
         variables: {
@@ -35,25 +40,37 @@ const DataWrapper = ({ event }) => {
         },
     });
 
+    const [notifications, { readRoom }] = useNotifications({
+        userId,
+    });
+
     if (!event) {
         return null;
     }
 
     const chats = data?.event?.gigs
         // .filter((g) => g.chatInitiated)
-        .map(gigToChatConfig({ organizer: event.organizer, eventId: event?.id }));
+        .map(gigToChatConfig({ notifications, organizer: event.organizer, eventId: event?.id }));
 
-    return <SidebarChat chats={chats} />;
+    return <SidebarChat chats={chats} event={event} readRoom={readRoom} />;
 };
 
-const SidebarChat = ({ chats = [] }) => {
+const SidebarChat = ({ chats = [], event, readRoom }) => {
     const [activeChat, setActiveChat] = useState();
 
     const activeChats = chats.slice(0, 7);
 
+    useEffect(() => {
+        if (activeChat) {
+            readRoom(activeChat.id);
+        }
+    }, [readRoom, activeChat]);
+
     return (
         <FixedWrapper>
-            {activeChat && <ChatWrapper chat={activeChat} onClose={() => setActiveChat(null)} />}
+            {activeChat && (
+                <ChatWrapper chat={activeChat} event={event} onClose={() => setActiveChat(null)} />
+            )}
             <ChatList>
                 {activeChats.map((c) => (
                     <ChatBubble
@@ -68,14 +85,14 @@ const SidebarChat = ({ chats = [] }) => {
     );
 };
 
-const ChatBubble = ({ receiver, onClick, active }) => {
+const ChatBubble = ({ receiver, onClick, active, hasMessage }) => {
     return (
         <ChatItem onClick={onClick} className={active ? 'active' : ''}>
             <ChatAvatarWrapper>
                 <ShadowWrapper>
                     <img src={receiver.image} />
                 </ShadowWrapper>
-                <NewMessages />
+                {hasMessage && <NewMessagesIndicator />}
             </ChatAvatarWrapper>
 
             {!active && (
@@ -90,18 +107,44 @@ const ChatBubble = ({ receiver, onClick, active }) => {
     );
 };
 
-const ChatWrapper = ({ chat, onClose }) => {
-    const { receiver } = chat;
+const ChatWrapper = ({ chat, event, onClose }) => {
+    const { receiver, chatId } = chat;
+    const { translate } = useTranslate();
+    useEffect(() => {
+        return () => {
+            document.body.style.overflowY = '';
+        };
+    }, []);
+
+    const pathname = `${translate(appRoutes.user)}/${receiver.permalink}/${userRoutes.overview}`;
+
     return (
-        <ChatBox>
+        <ChatBox
+            onMouseEnter={() => (document.body.style.overflowY = 'hidden')}
+            onMouseLeave={() => (document.body.style.overflowY = '')}
+        >
             <ChatHeader>
-                <Row>
-                    <Avatar small src={receiver.image} style={{ zIndex: 1, marginRight: '8px' }} />
-                    <NameBlock>
-                        {receiver.nickName || receiver.name}
-                        {receiver.nickName && <span>{receiver.name}</span>}
-                    </NameBlock>
-                </Row>
+                <NavLink
+                    to={{
+                        pathname,
+                        state: { gigId: chatId },
+                        search: `?gigId=${chatId}&eventId=${event.id}&hash=${event.hash}`,
+                    }}
+                >
+                    <TeritaryButton isWrapper title={`See ${receiver.name}'s profile`}>
+                        <Row middle>
+                            <Avatar
+                                small
+                                src={receiver.image}
+                                style={{ zIndex: 1, marginRight: '8px' }}
+                            />
+                            <NameBlock>
+                                {receiver.nickName || receiver.name}
+                                {receiver.nickName && <span>{receiver.name}</span>}
+                            </NameBlock>
+                        </Row>
+                    </TeritaryButton>
+                </NavLink>
                 <ClosePopupButton small onClick={onClose} />
             </ChatHeader>
             <div style={{ flex: 1 }} />
@@ -112,7 +155,7 @@ const ChatWrapper = ({ chat, onClose }) => {
     );
 };
 
-const NewMessages = styled.div`
+const NewMessagesIndicator = styled.div`
     border: 2px solid #ffffff;
     background-color: #fa383e;
     height: 16px;
@@ -141,6 +184,11 @@ const ChatMessagesWrapper = styled.div`
         &:hover {
             background-color: #f6f8f9;
         }
+    }
+
+    img {
+        opacity: 1;
+        z-index: 1 !important;
     }
 
     .messages {

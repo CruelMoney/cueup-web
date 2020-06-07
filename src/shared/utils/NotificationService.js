@@ -1,6 +1,7 @@
 import io from 'socket.io-client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useServerContext } from 'components/hooks/useServerContext';
+import { useAppState } from 'components/hooks/useAppState';
 
 export default class NotificationService {
     constructor() {
@@ -43,7 +44,7 @@ export default class NotificationService {
     };
 
     dispose = () => {
-        console.log('Disposing');
+        console.log('dispose socket');
         if (this.socket) {
             this.socket.close();
             this.socket = null;
@@ -70,26 +71,74 @@ export default class NotificationService {
 }
 
 export const useNotifications = ({ userId }) => {
-    const [notifications, setNotifications] = useState([]);
+    const { notifications, setAppState } = useAppState();
     const { environment } = useServerContext();
 
+    const setNotifications = useCallback(
+        (funOrVal) => {
+            setAppState((state) => {
+                const notifications =
+                    typeof funOrVal === 'function' ? funOrVal(state.notifications) : funOrVal;
+                return {
+                    ...state,
+                    notifications,
+                };
+            });
+        },
+        [setAppState]
+    );
+
     useEffect(() => {
+        const handleNewNotification = (n) => {
+            setNotifications((nn) => {
+                let existing = nn[n.room];
+                if (existing) {
+                    existing.total += 1;
+                } else {
+                    existing = {
+                        read: 0,
+                        total: 1,
+                    };
+                }
+
+                return {
+                    ...nn,
+                    [n.room]: existing,
+                };
+            });
+        };
+
         const connect = async () => {
             notificationService.init(userId, environment.CHAT_DOMAIN);
+            notificationService.addNotificationHandler(handleNewNotification);
             const nn = await notificationService.getChatStatus();
             setNotifications(nn);
         };
         if (userId) {
             connect();
             return () => {
+                notificationService.removeNotificationHandler(handleNewNotification);
                 notificationService.dispose();
             };
         }
-    }, [userId, environment]);
+    }, [userId, environment, setNotifications]);
 
-    const clearNotifications = () => setNotifications([]);
+    const readRoom = useCallback(
+        (id) => {
+            setNotifications((nn) => {
+                const existing = nn[id];
+                let notifications = nn;
+                if (existing) {
+                    existing.read = existing.total;
+                    notifications = { ...nn, [id]: existing };
+                }
+                return { notifications };
+            });
+        },
+        [setNotifications]
+    );
 
-    return [notifications, clearNotifications];
+    return [notifications, { readRoom }];
 };
 
 // Singleton pattern

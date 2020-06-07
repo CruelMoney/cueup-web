@@ -78,11 +78,7 @@ const Chat = ({
                 ) : null}
             </div>
             {!hideComposer && (
-                <MessageComposer
-                    autoFocus
-                    chat={chat}
-                    placeholder={'Send a message to ' + receiver.name + '...'}
-                />
+                <MessageComposer autoFocus chat={chat} placeholder={'Message ' + receiver.name} />
             )}
         </div>
     );

@@ -4,6 +4,7 @@ const defaultState = {
     showBottomPlayer: false,
     setAppState: () => {},
     onDeck: null,
+    notifications: {},
 };
 export const AppContext = createContext(defaultState);
 
@@ -13,7 +14,14 @@ export const useAppState = () => {
 };
 
 export const ProvideAppState = ({ children }) => {
-    const setAppState = (v) => setState((s) => ({ ...s, ...v }));
+    const setAppState = (v) =>
+        setState((s) => {
+            if (typeof v === 'function') {
+                return v(s);
+            }
+
+            return { ...s, ...v };
+        });
 
     const [state, setState] = useState({
         ...defaultState,
