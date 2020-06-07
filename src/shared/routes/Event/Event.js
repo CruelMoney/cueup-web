@@ -8,6 +8,7 @@ import { useRouteMatch } from 'react-router';
 import { appRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { useServerContext } from 'components/hooks/useServerContext';
+import { useNotifications } from 'utils/NotificationService';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col } from '../../components/Blocks';
@@ -33,6 +34,10 @@ const Index = ({ location }) => {
     });
 
     const { event: theEvent } = data || {};
+
+    const [notifications, { readRoom }] = useNotifications({
+        userId: theEvent?.organizer?.id,
+    });
 
     if (!loading && !theEvent) {
         return <Redirect to={translate(appRoutes.notFound)} />;
@@ -65,9 +70,10 @@ const Index = ({ location }) => {
                 theEvent={theEvent}
                 loading={loading}
                 translate={translate}
+                notifications={notifications}
             />
 
-            <SidebarChat event={theEvent} userId={theEvent?.organizer?.id} />
+            <SidebarChat event={theEvent} notifications={notifications} readRoom={readRoom} />
 
             <Footer
                 noSkew

@@ -17,7 +17,14 @@ import EmptyPage from '../../../../components/common/EmptyPage';
 import { gigStates } from '../../../../constants/constants';
 
 const EventGigs = React.forwardRef((props, ref) => {
-    const { theEvent = {}, loading: loadingEvent, translate, currency, match } = props;
+    const {
+        theEvent = {},
+        loading: loadingEvent,
+        translate,
+        currency,
+        match,
+        notifications,
+    } = props;
     const { status, organizer } = theEvent;
     const { data = {}, loading: loadingGigs, refetch } = useQuery(EVENT_GIGS, {
         skip: !theEvent.id,
@@ -31,9 +38,6 @@ const EventGigs = React.forwardRef((props, ref) => {
 
     const [refetchTries, setRefetchTries] = useState(data?.event ? 5 : 0);
     const history = useHistory();
-    const [notifications] = useNotifications({
-        userId: organizer.id,
-    });
 
     const loading = refetchTries < 15 || loadingEvent || loadingGigs;
 

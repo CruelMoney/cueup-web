@@ -22,19 +22,18 @@ const Chat = ({
 }) => {
     const messagesContainer = useRef();
 
-    const { typing, messages, ready, onNewContent } = chat;
-
-    const scrollToBottom = () => {
-        if (messagesContainer.current) {
-            console.log('Scrolling to bottom');
-            setTimeout(() => (messagesContainer.current.scrollTop = 99999999), 100);
-        }
-    };
+    const { typing, messages, ready } = chat;
 
     useEffect(() => {
-        onNewContent.current = scrollToBottom;
-        return () => (onNewContent.current = null);
-    }, [onNewContent]);
+        const scrollToBottom = () => {
+            if (messagesContainer.current) {
+                console.log('scrolling');
+                messagesContainer.current.scrollTop = 99999999;
+            }
+        };
+
+        scrollToBottom();
+    }, [messages]);
 
     const dateSorter = (a, b) => new Date(a.createdAt) - new Date(b.createdAt);
     const allMessages = systemMessages
@@ -352,6 +351,7 @@ const WithNotificationMessage = ({ systemMessages = [], ...props }) => {
 
 const WithChat = (props) => {
     const { sender, receiver, chatId, showPersonalInformation, eventId } = props;
+
     const chat = useChat({
         sender,
         receiver,

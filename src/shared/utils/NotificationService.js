@@ -89,35 +89,14 @@ export const useNotifications = ({ userId }) => {
     );
 
     useEffect(() => {
-        const handleNewNotification = (n) => {
-            setNotifications((nn) => {
-                let existing = nn[n.room];
-                if (existing) {
-                    existing.total += 1;
-                } else {
-                    existing = {
-                        read: 0,
-                        total: 1,
-                    };
-                }
-
-                return {
-                    ...nn,
-                    [n.room]: existing,
-                };
-            });
-        };
-
         const connect = async () => {
             notificationService.init(userId, environment.CHAT_DOMAIN);
-            notificationService.addNotificationHandler(handleNewNotification);
             const nn = await notificationService.getChatStatus();
             setNotifications(nn);
         };
         if (userId) {
             connect();
             return () => {
-                notificationService.removeNotificationHandler(handleNewNotification);
                 notificationService.dispose();
             };
         }
@@ -137,6 +116,33 @@ export const useNotifications = ({ userId }) => {
         },
         [setNotifications]
     );
+
+    // handle the notification
+    useEffect(() => {
+        const handleNewNotification = (n) => {
+            setNotifications((nn) => {
+                let existing = nn[n.room];
+                if (existing) {
+                    existing.total += 1;
+                } else {
+                    existing = {
+                        read: 0,
+                        total: 1,
+                    };
+                }
+
+                return {
+                    ...nn,
+                    [n.room]: existing,
+                };
+            });
+        };
+        notificationService.addNotificationHandler(handleNewNotification);
+
+        return () => {
+            notificationService.removeNotificationHandler(handleNewNotification);
+        };
+    }, [setNotifications]);
 
     return [notifications, { readRoom }];
 };

@@ -31,7 +31,7 @@ const gigToChatConfig = ({ organizer, eventId, notifications }) => (gig) => ({
     eventId,
 });
 
-const DataWrapper = ({ event, userId }) => {
+const DataWrapper = ({ event, readRoom, notifications }) => {
     const { data } = useQuery(EVENT_GIGS, {
         skip: !event?.id,
         variables: {
@@ -40,9 +40,13 @@ const DataWrapper = ({ event, userId }) => {
         },
     });
 
-    const [notifications, { readRoom }] = useNotifications({
-        userId,
-    });
+    const [activeChat, setActiveChat] = useState();
+
+    useEffect(() => {
+        if (activeChat) {
+            readRoom(activeChat.id);
+        }
+    }, [readRoom, activeChat, notifications]);
 
     if (!event) {
         return null;
@@ -52,19 +56,18 @@ const DataWrapper = ({ event, userId }) => {
         // .filter((g) => g.chatInitiated)
         .map(gigToChatConfig({ notifications, organizer: event.organizer, eventId: event?.id }));
 
-    return <SidebarChat chats={chats} event={event} readRoom={readRoom} />;
+    return (
+        <SidebarChat
+            chats={chats}
+            event={event}
+            setActiveChat={setActiveChat}
+            activeChat={activeChat}
+        />
+    );
 };
 
-const SidebarChat = ({ chats = [], event, readRoom }) => {
-    const [activeChat, setActiveChat] = useState();
-
+const SidebarChat = ({ chats = [], event, activeChat, setActiveChat }) => {
     const activeChats = chats.slice(0, 7);
-
-    useEffect(() => {
-        if (activeChat) {
-            readRoom(activeChat.id);
-        }
-    }, [readRoom, activeChat]);
 
     return (
         <FixedWrapper>

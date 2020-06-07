@@ -8,7 +8,6 @@ const useChat = ({ sender, receiver, id, showPersonalInformation, data }) => {
     const chat = useRef();
     const startedTyping = useRef();
     const stoppedTyping = useRef();
-    const onNewContent = useRef();
     const [messages, setMessages] = useState([]);
     const [sending, setSending] = useState(false);
     const [ready, setReady] = useState(false);
@@ -27,7 +26,6 @@ const useChat = ({ sender, receiver, id, showPersonalInformation, data }) => {
             },
         ]);
         setSending(sending);
-        onNewContent.current && onNewContent.current(message);
     }, []);
 
     // initialize
@@ -37,7 +35,6 @@ const useChat = ({ sender, receiver, id, showPersonalInformation, data }) => {
             chat.current.init({ showPersonalInformation }).then((messages) => {
                 setMessages(messages);
                 setReady(true);
-                onNewContent.current && onNewContent.current();
             });
             return () => {
                 chat.current.dispose();
@@ -104,7 +101,6 @@ const useChat = ({ sender, receiver, id, showPersonalInformation, data }) => {
         sendMessage,
         handleChange,
         newMessage,
-        onNewContent,
     };
 };
 
