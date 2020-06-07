@@ -42,9 +42,9 @@ const Index = ({ location }) => {
     const [activeChat, setActiveChat] = useState();
 
     useEffect(() => {
-        const hasNoti = notifications[activeChat?.id];
+        const hasNoti = notifications[activeChat];
         if (activeChat && hasNoti) {
-            readRoom(activeChat.id);
+            readRoom(activeChat);
         }
     }, [readRoom, activeChat, notifications]);
 

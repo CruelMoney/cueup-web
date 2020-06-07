@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useCallback } from 'react';
 
 const defaultState = {
     showBottomPlayer: false,
@@ -14,14 +14,17 @@ export const useAppState = () => {
 };
 
 export const ProvideAppState = ({ children }) => {
-    const setAppState = (v) =>
-        setState((s) => {
-            if (typeof v === 'function') {
-                return v(s);
-            }
+    const setAppState = useCallback(
+        (v) =>
+            setState((s) => {
+                if (typeof v === 'function') {
+                    return v(s);
+                }
 
-            return { ...s, ...v };
-        });
+                return { ...s, ...v };
+            }),
+        []
+    );
 
     const [state, setState] = useState({
         ...defaultState,
