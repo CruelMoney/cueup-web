@@ -125,7 +125,7 @@ export const NameBox = styled.div`
 
 export const FixedWrapper = styled.div`
     position: fixed;
-    bottom: 70px;
+    bottom: 20px;
     right: 0;
     z-index: 10;
     display: flex;
