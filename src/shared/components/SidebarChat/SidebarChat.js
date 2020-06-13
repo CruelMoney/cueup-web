@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 import { useQuery } from 'react-apollo';
 import { NavLink } from 'react-router-dom';
-import { Avatar, ClosePopupButton, Row, TeritaryButton } from 'components/Blocks';
+import { Avatar, ClosePopupButton, Row, TeritaryButton, Col } from 'components/Blocks';
 import { EVENT_GIGS } from 'routes/Event/gql';
 import { gigStates } from 'constants/constants';
 import Chat from 'components/common/Chat';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import { useAppState } from 'components/hooks/useAppState';
+import { BodySmall } from 'components/Text';
 import {
     ShadowWrapper,
     ExtraChatsLayover,
@@ -75,7 +76,8 @@ const SidebarChat = () => {
                 (latestChat, chat) => {
                     if (
                         chat.lastChatMessage &&
-                        latestChat.lastChatMessage.date < new Date(chat.lastChatMessage.date)
+                        new Date(latestChat.lastChatMessage.date) <
+                            new Date(chat.lastChatMessage.date)
                     ) {
                         return chat;
                     }
@@ -232,9 +234,17 @@ const ChatWrapper = ({ chat, event, onClose }) => {
             </ChatHeader>
             <div style={{ flex: 1 }} />
             <ChatMessagesWrapper>
-                <Chat {...chat} />
+                <Chat key={chat.id} {...chat} placeholder={<EmptyChat receiver={receiver} />} />
             </ChatMessagesWrapper>
         </ChatBox>
+    );
+};
+
+const EmptyChat = ({ receiver }) => {
+    return (
+        <Col center middle style={{ height: '100%' }}>
+            <BodySmall>Ask {receiver.name} about anything.</BodySmall>
+        </Col>
     );
 };
 
