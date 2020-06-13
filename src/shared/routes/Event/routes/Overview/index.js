@@ -39,20 +39,7 @@ const EventGigs = React.forwardRef((props, ref) => {
     const [refetchTries, setRefetchTries] = useState(data?.event ? 5 : 0);
     const history = useHistory();
 
-    const loading = refetchTries < 15 || loadingEvent || loadingGigs;
-
-    // event polling for djs
-    useEffect(() => {
-        console.log({ refetchTries, data });
-        if (refetchTries < 15 && !data.event) {
-            setTimeout(() => {
-                refetch();
-                setRefetchTries((c) => c + 1);
-            }, 1000);
-        } else {
-            setRefetchTries(15);
-        }
-    }, [refetchTries, refetch, data]);
+    const loading = refetchTries < 20 || loadingEvent || loadingGigs;
 
     let gigs = data.event ? data.event.gigs : [];
     gigs = gigs
@@ -62,6 +49,25 @@ const EventGigs = React.forwardRef((props, ref) => {
                 notifications[g.id] && notifications[g.id].read < notifications[g.id].total;
             return g;
         });
+
+    // event polling for djs
+    useEffect(() => {
+        if (refetchTries < 15 && !gigs?.length) {
+            setTimeout(() => {
+                refetch();
+                setRefetchTries((c) => c + 1);
+            }, 1000);
+        } else {
+            setRefetchTries(15);
+            // keep polling every 10 second until we have 8 up to 20 times
+            if (gigs.length < 8 && refetchTries < 20) {
+                setTimeout(() => {
+                    refetch();
+                    setRefetchTries((c) => c + 1);
+                }, 10000);
+            }
+        }
+    }, [refetchTries, refetch, gigs]);
 
     if (gigs.length === 0 && loading) {
         return (
