@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Icon, InlineIcon } from '@iconify/react';
 import chatbubbleEllipsesOutline from '@iconify/icons-ion/chatbubble-ellipses-outline';
+import helpIcon from '@iconify/icons-ion/help-circle-outline';
 import logoutIcon from '@iconify/icons-simple-line-icons/logout';
 import settingsOutline from '@iconify/icons-ion/settings-outline';
 import personOutline from '@iconify/icons-ion/person-outline';
@@ -12,6 +13,7 @@ import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import NavLink from 'components/common/Navlink';
 import { TeritaryButton } from 'components/Blocks';
+import { showOlark } from 'utils/olark';
 import UserRoute from '../../routes/User';
 import { useLogout } from '../hooks/useLogout';
 import UserMenuItem from './UserMenuItem';
@@ -139,6 +141,12 @@ const DropDownMenu = ({ user, ...props }) => {
                             Give Feedback
                         </MenuButton>
                     </a>
+                </li>
+                <li>
+                    <MenuButton onClick={showOlark}>
+                        <InlineIcon icon={helpIcon} />
+                        Help!?
+                    </MenuButton>
                 </li>
                 <li>
                     <NavLink to={t(appRoutes.home)} onClick={logout} activeClassName="">

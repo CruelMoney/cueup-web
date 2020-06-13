@@ -28,4 +28,10 @@ export const loadOlark = () => {
 
     /* custom configuration goes here (www.olark.com/documentation) */
     window.olark.identify('8095-537-10-2169');
+
+    window.olark('api.box.onShrink', () => {
+        setTimeout(() => {
+            window.olark('api.box.hide');
+        }, 500);
+    });
 };
