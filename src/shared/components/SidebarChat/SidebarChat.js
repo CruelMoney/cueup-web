@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useQuery } from 'react-apollo';
 import { NavLink } from 'react-router-dom';
 import { Avatar, ClosePopupButton, Row, TeritaryButton } from 'components/Blocks';
@@ -46,6 +46,7 @@ const gigToChatConfig = ({ organizer, eventId, notifications }) => (gig) => ({
 
 const SidebarChat = () => {
     const { notifications, activeChat, activeEvent, setAppState } = useAppState();
+    const initialized = useRef(false);
 
     const setActiveChat = (chat) => setAppState({ activeChat: chat });
 
@@ -57,12 +58,8 @@ const SidebarChat = () => {
         },
     });
 
-    if (!activeEvent) {
-        return null;
-    }
-
     const chats = data?.event?.gigs
-        .filter((g) => g.chatInitiated || notifications[g.id] || activeChat === g.id)
+        .filter((g) => !!g.lastChatMessage || notifications[g.id] || activeChat === g.id)
         .map(
             gigToChatConfig({
                 notifications,
@@ -70,6 +67,33 @@ const SidebarChat = () => {
                 eventId: activeEvent?.id,
             })
         );
+
+    // open the latest chat
+    useEffect(() => {
+        if (!initialized.current) {
+            const toBeActivated = chats.reduce(
+                (latestChat, chat) => {
+                    if (
+                        chat.lastChatMessage &&
+                        latestChat.lastChatMessage.date < new Date(chat.lastChatMessage.date)
+                    ) {
+                        return chat;
+                    }
+                    return latestChat;
+                },
+                { lastChatMessage: { date: new Date(0) } }
+            );
+
+            if (toBeActivated?.id) {
+                setActiveChat(toBeActivated.id);
+                initialized.current = true;
+            }
+        }
+    }, [activeChat, setActiveChat, chats]);
+
+    if (!activeEvent) {
+        return null;
+    }
 
     return (
         <InnerContent

@@ -290,7 +290,7 @@ const Message = (props) => {
             {isLast && isOwn && <Status sending={sending} message={props} />}
             {systemMessage && !nextMessage?.systemMessage ? (
                 <div className="message-info service-message">
-                    This is a service message from Cueup, and cannot be replied to.
+                    This is a service message from Cueup.
                 </div>
             ) : null}
         </>
