@@ -229,19 +229,6 @@ const AnimationWrapper = () => {
         leave: { transform: 'translate3d(0,100%,0)' },
     });
 
-    useEffect(() => {
-        if (window.olark) {
-            if (!track) {
-                window.olark('api.box.show');
-            } else {
-                window.olark('api.box.hide');
-                return () => {
-                    window.olark('api.box.show');
-                };
-            }
-        }
-    }, [track]);
-
     return transitions.map(
         ({ item, key, props }) =>
             item && (

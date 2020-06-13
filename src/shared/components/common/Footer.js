@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 import useTranslate from 'components/hooks/useTranslate';
 import useAlternativePages from 'components/hooks/useAlternativePages';
+import { showOlark } from 'utils/olark/index';
 import InstagramLogo from '../../assets/InstagramLogo';
 // eslint-disable-next-line no-unused-vars
 import languageIcon from '../../assets/icons/language.svg';
@@ -276,10 +277,7 @@ const Footer = ({
                                 <Link to={translate(appRoutes.about)}>{translate('about')}</Link>
                             </li>
                             <li>
-                                <a
-                                    className="link-look"
-                                    onClick={() => window.olark('api.box.expand')}
-                                >
+                                <a className="link-look" onClick={showOlark}>
                                     {translate('contact')}
                                 </a>
                             </li>
@@ -311,10 +309,7 @@ const Footer = ({
                             </li>
 
                             <li>
-                                <a
-                                    className="link-look"
-                                    onClick={() => window.olark('api.box.expand')}
-                                >
+                                <a className="link-look" onClick={showOlark}>
                                     {translate('Feedback')}
                                 </a>
                             </li>

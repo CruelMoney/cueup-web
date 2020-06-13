@@ -1,6 +1,7 @@
 import React from 'react';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
+import { showOlark } from 'utils/olark/index';
 import Footer from '../../../components/common/Footer';
 
 export default () => {
@@ -32,7 +33,7 @@ export default () => {
                             <a
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    window.olark('api.box.expand');
+                                    showOlark();
                                 }}
                             >
                                 Send a message

@@ -32,15 +32,6 @@ import content from './content.json';
 const Index = ({ location, match, history }) => {
     const { translate } = useNamespaceContent(content, 'gig');
 
-    useEffect(() => {
-        if (window.olark) {
-            window.olark('api.box.hide');
-            return () => {
-                window.olark('api.box.show');
-            };
-        }
-    }, []);
-
     const {
         params: { id },
     } = match;
