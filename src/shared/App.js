@@ -11,6 +11,7 @@ import LazyEvent from 'routes/Event';
 import ResetPassword from 'routes/ResetPassword';
 import LazyLocation, { LazyLocationsOverview } from 'routes/Location';
 import LazyGig from 'routes/Gig';
+import LazySideBarChat from 'components/SidebarChat';
 
 import LazyFaq from 'routes/Faq';
 import LazyBecomeDj from 'routes/BecomeDj';
@@ -40,7 +41,7 @@ const App = () => {
 
 const RouteWrapper = () => {
     const { t } = useTranslation();
-    const { showBottomPlayer } = useAppState();
+    const { showBottomPlayer, showSideBarChat } = useAppState();
 
     return (
         <div id="content">
@@ -71,6 +72,8 @@ const RouteWrapper = () => {
                 <Route component={NotFound} />
             </Switch>
             {showBottomPlayer && <BottomPlayer />}
+
+            {showSideBarChat && <LazySideBarChat />}
         </div>
     );
 };

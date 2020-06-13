@@ -7,6 +7,7 @@ import { gigStates } from 'constants/constants';
 import Chat from 'components/common/Chat';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
+import { useAppState } from 'components/hooks/useAppState';
 import {
     ShadowWrapper,
     ExtraChatsLayover,
@@ -43,34 +44,44 @@ const gigToChatConfig = ({ organizer, eventId, notifications }) => (gig) => ({
     eventId,
 });
 
-const DataWrapper = ({ event, activeChat, setActiveChat, notifications }) => {
+const SidebarChat = () => {
+    const { notifications, activeChat, activeEvent, setAppState } = useAppState();
+
+    const setActiveChat = (chat) => setAppState({ activeChat: chat });
+
     const { data } = useQuery(EVENT_GIGS, {
-        skip: !event?.id,
+        skip: !activeEvent?.id,
         variables: {
-            id: event?.id,
-            hash: event?.hash,
+            id: activeEvent?.id,
+            hash: activeEvent?.hash,
         },
     });
 
-    if (!event) {
+    if (!activeEvent) {
         return null;
     }
 
     const chats = data?.event?.gigs
         .filter((g) => g.chatInitiated || notifications[g.id] || activeChat === g.id)
-        .map(gigToChatConfig({ notifications, organizer: event.organizer, eventId: event?.id }));
+        .map(
+            gigToChatConfig({
+                notifications,
+                organizer: activeEvent.organizer,
+                eventId: activeEvent?.id,
+            })
+        );
 
     return (
-        <SidebarChat
+        <InnerContent
             chats={chats}
-            event={event}
+            event={activeEvent}
             setActiveChat={setActiveChat}
             activeChat={activeChat}
         />
     );
 };
 
-const SidebarChat = ({ chats = [], event, activeChat, setActiveChat }) => {
+const InnerContent = ({ chats = [], event, activeChat, setActiveChat }) => {
     const doesOverflow = chats.length > 7;
     const activeChats = chats.slice(0, doesOverflow ? 6 : 7);
     const remainingChats = chats.slice(6);
@@ -203,4 +214,4 @@ const ChatWrapper = ({ chat, event, onClose }) => {
     );
 };
 
-export default DataWrapper;
+export default SidebarChat;

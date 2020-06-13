@@ -5,6 +5,9 @@ const defaultState = {
     setAppState: () => {},
     onDeck: null,
     notifications: {},
+    activeChat: null,
+    showSideBarChat: false,
+    activeEvent: null,
 };
 export const AppContext = createContext(defaultState);
 

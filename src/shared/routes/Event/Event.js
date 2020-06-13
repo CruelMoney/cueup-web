@@ -8,7 +8,8 @@ import { useRouteMatch } from 'react-router';
 import { appRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { useServerContext } from 'components/hooks/useServerContext';
-import { useNotifications } from 'utils/NotificationService';
+import { useNotifications } from 'components/hooks/useNotifications';
+import { useAppState } from 'components/hooks/useAppState';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col } from '../../components/Blocks';
@@ -19,10 +20,10 @@ import Overview from './routes/Overview';
 import Requirements from './routes/Requirements';
 import Review from './routes/Review';
 import content from './content.json';
-import SidebarChat from './components/blocks/SidebarChat';
 
 const Index = ({ location }) => {
     const match = useRouteMatch();
+    const { setAppState } = useAppState();
     const { translate } = useNamespaceContent(content, 'event');
     const { id, hash } = match.params;
     const { data, loading } = useQuery(EVENT, {
@@ -35,18 +36,15 @@ const Index = ({ location }) => {
 
     const { event: theEvent } = data || {};
 
-    const [notifications, { readRoom }] = useNotifications({
+    const [notifications] = useNotifications({
         userId: theEvent?.organizer?.id,
     });
 
-    const [activeChat, setActiveChat] = useState();
-
     useEffect(() => {
-        const hasNoti = notifications[activeChat];
-        if (activeChat && hasNoti) {
-            readRoom(activeChat);
+        if (theEvent) {
+            setAppState({ showSideBarChat: true, activeEvent: theEvent });
         }
-    }, [readRoom, activeChat, notifications]);
+    }, [setAppState, theEvent]);
 
     if (!loading && !theEvent) {
         return <Redirect to={translate(appRoutes.notFound)} />;
@@ -80,14 +78,6 @@ const Index = ({ location }) => {
                 loading={loading}
                 translate={translate}
                 notifications={notifications}
-                setActiveChat={setActiveChat}
-            />
-
-            <SidebarChat
-                event={theEvent}
-                notifications={notifications}
-                setActiveChat={setActiveChat}
-                activeChat={activeChat}
             />
 
             <Footer
