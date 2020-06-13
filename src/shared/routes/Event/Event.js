@@ -40,6 +40,8 @@ const Index = ({ location }) => {
         userId: theEvent?.organizer?.id,
     });
 
+    const setActiveChat = (chat) => setAppState({ activeChat: chat });
+
     useEffect(() => {
         if (theEvent) {
             setAppState({ showSideBarChat: true, activeEvent: theEvent });
@@ -78,6 +80,7 @@ const Index = ({ location }) => {
                 loading={loading}
                 translate={translate}
                 notifications={notifications}
+                setActiveChat={setActiveChat}
             />
 
             <Footer
