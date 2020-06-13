@@ -39,7 +39,7 @@ const Chat = ({
     const allMessages = systemMessages
         ? [...messages, ...systemMessages].sort(dateSorter)
         : messages;
-    const datedMessages = toDateGroups(allMessages);
+    const datedMessages = Object.entries(toDateGroups(allMessages));
 
     return (
         <div className="chat">
@@ -54,7 +54,7 @@ const Chat = ({
                 ) : messages.length > 0 ? null : (
                     placeholder
                 )}
-                {Object.entries(datedMessages).map(([time, messages]) => (
+                {datedMessages.map(([time, messages], idx) => (
                     <DateGroup
                         key={time}
                         messages={messages}
@@ -62,6 +62,7 @@ const Chat = ({
                         sender={sender}
                         receiver={receiver}
                         showPersonalInformation={showPersonalInformation}
+                        isLastDateGroup={datedMessages.length === idx + 1}
                     />
                 ))}
 
@@ -122,8 +123,8 @@ const enrichMessages = ({ sender, receiver, messages }) => {
     return messages.map((msg, idx) => ({
         ...msg,
         isOwn: msg.from === sender.id,
-        isLast: idx + 1 === messages.length,
-        isFirst: idx === 0,
+        isLastInGroup: idx + 1 === messages.length,
+        isFirstInGroup: idx === 0,
         image: msg.from === sender.id ? sender.image : receiver.image,
     }));
 };
@@ -174,30 +175,39 @@ const toSenderGroup = (messages) => {
     }, {});
 };
 
-const DateGroup = ({ messages, time, sender, receiver, showPersonalInformation }) => {
+const DateGroup = ({
+    messages,
+    isLastDateGroup,
+    time,
+    sender,
+    receiver,
+    showPersonalInformation,
+}) => {
     const date = moment.unix(time / 1000);
     const isToday = moment().diff(date, 'days') === 0;
     const formatted = isToday ? date.format('LT') : date.format('LL');
 
     const groupedMessages = toSenderGroup(messages);
+    const groups = Object.entries(groupedMessages);
     return (
         <div>
             <p className="messages-date">{formatted}</p>
 
-            {Object.entries(groupedMessages).map(([senderId, messages], idx) => (
+            {groups.map(([senderId, messages], idx) => (
                 <SenderGroup
                     key={time + '-' + idx}
                     messages={messages}
                     receiver={receiver}
                     sender={sender}
                     showPersonalInformation={showPersonalInformation}
+                    isLastGroup={isLastDateGroup && groups.length === idx + 1}
                 />
             ))}
         </div>
     );
 };
 
-const SenderGroup = ({ messages, sender, receiver, showPersonalInformation }) => {
+const SenderGroup = ({ messages, isLastGroup, sender, receiver, showPersonalInformation }) => {
     const enrichedMessages = enrichMessages({ sender, receiver, messages });
 
     return (
@@ -208,6 +218,7 @@ const SenderGroup = ({ messages, sender, receiver, showPersonalInformation }) =>
                     {...m}
                     showPersonalInformation={showPersonalInformation}
                     nextMessage={enrichedMessages[idx + 1]}
+                    isLast={isLastGroup && messages.length === idx + 1}
                 />
             ))}
         </div>
@@ -218,8 +229,9 @@ const Message = (props) => {
     const {
         content,
         isOwn,
-        isFirst,
         isLast,
+        isFirstInGroup,
+        isLastInGroup,
         actions,
         containsNumber,
         containsURL,
@@ -236,21 +248,21 @@ const Message = (props) => {
         ? {
               borderTopLeftRadius: '20px',
               borderBottomLeftRadius: '20px',
-              borderBottomRightRadius: isLast ? '20px' : '2px',
-              borderTopRightRadius: isFirst ? '20px' : '2px',
+              borderBottomRightRadius: isLastInGroup ? '20px' : '2px',
+              borderTopRightRadius: isFirstInGroup ? '20px' : '2px',
           }
         : {
               borderTopRightRadius: '20px',
               borderBottomRightRadius: '20px',
-              borderBottomLeftRadius: isLast ? '20px' : '2px',
-              borderTopLeftRadius: isFirst ? '20px' : '2px',
+              borderBottomLeftRadius: isLastInGroup ? '20px' : '2px',
+              borderTopLeftRadius: isFirstInGroup ? '20px' : '2px',
           };
 
     return (
         <>
             <div className={`message-wrapper ${isOwn ? 'send' : 'received'}`}>
                 <div className={`message ${isOwn ? 'send' : 'received'}`}>
-                    {isLast && !isOwn && (
+                    {isLastInGroup && !isOwn && (
                         <Avatar
                             className="avatar"
                             alt={isOwn ? 'your picture' : 'receiver picture'}
