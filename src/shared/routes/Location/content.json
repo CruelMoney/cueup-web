@@ -1,7 +1,7 @@
 {
     "en": {
-        "title": "Book DJ in {{location}}",
-        "title-2": "Book DJ in <b>{{location}}</b>",
+        "title": "Book a DJ in {{location}}",
+        "title-2": "Book a DJ in <b>{{location}}</b>",
         "description": "Cueup is the easiest way for you to find DJs in {{location}}. Just tell us about your event, and within 1 day you will receive non-binding offers from DJs near you.",
         "sections": {
             "left": {

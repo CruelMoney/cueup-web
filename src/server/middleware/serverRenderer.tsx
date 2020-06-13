@@ -97,6 +97,7 @@ const serverRenderer = () => async (req, res) => {
         );
     }
 
+    res.setHeader('Content-Type', 'text/html');
     res.write('<!DOCTYPE html>');
 
     return renderToNodeStream(
