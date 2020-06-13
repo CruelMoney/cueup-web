@@ -59,7 +59,7 @@ export const ChatMessagesWrapper = styled.div`
         font-size: 1em;
     }
     .message-composer {
-        padding: 0.5em;
+        padding: 0.25em 0.5em;
     }
 `;
 
@@ -107,6 +107,11 @@ export const ChatBox = styled.div`
     display: flex;
     flex-direction: column;
     position: relative;
+    @media screen and (max-width: 420px) {
+        width: calc(100vw - 40px);
+        margin-right: 20px;
+        margin-bottom: 6px;
+    }
 `;
 
 export const NameBox = styled.div`
@@ -130,6 +135,9 @@ export const FixedWrapper = styled.div`
     z-index: 10;
     display: flex;
     align-items: flex-end;
+    @media screen and (max-width: 420px) {
+        flex-direction: column;
+    }
 `;
 
 export const ChatList = styled.ul`
@@ -138,6 +146,10 @@ export const ChatList = styled.ul`
     position: relative;
     justify-content: flex-end;
     margin: 0;
+    @media screen and (max-width: 420px) {
+        flex-direction: row;
+        margin-right: 10px;
+    }
 `;
 
 export const ShadowWrapper = styled.div`
@@ -179,6 +191,16 @@ export const ChatItem = styled.li`
         }
         ${ShadowWrapper} {
             box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 4px 0px, rgba(0, 0, 0, 0.2) 0px 16px 28px 0px;
+        }
+    }
+
+    @media screen and (max-width: 420px) {
+        width: 60px;
+        &.active:before,
+        :hover:before {
+            left: initial;
+            top: 0;
+            transform: translate(0%, -100%) rotate(45deg);
         }
     }
 `;
