@@ -233,9 +233,9 @@ const EmailNotVerifiedSection = ({ gigs, organizer }) => {
         <Col style={{ maxWidth: 500 }}>
             <Title>Verify your email</Title>
             <Body>
-                So far we've already found {foundDjs} {foundDjs > 1 ? 'DJs' : 'DJ'} for you, but
-                first you need to verify your email <b>{organizer?.email}</b>, so you don't loose
-                access to this page.
+                So far we've found {foundDjs} {foundDjs > 1 ? 'DJs' : 'DJ'} for you, but first you
+                need to verify your email <b>{organizer?.email}</b>, so you don't loose access to
+                this page.
             </Body>
             <InputRow style={{ marginTop: '30px' }}>
                 <SecondaryButton disabled={loading || data} onClick={resendLink}>
