@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { useQuery } from 'react-apollo';
 import { NavLink } from 'react-router-dom';
 import { Avatar, ClosePopupButton, Row, TeritaryButton } from 'components/Blocks';
@@ -48,7 +48,7 @@ const SidebarChat = () => {
     const { notifications, activeChat, activeEvent, setAppState } = useAppState();
     const initialized = useRef(false);
 
-    const setActiveChat = (chat) => setAppState({ activeChat: chat });
+    const setActiveChat = useCallback((chat) => setAppState({ activeChat: chat }), [setAppState]);
 
     const { data } = useQuery(EVENT_GIGS, {
         skip: !activeEvent?.id,
@@ -70,7 +70,7 @@ const SidebarChat = () => {
 
     // open the latest chat
     useEffect(() => {
-        if (!initialized.current) {
+        if (!initialized.current && chats) {
             const toBeActivated = chats.reduce(
                 (latestChat, chat) => {
                     if (
@@ -91,7 +91,7 @@ const SidebarChat = () => {
         }
     }, [activeChat, setActiveChat, chats]);
 
-    if (!activeEvent) {
+    if (!activeEvent || !chats) {
         return null;
     }
 

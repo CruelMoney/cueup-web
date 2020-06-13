@@ -1,21 +1,23 @@
 import React, { useState, useMemo } from 'react';
 import { useQuery } from 'react-apollo';
-import { NavLink, useRouteMatch, useHistory, Route } from 'react-router-dom';
+import { NavLink, useRouteMatch, useHistory } from 'react-router-dom';
 import queryString from 'query-string';
 import { appRoutes, userRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
+import { useAppState } from 'components/hooks/useAppState';
 import { CTAButton } from '../../../components/Sidebar';
-import Popup from '../../../components/common/Popup';
 import { GIG } from '../gql';
 import { LoadingIndicator } from '../../../components/Blocks';
-import Chat from '../../../components/common/Chat';
-import EmptyPage from '../../../components/common/EmptyPage';
 
 const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
+    const { setAppState } = useAppState();
     const { translate } = useTranslate();
-    const [showPopup, setShowPopup] = useState(false);
 
     const canBePaid = gig && gig.offer && gig.status === 'ACCEPTED' && event.status === 'ACCEPTED';
+
+    const openChat = () => {
+        setAppState({ showSideBarChat: true, activeChat: gig.id, activeEvent: { hash, ...event } });
+    };
 
     if (canBePaid) {
         return (
@@ -47,27 +49,9 @@ const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
         const { organizer } = event;
         return (
             <>
-                <CTAButton data-cy="profile-cta" onClick={() => setShowPopup(true)}>
+                <CTAButton data-cy="profile-cta" onClick={openChat}>
                     SEND MESSAGE
                 </CTAButton>
-                <Popup noPadding showing={showPopup} onClickOutside={() => setShowPopup(false)}>
-                    <Chat
-                        showPersonalInformation={false}
-                        eventId={event.id}
-                        receiver={{
-                            id: user.id,
-                            name: user.userMetadata.firstName,
-                            image: user.picture.path,
-                        }}
-                        sender={{
-                            id: organizer.id,
-                            name: organizer.userMetadata.firstName,
-                            image: organizer.picture.path,
-                        }}
-                        chatId={gig.id}
-                        placeholder={<EmptyPage title="No messages" />}
-                    />
-                </Popup>
             </>
         );
     }

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Query } from 'react-apollo';
 import usePushNotifications from 'components/hooks/usePushNotifications';
 import useTranslate from 'components/hooks/useTranslate';
-import { useNotifications } from 'utils/NotificationService';
+import { useNotifications } from 'components/hooks/useNotifications';
 import EmptyPage from '../../../../../components/common/EmptyPage';
 import { LoadingPlaceholder2 } from '../../../../../components/common/LoadingPlaceholder';
 import { MY_GIGS } from '../../../../../components/gql';
