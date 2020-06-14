@@ -57,6 +57,9 @@ const ErrorMessageApollo = ({ style, error, center, email, onFoundCode }) => {
             if (e.extensions.code === 'EMAIL_NOT_VERIFIED') {
                 showResend = true;
             }
+            if (e.message === 'EMAIL_NOT_UNIQUE') {
+                msgs = ['Email already in use'];
+            }
         });
     }
 

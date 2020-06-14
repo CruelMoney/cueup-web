@@ -22,7 +22,7 @@ const required = (msg) => (val) => (!val ? msg : null);
 const Requirements = React.forwardRef(({ theEvent, history, pathname }, ref) => {
     const { translate } = useTranslate();
 
-    const [update, { loading }] = useMutation(UPDATE_EVENT);
+    const [update, { loading, error }] = useMutation(UPDATE_EVENT);
     const [cancelationPopup, setCancelationPopup] = useState();
 
     if (!theEvent) {
@@ -41,29 +41,23 @@ const Requirements = React.forwardRef(({ theEvent, history, pathname }, ref) => 
         organizer,
     } = theEvent;
 
-    const save = (key, optimistic) => (val) =>
-        theEvent[key] !== val &&
-        update({
-            variables: {
-                id: theEvent.id,
-                hash: theEvent.hash,
-                [key]: val,
-            },
-            optimisticResponse: {
-                __typename: 'Mutation',
-                updateEvent: {
-                    __typename: 'Event',
-                    ...theEvent,
-                    ...optimistic,
+    const save = (key, optimistic) => async (val) => {
+        if (theEvent[key] !== val) {
+            await update({
+                variables: {
+                    id: theEvent.id,
+                    hash: theEvent.hash,
+                    [key]: val,
                 },
-            },
-        });
+            });
+        }
+    };
 
     const isCancable = ![eventStates.FINISHED, eventStates.CANCELLED].includes(theEvent.status);
 
     return (
         <Col ref={ref}>
-            <SavingIndicator loading={loading} />
+            <SavingIndicator loading={loading} error={error} />
 
             <SettingsSection
                 title={'Contact information'}
