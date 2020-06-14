@@ -242,8 +242,11 @@ const ChatWrapper = ({ chat, event, onClose }) => {
 
 const EmptyChat = ({ receiver }) => {
     return (
-        <Col center middle style={{ height: '100%' }}>
-            <BodySmall>Ask {receiver.name} about anything.</BodySmall>
+        <Col center middle style={{ height: '100%', textAlign: 'center' }}>
+            <BodySmall style={{ marginBottom: '0.5em' }}>
+                Ask {receiver.name} about anything.
+            </BodySmall>
+            <BodySmall>Contact information will be visible after booking confirmation.</BodySmall>
         </Col>
     );
 };
