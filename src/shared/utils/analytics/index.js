@@ -4,28 +4,17 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router';
 import facebookPixelPlugin from './facebookPixelPlugin';
 
-const isDevelopment = process.env.NODE_ENV === 'development';
-
-const mockAnalytics = {
-    page: () => {},
-    track: () => {},
-    identify: () => {},
-};
-
-const analytics = isDevelopment
-    ? mockAnalytics
-    : Analytics({
-          app: 'cueup-web',
-          plugins: [
-              googleAnalytics({
-                  trackingId: 'UA-59876038-4',
-                  debug: true,
-              }),
-              facebookPixelPlugin({
-                  pixelId: '1461498583979582',
-              }),
-          ],
-      });
+const analytics = Analytics({
+    app: 'cueup-web',
+    plugins: [
+        googleAnalytics({
+            trackingId: 'UA-59876038-4',
+        }),
+        facebookPixelPlugin({
+            pixelId: '1461498583979582',
+        }),
+    ],
+});
 
 export const trackPageView = (url) => {
     analytics.page({
