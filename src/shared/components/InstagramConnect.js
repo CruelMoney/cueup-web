@@ -60,7 +60,7 @@ const InstagramConnectIndicator = ({ code, mutate, loading, data, error }) => {
             overlay
             active={active}
             loading={loading}
-            message={data ? 'Instagram connected' : 'Connecting instagram'}
+            message={data ? data.connectInstagram : 'Connecting instagram'}
         >
             {error && <ErrorMessageApollo error={error} />}
         </Notification>

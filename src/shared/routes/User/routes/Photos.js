@@ -2,23 +2,22 @@ import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useQuery, useMutation } from 'react-apollo';
 
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import removeCircle from '@iconify/icons-ion/remove-circle';
 
 import { useInView } from 'react-intersection-observer';
-import { useConnectInstagram } from 'components/hooks/useConnectInstagram';
 import GracefullImage from '../../../components/GracefullImage';
 import { USER_PHOTOS, ADD_MEDIA, DELETE_MEDIA, UPDATE_PHOTOS_ORDER, USER } from '../gql';
 import EmptyPage from '../../../components/common/EmptyPage';
 import { getErrorMessage } from '../../../components/common/ErrorMessageApollo';
-import { SecondaryButton, Col, TeritaryButton, LoadingIndicator } from '../../../components/Blocks';
+import { Col, TeritaryButton } from '../../../components/Blocks';
 import { ButtonFileInput } from '../../../components/FormComponents';
 import { ImageCompressor } from '../../../utils/ImageCompressor';
 import GracefullVideo from '../../../components/GracefullVideo';
 import ReorderGrid from '../components/ReorderGrid';
 import SavingIndicator from '../../../components/SavingIndicator';
 import InstagramLogo from '../../../assets/InstagramLogo';
-import { BodySmall } from '../../../components/Text';
+import { BodySmall, Body } from '../../../components/Text';
 import ConnectInstagram from '../components/ConnectInstagram';
 
 const LIMIT = 6;
