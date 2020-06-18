@@ -6,10 +6,10 @@ import queryString from 'query-string';
 
 import moment from 'moment';
 
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import pinIcon from '@iconify/icons-ion/location-sharp';
 import addCircleIcon from '@iconify/icons-ion/add-circle';
-import instagramIcon from '@iconify/icons-ion/logo-instagram';
+import instagramIcon from '@iconify/icons-ion/logo-instagram-outline';
 import { Helmet } from 'react-helmet-async';
 import PayForm from 'components/common/PayForm.js';
 

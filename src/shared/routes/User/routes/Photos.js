@@ -465,7 +465,14 @@ const getCellStyle = (idx) => {
     return {};
 };
 
-const Images = ({ renderMedia, isOwn, deleteFile, updateFilesOrder, children }) => {
+const Images = ({
+    instagramConnected,
+    renderMedia,
+    isOwn,
+    deleteFile,
+    updateFilesOrder,
+    children,
+}) => {
     const imgData = renderMedia
         .sort((a, b) => a.orderBy - b.orderBy)
         .map((file, idx) => ({
@@ -518,7 +525,7 @@ const Images = ({ renderMedia, isOwn, deleteFile, updateFilesOrder, children }) 
     );
 };
 
-const EmptyCTA = ({ uploadFiles }) => {
+const EmptyCTA = ({ uploadFiles, user }) => {
     return (
         <>
             <Col
@@ -527,7 +534,7 @@ const EmptyCTA = ({ uploadFiles }) => {
                     justifyContent: 'space-between',
                 }}
             >
-                <ConnectInstagram />
+                {!user?.appMetadata?.instagramConnected && <ConnectInstagram />}
 
                 <ButtonFileInput
                     accept="image/*,video/*"

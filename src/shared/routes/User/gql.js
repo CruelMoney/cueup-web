@@ -138,9 +138,6 @@ const USER_PHOTOS = gql`
         user(id: $id) {
             id
             isOwn @client
-            appMetadata {
-                instagramStatus
-            }
             media(pagination: $pagination) {
                 edges {
                     id
