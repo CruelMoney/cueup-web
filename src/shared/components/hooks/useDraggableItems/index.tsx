@@ -109,7 +109,7 @@ export default function useDraggableItems({
                             currentOpenIndexPosition = cachedOpenIndexPosition;
 
                             // eslint - setTimeout won't run because of our isTransitioning flag.
-                            // eslint-disable-next-line
+                            // eslint-disable-next-line no-loop-func
                             setTimeout(() => {
                                 // Update elements array to reflect UI change
                                 const inserEl = elements[currentOpenIndex];
@@ -295,7 +295,7 @@ export default function useDraggableItems({
                     // Dispatch an update to let React update the DOM and reset the transform/transition
                     // properties on each element now that they're in the new positions.
 
-                    elements.forEach((element: any, index: number) => {
+                    elements.forEach((element: any) => {
                         element.node.style.transition = 'none';
                         element.node.style.transform = 'none';
                         element.node.style.zIndex = 'initial';
@@ -358,10 +358,10 @@ function debounce(
     immediate?: boolean
 ): (args: any) => void {
     let timeout: any;
-    return function(this: any) {
-        const context = this;
+    return function (instance: any) {
+        const context = instance;
         const args: any = arguments;
-        const later = function() {
+        const later = function () {
             timeout = null;
             if (!immediate) {
                 func.apply(context, args);

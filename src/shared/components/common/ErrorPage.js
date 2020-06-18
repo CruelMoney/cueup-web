@@ -31,9 +31,11 @@ class ErrorPage extends Component {
                                 <br />
                                 <SecondaryButton
                                     style={{ marginTop: '24px' }}
-                                    onClick={() => this.props.history.goBack()}
+                                    onClick={() => {
+                                        window.location = document.referrer;
+                                    }}
                                 >
-                                    Go back
+                                    Reload
                                 </SecondaryButton>
                             </span>
                         }

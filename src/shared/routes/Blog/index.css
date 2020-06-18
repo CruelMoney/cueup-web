@@ -70,6 +70,15 @@ article.post-preview:hover {
     top: 0;
     width: 100%;
 }
+
+.img-wrapper.contain {
+    background: #fff;
+    height: auto;
+}
+.img-wrapper.contain img {
+    object-fit: contain;
+    position: relative;
+}
 article.post-preview > a:last-child {
     flex: 1;
 }
@@ -114,6 +123,7 @@ button.subscribe-newsletter {
     border-radius: 6px;
     height: 540px;
     margin: auto;
+    margin-bottom: 70px;
     max-width: 1140px;
     overflow: hidden;
 }
@@ -123,7 +133,7 @@ button.subscribe-newsletter {
     line-height: 1.6em;
     margin: 0 auto;
     min-height: 230px;
-    padding: 70px 0 0;
+    padding: 0;
     position: relative;
 }
 .blog-post p,
@@ -131,7 +141,7 @@ button.subscribe-newsletter {
 .blog-post li,
 .blog-post .author-link {
     color: #7e8186;
-    font-size: 18px;
+    font-size: 21px;
     line-height: 1.7;
     margin: 0 0 1.5em;
 }
@@ -159,7 +169,12 @@ button.subscribe-newsletter {
     line-height: 1.2em;
     margin: 1em 0 0.5em;
 }
-.post-content > p:first-child {
+.post-content h4 {
+    font-size: 1em;
+    line-height: 1.6em;
+    text-transform: none;
+}
+.post-content > p:first-of-type {
     font-size: 1.25em;
     line-height: 1.5em;
 }
@@ -180,6 +195,9 @@ button.subscribe-newsletter {
     position: relative;
     top: 0;
     transform: translateX(-50%);
+}
+.blog-post main .post-content img.contain {
+    max-width: 100%;
 }
 .blog-post main .post-content figure {
     margin-bottom: 1.5em;

@@ -46,7 +46,7 @@ module.exports = {
             contact: {
                 name: 'Christopher',
                 phone: '24658061',
-                email: 'chrdengso@gmail.com',
+                email: 'test@email.com',
             },
             guests: 100,
             description:
@@ -66,7 +66,7 @@ module.exports = {
             contact: {
                 name: 'Christopher',
                 phone: '24658061',
-                email: 'chrdengso@gmail.com',
+                email: 'test@email.com',
             },
             guests: 100,
             description:
@@ -86,7 +86,7 @@ module.exports = {
             contact: {
                 name: 'Christopher',
                 phone: '24658061',
-                email: 'chrdengso@gmail.com',
+                email: 'test@email.com',
             },
             guests: 100,
             description:
@@ -106,7 +106,7 @@ module.exports = {
             contact: {
                 name: 'Christopher',
                 phone: '24658061',
-                email: 'chrdengso@gmail.com',
+                email: 'test@email.com',
             },
             guests: 1000,
             description:
@@ -126,7 +126,7 @@ module.exports = {
             contact: {
                 name: 'Christopher',
                 phone: '24658061',
-                email: 'chrdengso@gmail.com',
+                email: 'test@email.com',
             },
             guests: 1000,
             description:
@@ -177,7 +177,7 @@ module.exports = {
             contact: {
                 name: 'Christopher',
                 phone: '24658061',
-                email: 'chrdengso@gmail.com',
+                email: 'test@email.com',
             },
             guests: 100,
             address: '',
@@ -209,7 +209,7 @@ module.exports = {
             contact: {
                 name: 'Christopher',
                 phone: '24658061',
-                email: 'chrdengso@gmail.com',
+                email: 'test@email.com',
             },
             guests: 100,
             description:
@@ -239,7 +239,7 @@ module.exports = {
             contact: {
                 name: 'Christopher',
                 phone: '24658061',
-                email: 'chrdengso@gmail.com',
+                email: 'test@email.com',
             },
             guests: 1000,
             address: '',

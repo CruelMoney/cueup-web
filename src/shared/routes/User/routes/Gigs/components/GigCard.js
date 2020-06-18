@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { appRoutes } from 'constants/locales/appRoutes';
 import {
     Col,
     keyframeFadeIn,
@@ -12,7 +13,7 @@ import {
 } from '../../../../../components/Blocks';
 import { SmallHeader, BodySmall, BodyBold, SmallBold } from '../../../../../components/Text';
 
-const GigCard = ({ style, idx, gig, hasMessage, translate }) => {
+const GigCard = ({ style, idx, gig, hasMessage, translate, ...props }) => {
     const { event, offer } = gig;
     let { start, name, description } = event;
 
@@ -20,7 +21,7 @@ const GigCard = ({ style, idx, gig, hasMessage, translate }) => {
     description = shouldTruncate ? description.substring(0, 100) + '...' : description;
 
     return (
-        <Wrapper idx={idx}>
+        <Wrapper idx={idx} {...props}>
             <Card style={style}>
                 <Content>
                     <RowWrap style={{ marginBottom: '24px', width: '100%' }}>
@@ -65,10 +66,10 @@ const Offer = ({ offer, gig, hasMessage, translate }) => {
             <Buttons>
                 <NavLink
                     to={{
-                        pathname: `${translate('routes./gig')}/${id}`,
+                        pathname: `${translate(appRoutes.gig)}/${id}`,
                     }}
                 >
-                    <TeritaryButton>Read more</TeritaryButton>
+                    <TeritaryButton data-cy="gig-read-more">Read more</TeritaryButton>
                 </NavLink>
                 {hasMessage && (
                     <span>

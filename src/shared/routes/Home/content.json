@@ -1,44 +1,38 @@
 {
-  "home":{
-    "title": [
-      "Book DJs easily and secure", 
-      "Lej DJs uden bekymringer"
-    ],
-    "introduction": [
-      "Cueup is the easiest way for you to get a great DJ for your event. Tell us about your event below, and check out 100s of qualified DJs.",
-      "Cueup er den nemmeste måde at leje en DJ til dit event. Fortæl os om dit arrangement herunder, og kom i kontakt med 100-vis af kvalificerede DJs."
-    ],
-    "sections": {
-      "left":{
-        "title": [
-          "Secured booking system",
-          "Sikkert bookingsystem"
-        ],
-        "content":[
-          "At Cueup you are garuanteed to get the most value for money. The money is only disbursed when the DJ has played at the event, and in case of cancelation by the DJ, the money is instantly refunded. We'll then find a new DJ as quickly as possible.",
-          "Hos Cueup er du garanteret at få mest muligt ud af dine penge. Dine penge bliver først overført når eventet er afsluttet, og I tilfælde af at DJen aflyser, vil dine penge blive refunderet med det samme. Vi vil dernæst finde en ny DJ hurtigst muligt."  
-        ]
-      },
-      "right":{
-        "title": [
-          "Book the best DJ",
-          "Lej den bedste DJ"
-        ],
-        "content":[
-          "At Cueup we match your event with the DJs that fit the best. On every DJ's profile, you can see the price, read reveiews, play music, and see picture from other events. When you've chosen a DJ you want to book, you can talk the details of the night through.",
-          "Hos Cueup matcher vi dit event med de DJs der passer bedst. På hver DJ's profil kan du se pris, læse anmeldelser, lytte til musik og se billeder fra tidligere events. Når du har fundet en DJ du vil leje, kan i snakke detaljerne igennem for aftenen."
-        ]
-      }
+    "en": {
+        "title": "Book DJs easily and secure",
+        "introduction": "Cueup is the easiest way for you to get a great DJ for your event. Tell us about your event below, and check out 100s of qualified DJs.",
+        "sections": {
+            "left": {
+                "title": "Secured booking system",
+                "content": "At Cueup you are garuanteed to get the most value for money. The money is only disbursed when the DJ has played at the event, and in case of cancelation by the DJ, the money is instantly refunded. We'll then find a new DJ as quickly as possible."
+            },
+            "right": {
+                "title": "Book the best DJ",
+                "content": "At Cueup we match your event with the DJs that fit the best. On every DJ's profile, you can see the price, read reveiews, play music, and see picture from other events. When you've chosen a DJ you want to book, you can talk the details of the night through."
+            }
+        },
+        "footer": {
+            "first": "Are you a DJ?",
+            "second": "Apply to become DJ, or see how it works."
+        }
     },
-    "footer":{
-        "first": [
-          "Are you a DJ?",
-          "Er du DJ?"
-        ],
-        "second": [
-          "Apply to become DJ, or see how it works.",
-          "Tilmeld dig som DJ, eller se hvordan det virker."
-        ] 
-      }
-  }
+    "da": {
+        "title": "Lej DJs uden bekymringer",
+        "introduction": "Cueup er den nemmeste måde at leje en DJ til dit event. Fortæl os om dit arrangement herunder, og kom i kontakt med 100-vis af kvalificerede DJs.",
+        "sections": {
+            "left": {
+                "title": "Sikkert bookingsystem",
+                "content": "Hos Cueup er du garanteret at få mest muligt ud af dine penge. Dine penge bliver først overført når eventet er afsluttet, og I tilfælde af at DJen aflyser, vil dine penge blive refunderet med det samme. Vi vil dernæst finde en ny DJ hurtigst muligt."
+            },
+            "right": {
+                "title": "Lej den bedste DJ",
+                "content": "Hos Cueup matcher vi dit event med de DJs der passer bedst. På hver DJ's profil kan du se pris, læse anmeldelser, lytte til musik og se billeder fra tidligere events. Når du har fundet en DJ du vil leje, kan i snakke detaljerne igennem for aftenen."
+            }
+        },
+        "footer": {
+            "first": "Er du DJ?",
+            "second": "Tilmeld dig som DJ, eller se hvordan det virker."
+        }
+    }
 }

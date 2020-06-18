@@ -1,45 +1,8 @@
-const paths = require('./config/paths');
+require('@babel/register')({
+    envName: 'tooling',
+    // We can't add `extentions` directly to the Babel config because it's no known property for
+    // env specific configs and results in an "Unknown option" error.
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+});
 
-module.exports = {
-    extends: ['wiremore', 'wiremore/react', 'wiremore/typescript'],
-    globals: {
-        __BROWSER__: true,
-        __SERVER__: true,
-    },
-    settings: {
-        'import/resolver': {
-            node: {
-                paths: paths.resolveModules,
-                extensions: ['.js', '.jsx', '.ts', '.tsx'],
-            },
-        },
-        'react': {
-            version: 'detect',
-        },
-    },
-    rules: {
-        'import/no-unassigned-import': 0,
-        'import/no-named-as-default-member': 0,
-        'prettier/prettier': 'error',
-        'react/prop-types': 0,
-        'react/display-name': 0,
-        'no-unused-vars': 1,
-        'eqeqeq': 1,
-        'no-alert': 0,
-        'react/no-unescaped-entities': 0,
-        'prefer-const': 1,
-        'react/no-unused-prop-types': 1,
-        'react/jsx-indent': 1,
-        'import/namespace': 1,
-    },
-    overrides: [
-        {
-            files: ['*.tsx'],
-            rules: {
-                // TODO: add to eslint-config-wiremore
-                'import/named': 0,
-                'react/prop-types': 0,
-            },
-        },
-    ],
-};
+module.exports = require('./.eslintrc.ts').default;

@@ -1,41 +1,43 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Switch, Route, Redirect } from 'react-router';
 import { Helmet } from 'react-helmet-async';
-import addTranslate from '../../components/higher-order/addTranslate';
+import { withTranslation, useTranslation } from 'react-i18next';
+import { appRoutes } from 'constants/locales/appRoutes.ts';
+import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Faq from './components/Faq';
 import Dj from './routes/DJ';
 import Organizer from './routes/Organizer';
-
 import content from './content.json';
 
-class Index extends Component {
-    render() {
-        const { match, translate } = this.props;
-        const title = 'FAQ | Cueup';
+const Index = (props) => {
+    const { match, t } = props;
+    useNamespaceContent(content, 'faq');
 
-        return (
-            <Faq {...this.props}>
-                <Helmet>
-                    <title>{title}</title>
-                    <meta property="og:title" content={title} />
-                    <meta name="twitter:title" content={title} />
-                </Helmet>
-                <ScrollToTop />
-                <Switch>
-                    <Redirect exact from={`${match.url}`} to={translate('routes./faq/dj')} />
-                    <Route
-                        path={translate('routes./faq/dj')}
-                        render={(props) => <Dj {...props} translate={translate} />}
-                    />
-                    <Route
-                        path={translate('routes./faq/organizer')}
-                        render={(props) => <Organizer {...props} translate={translate} />}
-                    />
-                </Switch>
-            </Faq>
-        );
-    }
-}
+    const title = 'FAQ | Cueup';
 
-export default addTranslate(Index, content);
+    return (
+        <Faq {...props}>
+            <Helmet>
+                <body className="white-theme" />
+                <title>{title}</title>
+                <meta property="og:title" content={title} />
+                <meta name="twitter:title" content={title} />
+            </Helmet>
+            <ScrollToTop />
+            <Switch>
+                <Route
+                    path={t(appRoutes.faqDj)}
+                    render={(props) => <Dj {...props} translate={t} />}
+                />
+                <Route
+                    path={t(appRoutes.faqOrganizer)}
+                    render={(props) => <Organizer {...props} translate={t} />}
+                />
+                <Redirect exact from={`${match.url}`} to={t(appRoutes.faqDj)} />
+            </Switch>
+        </Faq>
+    );
+};
+// eslint-disable-next-line import/no-unused-modules
+export default withTranslation()(Index);

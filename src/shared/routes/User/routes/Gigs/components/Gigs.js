@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { localize } from 'react-localize-redux';
 import { Query } from 'react-apollo';
 import usePushNotifications from 'components/hooks/usePushNotifications';
+import useTranslate from 'components/hooks/useTranslate';
+import { useNotifications } from 'components/hooks/useNotifications';
 import EmptyPage from '../../../../../components/common/EmptyPage';
 import { LoadingPlaceholder2 } from '../../../../../components/common/LoadingPlaceholder';
 import { MY_GIGS } from '../../../../../components/gql';
@@ -10,6 +10,7 @@ import { Col, Row, HideBelow, SecondaryButton } from '../../../../../components/
 import { Title, BodySmall } from '../../../../../components/Text';
 import Checkbox from '../../../../../components/Checkbox';
 import { gigStates } from '../../../../../constants/constants';
+import lazyGig from '../../../../Gig';
 import GigCard from './GigCard';
 
 const statusPriority = {
@@ -25,7 +26,10 @@ const getPriority = (gig) => {
 };
 
 const Gigs = (props) => {
-    const { translate, notifications, user, currentLanguage, loading: loadingUser } = props;
+    const { translate } = useTranslate();
+    const { user, currentLanguage, loading: loadingUser } = props;
+
+    const [notifications] = useNotifications({ userId: user?.id });
 
     const approved = user?.appMetadata?.approved;
 
@@ -47,10 +51,9 @@ const Gigs = (props) => {
                     (filter.length === 0 || filter.includes(status))
             )
             .map((gig) => {
-                const notification = notifications.find((noti) => {
-                    return String(noti.room) === String(gig.id);
-                });
-                gig.hasMessage = notification;
+                gig.hasMessage =
+                    notifications[gig.id] &&
+                    notifications[gig.id].read < notifications[gig.id].total;
                 return gig;
             })
             .sort((g1, g2) => getPriority(g1) - getPriority(g2));
@@ -73,6 +76,7 @@ const Gigs = (props) => {
         }
         return renderGigs.map((gig, idx) => (
             <GigCard
+                onMouseEnter={() => lazyGig.preload()}
                 idx={idx}
                 translate={translate}
                 hasMessage={gig.hasMessage}
@@ -158,12 +162,4 @@ const EnableNotifications = ({ userId }) => {
     );
 };
 
-function mapStateToProps(state, ownProps) {
-    return {
-        notifications: state.notifications.data,
-    };
-}
-
-const SmartGigs = connect(mapStateToProps)(Gigs);
-
-export default localize(SmartGigs, 'locale');
+export default Gigs;

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import CheckCircle from 'react-ionicons/lib/MdAddCircle';
-import CheckCircleDone from 'react-ionicons/lib/MdCheckmarkCircle';
+import { Icon, InlineIcon } from '@iconify/react';
+import checkmarkCicleIcon from '@iconify/icons-ion/checkmark-circle';
+import addCircleIcon from '@iconify/icons-ion/add-circle';
+
 import { NavLink, useHistory } from 'react-router-dom';
 import { Body, SmallBold, SmallHeader } from '../../../components/Text';
 import { Col, Row } from '../../../components/Blocks';
@@ -35,12 +37,17 @@ const checks = [
     {
         label: 'Download the app',
         check: (u) => !!u.appMetadata.hasInstalledApp,
-        linkTo: '/signup',
+        linkTo: 'overview?modal=app',
     },
     {
         label: 'Add payout methods',
         check: (u) => !!u.payoutMethods?.length,
         linkTo: 'settings?modal=payoutMethods',
+    },
+    {
+        label: 'Write a bio',
+        check: (u) => !!u.userMetadata.bio,
+        linkTo: 'settings?modal=bio',
     },
 ];
 
@@ -59,9 +66,9 @@ const ProgressItem = ({ label, done, linkTo, onClick }) => {
     const Content = (
         <Row style={{ marginBottom: '15px' }} middle>
             {done ? (
-                <CheckCircleDone color={'#50E3C2'} fontSize={'20px'} />
+                <Icon icon={checkmarkCicleIcon} color={'#50E3C2'} style={{ fontSize: '20px' }} />
             ) : (
-                <CheckCircle color={'#4D6480'} fontSize={'20px'} />
+                <Icon icon={addCircleIcon} color={'#4D6480'} style={{ fontSize: '20px' }} />
             )}
             <ProgressItemText done={done}>{label}</ProgressItemText>
         </Row>

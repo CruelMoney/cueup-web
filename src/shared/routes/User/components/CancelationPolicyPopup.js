@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
-import ArrowIcon from 'react-ionicons/lib/MdArrowRoundForward';
+import { Icon, InlineIcon } from '@iconify/react';
+import arrowForward from '@iconify/icons-ion/arrow-forward';
 import SuggestionList from 'components/SuggestionList';
-import { Input, Label } from '../../../components/FormComponents';
+import { Input } from '../../../components/FormComponents';
 import { Row, TeritaryButton, PrimaryButton } from '../../../components/Blocks';
 import Popup from '../../../components/common/Popup';
 import Slider from '../../../components/common/Slider';
 import { Stat, StatUnit, BodySmall } from '../../../components/Text';
 
-const CancelationPolicyPopup = ({ initialValue, save, translate }) => {
+const CancelationPolicyPopup = ({ initialValue, onClose, save, translate, isActive }) => {
     const [cancelationPolicy, setCancelationPolicy] = useState(initialValue);
-    const [showing, setShowing] = useState(false);
+    const [showing, setShowing] = useState(isActive);
+
+    const closeModal = () => {
+        setShowing(false);
+        onClose && onClose();
+    };
 
     return (
         <>
@@ -22,7 +28,7 @@ const CancelationPolicyPopup = ({ initialValue, save, translate }) => {
                 onClick={(_) => setShowing(true)}
             />
 
-            <Popup showing={showing} onClickOutside={(_) => setShowing(false)} width={'520px'}>
+            <Popup showing={showing} onClickOutside={closeModal} width={'520px'}>
                 <div
                     style={{
                         marginBottom: '24px',
@@ -86,13 +92,13 @@ const CancelationPolicyPopup = ({ initialValue, save, translate }) => {
                 />
 
                 <Row style={{ marginTop: '15px' }} right>
-                    <TeritaryButton type="button" onClick={(_) => setShowing(false)}>
+                    <TeritaryButton type="button" onClick={closeModal}>
                         Cancel
                     </TeritaryButton>
                     <PrimaryButton
                         type="button"
                         onClick={() => {
-                            setShowing(false);
+                            closeModal();
                             save(cancelationPolicy);
                         }}
                     >
@@ -117,9 +123,9 @@ export const PolicyDisplayer = ({ cancelationPolicy, style, explanationText }) =
             }}
         >
             <Stat label={'MIN. NOTICE'} value={cancelationPolicy.days + ' days'} />
-            <ArrowIcon color={'#98a4b3'} fontSize={'18px'} />
+            <Icon icon={arrowForward} color={'#98a4b3'} style={{ fontSize: '18px' }} />
             <StatUnit>OR ELSE</StatUnit>
-            <ArrowIcon color={'#98a4b3'} fontSize={'18px'} />
+            <Icon icon={arrowForward} color={'#98a4b3'} style={{ fontSize: '18px' }} />
 
             <Stat label={'REFUNDED'} value={cancelationPolicy.percentage + '%'} />
         </Row>

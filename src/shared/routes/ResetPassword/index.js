@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { localize } from 'react-localize-redux';
 import { Helmet } from 'react-helmet-async';
 import { Mutation } from 'react-apollo';
 import { SmartButton } from 'components/Blocks';
 import { Input } from 'components/FormComponents';
 import RegistrationElement from 'components/common/RegistrationElement';
+import useTranslate from 'components/hooks/useTranslate';
+import { appRoutes } from 'constants/locales/appRoutes';
 import Footer from '../../components/common/Footer';
 
 import NumberedList from '../../components/common/NumberedList';
@@ -12,7 +13,8 @@ import ErrorMessageApollo from '../../components/common/ErrorMessageApollo';
 import { RESET_PASSWORD } from '../../components/gql';
 import { validators, useForm } from '../../components/hooks/useForm';
 
-const NotFound = ({ translate }) => {
+const ResetPassword = () => {
+    const { translate } = useTranslate();
     useEffect(() => {
         document.body.classList.add('not-found');
 
@@ -139,8 +141,8 @@ const NotFound = ({ translate }) => {
             <Footer
                 color={'#31DAFF'}
                 noSkew={true}
-                firstTo={translate('routes./')}
-                secondTo={translate('routes./signup')}
+                firstTo={translate(appRoutes.home)}
+                secondTo={translate(appRoutes.signUp)}
                 firstLabel={translate('arrange-event')}
                 secondLabel={translate('apply-to-become-dj')}
                 title={translate('ready-to-get-started')}
@@ -150,4 +152,4 @@ const NotFound = ({ translate }) => {
     );
 };
 
-export default localize(NotFound, 'locale');
+export default ResetPassword;

@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import useTranslate from 'components/hooks/useTranslate';
+import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import { Container, Row, ReadMore } from '../../../components/Blocks';
 
 const BackToProfile = ({ permalink }) => {
+    const { translate } = useTranslate();
+
     useEffect(() => {
         document.body.classList.add('pre-header-content');
         return () => {
@@ -14,7 +18,7 @@ const BackToProfile = ({ permalink }) => {
         <div style={{ backgroundColor: '#f6f9fc' }}>
             <Container>
                 <Row middle style={{ height: '42px' }}>
-                    <Link to={`/user/${permalink}/gigs`}>
+                    <Link to={`${translate(appRoutes.user)}/${permalink}/${userRoutes.gigs}`}>
                         <ReadMore back>Back to gigs</ReadMore>
                     </Link>
                 </Row>

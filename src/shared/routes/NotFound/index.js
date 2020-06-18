@@ -1,27 +1,21 @@
 import React, { Component } from 'react';
-import { localize } from 'react-localize-redux';
 import { Helmet } from 'react-helmet-async';
+import { withTranslation } from 'react-i18next';
+import { appRoutes } from 'constants/locales/appRoutes';
 import EmptyPage from '../../components/common/EmptyPage';
 import Footer from '../../components/common/Footer';
 
 class NotFound extends Component {
-    componentDidMount() {
-        document.body.classList.add('not-found');
-    }
-
-    componentWillUnmount() {
-        document.body.classList.remove('not-found');
-    }
-
     render() {
-        const { translate } = this.props;
-        const siteTitle = translate('not-found-title');
-        const siteDescription = translate('not-found-description');
+        const { t } = this.props;
+        const siteTitle = t('not-found-title');
+        const siteDescription = t('not-found-description');
 
         return (
             <div className="not-found-screen">
                 <Helmet>
                     <title>{siteTitle + ' | Cueup'}</title>
+                    <body className="white-theme" />
                     <meta name="description" content={siteDescription} />
 
                     <meta property="og:title" content={siteTitle + ' | Cueup'} />
@@ -35,16 +29,16 @@ class NotFound extends Component {
                 <Footer
                     color={'#31DAFF'}
                     noSkew={true}
-                    firstTo={translate('routes./')}
-                    secondTo={translate('routes./signup')}
-                    firstLabel={translate('arrange-event')}
-                    secondLabel={translate('apply-to-become-dj')}
-                    title={translate('ready-to-get-started')}
-                    subTitle={translate('arrange-event-or-become-dj')}
+                    firstTo={t(appRoutes.home)}
+                    secondTo={t(appRoutes.becomeDj)}
+                    firstLabel={t('arrange-event')}
+                    secondLabel={t('apply-to-become-dj')}
+                    title={t('ready-to-get-started')}
+                    subTitle={t('arrange-event-or-become-dj')}
                 />
             </div>
         );
     }
 }
 
-export default localize(NotFound, 'locale');
+export default withTranslation()(NotFound);

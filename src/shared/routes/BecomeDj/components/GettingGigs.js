@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useTransition, animated, config } from 'react-spring';
-import PeopleIcon from 'react-ionicons/lib/MdPeople';
-import TimeIcon from 'react-ionicons/lib/IosTime';
+
+import { Icon, InlineIcon } from '@iconify/react';
+import peopleIcon from '@iconify/icons-ion/people';
+import timeIcon from '@iconify/icons-ion/time';
+
 import { NavLink } from 'react-router-dom';
-import { HeaderTitle, Body, BodySmall, BodyBold } from 'components/Text';
-import { Container, Col, Row, ReadMore } from 'components/Blocks';
+import { useTranslation } from 'react-i18next';
+import { BodySmall } from 'components/Text';
+import { Container, ReadMore } from 'components/Blocks';
 import GracefullImage from 'components/GracefullImage';
+import { appRoutes } from 'constants/locales/appRoutes';
 import { ResponsiveTextAccent } from '../components/blocks/TextAccent';
 import { GrayText, Header } from '../../../components/common/Text';
-import addTranslate from '../../../components/higher-order/addTranslate';
 import cph from '../assets/maps/cph.png';
 import la from '../assets/maps/la.png';
 import nyc from '../assets/maps/nyc.png';
@@ -209,11 +213,11 @@ const Gig = ({ name, img, date, status, duration, guests }) => {
                     <div style={{ flex: 1 }} />
                     <div className="bottom">
                         <div style={{ marginRight: '2em' }}>
-                            <TimeIcon fontSize="1.2em" color="#98A4B3" />
+                            <Icon icon={timeIcon} style={{ fontSize: '1.2em' }} color="#98A4B3" />
                             <BodySmall>{duration}</BodySmall>
                         </div>
                         <div>
-                            <PeopleIcon fontSize="1.2em" color="#98A4B3" />
+                            <Icon icon={peopleIcon} style={{ fontSize: '1.2em' }} color="#98A4B3" />
                             <BodySmall>{guests}</BodySmall>
                         </div>
                     </div>
@@ -279,8 +283,9 @@ const AnimatedCards = () => {
     );
 };
 
-const GettingGigs = (props) => {
-    const { translate, currentLanguage } = props;
+const GettingGigs = () => {
+    const { t } = useTranslation();
+
     return (
         <Bg>
             <Container>
@@ -288,18 +293,18 @@ const GettingGigs = (props) => {
                     <AnimatedCards />
                     <TextCol>
                         <ResponsiveTextAccent>
-                            {translate('become-dj.getting-gigs.get-gigs-feature.feature')}
+                            {t('become-dj:getting-gigs.get-gigs-feature.feature')}
                         </ResponsiveTextAccent>
                         <Header bigMobile>
-                            {translate('become-dj.getting-gigs.get-gigs-feature.get-gigs')}
+                            {t('become-dj:getting-gigs.get-gigs-feature.get-gigs')}
                         </Header>
                         <GrayText>
                             At Cueup we constantly work on bringing gigs to our DJs. You just have
                             to chat the organizer - make your offer - play - get paid.
                         </GrayText>
-                        <NavLink to="/blog/stop-missing-dj-gigs">
+                        <NavLink to={t(appRoutes.blog) + '/stop-missing-dj-gigs'}>
                             <ReadMore size="18px" uppercase={false}>
-                                {translate('read-more')}
+                                {t('read-more')}
                             </ReadMore>
                         </NavLink>
                     </TextCol>
@@ -312,4 +317,4 @@ const GettingGigs = (props) => {
     );
 };
 
-export default addTranslate(GettingGigs);
+export default GettingGigs;

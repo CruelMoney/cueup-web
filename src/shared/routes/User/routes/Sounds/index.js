@@ -3,7 +3,7 @@ import { useQuery } from 'react-apollo';
 import { Helmet } from 'react-helmet-async';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
 import Popup from '../../../../components/common/Popup';
-import { Col, SecondaryButton, Row } from '../../../../components/Blocks';
+import { Col, SecondaryButton, Row, PrimaryButton } from '../../../../components/Blocks';
 import EmptyPage from '../../../../components/common/EmptyPage';
 import { Body } from '../../../../components/Text';
 import ConnectSounCloud from '../../components/ConnectSoundCloud';
@@ -42,17 +42,19 @@ const Sounds = ({ user, location, match, setShowPopup }) => {
                 message={
                     isOwn ? (
                         <>
-                            <Body>Showcase your mixes or productions</Body>
+                            <Body style={{ marginBottom: 15 }}>
+                                Showcase your mixes or productions
+                            </Body>
                             <ConnectSounCloud
                                 userId={user.id}
                                 soundCloudConnected={appMetadata.soundCloudConnected}
                             />
-                            <SecondaryButton
-                                style={{ marginTop: '9px' }}
+                            <PrimaryButton
+                                style={{ marginTop: '9px', width: '100%', maxWidth: '100%' }}
                                 onClick={() => setShowPopup(true)}
                             >
                                 Upload track
-                            </SecondaryButton>
+                            </PrimaryButton>
                         </>
                     ) : (
                         ''
@@ -113,21 +115,24 @@ const Sounds = ({ user, location, match, setShowPopup }) => {
 };
 
 const Wrapper = (props) => {
-    const { user } = props;
-    const [showPopup, setShowPopup] = useState(false);
+    const { user, location } = props;
+
+    const params = new URLSearchParams(location.search);
+    const modal = params.get('modal');
+    const initialPopup = modal === 'addSound';
+
+    const [showPopup, setShowPopup] = useState(initialPopup);
     const { isOwn } = user || {};
 
     return (
         <>
             <Sounds {...props} setShowPopup={setShowPopup} />
             {isOwn && (
-                <Popup
-                    showing={showPopup}
-                    onClickOutside={() => setShowPopup(false)}
-                    width={'750px'}
-                >
+                <Popup showing={showPopup} onClose={() => setShowPopup(false)} width={'750px'}>
                     <AddSound
                         userId={user.id}
+                        soundCloudConnected={user?.appMetadata?.soundCloudConnected}
+                        mixcloudConnected={user?.appMetadata?.mixcloudConnected}
                         closeModal={() => setShowPopup(false)}
                         onCancel={() => setShowPopup(false)}
                     />

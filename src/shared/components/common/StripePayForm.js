@@ -1,31 +1,26 @@
 /* eslint-disable camelcase */
-import React, { PureComponent, useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
     CardElement,
-    injectStripe,
     Elements,
-    StripeProvider,
     PaymentRequestButtonElement,
-} from 'react-stripe-elements';
-import { getTranslate } from 'react-localize-redux';
-import { connect } from 'react-redux';
+    useStripe,
+} from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
 import styled from 'styled-components';
 import * as Sentry from '@sentry/browser';
 import { Input, InputRow, LabelHalf } from 'components/FormComponents';
 import { validators, useForm } from 'components/hooks/useForm';
-import {
-    inputStyle,
-    SmartButton,
-    Row,
-    SecondaryButton,
-    TeritaryButton,
-    RowMobileCol,
-} from 'components/Blocks';
-import { Environment } from '../../constants/constants';
+import { inputStyle, SmartButton, TeritaryButton, RowMobileCol } from 'components/Blocks';
+import { useServerContext } from 'components/hooks/useServerContext';
+import useTranslate from 'components/hooks/useTranslate';
 import CountrySelector from './CountrySelector';
 import ErrorMessageApollo from './ErrorMessageApollo';
 
-const StripeForm = ({ translate, stripe, paymentIntent, onPaymentConfirmed, goBack }) => {
+const StripeForm = ({ onPaymentConfirmed, goBack, paymentIntent }) => {
+    const stripe = useStripe();
+    const { translate } = useTranslate();
     const cardElement = useRef();
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
@@ -53,6 +48,7 @@ const StripeForm = ({ translate, stripe, paymentIntent, onPaymentConfirmed, goBa
             });
             return false;
         } catch (error) {
+            console.log(error);
             Sentry.captureException(error);
             setError(error.message);
         } finally {
@@ -64,33 +60,28 @@ const StripeForm = ({ translate, stripe, paymentIntent, onPaymentConfirmed, goBa
         const { token } = paymentIntent;
         const PAYMENT_INTENT_CLIENT_SECRET = token.token;
 
-        try {
-            const options = {
-                payment_method_data: {
-                    billing_details: {
-                        address: {
-                            country,
-                        },
-                        name,
-                        email,
+        const options = {
+            payment_method_data: {
+                billing_details: {
+                    address: {
+                        country,
                     },
+                    name,
+                    email,
                 },
-                receipt_email: email,
-            };
-            const result = await stripe.handleCardPayment(
-                PAYMENT_INTENT_CLIENT_SECRET,
-                cardElement.current,
-                options
-            );
-            const { error, paymentIntent } = result;
-            if (error) {
-                throw new Error(error.message || 'Something went wrong');
-            }
-            onPaymentConfirmed();
-            return paymentIntent;
-        } catch (error) {
-            throw error;
+            },
+            receipt_email: email,
+        };
+        const result = await stripe.handleCardPayment(
+            PAYMENT_INTENT_CLIENT_SECRET,
+            cardElement.current,
+            options
+        );
+        if (result.error) {
+            throw new Error(result.error.message || 'Something went wrong');
         }
+        onPaymentConfirmed();
+        return result.paymentIntent;
     };
 
     return (
@@ -131,7 +122,7 @@ const StripeForm = ({ translate, stripe, paymentIntent, onPaymentConfirmed, goBa
                 <RowMobileCol right reverse>
                     {goBack && (
                         <TeritaryButton onClick={goBack} type="button">
-                            Back
+                            Go Back
                         </TeritaryButton>
                     )}
                     <SmartButton type="submit" loading={loading}>
@@ -144,82 +135,93 @@ const StripeForm = ({ translate, stripe, paymentIntent, onPaymentConfirmed, goBa
     );
 };
 
-const PaymentRequestButtonWrapper = ({ paymentIntent, stripe, onPaymentConfirmed }) => {
+const PaymentRequestButtonWrapper = ({ paymentIntent, onPaymentConfirmed }) => {
+    const stripe = useStripe();
     const { offer } = paymentIntent;
 
-    const [canMakePayment, setCanMakePayment] = useState(false);
-    const paymentRequest = useRef();
+    const [paymentRequest, setPaymentRequest] = useState(null);
 
-    const confirmPaymentRequest = async ({ complete, paymentMethod }) => {
-        try {
-            const { token } = paymentIntent;
-            const PAYMENT_INTENT_CLIENT_SECRET = token.token;
+    const confirmPaymentRequest = useCallback(
+        async ({ complete, paymentMethod }) => {
+            try {
+                const { token } = paymentIntent;
+                const PAYMENT_INTENT_CLIENT_SECRET = token.token;
 
-            complete('success');
-            const result = await stripe.handleCardPayment(PAYMENT_INTENT_CLIENT_SECRET, {
-                payment_method: paymentMethod.id,
-            });
-            const { error } = result;
-            if (error) {
+                complete('success');
+                const result = await stripe.handleCardPayment(PAYMENT_INTENT_CLIENT_SECRET, {
+                    payment_method: paymentMethod.id,
+                });
+                const { error } = result;
+                if (error) {
+                    console.log({ error });
+                    throw new Error(error.message || 'Something went wrong');
+                }
+                onPaymentConfirmed(true);
+            } catch (error) {
+                setTimeout(() => {
+                    alert(error.message);
+                }, 1000);
                 console.log({ error });
-                throw new Error(error.message || 'Something went wrong');
+                complete('fail');
             }
-            onPaymentConfirmed(true);
-        } catch (error) {
-            setTimeout(() => {
-                alert(error.message);
-            }, 1000);
-            console.log({ error });
-            complete('fail');
-        }
-    };
+        },
+        [stripe, onPaymentConfirmed, paymentIntent]
+    );
 
     useEffect(() => {
         // For full documentation of the available paymentRequest options, see:
         // https://stripe.com/docs/stripe.js#the-payment-request-object
-        paymentRequest.current = stripe.paymentRequest({
-            currency: offer.totalPayment.currency.toLowerCase(),
-            country: 'DK',
-            total: {
-                label: 'Total',
-                amount: offer.totalPayment.amount,
-            },
-            displayItems: [
-                {
-                    label: 'DJ offer',
-                    amount: offer.offer.amount,
+        if (stripe && offer) {
+            const { totalPayment, serviceFee, offer: innerOffer } = offer;
+            const pmRq = stripe.paymentRequest({
+                currency: totalPayment.currency.toLowerCase(),
+                country: 'DK',
+                total: {
+                    label: 'Total',
+                    amount: totalPayment.amount,
                 },
-                {
-                    label: 'Service fee',
-                    amount: offer.serviceFee.amount,
-                },
-            ],
-            requestPayerName: true,
-            requestPayerEmail: true,
-        });
+                displayItems: [
+                    {
+                        label: 'DJ offer',
+                        amount: innerOffer.amount,
+                    },
+                    {
+                        label: 'Service fee',
+                        amount: serviceFee.amount,
+                    },
+                ],
+                requestPayerName: true,
+                requestPayerEmail: true,
+            });
 
-        paymentRequest.current.on('paymentmethod', confirmPaymentRequest);
+            pmRq.on('paymentmethod', confirmPaymentRequest);
 
-        paymentRequest.current.canMakePayment().then((result) => {
-            setCanMakePayment(!!result);
-        });
-    }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+            // Check the availability of the Payment Request API.
+            pmRq.canMakePayment().then((result) => {
+                if (result) {
+                    setPaymentRequest(pmRq);
+                }
+            });
+        }
+    }, [stripe, offer, confirmPaymentRequest]);
 
-    if (!canMakePayment || !paymentRequest.current) {
+    if (!paymentRequest || !stripe) {
         return null;
     }
 
     return (
         <>
             <PaymentRequestButtonElement
-                paymentRequest={paymentRequest.current}
-                className="PaymentRequestButton"
-                style={{
-                    paymentRequestButton: {
-                        theme: 'dark',
-                        height: '40px',
+                options={{
+                    paymentRequest,
+                    style: {
+                        paymentRequestButton: {
+                            theme: 'dark',
+                            height: '40px',
+                        },
                     },
                 }}
+                className="PaymentRequestButton"
             />
             <div className="or-divider">
                 <hr />
@@ -229,33 +231,18 @@ const PaymentRequestButtonWrapper = ({ paymentIntent, stripe, onPaymentConfirmed
     );
 };
 
-const PaymentRequestBtn = injectStripe(PaymentRequestButtonWrapper);
+const StripeFormWrapper = (props) => {
+    const { environment } = useServerContext();
 
-const SmartForm = injectStripe(StripeForm);
+    const stripePromise = loadStripe(environment.STRIPE_PUBLIC_KEY);
 
-class StripeFormWrapper extends PureComponent {
-    render() {
-        return (
-            <StripeProvider apiKey={Environment.STRIPE_PUBLIC_KEY}>
-                <>
-                    <Elements>
-                        <PaymentRequestBtn {...this.props} />
-                    </Elements>
-                    <Elements>
-                        <SmartForm {...this.props} />
-                    </Elements>
-                </>
-            </StripeProvider>
-        );
-    }
-}
-
-function mapStateToProps(state, ownprops) {
-    return {
-        ...ownprops,
-        translate: getTranslate(state.locale),
-    };
-}
+    return (
+        <Elements stripe={stripePromise}>
+            <PaymentRequestButtonWrapper {...props} />
+            <StripeForm {...props} />
+        </Elements>
+    );
+};
 
 const ConnectedCard = ({ refForward, onSave }) => {
     const [error, setError] = useState();
@@ -263,20 +250,24 @@ const ConnectedCard = ({ refForward, onSave }) => {
         <LabelHalf>
             <Wrapper error={error}>
                 <CardElement
-                    style={{
-                        base: {
-                            'color': '#32325d',
-                            'fontFamily': 'Open Sans, Segoe UI, Helvetica, sans-serif',
-                            'fontSmoothing': 'antialiased',
-                            'fontSize': '18px',
-                            'lineHeight': '40px',
-                            '::placeholder': {
-                                color: '#98a4b3',
+                    options={{
+                        style: {
+                            base: {
+                                'color': '#32325d',
+                                'fontFamily':
+                                    'Avenir Next, Open Sans, Segoe UI, Helvetica, sans-serif',
+                                'fontSmoothing': 'antialiased',
+                                'fontWeight': '400',
+                                'fontSize': '18px',
+                                'lineHeight': '40px',
+                                '::placeholder': {
+                                    color: '#98a4b3',
+                                },
                             },
-                        },
-                        invalid: {
-                            color: '#f44336',
-                            iconColor: '#f44336',
+                            invalid: {
+                                color: '#f44336',
+                                iconColor: '#f44336',
+                            },
                         },
                     }}
                     onReady={(el) => {
@@ -309,4 +300,4 @@ const Wrapper = styled.div`
     padding-left: 9px;
 `;
 
-export default connect(mapStateToProps)(StripeFormWrapper);
+export default StripeFormWrapper;

@@ -34,6 +34,10 @@ const EVENT = gql`
             }
             organizer {
                 id
+                email
+                appMetadata {
+                    emailVerified
+                }
                 userMetadata {
                     firstName
                 }
@@ -103,10 +107,15 @@ const EVENT_GIGS = gql`
             gigs {
                 id
                 status
+                lastChatMessage {
+                    content
+                    date
+                }
                 tempPaidIndicator @client
                 offer {
                     canBePaid
                     daysUntilPaymentPossible
+
                     offer(currency: $currency) {
                         amount
                         currency
@@ -208,7 +217,6 @@ const REQUEST_PAYMENT_INTENT = gql`
         requestPaymentIntent(gigId: $id, currency: $currency, paymentType: $paymentType) {
             __typename
             gigId
-            recommendedCurrency
             paymentProvider
             token {
                 token

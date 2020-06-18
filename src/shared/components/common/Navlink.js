@@ -7,18 +7,7 @@ class MyNavlink extends Component {
     };
 
     render() {
-        const {
-            buttonLook,
-            onClick,
-            borderHover,
-            children,
-            label,
-            to,
-            rounded,
-            important,
-            userNavigation,
-            ...rest
-        } = this.props;
+        const { onClick, borderHover, children, label, to, ...rest } = this.props;
 
         return (
             <div onClick={onClick}>

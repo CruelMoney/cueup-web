@@ -7,7 +7,7 @@ const NotifyPayment = ({ translate }) => {
             <TextWrapper
                 label={translate('Pay')}
                 showLock={true}
-                text={translate('event.offer.pay-later')}
+                text={translate('event:offer.pay-later')}
             />
         </div>
     );

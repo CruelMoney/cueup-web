@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import { gigStates } from 'constants/constants';
 import {
     Col,
@@ -109,7 +109,11 @@ const Content = React.forwardRef(
                 <CustomLabel>
                     <TitleClean>Get in touch with {contactName}</TitleClean>
 
-                    <BodySmall>Information will be available when the gig is confirmed.</BodySmall>
+                    {!showInfo && (
+                        <BodySmall>
+                            Information will be available when the gig is confirmed.
+                        </BodySmall>
+                    )}
                     <RowWrap>
                         <ContactPills
                             email={contactEmail}

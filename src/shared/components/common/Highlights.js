@@ -2,7 +2,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Container, Col, Row } from 'components/Blocks';
-import addTranslate from '../higher-order/addTranslate';
 
 const OrderedContainer = styled(Container)`
     margin-bottom: 15px;
@@ -92,4 +91,4 @@ const Highlights = (props) => {
     );
 };
 
-export default addTranslate(Highlights);
+export default Highlights;

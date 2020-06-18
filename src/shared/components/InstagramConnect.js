@@ -10,14 +10,15 @@ const InstagramConnect = () => {
     useEffect(() => {
         const parsedUrl = new URL(window.location.href);
         const code = parsedUrl.searchParams.get('code');
-        const isInstagramConnect = parsedUrl.searchParams.get('instagramConnect');
+
+        const isInstagramConnect = parsedUrl.pathname.includes('connectInstagram');
 
         setState({ isInstagramConnect, code });
     }, []);
 
-    const { code } = state;
+    const { code, isInstagramConnect } = state;
 
-    if (!code) {
+    if (!code || !isInstagramConnect) {
         return null;
     }
 
@@ -59,7 +60,7 @@ const InstagramConnectIndicator = ({ code, mutate, loading, data, error }) => {
             overlay
             active={active}
             loading={loading}
-            message={data ? 'Instagram connected' : 'Connecting instagram'}
+            message={data ? data.connectInstagram : 'Connecting instagram'}
         >
             {error && <ErrorMessageApollo error={error} />}
         </Notification>

@@ -1,26 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useQuery } from 'react-apollo';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useRouteMatch, useHistory } from 'react-router-dom';
 import queryString from 'query-string';
-import { connect } from 'react-redux';
-import { getTranslate } from 'react-localize-redux';
+import { appRoutes, userRoutes, eventRoutes } from 'constants/locales/appRoutes';
+import useTranslate from 'components/hooks/useTranslate';
+import { useAppState } from 'components/hooks/useAppState';
 import { CTAButton } from '../../../components/Sidebar';
-import PayForm from '../../../components/common/PayForm.js';
-import Popup from '../../../components/common/Popup';
 import { GIG } from '../gql';
 import { LoadingIndicator } from '../../../components/Blocks';
-import Chat from '../../../components/common/Chat';
-import EmptyPage from '../../../components/common/EmptyPage';
 
-const BookingButton = ({ user, gig, event, hash, offer, translate, showPaymentForm }) => {
-    const [showPopup, setShowPopup] = useState(false);
+const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
+    const { setAppState } = useAppState();
+    const { translate } = useTranslate();
 
     const canBePaid = gig && gig.offer && gig.status === 'ACCEPTED' && event.status === 'ACCEPTED';
+
+    const openChat = () => {
+        setAppState({ showSideBarChat: true, activeChat: gig.id, activeEvent: { hash, ...event } });
+    };
 
     if (canBePaid) {
         return (
             <>
-                <CTAButton onClick={() => showPaymentForm(true)}>
+                <CTAButton data-cy="profile-cta" onClick={() => showPaymentForm(true)}>
                     BOOK {offer.offer.formatted}
                 </CTAButton>
             </>
@@ -33,13 +35,8 @@ const BookingButton = ({ user, gig, event, hash, offer, translate, showPaymentFo
 
     if (canBeReviewd) {
         return (
-            <NavLink
-                to={translate('routes./event/:id/:hash/review', {
-                    id: event.id,
-                    hash,
-                })}
-            >
-                <CTAButton>REVIEW</CTAButton>
+            <NavLink to={`${translate(appRoutes.event)}/${event.id}/${hash}/${eventRoutes.review}`}>
+                <CTAButton data-cy="profile-cta">REVIEW</CTAButton>
             </NavLink>
         );
     }
@@ -52,56 +49,29 @@ const BookingButton = ({ user, gig, event, hash, offer, translate, showPaymentFo
         const { organizer } = event;
         return (
             <>
-                <CTAButton onClick={() => setShowPopup(true)}>SEND MESSAGE</CTAButton>
-                <Popup noPadding showing={showPopup} onClickOutside={() => setShowPopup(false)}>
-                    <Chat
-                        showPersonalInformation={false}
-                        eventId={event.id}
-                        receiver={{
-                            id: user.id,
-                            name: user.userMetadata.firstName,
-                            image: user.picture.path,
-                        }}
-                        sender={{
-                            id: organizer.id,
-                            name: organizer.userMetadata.firstName,
-                            image: organizer.picture.path,
-                        }}
-                        chatId={gig.id}
-                        placeholder={<EmptyPage title="No messages" />}
-                    />
-                </Popup>
+                <CTAButton data-cy="profile-cta" onClick={openChat}>
+                    SEND MESSAGE
+                </CTAButton>
             </>
         );
     }
 
     return (
-        <NavLink to="booking">
-            <CTAButton>REQUEST BOOKING</CTAButton>
+        <NavLink to={userRoutes.booking}>
+            <CTAButton data-cy="booking-button">REQUEST BOOKING</CTAButton>
         </NavLink>
     );
 };
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        translate: getTranslate(state.locale),
-    };
-};
-
-const SmartButton = connect(mapStateToProps)(BookingButton);
-
 const Wrapper = (props) => {
     const { location, user } = props;
-    const [showPopup, setShowPopup] = useState(false);
+    const match = useRouteMatch();
+    const history = useHistory();
 
-    // check for gigId
-    const queries = queryString.parse(location.search);
-    let { gigId, hash } = queries;
-
-    if (!gigId && location && location.state && !hash) {
-        gigId = location.state.gigId;
-        hash = location.state.hash;
-    }
+    // check for gigId, and save even though url changes
+    const { gigId, hash } = useMemo(() => {
+        return queryString.parse(location.search);
+    }, []);
 
     const { data = {}, loading } = useQuery(GIG, {
         skip: !gigId || !hash,
@@ -117,7 +87,7 @@ const Wrapper = (props) => {
 
     if (loading) {
         return (
-            <CTAButton disabled>
+            <CTAButton disabled data-cy="profile-cta">
                 <LoadingIndicator />
             </CTAButton>
         );
@@ -125,7 +95,10 @@ const Wrapper = (props) => {
 
     if (user.isOwn) {
         return (
-            <CTAButton onClick={() => window.alert('Are you trying to book yourself? 🧐')}>
+            <CTAButton
+                onClick={() => window.alert('Are you trying to book yourself? 🧐')}
+                data-cy="profile-cta"
+            >
                 REQUEST BOOKING
             </CTAButton>
         );
@@ -136,21 +109,18 @@ const Wrapper = (props) => {
     const { offer } = gig || {};
 
     return (
-        <>
-            <SmartButton
-                {...props}
-                gig={gig}
-                event={event}
-                hash={hash}
-                offer={offer}
-                showPaymentForm={() => setShowPopup(true)}
-            />
-            {gig && (
-                <Popup showing={showPopup} onClickOutside={() => setShowPopup(false)} noPadding>
-                    <PayForm id={gig.id} offer={gig.offer} gig={gig} event={event} />
-                </Popup>
-            )}
-        </>
+        <BookingButton
+            {...props}
+            gig={gig}
+            event={event}
+            hash={hash}
+            offer={offer}
+            showPaymentForm={() =>
+                history.push(
+                    match.url + '/' + userRoutes.checkout.replace(':gigId', gigId) + location.search
+                )
+            }
+        />
     );
 };
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { Container, Col } from 'components/Blocks';
 import GracefullImage from 'components/GracefullImage';
-import addTranslate from '../../../components/higher-order/addTranslate';
 import integrationsGraphic from '../../../assets/images/integrations/Brands.png';
 import integrationsGraphicMobile from '../../../assets/images/integrations/Brands_mobile.png';
 import { Header } from '../../../components/common/Text';
@@ -92,8 +92,8 @@ const IntegrationsTextStarred = styled(IntegrationsText)`
     }
 `;
 
-const Integrations = (props) => {
-    const { translate, currentLanguage } = props;
+const Integrations = () => {
+    const { t } = useTranslation();
     return (
         <Container style={{ overflow: 'hidden' }}>
             <IntegrationsWrapper>
@@ -107,30 +107,27 @@ const Integrations = (props) => {
                         alt="soundcloud mixcloud"
                     />
                     <TextAccent margin="0 0 20px 0">
-                        {translate('become-dj.integrations.integrations')}
+                        {t('become-dj:integrations.integrations')}
                     </TextAccent>
                     <TitleWrapper>
                         <Header mobileTextAlign="left" small white>
-                            {translate('become-dj.integrations.combine-content-&-sell-yourself')}
+                            {t('become-dj:integrations.combine-content-&-sell-yourself')}
                         </Header>
                     </TitleWrapper>
                     <IntegrationsText>
                         <p>Instagram</p>
                         <p>SoundCloud</p>
                         <p>Testimonials</p>
-                        <p>{translate('become-dj.integrations.photos')}</p>
-                        <p>{translate('become-dj.integrations.videos')}</p>
+                        <p>{t('become-dj:integrations.photos')}</p>
+                        <p>{t('become-dj:integrations.videos')}</p>
                         <p>Mixtapes</p>
-                        <p>Mixcloud*</p>
-                        <p>{translate('become-dj.integrations.more')}</p>
+                        <p>Mixcloud</p>
+                        <p>{t('become-dj:integrations.more')}</p>
                     </IntegrationsText>
-                    <IntegrationsTextStarred>
-                        <p>{translate('become-dj.integrations.coming-soon')}</p>
-                    </IntegrationsTextStarred>
                 </IntegrationsCol>
             </IntegrationsWrapper>
         </Container>
     );
 };
 
-export default addTranslate(Integrations);
+export default Integrations;

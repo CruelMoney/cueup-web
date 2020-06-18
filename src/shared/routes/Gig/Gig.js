@@ -5,7 +5,8 @@ import { useQuery, useMutation } from 'react-apollo';
 import styled from 'styled-components';
 import { useTransition, animated } from 'react-spring';
 import { useMeasure } from '@softbind/hook-use-measure';
-import addTranslate from '../../components/higher-order/addTranslate';
+import { appRoutes } from 'constants/locales/appRoutes';
+import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col, TeritaryButton, SmartButton } from '../../components/Blocks';
@@ -26,8 +27,11 @@ import ChatSidebar from './components/ChatSidebar';
 import BackToProfile from './components/BackToProfile';
 import GigReview from './routes/GigReview';
 import MobileChat from './routes/MobileChat';
+import content from './content.json';
 
-const Index = ({ translate, match, location, history }) => {
+const Index = ({ location, match, history }) => {
+    const { translate } = useNamespaceContent(content, 'gig');
+
     const {
         params: { id },
     } = match;
@@ -58,7 +62,7 @@ const Index = ({ translate, match, location, history }) => {
     const redirectToHome = () => history.push('/');
 
     if (error && error.message.includes('Not your gig')) {
-        return <Redirect to={translate('routes./not-found')} />;
+        return <Redirect to={translate(appRoutes.notFound)} />;
     }
 
     const { event, status } = gig || {};
@@ -106,8 +110,8 @@ const Index = ({ translate, match, location, history }) => {
 
             <Footer
                 noSkew
-                firstTo={translate('routes./how-it-works')}
-                secondTo={translate('routes./')}
+                firstTo={translate(appRoutes.howItWorks)}
+                secondTo={translate(appRoutes.home)}
                 firstLabel={translate('how-it-works')}
                 secondLabel={translate('arrange-event')}
                 title={translate('Organizing a new event?')}
@@ -115,28 +119,6 @@ const Index = ({ translate, match, location, history }) => {
             />
         </div>
     );
-};
-
-const idxRoute = (path) => {
-    if (path.includes('review')) {
-        return 2;
-    }
-    if (path.includes('offer')) {
-        return 1;
-    }
-    return 0;
-};
-
-let curIdx = 0;
-
-const getDirection = (newPath) => {
-    const newIdx = idxRoute(newPath);
-    let dir = 'back';
-    if (newIdx > curIdx) {
-        dir = 'front';
-    }
-    curIdx = newIdx;
-    return dir;
 };
 
 const Content = React.memo((props) => {
@@ -200,83 +182,48 @@ const Content = React.memo((props) => {
 const MainContent = (props) => {
     const { location, setPopup } = props;
     const [height, setHeight] = useState('auto');
-    const direction = getDirection(location.pathname);
     const [ssr, setSsr] = useState(true);
 
     useEffect(() => {
         setSsr(false);
     }, []);
 
-    const transitions = useTransition(location, (location) => location.pathname, {
-        config: {
-            tension: 500,
-            friction: 40,
-            precision: 0.001,
-        },
-        from: {
-            opacity: 0,
-            transform: `translateX(${direction === 'back' ? '-100px' : '100px'}`,
-        },
-        enter: { opacity: 1, transform: 'translateX(0px)' },
-        leave: {
-            opacity: 0,
-            transform: `translateX(${direction === 'back' ? '100px' : '-100px'}`,
-        },
-    });
-
     return (
         <BorderCol style={{ height: height || 'auto' }}>
             <Switch>
                 <Redirect exact from={'/gig/:id'} to={'/gig/:id/information'} />
             </Switch>
-            <AnimationWrapper>
-                {transitions.map(({ item, props: style, key }) => (
-                    <SSRComponent
-                        key={key}
-                        {...props}
-                        ssr={ssr}
-                        item={item}
-                        style={style}
-                        registerHeight={setHeight}
-                        showDecline={() => setPopup(true)}
-                    />
-                ))}
-            </AnimationWrapper>
+            <GigRoutes
+                {...props}
+                ssr={ssr}
+                registerHeight={setHeight}
+                showDecline={() => setPopup(true)}
+            />
         </BorderCol>
     );
 };
 
-const SSRComponent = ({ ssr, ...props }) => {
-    if (ssr) {
-        return <GigRoutes {...props} />;
-    }
-
-    return <TransitionComponent {...props} />;
-};
-
 const GigRoutes = forwardRef((props, ref) => {
-    const { style, item, match } = props;
+    const { match } = props;
     return (
-        <animated.div style={style} ref={ref}>
-            <Switch location={item}>
-                <Route
-                    path={match.path + '/information'}
-                    render={(navProps) => <Information {...navProps} {...props} />}
-                />
-                <Route
-                    path={match.path + '/offer'}
-                    render={(navProps) => <Offer {...navProps} {...props} />}
-                />
-                <Route
-                    path={match.path + '/review'}
-                    render={(navProps) => <GigReview {...navProps} {...props} />}
-                />
-                <Route
-                    path={match.path + '/chat'}
-                    render={(navProps) => <MobileChat {...navProps} {...props} />}
-                />
-            </Switch>
-        </animated.div>
+        <Switch>
+            <Route
+                path={match.path + '/information'}
+                render={(navProps) => <Information {...navProps} {...props} />}
+            />
+            <Route
+                path={match.path + '/offer'}
+                render={(navProps) => <Offer {...navProps} {...props} />}
+            />
+            <Route
+                path={match.path + '/review'}
+                render={(navProps) => <GigReview {...navProps} {...props} />}
+            />
+            <Route
+                path={match.path + '/chat'}
+                render={(navProps) => <MobileChat {...navProps} {...props} />}
+            />
+        </Switch>
     );
 });
 
@@ -419,5 +366,5 @@ const GigContainer = styled(Container)`
         padding: 0;
     }
 `;
-
-export default addTranslate(Index);
+// eslint-disable-next-line import/no-unused-modules
+export default Index;

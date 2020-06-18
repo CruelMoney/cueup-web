@@ -5,12 +5,13 @@ import { Input, InputRow } from 'components/FormComponents';
 import { SmartButton, Row, TeritaryButton, LoadingIndicator } from 'components/Blocks';
 import { useForm } from 'components/hooks/useForm';
 import { ME } from 'components/gql';
+import useTranslate from 'components/hooks/useTranslate';
 import { PAYMENT_PROVIDERS, PAYOUT_TYPES } from '../../../constants/constants';
 import ErrorMessageApollo, { getErrorMessage } from '../ErrorMessageApollo';
 import PhoneInput from '../PhoneInput';
 import { UPDATE_USER_PAYOUT, USER_PAYOUT_METHOD, REMOVE_PAYOUT_METHOD } from './gql';
 
-const PayoutForm = ({ loading, translate, onSubmitted, ...props }) => {
+const PayoutForm = ({ loading, onSubmitted, translate, ...props }) => {
     const [mutate, { loading: submitting, error }] = useMutation(UPDATE_USER_PAYOUT, {
         onCompleted: onSubmitted,
         refetchQueries: [{ query: ME }],
@@ -46,9 +47,12 @@ const PayoutForm = ({ loading, translate, onSubmitted, ...props }) => {
             <MainForm submit={submit} {...props} loading={submitting} translate={translate} />
             <ErrorMessageApollo error={error || localError} />
 
-            <div className="row center">
+            <div className="row center" style={{ marginTop: '12px' }}>
                 <div className="col-xs-10">
-                    <p className="terms_link text-center">{translate('payout.terms')}</p>
+                    <p
+                        className="terms_link text-center"
+                        dangerouslySetInnerHTML={{ __html: translate('payout.terms') }}
+                    />
                 </div>
             </div>
         </>
@@ -95,6 +99,7 @@ const MainForm = ({ user, direct = {}, translate, isUpdate, submit, onCancel, lo
 
                 <Input
                     type="text-area"
+                    name="direct-description"
                     defaultValue={form.description}
                     label={'Description'}
                     placeholder={'Cash at event etc...'}
@@ -128,8 +133,7 @@ const MainForm = ({ user, direct = {}, translate, isUpdate, submit, onCancel, lo
 };
 
 const DirectPayout = (props) => {
-    const { translate } = props;
-
+    const { translate } = useTranslate();
     const { loading, data } = useQuery(USER_PAYOUT_METHOD, {
         variables: { id: props.id },
         ssr: false,
@@ -138,13 +142,18 @@ const DirectPayout = (props) => {
 
     const direct = data?.payoutMethod;
 
-    console.log({ props });
     return (
         <div className="payout-form">
             <Title>{translate('Direct Payout')}</Title>
             <BodySmall>{translate('payout.description-direct')}</BodySmall>
 
-            <PayoutForm {...props} isUpdate={props.id} loading={loading} direct={direct} />
+            <PayoutForm
+                {...props}
+                translate={translate}
+                isUpdate={props.id}
+                loading={loading}
+                direct={direct}
+            />
         </div>
     );
 };

@@ -1,0 +1,93 @@
+.tgl-wrapper {
+    align-items: center;
+    display: flex;
+}
+
+.tgl-wrapper.small {
+    font-size: 0.6em;
+}
+
+.tgl-wrapper label:last-child {
+    margin-left: 0.5em;
+}
+
+.tgl {
+    display: none;
+}
+.tgl,
+.tgl:after,
+.tgl:before,
+.tgl *,
+.tgl *:after,
+.tgl *:before,
+.tgl + .tgl-btn {
+    box-sizing: border-box;
+}
+.tgl::-moz-selection,
+.tgl:after::-moz-selection,
+.tgl:before::-moz-selection,
+.tgl *::-moz-selection,
+.tgl *:after::-moz-selection,
+.tgl *:before::-moz-selection,
+.tgl + .tgl-btn::-moz-selection {
+    background: none;
+}
+.tgl::selection,
+.tgl:after::selection,
+.tgl:before::selection,
+.tgl *::selection,
+.tgl *:after::selection,
+.tgl *:before::selection,
+.tgl + .tgl-btn::selection {
+    background: none;
+}
+.tgl + .tgl-btn {
+    cursor: pointer;
+    display: block;
+    height: 2em;
+    outline: 0;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    width: 4em;
+}
+.tgl + .tgl-btn:after,
+.tgl + .tgl-btn:before {
+    content: '';
+    display: block;
+    height: 100%;
+    position: relative;
+    width: 50%;
+}
+.tgl + .tgl-btn:after {
+    left: 0;
+}
+.tgl + .tgl-btn:before {
+    display: none;
+}
+.tgl:checked + .tgl-btn:after {
+    left: 50%;
+}
+
+.tgl-light + .tgl-btn {
+    background: rgb(229, 229, 234);
+    border-radius: 2em;
+    padding: 2px;
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+}
+.tgl-light + .tgl-btn:after {
+    background: #fff;
+    border-radius: 50%;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+.tgl-light:checked + .tgl-btn {
+    background: rgb(0, 209, 255);
+}
+
+.toggle-label {
+    opacity: 0.75;
+}

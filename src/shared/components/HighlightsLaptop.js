@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Col } from 'components/Blocks';
-import addTranslate from '../components/higher-order/addTranslate';
 // eslint-disable-next-line import/no-unresolved
 import Laptop from './Laptop';
 // eslint-disable-next-line import/no-unresolved
@@ -22,4 +21,4 @@ const HighlightsLaptop = () => {
     );
 };
 
-export default addTranslate(HighlightsLaptop);
+export default HighlightsLaptop;

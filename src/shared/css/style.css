@@ -340,134 +340,66 @@ body.pre-header-content .navigation {
     padding: 0;
 }
 
-.main-menu li {
+.main-menu > li {
     margin-left: 30px;
     position: relative;
-    text-align: right;
 }
 .main-menu .redirect-button {
     height: 20px !important;
     width: 20px !important;
 }
 
-.main-menu li:last-child {
+.main-menu > li:last-child {
     margin-left: 30px;
 }
 
 .main-menu a,
 .main-menu .link-look {
-    color: #ffffff;
+    color: #fff;
     cursor: pointer;
+    fill: #fff;
     font-size: 17px;
     /* Login: */
     font-weight: 600;
-    height: 30px;
+    height: 32px;
     letter-spacing: 0.3px;
-    line-height: 30px;
+    line-height: 32px;
 }
 li .link-look {
-    height: 30px;
+    height: 32px;
 }
 
 .logo {
     fill: #ffffff;
 }
-.location_terms,
-.location_betingelser,
-.location_book-dj,
-.location_locations,
-.location_faq,
-.location_about,
-.location_om,
-.location_blog,
-.not-found {
+.white-theme {
     .main-menu a,
     .main-menu .link-look {
         color: #32325d;
+        fill: #32325d;
     }
 }
-.location_terms .navigation .logo,
-.location_betingelser .navigation .logo,
-.location_book-dj .navigation .logo,
-.location_locations .navigation .logo,
-.location_faq .navigation .logo,
-.location_about .navigation .logo,
-.location_om .navigation .logo,
-.location_blog .navigation .logo,
-.not-found .navigation .logo {
+.white-theme .navigation .logo {
     color: #32325d;
     fill: #32325d;
 }
-.location_terms .mobileMenuButton h2,
-.location_terms .mobileMenuButton h2:after,
-.location_terms .mobileMenuButton h2:before,
-.location_betingelser .mobileMenuButton h2,
-.location_betingelser .mobileMenuButton h2:after,
-.location_betingelser .mobileMenuButton h2:before,
-.location_book-dj .mobileMenuButton h2,
-.location_book-dj .mobileMenuButton h2:after,
-.location_book-dj .mobileMenuButton h2:before,
-.location_locations .mobileMenuButton h2,
-.location_locations .mobileMenuButton h2:after,
-.location_locations .mobileMenuButton h2:before,
-.location_faq .mobileMenuButton h2,
-.location_faq .mobileMenuButton h2:after,
-.location_faq .mobileMenuButton h2:before,
-.location_blog .mobileMenuButton h2,
-.location_blog .mobileMenuButton h2:after,
-.location_blog .mobileMenuButton h2:before,
-.location_about .mobileMenuButton h2,
-.location_about .mobileMenuButton h2:after,
-.location_about .mobileMenuButton h2:before,
-.location_om .mobileMenuButton h2,
-.location_om .mobileMenuButton h2:after,
-.location_om .mobileMenuButton h2:before {
+.white-theme .mobileMenuButton h2,
+.white-theme .mobileMenuButton h2:after,
+.white-theme .mobileMenuButton h2:before {
     background: #32325d;
 }
 
-.location_terms .buttonFixed .mobileMenuButton h2,
-.location_terms .buttonFixed .mobileMenuButton h2:after,
-.location_terms .buttonFixed .mobileMenuButton h2:before,
-.location_betingelser .buttonFixed .mobileMenuButton h2,
-.location_betingelser .buttonFixed .mobileMenuButton h2:after,
-.location_betingelser .buttonFixed .mobileMenuButton h2:before,
-.location_book-dj .buttonFixed .mobileMenuButton h2,
-.location_book-dj .buttonFixed .mobileMenuButton h2:after,
-.location_book-dj .buttonFixed .mobileMenuButton h2:before,
-.location_locations .buttonFixed .mobileMenuButton h2,
-.location_locations .buttonFixed .mobileMenuButton h2:after,
-.location_locations .buttonFixed .mobileMenuButton h2:before,
-.location_faq .buttonFixed .mobileMenuButton h2,
-.location_faq .buttonFixed .mobileMenuButton h2:after,
-.location_faq .buttonFixed .mobileMenuButton h2:before,
-.location_blog .buttonFixed .mobileMenuButton h2,
-.location_blog .buttonFixed .mobileMenuButton h2:after,
-.location_blog .buttonFixed .mobileMenuButton h2:before,
-.location_about .buttonFixed .mobileMenuButton h2,
-.location_about .buttonFixed .mobileMenuButton h2:after,
-.location_about .buttonFixed .mobileMenuButton h2:before,
-.location_om .buttonFixed .mobileMenuButton h2,
-.location_om .buttonFixed .mobileMenuButton h2:after,
-.location_om .buttonFixed .mobileMenuButton h2:before {
+.white-theme .buttonFixed .mobileMenuButton h2,
+.white-theme .buttonFixed .mobileMenuButton h2:after,
+.white-theme .buttonFixed .mobileMenuButton h2:before {
     background: white;
 }
 
-.location_terms nav,
-.location_betingelser nav,
-.location_faq nav,
-.location_blog nav,
-.location_about nav,
-.location_om nav {
+.white-theme nav {
     border-bottom: 1px solid #f6f9fc;
 }
 
-.location_terms,
-.location_betingelser,
-.location_faq,
-.location_blog,
-.location_about,
-.location_om,
-.not-found {
+.white-theme {
     #content {
         padding-top: 90px;
     }
@@ -688,7 +620,7 @@ nav a {
 nav .main-menu a:hover {
     text-decoration: underline;
 }
-nav .main-menu a.active {
+nav .main-menu > li a.active {
     text-decoration: underline;
 }
 a:focus {
@@ -1017,6 +949,7 @@ input[type='file'] + label * {
   animationDuration: '0.5s',*/
     background-color: rgba(0, 0, 0, 0.4);
     opacity: 0;
+    perspective: 3000px;
     pointer-events: none;
     transition: opacity 0.35s;
 }
@@ -1345,7 +1278,7 @@ input[type='file'] + label * {
 
 .pay-fact.pay-later {
     border: none;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
     opacity: 0.5;
 }
 
@@ -1688,7 +1621,7 @@ button {
     opacity: 0;
     overflow-y: scroll !important;
     pointer-events: none;
-    transform: rotate3d(1, 1, 0, -15deg);
+    transform: rotate3d(1, 1, 0, -20deg);
     transform-origin: 100% 0;
     transition-duration: 0.35s;
     transition-property: transform, opacity;
@@ -2135,6 +2068,9 @@ table {
     white-space: pre-line;
     z-index: 1;
 }
+.gm-style-pbt {
+    color: #fff !important;
+}
 .signup li label,
 .signup li .toggle-button-handler {
     display: block;
@@ -2157,6 +2093,12 @@ table {
 }
 p.error {
     color: #f44336 !important;
+}
+.error button {
+    color: #8998aa !important;
+}
+.error button:hover {
+    color: #32325d !important;
 }
 .event-submit-wrapper {
     margin-bottom: 20px;
@@ -2681,9 +2623,6 @@ header .info-boxes {
     position: relative;
 }
 .payout-form {
-    button {
-        margin: 1em 0;
-    }
     .text-element-wrapper {
         margin-bottom: 0;
     }
@@ -3351,7 +3290,7 @@ ol.breadcrumbs a {
         margin-top: 0px;
     }
 
-    .location_about #content,
+    .white-theme #content,
     .location_faq #content,
     .location_terms #content {
         margin-top: 80px;
@@ -3472,7 +3411,8 @@ ol.breadcrumbs a {
     }
     .footer-columns > div {
         margin-bottom: 30px;
-        margin-right: 20px;
+        margin-right: 0;
+        width: 50%;
     }
     footer {
         align-items: flex-start;

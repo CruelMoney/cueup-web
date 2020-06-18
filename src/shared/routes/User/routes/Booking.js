@@ -8,7 +8,7 @@ import { useCreateEvent } from 'actions/EventActions';
 import { useForm } from 'components/hooks/useForm';
 import usePushNotifications from 'components/hooks/usePushNotifications';
 import { SettingsSection, Input, Label } from '../../../components/FormComponents';
-import DatePickerPopup from '../../../components/DatePicker';
+import DatePickerPopup from '../../../components/DatePickerPopup';
 import { Row, Container, Col, GradientBg, PrimaryButton, Card } from '../../../components/Blocks';
 import Sidebar, { SidebarContent, CTAButton } from '../../../components/Sidebar';
 import ScrollToTop from '../../../components/common/ScrollToTop';
@@ -79,9 +79,7 @@ const Booking = ({ user, loading, translate }) => {
             <Popup width="380px" showing={loginPopup} onClickOutside={() => setloginPopup(false)}>
                 <div>
                     <TitleClean center>Login</TitleClean>
-                    <p style={{ marginBottom: '20px' }}>
-                        {translate('request-form.email-exists-message')}
-                    </p>
+                    <p style={{ marginBottom: '20px' }}>{translate('email-exists-message')}</p>
                     <Login
                         redirect={false}
                         onLogin={() => {
@@ -155,6 +153,7 @@ const EventForm = ({
                     <Input
                         half
                         type="text"
+                        name="eventName"
                         label="Event Name"
                         placeholder="Add a short, clear name"
                         onSave={setValue('name')}
@@ -241,7 +240,8 @@ const EventForm = ({
                     <Input
                         type="text-area"
                         label={'Description'}
-                        placeholder={translate('request-form.step-3.event-description-description')}
+                        name="description"
+                        placeholder={translate('event-description-placeholder')}
                         style={{
                             height: '200px',
                         }}
@@ -263,6 +263,7 @@ const EventForm = ({
                         type="text"
                         label="Contact Name"
                         autoComplete="name"
+                        name="contactName"
                         placeholder="First Last"
                         validation={(v) => {
                             if (!v) {
@@ -283,6 +284,7 @@ const EventForm = ({
                         placeholder="mail@email.com"
                         type="email"
                         autoComplete="email"
+                        name="contactEmail"
                         label="Contact Email"
                         validation={(v) =>
                             emailValidator.validate(v) ? null : 'Not a valid email'
@@ -296,6 +298,7 @@ const EventForm = ({
                         placeholder="+123456789"
                         type="tel"
                         autoComplete="tel"
+                        name="contactPhone"
                         onSave={setValue('contactPhone')}
                     />
                 </SettingsSection>
@@ -349,6 +352,7 @@ const BookingSidebar = ({ loading, values, requestBooking, showLogin, eventCreat
 
             <MobileBookingButton>
                 <CTAButton
+                    type="submit"
                     disabled={createLoading || eventCreated}
                     loading={createLoading}
                     onClick={requestBooking(create)}
@@ -391,21 +395,14 @@ const Content = ({ user, values }) => {
 
     return (
         <>
-            <SmallHeader style={{ marginBottom: '15px' }}>{`Booking of ${artistName ||
-                firstName}`}</SmallHeader>
+            <SmallHeader style={{ marginBottom: '15px' }}>{`Booking of ${
+                artistName || firstName
+            }`}</SmallHeader>
             {name && <SidebarRow>{name}</SidebarRow>}
             <SidebarRow>{moment(date).format('dddd Do MMMM, YYYY')}</SidebarRow>
             <SidebarRow>
-                From{' '}
-                {moment(date)
-                    .startOf('day')
-                    .add(startMinute, 'minutes')
-                    .format('HH:mm')}{' '}
-                to{' '}
-                {moment(date)
-                    .startOf('day')
-                    .add(endMinute, 'minutes')
-                    .format('HH:mm')}
+                From {moment(date).startOf('day').add(startMinute, 'minutes').format('HH:mm')} to{' '}
+                {moment(date).startOf('day').add(endMinute, 'minutes').format('HH:mm')}
             </SidebarRow>
             <SidebarRow>{guestsCount} guests</SidebarRow>
             {speakers && <SidebarRow>Including speakers</SidebarRow>}
@@ -439,11 +436,11 @@ const SuccessMessage = ({ translate, userId }) => {
             }}
         >
             <Title>Thanks</Title>
-            <Body>{translate('request-form.succes-message')}</Body>
+            <Body>{translate('post-event-succes-message')}</Body>
             {pushShouldBeEnabled && (
                 <>
                     <Body style={{ marginBottom: 9 }}>
-                        {translate('request-form.succes-message-2')}
+                        {translate('post-event-succes-message-2')}
                     </Body>
                     <PrimaryButton onClick={showPrompt}>Get notifications</PrimaryButton>
                 </>

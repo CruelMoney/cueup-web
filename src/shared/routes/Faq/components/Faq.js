@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { localize } from 'react-localize-redux';
+import { appRoutes } from 'constants/locales/appRoutes.ts';
 import Footer from '../../../components/common/Footer';
 import ButtonLink from '../../../components/common/ButtonLink';
 
@@ -21,7 +21,7 @@ class Faq extends Component {
         }
     };
     render() {
-        const { translate } = this.props;
+        const { t } = this.props;
 
         return (
             <div className="faq-content">
@@ -29,17 +29,11 @@ class Faq extends Component {
                     <div className="row">
                         <div className="col-md-3">
                             <div className="terms-navigation" ref={(ref) => (this.nav = ref)}>
-                                <ButtonLink
-                                    color={this.themeColor}
-                                    to={translate('routes./faq/dj')}
-                                >
+                                <ButtonLink color={this.themeColor} to={t(appRoutes.faqDj)}>
                                     DJ
                                 </ButtonLink>
-                                <ButtonLink
-                                    color={this.themeColor}
-                                    to={translate('routes./faq/organizer')}
-                                >
-                                    {translate('Organizer')}
+                                <ButtonLink color={this.themeColor} to={t(appRoutes.faqOrganizer)}>
+                                    {t('Organizer')}
                                 </ButtonLink>
                             </div>
                         </div>
@@ -51,16 +45,16 @@ class Faq extends Component {
                 </div>
                 <Footer
                     color={this.themeColor}
-                    firstTo={translate('routes./')}
-                    secondTo={translate('routes./signup')}
-                    firstLabel={translate('arrange-event')}
-                    secondLabel={translate('apply-to-become-dj')}
-                    title={translate('ready-to-get-started')}
-                    subTitle={translate('arrange-event-or-become-dj')}
+                    firstTo={t(appRoutes.home)}
+                    secondTo={t(appRoutes.signUp)}
+                    firstLabel={t('arrange-event')}
+                    secondLabel={t('apply-to-become-dj')}
+                    title={t('ready-to-get-started')}
+                    subTitle={t('arrange-event-or-become-dj')}
                 />
             </div>
         );
     }
 }
 
-export default localize(Faq, 'locale');
+export default Faq;

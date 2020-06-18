@@ -1,6 +1,5 @@
 import React from 'react';
 import wNumb from 'wnumb';
-import addTranslate from 'components/higher-order/addTranslate';
 import { TeritaryButton, PrimaryButton, Row } from 'components/Blocks';
 import { Input, Label } from 'components/FormComponents';
 import { BodySmall } from 'components/Text';
@@ -19,10 +18,11 @@ const Step3 = ({
 }) => {
     return (
         <form>
-            <h3>{translate('request-form.step-3.header')}</h3>
+            <h3 dangerouslySetInnerHTML={{ __html: translate('requestForm:step-3.header') }} />
+
             <RequestSection>
                 <Label style={{ marginBottom: '12px', display: 'block' }}>
-                    {translate('request-form.step-3.music-duration')}
+                    {translate('requestForm:step-3.music-duration')}
                 </Label>
                 <TimeSlider
                     hoursLabel={translate('hours')}
@@ -39,7 +39,7 @@ const Step3 = ({
 
             <RequestSection>
                 <Label style={{ marginBottom: '12px', display: 'block' }}>
-                    {translate('request-form.step-3.guests')}
+                    {translate('requestForm:step-3.guests')}
                 </Label>
                 <div>
                     <Slider
@@ -59,12 +59,16 @@ const Step3 = ({
                         })}
                     />
                 </div>
-                <BodySmall style={{ marginTop: '15px' }}>
-                    {translate('request-form.step-3.guests-description', {
-                        prefix: form.guestsCount === 1000 ? translate('over') : translate('around'),
-                        amount: form.guestsCount,
-                    })}
-                </BodySmall>
+                <BodySmall
+                    style={{ marginTop: '15px' }}
+                    dangerouslySetInnerHTML={{
+                        __html: translate('requestForm:step-3.guests-description', {
+                            prefix:
+                                form.guestsCount === 1000 ? translate('over') : translate('around'),
+                            amount: form.guestsCount,
+                        }),
+                    }}
+                />
             </RequestSection>
             <RequestSection>
                 <Input
@@ -73,8 +77,8 @@ const Step3 = ({
                         height: '120px',
                     }}
                     defaultValue={form.description}
-                    label={translate('request-form.step-3.event-description')}
-                    placeholder={translate('request-form.step-3.event-description-description')}
+                    label={translate('requestForm:step-3.event-description')}
+                    placeholder={translate('event-description-placeholder')}
                     name="description"
                     onSave={(description) => handleChange({ description })}
                     validation={(v) => (v ? null : 'Please write a description')}
@@ -83,7 +87,7 @@ const Step3 = ({
                 />
             </RequestSection>
             <Row right style={{ marginTop: '12px' }}>
-                <TeritaryButton type="button" className="back-button" onClick={back}>
+                <TeritaryButton type="button" onClick={back}>
                     {translate('back')}
                 </TeritaryButton>
                 <PrimaryButton type="button" onClick={() => next()}>
@@ -94,4 +98,4 @@ const Step3 = ({
     );
 };
 
-export default addTranslate(Step3);
+export default Step3;

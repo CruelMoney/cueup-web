@@ -1,270 +1,68 @@
 {
-  "user": {
-    "notifications": {
-      "email": [
-        "You won't receive any gigs before you have confirmed your email-address.",
-        "Du vil ikke modtage gigs før du har bekræftet din email."
-      ],
-      "standby": [
-        "You are currently on standby and can not be booked.",
-        "Du er på standby og kan ikke blive booket."
-      ],
-      "standby-public": [
-        "This DJ is currently on standby and can not be booked.",
-        "Denne DJ er på standby og kan ikke bookes."
-      ],
-      "picture": [
-        "You should update your profile picture.",
-        "Du bør opdatere dit profilbillede."
-      ],
-      "empty": [
-        "You don't have any new notifications.",
-        "Du har ingen nye notifikation."
-      ],
-      "Book other DJs": ["Book other DJs", "Book andre DJs"]
+    "en": {
+        "notifications": {
+            "email": "You won't receive any gigs before you have confirmed your email-address.",
+            "standby": "You are currently on standby and can not be booked.",
+            "standby-public": "This DJ is currently on standby and can not be booked.",
+            "picture": "You should update your profile picture.",
+            "empty": "You don't have any new notifications.",
+            "Book other DJs": "Book other DJs"
+        },
+        "preferences": {
+            "delete-warning": "Are you sure you want to delete? All future gigs, events and payments will be lost.",
+            "payout-info": "To get paid, you need to set up a payout method. Cueup releases payouts about 24 hours after a job is finished.",
+            "card-info": "Last 4 digits of current account number",
+            "currency": "What currency do you wish to have prices shown in?",
+            "email": "What kind of notifications do you wish to receive?",
+            "cancelation": "How many days notice do you allow for cancelations? If the organizer wants to cancel the event within less days, the percentage specified below will be refunded. The organizer will have to agree to this policy when confirming your offer.",
+            "refund": "How many percentage of the offer should be returned if the organizer cancels within less days than your minimum notice?",
+            "refunded": "<span>${ percentage }% </span> will be refunded.",
+            "standby": "Are you unavailable to play at the moment? You will not receive requests if you're unavailable.",
+            "permalink": "What URL do you want people to find you at.",
+            "password": "Request an email to change your password.",
+            "email-verification": "Request an email to verify your email.",
+            "login": "Login to see your preferences."
+        },
+        "name": "Your full name. We only show your first name.",
+        "email": "Updating your email means you have to confirm it again.",
+        "phone": "We only share your phone number with people you contact through Cueup.",
+        "genres": "The kind of music you play.",
+        "bio": "Please tell us a bit about yourself. What kind of DJ are you? What is your level of experience? What kind of events do you usually play at?",
+        "refer-1-description": "At Cueup you can get more money by referring people to the site. The link below is used to book you directly. In case someone books you using your link, the Cueup fee will be removed from the gig, and you will get the full payout.",
+        "refer-2-description": "At Cueup you can get points for referring other DJs to the site. The link below is used for referring DJs to the site. In case a DJ signs up using your link, you will get a Cueup point whenever the referred DJ makes his or hers first offer. Cueup points are used when making an offer to remove the Cueup fee.",
+        "location": "This is the area where you will receive gigs. To edit the location or radius, click the edit information button, and drag in the points that appear on the circle."
     },
-    "preferences": {
-      "delete-warning": [
-        "Are you sure you want to delete? All future gigs, events and payments will be lost.",
-        "Er du sikker på at du vil slette din profil? Alle fremtidige gigs, begivenheder og udbetalinger vil blive tabt."
-      ],
-      "payout-info": [
-        "To get paid, you need to set up a payout method. Cueup releases payouts about 24 hours after a job is finished.",
-        "For at blive betalt, skal du udfylde din udbetalingsmetode. Cueup frigøre udbetalinger 24 timer efter et job er udført."
-      ],
-      "card-info": [
-        "Last 4 digits of current account number",
-        "De sidste 4 cifre af dit nuværende kontonummer"
-      ],
-      "currency": [
-        "What currency do you wish to have prices shown in?",
-        "Hvilken valuta ønsker du at vise priser i?"
-      ],
-      "email": [
-        "What kind of notifications do you wish to receive?",
-        "Hvilke slags notifikationer ønsker du at modtage?"
-      ],
-      "cancelation": [
-        "How many days notice do you allow for cancelations? If the organizer wants to cancel the event within less days, the percentage specified below will be refunded. The organizer will have to agree to this policy when confirming your offer.",
-        "Hvor mange dages varsel tillader du for aflysninger? Hvis kunden vil aflyse begivenheden inden for færre dage, vil den angivne procentdel blive refunderet. Kunder vil blive bedt om at acceptere denne politik, når de bekræfter dit tilbud."
-      ],
-      "refund": [
-        "How many percentage of the offer should be returned if the organizer cancels within less days than your minimum notice?",
-        "Hvor mange procent af tilbuddet skal refunderes hvis kunden aflyser inden for færre dage end hvad du tillader."
-      ],
-      "refunded": [
-        "<span>${ percentage }% </span> will be refunded.",
-        "<span>${ percentage }% </span> vil blive refunderet."
-      ],
-      "standby": [
-        "Are you unavailable to play at the moment? You will not receive requests if you're unavailable.",
-        "Er du ikke ledig til at spille for tiden? Du vil ikke modtage nogle gigs hvis du er utilgængelig."
-      ],
-      "permalink": [
-        "What URL do you want people to find you at.",
-        "Hvilken URL skal din profil kunne findes på?"
-      ],
-      "password": [
-        "Request an email to change your password.",
-        "Anmod om en email til at ændre dit password."
-      ],
-      "email-verification": [
-        "Request an email to verify your email.",
-        "Anmod om en email til at verificere din email."
-      ],
-      "login": [
-        "Login to see your preferences.",
-        "Log ind for at se dine indstillinger."
-      ]
+    "da": {
+        "notifications": {
+            "email": "Du vil ikke modtage gigs før du har bekræftet din email.",
+            "standby": "Du er på standby og kan ikke blive booket.",
+            "standby-public": "Denne DJ er på standby og kan ikke bookes.",
+            "picture": "Du bør opdatere dit profilbillede.",
+            "empty": "Du har ingen nye notifikation.",
+            "Book other DJs": "Book andre DJs"
+        },
+        "preferences": {
+            "delete-warning": "Er du sikker på at du vil slette din profil? Alle fremtidige gigs, begivenheder og udbetalinger vil blive tabt.",
+            "payout-info": "For at blive betalt, skal du udfylde din udbetalingsmetode. Cueup frigøre udbetalinger 24 timer efter et job er udført.",
+            "card-info": "De sidste 4 cifre af dit nuværende kontonummer",
+            "currency": "Hvilken valuta ønsker du at vise priser i?",
+            "email": "Hvilke slags notifikationer ønsker du at modtage?",
+            "cancelation": "Hvor mange dages varsel tillader du for aflysninger? Hvis kunden vil aflyse begivenheden inden for færre dage, vil den angivne procentdel blive refunderet. Kunder vil blive bedt om at acceptere denne politik, når de bekræfter dit tilbud.",
+            "refund": "Hvor mange procent af tilbuddet skal refunderes hvis kunden aflyser inden for færre dage end hvad du tillader.",
+            "refunded": "<span>${ percentage }% </span> vil blive refunderet.",
+            "standby": "Er du ikke ledig til at spille for tiden? Du vil ikke modtage nogle gigs hvis du er utilgængelig.",
+            "permalink": "Hvilken URL skal din profil kunne findes på?",
+            "password": "Anmod om en email til at ændre dit password.",
+            "email-verification": "Anmod om en email til at verificere din email.",
+            "login": "Log ind for at se dine indstillinger."
+        },
+        "name": "Dit fulde navn. Vi viser kun dit fornavn.",
+        "email": "Opdaterer du din email, skal du verificere den igen.",
+        "phone": "Vi deler kun dit telefonnummer med personer du kontakter gennem Cueup.",
+        "genres": "Hvilke genrer spiller du?",
+        "bio": "Fortæl os om dig selv. Hvilken slags DJ er du, hvor erfaren er du, hvilken slags events spiller du normalt?",
+        "refer-1-description": "Hos Cueup kan du få udbetalt mere hvis du henviser folk til sitet. Linket kan bruges til at booke dig direkte. Hvis nogen booker dig ved brug af linket, vil Cueup gebyret blive fjernet fra eventet, og du vil få udbetalt mere.",
+        "refer-2-description": "Hos Cueup kan du optjene point ved at henvise andre DJs. Linket kan bruges til at henvise en DJ til tilmeldingen. Når en DJ tilmelder sig ved hjælp af dit link, vil du modage et Cueup point når end den nye DJ afgiver sit første tilbud. Cueup point kan bruges til at fjerne DJ gebyret når du afgiver et tilbud.",
+        "location": "Du vil modtage gigs i dette område. For at ændre din lokation eller radius, tryk rediger information til venstre, og hiv i punkterne der fremkommer om cirklen."
     }
-  },
-  "gig": {
-    "messages": {
-      "expired": ["Gig has expired 😑", "Gig er udløbet 😑"],
-      "cancelled": [
-        "The gig has been cancelled ☹️",
-        "Gigget er blevet aflyst ☹️"
-      ],
-      "declined": ["You have declined the gig 😮", "Du har afslået gigget 😮"],
-      "lost": ["You have lost the gig ☹️", "Du har tabt gigget ☹️"],
-      "confirmed": [
-        "The gig has been confirmed, get ready to play 😁",
-        "Gigget er bekræftet, gør klar til at spille 😁"
-      ],
-      "finished": ["The gig is finished ☺️", "Gigget er færdigt ☺️"],
-      "event-finished": [
-        "The event is finished ☺️",
-        "Begivenheden er afsluttet ☺️"
-      ],
-      "accepted": [
-        "Waiting on confirmation from organizer 😊",
-        "Venter på bekræftelse fra kunden 😊"
-      ],
-      "referred": ["Direct booking", "Direkte booking"],
-      "requested": [
-        "Event happens soon, make your offer quickly 🤑",
-        "Event starter snart, afgiv dit tilbud hurtigt 🤑"
-      ]
-    },
-    "status-description": [
-      "The gig request will automatically be declined if you don't make an offer within this time. Remember, you can change the offer up until the organizer has paid.",
-      "Gigget vil automatisk blive afslået hvis du ikke afgiver et tilbud inden denne tid. Husk at du altid kan ændre tilbuddet indtil kunden har betalt."
-    ],
-    "event": {
-      "info": ["Event information", "Event information"],
-      "info-description": [
-        "If the information below is not enough to give an offer, don't hesitate contacting the organizer.",
-        "Hvis informationen ikke er nok til at afgive et tilbud kan du kontakte kunden for at høre mere."
-      ],
-      "requirements": ["Event requirements", "Event ønsker"],
-      "rider-dj": [
-        "The organizer does not need speakers or lights.",
-        "Kunden har ikke behov for højtalere eller lys."
-      ],
-      "rider-lights": [
-        "The organizer needs you to bring lights for the event.",
-        "Kunden ønsker at du medbringer lys til begivenheden."
-      ],
-      "rider-speakers": [
-        "The organizer needs you to bring speakers.",
-        "Kunden ønsker at du medbringer højtalere til begivenheden."
-      ],
-      "rider-speakers-lights": [
-        "The organizer needs you to bring speakers and light.",
-        "Kunden ønsker at du medbringer både højtalere og lys til begivenheden."
-      ],
-      "duration-description": [
-        "The music should start at ${ start }, and end at ${ end }.",
-        "Der skal være musik fra ${ start } indtil ${ end }."
-      ],
-      "contact": [
-        "Contact organizer ${ unread }",
-        "Kontakt kunden ${ unread }"
-      ],
-      "contact-description": [
-        "Contact ${ name } to discuss the price, or figure out additional details.",
-        "Kontakt ${ name } for at forhandle prisen eller aftale andre detajler."
-      ],
-      "genres": ["Music wishes", "Musikønsker"]
-    },
-    "offer": {
-      "intro": [
-        "Enter your price to play this gig. You can always update the offer until it has been paid.",
-        "Indtast din pris for at spille til begivenheden. Du kan altid opdatere tilbuddet indtil kunden har betalt."
-      ],
-      "point": [
-        "Use a Cueup point to discard the Cueup fee. You can update whether to use or not use the point, until the offer has been paid. If the gig gets cancelled, the point will be restored.",
-        "Brug Cueup point til at fjerne Cueup gebyret. Du kan opdatere om du vil benytte et point eller ej indtil kunden har betalt. Hvis eventet bliver aflyst vil dit point blive givet tilbage."
-      ],
-      "direct": [
-        "This gig is a direct booking of you, therefore the Cueup fee is discarded.",
-        "Dette gig er en direkte booking af dig, derfor er Cueup gebyret fjernet."
-      ],
-      "use-point": ["Use Cueup point", "Brug Cueup point"],
-      "service-fee-info": [
-        "This fee is calculated based <br/> on the offer. <br/> The organizer will pay this fee. <br/>",
-        "Dette gebyr er udregnet baseret <br/> på dit tilbud. <br/> Kunden betaler dette gebyr. <br/>"
-      ],
-      "dj-fee-info": [
-        "A fee on 3% is subtracted <br/> from your price. Using a Cueup <br/> point will discard this fee. <br/>",
-        "Et gebyr på 3% trækkes <br/> fra din pris. Hvis du bruger et <br/> Cueup point fjernes dette gebyr. <br/>"
-      ],
-      "lost": [
-        "Sorry you have lost this gig to another DJ. <br/> Next time try to set another price or be faster at responding. <br/> Adding info to your profile also helps the organizer being comfortable in choosing you.",
-        "Desværre, du har tabt dette gig til en anden DJ. <br/> Næste gang prøv at afgiv en anden pris eller vær hurtigere til at svare kunden. Du kan ogsp tilføjee mere information til din profil for at gøre kunden mere komfortabel med at vælge dig."
-      ],
-      "update-payout": [
-        "Please update your payout information before making an offer.",
-        "Opdater venligst din udbetalingsinformation før du afgiver et tilbud."
-      ],
-      "decline-warning": [
-        "Are you sure you want to decline the gig?",
-        "Er du sikker på at du vil afslå gigget?"
-      ],
-      "cancel-warning": [
-        "Are you sure you want to cancel the gig? All money will be refunded to the organizer.",
-        "Er du sikker på at du vil aflyse gigget? Hele beløbet vil refunderes til kunden."
-      ]
-    }
-  },
-  "profile": {
-    "name": [
-      "Your full name. We only show your first name.",
-      "Dit fulde navn. Vi viser kun dit fornavn."
-    ],
-    "email": [
-      "Updating your email means you have to confirm it again.",
-      "Opdaterer du din email, skal du verificere den igen."
-    ],
-    "phone": [
-      "We only share your phone number with people you contact through Cueup.",
-      "Vi deler kun dit telefonnummer med personer du kontakter gennem Cueup."
-    ],
-    "genres": ["The kind of music you play.", "Hvilke genrer spiller du?"],
-    "bio": [
-      "Please tell us a bit about yourself. What kind of DJ are you? What is your level of experience? What kind of events do you usually play at?",
-      "Fortæl os om dig selv. Hvilken slags DJ er du, hvor erfaren er du, hvilken slags events spiller du normalt?"
-    ],
-
-    "refer-1-description": [
-      "At Cueup you can get more money by referring people to the site. The link below is used to book you directly. In case someone books you using your link, the Cueup fee will be removed from the gig, and you will get the full payout.",
-      "Hos Cueup kan du få udbetalt mere hvis du henviser folk til sitet. Linket kan bruges til at booke dig direkte. Hvis nogen booker dig ved brug af linket, vil Cueup gebyret blive fjernet fra eventet, og du vil få udbetalt mere."
-    ],
-    "refer-2-description": [
-      "At Cueup you can get points for referring other DJs to the site. The link below is used for referring DJs to the site. In case a DJ signs up using your link, you will get a Cueup point whenever the referred DJ makes his or hers first offer. Cueup points are used when making an offer to remove the Cueup fee.",
-      "Hos Cueup kan du optjene point ved at henvise andre DJs. Linket kan bruges til at henvise en DJ til tilmeldingen. Når en DJ tilmelder sig ved hjælp af dit link, vil du modage et Cueup point når end den nye DJ afgiver sit første tilbud. Cueup point kan bruges til at fjerne DJ gebyret når du afgiver et tilbud."
-    ],
-    "location": [
-      "This is the area where you will receive gigs. To edit the location or radius, click the edit information button, and drag in the points that appear on the circle.",
-      "Du vil modtage gigs i dette område. For at ændre din lokation eller radius, tryk rediger information til venstre, og hiv i punkterne der fremkommer om cirklen."
-    ]
-  },
-  "Phone number": ["Phone number", "Telefonnummer"],
-  "Make offer": ["Make offer", "Afgiv tilbud"],
-  "date": ["Date", "Dato"],
-  "description": ["Description", "Beskrivelse"],
-  "guests": ["Guests", "Gæster"],
-  "equipment": ["Equipment", "Udstyr"],
-  "duration": ["Duration", "Varighed"],
-  "Organizer pays": ["Organizer pays", "Kunden betaler"],
-  "Your price": ["Your price", "Din pris"],
-  "Service fee": ["Service fee", "Servicegebyr"],
-  "You earn": ["You earn", "Du tjener"],
-  "Cueup fee": ["Cueup fee", "DJ gebyr"],
-  "Payout": ["Payout", "Udbetaling"],
-  "Decline gig": ["Decline gig", "Afslå gig"],
-  "Cancel gig": ["Cancel gig", "Aflys gig"],
-  "Send offer": ["Send offer", "Send tilbud"],
-  "Update offer": ["Update offer", "Opdater tilbud"],
-  "Update payout info": ["Update payout info", "Opdater udbetalingsinfo"],
-  "You have a gig request 😁": [
-    "You have a gig request 😁",
-    "Du er blevet tilbudt et gig 😁"
-  ],
-  "Copy link": ["Copy link", "Kopier link"],
-  "Edit information": ["Edit information", "Rediger information"],
-  "Back to profile": ["Back to profile", "Tilbage til profil"],
-  "public-profile": {
-    "location": [
-      "The DJ normally plays in this area.",
-      "DJen spiller normalt i dette område."
-    ],
-    "refund": [
-      "Full refund if event is cancelled ${ days } or more days before it starts. Otherwise ${ percentage }% is refunded.",
-      "Fuld refundering hvis event bliver aflyst ${ days } eller flere dage inden det starter. Ellers bliver ${ percentage }% refunderet."
-    ]
-  },
-  "empty-reviews-own": [
-    "Ask your customers to leave a review. <br/> It will help you get more gigs.",
-    "Bed dine kunder om af skrive en anmeldelse. <br/> Det vil hjælpe dig få flere gigs."
-  ],
-  "empty-reviews": [
-    "This DJ does not have any reviews. <br/>",
-    "Denne DJ har ingen anmeldelser. <br/>"
-  ],
-  "Appears after the offer is confirmed by the organizer.": [
-    "Appears after the offer is confirmed by the organizer.",
-    "Bliver synligt efter tilbuddet er godkendt af kunden."
-  ],
-  "offer": ["Offer", "Tilbud"]
 }

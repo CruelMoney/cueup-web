@@ -1,240 +1,82 @@
 /* eslint-disable import/first */
-import React, { memo, useState, useEffect, useCallback } from 'react';
-import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet-async';
-import ReactPixel from 'react-facebook-pixel';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { appRoutes } from 'constants/locales/appRoutes.ts';
+import LazySignup from 'routes/Signup';
+import LazyUser from 'routes/User';
+import LazyCompleteSignup from 'routes/CompleteSignup';
+import LazyTerms from 'routes/Terms';
+import LazyEvent from 'routes/Event';
+import ResetPassword from 'routes/ResetPassword';
+import LazyLocation, { LazyLocationsOverview } from 'routes/Location';
+import LazyGig from 'routes/Gig';
+import LazySideBarChat from 'components/SidebarChat';
 
-import { getActiveLanguage, getTranslate, setActiveLanguage } from 'react-localize-redux';
-
+import LazyFaq from 'routes/Faq';
 import LazyBecomeDj from 'routes/BecomeDj';
+import LazyBlog from 'routes/Blog';
 import LazyHowItWorks from 'routes/HowItWorks';
-import * as gtag from './utils/analytics/autotrack';
-import { Environment } from './constants/constants';
+import { ProvideAppState, useAppState } from './components/hooks/useAppState';
 import Home from './routes/Home';
 import About from './routes/About';
-import CueupEvent from './routes/Event';
-import Gig from './routes/Gig';
-import Signup from './routes/Signup';
-import User from './routes/User';
-import Faq from './routes/Faq';
-import Terms from './routes/Terms';
-import LocationLanding, { LazyLocationsOverview } from './routes/Location';
 import NotFound from './routes/NotFound';
-import defaultImage from './assets/images/default.png';
-import defaultImageDa from './assets/images/default_da.png';
-import Blog from './routes/Blog';
-import ErrorHandling from './components/common/ErrorPage';
 import Navigation from './components/Navigation';
-import { getTranslatedURL } from './utils/HelperFunctions';
-import ResetPassword from './routes/ResetPassword';
-import { MobileMenuContext } from './components/MobileMenu';
+import { ProvideMobileMenu } from './components/Navigation/MobileMenu';
 import BottomPlayer from './routes/User/routes/Sounds/BottomPlayer';
+
 import './css/style.css';
 
-let redirected = false;
-
-const compareRoutes = (r1 = [], r2 = [], key = 'route') => {
-    // eslint-disable-next-line security/detect-object-injection
-    return r1.every((v, idx) => r2[idx] && v[key] === r2[idx][key]);
+const App = () => {
+    return (
+        <ProvideAppState>
+            <ProvideMobileMenu>
+                <Navigation />
+                <RouteWrapper />
+            </ProvideMobileMenu>
+            <div id="popup-container" />
+        </ProvideAppState>
+    );
 };
 
-const App = (props) => {
-    const { location, translate, activeLanguage, setActiveLanguage } = props;
-
-    // eslint-disable-next-line no-unused-vars
-    const setLanguage = useCallback(setActiveLanguage, []);
-
-    const url = location.pathname;
-    const urlLocale = url.split('/')[1] === 'dk' ? 'da' : 'en';
-    // eslint-disable-next-line no-unused-vars
-    const language = urlLocale;
-    const redirect = false;
-
-    const [state, setState] = useState({
-        mobileLinks: [],
-    });
-
-    // useEffect(() => {
-    //     setLanguage(language);
-    // }, [language, setLanguage]);
-
-    useEffect(() => {
-        // Setup custom analytics
-        if (process.env.NODE_ENV !== 'development') {
-            gtag.init();
-            ReactPixel.init(Environment.PIXEL_ID);
-        }
-    }, []);
-
-    useEffect(() => {
-        if (process.env.NODE_ENV !== 'development') {
-            setTimeout(() => {
-                gtag.pageView(location.pathname);
-                ReactPixel.pageView();
-            }, 100);
-        }
-    }, [location.pathname]);
-
-    const registerMobileLinks = useCallback(
-        (routes, mobileLabel) => {
-            setState((state) => {
-                const { mobileLinks } = state;
-                if (!compareRoutes(routes, mobileLinks)) {
-                    let newLinks = mobileLinks.filter(
-                        (l) => !routes.map((r) => r.route).includes(l.route)
-                    );
-                    newLinks = [...newLinks, ...routes];
-
-                    return { ...state, mobileLinks: newLinks, mobileLabel };
-                }
-                return state;
-            });
-        },
-        [setState]
-    );
-
-    const unregisterMobileLinks = useCallback(
-        (routes) => {
-            setState((state) => {
-                const { mobileLinks } = state;
-                const newLinks = mobileLinks.filter(
-                    (l) => !routes.map((r) => r.route).includes(l.route)
-                );
-                if (!compareRoutes(mobileLinks, newLinks)) {
-                    return {
-                        ...state,
-                        mobileLinks: newLinks,
-                    };
-                }
-                return state;
-            });
-        },
-        [setState]
-    );
-
-    if (!!redirect && location.pathname !== redirect && !redirected) {
-        redirected = true;
-        return <Redirect to={redirect} />;
-    }
-
-    const thumb = activeLanguage === 'da' ? defaultImageDa : defaultImage;
-    const title = translate('Book DJs with ease') + ' | Cueup';
-    const description = translate('site-description');
-    const urlArr = url.split('/');
-    let cssLocation = urlArr[1] === 'dk' ? urlArr[2] : urlArr[1];
-    cssLocation = `location_${cssLocation || ''}`;
-    const pageURL = Environment.CALLBACK_DOMAIN + location.pathname;
-    const altLangURL =
-        Environment.CALLBACK_DOMAIN +
-        getTranslatedURL(url, translate('code.' + activeLanguage), translate);
+const RouteWrapper = () => {
+    const { t } = useTranslation();
+    const { showBottomPlayer, showSideBarChat } = useAppState();
 
     return (
-        <ErrorHandling>
-            <div className={cssLocation}>
-                <Helmet>
-                    <link
-                        rel="alternate"
-                        href={altLangURL}
-                        hrefLang={translate('hreflang.' + activeLanguage)}
-                    />
+        <div id="content">
+            <Switch>
+                <Route
+                    exact
+                    path={[t(appRoutes.home), '/verifyEmail', '/connectInstagram']}
+                    component={Home}
+                />
+                <Route path={t(appRoutes.about)} component={About} />
+                <Route path={t(appRoutes.faq)} component={LazyFaq} />
+                <Route path={t(appRoutes.becomeDj)} component={LazyBecomeDj} />
+                <Route path={t(appRoutes.blog)} component={LazyBlog} />
 
-                    <title>{title}</title>
+                <Route path={t(appRoutes.howItWorks)} component={LazyHowItWorks} />
+                <Route path={t(appRoutes.signUp)} component={LazySignup} />
 
-                    <meta name="description" content={description} />
-                    <meta
-                        name="keywords"
-                        content="dj, book, rent, copenhagen, cueup, music, events, party, wedding, birthday"
-                    />
+                <Route path={t(appRoutes.user) + '/:permalink'} component={LazyUser} />
+                <Route path={t(appRoutes.completeSignup)} component={LazyCompleteSignup} />
+                <Route path={t(appRoutes.terms)} component={LazyTerms} />
+                <Route path={t(appRoutes.event) + '/:id/:hash'} component={LazyEvent} />
+                <Route path={t(appRoutes.gig) + '/:id'} component={LazyGig} />
+                <Route path={t(appRoutes.bookDj)} component={LazyLocation} />
+                <Route path={t(appRoutes.bookDjOverview)} component={LazyLocationsOverview} />
 
-                    <meta property="og:url" content={pageURL} />
-                    <meta property="fb:app_id" content={Environment.FACEBOOK_ID} />
-                    <meta property="og:title" content={title} />
-                    <meta property="og:description" content={description} />
-                    <meta property="og:image" content={thumb} />
+                <Route path={t(appRoutes.resetPassword)} component={ResetPassword} />
 
-                    <meta name="twitter:card" content="summary_large_image" />
-                    <meta name="twitter:site" content="@@CueupDK" />
-                    <meta name="twitter:creator" content="@@CueupDK" />
-                    <meta name="twitter:title" content={title} />
-                    <meta name="twitter:description" content={description} />
-                    <meta name="twitter:image" content={thumb} />
-                    <meta name="twitter:url" content={pageURL} />
-                </Helmet>
-                <MobileMenuContext.Provider
-                    value={{
-                        routes: state.mobileLinks,
-                        unregisterRoutes: unregisterMobileLinks,
-                        registerRoutes: registerMobileLinks,
-                        label: state.mobileLabel,
-                    }}
-                >
-                    <RouteWrapper translate={translate} cssLocation={cssLocation} />
-                </MobileMenuContext.Provider>
-                <div id="popup-container" />
-            </div>
-        </ErrorHandling>
+                <Route component={NotFound} />
+            </Switch>
+            {showBottomPlayer && <BottomPlayer />}
+
+            {showSideBarChat && <LazySideBarChat />}
+        </div>
     );
 };
 
-const RouteWrapper = memo(({ translate, cssLocation }) => {
-    return (
-        <>
-            <Navigation />
-            <div id="content" className={cssLocation}>
-                <Switch>
-                    <Route exact path={[translate('routes./'), '/verifyEmail']} component={Home} />
-                    <Route path={translate('routes./about')} component={About} />
-                    <Route path={[translate('routes./user/:permalink')]} component={User} />
-                    <Route path={translate('routes./become-dj')} component={LazyBecomeDj} />
-                    <Route path={translate('routes./how-it-works')} component={LazyHowItWorks} />
-                    <Route path={translate('routes./signup')} component={Signup} />
-                    <Route path={translate('routes./faq')} component={Faq} />
-                    <Route path={translate('routes./terms')} component={Terms} />
-                    <Route
-                        path={translate('routes./event') + '/:id/:hash'}
-                        component={CueupEvent}
-                    />
-                    <Route path={translate('routes./gig') + '/:id'} component={Gig} />
-                    <Route
-                        path={translate('routes./book-dj') + '/:country/:city?'}
-                        component={LocationLanding}
-                    />
-                    <Route path={translate('routes./book-dj')} component={LazyLocationsOverview} />
-                    <Route path={translate('routes./blog')} component={Blog} />
-                    <Route path={translate('routes./reset-password')} component={ResetPassword} />
-
-                    <Route component={NotFound} />
-                </Switch>
-
-                <BottomPlayer />
-            </div>
-        </>
-    );
-});
-
-// eslint-disable-next-line no-unused-vars
-const mapStateToProps = (state, ownprops) => {
-    return {
-        loggedIn: state.login.status.signedIn,
-        profile: state.login.profile,
-        activeLanguage: getActiveLanguage(state.locale).code,
-        translate: getTranslate(state.locale),
-    };
-};
-
-// eslint-disable-next-line no-unused-vars
-function mapDispatchToProps(dispatch, ownprops) {
-    return {
-        setActiveLanguage: (code) => {
-            dispatch(setActiveLanguage(code));
-        },
-    };
-}
-
-export default withRouter(
-    connect(
-        mapStateToProps,
-        mapDispatchToProps
-    )(memo(App))
-);
+// eslint-disable-next-line import/no-unused-modules
+export default App;

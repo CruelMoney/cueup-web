@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import moment from 'moment-timezone';
 import { useCheckDjAvailability } from 'actions/EventActions';
-import addTranslate from 'components/higher-order/addTranslate';
 import { BodySmall } from 'components/Text';
+import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
 import { Row, SmartButton } from '../../Blocks';
 import { Input } from '../../FormComponents';
 import LocationSelector from '../LocationSelectorSimple';
-import DatePicker from '../Datepicker';
+import DatePicker from '../DatePicker';
 import ErrorMessageApollo from '../ErrorMessageApollo';
 import { RequestSection } from './RequestForm';
 
@@ -24,6 +23,10 @@ const Step1 = ({
     const [message, setMessage] = useState();
     const [check, { loading, error }] = useCheckDjAvailability(form);
 
+    const [loadGoogleMaps, { started, loaded }] = useLazyLoadScript(
+        'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
+    );
+
     const dateChanged = (date) => {
         handleChange({ date });
         setShowDatePickter(false);
@@ -34,14 +37,19 @@ const Step1 = ({
         const errors = runValidations();
 
         if (errors.length === 0) {
+            const moment = await import('moment-timezone');
+
+            const momentDate = moment.default(form.date);
+
             const { result, data } = await check({
                 ...form,
-                date: form.date.toDate(),
+                date: momentDate.toDate(),
             });
             if (result === true) {
                 const { timeZoneId, location } = data;
+
                 const newMoment = moment.tz(
-                    form.date.format('YYYY-MM-DDTHH:mm:ss'),
+                    momentDate.format('YYYY-MM-DDTHH:mm:ss'),
                     'YYYY-MM-DDTHH:mm:ss',
                     timeZoneId
                 );
@@ -55,30 +63,41 @@ const Step1 = ({
 
                 //not available
             } else {
-                setMessage(translate('request-form.no-djs-message'));
+                setMessage(translate('requestForm:no-djs-message'));
             }
         }
     };
 
-    const eventDateString = form.date.format('dddd Do, MMMM YYYY');
+    // handle both moment and js date
+    const eventDateString =
+        typeof form.date.format === 'function'
+            ? form.date.format('dddd Do, MMMM YYYY')
+            : typeof form.date.toLocaleDateString === 'function'
+            ? form.date.toLocaleDateString()
+            : null;
     return (
         <form name="requestForm-step-1" onSubmit={submit}>
-            <h3 className="center">{translate('request-form.step-1.header')}</h3>
+            <h3 className="center">{translate('requestForm:step-1.header')}</h3>
 
             {showDatePickter ? (
                 <DatePicker dark initialDate={form.date} handleChange={dateChanged} />
             ) : (
-                <div>
+                <div
+                    onMouseOver={() => {
+                        DatePicker.preload();
+                        if (!started) {
+                            loadGoogleMaps();
+                        }
+                    }}
+                >
                     <RequestSection style={{ position: 'relative', zIndex: 5 }}>
                         <LocationSelector
                             noShadow
                             countries={countries}
                             forceHeight
                             name="locationName"
-                            label={translate('request-form.step-1.event-location')}
-                            placeholder={translate(
-                                'request-form.step-1.event-location-placeholder'
-                            )}
+                            label={translate('requestForm:step-1.event-location')}
+                            placeholder={translate('requestForm:step-1.event-location-placeholder')}
                             onSave={(locationName) => handleChange({ locationName })}
                             validation={(v) => (v ? null : 'Please select a location')}
                             registerValidation={registerValidation('locationName')}
@@ -86,7 +105,7 @@ const Step1 = ({
                             defaultValue={form.locationName}
                         >
                             <BodySmall>
-                                {translate('request-form.step-1.event-location-description')}
+                                {translate('requestForm:step-1.event-location-description')}
                             </BodySmall>
                         </LocationSelector>
                     </RequestSection>
@@ -99,18 +118,16 @@ const Step1 = ({
                         <Input
                             type="text"
                             name="date"
-                            label={translate('request-form.step-1.event-date')}
+                            label={translate('requestForm:step-1.event-date')}
                             disabled
-                            onClick={() => {
-                                setShowDatePickter(true);
-                            }}
+                            style={{ pointerEvents: 'none', zIndex: 2, position: 'relative' }}
                             value={eventDateString}
                             validation={(v) => (v ? null : 'Please select a date')}
                             registerValidation={registerValidation('date')}
                             unregisterValidation={unregisterValidation('date')}
                         >
                             <BodySmall>
-                                {translate('request-form.step-1.event-date-description')}
+                                {translate('requestForm:step-1.event-date-description')}
                             </BodySmall>
                         </Input>
                     </RequestSection>
@@ -131,4 +148,4 @@ const Step1 = ({
     );
 };
 
-export default addTranslate(Step1);
+export default Step1;

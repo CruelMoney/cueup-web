@@ -14,6 +14,7 @@ const RadioSelect = ({ disabled, multi, options, chosen, setChosen, containerSty
                     disabled={disabled}
                     checked={chosen === value}
                     onClick={() => setChosen(value)}
+                    name={value}
                     {...props}
                 />
             ))}
@@ -29,11 +30,16 @@ export const MethodButton = ({
     onClick,
     withIndicator = true,
     disabled,
+    name,
 }) => {
     const Indicator = multi ? DumbCheckbox : RadioIndicator;
 
     return (
-        <MethodWrapper onClick={onClick} style={{ pointerEvents: disabled ? 'none' : 'auto' }}>
+        <MethodWrapper
+            name={name}
+            onClick={onClick}
+            style={{ pointerEvents: disabled ? 'none' : 'auto' }}
+        >
             {withIndicator && <Indicator checked={checked} />}
             <Col>
                 <BodyBold bold>{title}</BodyBold>

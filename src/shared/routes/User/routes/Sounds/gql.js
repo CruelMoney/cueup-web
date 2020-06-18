@@ -7,6 +7,7 @@ const USER_SOUNDS = gql`
                 id
                 title
                 description
+                date
                 samples
                 tags
                 source
@@ -21,6 +22,8 @@ const USER_SOUNDS = gql`
                     id
                     path
                 }
+                soundcloudId
+                mixcloudId
             }
             pageInfo {
                 page
@@ -36,22 +39,29 @@ const UPDATE_SOUND = gql`
     mutation UpdateSound(
         $id: ID!
         $title: String
+        $date: DateTime
         $description: String
         $tags: [String!]
         $file: ID
         $image: ID
+        $updateOnSoundCloud: Boolean
+        $updateOnMixcloud: Boolean
     ) {
         updateSound(
             id: $id
             title: $title
+            date: $date
             description: $description
             tags: $tags
             file: $file
             imageId: $image
+            updateOnSoundCloud: $updateOnSoundCloud
+            updateOnMixcloud: $updateOnMixcloud
         ) {
             id
             title
             description
+            date
             samples
             tags
             duration {
@@ -65,6 +75,8 @@ const UPDATE_SOUND = gql`
                 id
                 path
             }
+            soundcloudId
+            mixcloudId
         }
     }
 `;
@@ -73,6 +85,7 @@ const ADD_SOUND = gql`
     mutation AddSound(
         $title: String!
         $description: String
+        $date: DateTime
         $tags: [String!]
         $file: ID!
         $image: ID
@@ -83,6 +96,7 @@ const ADD_SOUND = gql`
             title: $title
             description: $description
             tags: $tags
+            date: $date
             file: $file
             imageId: $image
             addToSoundCloud: $addToSoundCloud
@@ -90,6 +104,7 @@ const ADD_SOUND = gql`
         ) {
             id
             title
+            date
             description
             samples
             tags
@@ -104,13 +119,19 @@ const ADD_SOUND = gql`
                 id
                 path
             }
+            soundcloudId
+            mixcloudId
         }
     }
 `;
 
 const DELETE_SOUND = gql`
-    mutation DeleteSound($id: ID!) {
-        removeSound(id: $id)
+    mutation DeleteSound($id: ID!, $removeOnSoundCloud: Boolean, $removeOnMixcloud: Boolean) {
+        removeSound(
+            id: $id
+            removeOnSoundCloud: $removeOnSoundCloud
+            removeOnMixcloud: $removeOnMixcloud
+        )
     }
 `;
 

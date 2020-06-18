@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useCallback, useLayoutEffect, memo } from 'react';
 import styled from 'styled-components';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import Sidebar, { SidebarContent } from '../../../../components/Sidebar';
 import { Title, Body } from '../../../../components/Text';
 import { Col, RowWrap } from '../../../../components/Blocks';
@@ -59,7 +59,10 @@ const ChatSidebar = (props) => {
     useLayoutEffect(adjustPadding);
 
     return (
-        <Content>
+        <Content
+            onMouseEnter={() => (document.body.style.overflowY = 'hidden')}
+            onMouseLeave={() => (document.body.style.overflowY = '')}
+        >
             <InnerContent>
                 <Header>
                     <SidebarContent>
@@ -80,10 +83,7 @@ const ChatSidebar = (props) => {
                 {gig && gig.isActionable && (
                     <MessageComposerContainer style={{ zIndex: 1 }}>
                         {chat && organizer && (
-                            <MessageComposer
-                                chat={chat}
-                                placeholder={`Message ${receiver.name}...`}
-                            />
+                            <MessageComposer chat={chat} placeholder={`Message ${receiver.name}`} />
                         )}
                         {!organizer && !loading && <Body>Organizer not found</Body>}
                     </MessageComposerContainer>
@@ -285,7 +285,7 @@ const MessagesWrapper = styled.div`
         display: flex;
         width: 100%;
         flex-direction: column;
-        padding-bottom: 69px;
+        margin-bottom: 55px;
     }
 `;
 

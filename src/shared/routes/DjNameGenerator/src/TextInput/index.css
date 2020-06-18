@@ -1,0 +1,19 @@
+.text-input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: 'HangTheDj', sans-serif;
+    font-size: 1.5em;
+    letter-spacing: 2px;
+    margin-bottom: 0.5em;
+    outline: none !important;
+    padding: 0;
+    text-indent: 0;
+    text-transform: uppercase;
+    width: 80%;
+}
+
+.text-input::selection {
+    background: rgba(255, 255, 255, 0.5);
+    color: #111;
+}

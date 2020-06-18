@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import Checkmark from '../assets/Checkmark';
 import {
@@ -141,7 +141,7 @@ const SettingsSection = ({ title, description, children, stickyTop = '90px', ...
         <SectionRow {...props}>
             <LeftCol stickyTop={stickyTop}>
                 <Title>{title}</Title>
-                <Body style={{ marginBottom: '24px' }}>{description}</Body>
+                <Body style={{ marginBottom: '24px', whiteSpace: 'pre-wrap' }}>{description}</Body>
             </LeftCol>
             <RightCol>{children}</RightCol>
         </SectionRow>
@@ -277,7 +277,7 @@ const Input = React.forwardRef(
         },
         fRef
     ) => {
-        const ref = fRef || useRef();
+        const ref = useRef(fRef);
         const LabelComponent = half ? LabelHalf : InputLabel;
 
         const saveIfInvalid = !!registerValidation;
@@ -347,8 +347,8 @@ const ButtonFileLabel = styled.label`
     cursor: pointer;
 `;
 
-export const ButtonFileInput = ({ children, ...props }) => (
-    <ButtonFileLabel>
+export const ButtonFileInput = ({ children, style, ...props }) => (
+    <ButtonFileLabel style={style}>
         {children}
         <FileInput {...props} />
     </ButtonFileLabel>

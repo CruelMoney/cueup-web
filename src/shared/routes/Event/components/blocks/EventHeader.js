@@ -1,14 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import Navigation from '../../../../components/SubNavigation';
+import { eventRoutes } from 'constants/locales/appRoutes';
+import Navigation from '../../../../components/Navigation/SubNavigation';
 import { Container, FullWidthCol, Row, Col, GradientBg } from '../../../../components/Blocks';
 import { HeaderTitle, BodyBold } from '../../../../components/Text';
 
 const getRoutes = (event, pathname) =>
     [
-        { route: 'overview', label: 'overview', active: true },
-        { route: 'requirements', label: 'requirements', active: true },
-        { route: 'review', label: 'review', active: true },
+        { route: eventRoutes.overview, label: 'overview', active: true },
+        { route: eventRoutes.requirements, label: 'requirements', active: true },
+        { route: eventRoutes.review, label: 'review', active: true },
     ].map((r) => ({ ...r, route: pathname + '/' + r.route }));
 
 const StyledGradientBg = styled(GradientBg)`

@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { useQuery } from 'react-apollo';
-import { withRouter, useHistory } from 'react-router';
+import { useHistory } from 'react-router';
 import Popup from 'components/common/Popup';
-import MyNavlink from 'components/common/Navlink';
-import Navigation from '../../../components/SubNavigation';
+import Navigation from '../../../components/Navigation/SubNavigation';
 import Rating from '../../../components/common/Rating';
 import VerifiedBadge from '../../../components/graphics/VerifiedBadge';
 import Tooltip from '../../../components/Tooltip';
@@ -18,19 +17,10 @@ import {
     Avatar,
     GradientBg,
     LoadingIndicator,
-    TeritaryButton,
     SecondaryButton,
 } from '../../../components/Blocks';
 import { Spacing } from '../../../components/Sidebar';
-import {
-    HeaderTitle,
-    SmallHeader,
-    Stat,
-    SmallBold,
-    BodyBold,
-    Title,
-    Body,
-} from '../../../components/Text';
+import { HeaderTitle, BodyBold, Title, Body } from '../../../components/Text';
 import ConditionalWrap from '../../../components/ConditionalWrap';
 import useWindowSize from '../../../components/hooks/useWindowSize';
 import { EDIT_STATUS } from '../../../constants/constants';
@@ -62,20 +52,22 @@ const content = {
     },
 };
 const getRoutesFromUser = (user, pathname) => {
-    const routes = [{ route: 'overview', label: 'overview', active: true }];
+    const routes = [];
 
     if (user) {
         const roles = user.appMetadata.roles;
+        const isDj = roles.includes('DJ');
+        const isOrganizer = roles.includes('ORGANIZER');
 
-        routes.push({ route: 'photos', label: 'photos' });
-
-        if (roles.includes('ORGANIZER')) {
+        if (isOrganizer) {
             if (user.isOwn) {
-                routes.push({ route: 'events', label: 'events' });
+                routes.push({ route: 'events', label: 'events', active: !isDj });
             }
         }
 
-        if (roles.includes('DJ')) {
+        if (isDj) {
+            routes.push({ route: 'overview', label: 'overview', active: true });
+            routes.push({ route: 'photos', label: 'photos' });
             routes.push({ route: 'sounds', label: 'sounds' });
             if (user.isOwn) {
                 routes.push({ route: 'gigs', label: 'gigs' });
@@ -189,6 +181,18 @@ const UserContent = ({ user }) => {
 
     const [showing, setShowing] = useState(!approved && user.isOwn);
 
+    useEffect(() => {
+        const dismissed = sessionStorage.getItem('dismissed-approval-modal');
+        if (dismissed) {
+            setShowing(false);
+        }
+    }, []);
+
+    const dismissApprovalModal = () => {
+        setShowing(false);
+        sessionStorage.setItem('dismissed-approval-modal', true);
+    };
+
     return (
         <>
             <ConditionalWrap
@@ -232,7 +236,7 @@ const UserContent = ({ user }) => {
                                 </div>
                             )}
 
-                            {!!statusContent && (
+                            {user.isDj && !!statusContent && (
                                 <StatusButton onClick={() => setShowing(true)}>
                                     <BodyBold white>
                                         {statusContent.title[approvedKey]} - read more
@@ -269,14 +273,16 @@ const UserContent = ({ user }) => {
                     </ShowBelow>
                 </HeaderWrapper>
             </ConditionalWrap>
-            <Popup showing={showing} onClickOutside={() => setShowing(false)} width={'500px'}>
-                <EditPopup
-                    profileStatus={profileStatus}
-                    approvedKey={approvedKey}
-                    close={() => setShowing(false)}
-                    user={user}
-                />
-            </Popup>
+            {user.isDj && (
+                <Popup showing={showing} onClickOutside={dismissApprovalModal} width={'500px'}>
+                    <EditPopup
+                        profileStatus={profileStatus}
+                        approvedKey={approvedKey}
+                        close={dismissApprovalModal}
+                        user={user}
+                    />
+                </Popup>
+            )}
         </>
     );
 };
@@ -300,7 +306,11 @@ const EditPopup = ({ profileStatus, approvedKey, close, user }) => {
                 <LoadingIndicator />
             ) : (
                 <ol className="numbered-list">
-                    {edits?.filter((e) => e.message).map((e) => <li key={e.id}>{e.message}</li>)}
+                    {edits
+                        ?.filter((e) => e.message)
+                        .map((e) => (
+                            <li key={e.id}>{e.message}</li>
+                        ))}
                 </ol>
             )}
 

@@ -1,23 +1,21 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import useTranslate from 'components/hooks/useTranslate';
 
+import { appRoutes } from 'constants/locales/appRoutes';
 import Footer from '../../components/common/Footer';
 
 import Map from '../../components/common/Map';
 import citySvg from '../../assets/City.svg';
-import addTranslate from '../../components/higher-order/addTranslate';
 import ScrollToTop from '../../components/common/ScrollToTop';
-import content from './content.json';
 import './index.css';
 import { countries } from './locations';
 import CountriesList from './components/CountriesList';
 
-const Location = (props) => {
+const Location = () => {
     const themeColor = '#31DAFF';
     const secondColor = '#25F4D2';
-
-    const { match, translate } = props;
-    const isMobile = false;
+    const { translate } = useTranslate();
     const title = translate('locationsOverview.title');
     const description = translate('locationsOverview.description');
 
@@ -28,6 +26,8 @@ const Location = (props) => {
     return (
         <div className="locations-page">
             <Helmet>
+                <body className="book-dj-location white-theme" />
+
                 <title>{title + ' | Cueup'}</title>
                 <meta name="description" content={description} />
 
@@ -83,8 +83,8 @@ const Location = (props) => {
             <Footer
                 noSkew
                 color={secondColor}
-                firstTo={translate('routes./signup')}
-                secondTo={translate('routes./how-it-works')}
+                firstTo={translate(appRoutes.becomeDj)}
+                secondTo={translate(appRoutes.howItWorks)}
                 firstLabel={translate('become-dj')}
                 secondLabel={translate('how-it-works')}
                 title={translate('are-you-a-dj', { location: title })}
@@ -94,4 +94,5 @@ const Location = (props) => {
     );
 };
 
-export default addTranslate(Location, content);
+// eslint-disable-next-line import/no-unused-modules
+export default Location;

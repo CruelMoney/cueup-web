@@ -1,10 +1,13 @@
 import React, { useEffect, useState, memo } from 'react';
 import Modal from 'react-modal';
+import styled from 'styled-components';
+import { TeritaryButton, ClosePopupButton } from 'components/Blocks';
 
 const Popup = memo((props) => {
     const {
         showing,
         onClickOutside,
+        onClose,
         noPadding,
         width,
         hideClose,
@@ -90,7 +93,7 @@ const Popup = memo((props) => {
                     className={
                         'card popup' + (showing ? ' active' : '') + (noPadding ? ' no-padding' : '')
                     }
-                    onClick={function(event) {
+                    onClick={function (event) {
                         event.stopPropagation();
                     }}
                 >
@@ -103,17 +106,19 @@ const Popup = memo((props) => {
                                 width: '100%',
                             }}
                         >
-                            <span
+                            <ClosePopupButton
+                                data-cy="close-popup-button"
                                 style={{
-                                    color: '#aaaaaa',
-                                    fontSize: '28px',
-                                    fontWeight: 'bold',
-                                    cursor: 'pointer',
+                                    right: '-10px',
                                 }}
-                                onClick={(_) => onClickOutside && onClickOutside()}
-                            >
-                                ×
-                            </span>
+                                onClick={(_) => {
+                                    if (onClose) {
+                                        onClose();
+                                        return;
+                                    }
+                                    onClickOutside && onClickOutside();
+                                }}
+                            />
                         </div>
                     ) : null}
                     {!lazy || showingChildren ? <div>{children}</div> : null}

@@ -1,6 +1,5 @@
-// import React from 'react';
 import path from 'path';
-import * as express from 'express';
+import express, { Application } from 'express';
 import cors from 'cors';
 import chalk from 'chalk';
 import manifestHelpers from 'express-manifest-helpers';
@@ -10,18 +9,27 @@ import addApollo from 'middleware/addApollo';
 import addLoadableExtractor from 'middleware/addLoadableExtractor';
 import addRedis, { cache } from 'middleware/addRedis';
 import addSitemap from 'middleware/addSitemap';
+import { addLanguage } from 'middleware/i18next';
+import addLogging from 'middleware/addLogging';
+import addTestEndpoints from 'middleware/addTestEndpoints';
+import addSocialImages from 'middleware/addSocialImages';
 import paths from '../../config/paths';
-// import { configureStore } from '../shared/store';
 import errorHandler from './middleware/errorHandler';
 import serverRenderer from './middleware/serverRenderer';
-import addStore from './middleware/addStore';
-import webhookVerification from './middleware/webhookVerification';
-import { i18nextXhr, refreshTranslations } from './middleware/i18n';
 
 require('dotenv').config();
 
-const app = express.default();
-const isDevelopment = process.env.NODE_ENV === 'development';
+const app: Application = express();
+const isProduction = process.env.NODE_ENV === 'production';
+
+console.log(process.env.NODE_ENV, process.env.SETTING);
+
+if (!isProduction) {
+    app.use(addLogging);
+}
+
+addTestEndpoints(app);
+addSocialImages(app);
 
 // Use Nginx or Apache to serve static assets in production or remove the if() around the following
 // lines to use the express.static middleware to serve assets for production (not recommended!)
@@ -33,11 +41,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.get('/locales/refresh', webhookVerification, refreshTranslations);
-
-// It's probably a good idea to serve these static assets with Nginx or Apache as well:
-app.get('/locales/:locale/:ns.json', i18nextXhr);
-
 const manifestPath = path.join(paths.clientBuild, paths.publicPath);
 
 app.use(
@@ -46,12 +49,13 @@ app.use(
     })
 );
 
-!isDevelopment && addRedis(app);
+addRedis(app);
 app.use(addApollo);
-app.use(addStore);
 app.use(addLoadableExtractor);
 
 addSitemap(app);
+
+app.use(addLanguage);
 
 app.use(serverRenderer());
 

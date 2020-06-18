@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Howl } from 'howler';
+import { useAppState } from 'components/hooks/useAppState';
 import useLogActivity, { ACTIVITY_TYPES } from '../../../../components/hooks/useLogActivity';
 
 export const playerStates = Object.freeze({
     PLAYING: 'PLAYING',
     PAUSED: 'PAUSED',
     STOPPED: 'STOPPED',
+    LOADING: 'LOADING',
 });
 
 //{id: howl}[]
@@ -16,10 +18,12 @@ let globalUpdate = () => {};
 const useSoundPlayer = ({ track, src, duration }) => {
     const soundId = track.id;
     const sound = useHowlWrapper(src, soundId, track);
+    const { setAppState } = useAppState();
 
     // recreate state
     let initPos = 0;
-    let initState = playerStates.STOPPED;
+    let initState = onDeck?.id === soundId ? playerStates.LOADING : playerStates.STOPPED;
+
     try {
         initState = sound.playing() ? playerStates.PLAYING : initState;
         initPos = sound.progress();
@@ -43,7 +47,7 @@ const useSoundPlayer = ({ track, src, duration }) => {
 
         const startInterval = () => {
             clearInterval(intervalRef);
-            intervalRef = setInterval(step, 250);
+            intervalRef = setInterval(step, 500);
         };
 
         if (sound.playing()) {
@@ -54,6 +58,8 @@ const useSoundPlayer = ({ track, src, duration }) => {
             setState(playerStates.PLAYING);
             setError(null);
             startInterval();
+            setAppState({ showBottomPlayer: true });
+            globalUpdate(track);
         };
         const onPause = () => {
             setState(playerStates.PAUSED);
@@ -102,14 +108,22 @@ const useSoundPlayer = ({ track, src, duration }) => {
         sound.progress(s);
     };
 
+    const play = useCallback(() => {
+        setState(playerStates.LOADING);
+        setAppState({ showBottomPlayer: true });
+        globalUpdate(track);
+
+        sound.play();
+    }, [sound, setAppState, track]);
+
     return {
-        play: sound.play,
+        play,
         pause: sound.pause,
         jumpTo,
-        state,
+        state: state,
         error,
         progress,
-        loading: sound.current && sound.current.howl.state() === 'loading',
+        loading: state === playerStates.LOADING,
     };
 };
 
@@ -188,9 +202,9 @@ const useHowlWrapper = (src, soundId, data) => {
 
     const play = () => {
         if (!howl.playing()) {
-            howl.play();
             onDeck = track;
             globalUpdate(data);
+            howl.play();
         }
     };
 

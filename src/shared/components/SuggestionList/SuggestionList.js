@@ -18,6 +18,7 @@ const SuggestionList = ({
     style,
     children,
     filter,
+    footer,
     ...props
 }) => {
     let suggestions = ogSuggestions;
@@ -76,7 +77,7 @@ const SuggestionList = ({
             e.preventDefault();
             handleChange(suggestions[Math.max(suggestionCursor, 0)], true);
             setFocused(false);
-            inputRef.current.blur();
+            inputRef.current && inputRef.current.blur();
             return false;
         }
 
@@ -130,6 +131,7 @@ const SuggestionList = ({
                     {suggestions.map((s, idx) => (
                         <Suggestion
                             key={idx}
+                            data-cy="suggestion-list-item"
                             active={suggestionCursor === idx}
                             onMouseEnter={() => setSuggestionCursor(idx)}
                             onMouseDown={() => handleChange(s, true)}
@@ -137,6 +139,7 @@ const SuggestionList = ({
                             {s.label || s}
                         </Suggestion>
                     ))}
+                    {footer}
                 </List>
             )}
             {children}

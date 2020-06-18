@@ -1,12 +1,9 @@
 import io from 'socket.io-client';
-import { Environment } from '../constants/constants';
-import store from '../store';
-import * as actions from '../actions/NotificationsActions';
 
 export default class ChatService {
-    constructor(chatId, token, senderId) {
-        console.log('connecting to: ', Environment.CHAT_DOMAIN + '?room=' + chatId);
-        this.domain = Environment.CHAT_DOMAIN;
+    constructor(chatId, token, senderId, domain) {
+        console.log('connecting to: ', domain + '?room=' + chatId);
+        this.domain = domain;
         this.chatId = chatId;
         this.token = token;
         this.senderId = senderId;
@@ -14,7 +11,7 @@ export default class ChatService {
 
     init({ showPersonalInformation }) {
         const url =
-            Environment.CHAT_DOMAIN +
+            this.domain +
             '?room=' +
             this.chatId +
             '&token=' +
@@ -73,6 +70,5 @@ export default class ChatService {
 
     readMessages = () => {
         this.socket.emit('messages read', this.senderId);
-        store.dispatch(actions.seenRoom(this.chatId));
     };
 }

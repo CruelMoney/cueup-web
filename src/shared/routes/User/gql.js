@@ -169,6 +169,7 @@ const UPDATE_USER = gql`
         $lastName: String
         $phone: String
         $picture: Upload
+        $profilePicture: ID
         $coverPhoto: Upload
         $playingLocation: Area
         $genres: [String!]
@@ -192,6 +193,7 @@ const UPDATE_USER = gql`
             firstName: $firstName
             lastName: $lastName
             picture: $picture
+            profilePicture: $profilePicture
             coverPhoto: $coverPhoto
             playingLocation: $playingLocation
             genres: $genres
@@ -236,6 +238,7 @@ const UPDATE_USER = gql`
             appMetadata {
                 profileStatus
                 approved
+                onboarded
             }
             userSettings {
                 currency

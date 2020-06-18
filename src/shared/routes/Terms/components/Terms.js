@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { localize } from 'react-localize-redux';
+import { withTranslation } from 'react-i18next';
+import { appRoutes } from 'constants/locales/appRoutes';
 import Footer from '../../../components/common/Footer';
 import ButtonLink from '../../../components/common/ButtonLink';
 
@@ -21,7 +22,7 @@ class Terms extends Component {
         }
     };
     render() {
-        const { translate } = this.props;
+        const { t } = this.props;
 
         return (
             <div className="terms-content">
@@ -31,7 +32,7 @@ class Terms extends Component {
                             <div className="terms-navigation" ref={(ref) => (this.nav = ref)}>
                                 <ButtonLink
                                     color={this.themeColor}
-                                    to={translate('routes./terms/agreements')}
+                                    to={t(appRoutes.termsAgreements)}
                                 >
                                     <svg
                                         width="20"
@@ -47,10 +48,7 @@ class Terms extends Component {
                                     </svg>
                                     Terms of Service
                                 </ButtonLink>
-                                <ButtonLink
-                                    color={this.themeColor}
-                                    to={translate('routes./terms/privacy')}
-                                >
+                                <ButtonLink color={this.themeColor} to={t(appRoutes.termsPrivacy)}>
                                     <svg
                                         width="20"
                                         height="20"
@@ -75,16 +73,16 @@ class Terms extends Component {
                 </div>
                 <Footer
                     color={this.themeColor}
-                    firstTo={translate('routes./')}
-                    secondTo={translate('routes./signup')}
-                    firstLabel={translate('arrange-event')}
-                    secondLabel={translate('apply-to-become-dj')}
-                    title={translate('ready-to-get-started')}
-                    subTitle={translate('arrange-event-or-become-dj')}
+                    firstTo={t(appRoutes.home)}
+                    secondTo={t(appRoutes.signUp)}
+                    firstLabel={t('arrange-event')}
+                    secondLabel={t('apply-to-become-dj')}
+                    title={t('ready-to-get-started')}
+                    subTitle={t('arrange-event-or-become-dj')}
                 />
             </div>
         );
     }
 }
 
-export default localize(Terms, 'locale');
+export default withTranslation()(Terms);

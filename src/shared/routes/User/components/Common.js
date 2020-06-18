@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import Medal from 'react-ionicons/lib/MdMedal';
-import Star from 'react-ionicons/lib/MdStar';
+
+import { Icon, InlineIcon } from '@iconify/react';
+import medalIcon from '@iconify/icons-ion/checkmark-circle';
+import startIcon from '@iconify/icons-ion/person-circle';
+
 import { Row, ShowBelow } from '../../../components/Blocks';
 import { Stat } from '../../../components/Text';
 import { CTAShadow } from '../../../components/Sidebar';
@@ -59,7 +62,7 @@ export const CertifiedVerified = ({ certified, identityVerified }) => (
             >
                 {({ ref, close, open }) => (
                     <IconRow ref={ref} onMouseEnter={open} onMouseLeave={close} className="iconRow">
-                        <Medal color={'#50E3C2'} />
+                        <Icon icon={medalIcon} color={'#50E3C2'} style={{ fontSize: '24px' }} />
                         Cueup certified
                     </IconRow>
                 )}
@@ -67,7 +70,7 @@ export const CertifiedVerified = ({ certified, identityVerified }) => (
         )}
         {identityVerified && (
             <IconRow className="iconRow">
-                <Star color={'#50E3C2'} />
+                <Icon icon={startIcon} color={'#50E3C2'} style={{ fontSize: '24px' }} />
                 Identity verified
             </IconRow>
         )}

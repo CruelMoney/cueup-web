@@ -1,57 +1,60 @@
 import React, { useEffect, useState } from 'react';
-import { Mutation } from 'react-apollo';
+import { useMutation } from 'react-apollo';
+import { useHistory, useLocation } from 'react-router';
 import Notification from './common/Notification';
 import { VERIFY_EMAIL } from './gql';
 import ErrorMessageApollo from './common/ErrorMessageApollo';
 
 const EmailVerifier = ({ onVerified }) => {
     const [state, setState] = useState({});
+    const { verifyToken, isEmailValidation, redirectLink } = state;
+
+    const history = useHistory();
+    const location = useLocation();
+
+    const onCompleted = () => {
+        if (redirectLink) {
+            const redirect = decodeURIComponent(redirectLink);
+            window.location.href = redirect;
+            return;
+        }
+        history.replace(location.pathname);
+        onVerified();
+    };
+
+    const [mutate, { loading, data, error }] = useMutation(VERIFY_EMAIL, {
+        variables: { verifyToken },
+        onCompleted,
+    });
 
     useEffect(() => {
         const parsedUrl = new URL(window.location.href);
         const verifyToken = parsedUrl.searchParams.get('token');
         const isEmailValidation = parsedUrl.searchParams.get('emailVerification');
+        const redirectLink = parsedUrl.searchParams.get('redirectLink');
 
-        setState({ isEmailValidation, verifyToken });
+        setState({ isEmailValidation, verifyToken, redirectLink });
     }, []);
-
-    const { verifyToken, isEmailValidation } = state;
 
     if (!verifyToken || !isEmailValidation) {
         return null;
     }
 
-    return (
-        <Mutation mutation={VERIFY_EMAIL} onError={console.log} onCompleted={onVerified}>
-            {(mutate, { loading, error, data }) => (
-                <EmailVerifyIndicator
-                    verifyToken={verifyToken}
-                    mutate={mutate}
-                    loading={loading}
-                    data={data}
-                    error={error}
-                />
-            )}
-        </Mutation>
-    );
+    return <EmailVerifyIndicator mutate={mutate} loading={loading} data={data} error={error} />;
 };
 
-const EmailVerifyIndicator = ({ verifyToken, mutate, loading, data, error }) => {
+const EmailVerifyIndicator = ({ mutate, loading, data, error }) => {
+    const [active, setActive] = useState(true);
+
     useEffect(() => {
         const verifyEmail = async () => {
-            await mutate({
-                variables: {
-                    verifyToken,
-                },
-            });
+            await mutate();
         };
         verifyEmail();
-    }, [verifyToken, mutate]);
+    }, [mutate]);
 
-    const [active, setActive] = useState(true);
     useEffect(() => {
         if (loading === false) {
-            // TODO should remove params here
             const r = setTimeout((_) => setActive(false), 3000);
             return (_) => clearTimeout(r);
         }

@@ -1,6 +1,5 @@
-import shuffle from 'lodash/shuffle';
 import React, { useState, useRef, useEffect } from 'react';
-import { DJs } from '../../../../constants/constants';
+import { DJs } from '../../../../constants/djs';
 import DJCard from '../../../../components/common/DJCard';
 import './index.css';
 
@@ -12,13 +11,13 @@ const FloatingCards = ({ location, ...props }) => {
         location = location ? location : 'notfound';
         location = location.toLowerCase() === 'københavn' ? 'copenhagen' : location;
 
-        let renderDJS = shuffle(
-            DJs.filter((dj) => dj.location.city.toLowerCase().includes(location.toLowerCase()))
+        let renderDJs = DJs.filter((dj) =>
+            dj.location.city.toLowerCase().includes(location.toLowerCase())
         );
 
-        renderDJS = renderDJS.length > 2 ? renderDJS : [];
+        renderDJs = renderDJs.length > 2 ? renderDJs : [];
 
-        return renderDJS;
+        return renderDJs;
     };
 
     const djs = filterDjs(location);

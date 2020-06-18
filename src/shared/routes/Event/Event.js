@@ -3,26 +3,30 @@ import { Helmet } from 'react-helmet-async';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { useQuery } from 'react-apollo';
 import styled from 'styled-components';
-import { useTransition, animated } from 'react-spring';
 import { useMeasure } from '@softbind/hook-use-measure';
-import requestFormContent from '../../components/common/RequestForm/content.json';
-import addTranslate from '../../components/higher-order/addTranslate';
+import { useRouteMatch } from 'react-router';
+import { appRoutes, eventRoutes } from 'constants/locales/appRoutes';
+import useNamespaceContent from 'components/hooks/useNamespaceContent';
+import { useServerContext } from 'components/hooks/useServerContext';
+import { useNotifications } from 'components/hooks/useNotifications';
+import { useAppState } from 'components/hooks/useAppState';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col } from '../../components/Blocks';
-import content from './content.json';
 import EventProgress from './components/blocks/EventProgress';
 import { EVENT } from './gql.js';
 import EventHeader from './components/blocks/EventHeader.js';
 import Overview from './routes/Overview';
 import Requirements from './routes/Requirements';
 import Review from './routes/Review';
+import content from './content.json';
 
-const Index = ({ translate, match, location }) => {
-    const {
-        params: { id, hash },
-    } = match;
-    const { data = {}, loading } = useQuery(EVENT, {
+const Index = ({ location }) => {
+    const match = useRouteMatch();
+    const { setAppState } = useAppState();
+    const { translate } = useNamespaceContent(content, 'event');
+    const { id, hash } = match.params;
+    const { data, loading } = useQuery(EVENT, {
         skip: !id || !hash,
         variables: {
             id,
@@ -30,10 +34,22 @@ const Index = ({ translate, match, location }) => {
         },
     });
 
-    const { event: theEvent } = data;
+    const { event: theEvent } = data || {};
+
+    const [notifications] = useNotifications({
+        userId: theEvent?.organizer?.id,
+    });
+
+    const setActiveChat = (chat) => setAppState({ activeChat: chat });
+
+    useEffect(() => {
+        if (theEvent) {
+            setAppState({ showSideBarChat: true, activeEvent: theEvent });
+        }
+    }, [setAppState, theEvent]);
 
     if (!loading && !theEvent) {
-        return <Redirect to={translate('routes./not-found')} />;
+        return <Redirect to={translate(appRoutes.notFound)} />;
     }
 
     const title = theEvent ? theEvent.name : 'Cueup | Event';
@@ -63,12 +79,14 @@ const Index = ({ translate, match, location }) => {
                 theEvent={theEvent}
                 loading={loading}
                 translate={translate}
+                notifications={notifications}
+                setActiveChat={setActiveChat}
             />
 
             <Footer
                 noSkew
-                firstTo={translate('routes./how-it-works')}
-                secondTo={translate('routes./')}
+                firstTo={translate(appRoutes.howItWorks)}
+                secondTo={translate(appRoutes.home)}
                 firstLabel={translate('how-it-works')}
                 secondLabel={translate('arrange-event')}
                 title={translate('Organizing a new event?')}
@@ -78,55 +96,10 @@ const Index = ({ translate, match, location }) => {
     );
 };
 
-const idxRoute = (path) => {
-    if (path.includes('review')) {
-        return 2;
-    }
-    if (path.includes('requirements')) {
-        return 1;
-    }
-    return 0;
-};
-
-let curIdx = 0;
-
-const getDirection = (newPath) => {
-    const newIdx = idxRoute(newPath);
-    let dir = 'back';
-    if (newIdx > curIdx) {
-        dir = 'front';
-    }
-    curIdx = newIdx;
-    return dir;
-};
-
 const Content = React.memo((props) => {
-    const { match, location, ...eventProps } = props;
+    const { match, ...eventProps } = props;
     const { theEvent, loading } = eventProps;
-    const [height, setHeight] = useState('auto');
-    const direction = getDirection(location.pathname);
-    const [ssr, setSsr] = useState(true);
-
-    useEffect(() => {
-        setSsr(false);
-    }, []);
-
-    const transitions = useTransition(location, (location) => location.pathname, {
-        config: {
-            tension: 500,
-            friction: 40,
-            precision: 0.001,
-        },
-        from: {
-            opacity: 0,
-            transform: `translateX(${direction === 'back' ? '-100px' : '100px'}`,
-        },
-        enter: { opacity: 1, transform: 'translateX(0px)' },
-        leave: {
-            opacity: 0,
-            transform: `translateX(${direction === 'back' ? '100px' : '-100px'}`,
-        },
-    });
+    const { isSSR } = useServerContext();
 
     return (
         <div>
@@ -136,20 +109,14 @@ const Content = React.memo((props) => {
 
             <Container>
                 <ContainerRow>
-                    <BorderCol style={{ height: height || 'auto' }}>
-                        <AnimationWrapper>
-                            {transitions.map(({ item, props, key }) => (
-                                <SSRComponent
-                                    item={item}
-                                    ssr={ssr}
-                                    style={props}
-                                    key={key}
-                                    match={match}
-                                    eventProps={eventProps}
-                                    registerHeight={setHeight}
-                                />
-                            ))}
-                        </AnimationWrapper>
+                    <BorderCol>
+                        <GigRoutes
+                            {...props}
+                            ssr={isSSR}
+                            style={props}
+                            match={match}
+                            eventProps={eventProps}
+                        />
                     </BorderCol>
                     <Col>
                         <EventProgress theEvent={theEvent} />
@@ -160,55 +127,28 @@ const Content = React.memo((props) => {
     );
 });
 
-const SSRComponent = ({ ssr, ...props }) => {
-    if (ssr) {
-        return <GigRoutes {...props} />;
-    }
-
-    return <TransitionComponent {...props} />;
-};
-
 const GigRoutes = forwardRef((props, ref) => {
-    const { style, item, match, eventProps } = props;
+    const { match, eventProps } = props;
+
     return (
-        <animated.div style={style} ref={ref}>
-            <Switch location={item}>
-                <Route
-                    path={[match.path + '/overview', match.path + '/info']}
-                    render={(navProps) => <Overview {...navProps} {...props} {...eventProps} />}
-                />
-                <Route
-                    path={match.path + '/requirements'}
-                    render={(navProps) => (
-                        <Requirements
-                            {...navProps}
-                            {...props}
-                            {...eventProps}
-                            pathname={match.url}
-                        />
-                    )}
-                />
-                <Route
-                    path={match.path + '/review'}
-                    render={(navProps) => <Review {...navProps} {...props} {...eventProps} />}
-                />
-            </Switch>
-        </animated.div>
+        <Switch>
+            <Route
+                path={match.path + '/' + eventRoutes.overview}
+                render={(navProps) => <Overview {...navProps} {...props} {...eventProps} />}
+            />
+            <Route
+                path={match.path + '/' + eventRoutes.requirements}
+                render={(navProps) => (
+                    <Requirements {...navProps} {...props} {...eventProps} pathname={match.url} />
+                )}
+            />
+            <Route
+                path={match.path + '/' + eventRoutes.review}
+                render={(navProps) => <Review {...navProps} {...props} {...eventProps} />}
+            />
+        </Switch>
     );
 });
-
-const TransitionComponent = ({ registerHeight, ...props }) => {
-    const ref = useRef(null);
-    const { bounds } = useMeasure(ref, 'bounds');
-
-    useEffect(() => {
-        if (bounds) {
-            registerHeight(bounds.height);
-        }
-    }, [bounds, registerHeight]);
-
-    return <GigRoutes ref={ref} {...props} />;
-};
 
 const ContainerRow = styled(Row)`
     align-items: stretch;
@@ -230,16 +170,5 @@ const BorderCol = styled(Col)`
     }
 `;
 
-const AnimationWrapper = styled.div`
-    position: relative;
-    width: 100%;
-    height: 100%;
-    > div {
-        position: absolute;
-        transform-origin: center center;
-        max-width: 100%;
-        width: 100%;
-    }
-`;
-
-export default addTranslate(Index, [content, requestFormContent]);
+// eslint-disable-next-line import/no-unused-modules
+export default Index;

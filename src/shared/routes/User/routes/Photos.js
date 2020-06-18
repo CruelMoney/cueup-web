@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useQuery, useMutation } from 'react-apollo';
-import RemoveButton from 'react-ionicons/lib/MdRemoveCircle';
+
+import { Icon } from '@iconify/react';
+import removeCircle from '@iconify/icons-ion/remove-circle';
+
 import { useInView } from 'react-intersection-observer';
-import { useConnectInstagram } from 'components/hooks/useConnectInstagram';
 import GracefullImage from '../../../components/GracefullImage';
 import { USER_PHOTOS, ADD_MEDIA, DELETE_MEDIA, UPDATE_PHOTOS_ORDER, USER } from '../gql';
 import EmptyPage from '../../../components/common/EmptyPage';
 import { getErrorMessage } from '../../../components/common/ErrorMessageApollo';
-import { SecondaryButton, Col, TeritaryButton, LoadingIndicator } from '../../../components/Blocks';
+import { Col, TeritaryButton } from '../../../components/Blocks';
 import { ButtonFileInput } from '../../../components/FormComponents';
 import { ImageCompressor } from '../../../utils/ImageCompressor';
 import GracefullVideo from '../../../components/GracefullVideo';
@@ -16,6 +18,7 @@ import ReorderGrid from '../components/ReorderGrid';
 import SavingIndicator from '../../../components/SavingIndicator';
 import InstagramLogo from '../../../assets/InstagramLogo';
 import { BodySmall, Body } from '../../../components/Text';
+import ConnectInstagram from '../components/ConnectInstagram';
 
 const LIMIT = 6;
 
@@ -159,8 +162,6 @@ const Photos = ({ user, loading }) => {
     const nextPage = loading || loadingPhotos ? 1 : data.user.media.pageInfo.nextPage;
 
     const userId = user && user.id;
-
-    const { instagramUsername, instagramStatus } = data?.user?.appMetadata || {};
 
     const loadMore = useCallback(
         (page, userId) => {
@@ -375,9 +376,7 @@ const Photos = ({ user, loading }) => {
                 <EmptyPage
                     title="No Photos or Videos"
                     message={isOwn ? <EmptyCTA user={user} uploadFiles={uploadFiles} /> : ''}
-                >
-                    <Body style={{ marginTop: 24 }}>{instagramStatus}</Body>
-                </EmptyPage>
+                />
                 <SavingIndicator loading={saving.length > 0} message={'Uploading'} />
             </>
         );
@@ -431,11 +430,11 @@ const LoadMoreButtonWrapper = styled.div`
 const RemoveImageButton = ({ deleteImage }) => {
     return (
         <RemoveImageWrapper>
-            <RemoveButton
+            <Icon
+                icon={removeCircle}
                 onClick={deleteImage}
                 color="#fff"
-                style={{ cursor: 'pointer' }}
-                fontSize="36px"
+                style={{ cursor: 'pointer', fontSize: '36px' }}
             />
         </RemoveImageWrapper>
     );
@@ -485,6 +484,7 @@ const Images = ({ renderMedia, isOwn, deleteFile, updateFilesOrder, children }) 
                             autoPlay
                             muted
                             playsInline
+                            canBeUnMuted
                         />
                     )}
                     {isOwn && file.id && (
@@ -524,31 +524,27 @@ const EmptyCTA = ({ uploadFiles }) => {
             <Col
                 style={{
                     marginTop: '30px',
-                    height: '100px',
                     justifyContent: 'space-between',
                 }}
             >
+                <ConnectInstagram />
+
                 <ButtonFileInput
                     accept="image/*,video/*"
                     onChange={(e) => uploadFiles(e.target.files)}
                     multiple
+                    style={{
+                        width: '100%',
+                        maxWidth: '100%',
+                        backgroundColor: '#31daff',
+                        color: '#fff',
+                        marginTop: '9px',
+                    }}
                 >
                     Add photos or videos
                 </ButtonFileInput>
-                <ConnectInstaButton />
             </Col>
         </>
-    );
-};
-
-const ConnectInstaButton = () => {
-    const [connect, { loading }] = useConnectInstagram();
-
-    return (
-        <SecondaryButton disabled={loading} onClick={connect}>
-            Connect Instagram
-            {loading && <LoadingIndicator style={{ marginLeft: '5px' }} />}
-        </SecondaryButton>
     );
 };
 

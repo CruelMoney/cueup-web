@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import emailValidator from 'email-validator';
 import { Mutation, useQuery } from 'react-apollo';
 import { useConnectInstagram } from 'components/hooks/useConnectInstagram';
+import { useServerContext } from 'components/hooks/useServerContext';
 import {
     SettingsSection,
     Input,
     DeleteFileButton,
     LabelHalf,
 } from '../../../components/FormComponents';
-import constants, { PAYOUT_TYPES } from '../../../constants/constants';
 import ImageUploader from '../../../components/ImageInput';
 import PasswordChanger from '../components/PasswordChanger';
-import DatePickerPopup from '../../../components/DatePicker';
+import DatePickerPopup from '../../../components/DatePickerPopup';
 import LocationPicker from '../components/LocationPicker';
 import NotificationPreferences from '../components/NotificationPreferences';
 import GenreSelector from '../../../components/GenreSelector';
@@ -24,6 +24,8 @@ import TextAreaPopup from '../../../components/TextAreaPopup';
 import VerifyIdentity from '../components/VerifyIdentity';
 import ConnectSoundCloud from '../components/ConnectSoundCloud';
 import CurrencySelector from '../../../components/CurrencySelector';
+import ConnectMixcloudButton from '../components/ConnectMixcloud';
+import ConnectInstagram from '../components/ConnectInstagram';
 
 const hasChanges = (o1, o2) => {
     const keys = Object.keys(o1);
@@ -35,6 +37,12 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
     const modal = params.get('modal');
     const verifyIdentity = modal === 'verifyIdentity';
     const addPayoutMethod = modal === 'payoutMethods';
+    const bioModal = modal === 'bio';
+    const genresModal = modal === 'genres';
+    const locationModal = modal === 'location';
+    const cancelationPolicyModal = modal === 'cancelationPolicy';
+
+    const { environment } = useServerContext();
 
     const { data } = useQuery(USER_EDITS);
     const editsMap = data?.me?.editsMap || {};
@@ -42,8 +50,6 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
     const onModalClose = () => {
         history.replace(location.pathname);
     };
-
-    const [connectInstagram, { loading: instaLoading, disconnect }] = useConnectInstagram();
 
     const saveData = async (data) => {
         const flatUser = {
@@ -54,7 +60,7 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
             await updateUser({
                 variables: {
                     id: user.id,
-                    redirectLink: constants.Environment.CALLBACK_DOMAIN,
+                    redirectLink: environment.CALLBACK_DOMAIN,
                     ...data,
                 },
             });
@@ -103,15 +109,19 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
         userSettings,
         email,
         artistName,
-        picture,
         permalink,
         isDj,
         payoutMethods,
     } = user;
     const { firstName, lastName, phone, birthday, bio } = userMetadata;
     const { cancelationPolicy, currency, notifications } = userSettings;
-    const { roles, instagramConnected, identityVerified, soundCloudConnected } = appMetadata;
-
+    const {
+        roles,
+        instagramConnected,
+        identityVerified,
+        soundCloudConnected,
+        mixcloudConnected,
+    } = appMetadata;
     return (
         <>
             <SettingsSection
@@ -200,18 +210,27 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                         label="URL"
                         placeholder="https://cueup.io/"
                         type="formatted-text"
+                        name="permalink"
                         defaultValue={permalink}
                         onSave={async (permalink) => {
                             saveData({ permalink: permalink.trim() });
                         }}
                     />
                     <LocationPicker
+                        isActive={locationModal}
                         initialLocation={playingLocation}
                         save={(playingLocation) => saveData({ playingLocation })}
+                        onClose={onModalClose}
                     />
 
-                    <GenreSelector initialGenres={genres} save={(genres) => saveData({ genres })} />
+                    <GenreSelector
+                        isActive={genresModal}
+                        initialGenres={genres}
+                        save={(genres) => saveData({ genres })}
+                        onClose={onModalClose}
+                    />
                     <CancelationPolicyPopup
+                        isActive={cancelationPolicyModal}
                         initialValue={cancelationPolicy}
                         save={(p) =>
                             saveData({
@@ -220,9 +239,12 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                             })
                         }
                         translate={translate}
+                        onClose={onModalClose}
                     />
                     <TextAreaPopup
+                        isActive={bioModal}
                         initialValue={bio || ''}
+                        attention={!bio}
                         label="Bio"
                         save={(bio) =>
                             saveData({
@@ -230,6 +252,7 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                             })
                         }
                         error={editsMap.bio?.message}
+                        onClose={onModalClose}
                         displayError
                     />
 
@@ -292,7 +315,7 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                 id="system"
                 title={'System'}
                 description={
-                    'If you delete your user, all data will be deleted and unrecoverable. If you have any unfinished gigs, they will all be declined and cancelled.'
+                    'Connect services to display their data on your Cueup profile.\n\nConnect both Mixcloud and Soundcloud to upload and manage sounds on both platforms from Cueup.\n\nMixcloud shows cannot be displayed on Cueup.'
                 }
             >
                 <Mutation
@@ -307,7 +330,7 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                     {(deleteUser) => {
                         const doMutate = () => {
                             const confirmed = window.confirm(
-                                translate('user.preferences.delete-warning')
+                                translate('user:preferences.delete-warning')
                             );
                             if (!confirmed) {
                                 return;
@@ -336,16 +359,18 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                         window.alert("We'll send you an email when your data is ready.")
                     }
                 />
-
-                <Input
-                    half
-                    loading={instaLoading}
-                    type="button"
-                    warning={instagramConnected ? 'Are you sure?' : false}
-                    label={'Connect Instagram'}
-                    onClick={() => (instagramConnected ? disconnect() : connectInstagram())}
-                    buttonText={instagramConnected ? 'disconnect' : 'connect'}
+                <VerifyIdentityPopup
+                    user={user}
+                    identityVerified={identityVerified}
+                    initialShowing={verifyIdentity}
+                    onClose={onModalClose}
                 />
+
+                <LabelHalf>
+                    Connect Instagram
+                    <ConnectInstagram instagramConnected={instagramConnected} />
+                </LabelHalf>
+
                 {isDj && (
                     <LabelHalf>
                         Connect SoundCloud
@@ -355,12 +380,15 @@ const Settings = ({ user, loading, updateUser, translate, history, location }) =
                         />
                     </LabelHalf>
                 )}
-                <VerifyIdentityPopup
-                    user={user}
-                    identityVerified={identityVerified}
-                    initialShowing={verifyIdentity}
-                />
-                <LabelHalf />
+                {isDj && (
+                    <LabelHalf>
+                        Connect Mixcloud
+                        <ConnectMixcloudButton
+                            mixcloudConnected={mixcloudConnected}
+                            userId={user.id}
+                        />
+                    </LabelHalf>
+                )}
             </SettingsSection>
         </>
     );
@@ -384,7 +412,7 @@ const PayoutPopup = ({ user, hasPayout, isActive = false, onClose }) => {
                 label="Payout methods"
                 buttonText={'update'}
             />
-            <Popup showing={showing} onClickOutside={close} width={'500px'}>
+            <Popup showing={showing} onClickOutside={close} width={'600px'}>
                 <PayoutForm
                     color={'#31daff'}
                     isUpdate={hasPayout}
@@ -397,15 +425,19 @@ const PayoutPopup = ({ user, hasPayout, isActive = false, onClose }) => {
     );
 };
 
-const VerifyIdentityPopup = ({ user, identityVerified, initialShowing = false }) => {
+const VerifyIdentityPopup = ({ user, onClose, identityVerified, initialShowing = false }) => {
     const [showing, setShowing] = useState(initialShowing);
+
+    const closeModal = () => {
+        setShowing(false);
+        onClose && onClose();
+    };
 
     return (
         <>
             <Input
                 half
                 type="button"
-                attention={!identityVerified}
                 onClick={(s) => setShowing(true)}
                 label="Verify identity"
                 buttonText={identityVerified ? 'verified' : 'get verified'}
@@ -414,13 +446,13 @@ const VerifyIdentityPopup = ({ user, identityVerified, initialShowing = false })
             />
             <Popup
                 showing={showing}
-                onClickOutside={(_) => setShowing(false)}
+                onClickOutside={(_) => closeModal()}
                 style={{ maxWidth: '1000px' }}
             >
                 <VerifyIdentity
                     isUpdate={identityVerified}
                     user={user}
-                    onCancel={(_) => setShowing(false)}
+                    onCancel={(_) => closeModal()}
                 />
             </Popup>
         </>

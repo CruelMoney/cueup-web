@@ -42,6 +42,7 @@ const CREATE_EVENT = gql`
             djId: $djId
         ) {
             id
+            hash
             organizer {
                 id
             }

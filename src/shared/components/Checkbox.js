@@ -27,6 +27,8 @@ export const StyledCheckbox = styled.div`
     display: inline-block;
     width: 24px;
     height: 24px;
+    min-width: 24px;
+    min-height: 24px;
     background: ${(props) => (props.checked ? '#50E3C2 !important' : '#F6F8F9')};
     border-radius: 3px;
     cursor: pointer;
@@ -52,8 +54,7 @@ export const StyledCheckbox = styled.div`
 `;
 
 const CheckboxContainer = styled.div`
-    display: inline-block;
-    vertical-align: middle;
+    display: flex;
 `;
 
 const Checkbox = ({ defaultValue, onChange, ...props }) => {
@@ -75,13 +76,22 @@ const Checkbox = ({ defaultValue, onChange, ...props }) => {
     );
 };
 
-export const DumbCheckbox = ({ className, onClick, checked, label, withBorder, ...props }) => {
+export const DumbCheckbox = ({
+    className,
+    onClick,
+    checked,
+    label,
+    withBorder,
+    style,
+    ...props
+}) => {
     return (
-        <CheckboxContainer className={className} onClick={onClick}>
+        <CheckboxContainer className={className} onClick={onClick} style={style}>
             <Label
                 onClick={(e) => {
                     e.preventDefault();
                 }}
+                style={{ display: 'flex' }}
             >
                 <HiddenCheckbox checked={checked} onChange={() => {}} {...props} />
                 <StyledCheckbox checked={checked} withBorder={withBorder} onChange={() => {}}>

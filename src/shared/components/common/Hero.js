@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { Container, Col, Row, PrimaryButton } from 'components/Blocks';
 import { TextAccent } from '../../routes/BecomeDj/components/blocks/TextAccent';
-import addTranslate from '../higher-order/addTranslate';
 import { SubTitle } from './SubTitle';
 import { Title } from './Title';
 
@@ -63,4 +62,4 @@ const Hero = (props) => {
     );
 };
 
-export default addTranslate(Hero);
+export default Hero;

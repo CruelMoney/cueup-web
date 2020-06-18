@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Navigation from '../../../../components/SubNavigation';
+import Navigation from '../../../../components/Navigation/SubNavigation';
 import { Container, FullWidthCol, Row, Col, GradientBg } from '../../../../components/Blocks';
 import { HeaderTitle, BodyBold } from '../../../../components/Text';
 import { Spacing } from '../../../../components/Sidebar';
@@ -56,7 +56,7 @@ const Content = ({ theEvent, statusHumanized }) => {
                             {'  ·  '}
                             {start.formattedDate}
                         </BodyBold>
-                        <BodyBold white opacity={0.75} style={{ margin: 0 }}>
+                        <BodyBold data-cy="gig-status" white opacity={0.75} style={{ margin: 0 }}>
                             {statusHumanized}
                         </BodyBold>
                     </Col>

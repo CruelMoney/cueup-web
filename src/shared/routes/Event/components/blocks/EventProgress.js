@@ -1,13 +1,16 @@
-import React, { useMemo } from 'react';
-import styled from 'styled-components';
+import React from 'react';
+import styled, { css } from 'styled-components';
 import { useQuery } from 'react-apollo';
 import { NavLink } from 'react-router-dom';
+import { eventRoutes } from 'constants/locales/appRoutes';
+import { eventStates } from 'constants/constants';
+import { SecondaryButton } from 'components/Blocks';
 import checkmark from '../../../../assets/checkmark.svg';
 import { EVENT_GIGS } from '../../gql';
 import ConditionalWrap from '../../../../components/ConditionalWrap';
 
 const EventProgress = ({ theEvent = {} }) => {
-    const { id, hash } = theEvent;
+    const { id, hash, organizer } = theEvent;
     const { data = {} } = useQuery(EVENT_GIGS, {
         skip: !id || !hash,
         variables: {
@@ -19,24 +22,41 @@ const EventProgress = ({ theEvent = {} }) => {
         return null;
     }
 
+    const emailVerified = organizer?.appMetadata?.emailVerified;
+
     const accepted = data?.event?.gigs.some((g) => g.offer);
 
     return (
-        <Wrapper>
-            <ProgressStep label={'Create event'} completed />
-            <ProgressStep label={'Get offers from DJs'} completed={accepted} />
-            <ProgressStep label={'Confirm and pay'} completed={!!theEvent.chosenGig} />
-            <ProgressStep label={'Review'} completed={theEvent && theEvent.review} to="review" />
-        </Wrapper>
+        <Sticky>
+            <Wrapper>
+                <ProgressStep label={'Create event'} completed />
+                {!emailVerified && (
+                    <ProgressStep small to={eventRoutes.requirements} label={'Verify email'} />
+                )}
+                <ProgressStep label={'Get offers from DJs'} completed={accepted} />
+                <ProgressStep
+                    label={'Confirm and pay'}
+                    completed={theEvent?.status === eventStates.CONFIRMED}
+                />
+                <ProgressStep
+                    label={'Review'}
+                    completed={theEvent && theEvent.review}
+                    to={eventRoutes.review}
+                />
+            </Wrapper>
+        </Sticky>
     );
 };
 
-const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
+const Sticky = styled.div`
     position: sticky;
     top: 80px;
     margin-left: 42px;
+`;
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+
     > * {
         margin-bottom: 2.3em;
         &:last-child > *:after {
@@ -57,7 +77,7 @@ const Wrapper = styled.div`
     }
 `;
 
-const ProgressStep = ({ label, completed, to }) => {
+const ProgressStep = ({ label, small, completed, to }) => {
     return (
         <ConditionalWrap
             condition={true}
@@ -65,7 +85,11 @@ const ProgressStep = ({ label, completed, to }) => {
                 to ? <NavLink to={to}>{children}</NavLink> : <div>{children}</div>
             }
         >
-            <Step completed={completed}>
+            <Step
+                small={small}
+                completed={completed}
+                data-cy={completed ? 'progress-step-complete' : 'progress-step-incomplete'}
+            >
                 {completed && <img src={checkmark} alt="Checkmark" />}
                 {label}
             </Step>
@@ -84,6 +108,15 @@ const Step = styled.div`
     color: ${({ completed }) => (completed ? '#fff' : '#4d6480')};
     text-align: center;
     position: relative;
+    margin: 0 auto;
+
+    ${({ small }) =>
+        small &&
+        css`
+            font-size: 14px;
+            line-height: 3em;
+            border: 2px solid #98a4b3;
+        `}
     > img {
         position: absolute;
         left: 1.33em;

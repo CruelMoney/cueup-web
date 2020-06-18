@@ -5,27 +5,31 @@ import styled from 'styled-components';
 import useScript from '@charlietango/use-script';
 import GeoCoder from 'utils/GeoCoder';
 import { PrimaryButton, Row } from 'components/Blocks';
+import { appRoutes } from 'constants/locales/appRoutes';
+import useNamespaceContent from 'components/hooks/useNamespaceContent';
+import { useServerContext } from 'components/hooks/useServerContext';
 import Footer from '../../components/common/Footer';
 import MoneyIcon from '../../components/graphics/Money';
 import NoteIcon from '../../components/graphics/Note';
 import Map from '../../components/common/Map';
 import citySvg from '../../assets/City.svg';
-import addTranslate from '../../components/higher-order/addTranslate';
-import { Environment } from '../../constants/constants';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import AsyncRequestForm from '../../components/common/RequestForm';
 import defaultImage from '../../assets/images/cities/default.png';
 import FloatingDJs from './components/FloatingCards';
-import content from './content.json';
 import './index.css';
 import { countries } from './locations';
 import { CitiesList } from './components/CountriesList';
+import content from './content.json';
 
 const Location = (props) => {
     const secondColor = '#25F4D2';
     const themeColor = '#31DAFF';
     const requestForm = useRef();
     const [isMobile, setIsMobile] = useState(false);
+
+    const { translate } = useNamespaceContent(content, 'location');
+    const { environment } = useServerContext();
 
     useEffect(() => {
         setIsMobile(window.innerWidth < 768);
@@ -39,7 +43,7 @@ const Location = (props) => {
         });
     };
 
-    const { match, translate } = props;
+    const { match } = props;
     const { city, country } = match.params;
     let location = null;
     let initialCoordinates = null;
@@ -75,22 +79,23 @@ const Location = (props) => {
 
     // Redirect
     if (!location) {
-        return <Redirect to={translate('routes./not-found')} />;
+        return <Redirect to={translate(appRoutes.notFound)} />;
     }
 
     const radius = city ? 25000 : isMobile ? 200000 : 100000;
 
-    const siteDescription = translate('location.description', {
+    const siteDescription = translate('location:description', {
         location: title,
     });
 
-    const siteTitle = translate('location.title', { location: title });
-    const thumb = Environment.CALLBACK_DOMAIN + (location.image || defaultImage);
+    const siteTitle = translate('location:title', { location: title });
+    const thumb = environment.CALLBACK_DOMAIN + (location.image || defaultImage);
 
     return (
         <div className="locations-page">
             <Helmet>
                 <title>{siteTitle + ' | Cueup'}</title>
+                <body className="book-dj-location white-theme" />
                 <meta name="description" content={siteDescription} />
 
                 <meta property="og:title" content={siteTitle + ' | Cueup'} />
@@ -112,7 +117,7 @@ const Location = (props) => {
             <div className="span-wrapper">
                 <header
                     style={{
-                        height: isMobile ? '700px' : '600px',
+                        height: isMobile ? '500px' : '600px',
                         backgroundColor: '#ebebeb',
                     }}
                 >
@@ -123,10 +128,10 @@ const Location = (props) => {
                             hideRoads={true}
                             radius={radius}
                             defaultCenter={{
-                                lat: coordinates.lat + (isMobile ? 0 : 0.05),
+                                lat: coordinates.lat + (isMobile ? 0.125 : 0.05),
                                 lng: coordinates.lng - (isMobile ? 0 : city ? 0.5 : 2),
                             }}
-                            height={isMobile ? 700 : 600}
+                            height={isMobile ? 500 : 600}
                             value={coordinates}
                             editable={false}
                             themeColor={themeColor}
@@ -137,12 +142,19 @@ const Location = (props) => {
 
                     <article>
                         <div className="container fix-top-mobile">
+                            <GoogleMapsLogo />
+
                             <div className="row">
                                 <div className="col-md-5 col-sm-6">
                                     <div className="card">
-                                        <h1 key="title">
-                                            {translate('location.title-2', { location: title })}
-                                        </h1>
+                                        <h1
+                                            key="title"
+                                            dangerouslySetInnerHTML={{
+                                                __html: translate('location:title-2', {
+                                                    location: title,
+                                                }),
+                                            }}
+                                        />
                                         <p key="paragraph">{siteDescription}</p>
 
                                         <div style={{ float: 'left', marginTop: '20px' }}>
@@ -156,18 +168,17 @@ const Location = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="show-tablet-down">
-                            <div className="container">
-                                <div className="row">
-                                    <div className="col-xs-12">
-                                        <p key="paragraph">{siteDescription}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </article>
                 </header>
-
+                <div className="show-tablet-down">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-xs-12">
+                                <p key="paragraph">{siteDescription}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className="container">
                     <FormRow center>
                         <div ref={requestForm} />
@@ -195,10 +206,10 @@ const Location = (props) => {
                             <div className="card">
                                 <NoteIcon altGradient={false} />
                                 <h2 style={{ color: themeColor }}>
-                                    {translate('location.sections.left.header')}
+                                    {translate('location:sections.left.header')}
                                 </h2>
                                 <p>
-                                    {translate('location.sections.left.content', {
+                                    {translate('location:sections.left.content', {
                                         location: title,
                                     })}
                                 </p>
@@ -208,10 +219,10 @@ const Location = (props) => {
                             <div className="card">
                                 <MoneyIcon altGradient={false} />
                                 <h2 style={{ color: themeColor }}>
-                                    {translate('location.sections.right.header')}
+                                    {translate('location:sections.right.header')}
                                 </h2>
                                 <p>
-                                    {translate('location.sections.right.content', {
+                                    {translate('location:sections.right.content', {
                                         location: title,
                                     })}
                                 </p>
@@ -224,16 +235,50 @@ const Location = (props) => {
             <Footer
                 bgColor="#FFFFFF"
                 color={secondColor}
-                firstTo={translate('routes./signup')}
-                secondTo={translate('routes./how-it-works')}
+                firstTo={translate(appRoutes.signUp)}
+                secondTo={translate(appRoutes.howItWorks)}
                 firstLabel={translate('apply-to-become-dj')}
                 secondLabel={translate('how-it-works')}
-                title={translate('are-you-a-dj-in-:location', { location: title })}
+                title={translate('are-you-a-dj-in-location', { location: title })}
                 subTitle={translate('apply-to-become-dj-or-see-how-it-works')}
             />
         </div>
     );
 };
+
+const GoogleMapsLogoWrapper = styled.div`
+    transform: translateX(-100%);
+    width: 100%;
+    position: absolute;
+    left: 270px;
+    height: 100%;
+    justify-content: flex-end;
+    align-items: flex-end;
+    display: flex;
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
+`;
+
+const GoogleMapsLogo = () => (
+    <GoogleMapsLogoWrapper>
+        <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://maps.google.com/maps?ll=55.7286,12.0635&amp;z=9&amp;t=m&amp;hl=en-US&amp;gl=US&amp;mapclient=apiv3"
+            title="Open this area in Google Maps (opens a new window)"
+        >
+            <div>
+                <img
+                    style={{ width: '66px', height: '26px' }}
+                    alt=""
+                    src="https://maps.gstatic.com/mapfiles/api-3/images/google_white5_hdpi.png"
+                    draggable="false"
+                />
+            </div>
+        </a>
+    </GoogleMapsLogoWrapper>
+);
 
 const FormRow = styled(Row)`
     padding-left: 200px;
@@ -241,5 +286,5 @@ const FormRow = styled(Row)`
         padding-left: 0px;
     }
 `;
-
-export default addTranslate(Location, content);
+// eslint-disable-next-line import/no-unused-modules
+export default Location;

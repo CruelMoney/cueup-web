@@ -1,18 +1,36 @@
-import React, { Component } from 'react';
-import { localize } from 'react-localize-redux';
+import React from 'react';
 import styled from 'styled-components';
 import { Body } from 'components/Text';
+import useTranslate from 'components/hooks/useTranslate';
 import Svg404 from '../graphics/404';
 
-const EmptyPage = ({ message, title, translate, children }) => {
+const EmptyPage = ({ message, title, style }) => {
+    const { translate } = useTranslate();
+    const renderTitle = title ? title : translate('empty-page-message');
+
     return (
-        <Wrapper>
+        <Wrapper style={style}>
             <Svg404 />
             <div>
-                <h2>{title ? title : translate('empty-page-message')}</h2>
+                {typeof renderTitle === 'string' ? (
+                    <h2
+                        dangerouslySetInnerHTML={{
+                            __html: renderTitle,
+                        }}
+                    />
+                ) : (
+                    <h2>{renderTitle}</h2>
+                )}
 
-                {message && <Body style={{ marginTop: 15 }}>{message}</Body>}
-                {children}
+                {message &&
+                    (typeof message === 'string' ? (
+                        <Body
+                            style={{ marginTop: 15 }}
+                            dangerouslySetInnerHTML={{ __html: message }}
+                        />
+                    ) : (
+                        <Body style={{ marginTop: 15 }}>{message}</Body>
+                    ))}
             </div>
         </Wrapper>
     );
@@ -38,4 +56,4 @@ const Wrapper = styled.div`
     }
 `;
 
-export default localize(EmptyPage, 'locale');
+export default EmptyPage;

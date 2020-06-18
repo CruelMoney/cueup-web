@@ -3,7 +3,10 @@ import { useMutation } from 'react-apollo';
 import styled from 'styled-components';
 import * as Sentry from '@sentry/browser';
 import { useForm } from 'components/hooks/useForm';
-import { Input, InputRow, InputLabel } from '../../../../components/FormComponents';
+import useConnectSoundCloud from 'components/hooks/useConnectSoundcloud';
+import DateInput from 'components/DateInput';
+import useConnectMixcloud from 'components/hooks/useConnectMixcloud';
+import { Input, InputRow, InputLabel, Checkbox } from '../../../../components/FormComponents';
 import { Title, Body, BodySmall, InlineLink } from '../../../../components/Text';
 import {
     Row,
@@ -11,6 +14,7 @@ import {
     SmartButton,
     Col,
     SecondaryButton,
+    RowWrap,
 } from '../../../../components/Blocks';
 import ErrorMessageApollo from '../../../../components/common/ErrorMessageApollo';
 import ImageUploader from '../../../../components/ImageInput';
@@ -22,11 +26,13 @@ import { ADD_SOUND, UPDATE_SOUND, USER_SOUNDS } from './gql';
 import useSongMetadata from './useSongMetadata';
 
 const AddSound = (props) => {
-    const { sound } = props;
+    const { sound, soundCloudConnected, mixcloudConnected, userId } = props;
     const [uploadProgress, setuploadProgress] = useState(sound ? 1 : null);
     const abortUpload = useRef();
     const [file, setFile] = useState();
     const [fileId, setFileId] = useState();
+    const [addToSoundCloud, setAddToSoundcloud] = useState(false);
+    const [addToMixcloud, setAddToMixcloud] = useState(false);
 
     const [upload, { loading: uploading, error: uploadError }] = useMutation(UPLOAD_FILE);
     const [uploadImage] = useMutation(UPLOAD_FILE);
@@ -59,13 +65,22 @@ const AddSound = (props) => {
     return (
         <>
             {!showForm ? (
-                <FileChooser onChange={startUpload} />
+                <FileChooser
+                    onChange={startUpload}
+                    userId={userId}
+                    soundCloudConnected={soundCloudConnected}
+                    setAddToSoundcloud={setAddToSoundcloud}
+                    mixcloudConnected={mixcloudConnected}
+                    setAddToMixcloud={setAddToMixcloud}
+                />
             ) : (
                 <DataForm
                     {...props}
                     sound={{
                         ...metadata.common,
                         tags: metadata.common && metadata.common.genre,
+                        addToSoundCloud,
+                        addToMixcloud,
                         ...sound,
                     }}
                     uploadImage={uploadImage}
@@ -94,41 +109,72 @@ const AddSound = (props) => {
     );
 };
 
-const FileChooser = ({ onChange }) => (
-    <Col middle>
-        <Body style={{ textAlign: 'center', maxWidth: '500px' }}>
-            For the best result upload in wav or m4a. <br />
-            The file will be optimised for streaming at 256 kbps.
-        </Body>
-        <ImageUploader
-            style={{
-                background: '#31daff',
-                color: 'white',
-                width: '250px',
-                margin: 'auto',
-                marginTop: '24px',
-            }}
-            name="sound"
-            accept="audio/*"
-            onSave={onChange}
-        >
-            Choose file
-        </ImageUploader>
-        {/* <Row style={{ margin: "6px 0 24px 0" }}>
-      <span style={{ marginRight: "24px" }}>
-        <Checkbox label={"Add to SoundCloud"} />
-      </span>
-      <Checkbox label={"Add to Mixcloud"} />
-    </Row> */}
-        <BodySmall style={{ textAlign: 'center', maxWidth: '500px' }}>
-            By uploading, you confirm that your sounds comply with our{' '}
-            <InlineLink href="/terms/agreements" target="_blank">
-                Terms of Service
-            </InlineLink>{' '}
-            and that you don't infringe anyone else's rights.
-        </BodySmall>
-    </Col>
-);
+const FileChooser = ({
+    onChange,
+    soundCloudConnected,
+    mixcloudConnected,
+    userId,
+    setAddToSoundcloud,
+    setAddToMixcloud,
+}) => {
+    const [connect, { loading }] = useConnectSoundCloud({ userId, soundCloudConnected });
+    const [connectMixcloud, { loading: loadingMixcloud }] = useConnectMixcloud({
+        userId,
+        mixcloudConnected,
+    });
+
+    return (
+        <Col middle>
+            <Body style={{ textAlign: 'center', maxWidth: '500px' }}>
+                For the best result upload in wav or m4a. <br />
+                The file will be optimised for streaming at 256 kbps.
+            </Body>
+            <Col style={{ margin: '24px 0 6px 0' }}>
+                <Checkbox
+                    label={'Add to your Soundcloud'}
+                    onChange={(checked) => {
+                        if (checked && !soundCloudConnected && !loading) {
+                            connect();
+                        }
+                        setAddToSoundcloud(checked);
+                    }}
+                />
+
+                <Checkbox
+                    label={'Add to your Mixcloud'}
+                    onChange={(checked) => {
+                        if (checked && !mixcloudConnected && !loadingMixcloud) {
+                            connectMixcloud();
+                        }
+                        setAddToMixcloud(checked);
+                    }}
+                />
+            </Col>
+            <ImageUploader
+                style={{
+                    background: '#31daff',
+                    color: 'white',
+                    width: '250px',
+                    margin: 'auto',
+                    marginTop: '24px',
+                }}
+                name="sound"
+                accept="audio/*"
+                onSave={onChange}
+            >
+                Choose file
+            </ImageUploader>
+
+            <BodySmall style={{ textAlign: 'center', maxWidth: '500px' }}>
+                By uploading, you confirm that your sounds comply with our{' '}
+                <InlineLink href="/terms/agreements" target="_blank">
+                    Terms of Service
+                </InlineLink>{' '}
+                and that you don't infringe anyone else's rights.
+            </BodySmall>
+        </Col>
+    );
+};
 
 const DataForm = ({
     formDisabled,
@@ -144,7 +190,12 @@ const DataForm = ({
     closeModal,
     userId,
 }) => {
-    const [form, setForm] = useState(sound);
+    const [form, setForm] = useState({
+        updateOnSoundCloud: true,
+        updateOnMixcloud: true,
+        ...sound,
+    });
+
     const [imageUpload, setImageUpload] = useState();
     const [submitting, setSubmitting] = useState(false);
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);
@@ -152,15 +203,19 @@ const DataForm = ({
     const onChange = (key) => (val) => {
         setForm((form) => ({ ...form, [key]: val }));
     };
-    const [mutate, { error }] = useMutation(form.id ? UPDATE_SOUND : ADD_SOUND, {
-        refetchQueries: [
-            {
-                query: USER_SOUNDS,
-                variables: {
-                    userId,
-                },
+
+    const refetchQueries = [];
+    if (!form.id) {
+        refetchQueries.push({
+            query: USER_SOUNDS,
+            variables: {
+                userId,
             },
-        ],
+        });
+    }
+
+    const [mutate, { error }] = useMutation(form.id ? UPDATE_SOUND : ADD_SOUND, {
+        refetchQueries,
         awaitRefetchQueries: true,
         onCompleted: closeModal,
     });
@@ -177,7 +232,12 @@ const DataForm = ({
                     title: form.title,
                     description: form.description,
                     tags: form.tags,
+                    addToSoundCloud: form.addToSoundCloud,
+                    addToMixcloud: form.addToMixcloud,
                     file,
+                    date: form.date,
+                    updateOnSoundCloud: form.updateOnSoundCloud,
+                    updateOnMixcloud: form.updateOnMixcloud,
                 };
 
                 if (imageUpload) {
@@ -207,17 +267,31 @@ const DataForm = ({
         [setImageUpload, uploadImage]
     );
 
-    const { title, tags, description, year, image, imageFile } = form || {};
+    const { title, tags, description, date, image, imageFile, source } = form || {};
+    const isSoundcloud = source === 'soundcloud';
+    const isMixcloud = source === 'mixcloud';
 
     return (
         <form onSubmit={updateSound}>
-            <Title style={{ marginBottom: '39px' }}>Add sound</Title>
+            <Title>{sound.id ? 'Update sound' : 'Add sound'}</Title>
 
             {!form.id && (
                 <>
                     {uploadingStatus}
                     <ProgressBar progress={uploadProgress} />
                 </>
+            )}
+            {isSoundcloud && (
+                <Body>
+                    This will update the sound on Soundcloud. Changes might take some time to take
+                    effect.
+                </Body>
+            )}
+            {isMixcloud && (
+                <Body>
+                    This will update the sound on Mixcloud. Changes might take some time to take
+                    effect.
+                </Body>
             )}
             <Row style={{ marginTop: '30px' }}>
                 <CoverPicture
@@ -239,13 +313,13 @@ const DataForm = ({
                             registerValidation={registerValidation('title')}
                             unregisterValidation={unregisterValidation('title')}
                         />
-                        <Input
-                            label="Year"
-                            defaultValue={year || new Date().getFullYear()}
-                            placeholder="When was this released"
+                        <DateInput
+                            label="Release date"
+                            defaultValue={date || (form.id ? null : new Date())}
+                            placeholder="MM-YYYY"
                             type="text"
-                            name="year"
-                            onSave={onChange('year')}
+                            name="date"
+                            onSave={onChange('date')}
                             disabled={formDisabled}
                         />
                         <InputLabel>
@@ -264,10 +338,38 @@ const DataForm = ({
                             onSave={onChange('description')}
                         />
                     </InputRow>
+                    {sound.soundcloudId && (
+                        <Checkbox
+                            label="Update entry on your Soundcloud"
+                            defaultValue={form.updateOnSoundCloud}
+                            onChange={onChange('updateOnSoundCloud')}
+                        />
+                    )}
+                    {sound.mixcloudId && (
+                        <Checkbox
+                            label="Update entry on your mixcloud"
+                            defaultValue={form.updateOnMixcloud}
+                            onChange={onChange('updateOnMixcloud')}
+                        />
+                    )}
+                    {!form.id && (
+                        <Checkbox
+                            label="Add to your Soundcloud"
+                            defaultValue={form.addToSoundCloud}
+                            onChange={onChange('addToSoundCloud')}
+                        />
+                    )}
+                    {!form.id && (
+                        <Checkbox
+                            label="Add to your Mixcloud"
+                            defaultValue={form.addToMixcloud}
+                            onChange={onChange('addToMixcloud')}
+                        />
+                    )}
                 </Col>
             </Row>
             {uploadProgress !== null && (
-                <Row right>
+                <Row right style={{ marginTop: 24 }}>
                     <TeritaryButton type="button" onClick={onCancel}>
                         Cancel
                     </TeritaryButton>
@@ -278,7 +380,7 @@ const DataForm = ({
                         onClick={updateSound}
                         type="submit"
                     >
-                        {uploading ? 'Uploading...' : form.id ? 'Update track' : 'Add track'}
+                        {uploading ? 'Uploading...' : sound.id ? 'Update sound' : 'Add sound'}
                     </SmartButton>
                 </Row>
             )}
@@ -327,7 +429,7 @@ const CoverPicture = ({ url, onChange, imageFile }) => {
         if (file) {
             const reader = new FileReader();
 
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 setSrc(e.target.result);
             };
             reader.readAsDataURL(file);
@@ -340,7 +442,7 @@ const CoverPicture = ({ url, onChange, imageFile }) => {
         if (imageFile) {
             const reader = new FileReader();
 
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 setSrc(e.target.result);
             };
             reader.readAsDataURL(imageFile);

@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import debounce from 'lodash/debounce';
+import { useServerContext } from 'components/hooks/useServerContext';
 import ChatService from '../../../utils/ChatService';
 import { authService as auth } from '../../../utils/AuthService';
 
@@ -7,12 +8,12 @@ const useChat = ({ sender, receiver, id, showPersonalInformation, data }) => {
     const chat = useRef();
     const startedTyping = useRef();
     const stoppedTyping = useRef();
-    const onNewContent = useRef();
     const [messages, setMessages] = useState([]);
     const [sending, setSending] = useState(false);
     const [ready, setReady] = useState(false);
     const [typing, setTyping] = useState(false);
     const [newMessage, setNewMessage] = useState();
+    const { environment } = useServerContext();
 
     const senderId = sender.id;
 
@@ -25,23 +26,21 @@ const useChat = ({ sender, receiver, id, showPersonalInformation, data }) => {
             },
         ]);
         setSending(sending);
-        onNewContent.current && onNewContent.current(message);
     }, []);
 
     // initialize
     useEffect(() => {
         if (id && senderId) {
-            chat.current = new ChatService(id, auth.getToken(), senderId);
+            chat.current = new ChatService(id, auth.getToken(), senderId, environment.CHAT_DOMAIN);
             chat.current.init({ showPersonalInformation }).then((messages) => {
                 setMessages(messages);
                 setReady(true);
-                onNewContent.current && onNewContent.current();
             });
             return () => {
                 chat.current.dispose();
             };
         }
-    }, [id, senderId, showPersonalInformation]);
+    }, [id, senderId, showPersonalInformation, environment]);
 
     // setup listeners
     useEffect(() => {
@@ -102,7 +101,6 @@ const useChat = ({ sender, receiver, id, showPersonalInformation, data }) => {
         sendMessage,
         handleChange,
         newMessage,
-        onNewContent,
     };
 };
 

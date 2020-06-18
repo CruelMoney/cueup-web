@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import { TeritaryButton, Row, PrimaryButton } from 'components/Blocks';
 import { useValidation } from 'components/hooks/useForm';
 import { Input, Label, LabelHalf, InputRow } from 'components/FormComponents';
-import addTranslate from 'components/higher-order/addTranslate';
 import { BodySmall } from 'components/Text';
 import ToggleButtonHandler from '../ToggleButtonHandler';
 import c from '../../../constants/constants';
@@ -43,17 +42,18 @@ const Step2 = ({
 
     return (
         <form name="requestForm-step-2">
-            <h3>{translate('request-form.step-2.header')}</h3>
+            <h3 dangerouslySetInnerHTML={{ __html: translate('requestForm:step-2.header') }} />
             <RequestSection>
                 <Input
-                    label={translate('request-form.step-2.event-name')}
+                    name="eventName"
+                    label={translate('requestForm:step-2.event-name')}
                     onSave={(name) => handleChange({ name })}
                     validation={(v) => (v ? null : 'Please write a name')}
                     registerValidation={registerValidation('name')}
                     unregisterValidation={unregisterValidation('name')}
                     defaultValue={form.name}
                 >
-                    <BodySmall>{translate('request-form.step-2.event-name-description')}</BodySmall>
+                    <BodySmall>{translate('requestForm:step-2.event-name-description')}</BodySmall>
                 </Input>
             </RequestSection>
             <RequestSection>
@@ -81,15 +81,15 @@ const Step2 = ({
                 </InputRow>
             </RequestSection>
             <RequestSection>
-                <Label>{translate('request-form.step-2.event-genres')} </Label>
+                <Label>{translate('requestForm:step-2.event-genres')} </Label>
                 <BodySmall style={{ marginBottom: '10px' }}>
-                    {translate('request-form.step-2.event-genres-description')}
+                    {translate('requestForm:step-2.event-genres-description')}
                 </BodySmall>
                 <GenreChooser
                     letCueupDecide={form.letCueupDecide}
                     setLetcueupDecide={handleGenreSelection}
-                    chooseLabel={translate('request-form.choose-genres')}
-                    cueupDecideLabel={translate('request-form.let-cueup-decide')}
+                    chooseLabel={translate('requestForm:choose-genres')}
+                    cueupDecideLabel={translate('requestForm:let-cueup-decide')}
                     name="genres"
                 />
                 {form.letCueupDecide === false ? (
@@ -109,7 +109,7 @@ const Step2 = ({
                 </Label>
             </RequestSection>
             <Row right style={{ marginTop: '12px' }}>
-                <TeritaryButton type="button" className="back-button" onClick={back}>
+                <TeritaryButton type="button" onClick={back}>
                     {translate('back')}
                 </TeritaryButton>
                 <PrimaryButton type="button" onClick={() => next()}>
@@ -120,4 +120,4 @@ const Step2 = ({
     );
 };
 
-export default addTranslate(Step2);
+export default Step2;

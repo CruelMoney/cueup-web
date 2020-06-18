@@ -1,10 +1,11 @@
-import ReactPixel from 'react-facebook-pixel';
 import * as Sentry from '@sentry/browser';
 import { useMutation } from 'react-apollo';
 import { useState } from 'react';
 import { CHECK_DJ_AVAILABILITY, CREATE_EVENT } from 'components/common/RequestForm/gql';
+import { trackCheckAvailability, trackEventPosted } from 'utils/analytics';
 import GeoCoder from '../utils/GeoCoder';
-import * as tracker from '../utils/analytics/autotrack';
+
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 export const getLocation = (location) => {
     return new Promise((resolve, reject) => {
@@ -43,23 +44,6 @@ export const getLocation = (location) => {
     });
 };
 
-export function postEvent(event, mutate, callback) {
-    return async (dispatch) => {
-        try {
-            const { error } = await mutate({
-                variables: event,
-            });
-            callback(error);
-            if (!error) {
-                tracker.trackEventPosted();
-                ReactPixel.track('Lead');
-            }
-        } catch (error) {
-            callback(error);
-        }
-    };
-}
-
 export const useCheckDjAvailability = ({ locationName, date }) => {
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
@@ -68,13 +52,10 @@ export const useCheckDjAvailability = ({ locationName, date }) => {
     const check = async () => {
         try {
             setLoading(true);
-            if (!__DEV__) {
-                try {
-                    tracker.trackCheckAvailability();
-                    ReactPixel.track('Search');
-                } catch (error) {
-                    Sentry.captureException(error);
-                }
+            try {
+                trackCheckAvailability();
+            } catch (error) {
+                Sentry.captureException(error);
             }
 
             const geoResult = await getLocation(locationName);
@@ -115,9 +96,8 @@ export const useCreateEvent = (theEvent) => {
 
     const doMutate = async (variables) => {
         try {
-            if (!__DEV__) {
-                tracker.trackEventPosted();
-                ReactPixel.track('Lead');
+            if (!isDevelopment) {
+                trackEventPosted();
             }
             return await mutate({
                 variables: {

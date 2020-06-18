@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation, useQuery } from 'react-apollo';
 import emailValidator from 'email-validator';
+import useTranslate from 'components/hooks/useTranslate';
+import { REQUEST_EMAIL_VERIFICATION } from 'components/gql';
 import { Col, Row, TeritaryButton, SmartButton } from '../../../../components/Blocks';
 import { SettingsSection, Input } from '../../../../components/FormComponents';
 
@@ -17,8 +19,10 @@ import { eventStates } from '../../../../constants/constants';
 
 const required = (msg) => (val) => (!val ? msg : null);
 
-const Requirements = React.forwardRef(({ theEvent, translate, history, pathname }, ref) => {
-    const [update, { loading }] = useMutation(UPDATE_EVENT);
+const Requirements = React.forwardRef(({ theEvent, history, pathname }, ref) => {
+    const { translate } = useTranslate();
+
+    const [update, { loading, error }] = useMutation(UPDATE_EVENT);
     const [cancelationPopup, setCancelationPopup] = useState();
 
     if (!theEvent) {
@@ -34,31 +38,69 @@ const Requirements = React.forwardRef(({ theEvent, translate, history, pathname 
         contactPhone,
         contactEmail,
         address,
+        organizer,
     } = theEvent;
 
-    const save = (key, optimistic) => (val) =>
-        theEvent[key] !== val &&
-        update({
-            variables: {
-                id: theEvent.id,
-                hash: theEvent.hash,
-                [key]: val,
-            },
-            optimisticResponse: {
-                __typename: 'Mutation',
-                updateEvent: {
-                    __typename: 'Event',
-                    ...theEvent,
-                    ...optimistic,
+    const save = (key, optimistic) => async (val) => {
+        if (theEvent[key] !== val) {
+            await update({
+                variables: {
+                    id: theEvent.id,
+                    hash: theEvent.hash,
+                    [key]: val,
                 },
-            },
-        });
+            });
+        }
+    };
 
     const isCancable = ![eventStates.FINISHED, eventStates.CANCELLED].includes(theEvent.status);
 
     return (
         <Col ref={ref}>
-            <SavingIndicator loading={loading} />
+            <SavingIndicator loading={loading} error={error} />
+
+            <SettingsSection
+                title={'Contact information'}
+                description={
+                    'Enter information on the person communicating with the DJ. This information is only visible to the DJ after the DJ has been booked.'
+                }
+            >
+                <Input
+                    label="Contact name"
+                    defaultValue={contactName}
+                    placeholder="Keep it short"
+                    type="text"
+                    autoComplete="name"
+                    name="name"
+                    onSave={save('contactEmail')}
+                    validation={required('Name is needed')}
+                />
+                <Input
+                    label="Contact email"
+                    defaultValue={organizer?.email}
+                    placeholder="mail@email.com"
+                    error={
+                        !organizer?.appMetadata?.emailVerified ? (
+                            <VerifyEmailError email={organizer?.email} />
+                        ) : null
+                    }
+                    type="email"
+                    autoComplete="email"
+                    name="email"
+                    onSave={(email) => save('contactEmail')(email.trim())}
+                    validation={(v) => (emailValidator.validate(v) ? null : 'Not a valid email')}
+                />
+                <PhoneInput
+                    label="Phone"
+                    attention={!contactPhone}
+                    defaultValue={contactPhone}
+                    placeholder="+123456789"
+                    type="tel"
+                    autoComplete="tel"
+                    name="phone"
+                    onSave={(phone) => save('contactPhone')(phone.trim())}
+                />
+            </SettingsSection>
 
             <SettingsSection
                 title={'Requirements'}
@@ -82,7 +124,7 @@ const Requirements = React.forwardRef(({ theEvent, translate, history, pathname 
                     save={save('description')}
                     validation={required('The event needs a description')}
                 >
-                    <Body>{translate('request-form.step-3.event-description-description')}</Body>
+                    <Body>{translate('event-description-placeholder')}</Body>
                 </TextAreaPopup>
                 <GenreSelector half initialGenres={genres} save={save('genres')} />
 
@@ -124,43 +166,6 @@ const Requirements = React.forwardRef(({ theEvent, translate, history, pathname 
                 />
             </SettingsSection>
 
-            <SettingsSection
-                title={'Contact information'}
-                description={
-                    'Enter information on the person communicating with the DJ. This information is only visible to the DJ after the DJ has been booked.'
-                }
-            >
-                <Input
-                    label="Contact name"
-                    defaultValue={contactName}
-                    placeholder="Keep it short"
-                    type="text"
-                    autoComplete="name"
-                    name="name"
-                    onSave={save('contactEmail')}
-                    validation={required('Name is needed')}
-                />
-                <Input
-                    label="Contact email"
-                    defaultValue={contactEmail}
-                    placeholder="mail@email.com"
-                    type="email"
-                    autoComplete="email"
-                    name="email"
-                    onSave={(email) => save('contactEmail')(email.trim())}
-                    validation={(v) => (emailValidator.validate(v) ? null : 'Not a valid email')}
-                />
-                <PhoneInput
-                    label="Phone"
-                    attention={!contactPhone}
-                    defaultValue={contactPhone}
-                    placeholder="+123456789"
-                    type="tel"
-                    autoComplete="tel"
-                    name="phone"
-                    onSave={(phone) => save('contactPhone')(phone.trim())}
-                />
-            </SettingsSection>
             <SettingsSection
                 id="system"
                 title={'System'}
@@ -311,6 +316,32 @@ const CancelationConsequences = ({ offer }) => {
         <Body>
             Cancel now and receive a refund of <b>{worstCaseRefund.formatted}</b>.
         </Body>
+    );
+};
+
+const VerifyEmailError = ({ email }) => {
+    const [request, { data, loading }] = useMutation(REQUEST_EMAIL_VERIFICATION);
+
+    const handleClick = () => {
+        request({
+            variables: {
+                email,
+                redirectLink: window.location.href,
+            },
+        });
+    };
+
+    return (
+        <>
+            Email not verified -{' '}
+            {data ? (
+                <button disabled>email sent, remember to check spam</button>
+            ) : loading ? (
+                <button disabled>...</button>
+            ) : (
+                <button onClick={handleClick}>Resend link</button>
+            )}
+        </>
     );
 };
 

@@ -1,7 +1,15 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
+import { useServerContext } from 'components/hooks/useServerContext';
 import { REQUEST_EMAIL_VERIFICATION } from '../gql';
-import c from '../../constants/constants';
+
+export const handleError = (error) => {
+    const msg = getErrorMessage(error);
+
+    if (msg) {
+        window.alert(msg);
+    }
+};
 
 export const getErrorMessage = (error) => {
     let msgs = 'There was an error';
@@ -49,6 +57,9 @@ const ErrorMessageApollo = ({ style, error, center, email, onFoundCode }) => {
             if (e.extensions.code === 'EMAIL_NOT_VERIFIED') {
                 showResend = true;
             }
+            if (e.message === 'EMAIL_NOT_UNIQUE') {
+                msgs = ['Email already in use'];
+            }
         });
     }
 
@@ -63,12 +74,14 @@ const ErrorMessageApollo = ({ style, error, center, email, onFoundCode }) => {
 };
 
 const ResendVerificationEmail = ({ email }) => {
+    const { environment } = useServerContext();
+
     return (
         <Mutation
             mutation={REQUEST_EMAIL_VERIFICATION}
             variables={{
                 email,
-                redirectLink: c.Environment.CALLBACK_DOMAIN,
+                redirectLink: environment.CALLBACK_DOMAIN,
             }}
         >
             {(mutate, { loading, data, error }) => {

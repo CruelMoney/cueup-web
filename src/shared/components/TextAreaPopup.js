@@ -12,10 +12,17 @@ const TextAreaPopup = ({
     children,
     error,
     attention,
+    isActive,
+    onClose,
     ...props
 }) => {
     const [value, setValue] = useState(initialValue);
-    const [showing, setShowing] = useState(false);
+    const [showing, setShowing] = useState(isActive);
+
+    const closeModal = () => {
+        setShowing(false);
+        onClose && onClose();
+    };
 
     return (
         <>
@@ -29,7 +36,7 @@ const TextAreaPopup = ({
                 attention={attention}
             />
 
-            <Popup showing={showing} onClickOutside={(_) => setShowing(false)} width={'520px'}>
+            <Popup showing={showing} onClickOutside={closeModal} width={'520px'}>
                 {children}
                 <TextArea
                     defaultValue={value}
@@ -47,13 +54,13 @@ const TextAreaPopup = ({
                         }}
                     >{`${value ? value.replace(/\s/g, '').length : 0} / ${characters}`}</BodySmall>
 
-                    <TeritaryButton type="button" onClick={(_) => setShowing(false)}>
+                    <TeritaryButton type="button" onClick={closeModal}>
                         Cancel
                     </TeritaryButton>
                     <PrimaryButton
                         type="button"
                         onClick={() => {
-                            setShowing(false);
+                            closeModal();
                             save(value);
                         }}
                     >

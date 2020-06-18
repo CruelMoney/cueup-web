@@ -7,7 +7,7 @@ security/detect-non-literal-fs-filename
 */
 import fs from 'fs';
 import path from 'path';
-import * as express from 'express';
+import { RequestHandler } from 'express';
 
 type TranslationCache = {
     [locale: string]: {
@@ -47,7 +47,7 @@ const loadAndCache = (locale: string, ns: string) => {
 const getTranslation = (locale: string, ns: string) => translationCache[locale][ns];
 
 // This middleware serves translation files requested via /locales/:locale/:ns
-export const i18nextXhr = (req: express.Request, res: express.Response) => {
+export const i18nextXhr: RequestHandler = (req, res) => {
     const { locale, ns } = req.params;
 
     try {

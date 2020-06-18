@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Switch, Route, Redirect } from 'react-router';
+import { Switch, Route, Redirect, useHistory } from 'react-router';
 import styled from 'styled-components';
-import { Query } from 'react-apollo';
+import { Query, useMutation } from 'react-apollo';
 import queryString from 'query-string';
-import { useMutation } from '@apollo/react-hooks';
-import Pin from 'react-ionicons/lib/MdPin';
-import LogoInstagram from 'react-ionicons/lib/LogoInstagram';
 
 import moment from 'moment';
-import AddCircle from 'react-ionicons/lib/MdAddCircle';
+
+import { Icon, InlineIcon } from '@iconify/react';
+import pinIcon from '@iconify/icons-ion/location-sharp';
+import addCircleIcon from '@iconify/icons-ion/add-circle';
+import instagramIcon from '@iconify/icons-ion/logo-instagram';
 import { Helmet } from 'react-helmet-async';
-import requestformContent from '../../components/common/RequestForm/content.json';
-import addTranslate from '../../components/higher-order/addTranslate';
+import PayForm from 'components/common/PayForm.js';
+
+import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
+import useTranslate from 'components/hooks/useTranslate';
+import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import Sidebar, { SidebarContent } from '../../components/Sidebar';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col, Divider } from '../../components/Blocks';
@@ -29,22 +33,21 @@ import useLogActivity, { ACTIVITY_TYPES } from '../../components/hooks/useLogAct
 import BookingButton from './components/BookingButton';
 import ProfileProgress from './components/ProfileProgress';
 import { Overview, Settings, Reviews, Gigs, Events, Booking, Photos, Sounds } from './routes';
+
 import { USER, UPDATE_USER } from './gql';
 import BackToEvent from './components/BackToEvent';
 import Header from './components/Header';
-import content from './content.json';
 import { Stats, MobileBookingButton, IconRow, CertifiedVerified } from './components/Common';
+import content from './content.json';
 
 const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
     const { userMetadata = {}, appMetadata = {}, playingLocation } = user || {};
-    const {
-        experience,
-        followers,
-        createdAt,
-        certified,
-        identityVerified,
-        instagramUsername,
-    } = appMetadata;
+    const { experience, createdAt, certified, identityVerified, instagramUsername } = appMetadata;
+    let { followers } = appMetadata;
+
+    if (followers && followers.total < 500) {
+        followers = false;
+    }
 
     const memberSince = moment(createdAt).format('MMMM YYYY');
     return (
@@ -84,12 +87,20 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                         }}
                     >
                         <IconRow className="iconRow">
-                            <AddCircle color={'#98a4b3'} style={{ marginRight: '15px' }} />
+                            <Icon
+                                icon={addCircleIcon}
+                                color={'#98a4b3'}
+                                style={{ marginRight: '15px', fontSize: '24px' }}
+                            />
                             Member since {memberSince}
                         </IconRow>
                         {playingLocation && (
                             <IconRow>
-                                <Pin color={'#98a4b3'} style={{ marginRight: '15px' }} />
+                                <Icon
+                                    icon={pinIcon}
+                                    color={'#98a4b3'}
+                                    style={{ marginRight: '15px', fontSize: '24px' }}
+                                />
                                 {playingLocation.name}
                             </IconRow>
                         )}
@@ -100,9 +111,10 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                                 href={'https://instagram.com/' + instagramUsername}
                             >
                                 <IconRow>
-                                    <LogoInstagram
+                                    <Icon
+                                        icon={instagramIcon}
                                         color={'#98a4b3'}
-                                        style={{ marginRight: '15px' }}
+                                        style={{ marginRight: '15px', fontSize: '24px' }}
                                     />
                                     {instagramUsername}
                                 </IconRow>
@@ -133,8 +145,9 @@ const UserContainer = styled(Container)`
 
 const Content = React.memo(({ match, ...userProps }) => {
     const { user, loading, location } = userProps;
-    const showPrivateRoutes = loading || (user && user.isOwn);
-    const bookingEnabled = user && user.isDj && !user.userSettings.standby;
+    const showPrivateRoutes = loading || user?.isOwn;
+    const bookingEnabled = user?.isDj && !user.userSettings.standby;
+    const history = useHistory();
 
     // check for event
     const queries = queryString.parse(location.search);
@@ -143,6 +156,8 @@ const Content = React.memo(({ match, ...userProps }) => {
     if (eventId && hash) {
         comingFromEvent = true;
     }
+
+    const overviewIsEvents = showPrivateRoutes && !user?.isDj;
 
     return (
         <div>
@@ -169,10 +184,14 @@ const Content = React.memo(({ match, ...userProps }) => {
                     >
                         <Switch location={location}>
                             <Route
-                                strict
-                                exact
-                                path={match.url + '/overview'}
-                                render={(props) => <Overview {...props} {...userProps} />}
+                                path={[match.url + '/overview', match.url + '/checkout']}
+                                render={(props) =>
+                                    overviewIsEvents ? (
+                                        <Events {...props} {...userProps} />
+                                    ) : (
+                                        <Overview {...props} {...userProps} />
+                                    )
+                                }
                             />
                             <Route
                                 strict
@@ -244,6 +263,19 @@ const Content = React.memo(({ match, ...userProps }) => {
                     </Col>
                 </Row>
             </UserContainer>
+            <Route
+                path={match.path + '/' + userRoutes.checkout}
+                render={(props) => (
+                    <PayForm
+                        onClose={() =>
+                            history.push(match.url + '/' + userRoutes.overview + location.search)
+                        }
+                        eventId={eventId}
+                        eventHash={hash}
+                        {...props}
+                    />
+                )}
+            />
         </div>
     );
 });
@@ -267,8 +299,9 @@ const LoginPopup = ({ translate }) => {
     );
 };
 
-const Index = ({ translate, match, location }) => {
-    const [updateUser, { loading: isSaving, error }] = useMutation(UPDATE_USER);
+const Index = ({ match, location }) => {
+    const { translate } = useNamespaceContent(content, 'user');
+    const [updateUser, { loading: isSaving }] = useMutation(UPDATE_USER);
     const [hasScrolled, setHasScrolled] = useState(false);
 
     useEffect(() => {
@@ -284,22 +317,27 @@ const Index = ({ translate, match, location }) => {
                         variables={{ permalink: match.params.permalink }}
                         onError={console.warn}
                     >
-                        {({ data: userData, loading: loadingUser }) => {
+                        {({ data: userData, loading: loadingUser, error }) => {
                             const { user: profileUser } = userData || {};
                             const loading = loadingMe || loadingUser;
+                            const me = data?.me;
 
-                            if (!loadingUser && !profileUser) {
-                                return <Redirect to={translate('routes./not-found')} />;
+                            if (!loading && !profileUser) {
+                                return <Redirect to={translate(appRoutes.notFound)} />;
                             }
 
                             let user = profileUser;
 
-                            if (user && data && data.me) {
-                                user.isOwn = user.isOwn || data.me.id === user.id;
+                            if (user && data && me) {
+                                user.isOwn = user.isOwn || me.id === user.id;
                             }
 
-                            if (user && user.isOwn && data && data.me) {
-                                user = mergeObjects(user, data.me);
+                            if (me && !me.appMetadata.onboarded && user?.isOwn) {
+                                return <Redirect to={'/complete-signup'} />;
+                            }
+
+                            if (user && user.isOwn && me) {
+                                user = mergeObjects(user, me);
                             }
 
                             const title = user
@@ -322,6 +360,8 @@ const Index = ({ translate, match, location }) => {
 
                                             <meta property="og:image" content={thumb} />
                                             <meta name="twitter:image" content={thumb} />
+
+                                            <meta property="og:type" content={'profile'} />
 
                                             <meta name="description" content={description} />
                                             <meta
@@ -351,8 +391,8 @@ const Index = ({ translate, match, location }) => {
 
                                     <Footer
                                         noSkew
-                                        firstTo={translate('routes./')}
-                                        secondTo={translate('routes./how-it-works')}
+                                        firstTo={translate(appRoutes.home)}
+                                        secondTo={translate(appRoutes.howItWorks)}
                                         firstLabel={translate('how-it-works')}
                                         secondLabel={translate('arrange-event')}
                                         title={translate('Wonder how it works?')}
@@ -370,7 +410,9 @@ const Index = ({ translate, match, location }) => {
     );
 };
 
-const UserRoutes = ({ match, user, loading, translate, updateUser, location }) => {
+const UserRoutes = ({ match, user, loading, updateUser, location }) => {
+    const { translate } = useTranslate();
+
     useLogActivity({
         type: ACTIVITY_TYPES.PROFILE_VIEW,
         subjectId: user && user.id,
@@ -380,7 +422,7 @@ const UserRoutes = ({ match, user, loading, translate, updateUser, location }) =
     return (
         <Switch>
             <Route
-                path={match.path + '/booking'}
+                path={match.path + '/' + userRoutes.booking}
                 render={(props) => (
                     <Booking {...props} user={user} loading={loading} translate={translate} />
                 )}
@@ -433,11 +475,12 @@ const mergeObjects = (o1, o2) => {
             };
         }, {});
     }
-    if (!o2) {
+    if (o2 === undefined || o2 === null) {
         return o1;
     }
 
     return o2;
 };
 
-export default addTranslate(Index, [content, requestformContent]);
+// eslint-disable-next-line import/no-unused-modules
+export default Index;

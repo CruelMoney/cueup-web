@@ -1,7 +1,10 @@
 import React from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import Arrow from 'react-ionicons/lib/MdArrowRoundForward';
-import ArrowBack from 'react-ionicons/lib/MdArrowRoundBack';
+// npm install --save-dev @iconify/react @iconify/icons-ion
+import { Icon, InlineIcon } from '@iconify/react';
+import arrowForward from '@iconify/icons-ion/arrow-forward';
+import arrowBack from '@iconify/icons-ion/arrow-back';
+
 import GracefullImage from './GracefullImage';
 
 export const Hr = styled.hr`
@@ -177,11 +180,19 @@ export const ReadMore = ({
             {!back && children}
             {back ? (
                 <ButtonIconBack>
-                    <ArrowBack fontSize={size ?? '15px'} color={color || '#4d6480'} />
+                    <Icon
+                        icon={arrowBack}
+                        style={{ fontSize: size ?? '15px' }}
+                        color={color || '#4d6480'}
+                    />
                 </ButtonIconBack>
             ) : (
                 <ButtonIcon>
-                    <Arrow fontSize={size ?? '15px'} color={color || '#4d6480'} />{' '}
+                    <Icon
+                        icon={arrowForward}
+                        style={{ fontSize: size ?? '15px' }}
+                        color={color || '#4d6480'}
+                    />
                 </ButtonIcon>
             )}
             {back && children}
@@ -211,16 +222,16 @@ export const ReadMoreButton = ({ children, onClick, color, style, back }) => {
 const avatarSizes = {
     extraLarge: '114px',
     large: '60px',
-    small: '30px',
+    small: '32px',
 };
 
 const AvatarWrapper = styled.div`
     box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
     border-radius: 50%;
-    width: ${({ size }) => avatarSizes[size] || '30px'};
-    min-width: ${({ size }) => avatarSizes[size] || '30px'};
-    min-height: ${({ size }) => avatarSizes[size] || '30px'};
-    height: ${({ size }) => avatarSizes[size] || '30px'};
+    width: ${({ size }) => avatarSizes[size] || '32px'};
+    min-width: ${({ size }) => avatarSizes[size] || '32px'};
+    min-height: ${({ size }) => avatarSizes[size] || '32px'};
+    height: ${({ size }) => avatarSizes[size] || '32px'};
     overflow: hidden;
     position: relative;
 `;
@@ -239,10 +250,10 @@ export const Avatar = ({ size, style, className, src, ...props }) => (
             src={src}
             style={{
                 objectFit: 'cover',
-                height: avatarSizes[size] || '30px',
-                width: avatarSizes[size] || '30px',
-                minHeight: avatarSizes[size] || '30px',
-                minWidth: avatarSizes[size] || '30px',
+                height: avatarSizes[size] || '32px',
+                width: avatarSizes[size] || '32px',
+                minHeight: avatarSizes[size] || '32px',
+                minWidth: avatarSizes[size] || '32px',
                 top: 0,
                 position: 'absolute',
                 left: 0,
@@ -331,6 +342,8 @@ const ButtonTextStyle = css`
     line-height: 20px;
     background: transparent;
     border-radius: 4px;
+    border: none;
+    cursor: pointer;
     min-width: ${({ small }) => (small ? '130px' : '150px')};
     padding: 0 1em;
     height: ${({ small }) => (small ? '30px' : '40px')};
@@ -341,12 +354,22 @@ const ButtonTextStyle = css`
     text-overflow: ellipsis;
     max-width: 200px;
     position: relative;
+    transition: none;
+
     ${({ flex }) =>
         flex &&
         css`
             display: flex;
             justify-content: center;
             align-items: center;
+        `}
+
+    ${({ isWrapper }) =>
+        isWrapper &&
+        css`
+            text-align: left;
+            max-width: 100%;
+            padding: 0 6px;
         `}
 `;
 
@@ -356,7 +379,7 @@ const inputButtonStyle = css`
     font-weight: 400;
     text-align: center;
     line-height: 40px !important;
-    transition: all 200ms ease;
+    transition: none;
     cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
     pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
     display: flex;
@@ -400,8 +423,7 @@ export const FileInputWrapper = styled.label`
 `;
 
 export const TeritaryButton = styled.button`
-    ${ButtonTextStyle}
-    :hover {
+    ${ButtonTextStyle} :hover {
         ${({ disabled, warning }) =>
             disabled
                 ? ''
@@ -446,12 +468,13 @@ export const SecondaryButtonLink = styled.a`
 export const PrimaryButton = styled.button.attrs(({ loading, ...props }) => props)`
     ${ButtonTextStyle}
     color: ${({ invert }) => (invert ? '#31daff' : '#fff')};
-    background:  ${({ invert }) => (invert ? '#fff' : '#31daff')}; 
+    background:  ${({ invert, warning }) => (invert ? '#fff' : warning ? '#D0021B' : '#31daff')}; 
     opacity: ${({ loading }) => (loading ? 0.5 : 1)};
     pointer-events: ${({ loading }) => (loading ? 'none' : 'auto')};
     :hover {
         color: ${({ invert }) => (invert ? '#31daff' : '#fff')};
-        background-color: ${({ invert }) => (invert ? '#fff' : '#00d1ff')};
+        background-color: ${({ invert, warning }) =>
+            invert ? '#fff' : warning ? '#b6051a' : '#00d1ff'};
     }
     ${({ disabled }) => (disabled ? 'opacity: 0.5;' : '')}
 `;
@@ -480,11 +503,11 @@ const rotate = keyframes`
 `;
 
 export const LoadingIndicator = styled.span`
-    height: 24px;
-    width: 24px;
-    border: 3px solid #fff;
+    height: ${({ small }) => (small ? '15px' : '24px')};
+    width: ${({ small }) => (small ? '15px' : '24px')};
+    border: ${({ small }) => (small ? '2px' : '3px')} solid #fff;
     border-radius: 50%;
-    animation: ${rotate} 1s linear infinite;
+    animation: ${rotate} 600ms linear infinite;
     display: block;
     border-color: currentColor currentColor currentColor transparent;
 `;
@@ -699,3 +722,55 @@ export const CardShadow = styled.div`
     bottom: 10px;
     right: 10px;
 `;
+
+const ClosePopupButtonWrapper = styled(TeritaryButton)`
+    font-size: 28px;
+    color: #aaaaaa !important;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 50%;
+    min-height: 40px;
+    min-width: 40px;
+    max-height: 40px;
+    max-width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin-left: auto;
+    ${({ small }) =>
+        small &&
+        css`
+            min-height: 32px;
+            min-width: 32px;
+            max-height: 32px;
+            max-width: 32px;
+        `}
+`;
+
+export const ClosePopupButton = (props) => {
+    return (
+        <ClosePopupButtonWrapper {...props}>
+            <svg height="26px" width="26px" viewBox="-4 -4 24 24">
+                <line
+                    stroke="#bec2c9"
+                    strokeLinecap="round"
+                    strokeWidth="2"
+                    x1="2"
+                    x2="14"
+                    y1="2"
+                    y2="14"
+                />
+                <line
+                    stroke="#bec2c9"
+                    strokeLinecap="round"
+                    strokeWidth="2"
+                    x1="2"
+                    x2="14"
+                    y1="14"
+                    y2="2"
+                />
+            </svg>
+        </ClosePopupButtonWrapper>
+    );
+};

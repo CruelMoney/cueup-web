@@ -1,452 +1,643 @@
-!(function(e) {
+!(function (o) {
     'use strict';
-    function t(e, i, a) {
+    function r(t, i, a) {
         var o,
-            r = document.createElement('img');
-        if (
-            ((r.onerror = function(o) {
-                return t.onerror(r, o, e, i, a);
+            n = document.createElement('img');
+        return (
+            (n.onerror = function (e) {
+                return r.onerror(n, e, t, i, a);
             }),
-            (r.onload = function(o) {
-                return t.onload(r, o, e, i, a);
+            (n.onload = function (e) {
+                return r.onload(n, e, t, i, a);
             }),
-            t.isInstanceOf('Blob', e) || t.isInstanceOf('File', e))
-        )
-            o = r._objectURL = t.createObjectURL(e);
-        else {
-            if ('string' != typeof e) return !1;
-            (o = e), a && a.crossOrigin && (r.crossOrigin = a.crossOrigin);
-        }
-        return o
-            ? ((r.src = o), r)
-            : t.readFile(e, function(e) {
-                  var t = e.target;
-                  t && t.result ? (r.src = t.result) : i && i(e);
-              });
+            'string' == typeof t
+                ? (r.fetchBlob(
+                      t,
+                      function (e) {
+                          e && r.isInstanceOf('Blob', e)
+                              ? (o = r.createObjectURL((t = e)))
+                              : ((o = t), a && a.crossOrigin && (n.crossOrigin = a.crossOrigin)),
+                              (n.src = o);
+                      },
+                      a
+                  ),
+                  n)
+                : r.isInstanceOf('Blob', t) || r.isInstanceOf('File', t)
+                ? (o = n._objectURL = r.createObjectURL(t))
+                    ? ((n.src = o), n)
+                    : r.readFile(t, function (e) {
+                          var t = e.target;
+                          t && t.result ? (n.src = t.result) : i && i(e);
+                      })
+                : void 0
+        );
     }
-    function i(e, i) {
+    var t =
+        (o.createObjectURL && o) ||
+        (o.URL && URL.revokeObjectURL && URL) ||
+        (o.webkitURL && webkitURL);
+    function n(e, t) {
         !e._objectURL ||
-            (i && i.noRevoke) ||
-            (t.revokeObjectURL(e._objectURL), delete e._objectURL);
+            (t && t.noRevoke) ||
+            (r.revokeObjectURL(e._objectURL), delete e._objectURL);
     }
-    var a =
-        (window.createObjectURL && window) ||
-        (window.URL && URL.revokeObjectURL && URL) ||
-        (window.webkitURL && webkitURL);
-    (t.isInstanceOf = function(e, t) {
-        return Object.prototype.toString.call(t) === '[object ' + e + ']';
+    (r.fetchBlob = function (e, t) {
+        t();
     }),
-        (t.transform = function(e, i, a, o, r) {
-            a(t.scale(e, i, r), r);
+        (r.isInstanceOf = function (e, t) {
+            return Object.prototype.toString.call(t) === '[object ' + e + ']';
         }),
-        (t.onerror = function(e, t, a, o, r) {
-            i(e, r), o && o.call(e, t);
+        (r.transform = function (e, t, i, a, o) {
+            i(e, o);
         }),
-        (t.onload = function(e, a, o, r, n) {
-            i(e, n), r && t.transform(e, n, r, o, {});
+        (r.onerror = function (e, t, i, a, o) {
+            n(e, o), a && a.call(e, t);
         }),
-        (t.transformCoordinates = function() {}),
-        (t.getTransformedOptions = function(e, t) {
-            var i,
-                a,
-                o,
-                r,
-                n = t.aspectRatio;
-            if (!n) return t;
-            i = {};
-            for (a in t) t.hasOwnProperty(a) && (i[a] = t[a]);
-            return (
-                (i.crop = !0),
-                (o = e.naturalWidth || e.width),
-                (r = e.naturalHeight || e.height),
-                o / r > n
-                    ? ((i.maxWidth = r * n), (i.maxHeight = r))
-                    : ((i.maxWidth = o), (i.maxHeight = o / n)),
-                i
-            );
+        (r.onload = function (e, t, i, a, o) {
+            n(e, o),
+                a &&
+                    r.transform(e, o, a, i, {
+                        originalWidth: e.naturalWidth || e.width,
+                        originalHeight: e.naturalHeight || e.height,
+                    });
         }),
-        (t.renderImageToCanvas = function(e, t, i, a, o, r, n, s, l, d) {
-            return e.getContext('2d').drawImage(t, i, a, o, r, n, s, l, d), e;
+        (r.createObjectURL = function (e) {
+            return !!t && t.createObjectURL(e);
         }),
-        (t.hasCanvasOption = function(e) {
-            return e.canvas || e.crop || !!e.aspectRatio;
+        (r.revokeObjectURL = function (e) {
+            return !!t && t.revokeObjectURL(e);
         }),
-        (t.scale = function(e, i, a) {
-            function o() {
-                var e = Math.max((l || v) / v, (d || P) / P);
-                e > 1 && ((v *= e), (P *= e));
-            }
-            function r() {
-                var e = Math.min((n || v) / v, (s || P) / P);
-                e < 1 && ((v *= e), (P *= e));
-            }
-            i = i || {};
-            var n,
-                s,
-                l,
-                d,
-                u,
-                c,
-                f,
-                g,
-                h,
-                m,
-                p,
-                S = document.createElement('canvas'),
-                b = e.getContext || (t.hasCanvasOption(i) && S.getContext),
-                x = e.naturalWidth || e.width,
-                y = e.naturalHeight || e.height,
-                v = x,
-                P = y;
-            if (
-                (b &&
-                    ((i = t.getTransformedOptions(e, i, a)),
-                    (f = i.left || 0),
-                    (g = i.top || 0),
-                    i.sourceWidth
-                        ? ((u = i.sourceWidth),
-                          void 0 !== i.right && void 0 === i.left && (f = x - u - i.right))
-                        : (u = x - f - (i.right || 0)),
-                    i.sourceHeight
-                        ? ((c = i.sourceHeight),
-                          void 0 !== i.bottom && void 0 === i.top && (g = y - c - i.bottom))
-                        : (c = y - g - (i.bottom || 0)),
-                    (v = u),
-                    (P = c)),
-                (n = i.maxWidth),
-                (s = i.maxHeight),
-                (l = i.minWidth),
-                (d = i.minHeight),
-                b && n && s && i.crop
-                    ? ((v = n),
-                      (P = s),
-                      (p = u / c - n / s),
-                      p < 0
-                          ? ((c = (s * u) / n),
-                            void 0 === i.top && void 0 === i.bottom && (g = (y - c) / 2))
-                          : p > 0 &&
-                            ((u = (n * c) / s),
-                            void 0 === i.left && void 0 === i.right && (f = (x - u) / 2)))
-                    : ((i.contain || i.cover) && ((l = n = n || l), (d = s = s || d)),
-                      i.cover ? (r(), o()) : (o(), r())),
-                b)
-            ) {
-                if (
-                    ((h = i.pixelRatio),
-                    h > 1 &&
-                        ((S.style.width = v + 'px'),
-                        (S.style.height = P + 'px'),
-                        (v *= h),
-                        (P *= h),
-                        S.getContext('2d').scale(h, h)),
-                    (m = i.downsamplingRatio),
-                    m > 0 && m < 1 && v < u && P < c)
-                )
-                    for (; u * m > v; )
-                        (S.width = u * m),
-                            (S.height = c * m),
-                            t.renderImageToCanvas(S, e, f, g, u, c, 0, 0, S.width, S.height),
-                            (u = S.width),
-                            (c = S.height),
-                            (e = document.createElement('canvas')),
-                            (e.width = u),
-                            (e.height = c),
-                            t.renderImageToCanvas(e, S, 0, 0, u, c, 0, 0, u, c);
-                return (
-                    (S.width = v),
-                    (S.height = P),
-                    t.transformCoordinates(S, i),
-                    t.renderImageToCanvas(S, e, f, g, u, c, 0, 0, v, P)
-                );
-            }
-            return (e.width = v), (e.height = P), e;
-        }),
-        (t.createObjectURL = function(e) {
-            return !!a && a.createObjectURL(e);
-        }),
-        (t.revokeObjectURL = function(e) {
-            return !!a && a.revokeObjectURL(e);
-        }),
-        (t.readFile = function(e, t, i) {
-            if (window.FileReader) {
+        (r.readFile = function (e, t, i) {
+            if (o.FileReader) {
                 var a = new FileReader();
-                if (((a.onload = a.onerror = t), (i = i || 'readAsDataURL'), a[i]))
-                    return a[i](e), a;
+                if (((a.onload = a.onerror = t), a[(i = i || 'readAsDataURL')])) return a[i](e), a;
             }
             return !1;
         }),
         'function' == typeof define && define.amd
-            ? define(function() {
-                  return t;
+            ? define(function () {
+                  return r;
               })
             : 'object' == typeof module && module.exports
-            ? (module.exports = t)
-            : (e.loadImage = t);
-})(window),
-    (function(e) {
+            ? (module.exports = r)
+            : (o.loadImage = r);
+})(('undefined' != typeof window && window) || this),
+    (function (e) {
         'use strict';
         'function' == typeof define && define.amd
             ? define(['./load-image'], e)
-            : e(
-                  'object' == typeof module && module.exports
-                      ? require('./load-image')
-                      : window.loadImage
-              );
-    })(function(e) {
+            : 'object' == typeof module && module.exports
+            ? e(require('./load-image'))
+            : e(window.loadImage);
+    })(function (I) {
         'use strict';
-        var t =
-            window.Blob &&
-            (Blob.prototype.slice || Blob.prototype.webkitSlice || Blob.prototype.mozSlice);
-        (e.blobSlice =
-            t &&
-            function() {
-                var e = this.slice || this.webkitSlice || this.mozSlice;
-                return e.apply(this, arguments);
+        var n = I.transform;
+        (I.transform = function (e, t, i, a, o) {
+            n.call(I, I.scale(e, t, o), t, i, a, o);
+        }),
+            (I.transformCoordinates = function () {}),
+            (I.getTransformedOptions = function (e, t) {
+                var i,
+                    a,
+                    o,
+                    n,
+                    r = t.aspectRatio;
+                if (!r) return t;
+                for (a in ((i = {}), t))
+                    Object.prototype.hasOwnProperty.call(t, a) && (i[a] = t[a]);
+                return (
+                    (i.crop = !0),
+                    r < (o = e.naturalWidth || e.width) / (n = e.naturalHeight || e.height)
+                        ? ((i.maxWidth = n * r), (i.maxHeight = n))
+                        : ((i.maxWidth = o), (i.maxHeight = o / r)),
+                    i
+                );
             }),
-            (e.metaDataParsers = { jpeg: { 65505: [] } }),
-            (e.parseMetaData = function(t, i, a, o) {
-                (a = a || {}), (o = o || {});
-                var r = this,
-                    n = a.maxMetaDataSize || 262144,
-                    s = !(
-                        window.DataView &&
-                        t &&
-                        t.size >= 12 &&
-                        'image/jpeg' === t.type &&
-                        e.blobSlice
+            (I.renderImageToCanvas = function (e, t, i, a, o, n, r, s, l, c, d) {
+                var u = e.getContext('2d');
+                return (
+                    !1 === d.imageSmoothingEnabled
+                        ? (u.imageSmoothingEnabled = !1)
+                        : d.imageSmoothingQuality &&
+                          (u.imageSmoothingQuality = d.imageSmoothingQuality),
+                    u.drawImage(t, i, a, o, n, r, s, l, c),
+                    e
+                );
+            }),
+            (I.hasCanvasOption = function (e) {
+                return e.canvas || e.crop || !!e.aspectRatio;
+            }),
+            (I.scale = function (e, t, i) {
+                t = t || {};
+                var a,
+                    o,
+                    n,
+                    r,
+                    s,
+                    l,
+                    c,
+                    d,
+                    u,
+                    f,
+                    g,
+                    p = document.createElement('canvas'),
+                    h = e.getContext || (I.hasCanvasOption(t) && p.getContext),
+                    m = e.naturalWidth || e.width,
+                    b = e.naturalHeight || e.height,
+                    y = m,
+                    S = b;
+                function x() {
+                    var e = Math.max((n || y) / y, (r || S) / S);
+                    1 < e && ((y *= e), (S *= e));
+                }
+                function v() {
+                    var e = Math.min((a || y) / y, (o || S) / S);
+                    e < 1 && ((y *= e), (S *= e));
+                }
+                if (
+                    (h &&
+                        ((c = (t = I.getTransformedOptions(e, t, i)).left || 0),
+                        (d = t.top || 0),
+                        t.sourceWidth
+                            ? ((s = t.sourceWidth),
+                              void 0 !== t.right && void 0 === t.left && (c = m - s - t.right))
+                            : (s = m - c - (t.right || 0)),
+                        t.sourceHeight
+                            ? ((l = t.sourceHeight),
+                              void 0 !== t.bottom && void 0 === t.top && (d = b - l - t.bottom))
+                            : (l = b - d - (t.bottom || 0)),
+                        (y = s),
+                        (S = l)),
+                    (a = t.maxWidth),
+                    (o = t.maxHeight),
+                    (n = t.minWidth),
+                    (r = t.minHeight),
+                    h && a && o && t.crop
+                        ? (g = s / l - (y = a) / (S = o)) < 0
+                            ? ((l = (o * s) / a),
+                              void 0 === t.top && void 0 === t.bottom && (d = (b - l) / 2))
+                            : 0 < g &&
+                              ((s = (a * l) / o),
+                              void 0 === t.left && void 0 === t.right && (c = (m - s) / 2))
+                        : ((t.contain || t.cover) && ((n = a = a || n), (r = o = o || r)),
+                          t.cover ? (v(), x()) : (x(), v())),
+                    h)
+                ) {
+                    if (
+                        (1 < (u = t.pixelRatio) &&
+                            ((p.style.width = y + 'px'),
+                            (p.style.height = S + 'px'),
+                            (y *= u),
+                            (S *= u),
+                            p.getContext('2d').scale(u, u)),
+                        0 < (f = t.downsamplingRatio) && f < 1 && y < s && S < l)
+                    )
+                        for (; y < s * f; )
+                            (p.width = s * f),
+                                (p.height = l * f),
+                                I.renderImageToCanvas(p, e, c, d, s, l, 0, 0, p.width, p.height, t),
+                                (d = c = 0),
+                                (s = p.width),
+                                (l = p.height),
+                                ((e = document.createElement('canvas')).width = s),
+                                (e.height = l),
+                                I.renderImageToCanvas(e, p, 0, 0, s, l, 0, 0, s, l, t);
+                    return (
+                        (p.width = y),
+                        (p.height = S),
+                        I.transformCoordinates(p, t),
+                        I.renderImageToCanvas(p, e, c, d, s, l, 0, 0, y, S, t)
                     );
-                (!s &&
-                    e.readFile(
-                        e.blobSlice.call(t, 0, n),
-                        function(t) {
-                            if (t.target.error) return console.log(t.target.error), void i(o);
-                            var n,
-                                s,
-                                l,
-                                d,
-                                u = t.target.result,
-                                c = new DataView(u),
-                                f = 2,
-                                g = c.byteLength - 4,
-                                h = f;
-                            if (65496 === c.getUint16(0)) {
+                }
+                return (e.width = y), (e.height = S), e;
+            });
+    }),
+    (function (e) {
+        'use strict';
+        'function' == typeof define && define.amd
+            ? define(['./load-image'], e)
+            : 'object' == typeof module && module.exports
+            ? e(require('./load-image'))
+            : e(window.loadImage);
+    })(function (p) {
+        'use strict';
+        var e =
+            'undefined' != typeof Blob &&
+            (Blob.prototype.slice || Blob.prototype.webkitSlice || Blob.prototype.mozSlice);
+        (p.blobSlice =
+            e &&
+            function () {
+                return (this.slice || this.webkitSlice || this.mozSlice).apply(this, arguments);
+            }),
+            (p.metaDataParsers = { jpeg: { 65505: [], 65517: [] } }),
+            (p.parseMetaData = function (e, d, u, f) {
+                f = f || {};
+                var g = this,
+                    t = (u = u || {}).maxMetaDataSize || 262144;
+                (!!(
+                    'undefined' != typeof DataView &&
+                    e &&
+                    12 <= e.size &&
+                    'image/jpeg' === e.type &&
+                    p.blobSlice
+                ) &&
+                    p.readFile(
+                        p.blobSlice.call(e, 0, t),
+                        function (e) {
+                            if (e.target.error) return console.log(e.target.error), void d(f);
+                            var t,
+                                i,
+                                a,
+                                o,
+                                n = e.target.result,
+                                r = new DataView(n),
+                                s = 2,
+                                l = r.byteLength - 4,
+                                c = s;
+                            if (65496 === r.getUint16(0)) {
                                 for (
                                     ;
-                                    f < g &&
-                                    ((n = c.getUint16(f)),
-                                    (n >= 65504 && n <= 65519) || 65534 === n);
+                                    s < l &&
+                                    ((65504 <= (t = r.getUint16(s)) && t <= 65519) || 65534 === t);
 
                                 ) {
-                                    if (((s = c.getUint16(f + 2) + 2), f + s > c.byteLength)) {
+                                    if (s + (i = r.getUint16(s + 2) + 2) > r.byteLength) {
                                         console.log('Invalid meta data: Invalid segment size.');
                                         break;
                                     }
-                                    if ((l = e.metaDataParsers.jpeg[n]))
-                                        for (d = 0; d < l.length; d += 1)
-                                            l[d].call(r, c, f, s, o, a);
-                                    (f += s), (h = f);
+                                    if ((a = p.metaDataParsers.jpeg[t]))
+                                        for (o = 0; o < a.length; o += 1)
+                                            a[o].call(g, r, s, i, f, u);
+                                    c = s += i;
                                 }
-                                !a.disableImageHead &&
-                                    h > 6 &&
-                                    (u.slice
-                                        ? (o.imageHead = u.slice(0, h))
-                                        : (o.imageHead = new Uint8Array(u).subarray(0, h)));
+                                !u.disableImageHead &&
+                                    6 < c &&
+                                    (n.slice
+                                        ? (f.imageHead = n.slice(0, c))
+                                        : (f.imageHead = new Uint8Array(n).subarray(0, c)));
                             } else console.log('Invalid JPEG file: Missing JPEG marker.');
-                            i(o);
+                            d(f);
                         },
                         'readAsArrayBuffer'
                     )) ||
-                    i(o);
+                    d(f);
             }),
-            (e.hasMetaOption = function(e) {
-                return e.meta;
+            (p.hasMetaOption = function (e) {
+                return e && e.meta;
             });
-        var i = e.transform;
-        e.transform = function(t, a, o, r, n) {
-            e.hasMetaOption(a || {})
-                ? e.parseMetaData(
-                      r,
-                      function(n) {
-                          i.call(e, t, a, o, r, n);
+        var n = p.transform;
+        p.transform = function (t, i, a, o, e) {
+            p.hasMetaOption(i)
+                ? p.parseMetaData(
+                      o,
+                      function (e) {
+                          n.call(p, t, i, a, o, e);
                       },
-                      a,
-                      n
+                      i,
+                      e
                   )
-                : i.apply(e, arguments);
+                : n.apply(p, arguments);
         };
     }),
-    (function(e) {
+    (function (e) {
         'use strict';
         'function' == typeof define && define.amd
             ? define(['./load-image', './load-image-meta'], e)
             : 'object' == typeof module && module.exports
             ? e(require('./load-image'), require('./load-image-meta'))
             : e(window.loadImage);
-    })(function(e) {
+    })(function (o) {
         'use strict';
-        (e.ExifMap = function() {
+        'undefined' != typeof fetch && 'undefined' != typeof Request
+            ? (o.fetchBlob = function (e, t, i) {
+                  o.hasMetaOption(i)
+                      ? fetch(new Request(e, i))
+                            .then(function (e) {
+                                return e.blob();
+                            })
+                            .then(t)
+                            .catch(function (e) {
+                                console.log(e), t();
+                            })
+                      : t();
+              })
+            : 'undefined' != typeof XMLHttpRequest &&
+              'undefined' != typeof ProgressEvent &&
+              (o.fetchBlob = function (e, t, i) {
+                  if (o.hasMetaOption(i)) {
+                      i = i || {};
+                      var a = new XMLHttpRequest();
+                      a.open(i.method || 'GET', e),
+                          i.headers &&
+                              Object.keys(i.headers).forEach(function (e) {
+                                  a.setRequestHeader(e, i.headers[e]);
+                              }),
+                          (a.withCredentials = 'include' === i.credentials),
+                          (a.responseType = 'blob'),
+                          (a.onload = function () {
+                              t(a.response);
+                          }),
+                          (a.onerror = a.onabort = a.ontimeout = function (e) {
+                              console.log(e), t();
+                          }),
+                          a.send(i.body);
+                  } else t();
+              });
+    }),
+    (function (e) {
+        'use strict';
+        'function' == typeof define && define.amd
+            ? define(['./load-image', './load-image-scale', './load-image-meta'], e)
+            : 'object' == typeof module && module.exports
+            ? e(
+                  require('./load-image'),
+                  require('./load-image-scale'),
+                  require('./load-image-meta')
+              )
+            : e(window.loadImage);
+    })(function (l) {
+        'use strict';
+        var t = l.hasCanvasOption,
+            i = l.hasMetaOption,
+            c = l.transformCoordinates,
+            s = l.getTransformedOptions;
+        (l.hasCanvasOption = function (e) {
+            return !!e.orientation || t.call(l, e);
+        }),
+            (l.hasMetaOption = function (e) {
+                return (e && !0 === e.orientation) || i.call(l, e);
+            }),
+            (l.transformCoordinates = function (e, t) {
+                c.call(l, e, t);
+                var i = e.getContext('2d'),
+                    a = e.width,
+                    o = e.height,
+                    n = e.style.width,
+                    r = e.style.height,
+                    s = t.orientation;
+                if (s && !(8 < s))
+                    switch (
+                        (4 < s &&
+                            ((e.width = o),
+                            (e.height = a),
+                            (e.style.width = r),
+                            (e.style.height = n)),
+                        s)
+                    ) {
+                        case 2:
+                            i.translate(a, 0), i.scale(-1, 1);
+                            break;
+                        case 3:
+                            i.translate(a, o), i.rotate(Math.PI);
+                            break;
+                        case 4:
+                            i.translate(0, o), i.scale(1, -1);
+                            break;
+                        case 5:
+                            i.rotate(0.5 * Math.PI), i.scale(1, -1);
+                            break;
+                        case 6:
+                            i.rotate(0.5 * Math.PI), i.translate(0, -o);
+                            break;
+                        case 7:
+                            i.rotate(0.5 * Math.PI), i.translate(a, -o), i.scale(-1, 1);
+                            break;
+                        case 8:
+                            i.rotate(-0.5 * Math.PI), i.translate(-a, 0);
+                    }
+            }),
+            (l.getTransformedOptions = function (e, t, i) {
+                var a,
+                    o,
+                    n = s.call(l, e, t),
+                    r = n.orientation;
+                if (
+                    (!0 === r && i && i.exif && (r = i.exif.get('Orientation')),
+                    !r || 8 < r || 1 === r)
+                )
+                    return n;
+                for (o in ((a = {}), n))
+                    Object.prototype.hasOwnProperty.call(n, o) && (a[o] = n[o]);
+                switch ((a.orientation = r)) {
+                    case 2:
+                        (a.left = n.right), (a.right = n.left);
+                        break;
+                    case 3:
+                        (a.left = n.right),
+                            (a.top = n.bottom),
+                            (a.right = n.left),
+                            (a.bottom = n.top);
+                        break;
+                    case 4:
+                        (a.top = n.bottom), (a.bottom = n.top);
+                        break;
+                    case 5:
+                        (a.left = n.top),
+                            (a.top = n.left),
+                            (a.right = n.bottom),
+                            (a.bottom = n.right);
+                        break;
+                    case 6:
+                        (a.left = n.top),
+                            (a.top = n.right),
+                            (a.right = n.bottom),
+                            (a.bottom = n.left);
+                        break;
+                    case 7:
+                        (a.left = n.bottom),
+                            (a.top = n.right),
+                            (a.right = n.top),
+                            (a.bottom = n.left);
+                        break;
+                    case 8:
+                        (a.left = n.bottom),
+                            (a.top = n.left),
+                            (a.right = n.top),
+                            (a.bottom = n.right);
+                }
+                return (
+                    4 < a.orientation &&
+                        ((a.maxWidth = n.maxHeight),
+                        (a.maxHeight = n.maxWidth),
+                        (a.minWidth = n.minHeight),
+                        (a.minHeight = n.minWidth),
+                        (a.sourceWidth = n.sourceHeight),
+                        (a.sourceHeight = n.sourceWidth)),
+                    a
+                );
+            });
+    }),
+    (function (e) {
+        'use strict';
+        'function' == typeof define && define.amd
+            ? define(['./load-image', './load-image-meta'], e)
+            : 'object' == typeof module && module.exports
+            ? e(require('./load-image'), require('./load-image-meta'))
+            : e(window.loadImage);
+    })(function (g) {
+        'use strict';
+        (g.ExifMap = function () {
             return this;
         }),
-            (e.ExifMap.prototype.map = { Orientation: 274 }),
-            (e.ExifMap.prototype.get = function(e) {
+            (g.ExifMap.prototype.map = { Orientation: 274 }),
+            (g.ExifMap.prototype.get = function (e) {
                 return this[e] || this[this.map[e]];
             }),
-            (e.getExifThumbnail = function(e, t, i) {
-                var a, o, r;
-                if (!i || t + i > e.byteLength)
-                    return void console.log('Invalid Exif data: Invalid thumbnail data.');
-                for (a = [], o = 0; o < i; o += 1)
-                    (r = e.getUint8(t + o)), a.push((r < 16 ? '0' : '') + r.toString(16));
-                return 'data:image/jpeg,%' + a.join('%');
+            (g.getExifThumbnail = function (e, t, i) {
+                if (i && !(t + i > e.byteLength))
+                    return g.createObjectURL(new Blob([e.buffer.slice(t, t + i)]));
+                console.log('Invalid Exif data: Invalid thumbnail data.');
             }),
-            (e.exifTagTypes = {
+            (g.exifTagTypes = {
                 1: {
-                    getValue: function(e, t) {
+                    getValue: function (e, t) {
                         return e.getUint8(t);
                     },
                     size: 1,
                 },
                 2: {
-                    getValue: function(e, t) {
+                    getValue: function (e, t) {
                         return String.fromCharCode(e.getUint8(t));
                     },
                     size: 1,
                     ascii: !0,
                 },
                 3: {
-                    getValue: function(e, t, i) {
+                    getValue: function (e, t, i) {
                         return e.getUint16(t, i);
                     },
                     size: 2,
                 },
                 4: {
-                    getValue: function(e, t, i) {
+                    getValue: function (e, t, i) {
                         return e.getUint32(t, i);
                     },
                     size: 4,
                 },
                 5: {
-                    getValue: function(e, t, i) {
+                    getValue: function (e, t, i) {
                         return e.getUint32(t, i) / e.getUint32(t + 4, i);
                     },
                     size: 8,
                 },
                 9: {
-                    getValue: function(e, t, i) {
+                    getValue: function (e, t, i) {
                         return e.getInt32(t, i);
                     },
                     size: 4,
                 },
                 10: {
-                    getValue: function(e, t, i) {
+                    getValue: function (e, t, i) {
                         return e.getInt32(t, i) / e.getInt32(t + 4, i);
                     },
                     size: 8,
                 },
             }),
-            (e.exifTagTypes[7] = e.exifTagTypes[1]),
-            (e.getExifValue = function(t, i, a, o, r, n) {
-                var s,
+            (g.exifTagTypes[7] = g.exifTagTypes[1]),
+            (g.getExifValue = function (e, t, i, a, o, n) {
+                var r,
+                    s,
                     l,
+                    c,
                     d,
                     u,
-                    c,
-                    f,
-                    g = e.exifTagTypes[o];
-                if (!g) return void console.log('Invalid Exif data: Invalid tag type.');
-                if (
-                    ((s = g.size * r),
-                    (l = s > 4 ? i + t.getUint32(a + 8, n) : a + 8),
-                    l + s > t.byteLength)
-                )
-                    return void console.log('Invalid Exif data: Invalid data offset.');
-                if (1 === r) return g.getValue(t, l, n);
-                for (d = [], u = 0; u < r; u += 1) d[u] = g.getValue(t, l + u * g.size, n);
-                if (g.ascii) {
-                    for (c = '', u = 0; u < d.length && ((f = d[u]), '\0' !== f); u += 1) c += f;
-                    return c;
-                }
-                return d;
+                    f = g.exifTagTypes[a];
+                if (f) {
+                    if (
+                        !(
+                            (s = 4 < (r = f.size * o) ? t + e.getUint32(i + 8, n) : i + 8) + r >
+                            e.byteLength
+                        )
+                    ) {
+                        if (1 === o) return f.getValue(e, s, n);
+                        for (l = [], c = 0; c < o; c += 1) l[c] = f.getValue(e, s + c * f.size, n);
+                        if (f.ascii) {
+                            for (d = '', c = 0; c < l.length && '\0' !== (u = l[c]); c += 1) d += u;
+                            return d;
+                        }
+                        return l;
+                    }
+                    console.log('Invalid Exif data: Invalid data offset.');
+                } else console.log('Invalid Exif data: Invalid tag type.');
             }),
-            (e.parseExifTag = function(t, i, a, o, r) {
-                var n = t.getUint16(a, o);
-                r.exif[n] = e.getExifValue(
+            (g.parseExifTag = function (e, t, i, a, o) {
+                var n = e.getUint16(i, a);
+                o.exif[n] = g.getExifValue(
+                    e,
                     t,
                     i,
-                    a,
-                    t.getUint16(a + 2, o),
-                    t.getUint32(a + 4, o),
-                    o
+                    e.getUint16(i + 2, a),
+                    e.getUint32(i + 4, a),
+                    a
                 );
             }),
-            (e.parseExifTags = function(e, t, i, a, o) {
-                var r, n, s;
+            (g.parseExifTags = function (e, t, i, a, o) {
+                var n, r, s;
                 if (i + 6 > e.byteLength)
-                    return void console.log('Invalid Exif data: Invalid directory offset.');
-                if (((r = e.getUint16(i, a)), (n = i + 2 + 12 * r), n + 4 > e.byteLength))
-                    return void console.log('Invalid Exif data: Invalid directory size.');
-                for (s = 0; s < r; s += 1) this.parseExifTag(e, t, i + 2 + 12 * s, a, o);
-                return e.getUint32(n, a);
-            }),
-            (e.parseExifData = function(t, i, a, o, r) {
-                if (!r.disableExif) {
-                    var n,
-                        s,
-                        l,
-                        d = i + 10;
-                    if (1165519206 === t.getUint32(i + 4)) {
-                        if (d + 8 > t.byteLength)
-                            return void console.log('Invalid Exif data: Invalid segment size.');
-                        if (0 !== t.getUint16(i + 8))
-                            return void console.log(
-                                'Invalid Exif data: Missing byte alignment offset.'
-                            );
-                        switch (t.getUint16(d)) {
-                            case 18761:
-                                n = !0;
-                                break;
-                            case 19789:
-                                n = !1;
-                                break;
-                            default:
-                                return void console.log(
-                                    'Invalid Exif data: Invalid byte alignment marker.'
-                                );
-                        }
-                        if (42 !== t.getUint16(d + 2, n))
-                            return void console.log('Invalid Exif data: Missing TIFF marker.');
-                        (s = t.getUint32(d + 4, n)),
-                            (o.exif = new e.ExifMap()),
-                            (s = e.parseExifTags(t, d, d + s, n, o)),
-                            s &&
-                                !r.disableExifThumbnail &&
-                                ((l = { exif: {} }),
-                                (s = e.parseExifTags(t, d, d + s, n, l)),
-                                l.exif[513] &&
-                                    (o.exif.Thumbnail = e.getExifThumbnail(
-                                        t,
-                                        d + l.exif[513],
-                                        l.exif[514]
-                                    ))),
-                            o.exif[34665] &&
-                                !r.disableExifSub &&
-                                e.parseExifTags(t, d, d + o.exif[34665], n, o),
-                            o.exif[34853] &&
-                                !r.disableExifGps &&
-                                e.parseExifTags(t, d, d + o.exif[34853], n, o);
+                    console.log('Invalid Exif data: Invalid directory offset.');
+                else {
+                    if (!((r = i + 2 + 12 * (n = e.getUint16(i, a))) + 4 > e.byteLength)) {
+                        for (s = 0; s < n; s += 1) this.parseExifTag(e, t, i + 2 + 12 * s, a, o);
+                        return e.getUint32(r, a);
                     }
+                    console.log('Invalid Exif data: Invalid directory size.');
                 }
             }),
-            e.metaDataParsers.jpeg[65505].push(e.parseExifData);
+            (g.parseExifData = function (e, t, i, a, o) {
+                if (!o.disableExif) {
+                    var n,
+                        r,
+                        s,
+                        l = t + 10;
+                    if (1165519206 === e.getUint32(t + 4))
+                        if (l + 8 > e.byteLength)
+                            console.log('Invalid Exif data: Invalid segment size.');
+                        else if (0 === e.getUint16(t + 8)) {
+                            switch (e.getUint16(l)) {
+                                case 18761:
+                                    n = !0;
+                                    break;
+                                case 19789:
+                                    n = !1;
+                                    break;
+                                default:
+                                    return void console.log(
+                                        'Invalid Exif data: Invalid byte alignment marker.'
+                                    );
+                            }
+                            42 === e.getUint16(l + 2, n)
+                                ? ((r = e.getUint32(l + 4, n)),
+                                  (a.exif = new g.ExifMap()),
+                                  (r = g.parseExifTags(e, l, l + r, n, a)) &&
+                                      !o.disableExifThumbnail &&
+                                      ((s = { exif: {} }),
+                                      (r = g.parseExifTags(e, l, l + r, n, s)),
+                                      s.exif[513] &&
+                                          (a.exif.Thumbnail = g.getExifThumbnail(
+                                              e,
+                                              l + s.exif[513],
+                                              s.exif[514]
+                                          ))),
+                                  a.exif[34665] &&
+                                      !o.disableExifSub &&
+                                      g.parseExifTags(e, l, l + a.exif[34665], n, a),
+                                  a.exif[34853] &&
+                                      !o.disableExifGps &&
+                                      g.parseExifTags(e, l, l + a.exif[34853], n, a))
+                                : console.log('Invalid Exif data: Missing TIFF marker.');
+                        } else console.log('Invalid Exif data: Missing byte alignment offset.');
+                }
+            }),
+            g.metaDataParsers.jpeg[65505].push(g.parseExifData);
     }),
-    (function(e) {
+    (function (e) {
         'use strict';
         'function' == typeof define && define.amd
             ? define(['./load-image', './load-image-exif'], e)
             : 'object' == typeof module && module.exports
             ? e(require('./load-image'), require('./load-image-exif'))
             : e(window.loadImage);
-    })(function(e) {
+    })(function (e) {
         'use strict';
         (e.ExifMap.prototype.tags = {
             256: 'ImageWidth',
@@ -708,7 +899,7 @@
                     8: 'left-bottom',
                 },
             }),
-            (e.ExifMap.prototype.getText = function(e) {
+            (e.ExifMap.prototype.getText = function (e) {
                 var t = this.get(e);
                 switch (e) {
                     case 'LightSource':
@@ -746,140 +937,162 @@
                 }
                 return String(t);
             }),
-            (function(e) {
+            (function (e) {
                 var t,
                     i = e.tags,
                     a = e.map;
-                for (t in i) i.hasOwnProperty(t) && (a[i[t]] = t);
+                for (t in i) Object.prototype.hasOwnProperty.call(i, t) && (a[i[t]] = t);
             })(e.ExifMap.prototype),
-            (e.ExifMap.prototype.getAll = function() {
+            (e.ExifMap.prototype.getAll = function () {
                 var e,
                     t,
                     i = {};
                 for (e in this)
-                    this.hasOwnProperty(e) && ((t = this.tags[e]), t && (i[t] = this.getText(t)));
+                    Object.prototype.hasOwnProperty.call(this, e) &&
+                        (t = this.tags[e]) &&
+                        (i[t] = this.getText(t));
                 return i;
             });
     }),
-    (function(e) {
+    (function (e) {
         'use strict';
         'function' == typeof define && define.amd
-            ? define(['./load-image'], e)
-            : e(
-                  'object' == typeof module && module.exports
-                      ? require('./load-image')
-                      : window.loadImage
-              );
-    })(function(e) {
+            ? define(['./load-image', './load-image-meta'], e)
+            : 'object' == typeof module && module.exports
+            ? e(require('./load-image'), require('./load-image-meta'))
+            : e(window.loadImage);
+    })(function (u) {
         'use strict';
-        var t = e.hasCanvasOption,
-            i = e.hasMetaOption,
-            a = e.transformCoordinates,
-            o = e.getTransformedOptions;
-        (e.hasCanvasOption = function(i) {
-            return !!i.orientation || t.call(e, i);
+        (u.IptcMap = function () {
+            return this;
         }),
-            (e.hasMetaOption = function(t) {
-                return t.orientation === !0 || i.call(e, t);
+            (u.IptcMap.prototype.map = { ObjectName: 5 }),
+            (u.IptcMap.prototype.get = function (e) {
+                return this[e] || this[this.map[e]];
             }),
-            (e.transformCoordinates = function(t, i) {
-                a.call(e, t, i);
-                var o = t.getContext('2d'),
-                    r = t.width,
-                    n = t.height,
-                    s = t.style.width,
-                    l = t.style.height,
-                    d = i.orientation;
-                if (d && !(d > 8))
-                    switch (
-                        (d > 4 &&
-                            ((t.width = n),
-                            (t.height = r),
-                            (t.style.width = l),
-                            (t.style.height = s)),
-                        d)
-                    ) {
-                        case 2:
-                            o.translate(r, 0), o.scale(-1, 1);
-                            break;
-                        case 3:
-                            o.translate(r, n), o.rotate(Math.PI);
-                            break;
-                        case 4:
-                            o.translate(0, n), o.scale(1, -1);
-                            break;
-                        case 5:
-                            o.rotate(0.5 * Math.PI), o.scale(1, -1);
-                            break;
-                        case 6:
-                            o.rotate(0.5 * Math.PI), o.translate(0, -n);
-                            break;
-                        case 7:
-                            o.rotate(0.5 * Math.PI), o.translate(r, -n), o.scale(-1, 1);
-                            break;
-                        case 8:
-                            o.rotate(-0.5 * Math.PI), o.translate(-r, 0);
-                    }
-            }),
-            (e.getTransformedOptions = function(t, i, a) {
-                var r,
-                    n,
-                    s = o.call(e, t, i),
-                    l = s.orientation;
-                if (
-                    (l === !0 && a && a.exif && (l = a.exif.get('Orientation')),
-                    !l || l > 8 || 1 === l)
-                )
-                    return s;
-                r = {};
-                for (n in s) s.hasOwnProperty(n) && (r[n] = s[n]);
-                switch (((r.orientation = l), l)) {
-                    case 2:
-                        (r.left = s.right), (r.right = s.left);
-                        break;
-                    case 3:
-                        (r.left = s.right),
-                            (r.top = s.bottom),
-                            (r.right = s.left),
-                            (r.bottom = s.top);
-                        break;
-                    case 4:
-                        (r.top = s.bottom), (r.bottom = s.top);
-                        break;
-                    case 5:
-                        (r.left = s.top),
-                            (r.top = s.left),
-                            (r.right = s.bottom),
-                            (r.bottom = s.right);
-                        break;
-                    case 6:
-                        (r.left = s.top),
-                            (r.top = s.right),
-                            (r.right = s.bottom),
-                            (r.bottom = s.left);
-                        break;
-                    case 7:
-                        (r.left = s.bottom),
-                            (r.top = s.right),
-                            (r.right = s.top),
-                            (r.bottom = s.left);
-                        break;
-                    case 8:
-                        (r.left = s.bottom),
-                            (r.top = s.left),
-                            (r.right = s.top),
-                            (r.bottom = s.right);
+            (u.parseIptcTags = function (e, t, i, a) {
+                function o(e, t, i) {
+                    for (var a = '', o = t; o < t + i; o++) a += String.fromCharCode(e.getUint8(o));
+                    return a;
                 }
-                return (
-                    r.orientation > 4 &&
-                        ((r.maxWidth = s.maxHeight),
-                        (r.maxHeight = s.maxWidth),
-                        (r.minWidth = s.minHeight),
-                        (r.minHeight = s.minWidth),
-                        (r.sourceWidth = s.sourceHeight),
-                        (r.sourceHeight = s.sourceWidth)),
-                    r
-                );
+                for (var n, r, s, l = t; l < t + i; )
+                    28 === e.getUint8(l) &&
+                        2 === e.getUint8(l + 1) &&
+                        (s = e.getUint8(l + 2)) in a.iptc.tags &&
+                        ((r = e.getInt16(l + 3)),
+                        (n = o(e, l + 5, r)),
+                        Object.prototype.hasOwnProperty.call(a.iptc, s)
+                            ? a.iptc[s] instanceof Array
+                                ? a.iptc[s].push(n)
+                                : (a.iptc[s] = [a.iptc[s], n])
+                            : (a.iptc[s] = n)),
+                        l++;
+            }),
+            (u.parseIptcData = function (e, t, i, a, o) {
+                if (!o.disableIptc) {
+                    for (var n, r, s = t + i; t + 8 < s; ) {
+                        if (
+                            ((r = t),
+                            943868237 === (n = e).getUint32(r) && 1028 === n.getUint16(r + 4))
+                        ) {
+                            var l = e.getUint8(t + 7);
+                            l % 2 != 0 && (l += 1), 0 === l && (l = 4);
+                            var c = t + 8 + l;
+                            if (s < c) {
+                                console.log('Invalid IPTC data: Invalid segment offset.');
+                                break;
+                            }
+                            var d = e.getUint16(t + 6 + l);
+                            if (s < t + d) {
+                                console.log('Invalid IPTC data: Invalid segment size.');
+                                break;
+                            }
+                            return (a.iptc = new u.IptcMap()), u.parseIptcTags(e, c, d, a);
+                        }
+                        t++;
+                    }
+                    console.log('No IPTC data at this offset - could be XMP');
+                }
+            }),
+            u.metaDataParsers.jpeg[65517].push(u.parseIptcData);
+    }),
+    (function (e) {
+        'use strict';
+        'function' == typeof define && define.amd
+            ? define(['./load-image', './load-image-iptc'], e)
+            : 'object' == typeof module && module.exports
+            ? e(require('./load-image'), require('./load-image-iptc'))
+            : e(window.loadImage);
+    })(function (e) {
+        'use strict';
+        (e.IptcMap.prototype.tags = {
+            3: 'ObjectType',
+            4: 'ObjectAttribute',
+            5: 'ObjectName',
+            7: 'EditStatus',
+            8: 'EditorialUpdate',
+            10: 'Urgency',
+            12: 'SubjectRef',
+            15: 'Category',
+            20: 'SupplCategory',
+            22: 'FixtureID',
+            25: 'Keywords',
+            26: 'ContentLocCode',
+            27: 'ContentLocName',
+            30: 'ReleaseDate',
+            35: 'ReleaseTime',
+            37: 'ExpirationDate',
+            38: 'ExpirationTime',
+            40: 'SpecialInstructions',
+            42: 'ActionAdvised',
+            45: 'RefService',
+            47: 'RefDate',
+            50: 'RefNumber',
+            55: 'DateCreated',
+            60: 'TimeCreated',
+            62: 'DigitalCreationDate',
+            63: 'DigitalCreationTime',
+            65: 'OriginatingProgram',
+            70: 'ProgramVersion',
+            75: 'ObjectCycle',
+            80: 'Byline',
+            85: 'BylineTitle',
+            90: 'City',
+            92: 'Sublocation',
+            95: 'State',
+            100: 'CountryCode',
+            101: 'CountryName',
+            103: 'OrigTransRef',
+            105: 'Headline',
+            110: 'Credit',
+            115: 'Source',
+            116: 'CopyrightNotice',
+            118: 'Contact',
+            120: 'Caption',
+            122: 'WriterEditor',
+            130: 'ImageType',
+            131: 'ImageOrientation',
+            135: 'LanguageID',
+        }),
+            (e.IptcMap.prototype.getText = function (e) {
+                var t = this.get(e);
+                return String(t);
+            }),
+            (function (e) {
+                var t,
+                    i = e.tags,
+                    a = e.map || {};
+                for (t in i) Object.prototype.hasOwnProperty.call(i, t) && (a[i[t]] = t);
+            })(e.IptcMap.prototype),
+            (e.IptcMap.prototype.getAll = function () {
+                var e,
+                    t,
+                    i = {};
+                for (e in this)
+                    Object.prototype.hasOwnProperty.call(this, e) &&
+                        (t = this.tags[e]) &&
+                        (i[t] = this.getText(t));
+                return i;
             });
     });
 //# sourceMappingURL=load-image.all.min.js.map

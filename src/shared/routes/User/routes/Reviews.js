@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Query } from 'react-apollo';
-import { useMutation } from '@apollo/react-hooks';
+import { Query, useMutation } from 'react-apollo';
+
 import { Title, Body, BodySmall, BodyBold } from '../../../components/Text';
 import {
     Col,
@@ -100,7 +100,7 @@ const VenueListItem = styled.li`
 
 const Cta = ({ onClick }) => (
     <>
-        <Body style={{ maxWidth: 300 }}>
+        <Body style={{ maxWidth: 300, marginBottom: '15px' }}>
             Add a testimonial to display something for the organizers
         </Body>
         <PrimaryButton onClick={onClick}>Add testimonial</PrimaryButton>

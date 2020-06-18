@@ -1,7 +1,7 @@
 const formatter = {
     date: {
         //returns a datetime object as a eu formatted string
-        ToEU: function(inputFormat) {
+        ToEU: function (inputFormat) {
             function pad(s) {
                 return s < 10 ? '0' + s : s;
             }
@@ -10,7 +10,7 @@ const formatter = {
         },
 
         //returns a datetime object as a us formatted string
-        ToUS: function(inputFormat) {
+        ToUS: function (inputFormat) {
             function pad(s) {
                 return s < 10 ? '0' + s : s;
             }
@@ -19,7 +19,7 @@ const formatter = {
         },
 
         //returns a date from a eu formatted date string. DD/MM/YYYY, 28/07/1993 etc.
-        FromEUStringToUSDate: function(dateString) {
+        FromEUStringToUSDate: function (dateString) {
             if (!dateString) {
                 return null;
             }
@@ -27,11 +27,11 @@ const formatter = {
             return new Date(from[2], from[1] - 1, from[0]);
         },
 
-        ToTime: function(date) {
+        ToTime: function (date) {
             const addZero = (n) => ('0' + n).slice(-2);
             return addZero(date.getHours()) + ':' + addZero(date.getMinutes());
         },
-        ToLocalString: function(date) {
+        ToLocalString: function (date) {
             const options = {
                 weekday: 'long',
                 year: 'numeric',
@@ -54,7 +54,7 @@ const formatter = {
     },
 
     name: {
-        GetFirstAndLast: function(name) {
+        GetFirstAndLast: function (name) {
             if (!name.includes(' ')) {
                 return { firstName: name, lastName: '' };
             }
@@ -65,7 +65,7 @@ const formatter = {
     },
 
     cueupEvent: {
-        GetStatus: function(statusEnum, translate) {
+        GetStatus: function (statusEnum, translate) {
             switch (statusEnum) {
                 case 'INITIAL':
                     return translate('No relevant DJ could be found');

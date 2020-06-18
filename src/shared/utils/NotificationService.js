@@ -1,38 +1,33 @@
 import io from 'socket.io-client';
-import { Environment } from '../constants/constants';
-import store from '../store';
-import * as actions from '../actions/NotificationsActions';
+import { useEffect, useState, useCallback } from 'react';
+import { useServerContext } from 'components/hooks/useServerContext';
+import { useAppState } from 'components/hooks/useAppState';
 
 export default class NotificationService {
     constructor() {
-        this.domain = Environment.CHAT_DOMAIN;
         this.notificationHandlers = [];
-        this.onInitialized = [];
     }
 
-    init(userId) {
-        if (!this.socket && userId) {
-            store.dispatch(actions.fetchingNotifications());
-
-            console.log('connecting to: ', Environment.CHAT_DOMAIN + '?userId=' + userId);
-
-            this.socket = io(Environment.CHAT_DOMAIN + '?userId=' + userId);
+    init = (userId, domain) => {
+        return new Promise((resolve, reject) => {
+            if (!this.socket) {
+                this.socket = io(domain + '?userId=' + userId, {});
+            }
+            if (!userId) {
+                return reject('No userId');
+            }
 
             this.socket.on('initialize notifications', (notifications) => {
-                store.dispatch(actions.fetchedNotifications(notifications));
-                this.onInitialized.reduce((_, fn) => {
-                    return fn();
-                }, 0);
+                resolve(notifications);
             });
 
             this.socket.on('new notification', (notification) => {
-                store.dispatch(actions.newNotification(notification));
                 this.notificationHandlers.reduce((acc, fn) => {
                     return fn(notification);
                 }, 0);
             });
-        }
-    }
+        });
+    };
 
     addNotificationHandler = (handler) => {
         this.notificationHandlers.push(handler);
@@ -48,6 +43,14 @@ export default class NotificationService {
         this.notificationHandlers = [];
     };
 
+    dispose = () => {
+        console.log('dispose socket');
+        if (this.socket) {
+            this.socket.close();
+            this.socket = null;
+        }
+    };
+
     getChatStatus = () => {
         return new Promise((resolve, reject) => {
             const chatFetcher = () => {
@@ -61,7 +64,7 @@ export default class NotificationService {
             if (this.socket) {
                 chatFetcher();
             } else {
-                this.onInitialized.push(chatFetcher);
+                this.onInitializedHandlers.push(chatFetcher);
             }
         });
     };

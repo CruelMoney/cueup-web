@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from 'react-apollo';
 
 import styled from 'styled-components';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import ReactDOM from 'react-dom';
-import { Popper } from 'react-popper';
+import { Popper, usePopper } from 'react-popper';
 import Rating from '../../../components/common/RatingNew';
 import { HIGHLIGHT_REVIEW } from '../gql';
 import QuotationMarkIcon from '../../../components/graphics/Quotes';
@@ -88,6 +88,7 @@ const Review = ({
                 </Col>
             </Row>
             {mounted &&
+                isOwn &&
                 portal.current &&
                 ReactDOM.createPortal(
                     <ToolTip
@@ -102,25 +103,28 @@ const Review = ({
     );
 };
 
-const ToolTip = ({ virtualReferenceElement, hasAdded, loading, addHighlight }) => (
-    <Popper referenceElement={virtualReferenceElement} eventsEnabled={false}>
-        {({ ref, style, placement }) => (
-            <div ref={ref} style={style} data-placement={placement}>
-                <HighlightTooltip>
-                    <TeritaryButton
-                        disabled={loading || hasAdded}
-                        style={{ color: '#fff' }}
-                        onClick={() => {
-                            addHighlight();
-                        }}
-                    >
-                        {loading ? 'Adding...' : hasAdded ? 'Added' : 'Highlight on profile'}
-                    </TeritaryButton>
-                </HighlightTooltip>
-            </div>
-        )}
-    </Popper>
-);
+const ToolTip = ({ virtualReferenceElement, hasAdded, loading, addHighlight }) => {
+    const [popperElement, setPopperElement] = useState(null);
+    const { styles, attributes } = usePopper(virtualReferenceElement, popperElement);
+    if (!virtualReferenceElement) {
+        return null;
+    }
+    return (
+        <div ref={setPopperElement} style={styles.popper} {...attributes}>
+            <HighlightTooltip>
+                <TeritaryButton
+                    disabled={loading || hasAdded}
+                    style={{ color: '#fff' }}
+                    onClick={() => {
+                        addHighlight();
+                    }}
+                >
+                    {loading ? 'Adding...' : hasAdded ? 'Added' : 'Highlight on profile'}
+                </TeritaryButton>
+            </HighlightTooltip>
+        </div>
+    );
+};
 
 const RemoveButton = styled(TeritaryButton)`
     display: none;

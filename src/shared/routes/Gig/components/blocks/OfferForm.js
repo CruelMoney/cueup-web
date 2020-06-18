@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import debounce from 'lodash/debounce';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from 'react-apollo';
 import RadioSelect from 'components/RadioSelect';
+import useTranslate from 'components/hooks/useTranslate';
 import { GET_OFFER, MAKE_OFFER, GIG } from '../../gql';
 import ErrorMessageApollo from '../../../../components/common/ErrorMessageApollo';
 import { gigStates, PAYOUT_TYPES } from '../../../../constants/constants';
@@ -17,18 +18,9 @@ import {
 import { Input, InputRow } from '../../../../components/FormComponents';
 import CurrencySelector from '../../../../components/CurrencySelector';
 import { Body, BodyBold, TitleClean } from '../../../../components/Text';
-import addTranslate from '../../../../components/higher-order/addTranslate';
-import content from '../../../User/content.json';
 
-const OfferForm = ({
-    gig,
-    profileCurrency,
-    translate,
-    payoutInfoValid,
-    showPopup,
-    showDecline,
-    user,
-}) => {
+const OfferForm = ({ gig, profileCurrency, payoutInfoValid, showPopup, showDecline, user }) => {
+    const { translate } = useTranslate();
     const initOffer = gig.offer || {
         offer: { amount: 0, formatted: 0 },
         serviceFee: { amount: 0, formatted: 0 },
@@ -68,7 +60,7 @@ const OfferForm = ({
 
     const updateOffer = async () => {
         const payoutTypes = Object.entries(payoutMethods)
-            .filter(([k, v]) => v)
+            .filter(([_k, v]) => v)
             .map(([k]) => k);
 
         if (!payoutTypes.length) {
@@ -149,8 +141,8 @@ const OfferForm = ({
 
     const canSubmit =
         (pendingUpdate ||
-            (offer.offer.amount !== initOffer.offer.amount ||
-                currency !== initOffer.offer.currency)) &&
+            offer.offer.amount !== initOffer.offer.amount ||
+            currency !== initOffer.offer.currency) &&
         parseInt(offer.offer.amount, 10) > 0 &&
         !loading;
 
@@ -162,10 +154,10 @@ const OfferForm = ({
         [gigStates.REQUESTED, gigStates.ACCEPTED].includes(gig.status);
 
     return (
-        <div>
+        <div data-cy="make-offer-section">
             <Body>
                 {!payoutInfoValid
-                    ? translate('gig.offer.update-payout')
+                    ? translate('gig:offer.update-payout')
                     : gigStateDescription[gig.status] ?? gigStateDescription.default}
             </Body>
 
@@ -219,7 +211,7 @@ const OfferForm = ({
             ) : null}
 
             {!!canUpdatePrice && (
-                <>
+                <div data-cy="payout-options">
                     <TitleClean>Organizer payment</TitleClean>
                     <RadioSelect
                         containerStyle={{ marginBottom: '30px' }}
@@ -241,7 +233,7 @@ const OfferForm = ({
                             },
                         ]}
                     />
-                </>
+                </div>
             )}
 
             <RowWrap style={{ marginTop: '24px' }}>
@@ -265,6 +257,7 @@ const OfferForm = ({
                         loading={submitLoading}
                         success={submitted}
                         onClick={updateOffer}
+                        data-cy="submit-offer-button"
                     >
                         {submitted
                             ? 'Updated'
@@ -286,15 +279,7 @@ const OfferForm = ({
     );
 };
 
-const RemainingPayment = ({
-    translate,
-    payoutType,
-    amountLeft,
-    amountPaid,
-    totalPayment,
-    offer,
-    serviceFee,
-}) => {
+const RemainingPayment = ({ translate, payoutType, amountLeft, amountPaid, offer }) => {
     const isDirect = payoutType === PAYOUT_TYPES.DIRECT;
     return (
         <Col style={{ marginBottom: '30px', marginTop: '30px' }}>
@@ -315,20 +300,20 @@ const RemainingPayment = ({
     );
 };
 
-const OfferTable = ({ loading, translate, totalPayment, serviceFee, djFee, totalPayout }) => {
+const OfferTable = ({ loading, translate, serviceFee, djFee, totalPayout }) => {
     return (
         <Col style={{ marginBottom: '30px', marginTop: '30px' }}>
             <div style={style1}>
                 <TableRow
                     label={translate('Service fee')}
-                    info={<div>{translate('gig.offer.service-fee-info')}</div>}
+                    info={<div>{translate('gig:offer.service-fee-info')}</div>}
                 >
                     {loading ? 'loading...' : serviceFee.formatted ? serviceFee.formatted : '...'}
                 </TableRow>
                 <Hr />
                 <TableRow
                     label={translate('Payment processing')}
-                    info={<div>{translate('gig.offer.dj-fee-info')}</div>}
+                    info={<div>{translate('gig:offer.dj-fee-info')}</div>}
                 >
                     {loading ? 'loading...' : djFee.formatted ? djFee.formatted : '...'}
                 </TableRow>
@@ -362,4 +347,4 @@ const TableRow = ({ label, value, children, bold }) =>
         </Row>
     );
 
-export default addTranslate(OfferForm, [content]);
+export default OfferForm;

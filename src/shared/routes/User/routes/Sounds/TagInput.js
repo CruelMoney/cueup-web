@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { WithContext as ReactTags } from 'react-tag-input';
+import ReactTags from 'react-tag-autocomplete';
+import { GENRES } from 'constants/constants';
 import './TagInput.css';
 
 const KeyCodes = {
@@ -7,14 +8,14 @@ const KeyCodes = {
     enter: 13,
 };
 
-const delimiters = [KeyCodes.comma, KeyCodes.enter];
+const delimiters = [KeyCodes.comma, KeyCodes.enter, 'Enter', 'Tab'];
 
 const TagInput = ({ defaultValue = [], placeholder, onChange, ...props }) => {
-    const [tags, setTags] = useState(defaultValue.map((t) => ({ text: t, id: t })));
+    const [tags, setTags] = useState(defaultValue.map((t) => ({ name: t, id: t })));
 
     const handleChange = (newTags) => {
         setTags(newTags);
-        onChange && onChange(newTags.map((t) => t.text));
+        onChange && onChange(newTags.map((t) => t.name));
     };
 
     const handleDelete = (idx) => {
@@ -31,22 +32,14 @@ const TagInput = ({ defaultValue = [], placeholder, onChange, ...props }) => {
         }
     };
 
-    const handleDrag = (tag, currPos, newPos) => {
-        const newTags = tags.slice();
-
-        newTags.splice(currPos, 1);
-        newTags.splice(newPos, 0, tag);
-
-        handleChange(newTags);
-    };
-
     return (
         <ReactTags
             tags={tags}
-            handleDelete={handleDelete}
-            handleAddition={handleAddition}
-            handleInputBlur={(text) => !!text.trim() && handleAddition({ text: text, id: text })}
-            handleDrag={handleDrag}
+            addOnBlur
+            allowNew
+            suggestions={GENRES.map((g) => ({ name: g, id: g }))}
+            onDelete={handleDelete}
+            onAddition={handleAddition}
             delimiters={delimiters}
             autofocus={false}
             maxLength="24"

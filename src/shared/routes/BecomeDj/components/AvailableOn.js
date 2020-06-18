@@ -1,10 +1,9 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { HeaderTitle, Body } from 'components/Text';
-import { Container, Col, Row } from 'components/Blocks';
+import { useTranslation } from 'react-i18next';
+import { Container, Row } from 'components/Blocks';
 import { TextAccent } from '../components/blocks/TextAccent';
 import { GrayText, Header } from '../../../components/common/Text';
-import addTranslate from '../../../components/higher-order/addTranslate';
 import GracefullImage from '../../../components/GracefullImage';
 import mobileIphone from '../../../assets/images/available-on/iphone_mobile.png';
 import iphoneX from '../../../assets/images/available-on/iphone_x.png';
@@ -116,7 +115,7 @@ const AnimatedTextWrapper = styled.div`
 let lastScrollPosition = 0;
 
 const AvailableOn = (props) => {
-    const { translate, currentLanguage } = props;
+    const { t } = useTranslation();
     const textAnimation = useRef();
     const buttonAnimation = useRef();
     const androidRef = useRef();
@@ -152,7 +151,7 @@ const AvailableOn = (props) => {
                     <DesktopTextContainer>
                         <StickyText>
                             <TextAccent margin="0 0 15px 0" mobileTextAlign="left">
-                                {translate('become-dj.available-on-iphone.desktop.available-on')}
+                                {t('become-dj:available-on-iphone.desktop.available-on')}
                             </TextAccent>
                             <AnimatedTextWrapper>
                                 <AnimatedText ref={textAnimation}>
@@ -236,7 +235,7 @@ const AvailableOn = (props) => {
                 <MobileContainer>
                     <MobileTextContainer>
                         <TextAccent margin="0 0 15px 0">
-                            {translate('become-dj.available-on-iphone.mobile.available-on')}
+                            {t('become-dj:available-on-iphone.mobile.available-on')}
                         </TextAccent>
                         <Header style={{ textAlign: 'left' }}>iPhone & Android</Header>
                         <GrayText mobileTextAlign="left">
@@ -289,4 +288,4 @@ const AvailableOn = (props) => {
     );
 };
 
-export default addTranslate(AvailableOn);
+export default AvailableOn;

@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import AddCircle from 'react-ionicons/lib/MdAddCircle';
+import { Icon, InlineIcon } from '@iconify/react';
+import addCircleIcon from '@iconify/icons-ion/add-circle';
+
+import { userRoutes } from 'constants/locales/appRoutes';
 import { Title, Citation, Cite, Body } from '../../../components/Text';
 import ReadMoreExpander from '../../../components/ReadMoreExpander';
 import { Col, Row, ReadMore, Show, InfoBox } from '../../../components/Blocks';
@@ -11,6 +14,7 @@ import { PolicyDisplayer } from '../components/CancelationPolicyPopup';
 import { LoadingPlaceholder2 } from '../../../components/common/LoadingPlaceholder';
 import GracefullImage from '../../../components/GracefullImage';
 import GracefullVideo from '../../../components/GracefullVideo';
+import DownloadAppPopup from '../components/DownloadAppPopup';
 import Sound from './Sounds/Sound';
 
 const ColumnLayout = styled.section`
@@ -37,6 +41,7 @@ const HalfColRight = styled(HalfCol)`
 `;
 
 const Item = styled.div`
+    position: relative;
     border-bottom: 1px solid #e9ecf0;
     padding: 42px;
 `;
@@ -109,20 +114,51 @@ const Square = styled.div`
     }
 `;
 
-const Bio = ({ bio, firstName, style }) => {
+const EditOverlay = styled.div`
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 100ms ease-out;
+    z-index: 2;
+    &:hover {
+        opacity: 1;
+    }
+`;
+
+const EditButtonOverlay = ({ to, children }) => {
+    return (
+        <Link to={to}>
+            <EditOverlay>
+                <ReadMore white>{children}</ReadMore>
+            </EditOverlay>
+        </Link>
+    );
+};
+
+const Bio = ({ bio, firstName, style, isOwn }) => {
     return (
         <LeftItem style={{ paddingTop: 0, ...style }}>
             <Title>About {firstName}</Title>
             <ReadMoreExpander content={bio || 'Nothing here yet'} />
+            {isOwn && <EditButtonOverlay to={'settings?modal=bio'}>Edit</EditButtonOverlay>}
         </LeftItem>
     );
 };
 
-const Genres = ({ genres, style }) => (
+const Genres = ({ genres, style, isOwn }) => (
     <GenresLayout style={style}>
         {genres.map((g) => (
             <Genre key={g}>{g}</Genre>
         ))}
+        {isOwn && <EditButtonOverlay to={'settings?modal=genres'}>Edit</EditButtonOverlay>}
     </GenresLayout>
 );
 
@@ -187,7 +223,7 @@ const Review = ({ reviewsCount, highlightedReview }) => {
         </Link>
     );
 };
-const MapArea = ({ playingLocation }) => {
+const MapArea = ({ playingLocation, isOwn }) => {
     if (!playingLocation) {
         return null;
     }
@@ -208,6 +244,7 @@ const MapArea = ({ playingLocation }) => {
                     fullscreenControl: false,
                 }}
             />
+            {isOwn && <EditButtonOverlay to={'settings?modal=location'}>Edit</EditButtonOverlay>}
         </Square>
     );
 };
@@ -300,16 +337,23 @@ const PhotosArea = ({ media, isOwn }) => {
 
     return (
         <PhotoGridWrapper>
-            <PhotoGrid>
-                {renderItems.map((m, idx) => (
-                    <li key={m.id}>
-                        {m.type === 'VIDEO' ? (
-                            <GracefullVideo src={m.path} loop autoPlay muted playsInline animate />
-                        ) : (
-                            <GracefullImage src={m.path} animate />
-                        )}
-                        {idx === renderItems.length - 1 && (
-                            <Link to={'photos'}>
+            <Link to={'photos'}>
+                <PhotoGrid>
+                    {renderItems.map((m, idx) => (
+                        <li key={m.id}>
+                            {m.type === 'VIDEO' ? (
+                                <GracefullVideo
+                                    src={m.path}
+                                    loop
+                                    autoPlay
+                                    muted
+                                    playsInline
+                                    animate
+                                />
+                            ) : (
+                                <GracefullImage src={m.path} animate />
+                            )}
+                            {idx === renderItems.length - 1 && (
                                 <ReadMore
                                     color="#fff"
                                     style={{
@@ -333,11 +377,11 @@ const PhotosArea = ({ media, isOwn }) => {
                                         </span>
                                     )}
                                 </ReadMore>
-                            </Link>
-                        )}
-                    </li>
-                ))}
-            </PhotoGrid>
+                            )}
+                        </li>
+                    ))}
+                </PhotoGrid>
+            </Link>
         </PhotoGridWrapper>
     );
 };
@@ -348,7 +392,7 @@ const AddBlockPlaceholder = ({ label, directions, to }) => {
             <LeftItem>
                 <Title>{label}</Title>
                 <Body>{directions}</Body>
-                <AddCircle color={'#50e3c2'} fontSize={'30px'} />
+                <Icon icon={addCircleIcon} color={'#50e3c2'} style={{ fontSize: '30px' }} />
             </LeftItem>
         </Link>
     );
@@ -359,10 +403,18 @@ const MobileExpandWidth = styled.div`
     margin-right: -15px;
 `;
 
-const Overview = ({ user, loading }) => {
+const Overview = ({ user, loading, location, history }) => {
     if (loading) {
         return <LoadingPlaceholder2 />;
     }
+    const params = new URLSearchParams(location.search);
+    const modal = params.get('modal');
+    const appPopup = modal === 'app';
+
+    const onModalClose = () => {
+        history.replace(location.pathname);
+    };
+
     const {
         userMetadata,
         genres,
@@ -385,16 +437,17 @@ const Overview = ({ user, loading }) => {
 
     return (
         <ColumnLayout>
+            <DownloadAppPopup isActive={appPopup} close={onModalClose} />
             <Row>
                 <HalfColLeft>
-                    <Bio firstName={firstName} bio={bio} style={bioStyle} />
+                    <Bio isOwn={isOwn} firstName={firstName} bio={bio} style={bioStyle} />
                     {showSelectedSound && (
                         <Show maxWidth="990px">
                             <HighlightedSound user={user} />
                         </Show>
                     )}
                     <Show maxWidth="990px">
-                        <Genres genres={genres} style={genresStyle} />
+                        <Genres genres={genres} style={genresStyle} isOwn={isOwn} />
                     </Show>
                     {showPhotosArea && <PhotosArea {...user} />}
                     {highlightedReview ? (
@@ -404,7 +457,7 @@ const Overview = ({ user, loading }) => {
                         />
                     ) : user.isOwn && user.isDj ? (
                         <AddBlockPlaceholder
-                            to="reviews"
+                            to={userRoutes.reviews}
                             label="Add Highlight"
                             directions="Select text with the cursor from a review or testimonial to highlight it here."
                         />
@@ -412,7 +465,7 @@ const Overview = ({ user, loading }) => {
                     {user.isDj && (
                         <MobileExpandWidth>
                             <Show maxWidth="990px">
-                                <MapArea playingLocation={playingLocation} />
+                                <MapArea playingLocation={playingLocation} isOwn={isOwn} />
                             </Show>
                         </MobileExpandWidth>
                     )}
@@ -420,15 +473,20 @@ const Overview = ({ user, loading }) => {
                         <LeftItem>
                             <Title>Cancelation Policy</Title>
                             <PolicyDisplayer cancelationPolicy={cancelationPolicy} />
+                            {isOwn && (
+                                <EditButtonOverlay to={'settings?modal=cancelationPolicy'}>
+                                    Edit
+                                </EditButtonOverlay>
+                            )}
                         </LeftItem>
                     )}
                 </HalfColLeft>
                 {user.isDj && (
                     <HalfColRight>
                         {showSelectedSound && <HighlightedSound user={user} />}
-                        <Genres genres={genres} style={genresStyle} />
+                        <Genres genres={genres} style={genresStyle} isOwn={isOwn} />
 
-                        <MapArea playingLocation={playingLocation} />
+                        <MapArea playingLocation={playingLocation} isOwn={isOwn} />
                     </HalfColRight>
                 )}
             </Row>

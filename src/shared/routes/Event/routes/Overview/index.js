@@ -1,100 +1,153 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery } from 'react-apollo';
-import { captureException } from '@sentry/core';
-import { connect } from 'react-redux';
-import { Title, Body, HeaderTitle } from '../../../../components/Text';
-import { Col } from '../../../../components/Blocks';
+import { useQuery, useMutation } from 'react-apollo';
+import { useHistory, Route } from 'react-router';
+import useTranslate from 'components/hooks/useTranslate';
+import { InputRow } from 'components/FormComponents';
+import { eventRoutes } from 'constants/locales/appRoutes';
+import { REQUEST_EMAIL_VERIFICATION } from 'components/gql';
+import usePushNotifications from 'components/hooks/usePushNotifications';
+import PayForm from 'components/common/PayForm';
+import { Title, Body, HeaderTitle, BodyBold } from '../../../../components/Text';
+import { Col, SecondaryButton, PrimaryButton } from '../../../../components/Blocks';
 import DjCard from '../../components/blocks/DJCard';
 import { EVENT_GIGS } from '../../gql';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
-import { notificationService } from '../../../../utils/NotificationService';
 import EmptyPage from '../../../../components/common/EmptyPage';
 import { gigStates } from '../../../../constants/constants';
 
-const EventGigs = React.forwardRef(
-    ({ theEvent = {}, loading: loadingEvent, translate, currency }, ref) => {
-        const { status } = theEvent;
+const EventGigs = React.forwardRef((props, ref) => {
+    const {
+        theEvent = {},
+        loading: loadingEvent,
+        translate,
+        currency,
+        match,
+        notifications,
+        setActiveChat,
+    } = props;
+    const { status, organizer } = theEvent;
+    const { data = {}, loading: loadingGigs, refetch } = useQuery(EVENT_GIGS, {
+        skip: !theEvent.id,
+        fetchPolicy: 'cache-and-network',
+        variables: {
+            id: theEvent.id,
+            hash: theEvent.hash,
+            currency,
+        },
+    });
 
-        const [gigMessages, setGigMessages] = useState([]);
-        const { data = {}, loading: loadingGigs } = useQuery(EVENT_GIGS, {
-            skip: !theEvent.id,
-            variables: {
-                id: theEvent.id,
-                hash: theEvent.hash,
-                currency,
-            },
+    const [refetchTries, setRefetchTries] = useState(data?.event ? 5 : 0);
+    const history = useHistory();
+
+    const loading = refetchTries < 20 || loadingEvent || loadingGigs;
+
+    let gigs = data.event ? data.event.gigs : [];
+    gigs = gigs
+        .filter((g) => g.status !== 'LOST')
+        .map((g) => {
+            g.hasMessage =
+                notifications[g.id] && notifications[g.id].read < notifications[g.id].total;
+            return g;
         });
 
-        useEffect(() => {
-            const connect = async () => {
-                try {
-                    notificationService.init(theEvent.organizer.id);
-                    const res = await notificationService.getChatStatus();
-                    setGigMessages(res);
-                } catch (error) {
-                    console.log(error);
-                    captureException(error);
-                }
-            };
-            if (theEvent && theEvent.organizer) {
-                connect();
+    // event polling for djs
+    useEffect(() => {
+        if (refetchTries < 15 && !gigs?.length) {
+            setTimeout(() => {
+                refetch();
+                setRefetchTries((c) => c + 1);
+            }, 1000);
+        } else {
+            setRefetchTries(15);
+            // keep polling every 10 second until we have 8 up to 20 times
+            if (gigs.length < 8 && refetchTries < 20) {
+                setTimeout(() => {
+                    refetch();
+                    setRefetchTries((c) => c + 1);
+                }, 10000);
             }
-        }, [theEvent]);
-
-        const readRoom = () => setGigMessages([]);
-
-        const loading = loadingEvent || loadingGigs;
-
-        if (loading) {
-            return <LoadingPlaceholder2 />;
         }
+    }, [refetchTries, refetch, gigs]);
 
-        let gigs = data.event ? data.event.gigs : [];
-        gigs = gigs
-            .filter((g) => g.status !== 'LOST')
-            .map((g) => {
-                g.hasMessage =
-                    gigMessages[g.id] && gigMessages[g.id].read < gigMessages[g.id].total;
-                return g;
-            });
-
-        if (!loading && gigs.length === 0) {
-            return (
-                <EmptyPage title="No DJs" message={'No DJs here at the moment, come back later.'} />
-            );
-        }
-
-        const statusPriority = {
-            [gigStates.CONFIRMED]: 2,
-            [gigStates.ACCEPTED]: 1,
-        };
-
-        const getPriority = (gig) => {
-            const status = statusPriority[gig.status] || 0;
-            return status + (gig.hasMessage ? 2 : 0);
-        };
-
+    if (gigs.length === 0 && loading) {
         return (
-            <Col ref={ref}>
-                <Title>{getTitle(status)}</Title>
-                <Body>{getText(status)}</Body>
+            <>
+                <Title>{refetchTries > 5 ? 'Still looking for DJs' : 'Looking for DJs'}</Title>
+                <Body>{'Wait a moment...'}</Body>
+                <LoadingPlaceholder2 style={{ marginTop: 24 }} />
+            </>
+        );
+    }
+
+    if (theEvent && !organizer?.appMetadata?.emailVerified) {
+        return <EmailNotVerifiedSection gigs={gigs} organizer={organizer} />;
+    }
+
+    if (!gigs.length) {
+        return (
+            <EmptyPage
+                title="Still contacting DJs"
+                message={
+                    <>
+                        We are still finding DJs for you. You can come back later.
+                        <NotificationButton organizer={organizer} />
+                    </>
+                }
+            />
+        );
+    }
+
+    const statusPriority = {
+        [gigStates.CONFIRMED]: 2,
+        [gigStates.ACCEPTED]: 1,
+    };
+
+    const getPriority = (gig) => {
+        const status = statusPriority[gig.status] || 0;
+        return status + (gig.hasMessage ? 2 : 0);
+    };
+
+    return (
+        <Col ref={ref}>
+            <Title>{getTitle(status)}</Title>
+            <Body>{getText(status)}</Body>
+            <NotificationButton organizer={organizer} />
+
+            <div data-cy="event-djs">
                 {gigs
                     .sort((g1, g2) => getPriority(g2) - getPriority(g1))
                     .map((gig, idx) => (
                         <DjCard
                             hasMessage={gig.hasMessage}
-                            onOpenChat={readRoom}
                             key={gig.id}
                             idx={idx}
                             gig={gig}
                             translate={translate}
                             theEvent={theEvent}
+                            onInitiateBooking={() =>
+                                history.push(
+                                    match.url + '/' + eventRoutes.checkout.replace(':gigId', gig.id)
+                                )
+                            }
+                            onOpenChat={() => setActiveChat(gig.id)}
                         />
                     ))}
-            </Col>
-        );
-    }
-);
+            </div>
+            <Route
+                path={match.path + '/' + eventRoutes.checkout}
+                render={(props) => (
+                    <PayForm
+                        onClose={() => history.push(match.url + '/' + eventRoutes.overview)}
+                        eventId={theEvent.id}
+                        eventHash={theEvent.hash}
+                        currency={currency}
+                        {...props}
+                    />
+                )}
+            />
+        </Col>
+    );
+});
 
 const getText = (status) => {
     switch (status) {
@@ -103,7 +156,7 @@ const getText = (status) => {
         case 'CONFIRMED':
             return 'Contact the DJ to make sure that all details are agreed upon.';
         default:
-            return 'The DJs have not made any offers yet. In the meantime you check out their profiles or message them. We’ll notify you by email when someone makes an offer or messages you. Once you have confirmed a DJ, you’ll be able to see additional information such as phone number.';
+            return 'The DJs have not made any offers yet. In the meantime you can check out their profiles or message them. We’ll notify you by email when someone makes an offer or messages you. Once you have confirmed a DJ, you’ll be able to see additional information such as phone number.';
     }
 };
 
@@ -112,12 +165,14 @@ const getTitle = (status) => {
         case 'CONFIRMED':
             return 'The DJ has been booked';
         default:
-            return "We've found these DJs for you";
+            return "So far, we've found these DJs for you";
     }
 };
 
 const Overview = (props) => {
-    const { theEvent, loading, translate } = props;
+    const { translate, setActiveChat } = useTranslate();
+    const { theEvent, loading } = props;
+
     if (loading) {
         return <LoadingPlaceholder2 />;
     }
@@ -139,6 +194,7 @@ const Overview = (props) => {
                         gig={chosenGig}
                         translate={translate}
                         theEvent={theEvent}
+                        onOpenChat={() => setActiveChat(chosenGig.id)}
                     />
                 )}
             </Col>
@@ -156,12 +212,56 @@ const Overview = (props) => {
     return <EventGigs {...props} />;
 };
 
-function mapStateToProps(state, ownprops) {
-    return {
-        currency: state.session.currency,
+const EmailNotVerifiedSection = ({ gigs, organizer }) => {
+    const history = useHistory();
+    const foundDjs = gigs.length || 1;
+
+    const navigateToRequirements = () => history.push(eventRoutes.requirements);
+
+    const [request, { loading, data }] = useMutation(REQUEST_EMAIL_VERIFICATION);
+
+    const resendLink = () => {
+        request({
+            variables: {
+                email: organizer.email,
+                redirectLink: window.location.href,
+            },
+        });
     };
-}
 
-const SmartOverview = connect(mapStateToProps)(Overview);
+    return (
+        <Col style={{ maxWidth: 500 }}>
+            <Title>Verify your email</Title>
+            <Body>
+                So far we've found {foundDjs} {foundDjs > 1 ? 'DJs' : 'DJ'} for you, but first you
+                need to verify your email <b>{organizer?.email}</b>, so you don't loose access to
+                this page.
+            </Body>
+            <InputRow style={{ marginTop: '30px' }}>
+                <SecondaryButton disabled={loading || data} onClick={resendLink}>
+                    Resend link
+                </SecondaryButton>
+                <SecondaryButton onClick={navigateToRequirements}>Change email</SecondaryButton>
+            </InputRow>
+            {data && (
+                <BodyBold style={{ marginTop: 12 }}>Email sent, remember to check spam</BodyBold>
+            )}
+        </Col>
+    );
+};
 
-export default SmartOverview;
+const NotificationButton = ({ organizer }) => {
+    const { showPrompt, pushShouldBeEnabled } = usePushNotifications({ userId: organizer.id });
+
+    if (!pushShouldBeEnabled) {
+        return null;
+    }
+
+    return (
+        <PrimaryButton onClick={showPrompt} style={{ maxWidth: '100%', width: 250, marginTop: 30 }}>
+            Get notified about new DJs
+        </PrimaryButton>
+    );
+};
+
+export default Overview;

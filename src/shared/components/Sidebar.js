@@ -1,7 +1,8 @@
 /* eslint-disable react/jsx-pascal-case */
 import React from 'react';
 import styled from 'styled-components';
-import Arrow from 'react-ionicons/lib/MdArrowRoundForward';
+import { Icon, InlineIcon } from '@iconify/react';
+import arrowForward from '@iconify/icons-ion/arrow-forward';
 import { LoadingIndicator } from './Blocks';
 
 const Sticky = styled.div`
@@ -104,7 +105,11 @@ export const CTAButton = ({ children, loading, ...props }) => (
     <CTA {...props}>
         {children}{' '}
         <CTAIcon>
-            {loading ? <LoadingIndicator /> : props.disabled ? null : <Arrow color="#fff" />}
+            {loading ? (
+                <LoadingIndicator />
+            ) : props.disabled ? null : (
+                <Icon icon={arrowForward} style={{ fontSize: '1.5em' }} color="#fff" />
+            )}
         </CTAIcon>
     </CTA>
 );

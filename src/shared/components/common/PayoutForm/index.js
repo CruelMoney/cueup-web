@@ -1,23 +1,16 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { getTranslate, getActiveLanguage } from 'react-localize-redux';
+
 import { Title, Body } from 'components/Text';
 import RadioSelect from 'components/RadioSelect';
+import useTranslate from 'components/hooks/useTranslate';
 import { PAYOUT_TYPES } from '../../../constants/constants';
 
 import StripeWrapper from './BankAccount';
 import DirectPayout from './Direct';
 
-function mapStateToProps(state, ownprops) {
-    return {
-        ...ownprops,
-        translate: getTranslate(state.locale),
-        currentLanguage: getActiveLanguage(state.locale).code,
-    };
-}
-
-const PayoutComponent = connect(mapStateToProps)((props) => {
-    const { translate, user } = props;
+const PayoutComponent = (props) => {
+    const { translate } = useTranslate();
+    const { user } = props;
     const { payoutMethods } = user;
     const bankAccount = payoutMethods.find((p) => p.payoutType === PAYOUT_TYPES.BANK);
     const direct = payoutMethods.find((p) => p.payoutType === PAYOUT_TYPES.DIRECT);
@@ -71,7 +64,7 @@ const PayoutComponent = connect(mapStateToProps)((props) => {
             />
         </div>
     );
-});
+};
 
 export default PayoutComponent;
 

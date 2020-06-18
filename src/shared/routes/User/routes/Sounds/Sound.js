@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
-import styled, { keyframes, css } from 'styled-components';
-import { useMeasure } from '@softbind/hook-use-measure';
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
+import { Label } from 'components/FormComponents';
 import { Title, BodySmall, SmallBold } from '../../../../components/Text';
 import { Row, Pill, SecondaryButton, SmartButton, Col } from '../../../../components/Blocks';
 import PlayIcon from '../../../../assets/icons/PlayIcon';
@@ -12,16 +12,15 @@ import Popup from '../../../../components/common/Popup';
 import GracefullImage from '../../../../components/GracefullImage';
 import soundcloudLogo from '../../../../assets/soundcloud-logo.png';
 import useSoundPlayer, { playerStates } from './useSoundPlayer';
-import useSamples from './useSamples';
 import { DELETE_SOUND, USER_SOUNDS } from './gql';
 import AddSound from './AddSound';
-
-const demoSoundSamples = Array.from({ length: 101 }, (_, idx) =>
-    Math.max(Math.abs(Math.round(Math.sin(idx / 8) * 100)), 0)
-);
+import useScanning from './useScanning';
+import SoundBars from './SoundBars';
+import RemoveSound from './RemoveSound';
 
 const Sound = ({
     title,
+    date,
     tags,
     duration,
     player,
@@ -37,7 +36,6 @@ const Sound = ({
     source,
 }) => {
     const isSoundcloud = source === 'soundcloud';
-
     const [showChildren, setShowChild] = useState(false);
 
     // Wait until after client-side hydration to show
@@ -79,7 +77,7 @@ const Sound = ({
         <Container small={small}>
             <Row>
                 {!small && image && <AlbumCoverMobile src={image.path} />}
-                <Title style={{ marginBottom: '39px' }}>{small ? 'Selected Sound' : title}</Title>
+                <Title style={{ marginBottom: '39px' }}>{small ? 'Latest Sound' : title}</Title>
             </Row>
             <Row>
                 {!small && image && <AlbumCover src={image.path} />}
@@ -103,6 +101,7 @@ const Sound = ({
                             />
                         )}
                         <div style={{ flex: 1 }} />
+                        <MonthYearDisplayer date={date} />
                         <Genres>
                             {tags.map((g) => (
                                 <Pill key={g}>{g}</Pill>
@@ -130,125 +129,50 @@ const Sound = ({
                 </Col>
             </Row>
             {!small && (
-                <Row right style={{ marginTop: '15px' }}>
+                <Row right middle style={{ marginTop: '15px' }}>
                     <SimpleSharing shareUrl={link} label={null} />
                     {<div style={{ flex: 1 }} />}
+                    {isSoundcloud && <SoundCloudLogo />}
 
-                    {isOwn && !isSoundcloud && (
+                    {isOwn && (
                         <SmartButton loading={loadingRemove} onClick={deleteSound} level="tertiary">
                             Remove
                         </SmartButton>
                     )}
-                    {isOwn && !isSoundcloud && (
-                        <SecondaryButton onClick={onEdit}>Edit</SecondaryButton>
-                    )}
-                    {isSoundcloud && <SoundCloudLogo />}
+                    {isOwn && <SecondaryButton onClick={onEdit}>Edit</SecondaryButton>}
                 </Row>
             )}
         </Container>
     );
 };
 
+const MonthYearDisplayer = ({ date }) => {
+    if (!date) {
+        return null;
+    }
+
+    // this date is in utc, but we are only interested in year and month so convert
+    const dateObject = new Date(date);
+    const year = dateObject.getUTCFullYear();
+    const month = dateObject.getUTCMonth();
+
+    const formatted = new Date(year, month).toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'long',
+    });
+
+    return <SmallBold style={{ marginTop: 2, marginRight: 6 }}>{formatted}</SmallBold>;
+};
+
 const SoundCloudLogo = styled.div`
     width: 78px;
     height: 12px;
-    margin-top: 8px;
-    background-color: #98a4b3;
-    -webkit-mask-box-image: url(${soundcloudLogo});
+    background: url(${soundcloudLogo});
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+    filter: invert(0.5);
 `;
-
-export const useScanning = ({ duration, loading, progress = 0 }) => {
-    const totalSeconds = duration ? duration.totalSeconds : 0;
-
-    const [scanningPosition, setScanningPosition] = useState(null);
-
-    const scanInSeconds = scanningPosition * totalSeconds;
-
-    const durationFormatted = formatTime(totalSeconds);
-    const progressFormatted = loading
-        ? 'Loading...'
-        : formatTime(scanningPosition ? scanInSeconds : progress);
-
-    return {
-        scanInSeconds,
-        setScanningPosition,
-        scanningPosition,
-        progressFormatted,
-        durationFormatted,
-    };
-};
-
-export const SoundBars = ({
-    loading,
-    progress,
-    samples,
-    duration,
-    setScanningPosition,
-    small,
-    scanningPosition,
-    jumpOrStart,
-    style,
-}) => {
-    if (!samples || samples.length === 0) {
-        samples = demoSoundSamples;
-    }
-
-    const ref = useRef(null);
-    const { bounds } = useMeasure(ref, 'bounds');
-
-    const onScanning = (event) => {
-        if (bounds) {
-            const { touches } = event;
-            let { clientX } = event;
-            if (touches) {
-                clientX = touches[0].clientX;
-            }
-            const x = clientX - bounds.left;
-            const scan = (x / bounds.width).toFixed(4);
-            setScanningPosition(scan);
-        }
-    };
-
-    const resolution = bounds ? bounds.width / 6 : small ? 75 : 140;
-
-    const bars = useSamples({ resolution, samples });
-    const position = progress / duration.totalSeconds;
-    const positionIdx = bars.length * position;
-    const scanningIdx = bars.length * scanningPosition;
-    let activeIdx = positionIdx;
-    let halfActiveIdx = scanningIdx;
-
-    if (scanningPosition && scanningIdx < positionIdx) {
-        activeIdx = scanningIdx;
-        halfActiveIdx = positionIdx;
-    }
-
-    return (
-        <SoundBarsRow
-            ref={ref}
-            onMouseMove={onScanning}
-            dataLoading={loading || undefined}
-            onMouseLeave={() => setScanningPosition(null)}
-            onTouchMove={onScanning}
-            onTouchCancel={() => setScanningPosition(null)}
-            onTouchEnd={jumpOrStart}
-            onClick={jumpOrStart}
-            small={small}
-            style={style}
-        >
-            {bars.map((p, idx) => (
-                <SoundBar
-                    hovering={scanningPosition}
-                    key={idx}
-                    idx={idx}
-                    pressure={p}
-                    active={idx < activeIdx}
-                    halfActive={idx < halfActiveIdx}
-                />
-            ))}
-        </SoundBarsRow>
-    );
-};
 
 const Container = styled.article`
     margin-bottom: ${({ small }) => (small ? '15px' : '60px')};
@@ -266,49 +190,6 @@ const Genres = styled(Row)`
         margin-left: 5px;
         margin-bottom: 5px;
     }
-`;
-
-const loadingPulse = keyframes`
-  from{
-    opacity: 1;
-  }
-  to{
-    opacity: 0.3;
-  }
-`;
-
-const pulseLoad = ({ dataLoading }) =>
-    dataLoading
-        ? css`
-              animation: ${loadingPulse} 1000ms cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite
-                  alternate;
-          `
-        : null;
-
-const SoundBarStyle = styled.span.attrs(({ pressure, active, halfActive, hovering }) => ({
-    style: {
-        height: `${pressure}%`,
-        background: active ? '#50e3c2' : halfActive ? '#50e3c299' : '#E9ECF0',
-        transition: hovering ? 'none' : 'all 1000ms ease',
-    },
-}))`
-    flex: 1;
-    margin: 1px;
-    border-radius: 10px;
-    min-height: 4px;
-    pointer-events: none;
-`;
-
-const SoundBar = (props) => {
-    return <SoundBarStyle {...props} />;
-};
-
-const SoundBarsRow = styled(Row)`
-    height: ${({ small }) => (small ? '50px' : '100px')};
-    align-items: center;
-    cursor: pointer;
-    touch-action: none;
-    ${pulseLoad}
 `;
 
 const StyledStateButton = styled.button`
@@ -335,17 +216,14 @@ const StyledStateButton = styled.button`
 const PlayPauseButton = ({ state, ...props }) => {
     return (
         <StyledStateButton {...props}>
-            {state !== playerStates.PLAYING ? <PlayIcon /> : <PauseIcon />}
+            {![playerStates.PLAYING, playerStates.LOADING].includes(state) ? (
+                <PlayIcon />
+            ) : (
+                <PauseIcon />
+            )}
         </StyledStateButton>
     );
 };
-
-const formatTime = (seconds) =>
-    new Date(null, null, null, null, null, seconds)
-        .toTimeString()
-        .split(' ')[0]
-        .replace('00:', '')
-        .replace(':', '.');
 
 const Wrapper = (props) => {
     const { id, file, duration, userId, isOwn, title, description, tags } = props;
@@ -355,19 +233,14 @@ const Wrapper = (props) => {
         track: props,
     });
     const [showPopup, setShowPopup] = useState(false);
+    const [removePopup, setShowRemove] = useState(false);
 
-    const [deleteSound, { loading: loadingRemove }] = useMutation(DELETE_SOUND, {
-        variables: { id },
-        refetchQueries: [{ query: USER_SOUNDS, variables: { userId } }],
-        awaitRefetchQueries: true,
-    });
     return (
         <>
             <Sound
                 {...props}
-                deleteSound={deleteSound}
-                loadingRemove={loadingRemove}
                 player={player}
+                deleteSound={() => setShowRemove(true)}
                 onEdit={() => setShowPopup(true)}
             />
             {isOwn && (
@@ -387,6 +260,26 @@ const Wrapper = (props) => {
                         }}
                         onCancel={() => setShowPopup(false)}
                         closeModal={() => setShowPopup(false)}
+                    />
+                </Popup>
+            )}
+            {isOwn && (
+                <Popup
+                    showing={removePopup}
+                    onClickOutside={() => setShowRemove(false)}
+                    width={'500px'}
+                >
+                    <RemoveSound
+                        userId={userId}
+                        sound={props}
+                        initialData={{
+                            id,
+                            title,
+                            description,
+                            tags,
+                        }}
+                        onCancel={() => setShowRemove(false)}
+                        closeModal={() => setShowRemove(false)}
                     />
                 </Popup>
             )}

@@ -1,17 +1,19 @@
-import loadable from '@loadable/component';
 import { useEffect } from 'react';
+import { loadOneSignal } from './oneSignal';
 
-const Olark = loadable(() => import('./olark'));
-const Stripe = loadable(() => import('./stripe'));
+const excludedScriptsRoutes = ['dj-name-generator'];
 
 const useExternals = () => {
     useEffect(() => {
-        Stripe.preload();
-        if (process.env.NODE_ENV === 'production') {
-            setTimeout(() => {
-                Olark.preload();
-            }, 4000);
-        }
+        const excludeScripts = excludedScriptsRoutes.some((s) =>
+            window.location.pathname.includes(s)
+        );
+
+        setTimeout(() => {
+            if (!excludeScripts) {
+                loadOneSignal();
+            }
+        }, 4000);
     }, []);
 };
 

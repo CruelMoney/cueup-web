@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Elements, StripeProvider, injectStripe } from 'react-stripe-elements';
-import { Query, Mutation, useMutation, useQuery } from 'react-apollo';
+import { Elements, useStripe } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import { useMutation, useQuery } from 'react-apollo';
 import { Title, BodySmall } from 'components/Text';
 import { Input, InputRow, Label } from 'components/FormComponents';
 import CurrencySelector from 'components/CurrencySelector';
 import { SmartButton, Row, TeritaryButton, LoadingIndicator } from 'components/Blocks';
 import { useForm } from 'components/hooks/useForm';
 import { ME } from 'components/gql';
-import {
-    Environment,
-    AllCurrencies,
-    PAYMENT_PROVIDERS,
-    PAYOUT_TYPES,
-} from '../../../constants/constants';
+import { useServerContext } from 'components/hooks/useServerContext';
+import useTranslate from 'components/hooks/useTranslate';
+import { AllCurrencies, PAYMENT_PROVIDERS, PAYOUT_TYPES } from '../../../constants/constants';
 import CountrySelector, { BankSelector } from '../CountrySelector';
 import ErrorMessageApollo, { getErrorMessage } from '../ErrorMessageApollo';
 import PhoneInput from '../PhoneInput';
@@ -85,11 +83,11 @@ const PayoutForm = ({
     bankAccount,
     isUpdate,
     translate,
-    stripe,
     onCancel,
     onSubmitted,
     availableBankCountries,
 }) => {
+    const stripe = useStripe();
     const [mutate, { loading: submitting, error }] = useMutation(UPDATE_USER_PAYOUT, {
         onCompleted: onSubmitted,
         refetchQueries: [{ query: ME }],
@@ -103,7 +101,7 @@ const PayoutForm = ({
             const variables = useXendit
                 ? getXenditData(values)
                 : await getStripeData({ ...values, stripe });
-            mutate({
+            await mutate({
                 variables,
             });
         } catch (error) {
@@ -134,9 +132,12 @@ const PayoutForm = ({
             />
             <ErrorMessageApollo error={error || localError} />
 
-            <div className="row center">
+            <div className="row center" style={{ marginTop: '12px' }}>
                 <div className="col-xs-10">
-                    <p className="terms_link text-center">{translate('payout.terms')}</p>
+                    <p
+                        className="terms_link text-center"
+                        dangerouslySetInnerHTML={{ __html: translate('payout.terms') }}
+                    />
                 </div>
             </div>
         </>
@@ -340,28 +341,20 @@ const MainForm = ({
     );
 };
 
-const Injected = injectStripe(PayoutForm);
-
 const StripeWrapper = (props) => {
-    const [stripe, setStripe] = useState(null);
+    const { environment } = useServerContext();
 
-    useEffect(() => {
-        if (window.Stripe) {
-            setStripe(window.Stripe(Environment.STRIPE_PUBLIC_KEY));
-        }
-    }, []);
+    const stripePromise = loadStripe(environment.STRIPE_PUBLIC_KEY);
 
     return (
-        <StripeProvider stripe={stripe}>
-            <Elements>
-                <Injected {...props} />
-            </Elements>
-        </StripeProvider>
+        <Elements stripe={stripePromise}>
+            <PayoutForm {...props} />
+        </Elements>
     );
 };
 
 const DataWrapper = (props) => {
-    const { translate } = props;
+    const { translate } = useTranslate();
 
     const { loading, data } = useQuery(USER_PAYOUT_METHOD, {
         variables: { id: props.id },
@@ -383,6 +376,7 @@ const DataWrapper = (props) => {
             <StripeWrapper
                 {...props}
                 loading={loading || loadingUserData}
+                translate={translate}
                 bankAccount={bankAccount}
                 isUpdate={props.id}
                 availableBankCountries={

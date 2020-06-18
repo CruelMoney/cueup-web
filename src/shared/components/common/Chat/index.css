@@ -21,6 +21,9 @@
     padding-right: 33px;
     position: relative;
 }
+.message-wrapper.send {
+    padding-right: 0px;
+}
 .flex {
     display: flex;
     justify-content: center;
@@ -98,7 +101,7 @@
     border-radius: 25px;
     flex: 1;
     overflow: hidden;
-    padding: 10px 15px;
+    padding: 5px 15px;
     padding-bottom: 2px;
 }
 
@@ -107,8 +110,8 @@
     background: transparent;
     border: none;
     cursor: text;
-    font-size: 18px;
-    line-height: 24px;
+    font-size: 16px;
+    line-height: 1.333em;
     margin: 0px;
     max-height: 150px;
     min-height: 24px;
@@ -128,8 +131,6 @@
     align-self: flex-end;
     -webkit-appearance: none;
     border: none;
-    margin-bottom: 6px;
-
     margin-left: 15px;
     outline: none;
 }
@@ -174,6 +175,7 @@
     color: #8998a9;
     font-size: 0.9em;
     margin: 4px 50px;
+    margin-right: 10px;
     text-align: right;
 }
 .service-message {

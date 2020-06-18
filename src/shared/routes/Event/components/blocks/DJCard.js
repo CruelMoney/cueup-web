@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import PhoneIcon from 'react-ionicons/lib/IosCall';
-import MailIcon from 'react-ionicons/lib/MdMail';
+
+import { Icon } from '@iconify/react';
+import mailIcon from '@iconify/icons-ion/mail';
+import phoneIcon from '@iconify/icons-ion/call';
+
 import { NavLink } from 'react-router-dom';
 import { useMutation } from 'react-apollo';
-import ReactPixel from 'react-facebook-pixel';
+import useTranslate from 'components/hooks/useTranslate';
+import { appRoutes, userRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import {
     Col,
     keyframeFadeIn,
@@ -24,28 +28,24 @@ import Popup from '../../../../components/common/Popup';
 import Chat from '../../../../components/common/Chat';
 import EmptyPage from '../../../../components/common/EmptyPage';
 import { DECLINE_DJ, EVENT_GIGS } from '../../gql';
-import PayForm from '../../../../components/common/PayForm';
 import { ACTIVITY_TYPES, LogActivityInView } from '../../../../components/hooks/useLogActivity';
+import lazyUser from '../../../User';
 
 const hiddenEmail = '12345678@1234'.replace(/\w/g, '•') + '.com';
 const hiddenNumber = '45 12 34 56 78'.replace(/\w/g, '•');
 
-const DjCard = ({ style, idx, gig, translate, theEvent, hasMessage, onOpenChat }) => {
-    const [showChat, setShowChat] = useState(false);
-    const [showPayment, setShowPayment] = useState(false);
-
-    const initiateBooking = () => {
-        ReactPixel.track('InitiateCheckout');
-        setShowPayment(true);
-    };
+const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateBooking }) => {
+    const { translate } = useTranslate();
 
     const { dj, offer, status } = gig;
     if (!dj) {
         return null;
     }
     const { userMetadata = {}, artistName, email } = dj;
-    const { bio = '', firstName, phone } = userMetadata;
-    const shouldTruncate = bio.length > 100;
+    const { firstName, phone } = userMetadata;
+    let { bio } = userMetadata;
+    bio = bio ? bio : '';
+    const shouldTruncate = bio?.length > 100;
     const truncatedBio = shouldTruncate ? bio.substring(0, 100) + '...' : bio;
     const name = artistName || firstName;
     const showInfo = status === 'CONFIRMED';
@@ -53,7 +53,7 @@ const DjCard = ({ style, idx, gig, translate, theEvent, hasMessage, onOpenChat }
 
     return (
         <LogActivityInView type={ACTIVITY_TYPES.GIG_VIEWED_BY_ORGANIZER} subjectId={gig.id}>
-            <Wrapper idx={idx}>
+            <Wrapper idx={idx} data-cy="event-dj" onMouseEnter={() => lazyUser.preload()}>
                 <Card style={style}>
                     <ImageWrapper>
                         <StyledImage src={dj.picture.path} />
@@ -69,31 +69,35 @@ const DjCard = ({ style, idx, gig, translate, theEvent, hasMessage, onOpenChat }
                                     {!finished && (
                                         <SecondaryButton
                                             small
+                                            data-cy="message-dj-button"
                                             style={{ position: 'relative', overflow: 'visible' }}
                                             onClick={() => {
-                                                setShowChat(true);
                                                 onOpenChat();
                                             }}
                                         >
                                             Message
                                             {hasMessage && (
-                                                <div className="notification-bubble">1</div>
+                                                <div className="notification-bubble">!</div>
                                             )}
                                         </SecondaryButton>
                                     )}
                                     <NavLink
                                         to={{
-                                            pathname: `${translate('routes./user')}/${
+                                            pathname: `${translate(appRoutes.user)}/${
                                                 dj.permalink
-                                            }/overview`,
+                                            }/${userRoutes.overview}`,
                                             state: { gigId: gig.id },
                                             search: `?gigId=${gig.id}&eventId=${theEvent.id}&hash=${theEvent.hash}`,
                                         }}
                                     >
                                         {finished ? (
-                                            <SecondaryButton small>See profile</SecondaryButton>
+                                            <SecondaryButton data-cy="dj-profile-button" small>
+                                                See profile
+                                            </SecondaryButton>
                                         ) : (
-                                            <TeritaryButton small>See profile</TeritaryButton>
+                                            <TeritaryButton data-cy="dj-profile-button" small>
+                                                See profile
+                                            </TeritaryButton>
                                         )}
                                     </NavLink>
                                 </RowWrap>
@@ -107,7 +111,11 @@ const DjCard = ({ style, idx, gig, translate, theEvent, hasMessage, onOpenChat }
                                         )}
                                     >
                                         <InfoPill>
-                                            <MailIcon fontSize="15px" color="#98A4B3" />
+                                            <Icon
+                                                icon={mailIcon}
+                                                style={{ fontSize: '15px' }}
+                                                color="#98A4B3"
+                                            />
                                             <span>{showInfo ? email : hiddenEmail}</span>
                                         </InfoPill>
                                     </ConditionalWrap>
@@ -118,13 +126,18 @@ const DjCard = ({ style, idx, gig, translate, theEvent, hasMessage, onOpenChat }
                                         wrap={(children) => <a href={'tel:' + phone}>{children}</a>}
                                     >
                                         <InfoPill>
-                                            <PhoneIcon fontSize="18px" color="#98A4B3" />
+                                            <Icon
+                                                icon={phoneIcon}
+                                                style={{ fontSize: '15px' }}
+                                                color="#98A4B3"
+                                            />
                                             <span>{showInfo ? phone : hiddenNumber}</span>
                                         </InfoPill>
                                     </ConditionalWrap>
                                 )}
                             </RightCol>
                         </RowWrap>
+                        <div style={{ flex: 1 }} />
                         <Hr />
 
                         <Offer
@@ -133,14 +146,14 @@ const DjCard = ({ style, idx, gig, translate, theEvent, hasMessage, onOpenChat }
                             gig={gig}
                             translate={translate}
                             name={name}
-                            initiateBooking={initiateBooking}
+                            initiateBooking={onInitiateBooking}
                         />
                     </Content>
                 </Card>
 
                 <Shadow />
 
-                <ChatPopup
+                {/* <ChatPopup
                     showing={showChat}
                     translate={translate}
                     close={() => setShowChat(false)}
@@ -149,14 +162,7 @@ const DjCard = ({ style, idx, gig, translate, theEvent, hasMessage, onOpenChat }
                     eventId={theEvent.id}
                     showInfo={showInfo}
                     gig={gig}
-                />
-                <PayPopup
-                    showing={showPayment}
-                    translate={translate}
-                    close={() => setShowPayment(false)}
-                    theEvent={theEvent}
-                    gig={gig}
-                />
+                /> */}
             </Wrapper>
         </LogActivityInView>
     );
@@ -198,12 +204,16 @@ const Offer = ({
         <OfferRow middle>
             <OfferTextWrapper>
                 {!confirmed && (
-                    <OfferText muted={!offer}>{offer ? offer.formatted : 'No offer yet'}</OfferText>
+                    <OfferText data-cy="offer-price" muted={!offer}>
+                        {offer ? offer.formatted : 'No offer yet'}
+                    </OfferText>
                 )}
                 {tempPaidIndicator && <OfferText muted={true}>Paid and confirmed</OfferText>}
                 {confirmed && !tempPaidIndicator && (
                     <>
-                        <OfferText muted={!offer}>{amountPaid?.formatted}</OfferText>
+                        <OfferText data-cy="offer-price" muted={!offer}>
+                            {amountPaid?.formatted}
+                        </OfferText>
                         <OfferText muted={true}>Paid and confirmed</OfferText>
                         {amountLeft?.amount ? (
                             <OfferText muted>{amountLeft.formatted} remaining</OfferText>
@@ -220,33 +230,21 @@ const Offer = ({
                         warning={translate('decline-warning')}
                         level="tertiary"
                     >
-                        Decline
+                        Remove DJ
                     </SmartButton>
                 )}
                 {['ACCEPTED'].includes(status) && (
-                    <PrimaryButton onClick={initiateBooking}>Book {name}</PrimaryButton>
+                    <PrimaryButton data-cy="book-dj-button" onClick={initiateBooking}>
+                        Book {name}
+                    </PrimaryButton>
                 )}
                 {['CONFIRMED', 'FINISHED'].includes(status) && (
-                    <NavLink to="review">
+                    <NavLink to={eventRoutes.review}>
                         <PrimaryButton>Review {name}</PrimaryButton>
                     </NavLink>
                 )}
             </ButtonsRow>
         </OfferRow>
-    );
-};
-
-const PayPopup = ({ showing, close, gig, paymentPossible, theEvent }) => {
-    return (
-        <Popup showing={showing} onClickOutside={close} noPadding>
-            <PayForm
-                paymentPossible={paymentPossible}
-                id={gig.id}
-                offer={gig.offer}
-                gig={gig}
-                event={theEvent}
-            />
-        </Popup>
     );
 };
 
@@ -270,7 +268,7 @@ const ChatPopup = ({ translate, showing, close, dj, organizer, gig, eventId, sho
                 placeholder={
                     <EmptyPage
                         title="No messages"
-                        message={<Body>{translate('event.offer.empty-chat')}</Body>}
+                        message={<Body>{translate('event:offer.empty-chat')}</Body>}
                     />
                 }
             />
