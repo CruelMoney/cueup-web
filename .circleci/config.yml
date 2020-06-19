@@ -87,7 +87,7 @@ jobs:
 
   sentry-upload:
     executor: with-redis-mysql-mongo
-    name: Create release and notify Sentry of deploy
+    description: Create release and notify Sentry of deploy
     steps: 
       - checkout
       - yarn-install
