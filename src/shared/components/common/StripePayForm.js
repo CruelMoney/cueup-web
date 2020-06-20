@@ -173,21 +173,22 @@ const PaymentRequestButtonWrapper = ({ paymentIntent, onPaymentConfirmed }) => {
         // https://stripe.com/docs/stripe.js#the-payment-request-object
         if (stripe && offer) {
             const { totalPayment, serviceFee, offer: innerOffer } = offer;
+
             const pmRq = stripe.paymentRequest({
                 currency: totalPayment.currency.toLowerCase(),
                 country: 'DK',
                 total: {
                     label: 'Total',
-                    amount: totalPayment.amount,
+                    amount: parseInt(totalPayment.amount),
                 },
                 displayItems: [
                     {
                         label: 'DJ offer',
-                        amount: innerOffer.amount,
+                        amount: parseInt(innerOffer.amount),
                     },
                     {
                         label: 'Service fee',
-                        amount: serviceFee.amount,
+                        amount: parseInt(serviceFee.amount),
                     },
                 ],
                 requestPayerName: true,
