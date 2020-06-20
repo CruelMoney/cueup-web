@@ -113,15 +113,18 @@ jobs:
           urls: 'https://cueup.io,https://cueup.io/become-dj'
 
 workflows:
-  build-deploy:
+  build-deploy-production:
     jobs:
-      - lint-and-test
+      - lint-and-test:
+          filters:
+            branches:
+              only: 
+                - master
       - e2e:
           filters:
             branches:
               only: 
                 - master
-                - staging
       - deploy: 
           requires:
             - e2e
@@ -130,7 +133,6 @@ workflows:
             branches:
               only: 
                 - master
-                - staging
       - sentry-upload: 
           requires:
             - deploy
@@ -145,4 +147,18 @@ workflows:
             branches:
               only: 
                 - master
+
+  build-deploy-staging:
+    jobs:
+      - lint-and-test:
+         filters:
+            branches:
+              only: 
+                - staging
+      - deploy: 
+          requires:
+            - lint-and-test
+          filters:
+            branches:
+              only: 
                 - staging
