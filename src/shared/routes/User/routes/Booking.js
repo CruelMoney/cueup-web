@@ -322,7 +322,6 @@ const BookingSidebar = ({ loading, values, requestBooking, showLogin, eventCreat
     return (
         <>
             <Sidebar
-                showCTAShadow
                 stickyTop={'0px'}
                 enableSharing={false}
                 childrenBelow={

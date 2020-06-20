@@ -52,7 +52,6 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
     const memberSince = moment(createdAt).format('MMMM YYYY');
     return (
         <Sidebar
-            showCTAShadow={bookingEnabled}
             stickyTop={'-300px'} // height of image
             childrenBelow={
                 user && user.isOwn ? (

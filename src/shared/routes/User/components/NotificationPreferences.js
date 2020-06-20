@@ -18,6 +18,7 @@ const TableRow = styled(Row)`
     > *:nth-child(4) {
         min-width: 100px;
         text-align: center;
+        justify-content: center;
     }
 `;
 

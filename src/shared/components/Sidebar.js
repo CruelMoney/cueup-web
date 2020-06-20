@@ -55,13 +55,12 @@ export const SidebarContent = styled.div`
     padding: 24px;
 `;
 
-const Sidebar = ({ children, showCTAShadow, childrenBelow, large, ...props }) => {
+const Sidebar = ({ children, childrenBelow, large, ...props }) => {
     return (
         <Sticky className={'sidebar'} {...props}>
             <Spacing large={large}>
                 <Card>{children}</Card>
                 <Shadow />
-                {showCTAShadow ? <CTAShadow /> : null}
             </Spacing>
             <div style={{ marginTop: '30px' }}>{childrenBelow}</div>
         </Sticky>
@@ -113,13 +112,5 @@ export const CTAButton = ({ children, loading, ...props }) => (
         </CTAIcon>
     </CTA>
 );
-
-export const CTAShadow = styled.div`
-    box-shadow: 0px -20px 50px 20px #26deff;
-    position: absolute;
-    width: 100%;
-    height: 0%;
-    bottom: 0;
-`;
 
 export default Sidebar;

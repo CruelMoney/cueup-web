@@ -7,7 +7,6 @@ import startIcon from '@iconify/icons-ion/person-circle';
 
 import { Row, ShowBelow } from '../../../components/Blocks';
 import { Stat } from '../../../components/Text';
-import { CTAShadow } from '../../../components/Sidebar';
 import Tooltip from '../../../components/Tooltip';
 import BookingButton from './BookingButton';
 
@@ -44,10 +43,7 @@ const StickyBookingButtonWrapper = styled.div`
 export const MobileBookingButton = ({ children, ...props }) => (
     <ShowBelow>
         <StickyBookingButtonWrapper>
-            <div>
-                <CTAShadow />
-                {children || <BookingButton {...props} />}
-            </div>
+            <div>{children || <BookingButton {...props} />}</div>
         </StickyBookingButtonWrapper>
     </ShowBelow>
 );
