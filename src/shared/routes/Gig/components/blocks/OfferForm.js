@@ -268,7 +268,7 @@ const OfferForm = ({ gig, profileCurrency, payoutInfoValid, showPopup, showDecli
                 ) : null}
 
                 {!payoutInfoValid ? (
-                    <PrimaryButton rounded={true} onClick={showPopup} name="show-payout-popup">
+                    <PrimaryButton onClick={showPopup} name="show-payout-popup">
                         {translate('Update payout info')}
                     </PrimaryButton>
                 ) : null}

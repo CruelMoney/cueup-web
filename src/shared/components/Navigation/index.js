@@ -54,30 +54,27 @@ const Menu = () => {
                                     <ul className="main-menu">
                                         <li>
                                             <Navlink
-                                                buttonLook={true}
                                                 to={t(appRoutes.howItWorks)}
                                                 label={t('how-it-works')}
-                                                important={true}
+                                                important="true"
                                             />
                                         </li>
 
                                         {loggedIn ? null : (
                                             <li>
                                                 <Navlink
-                                                    buttonLook={true}
                                                     to={t(appRoutes.becomeDj)}
                                                     label={t('become-a-dj')}
-                                                    important={true}
+                                                    important="true"
                                                 />
                                             </li>
                                         )}
                                         {loggedIn ? null : (
                                             <li>
                                                 <Navlink
-                                                    buttonLook={true}
                                                     to={t(appRoutes.signUp)}
                                                     label={t('sign up')}
-                                                    important={true}
+                                                    important="true"
                                                 />
                                             </li>
                                         )}

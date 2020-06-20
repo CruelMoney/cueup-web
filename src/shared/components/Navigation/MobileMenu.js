@@ -163,7 +163,6 @@ const Content = ({
                         <li>
                             <Navlink
                                 onClick={() => setShow(false)}
-                                buttonLook={true}
                                 to={translate(appRoutes.howItWorks)}
                                 label={translate('how-it-works')}
                             />
@@ -212,7 +211,6 @@ const Content = ({
                     {loggedIn ? (
                         <li>
                             <Navlink
-                                buttonLook={true}
                                 to={translate(appRoutes.home)}
                                 onClick={logout}
                                 label={translate('log-out')}
@@ -223,10 +221,9 @@ const Content = ({
                         <li>
                             <Navlink
                                 onClick={() => setShow(false)}
-                                buttonLook={true}
                                 to={translate(appRoutes.becomeDj)}
                                 label={translate('become-dj')}
-                                important={true}
+                                important="true"
                             />
                         </li>
                     )}
@@ -234,10 +231,9 @@ const Content = ({
                         <li>
                             <Navlink
                                 onClick={() => setShow(false)}
-                                buttonLook={true}
                                 to={translate(appRoutes.signUp)}
                                 label={translate('sign up')}
-                                important={true}
+                                important="true"
                             />
                         </li>
                     )}
@@ -270,7 +266,6 @@ const Content = ({
                                         <li key={idx}>
                                             <Navlink
                                                 onClick={() => setShow(false)}
-                                                buttonLook={true}
                                                 to={route}
                                                 label={label}
                                             />

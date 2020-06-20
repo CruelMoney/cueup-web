@@ -4,7 +4,6 @@ import ToggleButtonInput from './ToggleButtonInput';
 
 class ToggleButtonHandler extends Component {
     static defaultProps = {
-        rounded: true,
         columns: 3,
         potentialValues: [],
         value: [],
@@ -113,7 +112,6 @@ class ToggleButtonHandler extends Component {
                         <ToggleButton
                             key={this.state.addedGenres.length}
                             color={this.props.color}
-                            rounded={this.props.rounded}
                             label={'Add new +'}
                             active={false}
                             disabled={this.props.disabled}
@@ -128,7 +126,6 @@ class ToggleButtonHandler extends Component {
                             color={this.props.color}
                             onChange={(value) => this.inputUpdate(value, idx)}
                             active={true}
-                            rounded={this.props.rounded}
                         />
                     </td>
                 );
@@ -137,7 +134,6 @@ class ToggleButtonHandler extends Component {
                     <td key={genre} data-key={genre}>
                         <ToggleButton
                             color={this.props.color}
-                            rounded={this.props.rounded}
                             label={name}
                             active={this.state.selectedValues.includes(name)}
                             disabled={this.props.disabled}

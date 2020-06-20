@@ -4,7 +4,6 @@ import Checkmark from '../../assets/Checkmark';
 
 class ToggleButton extends Component {
     static defaultProps = {
-        rounded: false,
         label: 'ToggleButton',
     };
 

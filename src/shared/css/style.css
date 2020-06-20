@@ -520,16 +520,6 @@ footer .social svg {
     justify-content: flex-end;
 }
 
-#preFooter .action-buttons .button-wrapper:first-child a {
-    background-color: inherit !important;
-    border-color: inherit !important;
-    color: white !important;
-}
-#preFooter .action-buttons .button-wrapper:last-child a {
-    background-color: transparent !important;
-    border-color: inherit !important;
-    color: inherit !important;
-}
 #preFooter .button {
     min-width: 150px;
 }
@@ -1871,11 +1861,7 @@ button {
     transform: scale(1.05);
 }
 /*Action and toggle buttons*/
-.button-wrapper {
-    display: flex;
-    justify-content: center;
-    visibility: hidden;
-}
+
 .button.flat {
     border: 2px solid #bbbbbb;
     color: #bbbbbb;
@@ -2109,9 +2095,7 @@ p.error {
     margin-top: 10px;
     text-align: center;
 }
-.progrezz-wrapper .button-wrapper {
-    margin-top: -10px;
-}
+
 .terms {
     margin-bottom: 80px;
     position: relative;
@@ -2132,10 +2116,6 @@ p.error {
     margin-top: 30px;
 }
 
-.terms-navigation .button-wrapper {
-    margin-bottom: 10px;
-    width: 200px;
-}
 .terms-navigation button {
     width: 100%;
 }
@@ -2255,12 +2235,7 @@ header .info-boxes {
     position: relative;
     width: 100%;
 }
-.progrezz-wrapper .button-wrapper {
-    align-items: center;
-    display: flex;
-    height: 100%;
-    justify-content: center;
-}
+
 .progrezz-wrapper .button {
     height: 40px;
 }
@@ -2590,12 +2565,6 @@ header .info-boxes {
     justify-content: center;
     min-height: 400px;
     text-align: left;
-}
-
-.payout-form button,
-.pay-form button,
-.pay-form .button-wrapper {
-    width: 100%;
 }
 
 .payment-confirmation {
@@ -3002,9 +2971,7 @@ header .dj-card p {
     display: flex;
     justify-content: space-between;
 }
-.social-signup .button-wrapper {
-    width: 32%;
-}
+
 .social-signup button {
     width: 100%;
 }
@@ -3221,20 +3188,7 @@ ol.breadcrumbs a {
     .about-content .row {
         flex-direction: column;
     }
-    .terms-content .button-wrapper,
-    .faq-content .button-wrapper,
-    .about-content .button-wrapper {
-        flex-direction: row;
-        justify-content: center;
-        margin-bottom: 20px;
-        width: 100%;
-    }
-    .terms-content .button-wrapper a,
-    .faq-content .button-wrapper a,
-    .about-content .button-wrapper a {
-        margin: 0 5px;
-        min-width: 100px;
-    }
+
     .terms-content .fixed,
     .faq-content .fixed,
     .about-content .fixed {
@@ -3455,13 +3409,7 @@ ol.breadcrumbs a {
         flex-direction: row;
         width: 100%;
     }
-    .terms-navigation .button-wrapper {
-        margin-right: 5px;
-        min-width: 100px;
-    }
-    .terms-navigation .button-wrapper:last-child {
-        margin-right: 0px;
-    }
+
     .navigation {
         height: 60px;
     }
@@ -3581,10 +3529,6 @@ ol.breadcrumbs a {
 
     .social-signup .buttons {
         flex-direction: column;
-    }
-    .social-signup .buttons .button-wrapper {
-        margin-bottom: 15px;
-        width: 100%;
     }
 
     ol.breadcrumbs,

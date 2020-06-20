@@ -64,10 +64,10 @@ const Footer = ({
                             {subTitle}
                         </div>
                         <div key="preFooterButtons" className="col-md-5 action-buttons">
-                            <ButtonLink color={color} className="button elevated" to={firstTo}>
+                            <ButtonLink shadow to={firstTo}>
                                 {firstLabel}
                             </ButtonLink>
-                            <ButtonLink color={color} className="button elevated" to={secondTo}>
+                            <ButtonLink invert shadow to={secondTo}>
                                 {secondLabel}
                             </ButtonLink>
                         </div>

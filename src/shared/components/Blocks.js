@@ -474,9 +474,15 @@ export const PrimaryButton = styled.button.attrs(({ loading, ...props }) => prop
     :hover {
         color: ${({ invert }) => (invert ? '#31daff' : '#fff')};
         background-color: ${({ invert, warning }) =>
-            invert ? '#fff' : warning ? '#b6051a' : '#00d1ff'};
+            invert ? '#fbfbfb' : warning ? '#b6051a' : '#00d1ff'};
     }
     ${({ disabled }) => (disabled ? 'opacity: 0.5;' : '')}
+    ${({ shadow }) =>
+        shadow
+            ? css`
+                  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+              `
+            : ''}
 `;
 
 export const LinkButton = styled(TeritaryButton)`

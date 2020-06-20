@@ -14,7 +14,6 @@ const GenreChooser = ({ letCueupDecide, setLetcueupDecide, chooseLabel, cueupDec
                                 name="choose"
                                 label={chooseLabel}
                                 active={letCueupDecide === false}
-                                rounded
                             >
                                 {chooseLabel}
                             </ToggleButton>
@@ -26,7 +25,6 @@ const GenreChooser = ({ letCueupDecide, setLetcueupDecide, chooseLabel, cueupDec
                                 name="cueup"
                                 label={cueupDecideLabel}
                                 active={letCueupDecide === true}
-                                rounded
                             />
                         </td>
                     </tr>

@@ -62,7 +62,6 @@ const Step2 = ({
                         {translate('speakers')}
                         <ToggleButton
                             onClick={(speakers) => handleChange({ speakers })}
-                            rounded
                             active={form.speakers}
                             label={translate('Not required')}
                             labelToggled={translate('Required')}
@@ -71,7 +70,6 @@ const Step2 = ({
                     <LabelHalf>
                         {translate('lights')}
                         <ToggleButton
-                            rounded
                             onClick={(lights) => handleChange({ lights })}
                             label={translate('Not required')}
                             labelToggled={translate('Required')}
