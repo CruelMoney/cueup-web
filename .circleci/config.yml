@@ -2,6 +2,7 @@ version: 2.1
 orbs:
   node: circleci/node@2.0.0
   cypress: cypress-io/cypress@1.19.1
+  lighthouse-check: foo-software/lighthouse-check@0.0.12
 
 executors:
   with-redis-mysql-mongo:
@@ -102,6 +103,14 @@ jobs:
             sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps build/client/static
             sentry-cli releases finalize $SENTRY_RELEASE
             sentry-cli releases deploys $SENTRY_RELEASE new -e $SENTRY_ENVIRONMENT
+
+  performance-check:
+    executor: lighthouse-check/default
+    description: Run a lighthouse check and post to slack
+    steps:
+      - lighthouse-check/audit:
+          slackWebhookUrl: $LIGHTHOUSE_CHECK_SLACK_WEBHOOK_URL
+          urls: 'https://cueup.io,https://cueup.io/become-dj'
 
 workflows:
   build-deploy:
