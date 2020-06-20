@@ -4,6 +4,7 @@ import BasicSection from './BasicSection';
 import ProfileSection from './ProfileSection';
 import PreferencesSection from './PreferencesSection';
 import SystemSection from './SystemSection';
+import ProSection from './ProSection';
 
 const hasChanges = (o1, o2) => {
     const keys = Object.keys(o1);
@@ -52,14 +53,7 @@ const Settings = ({ user, loading, updateUser, history, location }) => {
 
     return (
         <>
-            <BasicSection
-                user={user}
-                updateKey={updateKey}
-                saveData={saveData}
-                modal={modal}
-                onModalClose={onModalClose}
-            />
-
+            <ProSection user={user} updateKey={updateKey} saveData={saveData} />
             {isDj && (
                 <ProfileSection
                     user={user}
@@ -71,6 +65,14 @@ const Settings = ({ user, loading, updateUser, history, location }) => {
             )}
 
             <PreferencesSection
+                user={user}
+                updateKey={updateKey}
+                saveData={saveData}
+                modal={modal}
+                onModalClose={onModalClose}
+            />
+
+            <BasicSection
                 user={user}
                 updateKey={updateKey}
                 saveData={saveData}

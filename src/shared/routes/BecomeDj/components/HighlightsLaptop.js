@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Col } from 'components/Blocks';
-import { TextAccent } from '../../routes/BecomeDj/components/blocks/TextAccent';
-import { Title } from './Title';
+import { TextAccent } from './blocks/TextAccent';
 import Laptop from './Laptop';
 import Highlights from './Highlights';
+import Title from './Title';
 
 const Wrapper = styled(Col)`
     position: relative;

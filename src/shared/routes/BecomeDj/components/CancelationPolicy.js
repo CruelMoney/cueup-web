@@ -4,9 +4,9 @@ import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Container, Col, Row, ReadMore } from 'components/Blocks';
 import { appRoutes } from 'constants/locales/appRoutes';
-import { Header } from '../../../components/common/Text';
 import { TextAccent } from '../components/blocks/TextAccent';
-import { SubTitle } from '../../../components/common/SubTitle';
+import { Header } from './Text';
+import { SubTitle } from './SubTitle';
 
 const Bg = styled.div`
     display: flex;

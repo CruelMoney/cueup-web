@@ -2,12 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import GracefullImage from 'components/GracefullImage';
 import { RowWrap, Col, SecondaryButton } from 'components/Blocks';
-import { Title, PageTitle, HeaderTitle } from 'components/Text';
+import { HeaderTitle } from 'components/Text';
+import mobileIphone from 'routes/BecomeDj/assets/available-on/iphone_mobile.png';
 import Popup from '../../../components/common/Popup';
-import mobileIphone from '../../../assets/images/available-on/iphone_mobile.png';
-
-import appStore from '../../../assets/icons/app_store_outline.png';
-import playStore from '../../../assets/icons/play_outline.png';
 
 const DownloadAppPopup = ({ isActive, close }) => {
     return (

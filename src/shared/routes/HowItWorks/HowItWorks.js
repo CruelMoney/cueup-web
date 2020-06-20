@@ -2,21 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet-async';
 import { NavLink } from 'react-router-dom';
+import { Header } from 'routes/BecomeDj/components/Text';
 import Footer from 'components/common/Footer';
 import { TextAccent } from 'routes/BecomeDj/components/blocks/TextAccent';
-import PaymentCards from 'components/common/PaymentCards';
-import JoinThousands from 'components/common/JoinThousands';
-import { Header } from 'components/common/Text';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
 import { useServerContext } from 'components/hooks/useServerContext';
+import JoinThousands from 'routes/BecomeDj/components/JoinThousands';
+import Hero from 'routes/BecomeDj/components/Hero';
+import { SubTitle } from 'routes/BecomeDj/components/SubTitle';
+import HighlightsLaptop from 'routes/BecomeDj/components/HighlightsLaptop';
+import PaymentCards from 'routes/BecomeDj/components/PaymentCards';
 import thumbEn from '../../assets/images/signup.png';
 import thumbDa from '../../assets/images/signup_da.png';
 import ScrollToTop from '../../components/common/ScrollToTop';
-import Hero from '../../components/common/Hero';
-import { SubTitle } from '../../components/common/SubTitle';
 import { ReadMore, Container, Col } from '../../components/Blocks';
-import HighlightsLaptop from '../../components/common/HighlightsLaptop';
 import HowItWorksCards from './components/HowItWorksCards';
 
 const Bg = styled.div`

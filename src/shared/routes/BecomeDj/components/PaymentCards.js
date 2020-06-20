@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { TextAccent } from 'routes/BecomeDj/components/blocks/TextAccent';
-import paymentCard from '../../assets/images/credit_card.jpg';
-import invoice from '../../assets/images/Invoice.jpg';
-import { ReadMore } from '../Blocks';
-import GracefullImage from '../GracefullImage';
+import { ReadMore } from 'components/Blocks';
+import GracefullImage from 'components/GracefullImage';
+import paymentCard from '../assets/credit_card.jpg';
+import invoice from '../assets/Invoice.jpg';
 import { Header, GrayText } from './Text';
 
 const Card = styled.div`

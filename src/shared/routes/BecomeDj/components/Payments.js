@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Container } from 'components/Blocks';
 import { appRoutes } from 'constants/locales/appRoutes';
-import PaymentCards from '../../../components/common/PaymentCards';
+import PaymentCards from './PaymentCards';
 
 const Bg = styled.div`
     display: flex;

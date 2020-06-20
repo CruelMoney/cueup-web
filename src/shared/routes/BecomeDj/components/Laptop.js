@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Container, Col } from 'components/Blocks';
-import Macbook from '../../assets/images/perf_gallery_hw__bdxj0rf7d3te_large_2x.png';
+import Macbook from '../assets/perf_gallery_hw__bdxj0rf7d3te_large_2x.png';
 // import screenShot1 from '../../assets/images/screenshots/1.jpg';
 // import screenShot2 from '../../assets/images/screenshots/2.jpg';
 // import screenShot3 from '../../assets/images/screenshots/3.jpg';
-import screenShot4 from '../../assets/images/screenshots/4.jpg';
+import screenShot4 from '../assets/screenshots/4.jpg';
 
 const LaptopContainer = styled(Container)`
     display: flex;

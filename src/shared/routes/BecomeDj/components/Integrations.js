@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Container, Col } from 'components/Blocks';
 import GracefullImage from 'components/GracefullImage';
-import integrationsGraphic from '../../../assets/images/integrations/Brands.png';
-import integrationsGraphicMobile from '../../../assets/images/integrations/Brands_mobile.png';
-import { Header } from '../../../components/common/Text';
+import integrationsGraphic from '../assets/integrations/Brands.png';
+import integrationsGraphicMobile from '../assets/integrations/Brands_mobile.png';
+import { Header } from './Text';
 import { TextAccent } from './blocks/TextAccent';
 
 const TitleWrapper = styled.div`

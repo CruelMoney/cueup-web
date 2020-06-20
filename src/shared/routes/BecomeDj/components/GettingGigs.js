@@ -13,11 +13,11 @@ import { Container, ReadMore } from 'components/Blocks';
 import GracefullImage from 'components/GracefullImage';
 import { appRoutes } from 'constants/locales/appRoutes';
 import { ResponsiveTextAccent } from '../components/blocks/TextAccent';
-import { GrayText, Header } from '../../../components/common/Text';
 import cph from '../assets/maps/cph.png';
 import la from '../assets/maps/la.png';
 import nyc from '../assets/maps/nyc.png';
 import bali from '../assets/maps/bali.png';
+import { GrayText, Header } from './Text';
 
 const gigCards = [
     {

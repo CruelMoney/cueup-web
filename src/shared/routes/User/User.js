@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Switch, Route, Redirect, useHistory } from 'react-router';
 import styled from 'styled-components';
-import { Query, useMutation } from 'react-apollo';
+import { Query, useMutation, useQuery } from 'react-apollo';
 import queryString from 'query-string';
 
 import moment from 'moment';
@@ -193,34 +193,24 @@ const Content = React.memo(({ match, ...userProps }) => {
                                 }
                             />
                             <Route
-                                strict
-                                exact
                                 path={match.url + '/reviews'}
                                 render={(props) => <Reviews {...props} {...userProps} />}
                             />
                             <Route
-                                strict
-                                exact
                                 path={match.path + '/photos'}
                                 render={(props) => <Photos {...props} {...userProps} />}
                             />
                             <Route
-                                strict
-                                exact
                                 path={[match.path + '/sounds', match.path + '/sounds/:id']}
                                 render={(props) => <Sounds {...props} {...userProps} />}
                             />
                             {showPrivateRoutes ? (
                                 <Route
-                                    strict
-                                    exact
                                     path={match.url + '/settings'}
                                     render={(props) => <Settings {...props} {...userProps} />}
                                 />
                             ) : !userProps.loading ? (
                                 <Route
-                                    strict
-                                    exact
                                     path={match.url + '/settings'}
                                     render={(props) => <LoginPopup {...props} {...userProps} />}
                                 />
@@ -228,15 +218,11 @@ const Content = React.memo(({ match, ...userProps }) => {
 
                             {showPrivateRoutes ? (
                                 <Route
-                                    strict
-                                    exact
                                     path={match.url + '/gigs'}
                                     render={(props) => <Gigs {...props} {...userProps} />}
                                 />
                             ) : !userProps.loading ? (
                                 <Route
-                                    strict
-                                    exact
                                     path={match.url + '/gigs'}
                                     render={(props) => <LoginPopup {...props} {...userProps} />}
                                 />
@@ -244,8 +230,6 @@ const Content = React.memo(({ match, ...userProps }) => {
 
                             {showPrivateRoutes ? (
                                 <Route
-                                    strict
-                                    exact
                                     path={match.url + '/events'}
                                     render={(props) => <Events {...props} {...userProps} />}
                                 />
@@ -298,8 +282,7 @@ const LoginPopup = ({ translate }) => {
     );
 };
 
-const Index = ({ match, location }) => {
-    const { translate } = useNamespaceContent(content, 'user');
+const User = ({ match, location, user, error, loading, translate }) => {
     const [updateUser, { loading: isSaving }] = useMutation(UPDATE_USER);
     const [hasScrolled, setHasScrolled] = useState(false);
 
@@ -307,105 +290,60 @@ const Index = ({ match, location }) => {
         setHasScrolled(true);
     }, []);
 
+    const title = user ? user.artistName || user.userMetadata.firstName : null;
+    const thumb = user ? user.picture.path : null;
+    const description = user ? user.userMetadata.bio : null;
+    if (user) {
+        user.title = title;
+    }
+
     return (
-        <>
-            <Query query={ME} onError={console.warn}>
-                {({ data, loading: loadingMe }) => (
-                    <Query
-                        query={USER}
-                        variables={{ permalink: match.params.permalink }}
-                        onError={console.warn}
-                    >
-                        {({ data: userData, loading: loadingUser, error }) => {
-                            const { user: profileUser } = userData || {};
-                            const loading = loadingMe || loadingUser;
-                            const me = data?.me;
+        <div>
+            {!hasScrolled && <ScrollToTop />}
+            {user && (
+                <Helmet>
+                    <title>{title}</title>
+                    <meta property="og:title" content={title} />
+                    <meta name="twitter:title" content={title} />
 
-                            if (!loading && !profileUser) {
-                                return <Redirect to={translate(appRoutes.notFound)} />;
-                            }
+                    <meta property="og:image" content={thumb} />
+                    <meta name="twitter:image" content={thumb} />
 
-                            let user = profileUser;
+                    <meta property="og:type" content={'profile'} />
 
-                            if (user && data && me) {
-                                user.isOwn = user.isOwn || me.id === user.id;
-                            }
+                    <meta name="description" content={description} />
+                    <meta name="twitter:description" content={description} />
+                    <meta property="og:description" content={description} />
 
-                            if (me && !me.appMetadata.onboarded && user?.isOwn) {
-                                return <Redirect to={'/complete-signup'} />;
-                            }
+                    {user.isOwn && (
+                        <meta
+                            name="apple-itunes-app"
+                            content="app-id=1458267647, app-argument=userProfile"
+                        />
+                    )}
+                </Helmet>
+            )}
+            <SavingIndicator loading={isSaving} error={error} />
 
-                            if (user && user.isOwn && me) {
-                                user = mergeObjects(user, me);
-                            }
+            <UserRoutes
+                loading={loading}
+                user={user}
+                updateUser={updateUser}
+                match={match}
+                location={location}
+                translate={translate}
+            />
 
-                            const title = user
-                                ? user.artistName || user.userMetadata.firstName
-                                : null;
-                            const thumb = user ? user.picture.path : null;
-                            const description = user ? user.userMetadata.bio : null;
-                            if (user) {
-                                user.title = title;
-                            }
-
-                            return (
-                                <div>
-                                    {!hasScrolled && <ScrollToTop />}
-                                    {user && (
-                                        <Helmet>
-                                            <title>{title}</title>
-                                            <meta property="og:title" content={title} />
-                                            <meta name="twitter:title" content={title} />
-
-                                            <meta property="og:image" content={thumb} />
-                                            <meta name="twitter:image" content={thumb} />
-
-                                            <meta property="og:type" content={'profile'} />
-
-                                            <meta name="description" content={description} />
-                                            <meta
-                                                name="twitter:description"
-                                                content={description}
-                                            />
-                                            <meta property="og:description" content={description} />
-
-                                            {user.isOwn && (
-                                                <meta
-                                                    name="apple-itunes-app"
-                                                    content="app-id=1458267647, app-argument=userProfile"
-                                                />
-                                            )}
-                                        </Helmet>
-                                    )}
-                                    <SavingIndicator loading={isSaving} error={error} />
-
-                                    <UserRoutes
-                                        loading={loading}
-                                        user={user}
-                                        updateUser={updateUser}
-                                        match={match}
-                                        location={location}
-                                        translate={translate}
-                                    />
-
-                                    <Footer
-                                        noSkew
-                                        firstTo={translate(appRoutes.home)}
-                                        secondTo={translate(appRoutes.howItWorks)}
-                                        firstLabel={translate('how-it-works')}
-                                        secondLabel={translate('arrange-event')}
-                                        title={translate('Wonder how it works?')}
-                                        subTitle={translate(
-                                            'See how it works, or arrange an event.'
-                                        )}
-                                    />
-                                </div>
-                            );
-                        }}
-                    </Query>
-                )}
-            </Query>
-        </>
+            <Footer
+                noSkew
+                firstTo={translate(appRoutes.home)}
+                secondTo={translate(appRoutes.howItWorks)}
+                firstLabel={translate('how-it-works')}
+                secondLabel={translate('arrange-event')}
+                title={translate('Wonder how it works?')}
+                subTitle={translate('See how it works, or arrange an event.')}
+            />
+        </div>
     );
 };
 
@@ -481,5 +419,39 @@ const mergeObjects = (o1, o2) => {
     return o2;
 };
 
+const DataWrapper = (props) => {
+    const { match } = props;
+    const { translate } = useNamespaceContent(content, 'user');
+
+    const { data, loading: loadingMe } = useQuery(ME);
+    const { data: userData, loading: loadingUser, error } = useQuery(USER, {
+        variables: { permalink: match.params.permalink },
+    });
+
+    const { user: profileUser } = userData || {};
+    const loading = loadingMe || loadingUser;
+    const me = data?.me;
+
+    if (!loading && !profileUser) {
+        return <Redirect to={translate(appRoutes.notFound)} />;
+    }
+
+    let user = profileUser;
+
+    if (user && data && me) {
+        user.isOwn = user.isOwn || me.id === user.id;
+    }
+
+    if (me && !me.appMetadata.onboarded && user?.isOwn) {
+        return <Redirect to={'/complete-signup'} />;
+    }
+
+    if (user && user.isOwn && me) {
+        user = mergeObjects(user, me);
+    }
+
+    return <User {...props} user={user} error={error} loading={loading} translate={translate} />;
+};
+
 // eslint-disable-next-line import/no-unused-modules
-export default Index;
+export default DataWrapper;

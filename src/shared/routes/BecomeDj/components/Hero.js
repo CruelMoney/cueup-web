@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { Container, Col, Row, PrimaryButton } from 'components/Blocks';
-import { TextAccent } from '../../routes/BecomeDj/components/blocks/TextAccent';
+import { TextAccent } from './blocks/TextAccent';
+import Title from './Title';
 import { SubTitle } from './SubTitle';
-import { Title } from './Title';
 
 const OrderedContainer = styled(Container)`
     order: 1;

@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Container, Row } from 'components/Blocks';
 import { TextAccent } from '../components/blocks/TextAccent';
-import { GrayText, Header } from '../../../components/common/Text';
 import GracefullImage from '../../../components/GracefullImage';
-import mobileIphone from '../../../assets/images/available-on/iphone_mobile.png';
-import iphoneX from '../../../assets/images/available-on/iphone_x.png';
-import android from '../../../assets/images/available-on/android.png';
-import appStore from '../../../assets/images/available-on/app store.png';
-import playStore from '../../../assets/images/available-on/googleplay.png';
+import mobileIphone from '../assets/available-on/iphone_mobile.png';
+import iphoneX from '../assets/available-on/iphone_x.png';
+import android from '../assets/available-on/android.png';
+import appStore from '../assets/available-on/app store.png';
+import playStore from '../assets/available-on/googleplay.png';
+import { GrayText, Header } from './Text';
 
 const Bg = styled.div`
     display: flex;
