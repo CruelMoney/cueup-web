@@ -145,3 +145,4 @@ workflows:
             branches:
               only: 
                 - master
+                - staging
