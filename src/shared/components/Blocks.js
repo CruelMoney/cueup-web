@@ -465,7 +465,7 @@ export const SecondaryButtonLink = styled.a`
     line-height: 40px;
 `;
 
-export const PrimaryButton = styled.button.attrs(({ loading, ...props }) => props)`
+export const PrimaryButton = styled.button`
     ${ButtonTextStyle}
     color: ${({ invert }) => (invert ? '#31daff' : '#fff')};
     background:  ${({ invert, warning }) => (invert ? '#fff' : warning ? '#D0021B' : '#31daff')}; 

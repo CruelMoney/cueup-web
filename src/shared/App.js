@@ -1,6 +1,6 @@
 /* eslint-disable import/first */
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 import LazySignup from 'routes/Signup';
@@ -12,6 +12,7 @@ import ResetPassword from 'routes/ResetPassword';
 import LazyLocation, { LazyLocationsOverview } from 'routes/Location';
 import LazyGig from 'routes/Gig';
 import LazySideBarChat from 'components/SidebarChat';
+import LazyGetProfessional from 'routes/GetProfessional';
 
 import LazyFaq from 'routes/Faq';
 import LazyBecomeDj from 'routes/BecomeDj';
@@ -74,6 +75,8 @@ const RouteWrapper = () => {
             {showBottomPlayer && <BottomPlayer />}
 
             {showSideBarChat && <LazySideBarChat />}
+
+            <Route path={'*/get-pro'} component={LazyGetProfessional} />
         </div>
     );
 };
