@@ -5,13 +5,16 @@ import { useQuery } from 'react-apollo';
 import { formatDistance } from 'date-fns';
 
 import Popup from 'components/common/Popup';
-import { RowWrap, Row, Col, PrimaryButton } from 'components/Blocks';
+import { RowWrap, Row, Col, PrimaryButton, Avatar } from 'components/Blocks';
 import { BodySmall, Body } from 'components/Text';
 import { DumbCheckbox } from 'components/Checkbox';
+import QuotationMarkIcon from 'components/graphics/Quotes';
 import { SUBSCRIPTION_TIERS } from './gql';
+import PaymentForm from './PaymentForm';
 
 export const PlanChooser = () => {
     const history = useHistory();
+    const [selectedTier, setTier] = useState();
 
     return (
         <Popup
@@ -32,10 +35,10 @@ export const PlanChooser = () => {
                     </h1>
 
                     <Col>
-                        <CustomCheckBox checked label="0% service fee on gigs." />
+                        <CustomCheckBox checked label="No service fee on gigs." />
                         <CustomCheckBox checked label="Direct contact to organizers." />
                         <CustomCheckBox checked label="Higher priority on gig requests." />
-                        <CustomCheckBox checked label="Unlimited locations & traveling." />
+                        <CustomCheckBox checked label="Unlimited playing locations & travel." />
                         <CustomCheckBox
                             checked
                             label="Add website & social media links to profile."
@@ -46,19 +49,23 @@ export const PlanChooser = () => {
                         />
                         <CustomCheckBox checked label="Unlimited mixtape uploads in 320kbps." />
                         <CustomCheckBox checked label="Attach documents to offers." />
+                        <CustomCheckBox checked label="...and much more. Read more here." />
+                        <Testimonial />
                     </Col>
                 </LeftSection>
                 <RightSection>
-                    <Plans />
+                    <Col style={{ height: '100%' }}>
+                        <Plans selectedTier={selectedTier} setTier={setTier} />
+                        <div style={{ flex: 1 }} />
+                        <PaymentForm selectedTier={selectedTier} />
+                    </Col>
                 </RightSection>
             </ContentContainer>
         </Popup>
     );
 };
 
-const Plans = () => {
-    const [selectedTier, setTier] = useState();
-
+const Plans = ({ setTier, selectedTier }) => {
     const { loading, data } = useQuery(SUBSCRIPTION_TIERS);
 
     const tiers = data?.subscriptionTiers || [];
@@ -67,7 +74,7 @@ const Plans = () => {
     const endingFormatted = formatDistance(offerEndDate, new Date(), { addSuffix: true });
 
     return (
-        <PlanWrapper>
+        <>
             <div style={{ marginBottom: 24, textAlign: 'center' }}>
                 <Body>Launch Offer ending {endingFormatted}.</Body>
             </div>
@@ -81,15 +88,7 @@ const Plans = () => {
                         {...t}
                     />
                 ))}
-
-            <div style={{ flex: 1 }} />
-            <PrimaryButton disabled={!selectedTier}>
-                {selectedTier ? `Buy now - ${selectedTier.price.formatted}` : 'Buy now'}
-            </PrimaryButton>
-            <BodySmall style={{ textAlign: 'center', marginTop: 12 }}>
-                Automatic refund each month if you don't receive any gig requests.
-            </BodySmall>
-        </PlanWrapper>
+        </>
     );
 };
 
@@ -121,6 +120,25 @@ const Tier = ({ beforePriceMonthly, price, priceMonthly, interval, onClick, acti
         </TierWrapper>
     );
 };
+
+const Testimonial = () => {
+    return (
+        <Row style={{ marginTop: '1em' }}>
+            <Avatar size="large" src={'https://i.vimeocdn.com/portrait/13325432_640x640'} />
+            <BodySmall style={{ marginLeft: 12 }}>
+                "I like to travel around the world and I’ve had a steady stream of gigs all thanks
+                to Cueup. Best investment I’ve made was becoming Pro."
+                <Quotee>- Oscar Bandersen, DJ & Producer</Quotee>
+            </BodySmall>
+        </Row>
+    );
+};
+
+const Quotee = styled.span`
+    display: block;
+    font-weight: 500;
+    color: #98a4b3;
+`;
 
 const ContentContainer = styled.div`
     display: flex;
@@ -199,14 +217,6 @@ const TierWrapper = styled.button`
         `}
 `;
 
-const PlanWrapper = styled(Col)`
-    height: 100%;
-    ${PrimaryButton} {
-        max-width: 100%;
-        width: 100%;
-    }
-`;
-
 const LeftSection = styled.div`
     width: 50%;
 
@@ -221,6 +231,10 @@ const RightSection = styled.div`
     width: 50%;
     background-color: #f6f8f9;
     padding: 3em;
+    ${PrimaryButton} {
+        max-width: 100%;
+        width: 100%;
+    }
 `;
 
 export default PlanChooser;
