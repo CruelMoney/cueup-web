@@ -3,9 +3,11 @@ import { useHistory } from 'react-router';
 import styled, { css } from 'styled-components';
 import { useQuery } from 'react-apollo';
 import { formatDistance } from 'date-fns';
+
 import Popup from 'components/common/Popup';
 import { RowWrap, Row, Col, PrimaryButton } from 'components/Blocks';
 import { BodySmall, Body } from 'components/Text';
+import { DumbCheckbox } from 'components/Checkbox';
 import { SUBSCRIPTION_TIERS } from './gql';
 
 export const PlanChooser = () => {
@@ -21,18 +23,35 @@ export const PlanChooser = () => {
                 history.goBack();
             }}
         >
-            <RowWrap>
+            <ContentContainer>
                 <LeftSection>
                     <h1>
                         Get more gigs
                         <br />
                         with Cueup Pro
                     </h1>
+
+                    <Col>
+                        <CustomCheckBox checked label="0% service fee on gigs." />
+                        <CustomCheckBox checked label="Direct contact to organizers." />
+                        <CustomCheckBox checked label="Higher priority on gig requests." />
+                        <CustomCheckBox checked label="Unlimited locations & traveling." />
+                        <CustomCheckBox
+                            checked
+                            label="Add website & social media links to profile."
+                        />
+                        <CustomCheckBox
+                            checked
+                            label="Automatic refund each month if you don't receive any gig requests."
+                        />
+                        <CustomCheckBox checked label="Unlimited mixtape uploads in 320kbps." />
+                        <CustomCheckBox checked label="Attach documents to offers." />
+                    </Col>
                 </LeftSection>
                 <RightSection>
                     <Plans />
                 </RightSection>
-            </RowWrap>
+            </ContentContainer>
         </Popup>
     );
 };
@@ -67,6 +86,9 @@ const Plans = () => {
             <PrimaryButton disabled={!selectedTier}>
                 {selectedTier ? `Buy now - ${selectedTier.price.formatted}` : 'Buy now'}
             </PrimaryButton>
+            <BodySmall style={{ textAlign: 'center', marginTop: 12 }}>
+                Automatic refund each month if you don't receive any gig requests.
+            </BodySmall>
         </PlanWrapper>
     );
 };
@@ -99,6 +121,17 @@ const Tier = ({ beforePriceMonthly, price, priceMonthly, interval, onClick, acti
         </TierWrapper>
     );
 };
+
+const ContentContainer = styled.div`
+    display: flex;
+`;
+
+const CustomCheckBox = styled(DumbCheckbox)`
+    margin-bottom: 1em;
+    div {
+        cursor: default !important;
+    }
+`;
 
 const BeforePrice = styled.span`
     margin-right: 5px;
@@ -176,7 +209,7 @@ const PlanWrapper = styled(Col)`
 
 const LeftSection = styled.div`
     width: 50%;
-    flex: 1;
+
     padding: 3em;
 
     h1 {
@@ -186,10 +219,8 @@ const LeftSection = styled.div`
 
 const RightSection = styled.div`
     width: 50%;
-    flex: 1;
     background-color: #f6f8f9;
     padding: 3em;
-    height: 500px;
 `;
 
 export default PlanChooser;
