@@ -35,8 +35,6 @@ const PaymentRequestButtonWrapper = ({ selectedTier }) => {
     const [paymentRequest, setPaymentRequest] = useState(null);
 
     useEffect(() => {
-        // For full documentation of the available paymentRequest options, see:
-        // https://stripe.com/docs/stripe.js#the-payment-request-object
         if (stripe && selectedTier) {
             const { price } = selectedTier;
 
@@ -57,6 +55,12 @@ const PaymentRequestButtonWrapper = ({ selectedTier }) => {
                 if (result) {
                     setPaymentRequest(pmRq);
                 }
+            });
+
+            pmRq.on('paymentmethod', (ev) => {
+                const applePayId = ev.paymentMethod.id;
+
+                // TODO: attach to customer
             });
         }
     }, [stripe, selectedTier]);

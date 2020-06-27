@@ -10,6 +10,7 @@ export const SUBSCRIPTION_TIERS = gql`
             price {
                 amount
                 formatted
+                currency
             }
             beforePriceMonthly {
                 amount

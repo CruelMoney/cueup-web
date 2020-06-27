@@ -123,16 +123,23 @@ const Tier = ({ beforePriceMonthly, price, priceMonthly, interval, onClick, acti
 
 const Testimonial = () => {
     return (
-        <Row style={{ marginTop: '1em' }}>
+        <TestimonialWrapper>
             <Avatar size="large" src={'https://i.vimeocdn.com/portrait/13325432_640x640'} />
             <BodySmall style={{ marginLeft: 12 }}>
                 "I like to travel around the world and I’ve had a steady stream of gigs all thanks
                 to Cueup. Best investment I’ve made was becoming Pro."
                 <Quotee>- Oscar Bandersen, DJ & Producer</Quotee>
             </BodySmall>
-        </Row>
+        </TestimonialWrapper>
     );
 };
+
+const TestimonialWrapper = styled(Row)`
+    margin-top: 1em;
+    img {
+        transform: scale(1.8);
+    }
+`;
 
 const Quotee = styled.span`
     display: block;
