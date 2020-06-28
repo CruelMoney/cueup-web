@@ -52,6 +52,20 @@ const Menu = () => {
 
                                     <MobileMenu />
                                     <ul className="main-menu">
+                                        {loggedIn && (
+                                            <li>
+                                                <Navlink
+                                                    label={'Go Pro'}
+                                                    to={
+                                                        t(appRoutes.userSettings).replace(
+                                                            ':permalink',
+                                                            user.permalink
+                                                        ) + '/get-pro'
+                                                    }
+                                                />
+                                            </li>
+                                        )}
+
                                         <li>
                                             <Navlink
                                                 to={t(appRoutes.howItWorks)}
