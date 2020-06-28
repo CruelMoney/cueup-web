@@ -14,6 +14,7 @@ import { inputStyle, SmartButton } from 'components/Blocks';
 import { BodySmall } from 'components/Text';
 import { useServerContext } from 'components/hooks/useServerContext';
 import ErrorMessageApollo from 'components/common/ErrorMessageApollo';
+import { ME } from 'components/gql';
 import { START_SUBSCRIPTION } from './gql';
 
 function PaymentForm({ selectedTier, setSuccess }) {
@@ -65,6 +66,8 @@ function PaymentForm({ selectedTier, setSuccess }) {
     );
 
     const [startSubscription] = useMutation(START_SUBSCRIPTION, {
+        refetchQueries: [{ query: ME }],
+        awaitRefetchQueries: true,
         onCompleted: ({ startSubscription }) => {
             if (startSubscription.requiresConfirmation) {
                 confirmCardPayment(startSubscription.paymentIntent);
@@ -75,8 +78,10 @@ function PaymentForm({ selectedTier, setSuccess }) {
         },
     });
 
-    const submit = async () => {
+    const submit = async (event) => {
         try {
+            event.preventDefault();
+
             setError(null);
             setLoading(true);
 
@@ -113,19 +118,21 @@ function PaymentForm({ selectedTier, setSuccess }) {
                 selectedTier={selectedTier}
                 startSubscription={startSubscription}
             />
-            <CardWrapper>
-                <CardElement options={inputOptions} />
-            </CardWrapper>
-            <ErrorMessageApollo error={error} />
+            <form onSubmit={submit}>
+                <CardWrapper>
+                    <CardElement options={inputOptions} />
+                </CardWrapper>
+                <ErrorMessageApollo error={error} />
 
-            <SmartButton
-                loading={loading}
-                level="primary"
-                disabled={!selectedTier}
-                onClick={submit}
-            >
-                {selectedTier ? `Buy now - ${selectedTier.price.formatted}` : 'Buy now'}
-            </SmartButton>
+                <SmartButton
+                    loading={loading}
+                    level="primary"
+                    disabled={!selectedTier}
+                    onClick={submit}
+                >
+                    {selectedTier ? `Buy now - ${selectedTier.price.formatted}` : 'Buy now'}
+                </SmartButton>
+            </form>
             <BodySmall style={{ textAlign: 'center', marginTop: 12 }}>
                 You will receive your money back each month, if you don't receive any gig requests.
                 Cancel any time.
