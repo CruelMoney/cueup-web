@@ -4,23 +4,125 @@ import {
     Elements,
     PaymentRequestButtonElement,
     useStripe,
+    useElements,
 } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import styled from 'styled-components';
-import { PrimaryButton, inputStyle } from 'components/Blocks';
+import { useMutation } from 'react-apollo';
+import { captureException } from '@sentry/core';
+import { inputStyle, SmartButton } from 'components/Blocks';
 import { BodySmall } from 'components/Text';
 import { useServerContext } from 'components/hooks/useServerContext';
+import ErrorMessageApollo from 'components/common/ErrorMessageApollo';
+import { START_SUBSCRIPTION } from './gql';
 
 function PaymentForm({ selectedTier }) {
+    const [error, setError] = useState();
+    const [loading, setLoading] = useState(false);
+    const stripe = useStripe();
+    const elements = useElements();
+
+    // if the customer needs to confirm using 3d secure etc
+    const confirmCardPayment = useCallback(
+        async (pIntent) => {
+            try {
+                setLoading(true);
+
+                const card = elements.getElement(CardElement);
+                const { paymentMethod } = await stripe.createPaymentMethod({
+                    type: 'card',
+                    card,
+                });
+
+                const { error, paymentIntent } = await stripe.confirmCardPayment(
+                    pIntent.client_secret,
+                    {
+                        payment_method: paymentMethod.id,
+                    }
+                );
+
+                if (error) {
+                    // Start code flow to handle updating the payment details.
+                    // Display error message in your UI.
+                    // The card was declined (i.e. insufficient funds, card has expired, etc).
+                    setError(error);
+                } else {
+                    if (paymentIntent.status === 'succeeded') {
+                        // Show a success message to your customer.
+                        // There's a risk of the customer closing the window before the callback.
+                        // We recommend setting up webhook endpoints later in this guide.
+                    }
+                }
+            } catch (error) {
+                captureException(error);
+                setError(error);
+            } finally {
+                setLoading(false);
+            }
+        },
+        [stripe, elements]
+    );
+
+    const [startSubscription] = useMutation(START_SUBSCRIPTION, {
+        onCompleted: ({ startSubscription }) => {
+            if (startSubscription.requiresConfirmation) {
+                confirmCardPayment(startSubscription.paymentIntent);
+            }
+        },
+    });
+
+    const submit = async () => {
+        try {
+            setError(null);
+            setLoading(true);
+
+            const card = elements.getElement(CardElement);
+            const { error, paymentMethod } = await stripe.createPaymentMethod({
+                type: 'card',
+                card,
+            });
+
+            if (error) {
+                console.log(error);
+                setError(error.message);
+            } else {
+                await startSubscription({
+                    variables: {
+                        tierId: selectedTier?.id,
+                        paymentData: {
+                            paymentMethodId: paymentMethod.id,
+                        },
+                    },
+                });
+            }
+        } catch (error) {
+            console.log(error);
+            setError(error);
+            captureException(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div>
-            <PaymentRequestButtonWrapper selectedTier={selectedTier} />
+            <PaymentRequestButtonWrapper
+                selectedTier={selectedTier}
+                startSubscription={startSubscription}
+            />
             <CardWrapper>
                 <CardElement options={inputOptions} />
             </CardWrapper>
-            <PrimaryButton disabled={!selectedTier}>
+            <ErrorMessageApollo error={error} />
+
+            <SmartButton
+                loading={loading}
+                level="primary"
+                disabled={!selectedTier}
+                onClick={submit}
+            >
                 {selectedTier ? `Buy now - ${selectedTier.price.formatted}` : 'Buy now'}
-            </PrimaryButton>
+            </SmartButton>
             <BodySmall style={{ textAlign: 'center', marginTop: 12 }}>
                 You will receive your money back each month, if you don't receive any gig requests.
                 Cancel any time.
@@ -29,7 +131,7 @@ function PaymentForm({ selectedTier }) {
     );
 }
 
-const PaymentRequestButtonWrapper = ({ selectedTier }) => {
+const PaymentRequestButtonWrapper = ({ selectedTier, startSubscription }) => {
     const stripe = useStripe();
 
     const [paymentRequest, setPaymentRequest] = useState(null);
@@ -57,13 +159,18 @@ const PaymentRequestButtonWrapper = ({ selectedTier }) => {
                 }
             });
 
-            pmRq.on('paymentmethod', (ev) => {
-                const applePayId = ev.paymentMethod.id;
-
-                // TODO: attach to customer
+            pmRq.on('paymentmethod', ({ paymentMethod }) => {
+                startSubscription({
+                    variables: {
+                        tierId: selectedTier.id,
+                        paymentData: {
+                            paymentMethodId: paymentMethod.id,
+                        },
+                    },
+                });
             });
         }
-    }, [stripe, selectedTier]);
+    }, [stripe, selectedTier, startSubscription]);
 
     if (!paymentRequest || !stripe) {
         return null;
