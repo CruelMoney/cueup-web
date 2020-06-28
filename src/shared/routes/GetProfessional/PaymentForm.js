@@ -16,7 +16,7 @@ import { useServerContext } from 'components/hooks/useServerContext';
 import ErrorMessageApollo from 'components/common/ErrorMessageApollo';
 import { START_SUBSCRIPTION } from './gql';
 
-function PaymentForm({ selectedTier }) {
+function PaymentForm({ selectedTier, setSuccess }) {
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
     const stripe = useStripe();
@@ -51,6 +51,7 @@ function PaymentForm({ selectedTier }) {
                         // Show a success message to your customer.
                         // There's a risk of the customer closing the window before the callback.
                         // We recommend setting up webhook endpoints later in this guide.
+                        setSuccess(true);
                     }
                 }
             } catch (error) {
@@ -60,13 +61,16 @@ function PaymentForm({ selectedTier }) {
                 setLoading(false);
             }
         },
-        [stripe, elements]
+        [stripe, elements, setSuccess]
     );
 
     const [startSubscription] = useMutation(START_SUBSCRIPTION, {
         onCompleted: ({ startSubscription }) => {
             if (startSubscription.requiresConfirmation) {
                 confirmCardPayment(startSubscription.paymentIntent);
+            } else {
+                setLoading(false);
+                setSuccess(true);
             }
         },
     });
@@ -98,9 +102,8 @@ function PaymentForm({ selectedTier }) {
         } catch (error) {
             console.log(error);
             setError(error);
-            captureException(error);
-        } finally {
             setLoading(false);
+            captureException(error);
         }
     };
 

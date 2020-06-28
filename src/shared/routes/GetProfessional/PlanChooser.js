@@ -3,18 +3,18 @@ import { useHistory } from 'react-router';
 import styled, { css } from 'styled-components';
 import { useQuery } from 'react-apollo';
 import { formatDistance } from 'date-fns';
+import { Icon } from '@iconify/react';
+import checkmarkCircle from '@iconify/icons-ion/checkmark-circle';
 
 import Popup from 'components/common/Popup';
-import { RowWrap, Row, Col, PrimaryButton, Avatar } from 'components/Blocks';
+import { Row, Col, PrimaryButton, Avatar } from 'components/Blocks';
 import { BodySmall, Body } from 'components/Text';
 import { DumbCheckbox } from 'components/Checkbox';
-import QuotationMarkIcon from 'components/graphics/Quotes';
 import { SUBSCRIPTION_TIERS } from './gql';
 import PaymentForm from './PaymentForm';
 
 export const PlanChooser = () => {
     const history = useHistory();
-    const [selectedTier, setTier] = useState();
 
     return (
         <Popup
@@ -26,42 +26,61 @@ export const PlanChooser = () => {
                 history.goBack();
             }}
         >
-            <ContentContainer>
-                <LeftSection>
-                    <h1>
-                        Get more gigs
-                        <br />
-                        with Cueup Pro
-                    </h1>
-
-                    <Col>
-                        <CustomCheckBox checked label="No service fee on gigs." />
-                        <CustomCheckBox checked label="Direct contact to organizers." />
-                        <CustomCheckBox checked label="Higher priority on gig requests." />
-                        <CustomCheckBox checked label="Unlimited playing locations & travel." />
-                        <CustomCheckBox
-                            checked
-                            label="Add website & social media links to profile."
-                        />
-                        <CustomCheckBox
-                            checked
-                            label="Automatic refund each month if you don't receive any gig requests."
-                        />
-                        <CustomCheckBox checked label="Unlimited mixtape uploads in 320kbps." />
-                        <CustomCheckBox checked label="Attach documents to offers." />
-                        <CustomCheckBox checked label="...and so much more. Read more here." />
-                        <Testimonial />
-                    </Col>
-                </LeftSection>
-                <RightSection>
-                    <Col style={{ height: '100%' }}>
-                        <Plans selectedTier={selectedTier} setTier={setTier} />
-                        <div style={{ flex: 1 }} />
-                        <PaymentForm selectedTier={selectedTier} />
-                    </Col>
-                </RightSection>
-            </ContentContainer>
+            <Content />
         </Popup>
+    );
+};
+
+const Content = () => {
+    const [selectedTier, setTier] = useState();
+    const [success, setSuccess] = useState(false);
+
+    if (success) {
+        return <Success />;
+    }
+
+    return (
+        <ContentContainer>
+            <LeftSection>
+                <h1>
+                    Get more gigs
+                    <br />
+                    with Cueup Pro
+                </h1>
+
+                <Col>
+                    <CustomCheckBox checked label="No service fee on gigs." />
+                    <CustomCheckBox checked label="Direct contact to organizers." />
+                    <CustomCheckBox checked label="First priority on new events." />
+                    <CustomCheckBox checked label="Unlimited playing locations & travel." />
+                    <CustomCheckBox checked label="Add website & social media links to profile." />
+                    <CustomCheckBox
+                        checked
+                        label="Automatic refund each month if you don't receive any gig requests."
+                    />
+                    <CustomCheckBox checked label="Unlimited mixtape uploads in 320kbps." />
+                    <CustomCheckBox checked label="Attach documents to offers." />
+                    <CustomCheckBox checked label="...and so much more. Read more here." />
+                    <Testimonial />
+                </Col>
+            </LeftSection>
+            <RightSection>
+                <Col style={{ height: '100%' }}>
+                    <Plans selectedTier={selectedTier} setTier={setTier} />
+                    <div style={{ flex: 1 }} />
+                    <PaymentForm selectedTier={selectedTier} setSuccess={setSuccess} />
+                </Col>
+            </RightSection>
+        </ContentContainer>
+    );
+};
+
+const Success = () => {
+    return (
+        <div className="payment-confirmation">
+            <Icon icon={checkmarkCircle} style={{ fontSize: '42px' }} />
+            <Body>You are now a Cueup Pro Member.</Body>
+        </div>
     );
 };
 
@@ -126,8 +145,8 @@ const Testimonial = () => {
         <TestimonialWrapper>
             <Avatar size="large" src={'https://i.vimeocdn.com/portrait/13325432_640x640'} />
             <BodySmall style={{ marginLeft: 12 }}>
-                "I like to travel around the world and I’ve had a steady stream of gigs all thanks
-                to Cueup. Best investment I’ve made was becoming Pro."
+                "I like to travel and thanks to Cueup I’ve had a steady stream of gigs while
+                traveling. Best investment I’ve made was becoming Pro."
                 <Quotee>- Oscar Bandersen, DJ & Producer</Quotee>
             </BodySmall>
         </TestimonialWrapper>
