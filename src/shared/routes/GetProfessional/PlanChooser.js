@@ -6,6 +6,7 @@ import { formatDistance } from 'date-fns';
 import { Icon } from '@iconify/react';
 import checkmarkCircle from '@iconify/icons-ion/checkmark-circle';
 
+import Skeleton from 'react-loading-skeleton';
 import Popup from 'components/common/Popup';
 import { Row, Col, PrimaryButton, Avatar } from 'components/Blocks';
 import { BodySmall, Body } from 'components/Text';
@@ -97,6 +98,14 @@ const Plans = ({ setTier, selectedTier }) => {
             <div style={{ marginBottom: 24, textAlign: 'center' }}>
                 <Body>Launch Offer ending {endingFormatted}.</Body>
             </div>
+
+            {loading && (
+                <>
+                    <Tier loading />
+                    <Tier loading />
+                </>
+            )}
+
             {tiers
                 .sort((t1, t2) => t1.price.amount - t2.price.amount) // cheapest first
                 .map((t) => (
@@ -116,26 +125,30 @@ const intervalNames = Object.freeze({
     MONTHLY: 'Monthly',
 });
 
-const Tier = ({ beforePriceMonthly, price, priceMonthly, interval, onClick, active }) => {
+const Tier = ({ beforePriceMonthly, price, priceMonthly, interval, onClick, active, loading }) => {
     return (
         <TierWrapper active={active} onClick={onClick}>
-            <Row between middle>
-                <Col>
-                    <h3>{intervalNames[interval]}</h3>
-                </Col>
-                <Col>
-                    <Price>
-                        {beforePriceMonthly && (
-                            <BeforePrice> {beforePriceMonthly.formatted}</BeforePrice>
+            {loading ? (
+                <Skeleton />
+            ) : (
+                <Row between middle>
+                    <Col>
+                        <h3>{intervalNames[interval]}</h3>
+                    </Col>
+                    <Col>
+                        <Price>
+                            {beforePriceMonthly && (
+                                <BeforePrice> {beforePriceMonthly.formatted}</BeforePrice>
+                            )}
+                            {priceMonthly.formatted}
+                            <span> / month</span>
+                        </Price>
+                        {interval === 'YEARLY' && (
+                            <BodySmall>Billed as one payment of {price.formatted}</BodySmall>
                         )}
-                        {priceMonthly.formatted}
-                        <span> / month</span>
-                    </Price>
-                    {interval === 'YEARLY' && (
-                        <BodySmall>Billed as one payment of {price.formatted}</BodySmall>
-                    )}
-                </Col>
-            </Row>
+                    </Col>
+                </Row>
+            )}
         </TierWrapper>
     );
 };
@@ -242,6 +255,8 @@ const TierWrapper = styled.button`
             transform: scale(0.99);
         `}
 `;
+
+const TierLoading = styled(TierWrapper)``;
 
 const LeftSection = styled.div`
     width: 50%;
