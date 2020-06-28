@@ -49,7 +49,7 @@ export const PlanChooser = () => {
                         />
                         <CustomCheckBox checked label="Unlimited mixtape uploads in 320kbps." />
                         <CustomCheckBox checked label="Attach documents to offers." />
-                        <CustomCheckBox checked label="...and much more. Read more here." />
+                        <CustomCheckBox checked label="...and so much more. Read more here." />
                         <Testimonial />
                     </Col>
                 </LeftSection>

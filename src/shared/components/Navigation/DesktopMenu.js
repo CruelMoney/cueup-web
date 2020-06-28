@@ -5,6 +5,7 @@ import chatbubbleEllipsesOutline from '@iconify/icons-ion/chatbubble-ellipses-ou
 import helpIcon from '@iconify/icons-ion/help-circle-outline';
 import logoutIcon from '@iconify/icons-simple-line-icons/logout';
 import settingsOutline from '@iconify/icons-ion/settings-outline';
+import starOutline from '@iconify/icons-ion/star-outline';
 import personOutline from '@iconify/icons-ion/person-outline';
 import musicalNotesOutline from '@iconify/icons-ion/musical-notes-outline';
 import calendarOutline from '@iconify/icons-ion/calendar-outline';
@@ -130,6 +131,19 @@ const DropDownMenu = ({ user, ...props }) => {
                         <MenuButton>
                             <InlineIcon icon={settingsOutline} />
                             Settings
+                        </MenuButton>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink
+                        to={
+                            t(appRoutes.userSettings).replace(':permalink', user.permalink) +
+                            '/get-pro'
+                        }
+                    >
+                        <MenuButton>
+                            <InlineIcon icon={starOutline} />
+                            Go Pro
                         </MenuButton>
                     </NavLink>
                 </li>
