@@ -79,6 +79,7 @@ const DropDownMenu = ({ user, ...props }) => {
     const { t } = useTranslate();
     const logout = useLogout();
 
+    const isPro = user.appMetadata.isPro;
     const isOrganizer = user.appMetadata.roles.includes('ORGANIZER');
     const isDJ = user.appMetadata.roles.includes('DJ');
 
@@ -134,19 +135,21 @@ const DropDownMenu = ({ user, ...props }) => {
                         </MenuButton>
                     </NavLink>
                 </li>
-                <li>
-                    <NavLink
-                        to={
-                            t(appRoutes.userSettings).replace(':permalink', user.permalink) +
-                            '/get-pro'
-                        }
-                    >
-                        <MenuButton>
-                            <InlineIcon icon={starOutline} />
-                            Go Pro
-                        </MenuButton>
-                    </NavLink>
-                </li>
+                {!isPro && (
+                    <li>
+                        <NavLink
+                            to={
+                                t(appRoutes.userSettings).replace(':permalink', user.permalink) +
+                                '/get-pro'
+                            }
+                        >
+                            <MenuButton>
+                                <InlineIcon icon={starOutline} />
+                                Go Pro
+                            </MenuButton>
+                        </NavLink>
+                    </li>
+                )}
                 <hr />
                 <li>
                     <a className="navLink" href={typeformUrl} target="_blank" rel="noreferrer">

@@ -580,6 +580,12 @@ const USER_EDITS = gql`
     }
 `;
 
+export const MANAGE_SUBSCRIPTION = gql`
+    query ManageSubscription($redirectUrl: String!) {
+        manageSubscription(redirectUrl: $redirectUrl)
+    }
+`;
+
 export {
     MY_EVENTS,
     USER,

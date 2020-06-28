@@ -38,6 +38,7 @@ const ME = gql`
                 profileStatus
                 approved
                 onboarded
+                isPro
             }
             userMetadata {
                 firstName
