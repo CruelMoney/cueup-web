@@ -130,6 +130,7 @@
     "socket.io-client": "^2.3.0",
     "styled-components": "^5.1.1",
     "subscriptions-transport-ws": "^0.9.16",
+    "url-search-params-polyfill": "^8.1.0",
     "use-analytics": "^0.0.3",
     "wnumb": "^1.0.4"
   },
