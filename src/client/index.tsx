@@ -1,10 +1,11 @@
+import './polyfills';
+
 import React from 'react';
 import { hydrate, render } from 'react-dom';
 import { loadableReady } from '@loadable/component';
 // import * as serviceWorker from './serviceWorker';
 import Router from './BrowserRouter';
 
-import './polyfills';
 import './i18next';
 
 const rootElement = document.getElementById('app');
