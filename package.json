@@ -1,6 +1,6 @@
 {
   "name": "cueup-web",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "engines": {
     "node": ">=12.0.0",
     "yarn": ">=1.10.0"
