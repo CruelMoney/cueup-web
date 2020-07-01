@@ -59,7 +59,7 @@ export const client = [
         sentryUpload() &&
         new SentryWebpackPlugin({
             include: '.',
-            ignore: ['node_modules', 'webpack.config.js'],
+            ignore: ['node_modules', 'config'],
             rewrite: true,
             release: version,
         }),
