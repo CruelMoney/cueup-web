@@ -7,7 +7,7 @@
   },
   "scripts": {
     "analyze": "yarn-or-npm build:with-stats && yarn-or-npm start:analyzer",
-    "build": "cross-env NODE_ENV=production OMIT_SOURCEMAP=true TS_NODE_PROJECT=tsconfig.tooling.json ts-node scripts/build ",
+    "build": "cross-env NODE_ENV=production OMIT_SOURCEMAP=true TS_NODE_PROJECT=tsconfig.tooling.json ts-node scripts/build",
     "build:with-sourcemaps": "cross-env NODE_ENV=production TS_NODE_PROJECT=tsconfig.tooling.json ts-node scripts/build ",
     "build:with-stats": "cross-env NODE_ENV=production TS_NODE_PROJECT=tsconfig.tooling.json webpack --config config/webpack.config.ts/client.prod.ts --json > build/client/static/bundle-stats.json",
     "clean:transpiled": "rimraf build/transpiled",
@@ -50,7 +50,6 @@
     "@rehooks/component-size": "^1.0.3",
     "@sentry/browser": "^5.17.0",
     "@sentry/core": "^5.17.0",
-    "@sentry/react": "^5.18.1",
     "@softbind/hook-use-measure": "^1.0.6",
     "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.7.0",

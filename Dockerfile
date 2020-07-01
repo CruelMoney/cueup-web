@@ -19,7 +19,9 @@ RUN apk add --no-cache \
       ca-certificates \
       ttf-freefont 
 
-RUN yarn build --sentry-upload
+RUN yarn build:with-sourcemaps --sentry-upload
+# remove maps from public
+RUN rm **/*.map
 
 EXPOSE 8500
 CMD [ "yarn", "start" ]

@@ -14,6 +14,7 @@ import paths from '../paths';
 import { clientOnly } from '../../scripts/utils';
 
 import envBuilder from '../env';
+const { version } = require('../../package.json');
 
 const env = envBuilder();
 
@@ -54,11 +55,13 @@ export const client = [
     new CopyPlugin({
         patterns: [{ from: paths.public, to: paths.clientBuild }],
     }),
-    sentryUpload() &&
+    !isDev() &&
+        sentryUpload() &&
         new SentryWebpackPlugin({
             include: '.',
             ignore: ['node_modules', 'webpack.config.js'],
             rewrite: true,
+            release: version,
         }),
 ].filter(Boolean);
 
