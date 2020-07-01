@@ -9,7 +9,7 @@ import {
 import { loadStripe } from '@stripe/stripe-js';
 
 import styled from 'styled-components';
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 import { Input, InputRow, LabelHalf } from 'components/FormComponents';
 import { validators, useForm } from 'components/hooks/useForm';
 import { inputStyle, SmartButton, TeritaryButton, RowMobileCol } from 'components/Blocks';

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { animated, useTransition } from 'react-spring';
 import emailValidator from 'email-validator';
 import { useMutation } from 'react-apollo';
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 import { Input } from 'components/FormComponents';
 import { trackSignup } from 'utils/analytics';
 

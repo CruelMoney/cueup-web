@@ -19,7 +19,7 @@ RUN apk add --no-cache \
       ca-certificates \
       ttf-freefont 
 
-RUN yarn build
+RUN yarn build --sentry-upload
 
 EXPOSE 8500
 CMD [ "yarn", "start" ]
