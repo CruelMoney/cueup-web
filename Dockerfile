@@ -22,6 +22,9 @@ WORKDIR /usr/src/app
 COPY . ./
 # get the node_modules from stage 1. This is kinda slow, could it be optimized by using 1 stage?
 COPY --from=stage1 /usr/src/app /usr/src/app
+
+ENV SENTRY_AUTH_TOKEN ${SENTRY_AUTH_TOKEN}
+
 RUN yarn build:with-sourcemaps --sentry-upload
 
 # remove sourcemaps from public
