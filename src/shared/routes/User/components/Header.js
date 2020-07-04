@@ -131,7 +131,7 @@ const StatusButton = styled.button`
 
 const Header = ({ user, loading, pathname, children }) => {
     return (
-        <GradientBg coverPhoto={user && user.coverPhoto}>
+        <GradientBg isPro={user?.appMetadata.isPro} coverPhoto={user && user.coverPhoto}>
             <Container>
                 {children}
                 <Row className="wrapper">

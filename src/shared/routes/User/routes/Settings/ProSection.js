@@ -33,8 +33,11 @@ const ProSection = ({ user, saveData, registerValidation, unregisterValidation }
             description={
                 <>
                     <Body style={{ marginBottom: 12 }}>
-                        Go Pro to remove service fees, get direct contact to organizers, unlimited
-                        playing locations, and so much more...
+                        ✔ Remove service fees
+                        <br />✔ Priority on new events
+                        <br />✔ Unlimited playing locations
+                        <br />✔ Direct contact to organizers
+                        <br />✔ And so much more...
                     </Body>
                     {!isPro && (
                         <>

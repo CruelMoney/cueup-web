@@ -100,7 +100,7 @@
         "payout": {
             "country-not-found": "Country could not be found.",
             "description-1": "Choose what payout methods you want to use. You can always switch off methods when responding to a gig.",
-            "description": "All information is encrypted. We are using IBAN numbers to allow deals between countries. That way you can play gigs in foreign contries if you're traveling.",
+            "description": "All information is encrypted.",
             "description-direct": "Fill out directions for the organizer to pay you. For example cash at the event, PayPal address, EAN number, or something else.",
             "address-description": "Enter the address of the person or business that the bank account is associated with.",
             "IBAN-number": "IBAN-number",

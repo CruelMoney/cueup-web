@@ -521,9 +521,11 @@ export const LoadingIndicator = styled.span`
 export const GradientBg = styled.section`
     height: 318px;
     background: linear-gradient(-180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%),
-        ${({ coverPhoto }) =>
+        ${({ coverPhoto, isPro }) =>
                 coverPhoto
                     ? `url(${coverPhoto.path})`
+                    : isPro
+                    ? 'radial-gradient(50% 50% at 50% 33%, #122b48 12%, #0b1b2d 90%)'
                     : 'linear-gradient(-56deg, #31fff5 0%, #31ffc5 11%, #00d1ff 80%, #32daff 87%)'}
             no-repeat center center;
     -webkit-background-size: cover;

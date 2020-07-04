@@ -12,12 +12,12 @@ import taxOptions from './options.json';
 import { USER_TAX_ID } from './gql';
 
 const DataWrapper = (props) => {
-    const { data } = useQuery(USER_TAX_ID, { ssr: false, fetchPolicy: 'network-only' });
+    const { data, loading } = useQuery(USER_TAX_ID, { ssr: false, fetchPolicy: 'network-only' });
     const taxId = data?.me?.userMetadata?.taxId;
-    return <TaxIdInput key={data} data={taxId} {...props} />;
+    return <TaxIdInput loading={loading} key={data} data={taxId} {...props} />;
 };
 
-const TaxIdInput = ({ label, onSave, onChange, onBlur, data, ...props }) => {
+const TaxIdInput = ({ label, onSave, loading, onChange, onBlur, data, ...props }) => {
     const ref = useRef();
     const [selection, setSelection] = useState(data?.country);
     const [error, setError] = useState();
@@ -60,6 +60,7 @@ const TaxIdInput = ({ label, onSave, onChange, onBlur, data, ...props }) => {
             {label}
             <Row style={{ position: 'relative' }}>
                 <SearchableSuggestionList
+                    disabled={loading}
                     half
                     forceHeight
                     error={error}
@@ -74,6 +75,7 @@ const TaxIdInput = ({ label, onSave, onChange, onBlur, data, ...props }) => {
                     }}
                 />
                 <TextInput
+                    disabled={loading}
                     save={save}
                     onChange={change}
                     placeholder={selection?.placeholder}

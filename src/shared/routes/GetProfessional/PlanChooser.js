@@ -52,7 +52,7 @@ const Content = () => {
                 <Col>
                     <CustomCheckBox checked label="No service fee on gigs." />
                     <CustomCheckBox checked label="Direct contact to organizers." />
-                    <CustomCheckBox checked label="First priority on new events." />
+                    <CustomCheckBox checked label="Priority on new events." />
                     <CustomCheckBox checked label="Unlimited playing locations & travel." />
                     <CustomCheckBox checked label="Add website & social media links to profile." />
                     <CustomCheckBox
