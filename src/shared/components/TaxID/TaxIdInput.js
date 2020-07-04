@@ -12,7 +12,7 @@ import taxOptions from './options.json';
 import { USER_TAX_ID } from './gql';
 
 const DataWrapper = (props) => {
-    const { data } = useQuery(USER_TAX_ID, { ssr: false });
+    const { data } = useQuery(USER_TAX_ID, { ssr: false, fetchPolicy: 'network-only' });
     const taxId = data?.me?.userMetadata?.taxId;
     return <TaxIdInput key={data} data={taxId} {...props} />;
 };

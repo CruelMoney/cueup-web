@@ -3,7 +3,10 @@ import { EDIT_STATUS } from 'constants/constants';
 import { ME } from '../../components/gql';
 
 const getEditsMap = (user) => {
-    const { edits = [] } = user ?? {};
+    if (!user) {
+        return {};
+    }
+    const { edits = [] } = user || {};
 
     return edits.reduce(
         (acc, edit) => ({

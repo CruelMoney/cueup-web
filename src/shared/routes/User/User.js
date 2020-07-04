@@ -283,7 +283,8 @@ const LoginPopup = ({ translate }) => {
 };
 
 const User = ({ match, location, user, error, loading, translate }) => {
-    const [updateUser, { loading: isSaving }] = useMutation(UPDATE_USER);
+    const [updateUser, { loading: isSaving, error: updateError }] = useMutation(UPDATE_USER);
+
     const [hasScrolled, setHasScrolled] = useState(false);
 
     useEffect(() => {
@@ -323,7 +324,7 @@ const User = ({ match, location, user, error, loading, translate }) => {
                     )}
                 </Helmet>
             )}
-            <SavingIndicator loading={isSaving} error={error} />
+            <SavingIndicator loading={isSaving} error={error || updateError} />
 
             <UserRoutes
                 loading={loading}

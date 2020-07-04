@@ -250,7 +250,6 @@ const UPDATE_USER = gql`
                     percentage
                 }
             }
-            editsMap @client
             edits {
                 id
                 status
