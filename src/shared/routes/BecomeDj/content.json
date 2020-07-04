@@ -213,12 +213,12 @@
         },
         "available-on-iphone": {
             "desktop": {
-                "available-on": "AVAILABLE ON",
+                "available-on": "ALSO ON",
                 "iphone": "iPhone",
                 "content": "Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non."
             },
             "mobile": {
-                "available-on": "AVAILABLE ON",
+                "available-on": "ALSO ON",
                 "iphone-and-android": "iPhone & Android",
                 "content": "Torquatos nostros? quos tu paulo ante cum teneam sententiam, quid iudicat, quo pertineant non."
             }

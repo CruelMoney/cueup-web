@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import debounce from 'lodash/debounce';
 import { useMutation } from 'react-apollo';
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 import { SmartButton, Avatar, Col } from 'components/Blocks';
 import { Input, InputRow } from 'components/FormComponents';
 import { useForm, validators, useValidation } from 'components/hooks/useForm';

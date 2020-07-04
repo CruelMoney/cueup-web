@@ -12,11 +12,11 @@ module.exports = (api) => {
                 '@babel/env',
                 {
                     modules: false,
-                    useBuiltIns: false,
-                    // corejs: {
-                    //     version: 3,
-                    //     proposals: true,
-                    // },
+                    useBuiltIns: 'usage',
+                    corejs: {
+                        version: 3,
+                        proposals: true,
+                    },
                     ...(isTargetWeb === false && {
                         targets: {
                             node: 'current',

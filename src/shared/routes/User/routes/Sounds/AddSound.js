@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useMutation } from 'react-apollo';
 import styled from 'styled-components';
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 import { useForm } from 'components/hooks/useForm';
 import useConnectSoundCloud from 'components/hooks/useConnectSoundcloud';
 import DateInput from 'components/DateInput';

@@ -8,16 +8,20 @@ import CopyPlugin from 'copy-webpack-plugin';
 import { TypedCssModulesPlugin } from 'typed-css-modules-webpack-plugin';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import LoadablePlugin from '@loadable/webpack-plugin';
+import SentryWebpackPlugin from '@sentry/webpack-plugin';
+
 import paths from '../paths';
 import { clientOnly } from '../../scripts/utils';
 
 import envBuilder from '../env';
+const { version } = require('../../package.json');
 
 const env = envBuilder();
 
 const isProfilerEnabled = () => process.argv.includes('--profile');
 
 const isDev = () => process.env.NODE_ENV === 'development';
+const sentryUpload = () => process.argv.includes('--sentry-upload');
 
 export const shared = [
     new MiniCssExtractPlugin({
@@ -51,6 +55,14 @@ export const client = [
     new CopyPlugin({
         patterns: [{ from: paths.public, to: paths.clientBuild }],
     }),
+    !isDev() &&
+        sentryUpload() &&
+        new SentryWebpackPlugin({
+            include: '.',
+            ignore: ['node_modules', 'config'],
+            rewrite: true,
+            release: version,
+        }),
 ].filter(Boolean);
 
 export const server = [

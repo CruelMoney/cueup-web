@@ -1,15 +1,12 @@
-# specify the node base image with your desired version node:<version>
-FROM node:12-alpine as builder
+FROM node:12-alpine as stage1
 WORKDIR /usr/src/app
 COPY package*.json  yarn.lock ./
-RUN yarn install
+RUN yarn install --frozen-lockfile
 
+# new stage so previous stage to optimize caching
 FROM node:12-alpine
-WORKDIR /usr/src/app
-COPY --from=builder /usr/src/app/ /usr/src/app/
-COPY . .
 
-# Installs latest Chromium (77) package.
+# Installs latest Chromium (77) package for puppeteer
 RUN apk add --no-cache \
       chromium \
       nss \
@@ -19,7 +16,20 @@ RUN apk add --no-cache \
       ca-certificates \
       ttf-freefont 
 
-RUN yarn build
+WORKDIR /usr/src/app
+
+# get the src code
+COPY . ./
+# get the node_modules from stage 1. This is kinda slow, could it be optimized by using 1 stage?
+COPY --from=stage1 /usr/src/app /usr/src/app
+
+ARG SENTRY_AUTH_TOKEN=secret
+ENV SENTRY_AUTH_TOKEN ${SENTRY_AUTH_TOKEN}
+
+RUN yarn build:with-sourcemaps --sentry-upload
+
+# remove sourcemaps from public
+RUN rm -rf **/*.map
 
 EXPOSE 8500
 CMD [ "yarn", "start" ]

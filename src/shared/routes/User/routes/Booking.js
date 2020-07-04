@@ -3,7 +3,7 @@ import emailValidator from 'email-validator';
 import styled from 'styled-components';
 import moment from 'moment-timezone';
 import wNumb from 'wnumb';
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 import { useCreateEvent } from 'actions/EventActions';
 import { useForm } from 'components/hooks/useForm';
 import usePushNotifications from 'components/hooks/usePushNotifications';

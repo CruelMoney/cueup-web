@@ -13,7 +13,7 @@ import DjCard from '../../components/blocks/DJCard';
 import { EVENT_GIGS } from '../../gql';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
 import EmptyPage from '../../../../components/common/EmptyPage';
-import { gigStates } from '../../../../constants/constants';
+import { gigStates, eventStates } from '../../../../constants/constants';
 
 const EventGigs = React.forwardRef((props, ref) => {
     const {
@@ -52,22 +52,29 @@ const EventGigs = React.forwardRef((props, ref) => {
 
     // event polling for djs
     useEffect(() => {
-        if (refetchTries < 15 && !gigs?.length) {
-            setTimeout(() => {
-                refetch();
-                setRefetchTries((c) => c + 1);
-            }, 1000);
-        } else {
-            setRefetchTries(15);
-            // keep polling every 10 second until we have 8 up to 20 times
-            if (gigs.length < 8 && refetchTries < 20) {
-                setTimeout(() => {
+        let timeoutRef = null;
+
+        if (status !== eventStates.CONFIRMED) {
+            if (refetchTries < 15 && !gigs?.length) {
+                timeoutRef = setTimeout(() => {
                     refetch();
                     setRefetchTries((c) => c + 1);
-                }, 10000);
+                }, 1000);
+            } else {
+                setRefetchTries(15);
+                // keep polling every 10 second until we have 8 up to 20 times
+                if (gigs.length < 8 && refetchTries < 20) {
+                    timeoutRef = setTimeout(() => {
+                        refetch();
+                        setRefetchTries((c) => c + 1);
+                    }, 10000);
+                }
             }
+            return () => {
+                clearTimeout(timeoutRef);
+            };
         }
-    }, [refetchTries, refetch, gigs]);
+    }, [refetchTries, refetch, gigs, status]);
 
     if (gigs.length === 0 && loading) {
         return (

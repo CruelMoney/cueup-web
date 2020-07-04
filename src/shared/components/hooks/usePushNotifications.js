@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 import getCookie from 'utils/getCookie';
 
 const DISABLE_NOTIFICATIONS_COOKIE = 'disable-notifications';

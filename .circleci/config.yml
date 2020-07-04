@@ -19,9 +19,6 @@ executors:
       DB_USERNAME: root
       DB_HOST: "127.0.0.1"
       DB_PORT: "3306"
-      SENTRY_ORG: cude-development
-      SENTRY_PROJECT: cueup-web
-      SENTRY_ENVIRONMENT: production
 
 commands:
   run-backend: 
@@ -86,24 +83,6 @@ jobs:
 
       - run: git push << pipeline.git.branch >> << pipeline.git.branch >>:master
 
-  sentry-upload:
-    executor: with-redis-mysql-mongo
-    description: Create release and notify Sentry of deploy
-    steps: 
-      - checkout
-      - yarn-install
-      - run: yarn build:with-sourcemaps
-      - run:
-          name: Create release and notify Sentry of deploy
-          command: | 
-            curl -sL https://sentry.io/get-cli/ | bash
-            export SENTRY_RELEASE=$(sentry-cli releases propose-version)
-            sentry-cli releases new -p $SENTRY_PROJECT $SENTRY_RELEASE
-            sentry-cli releases set-commits $SENTRY_RELEASE --auto
-            sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps build/client/static
-            sentry-cli releases finalize $SENTRY_RELEASE
-            sentry-cli releases deploys $SENTRY_RELEASE new -e $SENTRY_ENVIRONMENT
-
   performance-check:
     executor: lighthouse-check/default
     description: Run a lighthouse check and post to slack
@@ -129,13 +108,6 @@ workflows:
           requires:
             - e2e
             - lint-and-test
-          filters:
-            branches:
-              only: 
-                - master
-      - sentry-upload: 
-          requires:
-            - deploy
           filters:
             branches:
               only: 
