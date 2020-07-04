@@ -63,6 +63,7 @@ const USER = gql`
                     total
                     totalFormatted
                 }
+                isPro
             }
             userMetadata {
                 firstName

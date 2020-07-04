@@ -16,6 +16,7 @@ import PayForm from 'components/common/PayForm.js';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
+import ReactComment from 'components/ReactComment';
 import Sidebar, { SidebarContent } from '../../components/Sidebar';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col, Divider } from '../../components/Blocks';
@@ -48,6 +49,8 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
     if (followers && followers.total < 500) {
         followers = false;
     }
+
+    const { website } = userMetadata;
 
     const memberSince = moment(createdAt).format('MMMM YYYY');
     return (
@@ -106,7 +109,7 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                         {instagramUsername && (
                             <a
                                 target="_blank"
-                                rel="noopener noreferrer"
+                                rel="noopener noreferrer ugc"
                                 href={'https://instagram.com/' + instagramUsername}
                             >
                                 <IconRow>
@@ -118,6 +121,21 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                                     {instagramUsername}
                                 </IconRow>
                             </a>
+                        )}
+                        {website && (
+                            <>
+                                <ReactComment comment="HEY YOU! Want nofollow removed from your website-link? Message me on chris@cueup.io" />
+                                <a target="_blank" rel="noopener noreferrer ugc" href={website}>
+                                    <IconRow>
+                                        <Icon
+                                            icon={instagramIcon}
+                                            color={'#98a4b3'}
+                                            style={{ marginRight: '15px', fontSize: '24px' }}
+                                        />
+                                        {website}
+                                    </IconRow>
+                                </a>
+                            </>
                         )}
                         <CertifiedVerified
                             certified={certified}
