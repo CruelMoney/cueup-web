@@ -1,0 +1,282 @@
+[
+    {
+        "label": "United Arab Emirates",
+        "type": "ae_trn",
+        "placeholder": "123456789012345"
+    },
+    {
+        "label": "Australia",
+        "type": "au_abn",
+        "placeholder": "00000000000"
+    },
+    {
+        "label": "Brazil (CNPJ)",
+        "type": "br_cnpj",
+        "placeholder": "00.000.000/0000-00"
+    },
+    {
+        "label": "Brazil (CPF)",
+        "type": "br_cpf",
+        "placeholder": "000.000.000-00"
+    },
+    {
+        "label": "Canada (BN)",
+        "type": "ca_bn",
+        "placeholder": "000000000"
+    },
+    {
+        "label": "Canada (QST)",
+        "type": "ca_qst",
+        "placeholder": "1234567890TQ0001"
+    },
+    {
+        "label": "Chile",
+        "type": "cl_tin",
+        "placeholder": "12.345.678-K"
+    },
+    {
+        "label": "Spain (CIF)",
+        "type": "es_cif",
+        "placeholder": "A00000000"
+    },
+    {
+        "label": "Austria",
+        "type": "eu_vat",
+        "placeholder": "ATU00000000"
+    },
+    {
+        "label": "Belgium",
+        "type": "eu_vat",
+        "placeholder": "BE0000000000"
+    },
+    {
+        "label": "Bulgaria",
+        "type": "eu_vat",
+        "placeholder": "BG0000000000"
+    },
+    {
+        "label": "Cyprus",
+        "type": "eu_vat",
+        "placeholder": "CY00000000X"
+    },
+    {
+        "label": "Czech",
+        "type": "eu_vat",
+        "placeholder": "CZ0000000000"
+    },
+    {
+        "label": "Germany",
+        "type": "eu_vat",
+        "placeholder": "DE000000000"
+    },
+    {
+        "label": "Denmark",
+        "type": "eu_vat",
+        "placeholder": "DK00000000"
+    },
+    {
+        "label": "Estonia",
+        "type": "eu_vat",
+        "placeholder": "EE000000000"
+    },
+    {
+        "label": "Spain (VAT)",
+        "type": "eu_vat",
+        "placeholder": "ESX0000000X"
+    },
+    {
+        "label": "Finland",
+        "type": "eu_vat",
+        "placeholder": "FI00000000"
+    },
+    {
+        "label": "France",
+        "type": "eu_vat",
+        "placeholder": "FRXX000000000"
+    },
+    {
+        "label": "United Kingdom",
+        "type": "eu_vat",
+        "placeholder": "GB000000000"
+    },
+    {
+        "label": "Greece",
+        "type": "eu_vat",
+        "placeholder": "EL000000000"
+    },
+    {
+        "label": "Croatia",
+        "type": "eu_vat",
+        "placeholder": "HR00000000000"
+    },
+    {
+        "label": "Hungary",
+        "type": "eu_vat",
+        "placeholder": "HU00000000"
+    },
+    {
+        "label": "Ireland",
+        "type": "eu_vat",
+        "placeholder": "IE0000000XX"
+    },
+    {
+        "label": "Italy",
+        "type": "eu_vat",
+        "placeholder": "IT00000000000"
+    },
+    {
+        "label": "Lithuania",
+        "type": "eu_vat",
+        "placeholder": "LT000000000000"
+    },
+    {
+        "label": "Luxembourg",
+        "type": "eu_vat",
+        "placeholder": "LU00000000"
+    },
+    {
+        "label": "Latvia",
+        "type": "eu_vat",
+        "placeholder": "LV00000000000"
+    },
+    {
+        "label": "Malta",
+        "type": "eu_vat",
+        "placeholder": "MT00000000"
+    },
+    {
+        "label": "Netherlands",
+        "type": "eu_vat",
+        "placeholder": "NL000000000B00"
+    },
+    {
+        "label": "Poland",
+        "type": "eu_vat",
+        "placeholder": "PL0000000000"
+    },
+    {
+        "label": "Portugal",
+        "type": "eu_vat",
+        "placeholder": "PT000000000"
+    },
+    {
+        "label": "Romania",
+        "type": "eu_vat",
+        "placeholder": "RO0000000000"
+    },
+    {
+        "label": "Sweden",
+        "type": "eu_vat",
+        "placeholder": "SE000000000000"
+    },
+    {
+        "label": "Slovenia",
+        "type": "eu_vat",
+        "placeholder": "SI00000000"
+    },
+    {
+        "label": "Slovakia",
+        "type": "eu_vat",
+        "placeholder": "SK0000000000"
+    },
+    {
+        "label": "Hong Kong",
+        "type": "hk_br",
+        "placeholder": "00000000"
+    },
+    {
+        "label": "Indonesia",
+        "type": "id_npwp",
+        "placeholder": "12.345.678.9-012.345"
+    },
+    {
+        "label": "India",
+        "type": "in_gst",
+        "placeholder": "00XXXXX0000XXZX"
+    },
+    {
+        "label": "Japan",
+        "type": "jp_cn",
+        "placeholder": "3000020278670"
+    },
+    {
+        "label": "South Korea",
+        "type": "kr_brn",
+        "placeholder": "123-45-67890"
+    },
+    {
+        "label": "Liechtenstein",
+        "type": "li_uid",
+        "placeholder": "CHE123456789"
+    },
+    {
+        "label": "Mexico",
+        "type": "mx_rfc",
+        "placeholder": "GOAP780710RH7"
+    },
+    {
+        "label": "Malaysia (FRP)",
+        "type": "my_frp",
+        "placeholder": "12345678"
+    },
+    {
+        "label": "Malaysia (ITN)",
+        "type": "my_itn",
+        "placeholder": "C 1234567890"
+    },
+    {
+        "label": "Malaysia (SST)",
+        "type": "my_sst",
+        "placeholder": "A00-2001-00000000"
+    },
+    {
+        "label": "Norway",
+        "type": "no_vat",
+        "placeholder": "000000000MVA"
+    },
+    {
+        "label": "New Zealand",
+        "type": "nz_gst",
+        "placeholder": "000000000"
+    },
+    {
+        "label": "Russia",
+        "type": "ru_inn",
+        "placeholder": "0000000000"
+    },
+    {
+        "label": "Saudi Arabia",
+        "type": "sa_vat",
+        "placeholder": "123456789012345"
+    },
+    {
+        "label": "Singapore (GST)",
+        "type": "sg_gst",
+        "placeholder": "M12345678X"
+    },
+    {
+        "label": "Singapore (UEN)",
+        "type": "sg_uen",
+        "placeholder": "123456789F"
+    },
+    {
+        "label": "Thailand",
+        "type": "th_vat",
+        "placeholder": "0000000000000"
+    },
+    {
+        "label": "Taiwan",
+        "type": "tw_vat",
+        "placeholder": "00000000"
+    },
+    {
+        "label": "United States",
+        "type": "us_ein",
+        "placeholder": "12-3456789"
+    },
+    {
+        "label": "South Africa",
+        "type": "za_vat",
+        "placeholder": "4123456789"
+    }
+]

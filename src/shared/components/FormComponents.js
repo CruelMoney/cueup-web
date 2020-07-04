@@ -13,7 +13,7 @@ import {
     TextInput,
     FileInput,
 } from './Blocks';
-import { Title, Body } from './Text';
+import { Title, Body, BodySmall } from './Text';
 import Checkbox from './Checkbox';
 import { useValidation } from './hooks/useForm';
 
@@ -273,6 +273,7 @@ const Input = React.forwardRef(
             onBlur,
             unregisterValidation = () => {},
             errorOutside,
+            description,
             ...props
         },
         fRef
@@ -330,6 +331,7 @@ const Input = React.forwardRef(
                         onBlur={handleBlur}
                         {...props}
                     />
+                    {description && <BodySmall>{description}</BodySmall>}
                     {!errorOutside && displayError && <p className="error">{displayError}</p>}
                 </LabelComponent>
                 {errorOutside && displayError && <p className="error">{displayError}</p>}

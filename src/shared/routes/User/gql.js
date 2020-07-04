@@ -182,6 +182,8 @@ const UPDATE_USER = gql`
         $currency: Currency
         $notificationSettings: JSON
         $playedVenues: [String!]
+        $taxType: String
+        $taxId: String
     ) {
         updateUser(
             id: $id
@@ -206,6 +208,8 @@ const UPDATE_USER = gql`
             currency: $currency
             notificationSettings: $notificationSettings
             playedVenues: $playedVenues
+            taxType: $taxType
+            taxId: $taxId
         ) {
             id
             email

@@ -19,6 +19,7 @@ const SuggestionList = ({
     children,
     filter,
     footer,
+    wrapperStyle,
     ...props
 }) => {
     let suggestions = ogSuggestions;
@@ -110,6 +111,7 @@ const SuggestionList = ({
             active={focused}
             onKeyDown={handleKeyPress}
             className={'suggestionList' + (half ? ' half' : '')}
+            style={wrapperStyle}
         >
             <Input
                 ref={inputRef}

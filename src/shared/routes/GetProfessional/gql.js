@@ -34,8 +34,6 @@ export const SUBSCRIPTION_TIERS = gql`
 export const START_SUBSCRIPTION = gql`
     mutation StartSubscription($tierId: ID!, $paymentData: PaymentData!) {
         startSubscription(tierId: $tierId, paymentData: $paymentData) {
-            id
-            active
             paymentIntent
             requiresConfirmation
         }

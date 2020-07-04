@@ -1,6 +1,5 @@
 import React from 'react';
 import styled, { css, keyframes } from 'styled-components';
-// npm install --save-dev @iconify/react @iconify/icons-ion
 import { Icon, InlineIcon } from '@iconify/react';
 import arrowForward from '@iconify/icons-ion/arrow-forward';
 import arrowBack from '@iconify/icons-ion/arrow-back';
@@ -352,7 +351,8 @@ const ButtonTextStyle = css`
     white-space: nowrap;
     display: block;
     text-overflow: ellipsis;
-    max-width: 200px;
+    max-width: ${({ fullWidth }) => (fullWidth ? '100%' : '200px')};
+    width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
     position: relative;
     transition: none;
 
