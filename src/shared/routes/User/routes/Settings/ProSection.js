@@ -6,8 +6,9 @@ import { PrimaryButton } from 'components/Blocks';
 import { MANAGE_SUBSCRIPTION } from 'routes/User/gql';
 import TaxIdInput from 'components/TaxID';
 import { BodySmall, Body } from 'components/Text';
+import { validators } from 'components/hooks/useForm';
 
-const ProSection = ({ user, saveData, registerValidation, unregisterValidation }) => {
+const ProSection = ({ user, saveData }) => {
     const match = useRouteMatch();
 
     const [getManageSubscriptionSessionUrl, { loading }] = useLazyQuery(MANAGE_SUBSCRIPTION, {
@@ -24,7 +25,9 @@ const ProSection = ({ user, saveData, registerValidation, unregisterValidation }
         });
     };
 
-    const isPro = user?.appMetadata?.isPro;
+    const { appMetadata, permalink, userMetadata } = user || {};
+    const isPro = appMetadata?.isPro;
+    const { firstName, website } = userMetadata || {};
 
     return (
         <SettingsSection
@@ -61,14 +64,21 @@ const ProSection = ({ user, saveData, registerValidation, unregisterValidation }
                 description="Download invoices, and change or cancel your subscription."
             />
             <Input
-                half
                 label="Website"
-                // defaultValue={artistName}
-                placeholder={'https://artistname.com'}
+                defaultValue={website}
+                placeholder={`https://${permalink ? permalink : firstName}.com`}
                 type="text"
-                // onSave={(artistName) => saveData({ artistName: artistName.trim() })}
+                onSave={(website) => saveData({ website: getUrl(website) })}
+                validation={(value) =>
+                    validators.containsURL(true)(value) ? null : 'Not a valid URL'
+                }
                 description="Display a link to your website on your profile."
             />
+
+            <Input half label="Snapchat" />
+            <Input half label="YouTube" />
+
+            <Input half label="Twitter" />
 
             <TaxIdInput
                 label="Tax ID"
@@ -77,6 +87,17 @@ const ProSection = ({ user, saveData, registerValidation, unregisterValidation }
             />
         </SettingsSection>
     );
+};
+
+const getUrl = (value) => {
+    function addhttp(url) {
+        if (!/^(?:f|ht)tps?:\/\//.test(url)) {
+            url = 'https://' + url;
+        }
+        return url;
+    }
+
+    return new URL(addhttp(value));
 };
 
 export default ProSection;

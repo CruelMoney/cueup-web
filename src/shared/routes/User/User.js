@@ -8,7 +8,8 @@ import moment from 'moment';
 
 import { Icon } from '@iconify/react';
 import pinIcon from '@iconify/icons-ion/location-sharp';
-import addCircleIcon from '@iconify/icons-ion/add-circle';
+import timeIcon from '@iconify/icons-ion/time';
+import websiteIcon from '@iconify/icons-ion/globe-outline';
 import instagramIcon from '@iconify/icons-ion/logo-instagram-outline';
 import { Helmet } from 'react-helmet-async';
 import PayForm from 'components/common/PayForm.js';
@@ -90,7 +91,7 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                     >
                         <IconRow className="iconRow">
                             <Icon
-                                icon={addCircleIcon}
+                                icon={timeIcon}
                                 color={'#98a4b3'}
                                 style={{ marginRight: '15px', fontSize: '24px' }}
                             />
@@ -125,14 +126,18 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                         {website && (
                             <>
                                 <ReactComment comment="HEY YOU! Want nofollow removed from your website-link? Message me on chris@cueup.io" />
-                                <a target="_blank" rel="noopener noreferrer ugc" href={website}>
+                                <a
+                                    target="_blank"
+                                    rel="noopener noreferrer nofollow"
+                                    href={website}
+                                >
                                     <IconRow>
                                         <Icon
-                                            icon={instagramIcon}
+                                            icon={websiteIcon}
                                             color={'#98a4b3'}
                                             style={{ marginRight: '15px', fontSize: '24px' }}
                                         />
-                                        {website}
+                                        {new URL(website).hostname}
                                     </IconRow>
                                 </a>
                             </>

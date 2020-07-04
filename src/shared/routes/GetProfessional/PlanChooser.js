@@ -96,7 +96,10 @@ const Plans = ({ setTier, selectedTier }) => {
     return (
         <>
             <div style={{ marginBottom: 24, textAlign: 'center' }}>
-                <Body>Launch Offer ending {endingFormatted}.</Body>
+                <Body>
+                    Launch Offer valid for 20 days 2 hours 1 minute. Subscribe now and get this
+                    price forever.
+                </Body>
             </div>
 
             {loading && (

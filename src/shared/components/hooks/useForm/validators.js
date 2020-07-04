@@ -49,7 +49,7 @@ export const containsEmail = (message = 'Cannot contain emails') => (value) => {
     return null;
 };
 
-export const containsURL = (message = 'Cannot contain phone URLs') => (value) => {
+export const containsURL = (message = 'Cannot contain URLs') => (value) => {
     if (urlMatchers().some((m) => m.test(value))) {
         return message;
     }

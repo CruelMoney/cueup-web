@@ -71,6 +71,7 @@ const USER = gql`
                 bio
                 birthday
                 phone
+                website
             }
             userSettings {
                 standby
@@ -185,6 +186,7 @@ const UPDATE_USER = gql`
         $playedVenues: [String!]
         $taxType: String
         $taxId: String
+        $website: URL
     ) {
         updateUser(
             id: $id
@@ -211,6 +213,7 @@ const UPDATE_USER = gql`
             playedVenues: $playedVenues
             taxType: $taxType
             taxId: $taxId
+            website: $website
         ) {
             id
             email
@@ -236,6 +239,7 @@ const UPDATE_USER = gql`
                 bio
                 birthday
                 phone
+                website
             }
             appMetadata {
                 profileStatus
