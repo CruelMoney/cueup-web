@@ -30,8 +30,6 @@ const ProSection = ({ user, saveData }) => {
     const isPro = appMetadata?.isPro;
     const { firstName, website } = userMetadata || {};
 
-    console.log({ user });
-
     return (
         <SettingsSection
             id="pro"
@@ -81,7 +79,9 @@ const ProSection = ({ user, saveData }) => {
             <Input
                 label="Website"
                 defaultValue={website}
-                placeholder={`https://${permalink ? permalink : firstName}.com`}
+                placeholder={`www.${
+                    permalink?.length < 20 ? permalink : `dj-${firstName.toLowerCase()}`
+                }.com`}
                 type="text"
                 onSave={(website) => saveData({ website: getUrl(website) })}
                 validation={(value) =>
