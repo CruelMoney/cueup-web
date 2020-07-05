@@ -66,14 +66,31 @@ function PaymentForm({ selectedTier, setSuccess }) {
     );
 
     const [startSubscription] = useMutation(START_SUBSCRIPTION, {
-        refetchQueries: [{ query: ME }],
-        awaitRefetchQueries: true,
         onCompleted: ({ startSubscription }) => {
             if (startSubscription.requiresConfirmation) {
                 confirmCardPayment(startSubscription.paymentIntent);
             } else {
                 setLoading(false);
                 setSuccess(true);
+            }
+        },
+        update: (proxy, { data: { startSubscription } }) => {
+            if (!startSubscription.requiresConfirmation) {
+                const data = proxy.readQuery({ query: ME });
+
+                proxy.writeQuery({
+                    query: ME,
+                    data: {
+                        ...data,
+                        me: {
+                            ...data.me,
+                            appMetadata: {
+                                ...data.me.appMetadata,
+                                isPro: true,
+                            },
+                        },
+                    },
+                });
             }
         },
     });
@@ -125,6 +142,7 @@ function PaymentForm({ selectedTier, setSuccess }) {
                 <ErrorMessageApollo error={error} />
 
                 <SmartButton
+                    data-cy="submit-button"
                     loading={loading}
                     level="primary"
                     disabled={!selectedTier}

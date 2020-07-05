@@ -8,9 +8,10 @@ import checkmarkCircle from '@iconify/icons-ion/checkmark-circle';
 
 import Skeleton from 'react-loading-skeleton';
 import Popup from 'components/common/Popup';
-import { Row, Col, PrimaryButton, Avatar } from 'components/Blocks';
+import { Row, Col, PrimaryButton, Avatar, TeritaryButton } from 'components/Blocks';
 import { BodySmall, Body } from 'components/Text';
 import { DumbCheckbox } from 'components/Checkbox';
+import { Label } from 'components/FormComponents';
 import { SUBSCRIPTION_TIERS } from './gql';
 import PaymentForm from './PaymentForm';
 
@@ -78,9 +79,33 @@ const Content = () => {
 
 const Success = () => {
     return (
-        <div className="payment-confirmation">
-            <Icon icon={checkmarkCircle} style={{ fontSize: '42px' }} />
-            <Body>You are now a Cueup Pro Member.</Body>
+        <div style={{ padding: '3em' }}>
+            <h1>Welcome to Cueup Pro</h1>
+
+            <Body style={{ marginBottom: 24, maxWidth: 500 }}>
+                We're excited to have you on the <b>Pro team</b>. Go ahead and use some of the new
+                features! And remember, if you don't receive any gig requests your money will be
+                refunded each month.
+            </Body>
+
+            <Col>
+                <Row between middle>
+                    <Label>Add extra playing locations</Label>
+                    <TeritaryButton>Go</TeritaryButton>
+                </Row>
+                <Row between middle>
+                    <Label>Contact the organizer on your latest gig</Label>
+                    <TeritaryButton>Go</TeritaryButton>
+                </Row>
+                <Row between middle>
+                    <Label>Upload mixtapes</Label>
+                    <TeritaryButton>Go</TeritaryButton>
+                </Row>
+                <Row between middle>
+                    <Label>Add your website</Label>
+                    <TeritaryButton>Go</TeritaryButton>
+                </Row>
+            </Col>
         </div>
     );
 };
@@ -111,9 +136,10 @@ const Plans = ({ setTier, selectedTier }) => {
 
             {tiers
                 .sort((t1, t2) => t1.price.amount - t2.price.amount) // cheapest first
-                .map((t) => (
+                .map((t, idx) => (
                     <Tier
                         key={t.id}
+                        testId={`plan-${idx + 1}-button`}
                         active={selectedTier === t}
                         onClick={() => setTier(t)}
                         {...t}
@@ -128,9 +154,18 @@ const intervalNames = Object.freeze({
     MONTHLY: 'Monthly',
 });
 
-const Tier = ({ beforePriceMonthly, price, priceMonthly, interval, onClick, active, loading }) => {
+const Tier = ({
+    beforePriceMonthly,
+    price,
+    priceMonthly,
+    interval,
+    onClick,
+    active,
+    loading,
+    testId,
+}) => {
     return (
-        <TierWrapper active={active} onClick={onClick}>
+        <TierWrapper active={active} onClick={onClick} data-cy={testId}>
             {loading ? (
                 <Skeleton />
             ) : (
@@ -258,8 +293,6 @@ const TierWrapper = styled.button`
             transform: scale(0.99);
         `}
 `;
-
-const TierLoading = styled(TierWrapper)``;
 
 const LeftSection = styled.div`
     width: 50%;

@@ -30,6 +30,8 @@ const ProSection = ({ user, saveData }) => {
     const isPro = appMetadata?.isPro;
     const { firstName, website } = userMetadata || {};
 
+    console.log({ user });
+
     return (
         <SettingsSection
             id="pro"
@@ -49,7 +51,9 @@ const ProSection = ({ user, saveData }) => {
                     {!isPro && (
                         <>
                             <NavLink to={match.url + '/get-pro'}>
-                                <PrimaryButton fullWidth>Go Pro</PrimaryButton>
+                                <PrimaryButton fullWidth data-cy="go-pro-button">
+                                    Go Pro
+                                </PrimaryButton>
                             </NavLink>
                             <BodySmall style={{ marginTop: 3, textAlign: 'center' }}>
                                 Automatic refund if you don't receive any gig requests.
