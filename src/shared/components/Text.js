@@ -130,6 +130,7 @@ export const HeaderTitle = styled.h1`
     font-size: 36px;
     color: ${({ dark }) => (dark ? 'inherit' : '#fff')};
     margin-bottom: 0.3em;
+    margin-top: 0.3em;
     line-height: 1.2em;
     display: inline-block;
     position: relative;

@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { useQuery } from 'react-apollo';
 import { useHistory } from 'react-router';
+import Icon from '@iconify/react';
+import starIcon from '@iconify/icons-ion/star';
 import Popup from 'components/common/Popup';
 import Navigation from '../../../components/Navigation/SubNavigation';
 import Rating from '../../../components/common/Rating';
-import VerifiedBadge from '../../../components/graphics/VerifiedBadge';
 import Tooltip from '../../../components/Tooltip';
 import {
     Container,
@@ -173,6 +174,7 @@ const UserContent = ({ user }) => {
         followers,
         profileStatus,
         approved,
+        isPro,
     } = appMetadata;
 
     const { width } = useWindowSize();
@@ -202,23 +204,38 @@ const UserContent = ({ user }) => {
                 <HeaderWrapper>
                     <Row middle>
                         <Col style={{ flex: 1, alignItems: 'flex-start' }}>
+                            {user.isDj && !!statusContent && (
+                                <StatusButton onClick={() => setShowing(true)}>
+                                    <BodyBold white>
+                                        {statusContent.title[approvedKey]} - read more
+                                    </BodyBold>
+                                </StatusButton>
+                            )}
                             <HeaderTitle>
                                 {artistName || firstName}
-                                {certified && (
-                                    <Tooltip
-                                        text={
-                                            'This dj has been certified by Cueup. The Cueup team has personally met and seen this dj play.'
-                                        }
+                                {isPro && (
+                                    <span
+                                        title="Cueup Pro DJ"
+                                        style={{
+                                            backgroundColor: '#31daff',
+                                            borderRadius: 10,
+                                            height: 20,
+                                            width: 20,
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            position: 'relative',
+                                            marginLeft: 9,
+                                            top: -12,
+                                        }}
                                     >
-                                        {({ ref, close, open }) => (
-                                            <VerifiedBadge
-                                                ref={ref}
-                                                style={{ marginLeft: '15px' }}
-                                                onMouseEnter={open}
-                                                onMouseLeave={close}
-                                            />
-                                        )}
-                                    </Tooltip>
+                                        <Icon
+                                            color={'#fff'}
+                                            width={14}
+                                            height={14}
+                                            icon={starIcon}
+                                        />
+                                    </span>
                                 )}
                             </HeaderTitle>
                             {rating && (
@@ -234,14 +251,6 @@ const UserContent = ({ user }) => {
                                         {reviews.pageInfo.totalDocs} reviews
                                     </ReviewsCount>
                                 </div>
-                            )}
-
-                            {user.isDj && !!statusContent && (
-                                <StatusButton onClick={() => setShowing(true)}>
-                                    <BodyBold white>
-                                        {statusContent.title[approvedKey]} - read more
-                                    </BodyBold>
-                                </StatusButton>
                             )}
 
                             {(experience || followers) && (
