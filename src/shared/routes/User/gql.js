@@ -76,6 +76,7 @@ const USER = gql`
             userSettings {
                 standby
                 currency
+                publicDisplay
                 cancelationPolicy {
                     days
                     percentage
@@ -183,6 +184,7 @@ const UPDATE_USER = gql`
         $refundPercentage: Int
         $currency: Currency
         $notificationSettings: JSON
+        $publicDisplaySettings: JSON
         $playedVenues: [String!]
         $taxType: String
         $taxId: String
@@ -210,6 +212,7 @@ const UPDATE_USER = gql`
             refundPercentage: $refundPercentage
             currency: $currency
             notificationSettings: $notificationSettings
+            publicDisplaySettings: $publicDisplaySettings
             playedVenues: $playedVenues
             taxType: $taxType
             taxId: $taxId
@@ -250,6 +253,7 @@ const UPDATE_USER = gql`
                 currency
                 standby
                 notifications
+                publicDisplay
                 cancelationPolicy {
                     days
                     percentage

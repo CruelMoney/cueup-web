@@ -1,12 +1,13 @@
 import React from 'react';
 import { NavLink, useRouteMatch, Route, useLocation } from 'react-router-dom';
 import { useLazyQuery } from 'react-apollo';
-import { SettingsSection, Input } from 'components/FormComponents';
-import { PrimaryButton } from 'components/Blocks';
+import { SettingsSection, Input, Label } from 'components/FormComponents';
+import { PrimaryButton, Hr, Col, Row } from 'components/Blocks';
 import { MANAGE_SUBSCRIPTION } from 'routes/User/gql';
 import TaxIdInput from 'components/TaxID';
 import { BodySmall, Body } from 'components/Text';
 import { validators } from 'components/hooks/useForm';
+import { CheckBoxRow, TableRow } from 'components/CheckboxTable';
 
 const ProSection = ({ user, saveData }) => {
     const match = useRouteMatch();
@@ -33,6 +34,7 @@ const ProSection = ({ user, saveData }) => {
         <SettingsSection
             id="pro"
             title={'Cueup Pro'}
+            disable={!isPro}
             description={
                 <>
                     <Body style={{ marginBottom: 12 }}>
@@ -77,14 +79,33 @@ const ProSection = ({ user, saveData }) => {
                 validation={(value) =>
                     validators.containsURL(true)(value) ? null : 'Not a valid URL'
                 }
-                description="Display a link to your website on your profile."
             />
 
-            <Input half label="Snapchat" />
-            <Input half label="YouTube" />
-
-            <Input half label="Twitter" />
+            <PublicDisplaySettings />
         </SettingsSection>
+    );
+};
+
+const PublicDisplaySettings = () => {
+    return (
+        <Col style={{ width: '100%', marginRight: '36px' }}>
+            <TableRow>
+                <Label>Information</Label>
+                <Label>Public</Label>
+            </TableRow>
+            <Hr />
+            <CheckBoxRow label="Website" withBorder={false} checked={true} />
+            <CheckBoxRow label="Email" withBorder={false} checked={true} />
+            <CheckBoxRow label="Phone" withBorder={false} checked={true} />
+            <CheckBoxRow label="SoundCloud" withBorder={false} checked={true} />
+            <CheckBoxRow label="Mixcloud" withBorder={false} checked={true} />
+            <CheckBoxRow label="Instagram" withBorder={false} checked={true} />
+            <Hr />
+            <BodySmall style={{ marginTop: 6 }}>
+                Publicly display your contact information and social links on your profile.
+                Organizers will always be able to see contact information.
+            </BodySmall>
+        </Col>
     );
 };
 

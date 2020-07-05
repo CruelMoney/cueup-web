@@ -120,7 +120,12 @@ const RightCol = styled(InputRow)`
     flex: 2;
     min-width: 400px;
     flex-wrap: wrap;
-
+    ${({ disable }) =>
+        disable &&
+        css`
+            opacity: 0.25;
+            pointer-events: none;
+        `}
     @media only screen and (max-width: 425px) {
         min-width: 100%;
         margin-right: -15px;
@@ -136,14 +141,21 @@ const RightCol = styled(InputRow)`
     }
 `;
 
-const SettingsSection = ({ title, description, children, stickyTop = '90px', ...props }) => {
+const SettingsSection = ({
+    title,
+    description,
+    children,
+    stickyTop = '90px',
+    disable,
+    ...props
+}) => {
     return (
         <SectionRow {...props}>
             <LeftCol stickyTop={stickyTop}>
                 <Title>{title}</Title>
                 <Body style={{ marginBottom: '24px', whiteSpace: 'pre-wrap' }}>{description}</Body>
             </LeftCol>
-            <RightCol>{children}</RightCol>
+            <RightCol disable={disable}>{children}</RightCol>
         </SectionRow>
     );
 };

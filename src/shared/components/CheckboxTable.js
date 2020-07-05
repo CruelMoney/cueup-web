@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Label, Value, Checkbox } from './FormComponents';
 import { Row, Col, Hr, inputStyle } from './Blocks';
 
-const TableRow = styled(Row)`
+export const TableRow = styled(Row)`
     height: 42px;
     align-items: center;
     p {
@@ -19,21 +19,26 @@ const TableRow = styled(Row)`
     }
 `;
 
+export const CheckBoxRow = ({ label, checked, onChange, withBorder = true }) => {
+    return (
+        <TableRow>
+            <Value>{label}</Value>
+            <Checkbox
+                style={{ justifyContent: 'center' }}
+                defaultValue={checked}
+                onChange={onChange}
+                withBorder={withBorder}
+            />
+        </TableRow>
+    );
+};
+
 const OtherInput = styled.input`
     ${inputStyle}
     font-size: 18px;
     color: #122b48;
     margin: 0;
 `;
-
-const CheckBoxRow = ({ label, checked, onChange }) => {
-    return (
-        <TableRow>
-            <Value>{label}</Value>
-            <Checkbox defaultValue={checked} onChange={onChange} withBorder />
-        </TableRow>
-    );
-};
 
 const OtherRow = ({ checked, onChange, onTextChange }) => {
     return (
@@ -44,6 +49,7 @@ const OtherRow = ({ checked, onChange, onTextChange }) => {
                 <Value>Other</Value>
             )}
             <Checkbox
+                style={{ justifyContent: 'center' }}
                 defaultValue={checked}
                 onChange={(val) => onChange(val ? 'other' : val)}
                 withBorder
