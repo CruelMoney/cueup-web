@@ -183,7 +183,8 @@ const Genres = ({ genres, style, isOwn }) => (
 );
 
 const HighlightedSound = ({ user }) => {
-    const hasSounds = user.sounds.edges.length > 0;
+    const sounds = user?.sounds?.edges || [];
+    const hasSounds = sounds.length > 0;
 
     // placeholder
     let sound = {
@@ -198,7 +199,7 @@ const HighlightedSound = ({ user }) => {
     };
 
     if (hasSounds) {
-        sound = user.sounds.edges[0];
+        sound = sounds[0];
     }
 
     return (
@@ -452,8 +453,8 @@ const Overview = ({ user, loading, location, history }) => {
     const { firstName, bio } = userMetadata;
     const { cancelationPolicy } = userSettings;
 
-    const showPhotosArea = media && (media.edges.length > 0 || isOwn);
-    const showSelectedSound = sounds && (sounds.pageInfo.totalDocs > 0 || isOwn);
+    const showPhotosArea = media?.edges.length > 0 || isOwn;
+    const showSelectedSound = sounds?.pageInfo.totalDocs > 0 || isOwn;
 
     const bioStyle = showPhotosArea ? { borderBottom: 'none' } : {};
     const genresStyle = { paddingTop: showSelectedSound ? '42px' : '0px' };

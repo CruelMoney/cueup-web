@@ -59,6 +59,10 @@ const USER = gql`
                 certified
                 createdAt
                 instagramUsername
+                soundCloudUsername
+                soundCloudUrl
+                mixcloudUsername
+                mixcloudUrl
                 followers {
                     total
                     totalFormatted

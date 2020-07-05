@@ -13,6 +13,10 @@ import websiteIcon from '@iconify/icons-ion/globe-outline';
 import mailIcon from '@iconify/icons-ion/ios-email';
 import phoneIcon from '@iconify/icons-ion/call';
 import instagramIcon from '@iconify/icons-ion/logo-instagram-outline';
+
+import soundcloudLogo from '@iconify/icons-simple-icons/soundcloud';
+import mixcloudIcon from '@iconify/icons-simple-icons/mixcloud';
+
 import { Helmet } from 'react-helmet-async';
 import PayForm from 'components/common/PayForm.js';
 
@@ -54,6 +58,10 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
         identityVerified,
         instagramUsername,
         isPro,
+        soundCloudUsername,
+        soundCloudUrl,
+        mixcloudUsername,
+        mixcloudUrl,
     } = appMetadata;
     let { followers } = appMetadata;
 
@@ -134,6 +142,42 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                                 </IconRow>
                             </a>
                         )}
+                        {soundCloudUsername && isPro && publicDisplay?.SOUNDCLOUD.public && (
+                            <>
+                                <a
+                                    href={`${soundCloudUrl}?ref=cueup`}
+                                    target="_blank"
+                                    rel="noopener noreferrer ugc"
+                                >
+                                    <IconRow>
+                                        <Icon
+                                            icon={soundcloudLogo}
+                                            color={'#98a4b3'}
+                                            style={{ marginRight: '15px', fontSize: '24px' }}
+                                        />
+                                        {soundCloudUsername}
+                                    </IconRow>
+                                </a>
+                            </>
+                        )}
+                        {mixcloudUsername && isPro && publicDisplay?.MIXCLOUD.public && (
+                            <>
+                                <a
+                                    href={`${mixcloudUrl}?ref=cueup`}
+                                    target="_blank"
+                                    rel="noopener noreferrer ugc"
+                                >
+                                    <IconRow>
+                                        <Icon
+                                            icon={mixcloudIcon}
+                                            color={'#98a4b3'}
+                                            style={{ marginRight: '15px', fontSize: '24px' }}
+                                        />
+                                        {mixcloudUsername}
+                                    </IconRow>
+                                </a>
+                            </>
+                        )}
                         {website && isPro && publicDisplay?.WEBSITE.public && (
                             <>
                                 <ReactComment comment="HEY YOU! Want nofollow removed from your website-link? Message me on chris@cueup.io" />
@@ -181,6 +225,7 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                                 </a>
                             </>
                         )}
+
                         <CertifiedVerified
                             certified={certified}
                             identityVerified={identityVerified}

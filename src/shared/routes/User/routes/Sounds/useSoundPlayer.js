@@ -22,7 +22,7 @@ const useSoundPlayer = ({ track, src, duration }) => {
 
     // recreate state
     let initPos = 0;
-    let initState = onDeck?.id === soundId ? playerStates.LOADING : playerStates.STOPPED;
+    let initState = onDeck && onDeck?.id === soundId ? playerStates.LOADING : playerStates.STOPPED;
 
     try {
         initState = sound.playing() ? playerStates.PLAYING : initState;

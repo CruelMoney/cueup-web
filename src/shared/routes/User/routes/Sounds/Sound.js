@@ -12,7 +12,6 @@ import Popup from '../../../../components/common/Popup';
 import GracefullImage from '../../../../components/GracefullImage';
 import soundcloudLogo from '../../../../assets/soundcloud-logo.png';
 import useSoundPlayer, { playerStates } from './useSoundPlayer';
-import { DELETE_SOUND, USER_SOUNDS } from './gql';
 import AddSound from './AddSound';
 import useScanning from './useScanning';
 import SoundBars from './SoundBars';

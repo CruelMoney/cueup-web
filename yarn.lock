@@ -1921,6 +1921,11 @@
   resolved "https://registry.yarnpkg.com/@iconify/icons-ion/-/icons-ion-1.0.13.tgz#f912ee32e50d03f438fde3965b72d78e2f79df5c"
   integrity sha512-V48HCNL9UClZcswZOqiI7PDsy8fzatF5dEXs/ho+wM+I9c0RoLDZkjRVrd5nnX7jymwago+cRfiHIiLBGabsWQ==
 
+"@iconify/icons-simple-icons@^1.0.39":
+  version "1.0.39"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-simple-icons/-/icons-simple-icons-1.0.39.tgz#3000918c8e4dc19c399f5feb171fc22e0ee1abcb"
+  integrity sha512-NJf6uGTpdLN0s/Rr2I/Szu7cx+EgdICQt2tdTON0Lvq7ek85+T8QMRw8EZ5UxSbhVn/E6TLBl1u4x8zy9OTIbA==
+
 "@iconify/icons-simple-line-icons@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@iconify/icons-simple-line-icons/-/icons-simple-line-icons-1.0.3.tgz#bc9982d358352c2c9f3059ff518114077cbfc7e2"
