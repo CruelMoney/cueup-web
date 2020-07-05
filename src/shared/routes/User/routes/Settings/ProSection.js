@@ -38,10 +38,12 @@ const ProSection = ({ user, saveData }) => {
             description={
                 <>
                     <Body style={{ marginBottom: 12 }}>
-                        ✔ Remove service fees
+                        ✔ No service fees
                         <br />✔ Priority on new events
                         <br />✔ Unlimited playing locations
                         <br />✔ Direct contact to organizers
+                        <br />✔ Attach documents to offers
+                        <br />✔ Unlimited sound uploads
                         <br />✔ And so much more...
                     </Body>
                     {!isPro && (
