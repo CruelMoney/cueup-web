@@ -63,6 +63,11 @@ const ProSection = ({ user, saveData }) => {
                 buttonText={'Update'}
                 description="Download invoices, and change or cancel your subscription."
             />
+            <TaxIdInput
+                label="Tax ID"
+                type="text"
+                onSave={({ taxId, taxType }) => saveData({ taxId: taxId.trim(), taxType })}
+            />
             <Input
                 label="Website"
                 defaultValue={website}
@@ -79,12 +84,6 @@ const ProSection = ({ user, saveData }) => {
             <Input half label="YouTube" />
 
             <Input half label="Twitter" />
-
-            <TaxIdInput
-                label="Tax ID"
-                type="text"
-                onSave={({ taxId, taxType }) => saveData({ taxId: taxId.trim(), taxType })}
-            />
         </SettingsSection>
     );
 };

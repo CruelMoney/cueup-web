@@ -23,17 +23,17 @@ class Slider extends Component {
 
     parseRange = (range) => {
         const newRange = [];
-        Object.keys(this.props.range).map((k) => {
+        Object.keys(range).map((k) => {
             if (k === 'min') {
-                newRange.push([0, this.props.range.min]);
+                newRange.push([0, range.min]);
             } else if (k === 'max') {
-                newRange.push([100, this.props.range.max]);
+                newRange.push([100, range.max]);
             } else {
                 const perc = parseInt(k, 10);
                 if (isNaN(perc)) {
                     throw new Error('Range not valid');
                 }
-                newRange.push([perc, this.props.range[k]]);
+                newRange.push([perc, range[k]]);
             }
             return null;
         });
@@ -99,6 +99,7 @@ class Slider extends Component {
 
     render() {
         const color = this.props.color || '#25F4D2';
+
         return (
             <div
                 style={{

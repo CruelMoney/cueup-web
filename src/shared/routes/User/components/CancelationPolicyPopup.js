@@ -69,23 +69,29 @@ const CancelationPolicyPopup = ({ initialValue, onClose, save, translate, isActi
                         ]}
                     />
                 </div>
-                <Slider
-                    name="refundPercentage"
-                    range={{ min: 0, max: 100 }}
-                    step={1}
-                    connect="lower"
-                    value={[cancelationPolicy.percentage]}
-                    color="#50E3C2"
-                    onChange={(values) =>
+                <Input
+                    type="number"
+                    min={1}
+                    max={100}
+                    label="Percentage"
+                    defaultValue={cancelationPolicy.percentage}
+                    validation={(p) => {
+                        const val = parseInt(p, 10);
+                        if (val < 0 || val > 100) {
+                            return 'Enter a value between 0 and 100';
+                        }
+                        return null;
+                    }}
+                    onSave={(percentage) =>
                         setCancelationPolicy((s) => ({
                             ...s,
-                            percentage: values[0],
+                            percentage: parseInt(percentage, 10),
                         }))
                     }
                 />
 
                 <PolicyDisplayer
-                    style={{ maxWidth: '350px' }}
+                    style={{ maxWidth: '350px', marginTop: 0 }}
                     cancelationPolicy={cancelationPolicy}
                     explanationText={`Organizer can cancel any time before ${cancelationPolicy.days} days, and get a 100%
 							refund, minus the service fee.`}
