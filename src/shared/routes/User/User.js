@@ -65,7 +65,7 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                 )
             }
         >
-            <ProfileImg src={user ? user.picture.path : null} animate />
+            <ProfileImg src={user.picture?.path} animate />
 
             {loading || !user ? (
                 <SidebarContent>
@@ -82,7 +82,7 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
 
                     <SmallHeader
                         style={{ marginBottom: '15px' }}
-                    >{`Hi I'm ${userMetadata.firstName}`}</SmallHeader>
+                    >{`Hi I'm ${userMetadata?.firstName}`}</SmallHeader>
 
                     <Col
                         style={{
@@ -314,9 +314,9 @@ const User = ({ match, location, user, error, loading, translate }) => {
         setHasScrolled(true);
     }, []);
 
-    const title = user ? user.artistName || user.userMetadata.firstName : null;
-    const thumb = user ? user.picture.path : null;
-    const description = user ? user.userMetadata.bio : null;
+    const title = user ? user.artistName || user.userMetadata?.firstName : null;
+    const thumb = user?.picture?.path || null;
+    const description = user ? user.userMetadata?.bio : null;
     if (user) {
         user.title = title;
     }
@@ -471,7 +471,12 @@ const DataWrapper = (props) => {
         user = mergeObjects(user, me);
     }
 
-    console.log({ user });
+    if (!user.userMetadata) {
+        user.userMetadata = {};
+    }
+    if (!user.appMetadata) {
+        user.appMetadata = {};
+    }
 
     return <User {...props} user={user} error={error} loading={loading} translate={translate} />;
 };

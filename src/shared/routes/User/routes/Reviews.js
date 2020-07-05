@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Query, useMutation } from 'react-apollo';
 
+import { Route, useHistory } from 'react-router';
 import { Title, Body, BodySmall, BodyBold } from '../../../components/Text';
 import {
     Col,
@@ -107,20 +108,10 @@ const Cta = ({ onClick }) => (
     </>
 );
 
-const AutoFocusInput = ({ onSave }) => {
-    const input = useRef();
-
-    useEffect(() => {
-        input.current.focus();
-    }, []);
-
-    return <Input ref={input} type="text" placeholder="venue" onSave={onSave} />;
-};
-
 const Content = ({ playedVenues, reviews, isOwn, userId, updateUser }) => {
     const [isAddingVenue, setIsAddingVenue] = useState(false);
-    const [isAddingTestimonial, setIsAddingTestimonial] = useState(false);
     const [newTestimonial, setNewTestimonial] = useState({});
+    const history = useHistory();
 
     const saveVenue = (venue) => {
         venue = venue.trim();
@@ -164,7 +155,7 @@ const Content = ({ playedVenues, reviews, isOwn, userId, updateUser }) => {
                         <EmptyPage
                             title="No reviews yet"
                             message={
-                                isOwn ? <Cta onClick={() => setIsAddingTestimonial(true)} /> : ''
+                                isOwn ? <Cta onClick={() => history.push('reviews/add-new')} /> : ''
                             }
                         />
                     ) : null}
@@ -179,7 +170,7 @@ const Content = ({ playedVenues, reviews, isOwn, userId, updateUser }) => {
                     ))}
                     {isOwn && reviews.length > 0 && (
                         <Row>
-                            <AddButton onClick={() => setIsAddingTestimonial(true)}>
+                            <AddButton onClick={() => history.push('reviews/add-new')}>
                                 + Add testimonial
                             </AddButton>
 
@@ -205,7 +196,9 @@ const Content = ({ playedVenues, reviews, isOwn, userId, updateUser }) => {
                                 </VenueListItem>
                             ))}
                         </ul>
-                        {isAddingVenue && <AutoFocusInput onSave={saveVenue} />}
+                        {isAddingVenue && (
+                            <Input autoFocus type="text" placeholder="venue" onSave={saveVenue} />
+                        )}
 
                         {isOwn && (
                             <AddButton onClick={() => setIsAddingVenue(true)}>
@@ -215,48 +208,51 @@ const Content = ({ playedVenues, reviews, isOwn, userId, updateUser }) => {
                     </VenuesCol>
                 )}
             </RowMobileCol>
-            <Popup
-                lazy={false}
-                width={450}
-                showing={isAddingTestimonial}
-                onClickOutside={() => setIsAddingTestimonial(false)}
-            >
-                <Input
-                    type="text"
-                    placeholder="Wedding"
-                    label="Title"
-                    onChange={(title) => setNewTestimonial((t) => ({ ...t, title }))}
-                />
-                <Input
-                    type="text"
-                    placeholder="Barack Obama"
-                    label="Testifier"
-                    onChange={(testifier) => setNewTestimonial((t) => ({ ...t, testifier }))}
-                />
-                <Input
-                    style={{
-                        height: '250px',
-                    }}
-                    type="text-area"
-                    placeholder="Testimonial"
-                    onChange={(content) => setNewTestimonial((t) => ({ ...t, content }))}
-                />
-                <Row style={{ marginTop: '15px' }} right>
-                    <TeritaryButton type="button" onClick={(_) => setIsAddingTestimonial(false)}>
-                        Cancel
-                    </TeritaryButton>
-                    <PrimaryButton
-                        type="button"
-                        loading={loading}
-                        onClick={() => {
-                            writeTestimonial();
-                            setIsAddingTestimonial(false);
-                        }}
-                    >
-                        Save
-                    </PrimaryButton>
-                </Row>
-            </Popup>
+
+            <Route
+                path={'*/reviews/add-new'}
+                component={() => (
+                    <Popup lazy={false} width={450} showing onClickOutside={history.goBack}>
+                        <Input
+                            type="text"
+                            placeholder="Wedding"
+                            label="Title"
+                            onChange={(title) => setNewTestimonial((t) => ({ ...t, title }))}
+                        />
+                        <Input
+                            type="text"
+                            placeholder="Barack Obama"
+                            label="Testifier"
+                            onChange={(testifier) =>
+                                setNewTestimonial((t) => ({ ...t, testifier }))
+                            }
+                        />
+                        <Input
+                            style={{
+                                height: '250px',
+                            }}
+                            type="text-area"
+                            placeholder="Testimonial"
+                            onChange={(content) => setNewTestimonial((t) => ({ ...t, content }))}
+                        />
+                        <Row style={{ marginTop: '15px' }} right>
+                            <TeritaryButton type="button" onClick={history.goBack}>
+                                Cancel
+                            </TeritaryButton>
+                            <PrimaryButton
+                                type="button"
+                                loading={loading}
+                                onClick={() => {
+                                    writeTestimonial();
+                                    history.goBack();
+                                }}
+                            >
+                                Save
+                            </PrimaryButton>
+                        </Row>
+                    </Popup>
+                )}
+            />
         </>
     );
 };

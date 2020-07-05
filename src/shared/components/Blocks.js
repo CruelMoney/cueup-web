@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import arrowForward from '@iconify/icons-ion/arrow-forward';
 import arrowBack from '@iconify/icons-ion/arrow-back';
 

@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import addCircleIcon from '@iconify/icons-ion/add-circle';
+import editIcon from '@iconify/icons-ion/pencil';
 
 import { userRoutes } from 'constants/locales/appRoutes';
 import { Title, Citation, Cite, Body } from '../../../components/Text';
@@ -157,18 +158,27 @@ const Bio = ({ bio, firstName, style, isOwn }) => {
         <LeftItem style={{ paddingTop: 0, ...style }}>
             <Title>About {firstName}</Title>
             <ReadMoreExpander content={bio || 'Nothing here yet'} />
-            {/* {isOwn && <EditButtonOverlay to={'settings?modal=bio'}>Edit</EditButtonOverlay>} */}
+            {isOwn && (
+                <EditButton title="Edit bio" to={'settings?modal=bio'} style={{ marginTop: 0 }}>
+                    Edit
+                </EditButton>
+            )}
         </LeftItem>
     );
 };
 
 const Genres = ({ genres, style, isOwn }) => (
     <GenresLayout style={style}>
-        <EditButton />
+        {isOwn && (
+            <EditButton
+                to={'settings?modal=genres'}
+                title="Edit genres"
+                style={{ marginRight: 0, marginTop: 0 }}
+            />
+        )}
         {genres.map((g) => (
             <Genre key={g}>{g}</Genre>
         ))}
-        {isOwn && <EditButtonOverlay to={'settings?modal=genres'}>Edit</EditButtonOverlay>}
     </GenresLayout>
 );
 
@@ -205,7 +215,7 @@ const HighlightedSound = ({ user }) => {
     );
 };
 
-const Review = ({ reviewsCount, highlightedReview }) => {
+const Review = ({ isOwn, reviewsCount, highlightedReview }) => {
     const { content, author, citation } = highlightedReview;
 
     if (!content) {
@@ -229,6 +239,8 @@ const Review = ({ reviewsCount, highlightedReview }) => {
                 </Row>
 
                 <ReadMore style={{ marginTop: '24px' }}>{reviewsCount} REVIEWS MORE</ReadMore>
+
+                {isOwn && <EditButton to={'reviews/add-new'} title="Add testimonial" />}
             </LeftItem>
         </Link>
     );
@@ -463,6 +475,7 @@ const Overview = ({ user, loading, location, history }) => {
                     {showPhotosArea && <PhotosArea {...user} />}
                     {highlightedReview ? (
                         <Review
+                            isOwn={isOwn}
                             reviewsCount={reviews.pageInfo.totalDocs}
                             highlightedReview={highlightedReview}
                         />
@@ -484,11 +497,7 @@ const Overview = ({ user, loading, location, history }) => {
                         <LeftItem>
                             <Title>Cancelation Policy</Title>
                             <PolicyDisplayer cancelationPolicy={cancelationPolicy} />
-                            {isOwn && (
-                                <EditButtonOverlay to={'settings?modal=cancelationPolicy'}>
-                                    Edit
-                                </EditButtonOverlay>
-                            )}
+                            {isOwn && <EditButton to={'settings?modal=cancelationPolicy'} />}
                         </LeftItem>
                     )}
                 </HalfColLeft>
@@ -496,7 +505,6 @@ const Overview = ({ user, loading, location, history }) => {
                     <HalfColRight>
                         {showSelectedSound && <HighlightedSound user={user} />}
                         <Genres genres={genres} style={genresStyle} isOwn={isOwn} />
-
                         <MapArea playingLocation={playingLocation} isOwn={isOwn} />
                     </HalfColRight>
                 )}
@@ -505,8 +513,28 @@ const Overview = ({ user, loading, location, history }) => {
     );
 };
 
-const EditButton = () => {
-    return <TeritaryButton style={{ position: 'absolute', top: 0, right: 0 }}>Edit</TeritaryButton>;
+const EditButton = ({ style, title, to }) => {
+    return (
+        <Link to={to}>
+            <TeritaryButton
+                title={title}
+                style={{
+                    position: 'absolute',
+                    top: 0,
+                    right: 0,
+                    maxWidth: 40,
+                    minWidth: 40,
+                    borderRadius: 20,
+                    marginRight: 12,
+                    padding: 0,
+                    marginTop: 12,
+                    ...style,
+                }}
+            >
+                <Icon icon={editIcon} width={24} height={24} />
+            </TeritaryButton>
+        </Link>
+    );
 };
 
 export default Overview;

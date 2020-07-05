@@ -55,7 +55,7 @@ const getRoutesFromUser = (user, pathname) => {
     const routes = [];
 
     if (user) {
-        const roles = user.appMetadata.roles;
+        const roles = user.appMetadata.roles || [];
         const isDj = roles.includes('DJ');
         const isOrganizer = roles.includes('ORGANIZER');
 
