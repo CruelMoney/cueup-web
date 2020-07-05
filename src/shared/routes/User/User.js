@@ -10,6 +10,8 @@ import { Icon } from '@iconify/react';
 import pinIcon from '@iconify/icons-ion/location-sharp';
 import timeIcon from '@iconify/icons-ion/time';
 import websiteIcon from '@iconify/icons-ion/globe-outline';
+import mailIcon from '@iconify/icons-ion/ios-email';
+import phoneIcon from '@iconify/icons-ion/call';
 import instagramIcon from '@iconify/icons-ion/logo-instagram-outline';
 import { Helmet } from 'react-helmet-async';
 import PayForm from 'components/common/PayForm.js';
@@ -43,15 +45,26 @@ import { Stats, MobileBookingButton, IconRow, CertifiedVerified } from './compon
 import content from './content.json';
 
 const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
-    const { userMetadata = {}, appMetadata = {}, playingLocation } = user || {};
-    const { experience, createdAt, certified, identityVerified, instagramUsername } = appMetadata;
+    const { userMetadata = {}, appMetadata = {}, playingLocation, email, userSettings = {} } =
+        user || {};
+    const {
+        experience,
+        createdAt,
+        certified,
+        identityVerified,
+        instagramUsername,
+        isPro,
+    } = appMetadata;
     let { followers } = appMetadata;
 
     if (followers && followers.total < 500) {
         followers = false;
     }
 
-    const { website } = userMetadata;
+    const { publicDisplay } = userSettings;
+    const { website, phone } = userMetadata;
+
+    console.log({ isPro, publicDisplay, userSettings });
 
     const memberSince = moment(createdAt).format('MMMM YYYY');
     return (
@@ -107,7 +120,7 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                                 {playingLocation.name}
                             </IconRow>
                         )}
-                        {instagramUsername && (
+                        {instagramUsername && isPro && publicDisplay?.INSTAGRAM.public && (
                             <a
                                 target="_blank"
                                 rel="noopener noreferrer ugc"
@@ -123,7 +136,7 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                                 </IconRow>
                             </a>
                         )}
-                        {website && (
+                        {website && isPro && publicDisplay?.WEBSITE.public && (
                             <>
                                 <ReactComment comment="HEY YOU! Want nofollow removed from your website-link? Message me on chris@cueup.io" />
                                 <a
@@ -138,6 +151,34 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                                             style={{ marginRight: '15px', fontSize: '24px' }}
                                         />
                                         {new URL(website).hostname}
+                                    </IconRow>
+                                </a>
+                            </>
+                        )}
+                        {email && isPro && publicDisplay?.EMAIL.public && (
+                            <>
+                                <a href={`mailto:${email}`}>
+                                    <IconRow>
+                                        <Icon
+                                            icon={mailIcon}
+                                            color={'#98a4b3'}
+                                            style={{ marginRight: '15px', fontSize: '24px' }}
+                                        />
+                                        {email}
+                                    </IconRow>
+                                </a>
+                            </>
+                        )}
+                        {phone && isPro && publicDisplay?.PHONE.public && (
+                            <>
+                                <a href={`tel:${phone}`}>
+                                    <IconRow>
+                                        <Icon
+                                            icon={phoneIcon}
+                                            color={'#98a4b3'}
+                                            style={{ marginRight: '15px', fontSize: '24px' }}
+                                        />
+                                        {phone}
                                     </IconRow>
                                 </a>
                             </>

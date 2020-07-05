@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, useRouteMatch, Route, useLocation } from 'react-router-dom';
 import { useLazyQuery } from 'react-apollo';
 import { SettingsSection, Input, Label } from 'components/FormComponents';
@@ -81,12 +81,30 @@ const ProSection = ({ user, saveData }) => {
                 }
             />
 
-            <PublicDisplaySettings />
+            <PublicDisplaySettings
+                user={user}
+                onSave={(publicDisplaySettings) => saveData({ publicDisplaySettings })}
+            />
         </SettingsSection>
     );
 };
 
-const PublicDisplaySettings = () => {
+const PublicDisplaySettings = ({ user, onSave }) => {
+    const { publicDisplay = {} } = user?.userSettings || {};
+    const [internal, setInternal] = useState(publicDisplay);
+
+    const onChange = (key) => (val) => {
+        const newNotifications = {
+            ...internal,
+            [key]: {
+                ...internal[key],
+                public: val,
+            },
+        };
+        setInternal(newNotifications);
+        onSave(newNotifications);
+    };
+
     return (
         <Col style={{ width: '100%', marginRight: '36px' }}>
             <TableRow>
@@ -94,12 +112,42 @@ const PublicDisplaySettings = () => {
                 <Label>Public</Label>
             </TableRow>
             <Hr />
-            <CheckBoxRow label="Website" withBorder={false} checked={true} />
-            <CheckBoxRow label="Email" withBorder={false} checked={true} />
-            <CheckBoxRow label="Phone" withBorder={false} checked={true} />
-            <CheckBoxRow label="SoundCloud" withBorder={false} checked={true} />
-            <CheckBoxRow label="Mixcloud" withBorder={false} checked={true} />
-            <CheckBoxRow label="Instagram" withBorder={false} checked={true} />
+            <CheckBoxRow
+                label="Website"
+                withBorder={false}
+                checked={internal.WEBSITE?.public}
+                onChange={onChange('WEBSITE')}
+            />
+            <CheckBoxRow
+                label="Email"
+                withBorder={false}
+                checked={internal.EMAIL?.public}
+                onChange={onChange('EMAIL')}
+            />
+            <CheckBoxRow
+                label="Phone"
+                withBorder={false}
+                checked={internal.PHONE?.public}
+                onChange={onChange('PHONE')}
+            />
+            <CheckBoxRow
+                label="SoundCloud"
+                withBorder={false}
+                checked={internal.SOUNDCLOUD?.public}
+                onChange={onChange('SOUNDCLOUD')}
+            />
+            <CheckBoxRow
+                label="Mixcloud"
+                withBorder={false}
+                checked={internal.MIXCLOUD?.public}
+                onChange={onChange('MIXCLOUD')}
+            />
+            <CheckBoxRow
+                label="Instagram"
+                withBorder={false}
+                checked={internal.INSTAGRAM?.public}
+                onChange={onChange('INSTAGRAM')}
+            />
             <Hr />
             <BodySmall style={{ marginTop: 6 }}>
                 Publicly display your contact information and social links on your profile.
