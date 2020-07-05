@@ -72,7 +72,7 @@ const getRoutesFromUser = (user, pathname) => {
             if (user.isOwn) {
                 routes.push({ route: 'gigs', label: 'gigs' });
             }
-            if (user.reviews.pageInfo.totalDocs > 0 || user.isOwn) {
+            if (user.reviews?.pageInfo.totalDocs > 0 || user.isOwn) {
                 routes.push({ route: 'reviews', label: 'reviews' });
             }
         }

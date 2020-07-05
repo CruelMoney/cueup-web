@@ -21,12 +21,12 @@ const checks = [
     },
     {
         label: 'Add photos or connect Instagram',
-        check: (u) => u.media.edges.length > 0,
+        check: (u) => u.media?.edges.length > 0,
         linkTo: 'photos',
     },
     {
         label: 'Add a track or connect SoundCloud',
-        check: (u) => u.sounds.edges.length > 0,
+        check: (u) => u.sounds?.edges.length > 0,
         linkTo: 'sounds',
     },
     {

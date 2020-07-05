@@ -453,26 +453,25 @@ const DataWrapper = (props) => {
     });
 
     const { user: profileUser } = userData || {};
-    const loading = loadingMe || loadingUser;
+    const loading = loadingMe && loadingUser;
     const me = data?.me;
 
-    if (!loading && !profileUser) {
+    if (!loadingUser && !profileUser) {
         return <Redirect to={translate(appRoutes.notFound)} />;
     }
 
-    let user = profileUser;
-
-    if (user && data && me) {
-        user.isOwn = user.isOwn || me.id === user.id;
-    }
+    let user = profileUser || {};
+    user.isOwn = match.params.permalink === me?.permalink;
 
     if (me && !me.appMetadata.onboarded && user?.isOwn) {
         return <Redirect to={'/complete-signup'} />;
     }
 
-    if (user && user.isOwn && me) {
+    if (user.isOwn && me) {
         user = mergeObjects(user, me);
     }
+
+    console.log({ user });
 
     return <User {...props} user={user} error={error} loading={loading} translate={translate} />;
 };

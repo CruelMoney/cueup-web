@@ -7,7 +7,15 @@ import addCircleIcon from '@iconify/icons-ion/add-circle';
 import { userRoutes } from 'constants/locales/appRoutes';
 import { Title, Citation, Cite, Body } from '../../../components/Text';
 import ReadMoreExpander from '../../../components/ReadMoreExpander';
-import { Col, Row, ReadMore, Show, InfoBox } from '../../../components/Blocks';
+import {
+    Col,
+    Row,
+    ReadMore,
+    Show,
+    InfoBox,
+    SecondaryButton,
+    TeritaryButton,
+} from '../../../components/Blocks';
 import Map from '../../../components/common/Map';
 import QuotationMarkIcon from '../../../components/graphics/Quotes';
 import { PolicyDisplayer } from '../components/CancelationPolicyPopup';
@@ -47,6 +55,7 @@ const Item = styled.div`
 `;
 
 const LeftItem = styled(Item)`
+    position: relative;
     padding: 42px 42px 42px 0;
     @media only screen and (max-width: 425px) {
         padding: 42px 0px 42px 0px;
@@ -148,13 +157,14 @@ const Bio = ({ bio, firstName, style, isOwn }) => {
         <LeftItem style={{ paddingTop: 0, ...style }}>
             <Title>About {firstName}</Title>
             <ReadMoreExpander content={bio || 'Nothing here yet'} />
-            {isOwn && <EditButtonOverlay to={'settings?modal=bio'}>Edit</EditButtonOverlay>}
+            {/* {isOwn && <EditButtonOverlay to={'settings?modal=bio'}>Edit</EditButtonOverlay>} */}
         </LeftItem>
     );
 };
 
 const Genres = ({ genres, style, isOwn }) => (
     <GenresLayout style={style}>
+        <EditButton />
         {genres.map((g) => (
             <Genre key={g}>{g}</Genre>
         ))}
@@ -320,7 +330,8 @@ const PhotoGrid = styled.ul`
 `;
 
 const PhotosArea = ({ media, isOwn }) => {
-    const pleaseAddItems = isOwn && media.edges.length === 0;
+    const photos = media?.edges || [];
+    const pleaseAddItems = isOwn && photos.length === 0;
 
     let renderItems = [];
     if (pleaseAddItems) {
@@ -332,7 +343,7 @@ const PhotosArea = ({ media, isOwn }) => {
             { path: null, id: 5 },
         ];
     } else {
-        renderItems = media.edges.sort((a, b) => a.orderBy - b.orderBy);
+        renderItems = photos.sort((a, b) => a.orderBy - b.orderBy);
     }
 
     return (
@@ -429,8 +440,8 @@ const Overview = ({ user, loading, location, history }) => {
     const { firstName, bio } = userMetadata;
     const { cancelationPolicy } = userSettings;
 
-    const showPhotosArea = media.edges.length > 0 || isOwn;
-    const showSelectedSound = (sounds && sounds.pageInfo.totalDocs > 0) || isOwn;
+    const showPhotosArea = media && (media.edges.length > 0 || isOwn);
+    const showSelectedSound = sounds && (sounds.pageInfo.totalDocs > 0 || isOwn);
 
     const bioStyle = showPhotosArea ? { borderBottom: 'none' } : {};
     const genresStyle = { paddingTop: showSelectedSound ? '42px' : '0px' };
@@ -492,6 +503,10 @@ const Overview = ({ user, loading, location, history }) => {
             </Row>
         </ColumnLayout>
     );
+};
+
+const EditButton = () => {
+    return <TeritaryButton style={{ position: 'absolute', top: 0, right: 0 }}>Edit</TeritaryButton>;
 };
 
 export default Overview;
