@@ -138,17 +138,18 @@ const PublicDisplaySettings = ({ user, onSave, disabled }) => {
                 onChange={onChange('PHONE')}
             />
             <CheckBoxRow
-                label="SoundCloud"
-                withBorder={false}
-                checked={internal.SOUNDCLOUD?.public}
-                onChange={onChange('SOUNDCLOUD')}
-            />
-            <CheckBoxRow
                 label="Mixcloud"
                 withBorder={false}
                 checked={internal.MIXCLOUD?.public}
                 onChange={onChange('MIXCLOUD')}
             />
+            <CheckBoxRow
+                label="SoundCloud"
+                withBorder={false}
+                checked={internal.SOUNDCLOUD?.public}
+                onChange={onChange('SOUNDCLOUD')}
+            />
+
             <CheckBoxRow
                 label="Instagram"
                 withBorder={false}
