@@ -1916,6 +1916,11 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
+"@iconify/icons-entypo@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-entypo/-/icons-entypo-1.0.5.tgz#0bb236da8fa5979adbbf713761fea34742f2daf8"
+  integrity sha512-MU+WosE4wWPiUqL9rhFBKzuopQW0KieNdEIaVr/hRP2ApBzAGct1gQqeIW+oH0/TLo0unRErt4meYeyNsT6NOg==
+
 "@iconify/icons-ion@^1.0.13":
   version "1.0.13"
   resolved "https://registry.yarnpkg.com/@iconify/icons-ion/-/icons-ion-1.0.13.tgz#f912ee32e50d03f438fde3965b72d78e2f79df5c"

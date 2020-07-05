@@ -126,11 +126,16 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                                 {playingLocation.name}
                             </IconRow>
                         )}
+                        <CertifiedVerified
+                            certified={certified}
+                            identityVerified={identityVerified}
+                        />
                         {instagramUsername && isPro && publicDisplay?.INSTAGRAM.public && (
                             <a
                                 target="_blank"
                                 rel="noopener noreferrer ugc"
                                 href={'https://instagram.com/' + instagramUsername}
+                                title="Visit Instagram profile"
                             >
                                 <IconRow>
                                     <Icon
@@ -148,6 +153,7 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                                     href={`${soundCloudUrl}?ref=cueup`}
                                     target="_blank"
                                     rel="noopener noreferrer ugc"
+                                    title="Visit SoundCloud profile"
                                 >
                                     <IconRow>
                                         <Icon
@@ -166,6 +172,7 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                                     href={`${mixcloudUrl}?ref=cueup`}
                                     target="_blank"
                                     rel="noopener noreferrer ugc"
+                                    title="Visit Mixcloud profile"
                                 >
                                     <IconRow>
                                         <Icon
@@ -185,6 +192,7 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                                     target="_blank"
                                     rel="noopener noreferrer nofollow"
                                     href={website}
+                                    title="Visit website"
                                 >
                                     <IconRow>
                                         <Icon
@@ -199,7 +207,7 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                         )}
                         {email && isPro && publicDisplay?.EMAIL.public && (
                             <>
-                                <a href={`mailto:${email}`}>
+                                <a href={`mailto:${email}`} title="Send an email">
                                     <IconRow>
                                         <Icon
                                             icon={mailIcon}
@@ -213,7 +221,7 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                         )}
                         {phone && isPro && publicDisplay?.PHONE.public && (
                             <>
-                                <a href={`tel:${phone}`}>
+                                <a href={`tel:${phone}`} title="Call">
                                     <IconRow>
                                         <Icon
                                             icon={phoneIcon}
@@ -225,11 +233,6 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                                 </a>
                             </>
                         )}
-
-                        <CertifiedVerified
-                            certified={certified}
-                            identityVerified={identityVerified}
-                        />
                     </Col>
                 </SidebarContent>
             )}

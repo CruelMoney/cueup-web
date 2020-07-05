@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Icon, InlineIcon } from '@iconify/react';
-import medalIcon from '@iconify/icons-ion/checkmark-circle';
-import startIcon from '@iconify/icons-ion/person-circle';
+
+import shieldIcon from '@iconify/icons-entypo/shield';
+import shieldCheckmark from '@iconify/icons-ion/shield-checkmark';
 
 import { Row, ShowBelow } from '../../../components/Blocks';
 import { Stat } from '../../../components/Text';
@@ -58,7 +59,7 @@ export const CertifiedVerified = ({ certified, identityVerified }) => (
             >
                 {({ ref, close, open }) => (
                     <IconRow ref={ref} onMouseEnter={open} onMouseLeave={close} className="iconRow">
-                        <Icon icon={medalIcon} color={'#50E3C2'} style={{ fontSize: '24px' }} />
+                        <Icon icon={shieldIcon} color={'#50E3C2'} style={{ fontSize: '24px' }} />
                         Cueup certified
                     </IconRow>
                 )}
@@ -66,7 +67,7 @@ export const CertifiedVerified = ({ certified, identityVerified }) => (
         )}
         {identityVerified && (
             <IconRow className="iconRow">
-                <Icon icon={startIcon} color={'#50E3C2'} style={{ fontSize: '24px' }} />
+                <Icon icon={shieldCheckmark} color={'#50E3C2'} style={{ fontSize: '24px' }} />
                 Identity verified
             </IconRow>
         )}
