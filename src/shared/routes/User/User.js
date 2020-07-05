@@ -64,8 +64,6 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
     const { publicDisplay } = userSettings;
     const { website, phone } = userMetadata;
 
-    console.log({ isPro, publicDisplay, userSettings });
-
     const memberSince = moment(createdAt).format('MMMM YYYY');
     return (
         <Sidebar

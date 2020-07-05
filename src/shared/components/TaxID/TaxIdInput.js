@@ -17,7 +17,7 @@ const DataWrapper = (props) => {
     return <TaxIdInput loading={loading} key={data} data={taxId} {...props} />;
 };
 
-const TaxIdInput = ({ label, onSave, loading, onChange, onBlur, data, ...props }) => {
+const TaxIdInput = ({ label, onSave, loading, onChange, onBlur, data, disabled, ...props }) => {
     const ref = useRef();
     const [selection, setSelection] = useState(data?.country);
     const [error, setError] = useState();
@@ -60,7 +60,7 @@ const TaxIdInput = ({ label, onSave, loading, onChange, onBlur, data, ...props }
             {label}
             <Row style={{ position: 'relative' }}>
                 <SearchableSuggestionList
-                    disabled={loading}
+                    disabled={loading || disabled}
                     half
                     forceHeight
                     error={error}
@@ -75,7 +75,7 @@ const TaxIdInput = ({ label, onSave, loading, onChange, onBlur, data, ...props }
                     }}
                 />
                 <TextInput
-                    disabled={loading}
+                    disabled={loading || disabled}
                     save={save}
                     onChange={change}
                     placeholder={selection?.placeholder}
@@ -86,7 +86,7 @@ const TaxIdInput = ({ label, onSave, loading, onChange, onBlur, data, ...props }
                 />
                 {data?.verification && <CurrentStatus {...data.verification} />}
             </Row>
-            <BodySmall>Add a tax ID if you want to display it on invoices sent to you.</BodySmall>
+            <BodySmall>Add a tax ID if you want it on invoices sent to you.</BodySmall>
         </InputLabel>
     );
 };

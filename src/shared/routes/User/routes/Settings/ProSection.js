@@ -64,11 +64,13 @@ const ProSection = ({ user, saveData }) => {
                 label="Manage subscription"
                 buttonText={'Update'}
                 description="Download invoices, and change or cancel your subscription."
+                disabled={!isPro}
             />
             <TaxIdInput
                 label="Tax ID"
                 type="text"
                 onSave={({ taxId, taxType }) => saveData({ taxId: taxId.trim(), taxType })}
+                disabled={!isPro}
             />
             <Input
                 label="Website"
@@ -79,21 +81,26 @@ const ProSection = ({ user, saveData }) => {
                 validation={(value) =>
                     validators.containsURL(true)(value) ? null : 'Not a valid URL'
                 }
+                disabled={!isPro}
             />
 
             <PublicDisplaySettings
                 user={user}
                 onSave={(publicDisplaySettings) => saveData({ publicDisplaySettings })}
+                disabled={!isPro}
             />
         </SettingsSection>
     );
 };
 
-const PublicDisplaySettings = ({ user, onSave }) => {
+const PublicDisplaySettings = ({ user, onSave, disabled }) => {
     const { publicDisplay = {} } = user?.userSettings || {};
     const [internal, setInternal] = useState(publicDisplay);
 
     const onChange = (key) => (val) => {
+        if (disabled) {
+            return;
+        }
         const newNotifications = {
             ...internal,
             [key]: {
