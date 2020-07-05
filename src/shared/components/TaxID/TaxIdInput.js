@@ -12,12 +12,22 @@ import taxOptions from './options.json';
 import { USER_TAX_ID } from './gql';
 
 const DataWrapper = (props) => {
-    const { data, loading } = useQuery(USER_TAX_ID, { ssr: false, fetchPolicy: 'network-only' });
+    const { data, loading, refetch } = useQuery(USER_TAX_ID, { ssr: false });
     const taxId = data?.me?.userMetadata?.taxId;
-    return <TaxIdInput loading={loading} key={data} data={taxId} {...props} />;
+    return <TaxIdInput loading={loading} key={data} data={taxId} refetch={refetch} {...props} />;
 };
 
-const TaxIdInput = ({ label, onSave, loading, onChange, onBlur, data, disabled, ...props }) => {
+const TaxIdInput = ({
+    label,
+    refetch,
+    onSave,
+    loading,
+    onChange,
+    onBlur,
+    data,
+    disabled,
+    ...props
+}) => {
     const ref = useRef();
     const [selection, setSelection] = useState(data?.country);
     const [error, setError] = useState();
@@ -35,12 +45,13 @@ const TaxIdInput = ({ label, onSave, loading, onChange, onBlur, data, disabled, 
         [taxType]
     );
 
-    const save = (e) => {
+    const save = async (e) => {
         const value = e.target ? e.target.value : e;
 
         const error = validate(value);
         if (!error && value) {
-            onSave && onSave({ taxId: value, taxType }, e);
+            onSave && (await onSave({ taxId: value, taxType }, e));
+            refetch();
         }
     };
 

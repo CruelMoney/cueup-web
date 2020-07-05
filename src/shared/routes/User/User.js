@@ -107,6 +107,7 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                     <Col
                         style={{
                             alignItems: 'flex-start',
+                            marginBottom: '-15px',
                         }}
                     >
                         <IconRow className="iconRow">
