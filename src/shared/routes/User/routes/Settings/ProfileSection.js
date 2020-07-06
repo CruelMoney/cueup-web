@@ -58,6 +58,7 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
             }
         >
             <Input
+                half
                 label="Artist name"
                 attention={!artistName}
                 defaultValue={artistName}
@@ -65,9 +66,17 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
                 type="text"
                 onSave={(artistName) => saveData({ artistName: artistName.trim() })}
             />
+            <ImageUploader
+                half
+                label="Profile picture"
+                buttonText="Change picture"
+                onSave={updateKey('picture')}
+                error={editsMap.profilePictureId?.message}
+                displayError
+            />
             <Input
-                label="URL"
-                placeholder="https://cueup.io/"
+                label="Profile URL"
+                placeholder="cueup.io/"
                 type="formatted-text"
                 name="permalink"
                 defaultValue={permalink}
@@ -118,7 +127,7 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
             <ImageUploader
                 half
                 label="Cover photo"
-                buttonText="change photo"
+                buttonText="Change photo"
                 onSave={updateKey('coverPhoto')}
                 options={{ maxWidth: 1440, maxHeight: 400 }}
             >
@@ -135,7 +144,7 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
                 attention={userSettings.standby}
                 label="Standby"
                 onClick={toggleAvailability}
-                buttonText={userSettings.standby ? 'unavailable' : 'available'}
+                buttonText={userSettings.standby ? 'Unavailable' : 'Available'}
             />
             {isDj && (
                 <PayoutPopup
@@ -173,7 +182,7 @@ const PayoutPopup = ({ user, hasPayout, isActive = false, onClose }) => {
                 attention={!hasPayout}
                 onClick={(s) => setShowing(true)}
                 label="Payout methods"
-                buttonText={'update'}
+                buttonText={'Update'}
             />
             <Popup showing={showing} onClickOutside={close} width={'600px'}>
                 <PayoutForm

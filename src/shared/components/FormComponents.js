@@ -170,7 +170,7 @@ const DeleteFileButton = styled.button`
 `;
 
 const FormattedText = ({ defaultValue, save, ...props }) => {
-    const prefix = 'https://cueup.io/user/';
+    const prefix = 'cueup.io/user/';
 
     const [value, setValue] = useState(defaultValue);
 

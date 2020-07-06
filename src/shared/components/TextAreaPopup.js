@@ -30,7 +30,7 @@ const TextAreaPopup = ({
                 half
                 type="button"
                 label={label}
-                buttonText={'edit'}
+                buttonText={'Edit'}
                 onClick={(_) => setShowing(true)}
                 error={error}
                 attention={attention}

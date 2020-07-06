@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import emailValidator from 'email-validator';
-import { useQuery } from 'react-apollo';
 
 import { SettingsSection, Input } from 'components/FormComponents';
-import ImageUploader from 'components/ImageInput';
 import DatePickerPopup from 'components/DatePickerPopup';
 
 import PhoneInput from 'components/common/PhoneInput';
@@ -11,12 +9,7 @@ import PhoneInput from 'components/common/PhoneInput';
 import Popup from 'components/common/Popup';
 import VerifyIdentity from '../../components/VerifyIdentity';
 
-import { USER_EDITS } from '../../gql';
-
 const BasicSection = ({ user, updateKey, saveData, modal, onModalClose }) => {
-    const { data } = useQuery(USER_EDITS);
-    const editsMap = data?.me?.editsMap || {};
-
     const verifyIdentity = modal === 'verifyIdentity';
 
     const saveFullName = async (value) => {
@@ -88,14 +81,7 @@ const BasicSection = ({ user, updateKey, saveData, modal, onModalClose }) => {
                 onSave={(date) => saveData({ birthday: date })}
                 initialDate={birthday}
             />
-            <ImageUploader
-                half
-                label="Profile picture"
-                buttonText="Change picture"
-                onSave={updateKey('picture')}
-                error={editsMap.profilePictureId?.message}
-                displayError
-            />
+
             <VerifyIdentityPopup
                 user={user}
                 identityVerified={identityVerified}
