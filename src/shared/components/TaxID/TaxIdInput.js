@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react';
 import timeIcon from '@iconify/icons-ion/time';
 import checkmarkIcon from '@iconify/icons-ion/checkmark-circle';
 import { TextInput, Row, Col } from 'components/Blocks';
-import { InputLabel, InputRow } from 'components/FormComponents';
+import { InputLabel, InputRow, ProFeature } from 'components/FormComponents';
 import { SearchableSuggestionList } from 'components/SuggestionList/SuggestionList';
 import { BodySmall } from 'components/Text';
 import Tooltip from 'components/Tooltip';
@@ -69,6 +69,7 @@ const TaxIdInput = ({
     return (
         <InputLabel>
             {label}
+            <ProFeature />
             <Row style={{ position: 'relative' }}>
                 <SearchableSuggestionList
                     disabled={loading || disabled}

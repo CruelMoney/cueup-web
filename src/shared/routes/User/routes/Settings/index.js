@@ -52,9 +52,11 @@ const Settings = ({ user, loading, updateUser, history, location }) => {
     }
     const { isDj } = user;
 
+    const isPro = user?.appMetadata?.isPro;
+
     return (
         <>
-            <ProSection user={user} updateKey={updateKey} saveData={saveData} />
+            {!isPro && isDj && <ProSection user={user} updateKey={updateKey} saveData={saveData} />}
             {isDj && (
                 <ProfileSection
                     user={user}

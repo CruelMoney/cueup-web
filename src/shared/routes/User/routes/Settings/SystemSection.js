@@ -11,7 +11,7 @@ const SystemSection = ({ user, saveData }) => {
     const { translate } = useTranslate();
     const history = useHistory();
 
-    const { appMetadata } = user || {};
+    const { appMetadata, isDj } = user || {};
     const isPro = appMetadata?.isPro;
 
     const [getManageSubscriptionSessionUrl, { loading }] = useLazyQuery(MANAGE_SUBSCRIPTION, {
@@ -74,22 +74,28 @@ const SystemSection = ({ user, saveData }) => {
                 onClick={(_) => window.alert("We'll send you an email when your data is ready.")}
             />
             <PasswordChanger half onSave={saveData} />
-            <Input
-                labelStyle={{ opacity: isPro ? 1 : 0.5 }}
-                type="button"
-                onClick={redirectToManageSubscription}
-                loading={loading}
-                label="Manage subscription"
-                buttonText={'Go to subscription'}
-                description="Download invoices and change or cancel your subscription."
-                disabled={!isPro}
-            />
-            <TaxIdInput
-                label="Tax ID"
-                type="text"
-                onSave={({ taxId, taxType }) => saveData({ taxId: taxId.trim(), taxType })}
-                disabled={!isPro}
-            />
+            {isDj && (
+                <Input
+                    proFeature
+                    style={{ opacity: isPro ? 1 : 0.5 }}
+                    type="button"
+                    onClick={redirectToManageSubscription}
+                    loading={loading}
+                    label="Manage subscription"
+                    buttonText={'Go to subscription'}
+                    description="Download invoices and change or cancel your subscription."
+                    disabled={!isPro}
+                />
+            )}
+            {isDj && (
+                <TaxIdInput
+                    proFeature
+                    label="Tax ID"
+                    type="text"
+                    onSave={({ taxId, taxType }) => saveData({ taxId: taxId.trim(), taxType })}
+                    disabled={!isPro}
+                />
+            )}
         </SettingsSection>
     );
 };

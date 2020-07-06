@@ -1,5 +1,9 @@
 import React, { useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
+import { InlineIcon } from '@iconify/react';
+import starIcon from '@iconify/icons-ion/star';
+import { useRouteMatch } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import Checkmark from '../assets/Checkmark';
 import {
     Row,
@@ -287,6 +291,7 @@ const Input = React.forwardRef(
             errorOutside,
             description,
             labelStyle,
+            proFeature,
             ...props
         },
         fRef
@@ -334,6 +339,7 @@ const Input = React.forwardRef(
             <>
                 <LabelComponent style={labelStyle}>
                     {label}
+                    {proFeature && <ProFeature />}
                     <InputType
                         type={type}
                         save={save}
@@ -399,6 +405,49 @@ const TextArea = styled.textarea`
         background: #e9ecf0;
     }
 `;
+
+const ProSpan = styled.span`
+    background-color: #122b48;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 10px;
+    padding: 3px;
+    padding-right: 3px;
+    margin-top: 0;
+    margin-bottom: 4px;
+    margin-left: 6px;
+    position: relative;
+    bottom: 3px;
+    height: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    padding-right: 6px;
+    > span {
+        display: inline-flex;
+        background: #31daff;
+        border-radius: 6px;
+        padding: 1px;
+        height: 11px;
+        width: 11px;
+        margin-right: 3px;
+    }
+`;
+export const ProFeature = () => {
+    const match = useRouteMatch();
+
+    return (
+        <NavLink to={match.url + '/get-pro'}>
+            <ProSpan>
+                <span>
+                    <InlineIcon color={'#fff'} width={9} height={9} icon={starIcon} />
+                </span>
+                Pro only
+            </ProSpan>
+        </NavLink>
+    );
+};
 
 export {
     ButtonText,

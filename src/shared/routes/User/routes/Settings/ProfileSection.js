@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-apollo';
-import { SettingsSection, Input, DeleteFileButton, Label } from 'components/FormComponents';
+import {
+    SettingsSection,
+    Input,
+    DeleteFileButton,
+    Label,
+    ProFeature,
+} from 'components/FormComponents';
 import ImageUploader from 'components/ImageInput';
 import GenreSelector from 'components/GenreSelector';
 import TextAreaPopup from 'components/TextAreaPopup';
@@ -91,8 +97,8 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
                 }}
             />
             <Input
+                proFeature
                 label="Website"
-                labelStyle={{ opacity: isPro ? 1 : 0.5 }}
                 defaultValue={website}
                 placeholder={`www.${
                     permalink?.length < 20 ? permalink : `dj-${firstName.toLowerCase()}`
@@ -103,6 +109,7 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
                     validators.containsURL(true)(value) ? null : 'Not a valid URL'
                 }
                 disabled={!isPro}
+                style={{ opacity: isPro ? 1 : 0.5 }}
             />
 
             <LocationPicker
@@ -147,7 +154,10 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
 
             <ImageUploader
                 half
+                proFeature
                 label="Cover photo"
+                disabled={!isPro}
+                style={{ opacity: isPro ? 1 : 0.5 }}
                 buttonText="Change photo"
                 onSave={updateKey('coverPhoto')}
                 options={{ maxWidth: 1440, maxHeight: 400 }}
@@ -257,47 +267,51 @@ const PublicDisplaySettings = ({ user, onSave, disabled }) => {
     return (
         <Col style={{ width: '100%', marginRight: '36px' }}>
             <TableRow>
-                <Label>Public information</Label>
+                <Label>
+                    Public information <ProFeature />
+                </Label>
                 <Label>Public</Label>
             </TableRow>
             <Hr />
-            <CheckBoxRow
-                label="Website"
-                withBorder={false}
-                checked={internal.WEBSITE?.public}
-                onChange={onChange('WEBSITE')}
-            />
-            <CheckBoxRow
-                label="Email"
-                withBorder={false}
-                checked={internal.EMAIL?.public}
-                onChange={onChange('EMAIL')}
-            />
-            <CheckBoxRow
-                label="Phone"
-                withBorder={false}
-                checked={internal.PHONE?.public}
-                onChange={onChange('PHONE')}
-            />
-            <CheckBoxRow
-                label="Mixcloud"
-                withBorder={false}
-                checked={internal.MIXCLOUD?.public}
-                onChange={onChange('MIXCLOUD')}
-            />
-            <CheckBoxRow
-                label="SoundCloud"
-                withBorder={false}
-                checked={internal.SOUNDCLOUD?.public}
-                onChange={onChange('SOUNDCLOUD')}
-            />
+            <div style={{ opacity: disabled ? 0.5 : 1, pointerEvents: disabled ? 'none' : 'auto' }}>
+                <CheckBoxRow
+                    label="Website"
+                    withBorder={false}
+                    checked={!disabled && internal.WEBSITE?.public}
+                    onChange={onChange('WEBSITE')}
+                />
+                <CheckBoxRow
+                    label="Email"
+                    withBorder={false}
+                    checked={!disabled && internal.EMAIL?.public}
+                    onChange={onChange('EMAIL')}
+                />
+                <CheckBoxRow
+                    label="Phone"
+                    withBorder={false}
+                    checked={!disabled && internal.PHONE?.public}
+                    onChange={onChange('PHONE')}
+                />
+                <CheckBoxRow
+                    label="Mixcloud"
+                    withBorder={false}
+                    checked={!disabled && internal.MIXCLOUD?.public}
+                    onChange={onChange('MIXCLOUD')}
+                />
+                <CheckBoxRow
+                    label="SoundCloud"
+                    withBorder={false}
+                    checked={!disabled && internal.SOUNDCLOUD?.public}
+                    onChange={onChange('SOUNDCLOUD')}
+                />
 
-            <CheckBoxRow
-                label="Instagram"
-                withBorder={false}
-                checked={internal.INSTAGRAM?.public}
-                onChange={onChange('INSTAGRAM')}
-            />
+                <CheckBoxRow
+                    label="Instagram"
+                    withBorder={false}
+                    checked={!disabled && internal.INSTAGRAM?.public}
+                    onChange={onChange('INSTAGRAM')}
+                />
+            </div>
             <Hr />
             <BodySmall style={{ marginTop: 6 }}>
                 Publicly display your contact information and social links on your profile.
