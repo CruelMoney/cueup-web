@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-apollo';
 import { SettingsSection, Input, DeleteFileButton } from 'components/FormComponents';
 import ImageUploader from 'components/ImageInput';
 import GenreSelector from 'components/GenreSelector';
 import TextAreaPopup from 'components/TextAreaPopup';
 import useTranslate from 'components/hooks/useTranslate';
+import Popup from 'components/common/Popup';
+import PayoutForm from 'components/common/PayoutForm';
+import CurrencySelector from 'components/CurrencySelector';
 import LocationPicker from '../../components/LocationPicker';
 import CancelationPolicyPopup from '../../components/CancelationPolicyPopup';
 import { USER_EDITS } from '../../gql';
@@ -19,6 +22,7 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
     const genresModal = modal === 'genres';
     const locationModal = modal === 'location';
     const cancelationPolicyModal = modal === 'cancelationPolicy';
+    const addPayoutMethod = modal === 'payoutMethods';
 
     const toggleAvailability = () => {
         if (!userSettings.standby) {
@@ -32,9 +36,18 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
         updateKey('standby')(!userSettings.standby);
     };
 
-    const { userMetadata, genres, playingLocation, userSettings, artistName, permalink } = user;
+    const {
+        userMetadata,
+        genres,
+        playingLocation,
+        userSettings,
+        artistName,
+        permalink,
+        isDj,
+        payoutMethods,
+    } = user;
     const { firstName, bio } = userMetadata;
-    const { cancelationPolicy } = userSettings;
+    const { cancelationPolicy, currency } = userSettings;
 
     return (
         <SettingsSection
@@ -124,7 +137,54 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
                 onClick={toggleAvailability}
                 buttonText={userSettings.standby ? 'unavailable' : 'available'}
             />
+            {isDj && (
+                <PayoutPopup
+                    key={addPayoutMethod}
+                    user={user}
+                    hasPayout={payoutMethods?.length}
+                    isActive={addPayoutMethod}
+                    onClose={onModalClose}
+                />
+            )}
+
+            <CurrencySelector
+                half
+                label="Preferred currency"
+                initialValue={currency || ''}
+                onSave={(currency) => saveData({ currency })}
+            />
         </SettingsSection>
+    );
+};
+
+const PayoutPopup = ({ user, hasPayout, isActive = false, onClose }) => {
+    const [showing, setShowing] = useState(isActive);
+
+    const close = () => {
+        onClose();
+        setShowing(false);
+    };
+
+    return (
+        <>
+            <Input
+                half
+                type="button"
+                attention={!hasPayout}
+                onClick={(s) => setShowing(true)}
+                label="Payout methods"
+                buttonText={'update'}
+            />
+            <Popup showing={showing} onClickOutside={close} width={'600px'}>
+                <PayoutForm
+                    color={'#31daff'}
+                    isUpdate={hasPayout}
+                    user={user}
+                    onCancel={close}
+                    onSubmitted={close}
+                />
+            </Popup>
+        </>
     );
 };
 

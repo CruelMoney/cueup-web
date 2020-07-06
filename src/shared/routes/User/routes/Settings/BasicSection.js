@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import emailValidator from 'email-validator';
 import { useQuery } from 'react-apollo';
 
@@ -8,13 +8,16 @@ import DatePickerPopup from 'components/DatePickerPopup';
 
 import PhoneInput from 'components/common/PhoneInput';
 
-import PasswordChanger from '../../components/PasswordChanger';
+import Popup from 'components/common/Popup';
+import VerifyIdentity from '../../components/VerifyIdentity';
 
 import { USER_EDITS } from '../../gql';
 
-const BasicSection = ({ user, updateKey, saveData }) => {
+const BasicSection = ({ user, updateKey, saveData, modal, onModalClose }) => {
     const { data } = useQuery(USER_EDITS);
     const editsMap = data?.me?.editsMap || {};
+
+    const verifyIdentity = modal === 'verifyIdentity';
 
     const saveFullName = async (value) => {
         const [firstName, ...lastName] = value.split(' ');
@@ -32,7 +35,7 @@ const BasicSection = ({ user, updateKey, saveData }) => {
     return (
         <SettingsSection
             id="basics"
-            title={'Basics'}
+            title={'Personal information'}
             description={
                 'Edit your basic information. We might require some of this information for verification purposes.'
             }
@@ -75,7 +78,6 @@ const BasicSection = ({ user, updateKey, saveData }) => {
                 name="phone"
                 onSave={(phone) => saveData({ phone: phone.trim() })}
             />
-            <PasswordChanger half onSave={saveData} />
 
             <DatePickerPopup
                 half
@@ -89,12 +91,52 @@ const BasicSection = ({ user, updateKey, saveData }) => {
             <ImageUploader
                 half
                 label="Profile picture"
-                buttonText="change picture"
+                buttonText="Change picture"
                 onSave={updateKey('picture')}
                 error={editsMap.profilePictureId?.message}
                 displayError
             />
+            <VerifyIdentityPopup
+                user={user}
+                identityVerified={identityVerified}
+                initialShowing={verifyIdentity}
+                onClose={onModalClose}
+            />
         </SettingsSection>
+    );
+};
+
+const VerifyIdentityPopup = ({ user, onClose, identityVerified, initialShowing = false }) => {
+    const [showing, setShowing] = useState(initialShowing);
+
+    const closeModal = () => {
+        setShowing(false);
+        onClose && onClose();
+    };
+
+    return (
+        <>
+            <Input
+                half
+                type="button"
+                onClick={() => setShowing(true)}
+                label="Verify identity"
+                buttonText={identityVerified ? 'Verified' : 'Get verified'}
+                success={identityVerified}
+                disabled={identityVerified}
+            />
+            <Popup
+                showing={showing}
+                onClickOutside={(_) => closeModal()}
+                style={{ maxWidth: '1000px' }}
+            >
+                <VerifyIdentity
+                    isUpdate={identityVerified}
+                    user={user}
+                    onCancel={(_) => closeModal()}
+                />
+            </Popup>
+        </>
     );
 };
 

@@ -69,7 +69,7 @@ const NotificationPreferences = ({ notifications, onSave, roles, userId }) => {
         <Col style={{ width: '100%', marginRight: '36px' }} key={loading}>
             <TableRow>
                 <Label>Notifications</Label>
-                <Label>Mobile</Label>
+                <Label>App</Label>
                 <Label>Email</Label>
                 <Label>Browser</Label>
             </TableRow>

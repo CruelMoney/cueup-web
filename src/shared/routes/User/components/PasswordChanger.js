@@ -39,7 +39,7 @@ const PasswordChanger = ({ onSave }) => {
                 type="button"
                 onClick={(s) => setShowing(true)}
                 label="Password"
-                buttonText="change password"
+                buttonText="Change password"
             />
             <Popup showing={showing} onClickOutside={(_) => setShowing(false)} width={'520px'}>
                 <form

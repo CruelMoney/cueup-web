@@ -121,7 +121,7 @@ const PublicDisplaySettings = ({ user, onSave, disabled }) => {
     return (
         <Col style={{ width: '100%', marginRight: '36px' }}>
             <TableRow>
-                <Label>Information</Label>
+                <Label>Public information</Label>
                 <Label>Public</Label>
             </TableRow>
             <Hr />

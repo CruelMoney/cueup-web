@@ -5,6 +5,7 @@ import ProfileSection from './ProfileSection';
 import PreferencesSection from './PreferencesSection';
 import SystemSection from './SystemSection';
 import ProSection from './ProSection';
+import SocialProfiles from './SocialProfiles';
 
 const hasChanges = (o1, o2) => {
     const keys = Object.keys(o1);
@@ -79,7 +80,13 @@ const Settings = ({ user, loading, updateUser, history, location }) => {
                 modal={modal}
                 onModalClose={onModalClose}
             />
-
+            <SocialProfiles
+                user={user}
+                updateKey={updateKey}
+                saveData={saveData}
+                modal={modal}
+                onModalClose={onModalClose}
+            />
             <SystemSection
                 user={user}
                 updateKey={updateKey}
