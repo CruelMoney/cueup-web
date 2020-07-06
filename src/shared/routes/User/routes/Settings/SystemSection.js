@@ -1,14 +1,32 @@
 import React from 'react';
-import { Mutation } from 'react-apollo';
+import { Mutation, useLazyQuery } from 'react-apollo';
 import { useHistory } from 'react-router';
 import { SettingsSection, Input } from 'components/FormComponents';
 import useTranslate from 'components/hooks/useTranslate';
 import PasswordChanger from 'routes/User/components/PasswordChanger';
-import { DELETE_USER } from '../../gql';
+import TaxIdInput from 'components/TaxID';
+import { DELETE_USER, MANAGE_SUBSCRIPTION } from '../../gql';
 
 const SystemSection = ({ user, saveData }) => {
     const { translate } = useTranslate();
     const history = useHistory();
+
+    const { appMetadata } = user || {};
+    const isPro = appMetadata?.isPro;
+
+    const [getManageSubscriptionSessionUrl, { loading }] = useLazyQuery(MANAGE_SUBSCRIPTION, {
+        onCompleted: ({ manageSubscription }) => {
+            window.location.href = manageSubscription;
+        },
+    });
+
+    const redirectToManageSubscription = () => {
+        getManageSubscriptionSessionUrl({
+            variables: {
+                redirectUrl: window.location.href,
+            },
+        });
+    };
 
     return (
         <SettingsSection
@@ -56,6 +74,22 @@ const SystemSection = ({ user, saveData }) => {
                 onClick={(_) => window.alert("We'll send you an email when your data is ready.")}
             />
             <PasswordChanger half onSave={saveData} />
+            <Input
+                labelStyle={{ opacity: isPro ? 1 : 0.5 }}
+                type="button"
+                onClick={redirectToManageSubscription}
+                loading={loading}
+                label="Manage subscription"
+                buttonText={'Go to subscription'}
+                description="Download invoices and change or cancel your subscription."
+                disabled={!isPro}
+            />
+            <TaxIdInput
+                label="Tax ID"
+                type="text"
+                onSave={({ taxId, taxType }) => saveData({ taxId: taxId.trim(), taxType })}
+                disabled={!isPro}
+            />
         </SettingsSection>
     );
 };

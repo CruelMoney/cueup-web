@@ -64,6 +64,21 @@ const Settings = ({ user, loading, updateUser, history, location }) => {
                     onModalClose={onModalClose}
                 />
             )}
+            <BasicSection
+                user={user}
+                updateKey={updateKey}
+                saveData={saveData}
+                modal={modal}
+                onModalClose={onModalClose}
+            />
+
+            <SocialProfiles
+                user={user}
+                updateKey={updateKey}
+                saveData={saveData}
+                modal={modal}
+                onModalClose={onModalClose}
+            />
 
             <PreferencesSection
                 user={user}
@@ -73,20 +88,6 @@ const Settings = ({ user, loading, updateUser, history, location }) => {
                 onModalClose={onModalClose}
             />
 
-            <BasicSection
-                user={user}
-                updateKey={updateKey}
-                saveData={saveData}
-                modal={modal}
-                onModalClose={onModalClose}
-            />
-            <SocialProfiles
-                user={user}
-                updateKey={updateKey}
-                saveData={saveData}
-                modal={modal}
-                onModalClose={onModalClose}
-            />
             <SystemSection
                 user={user}
                 updateKey={updateKey}

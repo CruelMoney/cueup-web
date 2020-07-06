@@ -12,20 +12,6 @@ import { CheckBoxRow, TableRow } from 'components/CheckboxTable';
 const ProSection = ({ user, saveData }) => {
     const match = useRouteMatch();
 
-    const [getManageSubscriptionSessionUrl, { loading }] = useLazyQuery(MANAGE_SUBSCRIPTION, {
-        onCompleted: ({ manageSubscription }) => {
-            window.location.href = manageSubscription;
-        },
-    });
-
-    const redirectToManageSubscription = () => {
-        getManageSubscriptionSessionUrl({
-            variables: {
-                redirectUrl: window.location.href,
-            },
-        });
-    };
-
     const { appMetadata, permalink, userMetadata } = user || {};
     const isPro = appMetadata?.isPro;
     const { firstName, website } = userMetadata || {};
@@ -60,126 +46,8 @@ const ProSection = ({ user, saveData }) => {
                     )}
                 </>
             }
-        >
-            <Input
-                type="button"
-                onClick={redirectToManageSubscription}
-                loading={loading}
-                label="Manage subscription"
-                buttonText={'Update'}
-                description="Download invoices, and change or cancel your subscription."
-                disabled={!isPro}
-            />
-            <TaxIdInput
-                label="Tax ID"
-                type="text"
-                onSave={({ taxId, taxType }) => saveData({ taxId: taxId.trim(), taxType })}
-                disabled={!isPro}
-            />
-            <Input
-                label="Website"
-                defaultValue={website}
-                placeholder={`www.${
-                    permalink?.length < 20 ? permalink : `dj-${firstName.toLowerCase()}`
-                }.com`}
-                type="text"
-                onSave={(website) => saveData({ website: getUrl(website) })}
-                validation={(value) =>
-                    validators.containsURL(true)(value) ? null : 'Not a valid URL'
-                }
-                disabled={!isPro}
-            />
-
-            <PublicDisplaySettings
-                user={user}
-                onSave={(publicDisplaySettings) => saveData({ publicDisplaySettings })}
-                disabled={!isPro}
-            />
-        </SettingsSection>
+        />
     );
-};
-
-const PublicDisplaySettings = ({ user, onSave, disabled }) => {
-    const { publicDisplay = {} } = user?.userSettings || {};
-    const [internal, setInternal] = useState(publicDisplay);
-
-    const onChange = (key) => (val) => {
-        if (disabled) {
-            return;
-        }
-        const newNotifications = {
-            ...internal,
-            [key]: {
-                ...internal[key],
-                public: val,
-            },
-        };
-        setInternal(newNotifications);
-        onSave(newNotifications);
-    };
-
-    return (
-        <Col style={{ width: '100%', marginRight: '36px' }}>
-            <TableRow>
-                <Label>Public information</Label>
-                <Label>Public</Label>
-            </TableRow>
-            <Hr />
-            <CheckBoxRow
-                label="Website"
-                withBorder={false}
-                checked={internal.WEBSITE?.public}
-                onChange={onChange('WEBSITE')}
-            />
-            <CheckBoxRow
-                label="Email"
-                withBorder={false}
-                checked={internal.EMAIL?.public}
-                onChange={onChange('EMAIL')}
-            />
-            <CheckBoxRow
-                label="Phone"
-                withBorder={false}
-                checked={internal.PHONE?.public}
-                onChange={onChange('PHONE')}
-            />
-            <CheckBoxRow
-                label="Mixcloud"
-                withBorder={false}
-                checked={internal.MIXCLOUD?.public}
-                onChange={onChange('MIXCLOUD')}
-            />
-            <CheckBoxRow
-                label="SoundCloud"
-                withBorder={false}
-                checked={internal.SOUNDCLOUD?.public}
-                onChange={onChange('SOUNDCLOUD')}
-            />
-
-            <CheckBoxRow
-                label="Instagram"
-                withBorder={false}
-                checked={internal.INSTAGRAM?.public}
-                onChange={onChange('INSTAGRAM')}
-            />
-            <Hr />
-            <BodySmall style={{ marginTop: 6 }}>
-                Publicly display your contact information and social links on your profile.
-                Organizers will always be able to see contact information.
-            </BodySmall>
-        </Col>
-    );
-};
-
-const getUrl = (value) => {
-    function addhttp(url) {
-        if (!/^(?:f|ht)tps?:\/\//.test(url)) {
-            url = 'https://' + url;
-        }
-        return url;
-    }
-
-    return new URL(addhttp(value));
 };
 
 export default ProSection;

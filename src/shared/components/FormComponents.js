@@ -286,6 +286,7 @@ const Input = React.forwardRef(
             unregisterValidation = () => {},
             errorOutside,
             description,
+            labelStyle,
             ...props
         },
         fRef
@@ -331,7 +332,7 @@ const Input = React.forwardRef(
 
         return (
             <>
-                <LabelComponent>
+                <LabelComponent style={labelStyle}>
                     {label}
                     <InputType
                         type={type}

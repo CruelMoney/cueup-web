@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-apollo';
-import { SettingsSection, Input, DeleteFileButton } from 'components/FormComponents';
+import { SettingsSection, Input, DeleteFileButton, Label } from 'components/FormComponents';
 import ImageUploader from 'components/ImageInput';
 import GenreSelector from 'components/GenreSelector';
 import TextAreaPopup from 'components/TextAreaPopup';
@@ -8,6 +8,10 @@ import useTranslate from 'components/hooks/useTranslate';
 import Popup from 'components/common/Popup';
 import PayoutForm from 'components/common/PayoutForm';
 import CurrencySelector from 'components/CurrencySelector';
+import { validators } from 'components/hooks/useForm';
+import { CheckBoxRow, TableRow } from 'components/CheckboxTable';
+import { Hr, Col } from 'components/Blocks';
+import { BodySmall } from 'components/Text';
 import LocationPicker from '../../components/LocationPicker';
 import CancelationPolicyPopup from '../../components/CancelationPolicyPopup';
 import { USER_EDITS } from '../../gql';
@@ -38,6 +42,7 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
 
     const {
         userMetadata,
+        appMetadata,
         genres,
         playingLocation,
         userSettings,
@@ -46,8 +51,9 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
         isDj,
         payoutMethods,
     } = user;
-    const { firstName, bio } = userMetadata;
+    const { firstName, bio, website } = userMetadata;
     const { cancelationPolicy, currency } = userSettings;
+    const isPro = appMetadata?.isPro;
 
     return (
         <SettingsSection
@@ -84,6 +90,21 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
                     saveData({ permalink: permalink.trim() });
                 }}
             />
+            <Input
+                label="Website"
+                labelStyle={{ opacity: isPro ? 1 : 0.5 }}
+                defaultValue={website}
+                placeholder={`www.${
+                    permalink?.length < 20 ? permalink : `dj-${firstName.toLowerCase()}`
+                }.com`}
+                type="text"
+                onSave={(website) => saveData({ website: getUrl(website) })}
+                validation={(value) =>
+                    validators.containsURL(true)(value) ? null : 'Not a valid URL'
+                }
+                disabled={!isPro}
+            />
+
             <LocationPicker
                 isActive={locationModal}
                 initialLocation={playingLocation}
@@ -162,6 +183,12 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
                 initialValue={currency || ''}
                 onSave={(currency) => saveData({ currency })}
             />
+
+            <PublicDisplaySettings
+                user={user}
+                onSave={(publicDisplaySettings) => saveData({ publicDisplaySettings })}
+                disabled={!isPro}
+            />
         </SettingsSection>
     );
 };
@@ -194,6 +221,89 @@ const PayoutPopup = ({ user, hasPayout, isActive = false, onClose }) => {
                 />
             </Popup>
         </>
+    );
+};
+
+const getUrl = (value) => {
+    function addhttp(url) {
+        if (!/^(?:f|ht)tps?:\/\//.test(url)) {
+            url = 'https://' + url;
+        }
+        return url;
+    }
+
+    return new URL(addhttp(value));
+};
+
+const PublicDisplaySettings = ({ user, onSave, disabled }) => {
+    const { publicDisplay = {} } = user?.userSettings || {};
+    const [internal, setInternal] = useState(publicDisplay);
+
+    const onChange = (key) => (val) => {
+        if (disabled) {
+            return;
+        }
+        const newNotifications = {
+            ...internal,
+            [key]: {
+                ...internal[key],
+                public: val,
+            },
+        };
+        setInternal(newNotifications);
+        onSave(newNotifications);
+    };
+
+    return (
+        <Col style={{ width: '100%', marginRight: '36px' }}>
+            <TableRow>
+                <Label>Public information</Label>
+                <Label>Public</Label>
+            </TableRow>
+            <Hr />
+            <CheckBoxRow
+                label="Website"
+                withBorder={false}
+                checked={internal.WEBSITE?.public}
+                onChange={onChange('WEBSITE')}
+            />
+            <CheckBoxRow
+                label="Email"
+                withBorder={false}
+                checked={internal.EMAIL?.public}
+                onChange={onChange('EMAIL')}
+            />
+            <CheckBoxRow
+                label="Phone"
+                withBorder={false}
+                checked={internal.PHONE?.public}
+                onChange={onChange('PHONE')}
+            />
+            <CheckBoxRow
+                label="Mixcloud"
+                withBorder={false}
+                checked={internal.MIXCLOUD?.public}
+                onChange={onChange('MIXCLOUD')}
+            />
+            <CheckBoxRow
+                label="SoundCloud"
+                withBorder={false}
+                checked={internal.SOUNDCLOUD?.public}
+                onChange={onChange('SOUNDCLOUD')}
+            />
+
+            <CheckBoxRow
+                label="Instagram"
+                withBorder={false}
+                checked={internal.INSTAGRAM?.public}
+                onChange={onChange('INSTAGRAM')}
+            />
+            <Hr />
+            <BodySmall style={{ marginTop: 6 }}>
+                Publicly display your contact information and social links on your profile.
+                Organizers will always be able to see contact information.
+            </BodySmall>
+        </Col>
     );
 };
 
