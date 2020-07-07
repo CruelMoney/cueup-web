@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import styled, { css } from 'styled-components';
 import { useQuery } from 'react-apollo';
@@ -42,7 +42,7 @@ const Content = () => {
     }
 
     return (
-        <ContentContainer>
+        <ContentContainer data-cy="subscription-popup">
             <LeftSection>
                 <h1>
                     Get more gigs
@@ -79,7 +79,7 @@ const Content = () => {
 
 const Success = () => {
     return (
-        <div style={{ padding: '3em' }}>
+        <div style={{ padding: '3em' }} data-cy="subscription-welcome">
             <h1>Welcome to Cueup Pro</h1>
 
             <Body style={{ marginBottom: 24, maxWidth: 500 }}>
@@ -110,21 +110,59 @@ const Success = () => {
     );
 };
 
+function CountdownTimer() {
+    const calculateTimeLeft = () => {
+        const difference = Number(new Date('2020-08-07 19:31')) - Number(new Date());
+        let timeLeft = {};
+
+        if (difference > 0) {
+            timeLeft = {
+                days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+                hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+                minutes: Math.floor((difference / 1000 / 60) % 60),
+                seconds: Math.floor((difference / 1000) % 60),
+            };
+        }
+
+        return timeLeft;
+    };
+
+    const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+    useEffect(() => {
+        setTimeout(() => {
+            setTimeLeft(calculateTimeLeft());
+        }, 1000);
+    });
+
+    const timerComponents = [];
+
+    Object.keys(timeLeft).forEach((interval) => {
+        if (!timeLeft[interval] && interval !== 'seconds') {
+            return;
+        }
+
+        timerComponents.push(
+            <span>
+                {timeLeft[interval]} {interval}{' '}
+            </span>
+        );
+    });
+
+    return <h3>{timerComponents.length ? timerComponents : <span>Time's up!</span>}</h3>;
+}
+
 const Plans = ({ setTier, selectedTier }) => {
     const { loading, data } = useQuery(SUBSCRIPTION_TIERS);
 
     const tiers = data?.subscriptionTiers || [];
 
-    const offerEndDate = new Date(2020, 10, 1);
-    const endingFormatted = formatDistance(offerEndDate, new Date(), { addSuffix: true });
-
     return (
         <>
             <div style={{ marginBottom: 24, textAlign: 'center' }}>
-                <Body>
-                    Launch Offer valid for 20 days 2 hours 1 minute. Subscribe now and get this
-                    price forever.
-                </Body>
+                <Body>Launch offer ends in</Body>
+                <CountdownTimer />
+                <Body>Subscribe now and get this price forever.</Body>
             </div>
 
             {loading && (

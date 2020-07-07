@@ -26,7 +26,13 @@ describe('Update User', () => {
         cy.get('[data-cy=menu-user-link]').click();
         cy.get('[data-cy=menu-profile-link]').click();
         cy.url().should('include', '/user');
-        cy.get('.card.popup.active *[data-cy=close-popup-button]').click();
+
+        cy.get('body').then((body) => {
+            if (body.find('.card.popup.active *[data-cy=close-popup-button]').length > 0) {
+                cy.get('.card.popup.active *[data-cy=close-popup-button]').click();
+            }
+        });
+
         cy.get('[data-cy=navbutton-settings]').click();
         cy.get('[data-cy=go-pro-button]').click();
         cy.get('[data-cy=plan-1-button]').click();
@@ -45,5 +51,6 @@ describe('Update User', () => {
         });
 
         cy.get('[data-cy=submit-button]').click();
+        cy.get('[data-cy=subscription-welcome]').should('exist', 10000);
     });
 });
