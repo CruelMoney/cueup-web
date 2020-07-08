@@ -534,7 +534,6 @@ const DataWrapper = (props) => {
     });
 
     const { user: profileUser } = userData || {};
-    const loading = loadingMe && loadingUser;
     const me = data?.me;
 
     if (!loadingUser && !profileUser) {
@@ -558,6 +557,8 @@ const DataWrapper = (props) => {
     if (!user.appMetadata) {
         user.appMetadata = {};
     }
+
+    const loading = loadingMe || (!user.isOwn && loadingUser);
 
     return <User {...props} user={user} error={error} loading={loading} translate={translate} />;
 };

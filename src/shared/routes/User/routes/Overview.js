@@ -450,8 +450,8 @@ const Overview = ({ user, loading, location, history }) => {
         isOwn,
         sounds,
     } = user;
-    const { firstName, bio } = userMetadata;
-    const { cancelationPolicy } = userSettings;
+    const { firstName, bio } = userMetadata || {};
+    const { cancelationPolicy } = userSettings || {};
 
     const showPhotosArea = media?.edges.length > 0 || isOwn;
     const showSelectedSound = sounds?.pageInfo.totalDocs > 0 || isOwn;
