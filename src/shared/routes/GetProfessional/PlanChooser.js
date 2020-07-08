@@ -12,6 +12,7 @@ import { Row, Col, PrimaryButton, Avatar, TeritaryButton } from 'components/Bloc
 import { BodySmall, Body } from 'components/Text';
 import { DumbCheckbox } from 'components/Checkbox';
 import { Label } from 'components/FormComponents';
+import { ME } from 'components/gql';
 import { SUBSCRIPTION_TIERS } from './gql';
 import PaymentForm from './PaymentForm';
 
@@ -35,11 +36,10 @@ export const PlanChooser = () => {
 
 const Content = () => {
     const [selectedTier, setTier] = useState();
-    const [success, setSuccess] = useState(false);
 
-    if (success) {
-        return <Success />;
-    }
+    const { data } = useQuery(ME);
+
+    const isPro = data?.me?.appMetadata?.isPro;
 
     return (
         <ContentContainer data-cy="subscription-popup">
@@ -67,11 +67,15 @@ const Content = () => {
                 </Col>
             </LeftSection>
             <RightSection>
-                <Col style={{ height: '100%' }}>
-                    <Plans selectedTier={selectedTier} setTier={setTier} />
-                    <div style={{ flex: 1 }} />
-                    <PaymentForm selectedTier={selectedTier} setSuccess={setSuccess} />
-                </Col>
+                {isPro ? (
+                    <Success />
+                ) : (
+                    <Col style={{ height: '100%' }}>
+                        <Plans selectedTier={selectedTier} setTier={setTier} />
+                        <div style={{ flex: 1 }} />
+                        <PaymentForm selectedTier={selectedTier} />
+                    </Col>
+                )}
             </RightSection>
         </ContentContainer>
     );
@@ -80,7 +84,7 @@ const Content = () => {
 const Success = () => {
     return (
         <div style={{ padding: '3em' }} data-cy="subscription-welcome">
-            <h1>Welcome to Cueup Pro</h1>
+            <h2>You are a Cueup Pro member</h2>
 
             <Body style={{ marginBottom: 24, maxWidth: 500 }}>
                 We're excited to have you on the <b>Pro team</b>. Go ahead and use some of the new

@@ -39,3 +39,9 @@ export const START_SUBSCRIPTION = gql`
         }
     }
 `;
+
+export const SUBSCRIPTION_CONFIRMED = gql`
+    mutation SubscriptionConfirmed {
+        subscriptionConfirmed @client
+    }
+`;

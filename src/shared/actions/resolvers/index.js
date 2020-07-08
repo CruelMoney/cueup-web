@@ -90,6 +90,24 @@ const resolvers = {
 
             return null;
         },
+
+        subscriptionConfirmed: (_root, variables, { cache, getCacheKey, client }) => {
+            const data = client.readQuery({ query: ME });
+            client.writeQuery({
+                query: ME,
+                data: {
+                    ...data,
+                    me: {
+                        ...data.me,
+                        appMetadata: {
+                            ...data.me.appMetadata,
+                            isPro: true,
+                        },
+                    },
+                },
+            });
+            return null;
+        },
     },
 };
 

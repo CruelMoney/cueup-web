@@ -14,14 +14,15 @@ import { inputStyle, SmartButton } from 'components/Blocks';
 import { BodySmall } from 'components/Text';
 import { useServerContext } from 'components/hooks/useServerContext';
 import ErrorMessageApollo from 'components/common/ErrorMessageApollo';
-import { ME } from 'components/gql';
-import { START_SUBSCRIPTION } from './gql';
+import { START_SUBSCRIPTION, SUBSCRIPTION_CONFIRMED } from './gql';
 
-function PaymentForm({ selectedTier, setSuccess }) {
+function PaymentForm({ selectedTier }) {
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
     const stripe = useStripe();
     const elements = useElements();
+
+    const [subscriptionConfirmed] = useMutation(SUBSCRIPTION_CONFIRMED);
 
     // if the customer needs to confirm using 3d secure etc
     const confirmCardPayment = useCallback(
@@ -52,7 +53,7 @@ function PaymentForm({ selectedTier, setSuccess }) {
                         // Show a success message to your customer.
                         // There's a risk of the customer closing the window before the callback.
                         // We recommend setting up webhook endpoints later in this guide.
-                        setSuccess(true);
+                        subscriptionConfirmed();
                     }
                 }
             } catch (error) {
@@ -62,7 +63,7 @@ function PaymentForm({ selectedTier, setSuccess }) {
                 setLoading(false);
             }
         },
-        [stripe, elements, setSuccess]
+        [stripe, elements, subscriptionConfirmed]
     );
 
     const [startSubscription] = useMutation(START_SUBSCRIPTION, {
@@ -71,26 +72,7 @@ function PaymentForm({ selectedTier, setSuccess }) {
                 confirmCardPayment(startSubscription.paymentIntent);
             } else {
                 setLoading(false);
-                setSuccess(true);
-            }
-        },
-        update: (proxy, { data: { startSubscription } }) => {
-            if (!startSubscription.requiresConfirmation) {
-                const data = proxy.readQuery({ query: ME });
-
-                proxy.writeQuery({
-                    query: ME,
-                    data: {
-                        ...data,
-                        me: {
-                            ...data.me,
-                            appMetadata: {
-                                ...data.me.appMetadata,
-                                isPro: true,
-                            },
-                        },
-                    },
-                });
+                subscriptionConfirmed();
             }
         },
     });
