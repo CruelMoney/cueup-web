@@ -434,16 +434,16 @@ const ProSpan = styled.span`
         margin-right: 3px;
     }
 `;
-export const ProFeature = () => {
+export const ProFeature = ({ children, style }) => {
     const match = useRouteMatch();
 
     return (
         <NavLink to={match.url + '/get-pro'}>
-            <ProSpan>
+            <ProSpan style={style}>
                 <span>
                     <InlineIcon color={'#fff'} width={9} height={9} icon={starIcon} />
                 </span>
-                Pro only
+                {children || 'Pro only'}
             </ProSpan>
         </NavLink>
     );

@@ -333,7 +333,7 @@ const CancelationDeclinePopup = ({ gig, hide, onCancelled }) => {
 
 const ContainerRow = styled(Row)`
     align-items: stretch;
-    padding-top: 60px;
+    padding-top: 30px;
     padding-bottom: 60px;
 `;
 

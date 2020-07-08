@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import debounce from 'lodash/debounce';
 import { useMutation } from 'react-apollo';
+import { InlineIcon } from '@iconify/react';
+import infoIcon from '@iconify/icons-ion/information-circle';
 import RadioSelect from 'components/RadioSelect';
 import useTranslate from 'components/hooks/useTranslate';
+import Tooltip from 'components/Tooltip';
 import { GET_OFFER, MAKE_OFFER, GIG } from '../../gql';
 import ErrorMessageApollo from '../../../../components/common/ErrorMessageApollo';
 import { gigStates, PAYOUT_TYPES } from '../../../../constants/constants';
@@ -15,7 +18,7 @@ import {
     Col,
     Hr,
 } from '../../../../components/Blocks';
-import { Input, InputRow } from '../../../../components/FormComponents';
+import { Input, InputRow, ProFeature } from '../../../../components/FormComponents';
 import CurrencySelector from '../../../../components/CurrencySelector';
 import { Body, BodyBold, TitleClean } from '../../../../components/Text';
 
@@ -306,14 +309,17 @@ const OfferTable = ({ loading, translate, serviceFee, djFee, totalPayout }) => {
             <div style={style1}>
                 <TableRow
                     label={translate('Service fee')}
-                    info={<div>{translate('gig:offer.service-fee-info')}</div>}
+                    info={
+                        'This fee is used to run the platform. Cueup Pro members do not pay this fee.'
+                    }
                 >
                     {loading ? 'loading...' : serviceFee.formatted ? serviceFee.formatted : '...'}
+                    <ProFeature style={{ bottom: 1 }}>Free for Pro members</ProFeature>
                 </TableRow>
                 <Hr />
                 <TableRow
                     label={translate('Payment processing')}
-                    info={<div>{translate('gig:offer.dj-fee-info')}</div>}
+                    info={'A fee on 3% that goes directly to the payment provider.'}
                 >
                     {loading ? 'loading...' : djFee.formatted ? djFee.formatted : '...'}
                 </TableRow>
@@ -335,16 +341,33 @@ const gigStateDescription = {
 const style1 = { marginBottom: '24px' };
 const style2 = { lineHeight: '48px', margin: 0 };
 
-const TableRow = ({ label, value, children, bold }) =>
+const TableRow = ({ label, info, value, children, bold }) =>
     bold ? (
         <Row between middle>
             <BodyBold style={style2}>{value || children}</BodyBold>{' '}
-            <BodyBold style={style2}>{label}</BodyBold>
+            <BodyBold style={style2}>
+                {label} {info && <InfoPopup content={info} />}
+            </BodyBold>
         </Row>
     ) : (
         <Row between middle>
-            <Body style={style2}>{value || children}</Body> <Body style={style2}>{label}</Body>
+            <Body style={style2}>{value || children}</Body>{' '}
+            <Body style={style2}>
+                {label} {info && <InfoPopup content={info} />}
+            </Body>
         </Row>
     );
+
+const InfoPopup = ({ content }) => {
+    return (
+        <Tooltip content={content}>
+            {({ ref, close, open }) => (
+                <span ref={ref} onMouseEnter={open} onMouseLeave={close}>
+                    <InlineIcon icon={infoIcon} />
+                </span>
+            )}
+        </Tooltip>
+    );
+};
 
 export default OfferForm;
