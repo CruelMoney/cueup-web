@@ -1,12 +1,21 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { useMutation } from 'react-apollo';
+import { useMutation, useQuery } from 'react-apollo';
 import styled from 'styled-components';
 import * as Sentry from '@sentry/react';
+import { useHistory, useRouteMatch } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import { useForm } from 'components/hooks/useForm';
 import useConnectSoundCloud from 'components/hooks/useConnectSoundcloud';
 import DateInput from 'components/DateInput';
 import useConnectMixcloud from 'components/hooks/useConnectMixcloud';
-import { Input, InputRow, InputLabel, Checkbox } from '../../../../components/FormComponents';
+import { ME } from 'components/gql';
+import {
+    Input,
+    InputRow,
+    InputLabel,
+    Checkbox,
+    ProFeature,
+} from '../../../../components/FormComponents';
 import { Title, Body, BodySmall, InlineLink } from '../../../../components/Text';
 import {
     Row,
@@ -15,6 +24,7 @@ import {
     Col,
     SecondaryButton,
     RowWrap,
+    PrimaryButton,
 } from '../../../../components/Blocks';
 import ErrorMessageApollo from '../../../../components/common/ErrorMessageApollo';
 import ImageUploader from '../../../../components/ImageInput';
@@ -459,4 +469,40 @@ const CoverPicture = ({ url, onChange, imageFile }) => {
     );
 };
 
-export default AddSound;
+const LimitReached = () => {
+    const match = useRouteMatch();
+
+    return (
+        <Col center middle style={{ maxWidth: 350, margin: 'auto', textAlign: 'center' }}>
+            <ProFeature />
+            <h2>You've reached the upload limit for free members</h2>
+            <Body style={{ marginBottom: 24, maxWidth: 300 }}>
+                Go Pro to enjoy unlimited uploads and many other benefits.
+            </Body>
+            <NavLink to={match.url + '/get-pro'}>
+                <PrimaryButton>Go Pro</PrimaryButton>
+            </NavLink>
+        </Col>
+    );
+};
+
+const DataWrapper = (props) => {
+    const { data } = useQuery(USER_SOUNDS, {
+        variables: {
+            userId: props?.userId,
+        },
+    });
+
+    const { data: meData } = useQuery(ME);
+
+    const uploadedSoundsCount = data?.userSounds?.edges.filter((s) => !s.source).length;
+    const hasReachedLimit = uploadedSoundsCount >= 2 && !meData?.me?.appMetadata?.isPro;
+
+    if (hasReachedLimit) {
+        return <LimitReached />;
+    }
+
+    return <AddSound {...props} />;
+};
+
+export default DataWrapper;
