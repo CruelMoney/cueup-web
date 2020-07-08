@@ -340,7 +340,7 @@ const Input = React.forwardRef(
             <>
                 <LabelComponent style={labelStyle}>
                     {label}
-                    {proFeature && <ProFeature />}
+                    {proFeature && <ProFeature small />}
                     <InputType
                         type={type}
                         save={save}
@@ -420,6 +420,7 @@ const ProSpan = styled.span`
     border-radius: 1em;
     position: relative;
     top: -1px;
+    margin-left: 6px;
     > span {
         font-size: 0.7em;
         font-weight: 500;
