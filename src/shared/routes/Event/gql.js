@@ -170,6 +170,7 @@ const EVENT_GIGS = gql`
                     }
                     appMetadata {
                         averageRating
+                        isPro
                     }
                 }
                 availablePayoutMethods {

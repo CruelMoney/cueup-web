@@ -167,7 +167,7 @@ const Bio = ({ bio, firstName, style, isOwn }) => {
     );
 };
 
-const Genres = ({ genres, style, isOwn }) => (
+const Genres = ({ genres = [], style, isOwn }) => (
     <GenresLayout style={style}>
         {isOwn && (
             <EditButton

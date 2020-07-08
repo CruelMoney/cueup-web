@@ -57,7 +57,7 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
                 pointerEvents="auto"
                 to={{
                     pathname: `${translate(appRoutes.user)}/${dj.permalink}/${userRoutes.overview}`,
-                    state: { gigId: gig.id },
+                    state: { gigId: gig.id, dj },
                     search: `?gigId=${gig.id}&eventId=${theEvent.id}&hash=${theEvent.hash}`,
                 }}
             >

@@ -525,7 +525,10 @@ const mergeObjects = (o1, o2) => {
 };
 
 const DataWrapper = (props) => {
-    const { match } = props;
+    const { match, location } = props;
+
+    const routeDj = location.state?.dj || {};
+
     const { translate } = useNamespaceContent(content, 'user');
 
     const { data, loading: loadingMe } = useQuery(ME);
@@ -533,7 +536,7 @@ const DataWrapper = (props) => {
         variables: { permalink: match.params.permalink },
     });
 
-    const { user: profileUser } = userData || {};
+    const { user: profileUser } = userData || { user: routeDj };
     const me = data?.me;
 
     if (!loadingUser && !profileUser) {
@@ -558,7 +561,9 @@ const DataWrapper = (props) => {
         user.appMetadata = {};
     }
 
-    const loading = loadingMe || (!user.isOwn && loadingUser);
+    const loading = loadingMe || !user.id;
+
+    console.log({ user });
 
     return <User {...props} user={user} error={error} loading={loading} translate={translate} />;
 };
