@@ -152,7 +152,7 @@ const GigRoutes = forwardRef((props, ref) => {
 
 const ContainerRow = styled(Row)`
     align-items: stretch;
-    padding-top: 60px;
+    padding-top: 30px;
     padding-bottom: 60px;
     @media only screen and (max-width: 768px) {
         flex-direction: column-reverse;
