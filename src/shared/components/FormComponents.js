@@ -20,6 +20,7 @@ import {
 import { Title, Body, BodySmall } from './Text';
 import Checkbox from './Checkbox';
 import { useValidation } from './hooks/useForm';
+import ConditionalWrap from './ConditionalWrap';
 
 const Label = styled.label`
     font-size: 18px;
@@ -408,44 +409,55 @@ const TextArea = styled.textarea`
 
 const ProSpan = styled.span`
     background-color: #122b48;
-    border-radius: 12px;
     color: #fff;
-    font-size: 10px;
-    padding: 3px;
-    padding-right: 3px;
-    margin-top: 0;
-    margin-bottom: 4px;
-    margin-left: 6px;
-    position: relative;
-    bottom: 3px;
-    height: 16px;
-    display: inline-flex;
+    font-weight: 500;
     align-items: center;
     justify-content: center;
-    font-weight: 500;
-    padding-right: 6px;
+    display: inline-flex;
+    flex-direction: row;
+    font-size: ${({ small }) => (small ? '13px' : '20px')};
+    padding: 0.15em;
+    border-radius: 1em;
+    position: relative;
+    top: -1px;
     > span {
-        display: inline-flex;
-        background: #31daff;
-        border-radius: 6px;
-        padding: 1px;
-        height: 11px;
-        width: 11px;
-        margin-right: 3px;
+        font-size: 0.7em;
+        font-weight: 500;
+        line-height: 0.7em;
+        margin-left: 0.3em;
+        margin-right: 0.3em;
     }
 `;
-export const ProFeature = ({ children, style }) => {
+
+const IconWrapper = styled.div`
+    display: inline-flex;
+    background: #31daff;
+    border-radius: 0.4em;
+    height: 0.8em;
+    width: 0.8em;
+    align-items: center;
+    justify-content: center;
+`;
+
+export const ProFeature = ({ children, style, small, disabled }) => {
     const match = useRouteMatch();
 
     return (
-        <NavLink to={match.url + '/get-pro'}>
-            <ProSpan style={style}>
-                <span>
-                    <InlineIcon color={'#fff'} width={9} height={9} icon={starIcon} />
-                </span>
-                {children || 'Pro only'}
+        <ConditionalWrap
+            condition={!disabled}
+            wrap={(children) => (
+                <NavLink disabled={disabled} to={match.url + '/get-pro'}>
+                    {children}
+                </NavLink>
+            )}
+        >
+            <ProSpan small={small} style={style}>
+                <IconWrapper>
+                    <InlineIcon color={'#fff'} width={'0.6em'} height={'0.6em'} icon={starIcon} />
+                </IconWrapper>
+                <span>{children || 'Pro only'}</span>
             </ProSpan>
-        </NavLink>
+        </ConditionalWrap>
     );
 };
 

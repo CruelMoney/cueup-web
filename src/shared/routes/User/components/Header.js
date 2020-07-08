@@ -6,6 +6,7 @@ import { useHistory } from 'react-router';
 import Icon from '@iconify/react';
 import starIcon from '@iconify/icons-ion/star';
 import Popup from 'components/common/Popup';
+import { ProFeature } from 'components/FormComponents';
 import Navigation from '../../../components/Navigation/SubNavigation';
 import Rating from '../../../components/common/Rating';
 import Tooltip from '../../../components/Tooltip';
@@ -214,28 +215,15 @@ const UserContent = ({ user }) => {
                             <HeaderTitle>
                                 {artistName || firstName}
                                 {isPro && (
-                                    <span
-                                        title="Cueup Pro DJ"
+                                    <ProFeature
+                                        disabled
                                         style={{
-                                            backgroundColor: '#31daff',
-                                            borderRadius: 10,
-                                            height: 20,
-                                            width: 20,
-                                            display: 'inline-flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            position: 'relative',
-                                            marginLeft: 9,
-                                            top: -12,
+                                            top: -16,
+                                            marginLeft: 6,
                                         }}
                                     >
-                                        <Icon
-                                            color={'#fff'}
-                                            width={14}
-                                            height={14}
-                                            icon={starIcon}
-                                        />
-                                    </span>
+                                        Pro
+                                    </ProFeature>
                                 )}
                             </HeaderTitle>
                             {rating && (

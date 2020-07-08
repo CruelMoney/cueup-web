@@ -33,6 +33,7 @@ const Menu = () => {
     const loggedIn = !!user;
 
     const isPro = user?.appMetadata?.isPro;
+    const isDJ = user?.appMetadata?.roles?.includes('DJ');
 
     return (
         <div className="menu-wrapper">
@@ -51,7 +52,7 @@ const Menu = () => {
 
                         <MobileMenu />
                         <ul className="main-menu">
-                            {loggedIn && !isPro && (
+                            {loggedIn && !isPro && isDJ && (
                                 <li>
                                     <Navlink
                                         label={'Go Pro'}

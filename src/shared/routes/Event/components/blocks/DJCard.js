@@ -9,6 +9,7 @@ import { NavLink } from 'react-router-dom';
 import { useMutation } from 'react-apollo';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes, userRoutes, eventRoutes } from 'constants/locales/appRoutes';
+import { ProFeature } from 'components/FormComponents';
 import {
     Col,
     keyframeFadeIn,
@@ -69,7 +70,12 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
                         <Content>
                             <RowWrap>
                                 <ColLeft>
-                                    <SmallHeader>{name}</SmallHeader>
+                                    <SmallHeader>
+                                        {name}{' '}
+                                        <ProFeature disabled small>
+                                            Pro
+                                        </ProFeature>
+                                    </SmallHeader>
                                     <BodySmall
                                         style={{ wordBreak: 'break-word', marginBottom: '9px' }}
                                     >

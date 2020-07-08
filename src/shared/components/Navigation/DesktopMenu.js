@@ -135,7 +135,7 @@ const DropDownMenu = ({ user, ...props }) => {
                         </MenuButton>
                     </NavLink>
                 </li>
-                {!isPro && (
+                {!isPro && isDJ && (
                     <li>
                         <NavLink
                             to={
