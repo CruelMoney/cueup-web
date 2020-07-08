@@ -53,43 +53,50 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
 
     return (
         <LogActivityInView type={ACTIVITY_TYPES.GIG_VIEWED_BY_ORGANIZER} subjectId={gig.id}>
-            <Wrapper idx={idx} data-cy="event-dj" onMouseEnter={() => lazyUser.preload()}>
-                <Card style={style}>
-                    <ImageWrapper>
-                        <StyledImage src={dj.picture.path} />
-                    </ImageWrapper>
-                    <Content>
-                        <RowWrap>
-                            <ColLeft>
-                                <SmallHeader>{name}</SmallHeader>
-                                <BodySmall style={{ wordBreak: 'break-word', marginBottom: '9px' }}>
-                                    {truncatedBio}
-                                </BodySmall>
-                                <RowWrap>
-                                    {!finished && (
-                                        <SecondaryButton
-                                            small
-                                            data-cy="message-dj-button"
-                                            style={{ position: 'relative', overflow: 'visible' }}
-                                            onClick={() => {
-                                                onOpenChat();
-                                            }}
-                                        >
-                                            Message
-                                            {hasMessage && (
-                                                <div className="notification-bubble">!</div>
-                                            )}
-                                        </SecondaryButton>
-                                    )}
-                                    <NavLink
-                                        to={{
-                                            pathname: `${translate(appRoutes.user)}/${
-                                                dj.permalink
-                                            }/${userRoutes.overview}`,
-                                            state: { gigId: gig.id },
-                                            search: `?gigId=${gig.id}&eventId=${theEvent.id}&hash=${theEvent.hash}`,
-                                        }}
+            <NavLink
+                pointerEvents="auto"
+                to={{
+                    pathname: `${translate(appRoutes.user)}/${dj.permalink}/${userRoutes.overview}`,
+                    state: { gigId: gig.id },
+                    search: `?gigId=${gig.id}&eventId=${theEvent.id}&hash=${theEvent.hash}`,
+                }}
+            >
+                <Wrapper idx={idx} data-cy="event-dj" onMouseEnter={() => lazyUser.preload()}>
+                    <Card style={style}>
+                        <ImageWrapper>
+                            <StyledImage src={dj.picture.path} />
+                        </ImageWrapper>
+                        <Content>
+                            <RowWrap>
+                                <ColLeft>
+                                    <SmallHeader>{name}</SmallHeader>
+                                    <BodySmall
+                                        style={{ wordBreak: 'break-word', marginBottom: '9px' }}
                                     >
+                                        {truncatedBio}
+                                    </BodySmall>
+                                    <RowWrap>
+                                        {!finished && (
+                                            <SecondaryButton
+                                                small
+                                                data-cy="message-dj-button"
+                                                style={{
+                                                    position: 'relative',
+                                                    overflow: 'visible',
+                                                    pointerEvents: 'all',
+                                                }}
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    onOpenChat();
+                                                }}
+                                            >
+                                                Message
+                                                {hasMessage && (
+                                                    <div className="notification-bubble">!</div>
+                                                )}
+                                            </SecondaryButton>
+                                        )}
+
                                         {finished ? (
                                             <SecondaryButton data-cy="dj-profile-button" small>
                                                 See profile
@@ -99,71 +106,62 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
                                                 See profile
                                             </TeritaryButton>
                                         )}
-                                    </NavLink>
-                                </RowWrap>
-                            </ColLeft>
-                            <RightCol>
-                                {email && (
-                                    <ConditionalWrap
-                                        condition={showInfo}
-                                        wrap={(children) => (
-                                            <a href={'mailto:' + email}>{children}</a>
-                                        )}
-                                    >
-                                        <InfoPill>
-                                            <Icon
-                                                icon={mailIcon}
-                                                style={{ fontSize: '15px' }}
-                                                color="#98A4B3"
-                                            />
-                                            <span>{showInfo ? email : hiddenEmail}</span>
-                                        </InfoPill>
-                                    </ConditionalWrap>
-                                )}
-                                {phone && (
-                                    <ConditionalWrap
-                                        condition={showInfo}
-                                        wrap={(children) => <a href={'tel:' + phone}>{children}</a>}
-                                    >
-                                        <InfoPill>
-                                            <Icon
-                                                icon={phoneIcon}
-                                                style={{ fontSize: '15px' }}
-                                                color="#98A4B3"
-                                            />
-                                            <span>{showInfo ? phone : hiddenNumber}</span>
-                                        </InfoPill>
-                                    </ConditionalWrap>
-                                )}
-                            </RightCol>
-                        </RowWrap>
-                        <div style={{ flex: 1 }} />
-                        <Hr />
+                                    </RowWrap>
+                                </ColLeft>
+                                <RightCol>
+                                    {email && (
+                                        <ConditionalWrap
+                                            condition={showInfo}
+                                            wrap={(children) => (
+                                                <a href={'mailto:' + email}>{children}</a>
+                                            )}
+                                        >
+                                            <InfoPill>
+                                                <Icon
+                                                    icon={mailIcon}
+                                                    style={{ fontSize: '15px' }}
+                                                    color="#98A4B3"
+                                                />
+                                                <span>{showInfo ? email : hiddenEmail}</span>
+                                            </InfoPill>
+                                        </ConditionalWrap>
+                                    )}
+                                    {phone && (
+                                        <ConditionalWrap
+                                            condition={showInfo}
+                                            wrap={(children) => (
+                                                <a href={'tel:' + phone}>{children}</a>
+                                            )}
+                                        >
+                                            <InfoPill>
+                                                <Icon
+                                                    icon={phoneIcon}
+                                                    style={{ fontSize: '15px' }}
+                                                    color="#98A4B3"
+                                                />
+                                                <span>{showInfo ? phone : hiddenNumber}</span>
+                                            </InfoPill>
+                                        </ConditionalWrap>
+                                    )}
+                                </RightCol>
+                            </RowWrap>
+                            <div style={{ flex: 1 }} />
+                            <Hr />
 
-                        <Offer
-                            {...offer}
-                            theEvent={theEvent}
-                            gig={gig}
-                            translate={translate}
-                            name={name}
-                            initiateBooking={onInitiateBooking}
-                        />
-                    </Content>
-                </Card>
+                            <Offer
+                                {...offer}
+                                theEvent={theEvent}
+                                gig={gig}
+                                translate={translate}
+                                name={name}
+                                initiateBooking={onInitiateBooking}
+                            />
+                        </Content>
+                    </Card>
 
-                <Shadow />
-
-                {/* <ChatPopup
-                    showing={showChat}
-                    translate={translate}
-                    close={() => setShowChat(false)}
-                    dj={dj}
-                    organizer={theEvent.organizer}
-                    eventId={theEvent.id}
-                    showInfo={showInfo}
-                    gig={gig}
-                /> */}
-            </Wrapper>
+                    <Shadow />
+                </Wrapper>
+            </NavLink>
         </LogActivityInView>
     );
 };
@@ -226,15 +224,27 @@ const Offer = ({
                 {['ACCEPTED', 'REQUESTED'].includes(status) && (
                     <SmartButton
                         loading={loading}
-                        onClick={() => decline()}
+                        onClick={decline}
                         warning={translate('decline-warning')}
                         level="tertiary"
+                        style={{
+                            pointerEvents: 'all',
+                        }}
                     >
                         Remove DJ
                     </SmartButton>
                 )}
                 {['ACCEPTED'].includes(status) && (
-                    <PrimaryButton data-cy="book-dj-button" onClick={initiateBooking}>
+                    <PrimaryButton
+                        style={{
+                            pointerEvents: 'all',
+                        }}
+                        data-cy="book-dj-button"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            initiateBooking();
+                        }}
+                    >
                         Book {name}
                     </PrimaryButton>
                 )}

@@ -585,6 +585,9 @@ export const SmartButton = ({
     const Button = buttons[level];
 
     const handleClick = (e) => {
+        if (e?.preventDefault) {
+            e.preventDefault();
+        }
         if (onClick) {
             if (warning && typeof warning === 'string') {
                 const confirmed = window.confirm(warning);
