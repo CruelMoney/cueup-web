@@ -234,7 +234,12 @@ const ChatWrapper = ({ chat, event, onClose }) => {
             </ChatHeader>
             <div style={{ flex: 1 }} />
             <ChatMessagesWrapper>
-                <Chat key={chat.id} {...chat} placeholder={<EmptyChat receiver={receiver} />} />
+                <Chat
+                    declineOnContactInfo={false}
+                    key={chat.id}
+                    {...chat}
+                    placeholder={<EmptyChat receiver={receiver} />}
+                />
             </ChatMessagesWrapper>
         </ChatBox>
     );

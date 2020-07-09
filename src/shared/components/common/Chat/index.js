@@ -362,12 +362,20 @@ const WithNotificationMessage = ({ systemMessages = [], ...props }) => {
 };
 
 const WithChat = (props) => {
-    const { sender, receiver, chatId, showPersonalInformation, eventId } = props;
+    const {
+        sender,
+        receiver,
+        chatId,
+        showPersonalInformation,
+        eventId,
+        declineOnContactInfo,
+    } = props;
 
     const chat = useChat({
         sender,
         receiver,
         id: chatId,
+        declineOnContactInfo,
         showPersonalInformation,
         data: {
             eventId,

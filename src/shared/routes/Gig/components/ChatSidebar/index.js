@@ -35,6 +35,8 @@ const ChatSidebar = (props) => {
         receiver,
         id: gig && gig.id,
         showPersonalInformation: gig && gig.showInfo,
+        handleMessageError: console.log,
+        declineOnContactInfo: true,
         data: {
             eventId: theEvent && theEvent.id,
         },

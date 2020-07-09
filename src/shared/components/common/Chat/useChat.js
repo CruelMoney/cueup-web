@@ -4,7 +4,15 @@ import { useServerContext } from 'components/hooks/useServerContext';
 import ChatService from '../../../utils/ChatService';
 import { authService as auth } from '../../../utils/AuthService';
 
-const useChat = ({ sender, receiver, id, showPersonalInformation, data }) => {
+const useChat = ({
+    sender,
+    receiver,
+    id,
+    showPersonalInformation,
+    declineOnContactInfo,
+    data,
+    handleMessageError,
+}) => {
     const chat = useRef();
     const startedTyping = useRef();
     const stoppedTyping = useRef();
@@ -66,7 +74,7 @@ const useChat = ({ sender, receiver, id, showPersonalInformation, data }) => {
         }
     }, [addNewMessage, ready]);
 
-    const sendMessage = (declineOnContactInfo = false) => {
+    const sendMessage = async () => {
         if (!newMessage || !newMessage.trim()) {
             return;
         }
@@ -84,7 +92,16 @@ const useChat = ({ sender, receiver, id, showPersonalInformation, data }) => {
         setNewMessage('');
 
         // Then send the message
-        chat.current.sendMessage(message).then((_) => setSending(false));
+        try {
+            await chat.current.sendMessage(message);
+        } catch (error) {
+            // remove message and set it back to the composer
+            setMessages((messages) => [...messages.slice(0, -1)]);
+            setNewMessage(newMessage);
+            handleMessageError && handleMessageError(error);
+        } finally {
+            setSending(false);
+        }
     };
 
     const handleChange = (text) => {
