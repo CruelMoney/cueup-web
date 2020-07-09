@@ -71,7 +71,7 @@ const Index = ({ location, match, history }) => {
     const title = event ? event.name : 'Cueup | Event';
     const description = event ? event.description : null;
     if (gig) {
-        gig.showInfo = status === gigStates.CONFIRMED;
+        gig.showInfo = status === gigStates.CONFIRMED || me?.appMetadata?.isPro;
     }
 
     return (
