@@ -117,7 +117,7 @@ const Content = React.forwardRef(
                             Information will be available when the gig is confirmed - until then,
                             you can use the chat.
                             <br />
-                            <NavLink to={match.url + '/contact-get-pro'} activeClassName="">
+                            <NavLink to={match.url + '/contact-get-pro'}>
                                 <b style={{ color: '#4d6480' }}>Pro members</b>
                             </NavLink>{' '}
                             can see the contact information any time.
