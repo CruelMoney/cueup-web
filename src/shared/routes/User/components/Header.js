@@ -218,8 +218,7 @@ const UserContent = ({ user }) => {
                                     <ProFeature
                                         disabled
                                         style={{
-                                            top: -16,
-                                            marginLeft: 6,
+                                            top: -4,
                                         }}
                                     >
                                         Pro

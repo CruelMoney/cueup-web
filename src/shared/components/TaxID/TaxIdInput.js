@@ -69,7 +69,7 @@ const TaxIdInput = ({
     return (
         <InputLabel>
             {label}
-            <ProFeature />
+            <ProFeature small />
             <Row style={{ position: 'relative' }}>
                 <SearchableSuggestionList
                     disabled={loading || disabled}

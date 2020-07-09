@@ -563,8 +563,6 @@ const DataWrapper = (props) => {
 
     const loading = loadingMe || !user.id;
 
-    console.log({ user });
-
     return <User {...props} user={user} error={error} loading={loading} translate={translate} />;
 };
 

@@ -18,7 +18,7 @@ const SocialProfiles = ({ user }) => {
     return (
         <SettingsSection
             id="system"
-            title={'Social Profiles'}
+            title={'Connected profiles'}
             description={
                 'Connect services to display their data on your Cueup profile.\n\nConnect both Mixcloud and Soundcloud to upload and manage sounds on both platforms from Cueup.'
             }

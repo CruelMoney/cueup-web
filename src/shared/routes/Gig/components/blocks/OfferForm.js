@@ -314,7 +314,7 @@ const OfferTable = ({ loading, translate, serviceFee, djFee, totalPayout }) => {
                     }
                 >
                     {loading ? 'loading...' : serviceFee.formatted ? serviceFee.formatted : '...'}
-                    <ProFeature style={{ bottom: 1 }}>Free for Pro members</ProFeature>
+                    <ProFeature style={{ fontSize: '15px' }}>Free for Pro members</ProFeature>
                 </TableRow>
                 <Hr />
                 <TableRow
