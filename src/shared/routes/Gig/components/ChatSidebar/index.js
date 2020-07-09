@@ -17,6 +17,8 @@ const ChatSidebar = (props) => {
 
     const messageWrapper = useRef();
 
+    const isPro = me?.appMetadata?.isPro;
+
     const sender = me
         ? {
               id: me.id,
@@ -47,9 +49,9 @@ const ChatSidebar = (props) => {
         sender,
         receiver,
         id: gig && gig.id,
-        showPersonalInformation: gig && gig.showInfo,
+        showPersonalInformation: (gig && gig.showInfo) || isPro,
         handleMessageError,
-        declineOnContactInfo: true,
+        declineOnContactInfo: !isPro,
         data: {
             eventId: theEvent && theEvent.id,
         },

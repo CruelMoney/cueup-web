@@ -3,8 +3,6 @@ import { Helmet } from 'react-helmet-async';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { useQuery, useMutation } from 'react-apollo';
 import styled from 'styled-components';
-import { useTransition, animated } from 'react-spring';
-import { useMeasure } from '@softbind/hook-use-measure';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { LazyContactInformationPopup, LazyChatGetProPopup } from 'routes/GetProfessional';
