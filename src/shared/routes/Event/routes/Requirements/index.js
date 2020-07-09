@@ -72,7 +72,7 @@ const Requirements = React.forwardRef(({ theEvent, history, pathname }, ref) => 
                     type="text"
                     autoComplete="name"
                     name="name"
-                    onSave={save('contactEmail')}
+                    onSave={save('contactName')}
                     validation={required('Name is needed')}
                 />
                 <Input
