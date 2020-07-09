@@ -7,6 +7,7 @@ import { useTransition, animated } from 'react-spring';
 import { useMeasure } from '@softbind/hook-use-measure';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
+import { LazyContactInformationPopup } from 'routes/GetProfessional';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col, TeritaryButton, SmartButton } from '../../components/Blocks';
@@ -199,6 +200,8 @@ const MainContent = (props) => {
                 registerHeight={setHeight}
                 showDecline={() => setPopup(true)}
             />
+
+            <Route component={LazyContactInformationPopup} path={'*/contact-get-pro'} />
         </BorderCol>
     );
 };
@@ -226,19 +229,6 @@ const GigRoutes = forwardRef((props, ref) => {
         </Switch>
     );
 });
-
-const TransitionComponent = ({ registerHeight, ...props }) => {
-    const ref = useRef(null);
-    const { bounds } = useMeasure(ref, 'bounds');
-
-    useEffect(() => {
-        if (bounds) {
-            registerHeight(bounds.height);
-        }
-    }, [bounds, registerHeight]);
-
-    return <GigRoutes ref={ref} {...props} />;
-};
 
 const CancelationDeclinePopup = ({ gig, hide, onCancelled }) => {
     const [reason, setReason] = useState(null);
@@ -344,18 +334,6 @@ const BorderCol = styled(Col)`
     @media only screen and (max-width: 768px) {
         border-right: none;
         padding-right: 0;
-    }
-`;
-
-const AnimationWrapper = styled.div`
-    position: relative;
-    width: 100%;
-    height: 100%;
-    > div {
-        position: absolute;
-        transform-origin: center center;
-        max-width: 100%;
-        width: 100%;
     }
 `;
 

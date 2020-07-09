@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import moment from 'moment-timezone';
+import { NavLink, useRouteMatch } from 'react-router-dom';
 import { gigStates } from 'constants/constants';
 import {
     Col,
@@ -12,7 +13,7 @@ import {
 } from '../../../../components/Blocks';
 
 import { Body, BodySmall, TitleClean } from '../../../../components/Text';
-import { Label } from '../../../../components/FormComponents';
+import { Label, ProFeature } from '../../../../components/FormComponents';
 import ContactPills from '../../components/blocks/ContactPills';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
 
@@ -67,6 +68,8 @@ const MobileActionButtons = ({ showDecline, navigateToOffer }) => {
 
 const Content = React.forwardRef(
     ({ gig, showDecline, translate, history, navigateToOffer }, ref) => {
+        const match = useRouteMatch();
+
         if (!gig) {
             return null;
         }
@@ -111,7 +114,13 @@ const Content = React.forwardRef(
 
                     {!showInfo && (
                         <BodySmall>
-                            Information will be available when the gig is confirmed.
+                            Information will be available when the gig is confirmed - until then,
+                            you can use the chat.
+                            <br />
+                            <NavLink to={match.url + '/contact-get-pro'} activeClassName="">
+                                <b style={{ color: '#4d6480' }}>Pro members</b>
+                            </NavLink>{' '}
+                            can see the contact information any time.
                         </BodySmall>
                     )}
                     <RowWrap>
