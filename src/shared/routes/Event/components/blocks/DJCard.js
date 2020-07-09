@@ -25,9 +25,6 @@ import {
 import GracefullImage from '../../../../components/GracefullImage';
 import { SmallHeader, BodySmall, BodyBold, Body } from '../../../../components/Text';
 import ConditionalWrap from '../../../../components/ConditionalWrap';
-import Popup from '../../../../components/common/Popup';
-import Chat from '../../../../components/common/Chat';
-import EmptyPage from '../../../../components/common/EmptyPage';
 import { DECLINE_DJ, EVENT_GIGS } from '../../gql';
 import { ACTIVITY_TYPES, LogActivityInView } from '../../../../components/hooks/useLogActivity';
 import lazyUser from '../../../User';
@@ -73,9 +70,11 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
                                 <ColLeft>
                                     <SmallHeader>
                                         {name}{' '}
-                                        <ProFeature disabled small>
-                                            Pro
-                                        </ProFeature>
+                                        {isPro && (
+                                            <ProFeature disabled small>
+                                                Pro
+                                            </ProFeature>
+                                        )}
                                     </SmallHeader>
                                     <BodySmall
                                         style={{ wordBreak: 'break-word', marginBottom: '9px' }}

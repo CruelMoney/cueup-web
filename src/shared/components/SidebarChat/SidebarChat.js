@@ -26,7 +26,7 @@ import {
 
 const gigToChatConfig = ({ organizer, eventId, notifications }) => (gig) => ({
     ...gig,
-    showPersonalInformation: gig.status === gigStates.CONFIRMED,
+    showPersonalInformation: gig.status === gigStates.CONFIRMED || gig.dj?.appMetadata?.isPro,
     chatId: gig.id,
     receiver: {
         id: gig.dj?.id,
