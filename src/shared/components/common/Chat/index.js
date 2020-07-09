@@ -285,7 +285,7 @@ const Message = (props) => {
             </div>
 
             {!showPersonalInformation && showNotice && (
-                <div className="message-info">Information visible after payment</div>
+                <div className="message-info">Information visible after confirmation</div>
             )}
             {isLast && isOwn && <Status sending={sending} message={props} />}
             {systemMessage && !nextMessage?.systemMessage ? (
