@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 import { useQuery } from 'react-apollo';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory, useLocation, Route } from 'react-router-dom';
 import { Avatar, ClosePopupButton, Row, TeritaryButton, Col } from 'components/Blocks';
 import { EVENT_GIGS } from 'routes/Event/gql';
 import { gigStates } from 'constants/constants';
@@ -9,6 +9,7 @@ import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import { useAppState } from 'components/hooks/useAppState';
 import { BodySmall } from 'components/Text';
+import { LazyContactInformationPopup } from 'routes/GetProfessional';
 import {
     ShadowWrapper,
     ExtraChatsLayover,
@@ -23,6 +24,7 @@ import {
     NameBox,
     NewMessagesIndicator,
 } from './blocks';
+import ChatConfirmBeforeContact from './ChatConfirmBeforeContact';
 
 const gigToChatConfig = ({ organizer, eventId, notifications }) => (gig) => ({
     ...gig,
@@ -195,6 +197,9 @@ const ChatBubble = ({ receiver, onClick, active, hasMessage }) => {
 const ChatWrapper = ({ chat, event, onClose }) => {
     const { receiver, chatId } = chat;
     const { translate } = useTranslate();
+    const history = useHistory();
+    const location = useLocation();
+
     useEffect(() => {
         return () => {
             document.body.style.overflowY = '';
@@ -202,6 +207,17 @@ const ChatWrapper = ({ chat, event, onClose }) => {
     }, []);
 
     const pathname = `${translate(appRoutes.user)}/${receiver.permalink}/${userRoutes.overview}`;
+
+    const handleMessageError = useCallback(
+        (error) => {
+            if (error.status === 403) {
+                // forbidden / trying to send contact info
+                const currentPath = location.pathname === '/' ? '' : location.pathname;
+                history.push(currentPath + '/chat-confirm-first');
+            }
+        },
+        [history, location]
+    );
 
     return (
         <ChatBox
@@ -235,12 +251,18 @@ const ChatWrapper = ({ chat, event, onClose }) => {
             <div style={{ flex: 1 }} />
             <ChatMessagesWrapper>
                 <Chat
-                    declineOnContactInfo={false}
+                    declineOnContactInfo
+                    handleMessageError={handleMessageError}
                     key={chat.id}
                     {...chat}
                     placeholder={<EmptyChat receiver={receiver} />}
                 />
             </ChatMessagesWrapper>
+
+            <Route
+                path="*/chat-confirm-first"
+                render={() => <ChatConfirmBeforeContact event={event} gigId={chatId} />}
+            />
         </ChatBox>
     );
 };

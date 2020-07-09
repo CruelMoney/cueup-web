@@ -369,6 +369,7 @@ const WithChat = (props) => {
         showPersonalInformation,
         eventId,
         declineOnContactInfo,
+        handleMessageError,
     } = props;
 
     const chat = useChat({
@@ -377,6 +378,7 @@ const WithChat = (props) => {
         id: chatId,
         declineOnContactInfo,
         showPersonalInformation,
+        handleMessageError,
         data: {
             eventId,
         },
