@@ -42,14 +42,15 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
     if (!dj) {
         return null;
     }
-    const { userMetadata = {}, artistName, email } = dj;
+    const { userMetadata = {}, appMetadata = {}, artistName, email } = dj;
     const { firstName, phone } = userMetadata;
+    const { isPro } = appMetadata;
     let { bio } = userMetadata;
     bio = bio ? bio : '';
     const shouldTruncate = bio?.length > 100;
     const truncatedBio = shouldTruncate ? bio.substring(0, 100) + '...' : bio;
     const name = artistName || firstName;
-    const showInfo = status === 'CONFIRMED';
+    const showInfo = status === 'CONFIRMED' || isPro;
     const finished = theEvent.status === 'FINISHED';
 
     return (
@@ -119,7 +120,13 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
                                         <ConditionalWrap
                                             condition={showInfo}
                                             wrap={(children) => (
-                                                <a href={'mailto:' + email}>{children}</a>
+                                                <a
+                                                    title={'Send an email to ' + firstName}
+                                                    href={'mailto:' + email}
+                                                    onClick={(e) => e.stopPropagation()}
+                                                >
+                                                    {children}
+                                                </a>
                                             )}
                                         >
                                             <InfoPill>
@@ -136,7 +143,13 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
                                         <ConditionalWrap
                                             condition={showInfo}
                                             wrap={(children) => (
-                                                <a href={'tel:' + phone}>{children}</a>
+                                                <a
+                                                    title={'Call ' + firstName}
+                                                    href={'tel:' + phone}
+                                                    onClick={(e) => e.stopPropagation()}
+                                                >
+                                                    {children}
+                                                </a>
                                             )}
                                         >
                                             <InfoPill>
@@ -261,34 +274,6 @@ const Offer = ({
                 )}
             </ButtonsRow>
         </OfferRow>
-    );
-};
-
-const ChatPopup = ({ translate, showing, close, dj, organizer, gig, eventId, showInfo }) => {
-    return (
-        <Popup noPadding showing={showing} onClickOutside={close}>
-            <Chat
-                showPersonalInformation={showInfo}
-                eventId={eventId}
-                receiver={{
-                    id: dj.id,
-                    name: dj.userMetadata.firstName,
-                    image: dj.picture.path,
-                }}
-                sender={{
-                    id: organizer.id,
-                    name: organizer.userMetadata.firstName,
-                    image: organizer.picture.path,
-                }}
-                chatId={gig.id}
-                placeholder={
-                    <EmptyPage
-                        title="No messages"
-                        message={<Body>{translate('event:offer.empty-chat')}</Body>}
-                    />
-                }
-            />
-        </Popup>
     );
 };
 
