@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useCallback, useLayoutEffect, memo } from 'react';
 import styled from 'styled-components';
 import moment from 'moment-timezone';
+import { useHistory, useLocation } from 'react-router';
 import Sidebar, { SidebarContent } from '../../../../components/Sidebar';
 import { Title, Body } from '../../../../components/Text';
 import { Col, RowWrap } from '../../../../components/Blocks';
@@ -10,6 +11,8 @@ import { gigStates } from '../../../../constants/constants';
 import useChat from '../../../../components/common/Chat/useChat';
 
 const ChatSidebar = (props) => {
+    const location = useLocation();
+    const history = useHistory();
     const { organizer, gig, theEvent, me, systemMessages, loading } = props;
 
     const messageWrapper = useRef();
@@ -30,12 +33,22 @@ const ChatSidebar = (props) => {
           }
         : {};
 
+    const handleMessageError = useCallback(
+        (error) => {
+            if (error.status === 403) {
+                // forbidden / trying to send contact info
+                history.push(location.pathname.replaceAll('/chat-get-pro', '') + '/chat-get-pro');
+            }
+        },
+        [history, location]
+    );
+
     const chat = useChat({
         sender,
         receiver,
         id: gig && gig.id,
         showPersonalInformation: gig && gig.showInfo,
-        handleMessageError: console.log,
+        handleMessageError,
         declineOnContactInfo: true,
         data: {
             eventId: theEvent && theEvent.id,

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import styled, { css } from 'styled-components';
 
-import { Row, Col, Avatar } from 'components/Blocks';
-import { BodySmall } from 'components/Text';
-import { DumbCheckbox } from 'components/Checkbox';
+import { Col } from 'components/Blocks';
+
+import { Testimonial, CustomCheckBox } from './BenefitsPopup';
 
 import GenericPopup from './GenericPopup';
 
@@ -30,38 +29,5 @@ export const BenefitsPopup = () => {
         </GenericPopup>
     );
 };
-
-const Testimonial = () => {
-    return (
-        <TestimonialWrapper>
-            <Avatar size="large" src={'https://i.vimeocdn.com/portrait/13325432_640x640'} />
-            <BodySmall style={{ marginLeft: 12 }}>
-                "I like to travel and thanks to Cueup I’ve had a steady stream of gigs while
-                traveling. Best investment I’ve made was becoming Pro."
-                <Quotee>- Oscar Bandersen, DJ & Producer</Quotee>
-            </BodySmall>
-        </TestimonialWrapper>
-    );
-};
-
-const CustomCheckBox = styled(DumbCheckbox)`
-    margin-bottom: 1em;
-    div {
-        cursor: default !important;
-    }
-`;
-
-const TestimonialWrapper = styled(Row)`
-    margin-top: 1em;
-    img {
-        transform: scale(1.8);
-    }
-`;
-
-const Quotee = styled.span`
-    display: block;
-    font-weight: 500;
-    color: #98a4b3;
-`;
 
 export default BenefitsPopup;

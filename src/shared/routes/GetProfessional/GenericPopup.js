@@ -5,15 +5,14 @@ import { useQuery } from 'react-apollo';
 
 import Skeleton from 'react-loading-skeleton';
 import Popup from 'components/common/Popup';
-import { Row, Col, PrimaryButton, Avatar, TeritaryButton } from 'components/Blocks';
+import { Row, Col, PrimaryButton, TeritaryButton } from 'components/Blocks';
 import { BodySmall, Body } from 'components/Text';
-import { DumbCheckbox } from 'components/Checkbox';
 import { Label } from 'components/FormComponents';
 import { ME } from 'components/gql';
 import { SUBSCRIPTION_TIERS } from './gql';
 import PaymentForm from './PaymentForm';
 
-export const GenericPopup = ({ children }) => {
+export const GenericPopup = ({ children, showPayment = true }) => {
     const history = useHistory();
 
     return (
@@ -26,12 +25,12 @@ export const GenericPopup = ({ children }) => {
                 history.goBack();
             }}
         >
-            <Content>{children}</Content>
+            <Content showPayment={showPayment}>{children}</Content>
         </Popup>
     );
 };
 
-const Content = ({ children }) => {
+const Content = ({ children, showPayment }) => {
     const [selectedTier, setTier] = useState();
 
     const { data } = useQuery(ME);
@@ -41,17 +40,19 @@ const Content = ({ children }) => {
     return (
         <ContentContainer data-cy="subscription-popup">
             <LeftSection>{children}</LeftSection>
-            <RightSection>
-                {isPro ? (
-                    <Success />
-                ) : (
-                    <Col style={{ height: '100%' }}>
-                        <Plans selectedTier={selectedTier} setTier={setTier} />
-                        <div style={{ flex: 1 }} />
-                        <PaymentForm selectedTier={selectedTier} />
-                    </Col>
-                )}
-            </RightSection>
+            {showPayment && (
+                <RightSection>
+                    {isPro ? (
+                        <Success />
+                    ) : (
+                        <Col style={{ height: '100%' }}>
+                            <Plans selectedTier={selectedTier} setTier={setTier} />
+                            <div style={{ flex: 1 }} />
+                            <PaymentForm selectedTier={selectedTier} />
+                        </Col>
+                    )}
+                </RightSection>
+            )}
         </ContentContainer>
     );
 };
@@ -210,6 +211,7 @@ const Tier = ({
 
 const ContentContainer = styled.div`
     display: flex;
+    justify-content: center;
 `;
 
 const BeforePrice = styled.span`
@@ -279,17 +281,15 @@ const TierWrapper = styled.button`
 `;
 
 const LeftSection = styled.div`
-    width: 50%;
-
+    min-width: 50%;
     padding: 3em;
-
     h1 {
         font-size: 2.5em;
     }
 `;
 
 const RightSection = styled.div`
-    width: 50%;
+    min-width: 50%;
     background-color: #f6f8f9;
     padding: 3em;
     ${PrimaryButton} {

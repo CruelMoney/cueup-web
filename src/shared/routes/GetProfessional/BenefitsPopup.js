@@ -35,7 +35,7 @@ export const BenefitsPopup = () => {
     );
 };
 
-const Testimonial = () => {
+export const Testimonial = () => {
     return (
         <TestimonialWrapper>
             <Avatar size="large" src={'https://i.vimeocdn.com/portrait/13325432_640x640'} />
@@ -48,7 +48,7 @@ const Testimonial = () => {
     );
 };
 
-const CustomCheckBox = styled(DumbCheckbox)`
+export const CustomCheckBox = styled(DumbCheckbox)`
     margin-bottom: 1em;
     div {
         cursor: default !important;

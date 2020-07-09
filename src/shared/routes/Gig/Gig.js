@@ -7,7 +7,7 @@ import { useTransition, animated } from 'react-spring';
 import { useMeasure } from '@softbind/hook-use-measure';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
-import { LazyContactInformationPopup } from 'routes/GetProfessional';
+import { LazyContactInformationPopup, LazyChatGetProPopup } from 'routes/GetProfessional';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col, TeritaryButton, SmartButton } from '../../components/Blocks';
@@ -202,6 +202,7 @@ const MainContent = (props) => {
             />
 
             <Route component={LazyContactInformationPopup} path={'*/contact-get-pro'} />
+            <Route component={LazyChatGetProPopup} path={'*/chat-get-pro'} />
         </BorderCol>
     );
 };
