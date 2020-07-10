@@ -41,6 +41,7 @@ const useChat = ({
         if (id && senderId) {
             chat.current = new ChatService(id, auth.getToken(), senderId, environment.CHAT_DOMAIN);
             chat.current.init({ showPersonalInformation }).then((messages) => {
+                console.log({ messages });
                 setMessages(messages);
                 setReady(true);
             });
@@ -93,7 +94,11 @@ const useChat = ({
 
         // Then send the message
         try {
-            await chat.current.sendMessage(message);
+            const resultMessage = await chat.current.sendMessage(message);
+            setMessages((messages) => [
+                ...messages.filter((m) => m._id !== resultMessage._id),
+                resultMessage,
+            ]);
         } catch (error) {
             // remove message and set it back to the composer
             setMessages((messages) => [...messages.slice(0, -1)]);

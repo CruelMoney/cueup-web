@@ -5,6 +5,7 @@ import sendIcon from '@iconify/icons-ion/send';
 
 import TextareaAutosize from 'react-autosize-textarea';
 import usePushNotifications from 'components/hooks/usePushNotifications';
+import { BodySmall } from 'components/Text';
 import LoadingPlaceholder from '../LoadingPlaceholder';
 import { Avatar } from '../../Blocks';
 import useChat from './useChat';
@@ -241,8 +242,12 @@ const Message = (props) => {
         image,
         systemMessage,
         nextMessage,
+        metadata,
     } = props;
+
     const showNotice = containsEmail || containsNumber || containsURL;
+
+    console.log({ metadata });
 
     const cornerStyle = isOwn
         ? {
@@ -280,6 +285,7 @@ const Message = (props) => {
                                 ))}
                             </div>
                         )}
+                        {metadata && <UrlMetadata {...metadata} />}
                     </div>
                 </div>
             </div>
@@ -294,6 +300,43 @@ const Message = (props) => {
                 </div>
             ) : null}
         </>
+    );
+};
+
+const UrlMetadata = ({ title, image, description, url }) => {
+    return (
+        <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={url}
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                backgroundColor: '#f4f5f7',
+                color: '#32325d',
+                alignItems: 'center',
+            }}
+        >
+            {image && (
+                <img src={image} style={{ maxHeight: 106, width: '100%', objectFit: 'cover' }} />
+            )}
+            <div style={{ padding: 14, textAlign: 'left', width: '100%' }}>
+                <b style={{ fontWeight: 500 }}>{title}</b>
+                <BodySmall
+                    style={{
+                        'overflow': 'hidden',
+                        'textOverflow': 'ellipsis',
+                        'display': '-webkit-box',
+                        'lineClamp': '2',
+                        '-webkit-line-clamp': '2',
+                        'webkitBoxOrient': 'vertical',
+                        'maxHeight': '50px',
+                    }}
+                >
+                    {description}
+                </BodySmall>
+            </div>
+        </a>
     );
 };
 

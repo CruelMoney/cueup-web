@@ -21,7 +21,6 @@ export default class ChatService {
         this.socket = io(url, {});
 
         this.socket.on('new message', (message) => {
-            console.log('new message');
             !!this.onNewMessage && this.onNewMessage(message);
             this.readMessages();
         });
