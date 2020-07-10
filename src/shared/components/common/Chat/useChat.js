@@ -95,10 +95,7 @@ const useChat = ({
         // Then send the message
         try {
             const resultMessage = await chat.current.sendMessage(message);
-            setMessages((messages) => [
-                ...messages.filter((m) => m._id !== resultMessage._id),
-                resultMessage,
-            ]);
+            setMessages((messages) => [...messages.slice(0, -1), resultMessage]);
         } catch (error) {
             // remove message and set it back to the composer
             setMessages((messages) => [...messages.slice(0, -1)]);

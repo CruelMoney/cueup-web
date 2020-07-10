@@ -247,8 +247,6 @@ const Message = (props) => {
 
     const showNotice = containsEmail || containsNumber || containsURL;
 
-    console.log({ metadata });
-
     const cornerStyle = isOwn
         ? {
               borderTopLeftRadius: '20px',
@@ -285,7 +283,7 @@ const Message = (props) => {
                                 ))}
                             </div>
                         )}
-                        {metadata && <UrlMetadata {...metadata} />}
+                        {metadata && showPersonalInformation && <UrlMetadata {...metadata} />}
                     </div>
                 </div>
             </div>
