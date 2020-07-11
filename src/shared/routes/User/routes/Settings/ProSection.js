@@ -20,17 +20,17 @@ const ProSection = () => {
                         style={{
                             backgroundColor: '#31daff',
                             borderRadius: 10,
-                            height: 20,
-                            width: 20,
+                            height: 16,
+                            width: 16,
                             display: 'inline-flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             position: 'relative',
-                            marginLeft: 9,
-                            top: -12,
+                            marginLeft: 6,
+                            top: -16,
                         }}
                     >
-                        <Icon color={'#fff'} width={14} height={14} icon={starIcon} />
+                        <Icon color={'#fff'} width={10} height={10} icon={starIcon} />
                     </span>
                 </h2>
                 <RowWrap>
