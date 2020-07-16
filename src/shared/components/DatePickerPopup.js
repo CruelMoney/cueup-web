@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import moment from 'moment-timezone';
+import Icon from '@iconify/react';
 import { Input } from '../components/FormComponents';
 
 import Popup from './common/Popup';
@@ -19,6 +20,8 @@ const DatePickerPopup = ({
     registerValidation,
     unregisterValidation,
     disabled,
+    buttonText,
+    removable,
 }) => {
     const ref = useRef();
     const [showing, setShowing] = useState(false);
@@ -50,9 +53,15 @@ const DatePickerPopup = ({
                 onClick={() => {
                     setShowing(true);
                 }}
+                onChange={() => setDate(null)}
                 label={label}
-                buttonText={selectedDate ? moment(selectedDate).format('DD/MM/YYYY') : 'Select'}
+                buttonText={
+                    selectedDate
+                        ? moment(selectedDate).format('DD/MM/YYYY')
+                        : buttonText || 'Select'
+                }
                 ref={ref}
+                removable={selectedDate && removable}
             />
             <Popup
                 width="380px"

@@ -1,7 +1,6 @@
 import React, { useEffect, useState, memo } from 'react';
 import Modal from 'react-modal';
-import styled from 'styled-components';
-import { TeritaryButton, ClosePopupButton } from 'components/Blocks';
+import { ClosePopupButton } from 'components/Blocks';
 
 const Popup = memo((props) => {
     const {

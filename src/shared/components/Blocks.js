@@ -385,6 +385,7 @@ const inputButtonStyle = css`
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
     box-shadow: ${({ attention, error }) => {
         const show = attention || error;
         const color = error ? '#D0021B' : '#FFC800';
@@ -424,7 +425,7 @@ export const FileInputWrapper = styled.label`
 
 export const TeritaryButton = styled.button`
     ${ButtonTextStyle} :hover {
-        ${({ disabled, warning }) =>
+        ${({ disabled, warning, inverse }) =>
             disabled
                 ? ''
                 : warning
@@ -433,7 +434,7 @@ export const TeritaryButton = styled.button`
 				color: white;
 				`
                 : `
-			background: #f6f8f9;
+			background: ${inverse ? '#fff' : '#f6f8f9'};
 		`}
     }
 `;
@@ -749,6 +750,7 @@ const ClosePopupButtonWrapper = styled(TeritaryButton)`
     justify-content: center;
     padding: 0;
     margin-left: auto;
+    z-index: 10;
     ${({ small }) =>
         small &&
         css`

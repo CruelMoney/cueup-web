@@ -6,6 +6,7 @@ import { Row, TeritaryButton, PrimaryButton } from '../../../components/Blocks';
 import Popup from '../../../components/common/Popup';
 import Map from '../../../components/common/Map';
 import GeoCoder from '../../../utils/GeoCoder';
+import LazyLocationEditor from './LocationsEditor';
 
 const LocationPicker = ({ initialLocation, save, isActive, onClose }) => {
     const [location, setLocation] = useState(
@@ -78,41 +79,8 @@ const LocationPicker = ({ initialLocation, save, isActive, onClose }) => {
                 label="Location"
                 buttonText={initialLocation ? initialLocation.name : 'Update location'}
             />
-            <Popup showing={showing} onClickOutside={(_) => closeModal()} width={'520px'}>
-                <LocationSelector
-                    big
-                    autocomplete="off"
-                    name="location"
-                    onChange={updateMap}
-                    value={location && location.name}
-                    label={'Location'}
-                />
-
-                {location ? (
-                    <Map
-                        key={location ? location.name : 'init'}
-                        radius={location.radius || 25000}
-                        name={'playingLocation'}
-                        value={location}
-                        editable={true}
-                        color={'#50E3C2'}
-                        radiusName="playingRadius"
-                        locationName="playingLocation"
-                        onRadiusChange={onRadiusChange}
-                        onCoordinatesChange={onCoordinatesChange}
-                    />
-                ) : null}
-
-                <Row style={{ marginTop: '15px' }} right>
-                    <TeritaryButton type="button" onClick={(_) => closeModal()}>
-                        Cancel
-                    </TeritaryButton>
-                    <PrimaryButton type="button" onClick={onSave}>
-                        Save
-                    </PrimaryButton>
-                </Row>
-
-                {error && <p className="error">{error}</p>}
+            <Popup showing={showing} onClickOutside={(_) => closeModal()} noPadding>
+                <LazyLocationEditor />
             </Popup>
         </>
     );

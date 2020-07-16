@@ -35,11 +35,11 @@ const EventProgress = ({ theEvent = {} }) => {
                 )}
                 <ProgressStep label={'Get offers from DJs'} completed={accepted} />
                 <ProgressStep
-                    label={'Confirm and pay'}
+                    label={'Book a DJ'}
                     completed={theEvent?.status === eventStates.CONFIRMED}
                 />
                 <ProgressStep
-                    label={'Review'}
+                    label={'Review the DJ'}
                     completed={theEvent && theEvent.review}
                     to={eventRoutes.review}
                 />

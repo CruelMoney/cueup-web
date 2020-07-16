@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
-import { InlineIcon } from '@iconify/react';
+import Icon, { InlineIcon } from '@iconify/react';
 import starIcon from '@iconify/icons-ion/star';
 import { useRouteMatch } from 'react-router';
 import { NavLink } from 'react-router-dom';
+import removeIcon from '@iconify/icons-ion/remove-circle';
 import Checkmark from '../assets/Checkmark';
 import {
     Row,
@@ -36,6 +37,7 @@ export const InputLabel = styled(Label)`
     margin-bottom: 30px;
     min-width: 100%;
     flex: 2;
+    position: relative;
     > * {
         margin-top: 6px;
     }
@@ -225,6 +227,7 @@ const InputType = React.forwardRef(
                         {buttonText}
                         {loading && <LoadingIndicator style={{ marginLeft: '6px' }} />}
                         {success && <Checkmark style={{ marginLeft: '6px' }} color="#50e3c2" />}
+                        {children}
                     </ButtonInput>
                 );
             case 'file':
@@ -293,6 +296,7 @@ const Input = React.forwardRef(
             description,
             labelStyle,
             proFeature,
+            removable,
             ...props
         },
         fRef
@@ -334,6 +338,13 @@ const Input = React.forwardRef(
             onBlur && onBlur();
         };
 
+        const remove = (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            onSave && onSave(null);
+            onChange && onChange(null);
+        };
+
         const displayError = propsError || error;
 
         return (
@@ -353,6 +364,20 @@ const Input = React.forwardRef(
                     />
                     {description && <BodySmall>{description}</BodySmall>}
                     {!errorOutside && displayError && <p className="error">{displayError}</p>}
+                    {removable && (
+                        <Icon
+                            onClick={remove}
+                            style={{
+                                position: 'absolute',
+                                top: '-0.35em',
+                                right: '-0.35em',
+                                cursor: 'pointer',
+                                fontSize: '1.2em',
+                            }}
+                            color={'#111'}
+                            icon={removeIcon}
+                        />
+                    )}
                 </LabelComponent>
                 {errorOutside && displayError && <p className="error">{displayError}</p>}
             </>

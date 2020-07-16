@@ -3,20 +3,11 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import addCircleIcon from '@iconify/icons-ion/add-circle';
-import editIcon from '@iconify/icons-ion/pencil';
 
 import { userRoutes } from 'constants/locales/appRoutes';
 import { Title, Citation, Cite, Body } from '../../../components/Text';
 import ReadMoreExpander from '../../../components/ReadMoreExpander';
-import {
-    Col,
-    Row,
-    ReadMore,
-    Show,
-    InfoBox,
-    SecondaryButton,
-    TeritaryButton,
-} from '../../../components/Blocks';
+import { Col, Row, ReadMore, Show, InfoBox } from '../../../components/Blocks';
 import Map from '../../../components/common/Map';
 import QuotationMarkIcon from '../../../components/graphics/Quotes';
 import { PolicyDisplayer } from '../components/CancelationPolicyPopup';
@@ -24,6 +15,7 @@ import { LoadingPlaceholder2 } from '../../../components/common/LoadingPlacehold
 import GracefullImage from '../../../components/GracefullImage';
 import GracefullVideo from '../../../components/GracefullVideo';
 import DownloadAppPopup from '../components/DownloadAppPopup';
+import EditButton from '../components/EditButton';
 import Sound from './Sounds/Sound';
 
 const ColumnLayout = styled.section`
@@ -511,30 +503,6 @@ const Overview = ({ user, loading, location, history }) => {
                 )}
             </Row>
         </ColumnLayout>
-    );
-};
-
-const EditButton = ({ style, title, to }) => {
-    return (
-        <Link to={to}>
-            <TeritaryButton
-                title={title}
-                style={{
-                    position: 'absolute',
-                    top: 0,
-                    right: 0,
-                    maxWidth: 40,
-                    minWidth: 40,
-                    borderRadius: 20,
-                    marginRight: 12,
-                    padding: 0,
-                    marginTop: 12,
-                    ...style,
-                }}
-            >
-                <Icon icon={editIcon} width={24} height={24} />
-            </TeritaryButton>
-        </Link>
     );
 };
 
