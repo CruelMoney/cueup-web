@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import moment from 'moment-timezone';
-import Icon from '@iconify/react';
 import { Input } from '../components/FormComponents';
 
 import Popup from './common/Popup';
