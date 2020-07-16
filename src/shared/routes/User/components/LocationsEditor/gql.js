@@ -44,3 +44,9 @@ export const UPDATE_LOCATION = gql`
         }
     }
 `;
+
+export const REMOVE_LOCATION = gql`
+    mutation RemoveLocation($id: ID!) {
+        removePlayingLocation(id: $id)
+    }
+`;

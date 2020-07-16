@@ -1,43 +1,11 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import useScript from '@charlietango/use-script';
 import { GoogleMap, Circle } from '@react-google-maps/api';
 import { getCenter, getBounds } from 'geolib';
 
-const EditorMap = ({ locations }) => {
+const EditorMap = ({ locations, editId, updateLocation }) => {
     const map = useRef();
     const [loaded, setLoadedd] = useState(false);
-    // // update radius
-    // useEffect(() => {
-    //     if (myCircle.current && radius) {
-    //         if (radius !== currentRadius) {
-    //             myCircle.current.setRadius(radius);
-    //         }
-    //     }
-    // }, [radius, currentRadius]);
-
-    // const handleRadiusChange = () => {
-    //     if (myCircle.current) {
-    //         const r = Math.min(myCircle.current.getRadius(), 1000000);
-    //         setRadius(r);
-
-    //         if (onRadiusChange) {
-    //             onRadiusChange(r);
-    //         }
-    //     }
-    // };
-
-    // const handleLocationChange = () => {
-    //     if (myCircle.current) {
-    //         const data = {
-    //             lat: myCircle.current.getCenter().lat(),
-    //             lng: myCircle.current.getCenter().lng(),
-    //         };
-
-    //         if (onCoordinatesChange) {
-    //             onCoordinatesChange(data);
-    //         }
-    //     }
-    // };
 
     const center = getCenter(locations);
     const bounds = useMemo(() => {
@@ -64,6 +32,7 @@ const EditorMap = ({ locations }) => {
 
     useEffect(() => {
         if (map.current && bounds) {
+            console.log('Fitting bounds');
             map.current.fitBounds(bounds);
         }
     }, [bounds]);
@@ -78,8 +47,8 @@ const EditorMap = ({ locations }) => {
             }}
             onLoad={(m) => {
                 map.current = m;
-                bounds && m.fitBounds(bounds);
                 setTimeout(() => {
+                    bounds && m.fitBounds(bounds);
                     setLoadedd(true);
                 }, 500);
             }}
@@ -95,26 +64,66 @@ const EditorMap = ({ locations }) => {
                 lng: center?.longitude,
             }}
         >
-            {locations.map(({ id, latitude, longitude, radius }) => (
-                <Circle
-                    key={id}
-                    // onLoad={(c) => (myCircle.current = c)}
-                    options={{
-                        fillColor: '#25F4D2',
-                        strokeWeight: 0,
-                        suppressUndo: true,
-                    }}
-                    editable
-                    center={{
-                        lat: latitude,
-                        lng: longitude,
-                    }}
-                    radius={radius}
-                    // onCenterChanged={handleLocationChange}
-                    // onRadiusChanged={handleRadiusChange}
+            {locations.map((l) => (
+                <SmartCircle
+                    key={l.id}
+                    editable={l.id === editId}
+                    updateLocation={updateLocation}
+                    {...l}
                 />
             ))}
         </GoogleMap>
+    );
+};
+
+const SmartCircle = ({ id, latitude, longitude, radius, editable, updateLocation }) => {
+    const myCircle = useRef();
+
+    const handleRadiusChange = useCallback(() => {
+        console.log('change radius');
+
+        if (myCircle.current) {
+            const newRadius = Math.min(myCircle.current.getRadius(), 1000000);
+            updateLocation({ id, radius: newRadius });
+        }
+    }, [updateLocation, id]);
+
+    const handleLocationChange = useCallback(() => {
+        console.log('change location');
+
+        if (myCircle.current) {
+            const data = {
+                latitude: myCircle.current.getCenter().lat(),
+                longitude: myCircle.current.getCenter().lng(),
+            };
+            if (latitude !== data.latitude || longitude !== data.longitude) {
+                console.log({ data });
+                updateLocation({
+                    id,
+                    ...data,
+                });
+            }
+        }
+    }, [updateLocation, id, latitude, longitude]);
+
+    return (
+        <Circle
+            key={id}
+            onLoad={(c) => (myCircle.current = c)}
+            options={{
+                fillColor: '#25F4D2',
+                strokeWeight: 0,
+                suppressUndo: true,
+            }}
+            editable={editable}
+            center={{
+                lat: latitude,
+                lng: longitude,
+            }}
+            radius={radius}
+            onCenterChanged={handleLocationChange}
+            onRadiusChanged={handleRadiusChange}
+        />
     );
 };
 
