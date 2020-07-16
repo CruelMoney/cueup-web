@@ -52,7 +52,10 @@ const DatePickerPopup = ({
                 onClick={() => {
                     setShowing(true);
                 }}
-                onChange={() => setDate(null)}
+                onChange={() => {
+                    setDate(null);
+                    onSave(null);
+                }}
                 label={label}
                 buttonText={
                     selectedDate

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useQuery, useMutation } from 'react-apollo';
 import styled from 'styled-components';
 import { Icon } from '@iconify/react';
@@ -15,19 +15,41 @@ import { Title, BodyBold, BodySmall, Body } from 'components/Text';
 import { Input, InputRow, Label } from 'components/FormComponents';
 import DatePickerPopup from 'components/DatePickerPopup';
 import { validators } from 'components/hooks/useForm';
+import GeoCoder from 'utils/GeoCoder';
+import useDebounce from 'components/hooks/useDebounce';
 import Map from './Map';
 import { MY_LOCATIONS, UPDATE_LOCATION } from './gql';
 
-const Editor = () => {
-    const [editIndex, setEditIndex] = useState(0);
+const LocationEditor = () => {
     const { data } = useQuery(MY_LOCATIONS);
-
     const locations = data?.me?.playingLocations || [];
+
+    return <Editor key={locations.length} initialLocations={locations} />;
+};
+
+const Editor = ({ initialLocations }) => {
+    const [editId, setEditId] = useState();
+    const [locations, setLocations] = useState(initialLocations);
 
     const validate = () => {
         // check that the user has at least 1 location
         // and that at least 1 location does not have time period
     };
+
+    const updateLocation = useCallback((data) => {
+        console.log({ data });
+        setLocations((ll) => {
+            return ll.map((l) => {
+                if (l.id === data.id) {
+                    return {
+                        ...l,
+                        ...data,
+                    };
+                }
+                return l;
+            });
+        });
+    }, []);
 
     return (
         <Row between>
@@ -51,12 +73,13 @@ const Editor = () => {
                     <Location
                         key={l.id || idx}
                         {...l}
-                        editMode={idx === editIndex}
+                        editMode={l.id === editId}
+                        updateLocation={updateLocation}
                         toggleEditMode={() => {
-                            if (editIndex === idx) {
-                                setEditIndex(null);
+                            if (editId === l.id) {
+                                setEditId(null);
                             } else {
-                                setEditIndex(idx);
+                                setEditId(l.id);
                             }
                         }}
                     />
@@ -86,21 +109,16 @@ const Location = ({
     toDate,
     editMode,
     toggleEditMode,
+    updateLocation,
 }) => {
-    const [internalState, setState] = useState({
-        name,
-        radius,
-        latitude,
-        longitude,
-        fromDate,
-        toDate,
-    });
+    const [error, setError] = useState();
     const format = (d) => moment(d).format('ll');
+    const debouncedLocation = useDebounce(name, 500);
 
     const [save, { loading }] = useMutation(UPDATE_LOCATION, {
         variables: {
             id,
-            area: {
+            location: {
                 name,
                 radius,
                 latitude,
@@ -111,6 +129,29 @@ const Location = ({
         },
     });
 
+    useEffect(() => {
+        if (debouncedLocation) {
+            //Getting the coordinates of the playing location
+            GeoCoder.codeAddress(debouncedLocation, (geoResult) => {
+                console.log({ geoResult });
+                if (geoResult.error) {
+                    setError('City not found');
+                } else {
+                    updateLocation({
+                        id,
+                        latitude: geoResult.position.lat,
+                        longitude: geoResult.position.lng,
+                    });
+                }
+            });
+        }
+    }, [debouncedLocation, id, updateLocation]);
+
+    const handleSave = () => {
+        save();
+        toggleEditMode();
+    };
+
     return (
         <LocationWrapper key={id} editMode={editMode}>
             <Row middle between>
@@ -118,9 +159,13 @@ const Location = ({
                     <div style={{ position: 'relative', width: '100%' }}>
                         <Input
                             autoFocus
-                            defaultValue={internalState.name}
-                            onSave={(name) => setState((s) => ({ ...s, name }))}
+                            defaultValue={name}
+                            onChange={(name) => {
+                                setError(null);
+                                updateLocation({ id, name });
+                            }}
                             validation={[validators.required]}
+                            error={error}
                         />
                         <Body
                             style={{
@@ -170,14 +215,14 @@ const Location = ({
                             buttonText="Start date"
                             removable
                             initialDate={fromDate}
-                            onSave={(fromDate) => setState((s) => ({ ...s, fromDate }))}
+                            onSave={(fromDate) => updateLocation({ id, fromDate })}
                         />
                         <DatePickerPopup
                             half
                             buttonText="End date"
                             removable
                             initialDate={toDate}
-                            onSave={(toDate) => setState((s) => ({ ...s, toDate }))}
+                            onSave={(toDate) => updateLocation({ id, toDate })}
                         />
                     </InputRow>
                 </>
@@ -185,7 +230,7 @@ const Location = ({
             {editMode && (
                 <Row right style={{ marginTop: 12 }}>
                     <CancelButton onClick={toggleEditMode} />
-                    <SaveButton />
+                    <SaveButton onClick={handleSave} />
                 </Row>
             )}
         </LocationWrapper>
@@ -229,4 +274,4 @@ const LocationWrapper = styled.div`
     }
 `;
 
-export default Editor;
+export default LocationEditor;
