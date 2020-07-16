@@ -439,6 +439,13 @@ export const TeritaryButton = styled.button`
     }
 `;
 
+export const RoundButton = styled(TeritaryButton)`
+    max-width: 40px;
+    min-width: 40px;
+    border-radius: 20px;
+    padding: 0;
+`;
+
 export const secondaryButtonStyle = css`
     ${ButtonTextStyle}
     background: ${({ muted }) => (muted ? '#f6f8f9' : '#E9ECF0')};
