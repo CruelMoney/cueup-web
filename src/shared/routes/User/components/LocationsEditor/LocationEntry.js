@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, ReactDOM, useRef } from 'react';
 import { useMutation } from 'react-apollo';
 import styled from 'styled-components';
 import { Icon } from '@iconify/react';
@@ -37,6 +37,17 @@ const LocationEntry = ({
     const format = (d) => moment(d).format('ll');
     const [searchName, setSearchName] = useState();
     const debouncedLocation = useDebounce(searchName, 500);
+    const inputRef = useRef();
+
+    useEffect(() => {
+        if (editMode) {
+            setTimeout(() => {
+                if (inputRef.current) {
+                    inputRef.current.focus();
+                }
+            }, 100);
+        }
+    }, [editMode]);
 
     const [save, { loading: saving }] = useMutation(id !== 'NEW' ? UPDATE_LOCATION : ADD_LOCATION, {
         variables: {
@@ -103,8 +114,8 @@ const LocationEntry = ({
                 {editMode ? (
                     <div style={{ position: 'relative', width: '100%' }}>
                         <Input
-                            autoFocus
-                            ref={(r) => r.focus()}
+                            ref={inputRef}
+                            autoFocus={editMode}
                             defaultValue={name}
                             onChange={(name) => {
                                 setError(null);

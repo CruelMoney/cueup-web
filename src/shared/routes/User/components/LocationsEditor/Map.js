@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import useScript from '@charlietango/use-script';
 import { GoogleMap, Circle } from '@react-google-maps/api';
 import { getCenter, getBounds } from 'geolib';
-import { css } from 'styled-components';
 
 const EditorMap = ({ locations, editId, updateLocation }) => {
     const map = useRef();

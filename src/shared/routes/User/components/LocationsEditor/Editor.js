@@ -75,15 +75,8 @@ const Editor = ({ userLocations, loading, isPro }) => {
     };
 
     return (
-        <Row between>
-            <Col
-                style={{
-                    width: 400,
-                    padding: 24,
-                    backgroundColor: '#f6f9fc',
-                    alignSelf: 'stretch',
-                }}
-            >
+        <EditorStyle between>
+            <LeftSide>
                 <Title style={{ marginBottom: 30 }}>Playing locations</Title>
                 <Row middle between style={{ marginBottom: 15 }}>
                     <BodyBold>
@@ -92,32 +85,39 @@ const Editor = ({ userLocations, loading, isPro }) => {
                     </BodyBold>
                     <Body>{locations.length} locations</Body>
                 </Row>
-                {locations.map((l, idx) => (
-                    <LocationEntry
-                        key={l.id || idx}
-                        isPrimary={idx === 0}
-                        {...l}
-                        editMode={l.id === editId}
-                        updateLocation={updateLocation}
-                        toggleEditMode={(isSave) => toggleEditMode(l, isSave)}
-                    />
-                ))}
-                {loading && [<LocationEntry key={1} loading />, <LocationEntry key={2} loading />]}
-                {!isAddingNew && (
-                    <TeritaryButton
-                        fullWidth
-                        inverse
-                        onClick={() => (isPro ? addNewLocation() : goPro())}
-                    >
-                        Add new {!isPro && <ProFeature style={{ top: 0 }} disabled />}
-                    </TeritaryButton>
-                )}
+                <LocationsList>
+                    {locations.map((l, idx) => (
+                        <LocationEntry
+                            key={l.id || idx}
+                            isPrimary={idx === 0}
+                            {...l}
+                            editMode={l.id === editId}
+                            updateLocation={updateLocation}
+                            toggleEditMode={(isSave) => toggleEditMode(l, isSave)}
+                        />
+                    ))}
+                    {loading && [
+                        <LocationEntry key={1} loading />,
+                        <LocationEntry key={2} loading />,
+                    ]}
+                    {!isAddingNew && (
+                        <TeritaryButton
+                            fullWidth
+                            inverse
+                            style={{ minHeight: '40px' }}
+                            onClick={() => (isPro ? addNewLocation() : goPro())}
+                        >
+                            Add new {!isPro && <ProFeature style={{ top: 0 }} disabled />}
+                        </TeritaryButton>
+                    )}
+                </LocationsList>
 
-                <BodySmall style={{ marginTop: 'auto' }}>
+                <div style={{ flex: 1 }} />
+                <BodySmall style={{ marginTop: '30px' }}>
                     Add the places where you want to get gigs. Adding unnecessary locations, that
                     you cannot play in, can impact your profile negatively.
                 </BodySmall>
-            </Col>
+            </LeftSide>
             <MapWrapper>
                 <Map
                     locations={
@@ -129,13 +129,34 @@ const Editor = ({ userLocations, loading, isPro }) => {
                     updateLocation={updateLocation}
                 />
             </MapWrapper>
-        </Row>
+        </EditorStyle>
     );
 };
 
 const MapWrapper = styled.div`
-    height: 800px;
+    height: 900px;
+    max-height: 90vh;
     width: 1200px;
+`;
+
+const EditorStyle = styled(Row)`
+    height: 900px;
+    max-height: 90vh;
+`;
+
+const LeftSide = styled(Col)`
+    width: 400px;
+    min-width: 400px;
+    padding: 24px;
+    background-color: #f6f9fc;
+    align-self: stretch;
+`;
+
+const LocationsList = styled(Col)`
+    margin: 0 -24px;
+    padding: 0 24px;
+    max-height: 70vh;
+    overflow-y: scroll;
 `;
 
 export default LocationEditor;

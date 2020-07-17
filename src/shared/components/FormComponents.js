@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import Icon, { InlineIcon } from '@iconify/react';
 import starIcon from '@iconify/icons-ion/star';
@@ -301,7 +301,8 @@ const Input = React.forwardRef(
         },
         fRef
     ) => {
-        const ref = useRef(fRef);
+        const innerRef = useRef();
+        const ref = fRef || innerRef;
         const LabelComponent = half ? LabelHalf : InputLabel;
 
         const saveIfInvalid = !!registerValidation;
