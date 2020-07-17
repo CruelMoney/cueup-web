@@ -35,8 +35,8 @@ const LocationEntry = ({
 }) => {
     const [error, setError] = useState();
     const format = (d) => moment(d).format('ll');
-    const debouncedLocation = useDebounce(name, 500);
-    const initialName = useRef(name).current;
+    const [searchName, setSearchName] = useState();
+    const debouncedLocation = useDebounce(searchName, 500);
 
     const [save, { loading: saving }] = useMutation(id !== 'NEW' ? UPDATE_LOCATION : ADD_LOCATION, {
         variables: {
@@ -64,10 +64,9 @@ const LocationEntry = ({
     });
 
     useEffect(() => {
-        if (debouncedLocation && debouncedLocation !== initialName) {
+        if (debouncedLocation) {
             //Getting the coordinates of the playing location
             GeoCoder.codeAddress(debouncedLocation, (geoResult) => {
-                console.log({ geoResult });
                 if (geoResult.error) {
                     setError('City not found');
                 } else {
@@ -75,15 +74,19 @@ const LocationEntry = ({
                         id,
                         latitude: geoResult.position.lat,
                         longitude: geoResult.position.lng,
-                        radius: radius || 25000,
+                        radius: 25000,
                     });
                 }
             });
         }
-    }, [debouncedLocation, id, updateLocation, radius, initialName]);
+    }, [debouncedLocation, id, updateLocation]);
 
     const handleSave = () => {
         save();
+    };
+
+    const handleCancel = () => {
+        toggleEditMode(false);
     };
 
     if (loading || saving) {
@@ -101,12 +104,14 @@ const LocationEntry = ({
                     <div style={{ position: 'relative', width: '100%' }}>
                         <Input
                             autoFocus
+                            ref={(r) => r.focus()}
                             defaultValue={name}
                             onChange={(name) => {
                                 setError(null);
                                 updateLocation({ id, name });
+                                setSearchName(name);
                             }}
-                            labelStyle={isPrimary ? { marginBottom: 0 } : {}}
+                            labelStyle={{ marginBottom: 0 }}
                             error={error}
                         />
                         <Body
@@ -118,6 +123,15 @@ const LocationEntry = ({
                         >
                             <Icon icon={searchIcon} />
                         </Body>
+                        <BodySmall
+                            style={{
+                                marginBottom: isPrimary ? 0 : 15,
+                                marginTop: 6,
+                                textAlign: 'center',
+                            }}
+                        >
+                            Drag the sides of the circle to adjust the area.
+                        </BodySmall>
                     </div>
                 ) : (
                     <BodyBold>{name}</BodyBold>
@@ -183,7 +197,7 @@ const LocationEntry = ({
                         </SmartButton>
                     )}
                     <div style={{ flex: 1 }} />
-                    <CancelButton onClick={() => toggleEditMode(false)} />
+                    <CancelButton onClick={handleCancel} />
                     <SaveButton onClick={handleSave} />
                 </Row>
             )}

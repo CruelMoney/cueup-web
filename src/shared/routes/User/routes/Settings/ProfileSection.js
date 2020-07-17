@@ -117,6 +117,7 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
                 initialLocation={playingLocation}
                 save={(playingLocation) => saveData({ playingLocation })}
                 onClose={onModalClose}
+                isPro={isPro}
             />
 
             <GenreSelector

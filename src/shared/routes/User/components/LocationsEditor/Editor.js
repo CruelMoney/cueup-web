@@ -4,25 +4,29 @@ import styled from 'styled-components';
 import { Icon } from '@iconify/react';
 
 import pinIcon from '@iconify/icons-ion/location';
+import { useRouteMatch, useHistory } from 'react-router';
 import { Row, Col, TeritaryButton } from 'components/Blocks';
 import { Title, BodyBold, BodySmall, Body } from 'components/Text';
 
+import { ProFeature } from 'components/FormComponents';
 import Map from './Map';
 import { MY_LOCATIONS } from './gql';
 import LocationEntry from './LocationEntry';
 
-const LocationEditor = () => {
+const LocationEditor = (props) => {
     const { data, loading } = useQuery(MY_LOCATIONS);
     const locations = data?.me?.playingLocations || [];
 
-    return <Editor userLocations={locations} loading={loading} />;
+    return <Editor userLocations={locations} loading={loading} {...props} />;
 };
 
-const Editor = ({ userLocations, loading }) => {
+const Editor = ({ userLocations, loading, isPro }) => {
     const [editId, setEditId] = useState();
     const [locations, setLocations] = useState(userLocations);
-
     const editingLocation = locations.find((l) => l.id === editId);
+
+    const match = useRouteMatch();
+    const history = useHistory();
 
     useEffect(() => {
         setLocations(userLocations);
@@ -30,7 +34,7 @@ const Editor = ({ userLocations, loading }) => {
 
     const addNewLocation = () => {
         setEditId('NEW');
-        setLocations((ll) => [...ll, { id: 'NEW' }]);
+        setLocations((ll) => [...ll, { id: 'NEW', radius: 25000 }]);
     };
 
     const updateLocation = useCallback((data) => {
@@ -52,7 +56,7 @@ const Editor = ({ userLocations, loading }) => {
     const toggleEditMode = useCallback(
         (l, isSave) => {
             if (!isSave) {
-                setLocations((ll) => ll.filter((l) => l.id !== 'NEW'));
+                setLocations(userLocations);
             }
 
             if (editId === l.id) {
@@ -63,8 +67,12 @@ const Editor = ({ userLocations, loading }) => {
                 setEditId(l.id);
             }
         },
-        [editId]
+        [editId, userLocations]
     );
+
+    const goPro = () => {
+        history.push(match.url + '/get-pro');
+    };
 
     return (
         <Row between>
@@ -96,13 +104,18 @@ const Editor = ({ userLocations, loading }) => {
                 ))}
                 {loading && [<LocationEntry key={1} loading />, <LocationEntry key={2} loading />]}
                 {!isAddingNew && (
-                    <TeritaryButton fullWidth inverse onClick={addNewLocation}>
-                        Add new
+                    <TeritaryButton
+                        fullWidth
+                        inverse
+                        onClick={() => (isPro ? addNewLocation() : goPro())}
+                    >
+                        Add new {!isPro && <ProFeature style={{ top: 0 }} disabled />}
                     </TeritaryButton>
                 )}
+
                 <BodySmall style={{ marginTop: 'auto' }}>
-                    Add the places you want to get gigs in. Adding unnecessary locations, that you
-                    cannot play in, can impact your profile negatively.
+                    Add the places where you want to get gigs. Adding unnecessary locations, that
+                    you cannot play in, can impact your profile negatively.
                 </BodySmall>
             </Col>
             <MapWrapper>

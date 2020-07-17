@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import useScript from '@charlietango/use-script';
 import { GoogleMap, Circle } from '@react-google-maps/api';
 import { getCenter, getBounds } from 'geolib';
+import { css } from 'styled-components';
 
 const EditorMap = ({ locations, editId, updateLocation }) => {
     const map = useRef();
@@ -112,7 +113,7 @@ const SmartCircle = ({ id, latitude, longitude, radius, editable, updateLocation
             onLoad={(c) => (myCircle.current = c)}
             options={{
                 fillColor: '#25F4D2',
-                strokeWeight: 0,
+                strokeWeight: editable ? 2 : 0,
                 suppressUndo: true,
             }}
             editable={editable}
@@ -152,19 +153,30 @@ const styles = [
         stylers: [{ visibility: 'on' }, { color: '#32325D' }],
     },
     {
-        featureType: 'administrative.locality',
-        elementType: 'labels',
+        featureType: 'administrative.neighborhood',
+        elementType: 'labels.text.fill',
         stylers: [{ color: '#ffffff' }, { visibility: 'on' }],
+    },
+    {
+        featureType: 'administrative.neighborhood',
+        elementType: 'labels.text.stroke',
+        stylers: [{ color: '#32325D' }, { visibility: 'on' }],
     },
     {
         featureType: 'administrative.locality',
         elementType: 'labels.text.stroke',
         stylers: [{ color: '#32325D' }, { visibility: 'on' }],
     },
+
+    {
+        featureType: 'administrative.locality',
+        elementType: 'labels.text.fill',
+        stylers: [{ color: '#ffffff' }, { visibility: 'on' }],
+    },
     {
         featureType: 'road.arterial',
         elementType: 'geometry',
-        stylers: [{ visibility: 'off' }],
+        stylers: [{ color: '#42425E' }, { visibility: 'on' }],
     },
     {
         featureType: 'administrative.province',
