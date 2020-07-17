@@ -7,7 +7,7 @@
             "header": "Check if we have DJs available",
             "event-location": "Event location",
             "event-location-description": "Venue name or city where the event is happening.",
-            "event-location-placeholder": "Venue or city",
+            "event-location-placeholder": "Where is the event?",
             "event-date": "Event date",
             "event-date-description": "Start date of the event."
         },
@@ -48,7 +48,7 @@
             "header": "Se om vi har ledige DJs",
             "event-location": "Event lokation",
             "event-location-description": "Navnet på stedet eller byen hvor begivenheden afholdes.",
-            "event-location-placeholder": "Sted eller by",
+            "event-location-placeholder": "Hvor er begivenheden?",
             "event-date": "Event dato",
             "event-date-description": "Startdato for begivenheden."
         },

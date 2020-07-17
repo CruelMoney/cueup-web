@@ -120,6 +120,12 @@ const SuggestionList = ({
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 style={style}
+                aria-autocomplete="list"
+                aria-expanded="false"
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck="false"
+                role="combobox"
                 {...props}
             />
             {focused && suggestions.length > 0 && (

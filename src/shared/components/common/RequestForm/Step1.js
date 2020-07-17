@@ -95,7 +95,7 @@ const Step1 = ({
                             noShadow
                             countries={countries}
                             forceHeight
-                            name="locationName"
+                            name="query"
                             label={translate('requestForm:step-1.event-location')}
                             placeholder={translate('requestForm:step-1.event-location-placeholder')}
                             onSave={(locationName) => handleChange({ locationName })}
