@@ -5,10 +5,11 @@ import { Icon } from '@iconify/react';
 
 import pinIcon from '@iconify/icons-ion/location';
 import { useRouteMatch, useHistory } from 'react-router';
-import { Row, Col, TeritaryButton } from 'components/Blocks';
+import { Row, Col, TeritaryButton, ShowBelow } from 'components/Blocks';
 import { Title, BodyBold, BodySmall, Body } from 'components/Text';
 
 import { ProFeature } from 'components/FormComponents';
+import { useServerContext } from 'components/hooks/useServerContext';
 import Map from './Map';
 import { MY_LOCATIONS } from './gql';
 import LocationEntry from './LocationEntry';
@@ -25,6 +26,8 @@ const Editor = ({ userLocations, loading, isPro }) => {
     const [locations, setLocations] = useState(userLocations);
     const editingLocation = locations.find((l) => l.id === editId);
     const scrollRef = useRef();
+
+    const { environment } = useServerContext();
 
     const match = useRouteMatch();
     const history = useHistory();
@@ -83,6 +86,32 @@ const Editor = ({ userLocations, loading, isPro }) => {
     return (
         <EditorStyle between>
             <LeftSide>
+                <ShowBelow width={450}>
+                    <a
+                        href={encodeURI(
+                            `${environment.GQL_DOMAIN}/shareLink?iosLink=${encodeURIComponent(
+                                'https://apps.apple.com/us/app/cueup-gigs/id1458267647?mt=8'
+                            )}&androidLink=${encodeURIComponent(
+                                'https://play.google.com/store/apps/details?id=io.cueup.gigs'
+                            )}`
+                        )}
+                    >
+                        <div
+                            style={{
+                                backgroundColor: '#fff',
+                                padding: 12,
+                                marginBottom: 12,
+                                borderRadius: 12,
+                                border: '2px solid #50e3c2',
+                            }}
+                        >
+                            <BodySmall>
+                                Use the Cueup Gigs App for a better mobile experience.
+                                <b> Download here.</b>
+                            </BodySmall>
+                        </div>
+                    </a>
+                </ShowBelow>
                 <Title style={{ marginBottom: 30 }}>Playing locations</Title>
                 <Row middle between style={{ marginBottom: 15 }}>
                     <BodyBold>
@@ -142,12 +171,17 @@ const Editor = ({ userLocations, loading, isPro }) => {
 const MapWrapper = styled.div`
     height: 900px;
     max-height: 90vh;
-    width: 1200px;
+    width: 100%;
+    @media only screen and (max-width: 768px) {
+        display: none;
+    }
 `;
 
 const EditorStyle = styled(Row)`
     height: 900px;
     max-height: 90vh;
+    max-width: max(450px, 95vw);
+    width: 95vw;
 `;
 
 const LeftSide = styled(Col)`
@@ -156,6 +190,10 @@ const LeftSide = styled(Col)`
     padding: 24px;
     background-color: #f6f9fc;
     align-self: stretch;
+    @media only screen and (max-width: 768px) {
+        width: min(100vw, 400px);
+        min-width: min(100vw, 400px);
+    }
 `;
 
 const LocationsList = styled(Col)`
