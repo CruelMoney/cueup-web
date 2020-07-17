@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useQuery } from 'react-apollo';
 import styled from 'styled-components';
 import { Icon } from '@iconify/react';
@@ -24,6 +24,7 @@ const Editor = ({ userLocations, loading, isPro }) => {
     const [editId, setEditId] = useState();
     const [locations, setLocations] = useState(userLocations);
     const editingLocation = locations.find((l) => l.id === editId);
+    const scrollRef = useRef();
 
     const match = useRouteMatch();
     const history = useHistory();
@@ -35,6 +36,11 @@ const Editor = ({ userLocations, loading, isPro }) => {
     const addNewLocation = () => {
         setEditId('NEW');
         setLocations((ll) => [...ll, { id: 'NEW', radius: 25000 }]);
+        setTimeout(() => {
+            if (scrollRef.current) {
+                scrollRef.current.scroll({ top: 9999, behavior: 'smooth' });
+            }
+        }, 100);
     };
 
     const updateLocation = useCallback((data) => {
@@ -85,7 +91,7 @@ const Editor = ({ userLocations, loading, isPro }) => {
                     </BodyBold>
                     <Body>{locations.length} locations</Body>
                 </Row>
-                <LocationsList>
+                <LocationsList ref={scrollRef}>
                     {locations.map((l, idx) => (
                         <LocationEntry
                             key={l.id || idx}
