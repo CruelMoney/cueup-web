@@ -45,7 +45,13 @@ import { Overview, Settings, Reviews, Gigs, Events, Booking, Photos, Sounds } fr
 import { USER, UPDATE_USER } from './gql';
 import BackToEvent from './components/BackToEvent';
 import Header from './components/Header';
-import { Stats, MobileBookingButton, IconRow, CertifiedVerified } from './components/Common';
+import {
+    Stats,
+    MobileBookingButton,
+    IconRow,
+    CertifiedVerified,
+    IconRowLink,
+} from './components/Common';
 import content from './content.json';
 
 const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
@@ -133,99 +139,87 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                             identityVerified={identityVerified}
                         />
                         {instagramUsername && isPro && publicDisplay?.INSTAGRAM.public && (
-                            <a
+                            <IconRowLink
                                 target="_blank"
                                 rel="noopener noreferrer ugc"
                                 href={'https://instagram.com/' + instagramUsername}
                                 title="Visit Instagram profile"
                             >
-                                <IconRow>
-                                    <Icon
-                                        icon={instagramIcon}
-                                        color={'#98a4b3'}
-                                        style={{ marginRight: '15px', fontSize: '24px' }}
-                                    />
-                                    {instagramUsername}
-                                </IconRow>
-                            </a>
+                                <Icon
+                                    icon={instagramIcon}
+                                    color={'#98a4b3'}
+                                    style={{ marginRight: '15px', fontSize: '24px' }}
+                                />
+                                {instagramUsername}
+                            </IconRowLink>
                         )}
 
                         {soundCloudUsername && isPro && publicDisplay?.SOUNDCLOUD.public && (
-                            <a
+                            <IconRowLink
                                 href={`${soundCloudUrl}?ref=cueup`}
                                 target="_blank"
                                 rel="noopener noreferrer ugc"
                                 title="Visit SoundCloud profile"
                             >
-                                <IconRow>
-                                    <Icon
-                                        icon={soundcloudLogo}
-                                        color={'#98a4b3'}
-                                        style={{ marginRight: '15px', fontSize: '24px' }}
-                                    />
-                                    {soundCloudUsername}
-                                </IconRow>
-                            </a>
+                                <Icon
+                                    icon={soundcloudLogo}
+                                    color={'#98a4b3'}
+                                    style={{ marginRight: '15px', fontSize: '24px' }}
+                                />
+                                {soundCloudUsername}
+                            </IconRowLink>
                         )}
 
                         {mixcloudUrl && isPro && publicDisplay?.MIXCLOUD.public && (
-                            <a
+                            <IconRowLink
                                 href={`${mixcloudUrl}?ref=cueup`}
                                 target="_blank"
                                 rel="noopener noreferrer ugc"
                                 title="Visit Mixcloud profile"
                             >
-                                <IconRow>
-                                    <Icon
-                                        icon={mixcloudIcon}
-                                        color={'#98a4b3'}
-                                        style={{ marginRight: '15px', fontSize: '24px' }}
-                                    />
-                                    {mixcloudUsername}
-                                </IconRow>
-                            </a>
+                                <Icon
+                                    icon={mixcloudIcon}
+                                    color={'#98a4b3'}
+                                    style={{ marginRight: '15px', fontSize: '24px' }}
+                                />
+                                {mixcloudUsername}
+                            </IconRowLink>
                         )}
                         {website && isPro && publicDisplay?.WEBSITE.public && (
-                            <a
+                            <IconRowLink
                                 target="_blank"
                                 rel="noopener noreferrer nofollow"
                                 href={website}
                                 title="Visit website"
                             >
                                 <ReactComment comment="HEY YOU! Want nofollow removed from your website-link? Message me on chris@cueup.io" />
-                                <IconRow>
-                                    <Icon
-                                        icon={websiteIcon}
-                                        color={'#98a4b3'}
-                                        style={{ marginRight: '15px', fontSize: '24px' }}
-                                    />
-                                    {new URL(website).hostname}
-                                </IconRow>
-                            </a>
+                                <Icon
+                                    icon={websiteIcon}
+                                    color={'#98a4b3'}
+                                    style={{ marginRight: '15px', fontSize: '24px' }}
+                                />
+                                {new URL(website).hostname}
+                            </IconRowLink>
                         )}
                         {email && isPro && publicDisplay?.EMAIL.public && (
-                            <a href={`mailto:${email}`} title="Send an email">
-                                <IconRow>
-                                    <Icon
-                                        icon={mailIcon}
-                                        color={'#98a4b3'}
-                                        style={{ marginRight: '15px', fontSize: '24px' }}
-                                    />
-                                    {email}
-                                </IconRow>
-                            </a>
+                            <IconRowLink href={`mailto:${email}`} title="Send an email">
+                                <Icon
+                                    icon={mailIcon}
+                                    color={'#98a4b3'}
+                                    style={{ marginRight: '15px', fontSize: '24px' }}
+                                />
+                                {email}
+                            </IconRowLink>
                         )}
                         {phone && isPro && publicDisplay?.PHONE.public && (
-                            <a href={`tel:${phone}`} title="Call">
-                                <IconRow>
-                                    <Icon
-                                        icon={phoneIcon}
-                                        color={'#98a4b3'}
-                                        style={{ marginRight: '15px', fontSize: '24px' }}
-                                    />
-                                    {phone}
-                                </IconRow>
-                            </a>
+                            <IconRowLink href={`tel:${phone}`} title="Call">
+                                <Icon
+                                    icon={phoneIcon}
+                                    color={'#98a4b3'}
+                                    style={{ marginRight: '15px', fontSize: '24px' }}
+                                />
+                                {phone}
+                            </IconRowLink>
                         )}
                     </Col>
                 </SidebarContent>

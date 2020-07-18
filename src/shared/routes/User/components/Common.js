@@ -85,3 +85,7 @@ export const IconRow = styled(Row)`
         margin-right: 15px;
     }
 `;
+
+export const IconRowLink = styled(IconRow).attrs({
+    as: 'a',
+})``;
