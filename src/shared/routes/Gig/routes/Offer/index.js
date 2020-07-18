@@ -12,7 +12,9 @@ const Content = ({ gig, theEvent, me, showDecline }) => {
     if (!me || !gig) {
         return null;
     }
-    const { userSettings, payoutMethods } = me;
+    const { userSettings, payoutMethods, appMetadata } = me;
+
+    const isPro = appMetadata?.isPro;
 
     return (
         <Col>
@@ -37,6 +39,7 @@ const Content = ({ gig, theEvent, me, showDecline }) => {
                 payoutInfoValid={payoutMethods?.length}
                 showDecline={showDecline}
                 user={me}
+                isPro={isPro}
             />
         </Col>
     );

@@ -22,7 +22,15 @@ import { Input, InputRow, ProFeature } from '../../../../components/FormComponen
 import CurrencySelector from '../../../../components/CurrencySelector';
 import { Body, BodyBold, TitleClean } from '../../../../components/Text';
 
-const OfferForm = ({ gig, profileCurrency, payoutInfoValid, showPopup, showDecline, user }) => {
+const OfferForm = ({
+    gig,
+    profileCurrency,
+    payoutInfoValid,
+    showPopup,
+    showDecline,
+    user,
+    isPro,
+}) => {
     const { translate } = useTranslate();
     const initOffer = gig.offer || {
         offer: { amount: 0, formatted: 0 },
@@ -206,7 +214,7 @@ const OfferForm = ({ gig, profileCurrency, payoutInfoValid, showPopup, showDecli
             )}
 
             {payoutInfoValid && ![gigStates.CONFIRMED, gigStates.FINISHED].includes(gig.status) ? (
-                <OfferTable translate={translate} loading={loading} {...offer} />
+                <OfferTable translate={translate} loading={loading} isPro={isPro} {...offer} />
             ) : null}
 
             {[gigStates.CONFIRMED, gigStates.FINISHED].includes(gig.status) ? (
@@ -303,7 +311,7 @@ const RemainingPayment = ({ translate, payoutType, amountLeft, amountPaid, offer
     );
 };
 
-const OfferTable = ({ loading, translate, serviceFee, djFee, totalPayout }) => {
+const OfferTable = ({ loading, translate, serviceFee, djFee, totalPayout, isPro }) => {
     return (
         <Col style={{ marginBottom: '30px', marginTop: '30px' }}>
             <div style={style1}>
@@ -314,7 +322,9 @@ const OfferTable = ({ loading, translate, serviceFee, djFee, totalPayout }) => {
                     }
                 >
                     {loading ? 'loading...' : serviceFee.formatted ? serviceFee.formatted : '...'}
-                    <ProFeature style={{ fontSize: '15px' }}>Free for Pro members</ProFeature>
+                    <ProFeature style={{ fontSize: '15px' }} disabled={isPro}>
+                        Free for Pro members
+                    </ProFeature>
                 </TableRow>
                 <Hr />
                 <TableRow

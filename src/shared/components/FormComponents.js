@@ -296,6 +296,7 @@ const Input = React.forwardRef(
             description,
             labelStyle,
             proFeature,
+            isPro,
             removable,
             ...props
         },
@@ -352,7 +353,7 @@ const Input = React.forwardRef(
             <>
                 <LabelComponent style={labelStyle}>
                     {label}
-                    {proFeature && <ProFeature small />}
+                    {proFeature && <ProFeature small disabled={isPro} />}
                     <InputType
                         type={type}
                         save={save}

@@ -98,6 +98,7 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
             />
             <Input
                 proFeature
+                isPro={isPro}
                 label="Website"
                 defaultValue={website}
                 placeholder={`www.${
@@ -156,6 +157,7 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
             <ImageUploader
                 half
                 proFeature
+                isPro={isPro}
                 label="Cover photo"
                 disabled={!isPro}
                 style={{ opacity: isPro ? 1 : 0.5 }}
@@ -199,6 +201,7 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
                 user={user}
                 onSave={(publicDisplaySettings) => saveData({ publicDisplaySettings })}
                 disabled={!isPro}
+                isPro={isPro}
             />
         </SettingsSection>
     );
@@ -246,7 +249,7 @@ const getUrl = (value) => {
     return new URL(addhttp(value));
 };
 
-const PublicDisplaySettings = ({ user, onSave, disabled }) => {
+const PublicDisplaySettings = ({ user, onSave, disabled, isPro }) => {
     const { publicDisplay = {} } = user?.userSettings || {};
     const [internal, setInternal] = useState(publicDisplay);
 
@@ -269,7 +272,7 @@ const PublicDisplaySettings = ({ user, onSave, disabled }) => {
         <Col style={{ width: '100%', marginRight: '36px' }}>
             <TableRow>
                 <Label>
-                    Public information <ProFeature small />
+                    Public information <ProFeature small disabled={isPro} />
                 </Label>
                 <Label>Public</Label>
             </TableRow>

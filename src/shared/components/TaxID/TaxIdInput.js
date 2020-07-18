@@ -26,6 +26,7 @@ const TaxIdInput = ({
     onBlur,
     data,
     disabled,
+    isPro,
     ...props
 }) => {
     const ref = useRef();
@@ -69,7 +70,7 @@ const TaxIdInput = ({
     return (
         <InputLabel>
             {label}
-            <ProFeature small />
+            <ProFeature small disabled={isPro} />
             <Row style={{ position: 'relative' }}>
                 <SearchableSuggestionList
                     disabled={loading || disabled}
@@ -98,7 +99,7 @@ const TaxIdInput = ({
                 />
                 {data?.verification && <CurrentStatus {...data.verification} />}
             </Row>
-            <BodySmall>Add a tax ID if you want it on invoices sent to you.</BodySmall>
+            <BodySmall>Add your tax ID on the invoices sent to you.</BodySmall>
         </InputLabel>
     );
 };

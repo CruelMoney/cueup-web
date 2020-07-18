@@ -77,6 +77,7 @@ const SystemSection = ({ user, saveData }) => {
             {isDj && (
                 <Input
                     proFeature
+                    isPro={isPro}
                     style={{ opacity: isPro ? 1 : 0.5 }}
                     type="button"
                     onClick={redirectToManageSubscription}
@@ -90,6 +91,7 @@ const SystemSection = ({ user, saveData }) => {
             {isDj && (
                 <TaxIdInput
                     proFeature
+                    isPro={isPro}
                     label="Tax ID"
                     type="text"
                     onSave={({ taxId, taxType }) => saveData({ taxId: taxId.trim(), taxType })}
