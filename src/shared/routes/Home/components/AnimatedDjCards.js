@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import SuperEllipse, { Preset } from 'react-superellipse';
+import SuperEllipse from 'react-superellipse';
 import { useTransition, animated } from 'react-spring';
 import { useQuery } from 'react-apollo';
 import { NavLink } from 'react-router-dom';
 import { InlineIcon } from '@iconify/react';
 import pinIcon from '@iconify/icons-ion/location-sharp';
 import GracefullImage from 'components/GracefullImage';
-import { Body, BodySmall } from 'components/Text';
+import { Body } from 'components/Text';
 import { Col, Row, RowWrap } from 'components/Blocks';
 import { FEATURED_DJS } from '../gql';
 
@@ -35,6 +35,10 @@ const AnimatedDjCards = ({ djs }) => {
                 });
             }
         }, 6000);
+
+        setTimeout(() => {
+            setIndex((idx) => idx + 1);
+        }, 1000);
 
         return () => clearInterval(i);
     }, [djs]);
@@ -131,13 +135,15 @@ const InnerContent = ({ userMetadata, artistname, playingLocations, picture, gen
                             </Body>
                         )}
                     </Col>
-                    <Col style={{ maxWidth: '40%' }}>
-                        <RowWrap right>
-                            {genres.map((g, idx) => (
-                                <Pill key={idx}>{g.trim()}</Pill>
-                            ))}
-                        </RowWrap>
-                    </Col>
+                    {genres && (
+                        <Col style={{ maxWidth: '40%' }}>
+                            <RowWrap right>
+                                {genres.map((g, idx) => (
+                                    <Pill key={idx}>{g.trim()}</Pill>
+                                ))}
+                            </RowWrap>
+                        </Col>
+                    )}
                 </Row>
             </DjCardContent>
         </NavLink>
