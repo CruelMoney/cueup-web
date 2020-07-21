@@ -25,10 +25,17 @@ const DataWrapper = () => {
 
 const AnimatedDjCards = ({ djs }) => {
     const [index, setIndex] = useState(0);
+    const [pauseAnimation, setPauseanimation] = useState(false);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setIndex((idx) => idx + 1);
+        }, 1000);
+    }, []);
 
     useEffect(() => {
         const i = setInterval(() => {
-            if (document.visibilityState === 'visible') {
+            if (document.visibilityState === 'visible' && !pauseAnimation) {
                 setIndex((idx) => {
                     const next = idx + 1;
                     return next >= djs.length ? 0 : next;
@@ -36,12 +43,8 @@ const AnimatedDjCards = ({ djs }) => {
             }
         }, 6000);
 
-        setTimeout(() => {
-            setIndex((idx) => idx + 1);
-        }, 1000);
-
         return () => clearInterval(i);
-    }, [djs]);
+    }, [djs, pauseAnimation]);
 
     const currentDj = djs[index];
 
@@ -81,7 +84,13 @@ const AnimatedDjCards = ({ djs }) => {
                         }}
                     >
                         <Card p1={10} p2={32}>
-                            {item.isDj && <InnerContent {...item} />}
+                            {item.isDj && (
+                                <InnerContent
+                                    onMouseEnter={() => setPauseanimation(true)}
+                                    onMouseLeave={() => setPauseanimation(false)}
+                                    {...item}
+                                />
+                            )}
                         </Card>
                     </AnimateItem>
                 ))}
@@ -105,11 +114,19 @@ const AnimatedDjCards = ({ djs }) => {
     );
 };
 
-const InnerContent = ({ userMetadata, artistname, playingLocations, picture, genres, isNew }) => {
+const InnerContent = ({
+    userMetadata,
+    artistname,
+    playingLocations,
+    picture,
+    genres,
+    isNew,
+    ...props
+}) => {
     const location = playingLocations?.[0]?.name;
 
     return (
-        <NavLink to="/" draggable={false}>
+        <NavLink to="/" draggable={false} {...props}>
             <GracefullImage
                 draggable={false}
                 src={picture?.path}
