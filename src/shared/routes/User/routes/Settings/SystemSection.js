@@ -84,7 +84,7 @@ const SystemSection = ({ user, saveData }) => {
                     loading={loading}
                     label="Manage subscription"
                     buttonText={'Go to subscription'}
-                    description="Download invoices and change or cancel your subscription."
+                    description="Download invoices, change payment method or cancel your subscription."
                     disabled={!isPro}
                 />
             )}

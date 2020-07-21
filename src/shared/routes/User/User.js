@@ -186,20 +186,24 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                             </IconRowLink>
                         )}
                         {website && isPro && publicDisplay?.WEBSITE.public && (
-                            <IconRowLink
-                                target="_blank"
-                                rel="noopener noreferrer nofollow"
-                                href={website}
-                                title="Visit website"
-                            >
-                                <ReactComment comment="HEY YOU! Want nofollow removed from your website-link? Message me on chris@cueup.io" />
-                                <Icon
-                                    icon={websiteIcon}
-                                    color={'#98a4b3'}
-                                    style={{ marginRight: '15px', fontSize: '24px' }}
+                            <>
+                                <ReactComment
+                                    comment={`Hey ${userMetadata?.firstName}! Want nofollow removed from your website-link? Message me on chris@cueup.io`}
                                 />
-                                {new URL(website).hostname}
-                            </IconRowLink>
+                                <IconRowLink
+                                    target="_blank"
+                                    rel="noopener noreferrer nofollow"
+                                    href={website}
+                                    title="Visit website"
+                                >
+                                    <Icon
+                                        icon={websiteIcon}
+                                        color={'#98a4b3'}
+                                        style={{ marginRight: '15px', fontSize: '24px' }}
+                                    />
+                                    {new URL(website).hostname}
+                                </IconRowLink>
+                            </>
                         )}
                         {email && isPro && publicDisplay?.EMAIL.public && (
                             <IconRowLink href={`mailto:${email}`} title="Send an email">
