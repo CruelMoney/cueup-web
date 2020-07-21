@@ -147,7 +147,14 @@ const InnerContent = ({
                     <Col>
                         <h3>{artistname || userMetadata?.firstName}</h3>
                         {location && (
-                            <Body white style={{ marginTop: '0.3em' }}>
+                            <Body
+                                white
+                                style={{
+                                    marginTop: '0.3em',
+                                    fontSize: '0.15em',
+                                    lineHeight: '1em',
+                                }}
+                            >
                                 <InlineIcon icon={pinIcon} /> {location}
                             </Body>
                         )}
@@ -238,7 +245,7 @@ const AnimateItem = styled(animated.div)`
     padding: 0.15em 0;
     will-change: transform, opacity;
     position: absolute;
-    top: 0;
+    top: -0.15em;
     left: 0;
 `;
 
