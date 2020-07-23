@@ -140,11 +140,6 @@ const RightCol = styled(InputRow)`
             min-width: calc(100% - 15px);
             margin-right: 15px;
         }
-        ${LabelHalf} {
-            margin-right: 15px;
-            min-width: calc(50% - 15px);
-            width: calc(50% - 15px);
-        }
     }
 `;
 

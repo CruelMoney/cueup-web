@@ -3,8 +3,9 @@ import { useQuery } from 'react-apollo';
 import { Icon } from '@iconify/react';
 import timeIcon from '@iconify/icons-ion/time';
 import checkmarkIcon from '@iconify/icons-ion/checkmark-circle';
+import styled from 'styled-components';
 import { TextInput, Row, Col } from 'components/Blocks';
-import { InputLabel, InputRow, ProFeature } from 'components/FormComponents';
+import { InputLabel, InputRow, ProFeature, LabelHalf, Label } from 'components/FormComponents';
 import { SearchableSuggestionList } from 'components/SuggestionList/SuggestionList';
 import { BodySmall } from 'components/Text';
 import Tooltip from 'components/Tooltip';
@@ -68,41 +69,58 @@ const TaxIdInput = ({
     };
 
     return (
-        <InputLabel>
-            {label}
-            <ProFeature small disabled={isPro} />
-            <Row style={{ position: 'relative' }}>
-                <SearchableSuggestionList
-                    disabled={loading || disabled}
-                    half
-                    forceHeight
-                    error={error}
-                    suggestions={taxOptions}
-                    wrapperStyle={{ marginBottom: 0, marginRight: 6 }}
-                    style={{ marginTop: 0 }}
-                    defaultValue={selection}
-                    placeholder="Country"
-                    onSave={(val) => {
-                        setError(null);
-                        setSelection(val);
-                    }}
-                />
-                <TextInput
-                    disabled={loading || disabled}
-                    save={save}
-                    onChange={change}
-                    placeholder={selection?.placeholder}
-                    ref={ref}
-                    onBlur={handleBlur}
-                    defaultValue={data?.value}
-                    {...props}
-                />
-                {data?.verification && <CurrentStatus {...data.verification} />}
-            </Row>
+        <>
+            <Label>
+                {label}
+                <ProFeature small disabled={isPro} />
+            </Label>
+            <CombineInputRow>
+                <LabelHalf>
+                    <SearchableSuggestionList
+                        disabled={loading || disabled}
+                        half
+                        forceHeight
+                        error={error}
+                        suggestions={taxOptions}
+                        wrapperStyle={{ marginBottom: 0, width: '100%' }}
+                        style={{ marginTop: 0 }}
+                        defaultValue={selection}
+                        placeholder="Country"
+                        onSave={(val) => {
+                            setError(null);
+                            setSelection(val);
+                        }}
+                    />
+                </LabelHalf>
+                <LabelHalf>
+                    <TextInput
+                        disabled={loading || disabled}
+                        save={save}
+                        onChange={change}
+                        placeholder={selection?.placeholder}
+                        ref={ref}
+                        onBlur={handleBlur}
+                        defaultValue={data?.value}
+                        {...props}
+                    />
+                </LabelHalf>
+            </CombineInputRow>
+            {data?.verification && <CurrentStatus {...data.verification} />}
             <BodySmall>Add your tax ID on the invoices sent to you.</BodySmall>
-        </InputLabel>
+        </>
     );
 };
+
+const CombineInputRow = styled(InputRow)`
+    display: flex;
+    width: 100%;
+    ${LabelHalf} {
+        margin-bottom: 6px;
+    }
+    > :first-child {
+        margin-right: 6px;
+    }
+`;
 
 const statusIcons = {
     verified: checkmarkIcon,
