@@ -5,10 +5,11 @@ import { Label, Value, Checkbox } from '../../../components/FormComponents';
 import { Row, Col, Hr } from '../../../components/Blocks';
 
 const TableRow = styled(Row)`
-    height: 42px;
+    min-height: 42px;
     align-items: center;
     p {
-        margin-bottom: 0;
+        line-height: 1.2em;
+        margin: 0.5em 0;
     }
     > *:first-child {
         flex: 1;
