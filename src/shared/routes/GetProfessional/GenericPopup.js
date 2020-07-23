@@ -9,6 +9,8 @@ import { Row, Col, PrimaryButton, TeritaryButton, SecondaryButton } from 'compon
 import { BodySmall, Body } from 'components/Text';
 import { Label, ProFeature } from 'components/FormComponents';
 import { ME } from 'components/gql';
+import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
+import useTranslate from 'components/hooks/useTranslate';
 import { SUBSCRIPTION_TIERS } from './gql';
 import PaymentForm from './PaymentForm';
 
@@ -40,7 +42,7 @@ const Content = ({ children, showPayment }) => {
     if (isPro) {
         return (
             <ContentContainer data-cy="subscription-popup">
-                <Success />
+                <Success user={data?.me} />
             </ContentContainer>
         );
     }
@@ -61,7 +63,19 @@ const Content = ({ children, showPayment }) => {
     );
 };
 
-const Success = () => {
+const Success = ({ user }) => {
+    const history = useHistory();
+    const { translate } = useTranslate();
+
+    const navigate = (to, reload) => {
+        const route = `${translate(appRoutes.user)}/${user.permalink}/${userRoutes.settings}/${to}`;
+        if (reload) {
+            window.location.href = route;
+        } else {
+            history.push(route);
+        }
+    };
+
     return (
         <div style={{ padding: '2em', alignSelf: 'center' }} data-cy="subscription-welcome">
             <div style={{ textAlign: 'center' }}>
@@ -77,11 +91,13 @@ const Success = () => {
             <Col>
                 <RowCustom between middle>
                     <Label>Add your website</Label>
-                    <SecondaryButton>Go</SecondaryButton>
+                    <SecondaryButton onClick={() => navigate('#website')}>Go</SecondaryButton>
                 </RowCustom>
                 <RowCustom between middle>
                     <Label>Add more playing locations</Label>
-                    <SecondaryButton>Go</SecondaryButton>
+                    <SecondaryButton onClick={() => navigate('?modal=location', true)}>
+                        Go
+                    </SecondaryButton>
                 </RowCustom>
                 <RowCustom between middle>
                     <Label>Contact the organizer from your latest gig</Label>

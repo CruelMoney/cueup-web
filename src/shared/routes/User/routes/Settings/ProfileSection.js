@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-apollo';
+import { useLocation } from 'react-router';
 import {
     SettingsSection,
     Input,
@@ -22,7 +23,23 @@ import LocationPicker from '../../components/LocationPicker';
 import CancelationPolicyPopup from '../../components/CancelationPolicyPopup';
 import { USER_EDITS } from '../../gql';
 
+const refFunScrollTo = (doScroll) => (ref) => {
+    if (doScroll && ref) {
+        const { top } = ref.getBoundingClientRect();
+
+        window.scrollTo({
+            behavior: 'smooth',
+            top: top - 80,
+        });
+
+        ref.focus();
+    }
+};
+
 const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
+    const location = useLocation();
+    const hash = location.hash.split('#')[1];
+
     const { data } = useQuery(USER_EDITS);
     const editsMap = data?.me?.editsMap || {};
 
@@ -97,7 +114,9 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
                 }}
             />
             <Input
+                id="website"
                 proFeature
+                ref={refFunScrollTo(hash === 'website')}
                 isPro={isPro}
                 label="Website"
                 defaultValue={website}
