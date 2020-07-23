@@ -52,7 +52,6 @@ const SectionRow = styled(Row)`
     margin-bottom: 42px;
     border-bottom: 1px solid #e9ecf0;
     flex-wrap: wrap;
-    overflow: hidden;
 `;
 
 const LeftCol = styled(Col)`

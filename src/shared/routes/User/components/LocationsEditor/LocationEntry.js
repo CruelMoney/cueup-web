@@ -238,9 +238,9 @@ const LocationEntry = ({
 const HowToDo = () => {
     return (
         <GifsWrapper>
-            <BodySmall>Move it with the dot in the center.</BodySmall>
+            <BodySmall>Move the area with the dot in the center of the circle.</BodySmall>
             <img src={moveGif} title="Move the area" />
-            <BodySmall>Resize it with the dots on the edge.</BodySmall>
+            <BodySmall>Resize the area with the dots on the edge of the circle.</BodySmall>
             <img src={scaleGif} title="Resize the area" />
         </GifsWrapper>
     );

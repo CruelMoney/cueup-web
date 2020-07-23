@@ -5,9 +5,9 @@ import { useQuery } from 'react-apollo';
 
 import Skeleton from 'react-loading-skeleton';
 import Popup from 'components/common/Popup';
-import { Row, Col, PrimaryButton, TeritaryButton } from 'components/Blocks';
+import { Row, Col, PrimaryButton, TeritaryButton, SecondaryButton } from 'components/Blocks';
 import { BodySmall, Body } from 'components/Text';
-import { Label } from 'components/FormComponents';
+import { Label, ProFeature } from 'components/FormComponents';
 import { ME } from 'components/gql';
 import { SUBSCRIPTION_TIERS } from './gql';
 import PaymentForm from './PaymentForm';
@@ -35,7 +35,7 @@ const Content = ({ children, showPayment }) => {
 
     const { data } = useQuery(ME);
 
-    const isPro = data?.me?.appMetadata?.isPro;
+    const isPro = true || data?.me?.appMetadata?.isPro;
 
     return (
         <ContentContainer data-cy="subscription-popup">
@@ -59,36 +59,41 @@ const Content = ({ children, showPayment }) => {
 
 const Success = () => {
     return (
-        <div style={{ padding: '3em' }} data-cy="subscription-welcome">
-            <h2>You are a Cueup Pro member</h2>
+        <div style={{ padding: '2em', alignSelf: 'center' }} data-cy="subscription-welcome">
+            <h2>
+                You are now a Cueup Pro Member <ProFeature disabled>Pro Member</ProFeature>
+            </h2>
 
             <Body style={{ marginBottom: 24, maxWidth: 500 }}>
-                We're excited to have you on the <b>Pro team</b>. Go ahead and use some of the new
-                features! And remember, if you don't receive any gig requests your money will be
-                refunded each month.
+                We're excited to have you on the <b>Pro Team</b>. Go ahead and use some of the pro
+                features!
             </Body>
 
             <Col>
-                <Row between middle>
-                    <Label>Add extra playing locations</Label>
-                    <TeritaryButton>Go</TeritaryButton>
-                </Row>
-                <Row between middle>
-                    <Label>Contact the organizer on your latest gig</Label>
-                    <TeritaryButton>Go</TeritaryButton>
-                </Row>
-                <Row between middle>
-                    <Label>Upload mixtapes</Label>
-                    <TeritaryButton>Go</TeritaryButton>
-                </Row>
-                <Row between middle>
+                <RowCustom between middle>
                     <Label>Add your website</Label>
-                    <TeritaryButton>Go</TeritaryButton>
-                </Row>
+                    <SecondaryButton>Go</SecondaryButton>
+                </RowCustom>
+                <RowCustom between middle>
+                    <Label>Add playing locations</Label>
+                    <SecondaryButton>Go</SecondaryButton>
+                </RowCustom>
+                <RowCustom between middle>
+                    <Label>Contact the organizer on your last gig</Label>
+                    <SecondaryButton>Go</SecondaryButton>
+                </RowCustom>
+                <RowCustom between middle>
+                    <Label>Upload mixtapes</Label>
+                    <SecondaryButton>Go</SecondaryButton>
+                </RowCustom>
             </Col>
         </div>
     );
 };
+
+const RowCustom = styled(Row)`
+    margin-bottom: 12px;
+`;
 
 function CountdownTimer() {
     const calculateTimeLeft = () => {
