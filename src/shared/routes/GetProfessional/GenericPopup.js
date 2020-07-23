@@ -38,7 +38,7 @@ const Content = ({ children, showPayment }) => {
 
     const { data } = useQuery(ME);
 
-    const isPro = true || data?.me?.appMetadata?.isPro;
+    const isPro = data?.me?.appMetadata?.isPro;
 
     if (isPro) {
         return (

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { Col, PrimaryButton, TeritaryButton } from 'components/Blocks';
 import { Body } from 'components/Text';
+import { ProFeature } from 'components/FormComponents';
 import { Testimonial, CustomCheckBox } from './BenefitsPopup';
 import GenericPopup from './GenericPopup';
 
@@ -34,11 +35,11 @@ export const ChatGoProPopup = () => {
                 </Col>
             ) : (
                 <Col style={{ maxWidth: 450, textAlign: 'center', alignItems: 'center' }}>
-                    <h1>Whoops! Looks like you tried to share contact information.</h1>
+                    <h1>Whoops! Looks like you tried to share contact information</h1>
 
                     <Body style={{ marginBottom: 30 }}>
-                        You can only share contact information once the gig is confirmed - or if you
-                        are a Pro member.
+                        You can only share contact information once the gig is confirmed by the
+                        organizer or if you are a Pro member.
                     </Body>
                     <PrimaryButton onClick={() => setShowGoPro(true)}>Go Pro</PrimaryButton>
                     <TeritaryButton
