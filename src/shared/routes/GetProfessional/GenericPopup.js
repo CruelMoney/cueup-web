@@ -37,20 +37,24 @@ const Content = ({ children, showPayment }) => {
 
     const isPro = true || data?.me?.appMetadata?.isPro;
 
+    if (isPro) {
+        return (
+            <ContentContainer data-cy="subscription-popup">
+                <Success />
+            </ContentContainer>
+        );
+    }
+
     return (
         <ContentContainer data-cy="subscription-popup">
             <LeftSection>{children}</LeftSection>
             {showPayment && (
                 <RightSection>
-                    {isPro ? (
-                        <Success />
-                    ) : (
-                        <Col style={{ height: '100%' }}>
-                            <Plans selectedTier={selectedTier} setTier={setTier} />
-                            <div style={{ flex: 1 }} />
-                            <PaymentForm selectedTier={selectedTier} />
-                        </Col>
-                    )}
+                    <Col style={{ height: '100%' }}>
+                        <Plans selectedTier={selectedTier} setTier={setTier} />
+                        <div style={{ flex: 1 }} />
+                        <PaymentForm selectedTier={selectedTier} />
+                    </Col>
                 </RightSection>
             )}
         </ContentContainer>
@@ -60,14 +64,15 @@ const Content = ({ children, showPayment }) => {
 const Success = () => {
     return (
         <div style={{ padding: '2em', alignSelf: 'center' }} data-cy="subscription-welcome">
-            <h2>
-                You are now a Cueup Pro Member <ProFeature disabled>Pro Member</ProFeature>
-            </h2>
-
-            <Body style={{ marginBottom: 24, maxWidth: 500 }}>
-                We're excited to have you on the <b>Pro Team</b>. Go ahead and use some of the pro
-                features!
-            </Body>
+            <div style={{ textAlign: 'center' }}>
+                <ProFeature disabled>Pro Member</ProFeature>
+                <h2 style={{ maxWidth: 300, margin: 'auto' }}>
+                    Welcome to your Cueup Pro Membership
+                </h2>
+                <Body style={{ marginBottom: 24, marginTop: 24, maxWidth: 500 }}>
+                    We're excited to have you on the <b>Pro Team</b>.
+                </Body>
+            </div>
 
             <Col>
                 <RowCustom between middle>
@@ -75,15 +80,19 @@ const Success = () => {
                     <SecondaryButton>Go</SecondaryButton>
                 </RowCustom>
                 <RowCustom between middle>
-                    <Label>Add playing locations</Label>
+                    <Label>Add more playing locations</Label>
                     <SecondaryButton>Go</SecondaryButton>
                 </RowCustom>
                 <RowCustom between middle>
-                    <Label>Contact the organizer on your last gig</Label>
+                    <Label>Contact the organizer from your latest gig</Label>
                     <SecondaryButton>Go</SecondaryButton>
                 </RowCustom>
                 <RowCustom between middle>
                     <Label>Upload mixtapes</Label>
+                    <SecondaryButton>Go</SecondaryButton>
+                </RowCustom>
+                <RowCustom between middle>
+                    <Label>Contact the Cueup team</Label>
                     <SecondaryButton>Go</SecondaryButton>
                 </RowCustom>
             </Col>
@@ -93,6 +102,9 @@ const Success = () => {
 
 const RowCustom = styled(Row)`
     margin-bottom: 12px;
+    ${SecondaryButton} {
+        margin-left: 30px;
+    }
 `;
 
 function CountdownTimer() {
