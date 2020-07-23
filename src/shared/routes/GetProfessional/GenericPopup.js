@@ -8,9 +8,10 @@ import Popup from 'components/common/Popup';
 import { Row, Col, PrimaryButton, TeritaryButton, SecondaryButton } from 'components/Blocks';
 import { BodySmall, Body } from 'components/Text';
 import { Label, ProFeature } from 'components/FormComponents';
-import { ME } from 'components/gql';
+import { ME, MY_GIGS } from 'components/gql';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
+import { showOlark } from 'utils/olark';
 import { SUBSCRIPTION_TIERS } from './gql';
 import PaymentForm from './PaymentForm';
 
@@ -64,15 +65,27 @@ const Content = ({ children, showPayment }) => {
 };
 
 const Success = ({ user }) => {
+    const { data, loading } = useQuery(MY_GIGS, { variables: { limit: 1 } });
+
+    const gig = data?.myGigs?.edges?.[0];
+
     const history = useHistory();
     const { translate } = useTranslate();
 
+    const baseRoute = `${translate(appRoutes.user)}/${user.permalink}`;
+
     const navigate = (to, reload) => {
-        const route = `${translate(appRoutes.user)}/${user.permalink}/${userRoutes.settings}/${to}`;
+        const route = `${baseRoute}/${to}`;
         if (reload) {
             window.location.href = route;
         } else {
             history.push(route);
+        }
+    };
+
+    const navigateToLatestGig = () => {
+        if (gig) {
+            history.push(`${translate(appRoutes.gig)}/${gig.id}`);
         }
     };
 
@@ -91,25 +104,35 @@ const Success = ({ user }) => {
             <Col>
                 <RowCustom between middle>
                     <Label>Add your website</Label>
-                    <SecondaryButton onClick={() => navigate('#website')}>Go</SecondaryButton>
-                </RowCustom>
-                <RowCustom between middle>
-                    <Label>Add more playing locations</Label>
-                    <SecondaryButton onClick={() => navigate('?modal=location', true)}>
+                    <SecondaryButton onClick={() => navigate(userRoutes.settings + '#website')}>
                         Go
                     </SecondaryButton>
                 </RowCustom>
                 <RowCustom between middle>
-                    <Label>Contact the organizer from your latest gig</Label>
-                    <SecondaryButton>Go</SecondaryButton>
+                    <Label>Add more playing locations</Label>
+                    <SecondaryButton
+                        onClick={() => navigate(userRoutes.settings + '?modal=location', true)}
+                    >
+                        Go
+                    </SecondaryButton>
                 </RowCustom>
+                {loading || gig ? (
+                    <RowCustom between middle>
+                        <Label>Contact the organizer from your latest gig</Label>
+                        <SecondaryButton onClick={navigateToLatestGig}>Go</SecondaryButton>
+                    </RowCustom>
+                ) : null}
                 <RowCustom between middle>
                     <Label>Upload mixtapes</Label>
-                    <SecondaryButton>Go</SecondaryButton>
+                    <SecondaryButton
+                        onClick={() => navigate(userRoutes.sounds + '?modal=addSound')}
+                    >
+                        Go
+                    </SecondaryButton>
                 </RowCustom>
                 <RowCustom between middle>
                     <Label>Contact the Cueup team</Label>
-                    <SecondaryButton>Go</SecondaryButton>
+                    <SecondaryButton onClick={showOlark}>Go</SecondaryButton>
                 </RowCustom>
             </Col>
         </div>
