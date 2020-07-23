@@ -39,10 +39,11 @@ const ProSection = () => {
                             white
                             medium
                             style={{
-                                marginBottom: 12,
+                                marginBottom: 24,
                                 columnCount: 2,
                                 fontWeight: 500,
                                 color: '#fff',
+                                whiteSpace: 'nowrap',
                             }}
                         >
                             ✔ No service fees
@@ -55,7 +56,7 @@ const ProSection = () => {
                             <br />✔ And so much more...
                         </BodySmall>
                     </Col>
-                    <Col style={{ flex: 1 }}>
+                    <Col style={{ flex: 1, minWidth: '200px' }}>
                         <PrimaryButton fullWidth data-cy="go-pro-button">
                             Go Pro
                         </PrimaryButton>
@@ -84,6 +85,7 @@ const Card = styled.section`
     background: radial-gradient(50% 50% at 50% 33%, #122b48 12%, #0b1b2d 90%);
     box-shadow: 4px 5px 20px rgba(0, 0, 0, 0.09);
     padding: 2em;
+    padding-bottom: 1em;
     margin-bottom: 42px;
     color: #fff;
     width: 100%;
@@ -95,6 +97,12 @@ const Card = styled.section`
         > p {
             width: 100%;
             margin-bottom: 0;
+        }
+    }
+    @media screen and (max-width: 480px) {
+        text-align: center;
+        ${BodySmall} {
+            column-count: 1 !important;
         }
     }
 `;
