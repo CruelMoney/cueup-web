@@ -18,13 +18,13 @@ const DjSearch = () => {
             r2={Preset.iOS.r2}
             style={{
                 width: '100%',
-                height: '72px',
+                height: '0.6em',
                 background: '#fff',
                 marginTop: '0.3em',
                 display: 'flex',
                 alignItems: 'center',
                 flexDirection: 'row',
-                padding: '13px',
+                padding: '0.1em',
             }}
         >
             <SuperEllipse
@@ -33,7 +33,7 @@ const DjSearch = () => {
                 r2={Preset.iOS.r2}
                 style={{ marginLeft: 'auto' }}
             >
-                <SmartButton primary style={{ height: '50px' }}>
+                <SmartButton primary style={{ fontSize: '0.14em', height: '3em', minWidth: '8em' }}>
                     Find DJs
                 </SmartButton>
             </SuperEllipse>
@@ -45,7 +45,7 @@ const Hero = () => {
     return (
         <HeroContainer>
             <Container>
-                <Col style={{ maxWidth: '50%' }}>
+                <LeftSide>
                     <Accent>1000+ successful events</Accent>
                     <Title>
                         Find DJs for parties <br />
@@ -56,9 +56,10 @@ const Hero = () => {
                         about your event below, and check out 1000s of qualified DJs.
                     </LandingBody>
                     <DjSearch />
-                </Col>
+                </LeftSide>
             </Container>
             <AnimatedDjCards />
+            <MobileLayover />
         </HeroContainer>
     );
 };
@@ -86,13 +87,35 @@ const Home = () => {
 const HeroContainer = styled.section`
     background: radial-gradient(114.62% 129.84% at 45.24% 67.36%, #122b48 0%, #000000 100%);
     min-height: 7.8em;
-    height: 7.8em;
-    padding: 2.31em 0 0;
     overflow: hidden;
+    display: flex;
+    align-items: center;
     width: 100%;
     font-size: 6.94444vw;
     color: #fff;
     position: relative;
+    @media only screen and (max-width: 1024px) {
+        font-size: 13.02083vw;
+        min-height: 6.5em;
+    }
+    @media only screen and (max-width: 480px) {
+        min-height: 12em;
+    }
+`;
+
+const MobileLayover = styled.div`
+    background: radial-gradient(114.62% 129.84% at 45.24% 67.36%, #122b48 0%, #000000 100%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.8;
+    display: none;
+
+    @media only screen and (max-width: 480px) {
+        display: block;
+    }
 `;
 
 const Container = styled.div`
@@ -104,6 +127,13 @@ const Container = styled.div`
 
 const Title = styled.h1`
     font-size: 0.42em;
+    line-height: 1.3em;
+    @media only screen and (max-width: 1024px) {
+        font-size: 0.35em;
+    }
+    @media only screen and (max-width: 480px) {
+        font-size: 0.3em;
+    }
 `;
 
 const LandingBody = styled(Body)`
@@ -117,6 +147,21 @@ const Accent = styled.p`
     font-weight: 700;
     font-size: 0.15em;
     margin-bottom: 0.75em;
+`;
+
+const LeftSide = styled(Col)`
+    max-width: 50%;
+    font-size: 120px;
+    z-index: 2;
+    position: relative;
+    @media only screen and (max-width: 1024px) {
+        font-size: 100px;
+    }
+    @media only screen and (max-width: 480px) {
+        max-width: 100%;
+        padding-top: 1.2em;
+        padding-bottom: 0.5em;
+    }
 `;
 
 export default withTranslation()(Home);

@@ -9,6 +9,7 @@ import pinIcon from '@iconify/icons-ion/location-sharp';
 import GracefullImage from 'components/GracefullImage';
 import { Body } from 'components/Text';
 import { Col, Row, RowWrap } from 'components/Blocks';
+import useWindowSize from 'components/hooks/useWindowSize';
 import { FEATURED_DJS } from '../gql';
 
 const DataWrapper = () => {
@@ -20,10 +21,13 @@ const DataWrapper = () => {
         return null;
     }
 
-    return <AnimatedDjCards djs={djs.filter((dj) => !!dj.picture && dj.genres.length)} />;
+    const filteredDjs = djs.filter((dj) => !!dj.picture && dj.genres.length);
+
+    return <AnimatedDjCards djs={filteredDjs} />;
 };
 
 const AnimatedDjCards = ({ djs }) => {
+    const { width } = useWindowSize();
     const [index, setIndex] = useState(0);
     const [pauseAnimation, setPauseanimation] = useState(false);
 
@@ -47,6 +51,10 @@ const AnimatedDjCards = ({ djs }) => {
     }, [djs, pauseAnimation]);
 
     const currentDj = djs[index];
+    const nextDj = djs[index + 1];
+
+    const mobileOptions = width <= 480 ? { opacity: 0 } : {};
+    const mobileOptions2 = width <= 480 ? { opacity: 1 } : {};
 
     const transitions = useTransition(
         [
@@ -62,10 +70,10 @@ const AnimatedDjCards = ({ djs }) => {
             },
             trail: 100,
             order: ['leave', 'enter', 'update'],
-            initial: (item) => ({ translateY: item.idx * 100 - 50 }),
-            from: (item) => ({ translateY: item.idx * 100 - 50 + 300 }),
-            enter: (item) => ({ translateY: item.idx * 100 - 50 }),
-            leave: (item) => ({ translateY: item.idx * 100 - 50 - 300 }),
+            initial: (item) => ({ ...mobileOptions2, translateY: item.idx * 100 - 50 }),
+            from: (item) => ({ ...mobileOptions, translateY: item.idx * 100 - 50 + 300 }),
+            enter: (item) => ({ ...mobileOptions2, translateY: item.idx * 100 - 50 }),
+            leave: (item) => ({ ...mobileOptions, translateY: item.idx * 100 - 50 - 300 }),
             native: true,
         }
     );
@@ -162,7 +170,7 @@ const InnerContent = ({
                     {genres && (
                         <Col style={{ maxWidth: '40%' }}>
                             <RowWrap right>
-                                {genres.map((g, idx) => (
+                                {genres.slice(0, 5).map((g, idx) => (
                                     <Pill key={idx}>{g.trim()}</Pill>
                                 ))}
                             </RowWrap>
@@ -227,6 +235,10 @@ const Container = styled.div`
     top: 0;
     right: -1.5em;
     display: flex;
+    @media only screen and (max-width: 1024px) {
+        right: -3em;
+        font-size: 0.75em;
+    }
 `;
 
 function easeInOutExpo(x) {
@@ -252,7 +264,7 @@ const AnimateItem = styled(animated.div)`
 const Card = styled(SuperEllipse)`
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.1);
     transition: transform 1000ms ease;
     transform: scale(1);
     &:hover {
