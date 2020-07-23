@@ -1,11 +1,12 @@
 import React, { useState, useEffect, ReactDOM, useRef } from 'react';
 import { useMutation } from 'react-apollo';
 import styled from 'styled-components';
-import { Icon } from '@iconify/react';
+import { Icon, InlineIcon } from '@iconify/react';
 import saveIcon from '@iconify/icons-ion/ios-checkmark';
 import cancelIcon from '@iconify/icons-ion/close';
 import editIcon from '@iconify/icons-ion/pencil';
 import Skeleton from 'react-loading-skeleton';
+import infoIcon from '@iconify/icons-ion/information-circle';
 
 import airplaneIcon from '@iconify/icons-ion/airplane';
 import searchIcon from '@iconify/icons-ion/search';
@@ -17,7 +18,11 @@ import DatePickerPopup from 'components/DatePickerPopup';
 import GeoCoder from 'utils/GeoCoder';
 import useDebounce from 'components/hooks/useDebounce';
 import { getErrorMessage } from 'utils/errorHandler';
+import Tooltip from 'components/Tooltip';
 import { MY_LOCATIONS, UPDATE_LOCATION, ADD_LOCATION, REMOVE_LOCATION } from './gql';
+
+import scaleGif from './assets/scale.gif';
+import moveGif from './assets/move.gif';
 
 const LocationEntry = ({
     id,
@@ -141,7 +146,21 @@ const LocationEntry = ({
                                 textAlign: 'center',
                             }}
                         >
-                            Drag the sides of the circle to adjust the area.
+                            Adjust the area using the circle on the map{' '}
+                            <Tooltip content={<HowToDo />}>
+                                {({ ref, close, open }) => (
+                                    <span ref={ref} onMouseEnter={open} onMouseLeave={close}>
+                                        <InlineIcon
+                                            icon={infoIcon}
+                                            style={{
+                                                fontSize: '1.2em',
+                                                top: '4px',
+                                                position: 'relative',
+                                            }}
+                                        />
+                                    </span>
+                                )}
+                            </Tooltip>
                         </BodySmall>
                     </div>
                 ) : (
@@ -215,6 +234,30 @@ const LocationEntry = ({
         </LocationWrapper>
     );
 };
+
+const HowToDo = () => {
+    return (
+        <GifsWrapper>
+            <BodySmall>Move it with the dot in the center.</BodySmall>
+            <img src={moveGif} title="Move the area" />
+            <BodySmall>Resize it with the dots on the edge.</BodySmall>
+            <img src={scaleGif} title="Resize the area" />
+        </GifsWrapper>
+    );
+};
+
+const GifsWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    max-width: 200px;
+    align-items: center;
+    > img {
+        height: 100px;
+        width: 150px;
+        margin-bottom: 12px;
+        object-fit: cover;
+    }
+`;
 
 const SaveButton = (props) => (
     <RoundButton {...props} title="Save">

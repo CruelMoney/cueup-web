@@ -14,9 +14,6 @@ import Map from './Map';
 import { MY_LOCATIONS } from './gql';
 import LocationEntry from './LocationEntry';
 
-import scaleGif from './assets/scale.gif';
-import moveGif from './assets/move.gif';
-
 const LocationEditor = (props) => {
     const { data, loading } = useQuery(MY_LOCATIONS);
     const locations = data?.me?.playingLocations || [];
@@ -166,13 +163,6 @@ const Editor = ({ userLocations, loading, isPro }) => {
                     editId={editId}
                     updateLocation={updateLocation}
                 />
-
-                {editId && (
-                    <GifsWrapper>
-                        <img src={moveGif} title="Move the area" />
-                        <img src={scaleGif} title="Resize the area" />
-                    </GifsWrapper>
-                )}
             </MapWrapper>
         </EditorStyle>
     );
@@ -212,22 +202,6 @@ const LocationsList = styled(Col)`
     padding: 0 24px;
     max-height: 70vh;
     overflow-y: scroll;
-`;
-
-const GifsWrapper = styled.div`
-    position: absolute;
-    left: 1em;
-    top: 1em;
-    display: flex;
-    flex-direction: column;
-    > img {
-        height: 100px;
-        width: 150px;
-        margin-bottom: 12px;
-        object-fit: cover;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-    }
 `;
 
 export default LocationEditor;

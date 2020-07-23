@@ -46,7 +46,7 @@ const Popup = memo((props) => {
             right: 0,
             bottom: 0,
             backgroundColor: 'none',
-            zIndex: 1000,
+            zIndex: 98,
             pointerEvents: 'none',
         },
         content: {
