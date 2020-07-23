@@ -5,7 +5,8 @@ import SuperEllipse, { Preset } from 'react-superellipse';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { Body } from 'components/Text';
-import { Col, SmartButton } from 'components/Blocks';
+import { Col, SmartButton, Row } from 'components/Blocks';
+import { Input } from 'components/FormComponents';
 import Footer from '../../../components/common/Footer';
 
 import content from '../content.json';
@@ -13,31 +14,29 @@ import AnimatedDjCards from './AnimatedDjCards';
 
 const DjSearch = () => {
     return (
-        <SuperEllipse
-            r1={Preset.iOS.r1}
-            r2={Preset.iOS.r2}
-            style={{
-                width: '100%',
-                height: '0.6em',
-                background: '#fff',
-                marginTop: '0.3em',
-                display: 'flex',
-                alignItems: 'center',
-                flexDirection: 'row',
-                padding: '0.1em',
-            }}
-        >
+        <StyledSearchWrapper r1={Preset.iOS.r1} r2={Preset.iOS.r2}>
+            <label>
+                LOCATION
+                <input placeholder="Where's the event?" />
+            </label>
+
+            <Divider />
+            <label>
+                DATE
+                <input placeholder="Add a date" />
+            </label>
+
             <SuperEllipse
                 perEllipse
                 r1={Preset.iOS.r1}
                 r2={Preset.iOS.r2}
-                style={{ marginLeft: 'auto' }}
+                style={{ margin: '0.1em' }}
             >
-                <SmartButton primary style={{ fontSize: '0.14em', height: '3em', minWidth: '8em' }}>
+                <SmartButton primary style={{ fontSize: '0.14em', height: '3em', minWidth: '6em' }}>
                     Find DJs
                 </SmartButton>
             </SuperEllipse>
-        </SuperEllipse>
+        </StyledSearchWrapper>
     );
 };
 
@@ -83,6 +82,39 @@ const Home = () => {
         </div>
     );
 };
+const Divider = styled.div`
+    height: 60%;
+    width: 2px;
+    background: #d8d8d8;
+`;
+const StyledSearchWrapper = styled(SuperEllipse)`
+    width: 100%;
+    height: 0.6em;
+    background: #fff;
+    margin-top: 0.3em;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    > label {
+        flex: 1;
+        color: #32325d;
+        font-size: 0.1em;
+        padding-left: 1.7em;
+        height: 100%;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        padding-top: 1.1em;
+        > input {
+            font-size: 1.5em;
+            display: block;
+            border: none;
+            outline: none;
+        }
+    }
+    > label:first-of-type {
+        flex: 2;
+    }
+`;
 
 const HeroContainer = styled.section`
     background: radial-gradient(114.62% 129.84% at 45.24% 67.36%, #122b48 0%, #000000 100%);
