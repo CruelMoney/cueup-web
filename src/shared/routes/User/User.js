@@ -281,6 +281,7 @@ const Content = React.memo(({ match, ...userProps }) => {
                             marginBottom: '60px',
                             zIndex: 0,
                             position: 'relative',
+                            overflow: 'hidden',
                         }}
                     >
                         <Switch location={location}>

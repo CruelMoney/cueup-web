@@ -33,7 +33,7 @@ const StickyBookingButtonWrapper = styled.div`
     right: 0;
     bottom: 0;
     padding: 15px;
-    z-index: 99;
+    z-index: 90;
     margin-bottom: env(safe-area-inset-bottom);
     > div,
     button {

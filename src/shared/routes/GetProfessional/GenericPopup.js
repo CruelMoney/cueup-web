@@ -19,7 +19,7 @@ export const GenericPopup = ({ children, showPayment = true }) => {
         <Popup
             lazy={false}
             noPadding
-            width={1000}
+            style={{ maxWidth: '1000px' }}
             showing
             onClose={() => {
                 history.goBack();
@@ -212,6 +212,11 @@ const Tier = ({
 const ContentContainer = styled.div`
     display: flex;
     justify-content: center;
+    flex-direction: row;
+    @media screen and (max-width: 1000px) {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
 `;
 
 const BeforePrice = styled.span`
@@ -281,20 +286,30 @@ const TierWrapper = styled.button`
 `;
 
 const LeftSection = styled.div`
-    min-width: 50%;
+    max-width: 500px;
     padding: 3em;
     h1 {
         font-size: 2.5em;
     }
+    @media screen and (max-width: 1000px) {
+        max-width: 100%;
+        padding: 2em;
+    }
 `;
 
 const RightSection = styled.div`
-    min-width: 50%;
+    max-width: 500px;
     background-color: #f6f8f9;
     padding: 3em;
     ${PrimaryButton} {
         max-width: 100%;
         width: 100%;
+    }
+
+    @media screen and (max-width: 1000px) {
+        max-width: 100%;
+        width: 100%;
+        padding: 2em;
     }
 `;
 
