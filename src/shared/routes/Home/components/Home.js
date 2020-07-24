@@ -6,7 +6,8 @@ import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { Body } from 'components/Text';
 import { Col, SmartButton, Row } from 'components/Blocks';
-import { Input } from 'components/FormComponents';
+import LocationSelector from 'components/common/LocationSelectorSimple';
+import { Label } from 'components/FormComponents';
 import Footer from '../../../components/common/Footer';
 
 import content from '../content.json';
@@ -14,11 +15,20 @@ import AnimatedDjCards from './AnimatedDjCards';
 
 const DjSearch = () => {
     return (
-        <StyledSearchWrapper r1={Preset.iOS.r1} r2={Preset.iOS.r2}>
-            <label>
-                LOCATION
-                <input placeholder="Where's the event?" />
-            </label>
+        <StyledSearchWrapper>
+            <SearchWrapperBg r1={Preset.iOS.r1} r2={Preset.iOS.r2} />
+
+            <LocationSelector
+                name="query"
+                label={'LOCATION'}
+                placeholder={"Where's the event?"}
+                wrapperStyle={{ width: '100%', height: '100%', display: 'flex', marginBottom: 0 }}
+                //  onSave={(locationName) => handleChange({ locationName })}
+                //  validation={(v) => (v ? null : 'Please select a location')}
+                //  registerValidation={registerValidation('locationName')}
+                //  unregisterValidation={unregisterValidation('locationName')}
+                //  defaultValue={form.locationName}
+            />
 
             <Divider />
             <label>
@@ -82,20 +92,22 @@ const Home = () => {
         </div>
     );
 };
+
 const Divider = styled.div`
     height: 60%;
     width: 2px;
     background: #d8d8d8;
 `;
-const StyledSearchWrapper = styled(SuperEllipse)`
+const StyledSearchWrapper = styled.div`
+    position: relative;
     width: 100%;
     height: 0.6em;
-    background: #fff;
     margin-top: 0.3em;
     display: flex;
     align-items: center;
     flex-direction: row;
-    > label {
+    label,
+    ${Label} {
         flex: 1;
         color: #32325d;
         font-size: 0.1em;
@@ -109,17 +121,42 @@ const StyledSearchWrapper = styled(SuperEllipse)`
             display: block;
             border: none;
             outline: none;
+            background: transparent;
+            text-indent: 0;
+            margin-top: 0;
+            height: 1.4em;
         }
     }
     > label:first-of-type {
         flex: 2;
     }
+    ul {
+        top: 0;
+        left: 0;
+        right: -18.7em;
+        padding-top: 4em;
+        border-radius: 1.4em;
+    }
+    .powered-by-google {
+        top: 1.5em !important;
+        display: flex;
+        right: 1em !important;
+    }
+`;
+
+const SearchWrapperBg = styled(SuperEllipse)`
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    z-index: -1;
 `;
 
 const HeroContainer = styled.section`
     background: radial-gradient(114.62% 129.84% at 45.24% 67.36%, #122b48 0%, #000000 100%);
     min-height: 7.8em;
-    overflow: hidden;
     display: flex;
     align-items: center;
     width: 100%;

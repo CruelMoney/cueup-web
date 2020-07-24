@@ -69,21 +69,26 @@ const LocationSelector = ({ placeholder, countries = [], ...props }) => {
                 onFocus={() => setFocus(true)}
                 onBlur={() => setFocus(false)}
                 disableInput={false}
+                footer={
+                    <div
+                        className="powered-by-google"
+                        style={{
+                            position: 'absolute',
+                            top: '40px',
+                            right: '15px',
+                            pointerEvents: 'none',
+                            zIndex: 2,
+                        }}
+                    >
+                        <img
+                            style={{ width: '96px' }}
+                            src={poweredByGoogle}
+                            alt="powered by google"
+                        />
+                    </div>
+                }
                 {...props}
             />
-            {focus && (
-                <div
-                    style={{
-                        position: 'absolute',
-                        top: '40px',
-                        right: '15px',
-                        pointerEvents: 'none',
-                        zIndex: 2,
-                    }}
-                >
-                    <img style={{ width: '96px' }} src={poweredByGoogle} alt="powered by google" />
-                </div>
-            )}
         </>
     );
 };

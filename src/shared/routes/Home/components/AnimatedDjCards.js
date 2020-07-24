@@ -10,6 +10,8 @@ import GracefullImage from 'components/GracefullImage';
 import { Body } from 'components/Text';
 import { Col, Row, RowWrap } from 'components/Blocks';
 import useWindowSize from 'components/hooks/useWindowSize';
+import useTranslate from 'components/hooks/useTranslate';
+import { appRoutes } from 'constants/locales/appRoutes';
 import { FEATURED_DJS } from '../gql';
 
 const DataWrapper = () => {
@@ -129,12 +131,16 @@ const InnerContent = ({
     picture,
     genres,
     isNew,
+    permalink,
     ...props
 }) => {
+    const { translate } = useTranslate();
+
+    const route = `${translate(appRoutes.user)}/${permalink}`;
     const location = playingLocations?.[0]?.name;
 
     return (
-        <NavLink to="/" draggable={false} {...props}>
+        <NavLink to={route} draggable={false} {...props}>
             <GracefullImage
                 draggable={false}
                 src={picture?.path}
