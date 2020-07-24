@@ -21,6 +21,7 @@ const DatePickerPopup = ({
     disabled,
     buttonText,
     removable,
+    ...props
 }) => {
     const ref = useRef();
     const [showing, setShowing] = useState(false);
@@ -44,6 +45,7 @@ const DatePickerPopup = ({
     return (
         <>
             <Input
+                className={selectedDate ? 'date-picker' : 'date-picker empty'}
                 disabled={disabled}
                 error={error}
                 half={half}
@@ -64,6 +66,7 @@ const DatePickerPopup = ({
                 }
                 ref={ref}
                 removable={selectedDate && removable}
+                {...props}
             />
             <Popup
                 width="380px"

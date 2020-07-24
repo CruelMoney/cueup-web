@@ -7,7 +7,8 @@ import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { Body } from 'components/Text';
 import { Col, SmartButton, Row } from 'components/Blocks';
 import LocationSelector from 'components/common/LocationSelectorSimple';
-import { Label } from 'components/FormComponents';
+import { Label, Input } from 'components/FormComponents';
+import DatePickerPopup from 'components/DatePickerPopup';
 import Footer from '../../../components/common/Footer';
 
 import content from '../content.json';
@@ -22,7 +23,7 @@ const DjSearch = () => {
                 name="query"
                 label={'LOCATION'}
                 placeholder={"Where's the event?"}
-                wrapperStyle={{ width: '100%', height: '100%', display: 'flex', marginBottom: 0 }}
+                wrapperStyle={{ flex: 1.5, height: '100%', display: 'flex', marginBottom: 0 }}
                 //  onSave={(locationName) => handleChange({ locationName })}
                 //  validation={(v) => (v ? null : 'Please select a location')}
                 //  registerValidation={registerValidation('locationName')}
@@ -31,10 +32,7 @@ const DjSearch = () => {
             />
 
             <Divider />
-            <label>
-                DATE
-                <input placeholder="Add a date" />
-            </label>
+            <DatePickerPopup label="WHEN" buttonText="Add date" />
 
             <SuperEllipse
                 perEllipse
@@ -115,21 +113,28 @@ const StyledSearchWrapper = styled.div`
         height: 100%;
         font-weight: 600;
         letter-spacing: 0.08em;
-        padding-top: 1.1em;
-        > input {
+        padding-top: 1.25em;
+        margin-bottom: 0;
+        min-width: 0;
+        > input,
+        > button {
             font-size: 1.5em;
             display: block;
             border: none;
             outline: none;
             background: transparent;
-            text-indent: 0;
+            text-indent: 0px;
             margin-top: 0;
+            margin-left: -1px;
             height: 1.4em;
+            line-height: 1em !important;
+            width: auto;
+        }
+        .empty {
+            color: #98a4b3;
         }
     }
-    > label:first-of-type {
-        flex: 2;
-    }
+
     ul {
         top: 0;
         left: 0;
