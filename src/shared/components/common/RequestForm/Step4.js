@@ -163,7 +163,7 @@ const Step4 = ({
                     {translate('back')}
                 </TeritaryButton>
                 <SmartButton data-cy="submit-event" type="submit" loading={loading}>
-                    {translate('get-offers')}
+                    Show DJs
                 </SmartButton>
             </Row>
         </form>

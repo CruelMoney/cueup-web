@@ -77,9 +77,9 @@ const RouteWrapper = () => {
 
             {showSideBarChat && <LazySideBarChat />}
 
-            <Route path={'*/get-pro'} component={LazyGetProfessional} />
+            <Route path={'*/get-pro'} exact component={LazyGetProfessional} />
 
-            <Route path={'*/book-dj'} component={RequestFormPopup} />
+            <Route path={'*/book-dj'} exact component={RequestFormPopup} />
         </div>
     );
 };
