@@ -303,9 +303,11 @@ export const inputStyle = css`
     ::placeholder,
     ::-webkit-input-placeholder {
         color: #98a4b3;
+        opacity: 1;
     }
     :-ms-input-placeholder {
         color: #98a4b3;
+        opacity: 1;
     }
 
     :focus {

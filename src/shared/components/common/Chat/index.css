@@ -122,6 +122,7 @@
 }
 .message-input::placeholder {
     color: #98a4b3;
+    opacity: 1;
 }
 .message-composer {
     display: flex;

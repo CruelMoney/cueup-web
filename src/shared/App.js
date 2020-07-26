@@ -13,6 +13,7 @@ import LazyLocation, { LazyLocationsOverview } from 'routes/Location';
 import LazyGig from 'routes/Gig';
 import LazySideBarChat from 'components/SidebarChat';
 import LazyGetProfessional from 'routes/GetProfessional';
+import { RequestFormPopup } from 'components/common/RequestForm';
 
 import LazyFaq from 'routes/Faq';
 import LazyBecomeDj from 'routes/BecomeDj';
@@ -49,7 +50,7 @@ const RouteWrapper = () => {
             <Switch>
                 <Route
                     exact
-                    path={[t(appRoutes.home), '/verifyEmail', '/connectInstagram']}
+                    path={[t(appRoutes.home), '/verifyEmail', '/connectInstagram', '/book-dj']}
                     component={Home}
                 />
                 <Route path={t(appRoutes.about)} component={About} />
@@ -77,6 +78,8 @@ const RouteWrapper = () => {
             {showSideBarChat && <LazySideBarChat />}
 
             <Route path={'*/get-pro'} component={LazyGetProfessional} />
+
+            <Route path={'*/book-dj'} component={RequestFormPopup} />
         </div>
     );
 };

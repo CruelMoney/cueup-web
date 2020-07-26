@@ -263,6 +263,7 @@ const ConnectedCard = ({ refForward, onSave }) => {
                                 'lineHeight': '40px',
                                 '::placeholder': {
                                     color: '#98a4b3',
+                                    opacity: 1,
                                 },
                             },
                             invalid: {

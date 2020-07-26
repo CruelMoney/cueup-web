@@ -219,6 +219,7 @@ const ConnectedCard = ({ onSave }) => {
                         'background': 'transparent',
                         '::placeholder': {
                             color: '#98a4b3',
+                            opacity: 1,
                         },
                     }}
                     fieldStyle={{

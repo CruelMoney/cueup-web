@@ -1,20 +1,32 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { withTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import SuperEllipse, { Preset } from 'react-superellipse';
+import { useHistory, useRouteMatch } from 'react-router';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { Body } from 'components/Text';
-import { Col, SmartButton, Row } from 'components/Blocks';
+import { Col, SmartButton } from 'components/Blocks';
 import LocationSelector from 'components/common/LocationSelectorSimple';
-import { Label, Input } from 'components/FormComponents';
+import { Label } from 'components/FormComponents';
 import DatePickerPopup from 'components/DatePickerPopup';
+import { useForm } from 'components/hooks/useForm';
 import Footer from '../../../components/common/Footer';
 
 import content from '../content.json';
 import AnimatedDjCards from './AnimatedDjCards';
 
 const DjSearch = () => {
+    const match = useRouteMatch();
+    const history = useHistory();
+
+    const { registerValidation, unregisterValidation, runValidations, setValue, form } = useForm();
+
+    const handleSubmit = () => {
+        const route = match.url + 'book-dj';
+        history.push(route);
+    };
+
     return (
         <StyledSearchWrapper>
             <SearchWrapperBg r1={Preset.iOS.r1} r2={Preset.iOS.r2} />
@@ -24,15 +36,21 @@ const DjSearch = () => {
                 label={'LOCATION'}
                 placeholder={"Where's the event?"}
                 wrapperStyle={{ flex: 1.5, height: '100%', display: 'flex', marginBottom: 0 }}
-                //  onSave={(locationName) => handleChange({ locationName })}
-                //  validation={(v) => (v ? null : 'Please select a location')}
-                //  registerValidation={registerValidation('locationName')}
-                //  unregisterValidation={unregisterValidation('locationName')}
-                //  defaultValue={form.locationName}
+                onSave={(locationName) => setValue({ locationName })}
+                validation={(v) => (v ? null : 'Please select a location')}
+                registerValidation={registerValidation('locationName')}
+                unregisterValidation={unregisterValidation('locationName')}
+                defaultValue={form.locationName}
             />
 
             <Divider />
-            <DatePickerPopup label="WHEN" buttonText="Add date" />
+            <DatePickerPopup
+                label="WHEN"
+                buttonText="Add date"
+                validation={(v) => (v ? null : 'Please select a date')}
+                registerValidation={registerValidation('date')}
+                unregisterValidation={unregisterValidation('date')}
+            />
 
             <SuperEllipse
                 perEllipse
@@ -40,7 +58,11 @@ const DjSearch = () => {
                 r2={Preset.iOS.r2}
                 style={{ margin: '0.1em' }}
             >
-                <SmartButton primary style={{ fontSize: '0.14em', height: '3em', minWidth: '6em' }}>
+                <SmartButton
+                    primary
+                    style={{ fontSize: '0.14em', height: '3em', minWidth: '6em' }}
+                    onClick={handleSubmit}
+                >
                     Find DJs
                 </SmartButton>
             </SuperEllipse>
@@ -59,8 +81,8 @@ const Hero = () => {
                         and events
                     </Title>
                     <LandingBody>
-                        Cueup is the easiest way for you to get a great DJ for your event. Tell us
-                        about your event below, and check out 1000s of qualified DJs.
+                        Cueup is the easiest way for you to book a great DJ for your event. Start by
+                        telling us about your event, and get prices from the DJs in your area.
                     </LandingBody>
                     <DjSearch />
                 </LeftSide>

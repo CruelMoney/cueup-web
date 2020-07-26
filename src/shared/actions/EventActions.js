@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/react';
 import { useMutation } from 'react-apollo';
 import { useState } from 'react';
-import { CHECK_DJ_AVAILABILITY, CREATE_EVENT } from 'components/common/RequestForm/gql';
+import { CREATE_EVENT } from 'components/common/RequestForm/gql';
 import { trackCheckAvailability, trackEventPosted } from 'utils/analytics';
 import GeoCoder from '../utils/GeoCoder';
 
@@ -44,16 +44,16 @@ export const getLocation = (location) => {
     });
 };
 
-export const useCheckDjAvailability = ({ locationName, date }) => {
+export const useCheckDjAvailability = () => {
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
-    const [mutate, { error: apolloError }] = useMutation(CHECK_DJ_AVAILABILITY);
+    // const [mutate, { error: apolloError }] = useMutation(CHECK_DJ_AVAILABILITY);
 
-    const check = async () => {
+    const check = async ({ locationName, date }) => {
         try {
             setLoading(true);
             try {
-                trackCheckAvailability();
+                trackCheckAvailability(locationName);
             } catch (error) {
                 Sentry.captureException(error);
             }
@@ -68,6 +68,25 @@ export const useCheckDjAvailability = ({ locationName, date }) => {
                 },
                 timeZoneId: geoResult.timeZoneId,
             };
+
+            const moment = await import('moment-timezone');
+            const momentDate = moment.default(date);
+
+            const { timeZoneId, location } = geoData;
+
+            const newMoment = moment.tz(
+                momentDate.format('YYYY-MM-DDTHH:mm:ss'),
+                'YYYY-MM-DDTHH:mm:ss',
+                timeZoneId
+            );
+
+            // next({
+            //     ...form,
+            //     date: newMoment,
+            //     timeZoneId,
+            //     location,
+            // });
+
             // const variables = {
             //     date,
             //     location: geoData.location,
@@ -76,7 +95,9 @@ export const useCheckDjAvailability = ({ locationName, date }) => {
             // const { data = {} } = await mutate({ variables });
             return {
                 result: true,
-                data: geoData,
+                date: newMoment,
+                timeZoneId,
+                location,
             };
         } catch (err) {
             Sentry.captureException(err);
@@ -86,7 +107,7 @@ export const useCheckDjAvailability = ({ locationName, date }) => {
         }
     };
 
-    return [check, { loading, error: error || apolloError }];
+    return [check, { loading, error: error }];
 };
 
 export const useCreateEvent = (theEvent) => {

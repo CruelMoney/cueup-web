@@ -2774,6 +2774,12 @@ header .dj-card p {
 .popup .message-composer {
     margin: 15px;
 }
+.popup .request-form {
+    margin-bottom: 0px;
+}
+.popup .progrezz-wrapper {
+    margin-top: 24px;
+}
 
 .location_faq .collapsible-container .divider {
     border-width: 1px;

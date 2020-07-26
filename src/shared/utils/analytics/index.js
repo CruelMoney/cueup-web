@@ -23,9 +23,10 @@ export const trackPageView = (url) => {
     });
 };
 
-export const trackCheckAvailability = () => {
+export const trackCheckAvailability = (locationName) => {
     analytics.track('Search', {
         category: 'Events',
+        value: locationName,
     });
 };
 

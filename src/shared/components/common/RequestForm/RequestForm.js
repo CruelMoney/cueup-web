@@ -13,6 +13,7 @@ import { trackPageView } from 'utils/analytics';
 import useDebounce from 'components/hooks/useDebounce';
 import { ME } from 'components/gql';
 import { appRoutes } from 'constants/locales/appRoutes';
+import useUrlState from 'components/hooks/useUrlState';
 import Login from '../Login';
 import ErrorMessageApollo from '../ErrorMessageApollo';
 import Progress from './ProgressSubmit';
@@ -22,77 +23,31 @@ import Step3 from './Step3';
 import Step4 from './Step4';
 import content from './content.json';
 
-const formToParams = (form) => {
-    try {
-        const searchParams = new URLSearchParams(window.location.search);
-        Object.keys(form).forEach((key) => {
-            const value = form[key];
-            if (value) {
-                searchParams.set(key, JSON.stringify(value));
-            }
-        });
-        return searchParams;
-    } catch (error) {
-        console.log({ error });
-        return '';
-    }
-};
+const MainForm = ({ initialCity, countries, transparent }) => {
+    const { translate } = useNamespaceContent(content, 'requestForm');
+    const history = useHistory();
 
-const paramsToForm = (params, initialCity, user) => {
-    const form = {
-        date: new Date(),
+    const { data: userData } = useQuery(ME);
+
+    const [showLogin, setShowLogin] = useState(false);
+
+    const [form, setForm] = useUrlState({
+        activeStep: 1,
         locationName: initialCity,
         startMinute: 21 * 60,
         endMinute: 27 * 60,
         guestsCount: 100,
-        contactName: user?.userMetadata.fullName,
-        contactEmail: user?.email,
-        contactPhone: user?.userMetadata.phone,
-    };
-
-    try {
-        const searchParams = new URLSearchParams(params);
-
-        searchParams.forEach((val, key) => {
-            try {
-                const value = JSON.parse(val);
-
-                if (key === 'date') {
-                    form[key] = new Date(value);
-                } else {
-                    form[key] = value;
-                }
-            } catch (error) {}
-        });
-    } catch (error) {
-        captureException(error);
-    }
-    return form;
-};
-
-const MainForm = ({ initialCity, countries }) => {
-    const { translate } = useNamespaceContent(content, 'requestForm');
-    const history = useHistory();
-    const location = useLocation();
-
-    const initialUrlState = useRef();
-
-    const { data: userData } = useQuery(ME);
-
-    if (!initialUrlState.current) {
-        initialUrlState.current = paramsToForm(location.search, initialCity, userData?.me);
-    }
-
-    const [activeStep, setActiveStep] = useState(initialUrlState.current.activeStep || 1);
-    const [showLogin, setShowLogin] = useState(false);
-
-    // defaults
-    const [form, setForm] = useState(initialUrlState.current);
-    const debouncedForm = useDebounce(form, 500);
+        contactName: userData?.me?.userMetadata.fullName,
+        contactEmail: userData?.me?.email,
+        contactPhone: userData?.me?.userMetadata.phone,
+    });
 
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);
+
     const [error, setError] = useState();
     const [mutate, { loading }] = useCreateEvent(form);
+
+    const { activeStep } = form;
 
     // track progress
     useEffect(() => {
@@ -100,16 +55,6 @@ const MainForm = ({ initialCity, countries }) => {
             trackPageView('/create-event-form-' + activeStep);
         }
     }, [activeStep]);
-
-    // save state to url
-    useEffect(() => {
-        if (activeStep > 1) {
-            const searchParams = formToParams(debouncedForm);
-            searchParams.set('activeStep', activeStep);
-
-            history.push(`?${searchParams.toString()}#book-dj`);
-        }
-    }, [debouncedForm, history, activeStep]);
 
     const createEvent = async () => {
         const errors = runValidations();
@@ -134,17 +79,17 @@ const MainForm = ({ initialCity, countries }) => {
         const errors = runValidations();
         if (errors.length === 0) {
             handleChange(data);
-            setActiveStep((s) => s + 1);
+            setForm((f) => ({ ...f, activeStep: activeStep + 1 }));
         }
     };
 
     const back = () => {
-        setActiveStep((s) => s - 1);
+        setForm((f) => ({ ...f, activeStep: activeStep - 1 }));
     };
 
     const setProgress = (step) => {
         if (step + 1 < activeStep) {
-            setActiveStep(step);
+            setForm((f) => ({ ...f, activeStep: step }));
         }
     };
 
@@ -235,7 +180,7 @@ const MainForm = ({ initialCity, countries }) => {
                             }}
                         />
                     </RequestCard>
-                    <CardShadow />
+                    {!transparent && <CardShadow />}
                 </Wrapper>
                 {activeStep === 4 && (
                     <Wrapper>

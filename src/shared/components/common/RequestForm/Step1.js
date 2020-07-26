@@ -19,7 +19,7 @@ const Step1 = ({
     runValidations,
     countries,
 }) => {
-    const [showDatePickter, setShowDatePickter] = useState(false);
+    const [showDatePicker, setShowDatePicker] = useState(false);
     const [message, setMessage] = useState();
     const [check, { loading, error }] = useCheckDjAvailability(form);
 
@@ -29,7 +29,7 @@ const Step1 = ({
 
     const dateChanged = (date) => {
         handleChange({ date });
-        setShowDatePickter(false);
+        setShowDatePicker(false);
     };
 
     const submit = async (e) => {
@@ -37,26 +37,11 @@ const Step1 = ({
         const errors = runValidations();
 
         if (errors.length === 0) {
-            const moment = await import('moment-timezone');
-
-            const momentDate = moment.default(form.date);
-
-            const { result, data } = await check({
-                ...form,
-                date: momentDate.toDate(),
-            });
+            const { result, date, timeZoneId, location } = await check(form);
             if (result === true) {
-                const { timeZoneId, location } = data;
-
-                const newMoment = moment.tz(
-                    momentDate.format('YYYY-MM-DDTHH:mm:ss'),
-                    'YYYY-MM-DDTHH:mm:ss',
-                    timeZoneId
-                );
-
                 next({
                     ...form,
-                    date: newMoment,
+                    date,
                     timeZoneId,
                     location,
                 });
@@ -70,16 +55,16 @@ const Step1 = ({
 
     // handle both moment and js date
     const eventDateString =
-        typeof form.date.format === 'function'
+        typeof form.date?.format === 'function'
             ? form.date.format('dddd Do, MMMM YYYY')
-            : typeof form.date.toLocaleDateString === 'function'
-            ? form.date.toLocaleDateString()
+            : typeof form.date?.toLocaleDateString === 'function'
+            ? form.date?.toLocaleDateString()
             : null;
     return (
         <form name="requestForm-step-1" onSubmit={submit}>
             <h3 className="center">{translate('requestForm:step-1.header')}</h3>
 
-            {showDatePickter ? (
+            {showDatePicker ? (
                 <DatePicker dark initialDate={form.date} handleChange={dateChanged} />
             ) : (
                 <div
@@ -112,7 +97,7 @@ const Step1 = ({
                     <RequestSection
                         className="cursor-pointer"
                         onClick={() => {
-                            setShowDatePickter(true);
+                            setShowDatePicker(true);
                         }}
                     >
                         <Input
@@ -138,7 +123,7 @@ const Step1 = ({
                                 {message}
                             </BodySmall>
                         )}
-                        <SmartButton type="submit" loading={loading}>
+                        <SmartButton type="submit" onClick={submit} loading={loading}>
                             {translate('continue')}
                         </SmartButton>
                     </Row>
