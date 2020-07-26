@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Query, useQuery } from 'react-apollo';
+import { useQuery } from 'react-apollo';
 import { useTranslation } from 'react-i18next';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 import Navlink from '../common/Navlink';
@@ -11,7 +11,7 @@ import EmailVerifier from '../EmailVerifier';
 import { ME } from '../gql';
 import Popup from '../common/Popup';
 import InstagramConnect from '../InstagramConnect';
-import { LoadingIndicator } from '../Blocks';
+import { LoadingIndicator, Container } from '../Blocks';
 import DesktopMenu from './DesktopMenu';
 import MobileMenu from './MobileMenu';
 
@@ -40,7 +40,7 @@ const Menu = () => {
             <EmailVerifier onVerified={() => setLoginExpanded(true)} />
             <InstagramConnect />
 
-            <div className="container">
+            <Container className="container">
                 <div className={'nav-container location_'}>
                     <nav className="navigation">
                         <div className="logo-area">
@@ -129,7 +129,7 @@ const Menu = () => {
                         </ul>
                     </nav>
                 </div>
-            </div>
+            </Container>
         </div>
     );
 };

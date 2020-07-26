@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components';
 import useScript from '@charlietango/use-script';
 import GeoCoder from 'utils/GeoCoder';
-import { PrimaryButton, Row } from 'components/Blocks';
+import { PrimaryButton, Row, Container, Col, RowMobileCol } from 'components/Blocks';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { useServerContext } from 'components/hooks/useServerContext';
@@ -17,10 +17,10 @@ import ScrollToTop from '../../components/common/ScrollToTop';
 import AsyncRequestForm from '../../components/common/RequestForm';
 import defaultImage from '../../assets/images/cities/default.png';
 import FloatingDJs from './components/FloatingCards';
-import './index.css';
 import { countries } from './locations';
 import { CitiesList } from './components/CountriesList';
 import content from './content.json';
+import './index.css';
 
 const Location = (props) => {
     const secondColor = '#25F4D2';
@@ -141,11 +141,11 @@ const Location = (props) => {
                     )}
 
                     <article>
-                        <div className="container fix-top-mobile">
+                        <Container className="container">
                             <GoogleMapsLogo />
 
-                            <div className="row">
-                                <div className="col-md-5 col-sm-6">
+                            <Row className="row">
+                                <HeroContent>
                                     <div className="card">
                                         <h1
                                             key="title"
@@ -165,21 +165,21 @@ const Location = (props) => {
                                             </PrimaryButton>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
+                                </HeroContent>
+                            </Row>
+                        </Container>
                     </article>
                 </header>
                 <div className="show-tablet-down">
-                    <div className="container">
-                        <div className="row">
+                    <Container className="container">
+                        <Row className="row">
                             <div className="col-xs-12">
                                 <p key="paragraph">{siteDescription}</p>
                             </div>
-                        </div>
-                    </div>
+                        </Row>
+                    </Container>
                 </div>
-                <div className="container">
+                <Container className="container">
                     <FormRow center>
                         <div ref={requestForm} />
                         <AsyncRequestForm initialCity={title} key={title} />
@@ -192,7 +192,7 @@ const Location = (props) => {
                             countrySlug={country}
                         />
                     )}
-                </div>
+                </Container>
 
                 <img id="city-illustration" src={citySvg} />
             </div>
@@ -200,9 +200,9 @@ const Location = (props) => {
             <FloatingDJs {...translate(['copenhagen', 'denmark'])} location={title} />
 
             <div className="info-boxes grey">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-sm-6 col-md-5 col-md-push-1">
+                <Container className="container">
+                    <RowMobileCol center>
+                        <BottomCol>
                             <div className="card">
                                 <NoteIcon altGradient={false} />
                                 <h2 style={{ color: themeColor }}>
@@ -214,8 +214,9 @@ const Location = (props) => {
                                     })}
                                 </p>
                             </div>
-                        </div>
-                        <div className="col-sm-6 col-md-5 col-md-push-1">
+                        </BottomCol>
+                        <div style={{ minWidth: 30, minHeight: 30 }} />
+                        <BottomCol>
                             <div className="card">
                                 <MoneyIcon altGradient={false} />
                                 <h2 style={{ color: themeColor }}>
@@ -227,9 +228,9 @@ const Location = (props) => {
                                     })}
                                 </p>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        </BottomCol>
+                    </RowMobileCol>
+                </Container>
             </div>
 
             <Footer
@@ -245,6 +246,14 @@ const Location = (props) => {
         </div>
     );
 };
+
+const BottomCol = styled(Col)`
+    max-width: 480px;
+`;
+
+const HeroContent = styled.div`
+    max-width: 480px;
+`;
 
 const GoogleMapsLogoWrapper = styled.div`
     transform: translateX(-100%);

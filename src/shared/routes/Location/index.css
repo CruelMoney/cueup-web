@@ -28,6 +28,7 @@
 
 .book-dj-location .menu-wrapper > .container:after,
 .book-dj-location .menu-wrapper > .container:before {
+    content: '';
     background: rgba(255, 255, 255, 0.96);
     height: 100%;
     position: absolute;
@@ -115,7 +116,7 @@
 }
 
 #city-illustration {
-    bottom: -2px;
+    bottom: -8px;
     height: auto;
     left: 50%;
     position: relative;

@@ -109,16 +109,6 @@ textarea:focus {
     border-color: inherit !important;
 }
 
-.container {
-    margin: 0 auto;
-    max-width: 1260px;
-    padding: 0 30px;
-    width: 100%;
-    @media only screen and (max-width: 768px) {
-        padding: 0 15px;
-    }
-}
-
 .header-wrapper {
     overflow: hidden;
     padding-top: 90px;
