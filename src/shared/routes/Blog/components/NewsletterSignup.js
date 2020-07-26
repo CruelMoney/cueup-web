@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Input, InputRow } from 'components/FormComponents';
 import { SmartButton, Row, TextInput } from 'components/Blocks';
 import Checkmark from '../../../assets/Checkmark';
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink as Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { SmartButton, Row } from 'components/Blocks.js';
+import { SmartButton, Row, Container } from 'components/Blocks.js';
 import { appRoutes } from 'constants/locales/appRoutes';
 import posts from '../posts.json';
 import Popup from '../../../components/common/Popup';
@@ -30,7 +30,7 @@ const Blog = () => {
                 </Row>
             </header>
             <main>
-                <div className="container">
+                <Container>
                     <div className="post-feed">
                         {posts.map((post) => {
                             const link = `${t(appRoutes.blog)}/${post.slug}`;
@@ -59,7 +59,7 @@ const Blog = () => {
                             );
                         })}
                     </div>
-                </div>
+                </Container>
             </main>
             <Popup showing={showPopup} onClickOutside={() => setShowPopup(false)}>
                 <div className="blog">

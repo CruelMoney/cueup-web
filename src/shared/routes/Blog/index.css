@@ -15,6 +15,7 @@
 }
 
 .blog main {
+    font-size: 22px;
     margin: 5em 0 6em 0;
 }
 
@@ -129,7 +130,7 @@ button.subscribe-newsletter {
 }
 
 .post-content {
-    font-size: 2.2rem;
+    font-size: 22px;
     line-height: 1.6em;
     margin: 0 auto;
     min-height: 230px;
@@ -162,10 +163,11 @@ button.subscribe-newsletter {
     margin-bottom: 0;
 }
 .blog-post a {
-    color: rgb(37, 244, 210);
+    color: #31daff;
+    font-weight: 600;
 }
 .post-content h2 {
-    font-size: 3.6rem;
+    font-size: 1.7em;
     line-height: 1.2em;
     margin: 1em 0 0.5em;
 }
@@ -175,7 +177,7 @@ button.subscribe-newsletter {
     text-transform: none;
 }
 .post-content > p:first-of-type {
-    font-size: 1.25em;
+    font-size: 27px;
     line-height: 1.5em;
 }
 .blog-post main .container {
@@ -200,6 +202,7 @@ button.subscribe-newsletter {
     max-width: 100%;
 }
 .blog-post main .post-content figure {
+    margin: 0;
     margin-bottom: 1.5em;
 }
 .blog-post main .post-content figure img {
@@ -208,7 +211,8 @@ button.subscribe-newsletter {
 
 .blog-post main .post-content figcaption {
     color: #7e8186;
-    font-size: 0.75em;
+    font-size: 14px;
+    line-height: 1.5em;
     margin-left: auto;
     text-align: center;
 }
