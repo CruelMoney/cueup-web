@@ -1,5 +1,12 @@
-@import './bootstrapReplacement.css';
 @import './fonts.css';
+
+* {
+    box-sizing: border-box;
+}
+*:before,
+*:after {
+    box-sizing: border-box;
+}
 
 body {
     color: #32325d;
@@ -821,87 +828,6 @@ input[type='file'] + label * {
     -moz-animation-timing-function: ease-out;
     -webkit-animation-timing-function: ease-out;
     animation-timing-function: ease-out;
-}
-
-@-moz-keyframes dropHeader {
-    0% {
-        -moz-transform: translateY(-100px);
-    }
-    100% {
-        -moz-transform: translateY(0);
-    }
-}
-@-webkit-keyframes dropHeader {
-    0% {
-        -webkit-transform: translateY(-100px);
-    }
-    100% {
-        -webkit-transform: translateY(0);
-    }
-}
-@keyframes dropHeader {
-    0% {
-        transform: translateY(-100px);
-    }
-    100% {
-        transform: translateY(0);
-    }
-}
-@keyframes fadeBlack {
-    0% {
-        background-color: rgba(0, 0, 0, 0);
-    }
-    100% {
-        background-color: rgba(0, 0, 0, 0.4);
-    }
-}
-
-@keyframes growIn {
-    0% {
-        height: 40px;
-    }
-    100% {
-        height: inherit;
-    }
-}
-
-@keyframes growOut {
-    0% {
-        height: inherit;
-    }
-    100% {
-        height: 40px;
-    }
-}
-
-@keyframes rotating {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes blink {
-    50% {
-        opacity: 1;
-    }
-}
-
-@keyframes bulge {
-    50% {
-        transform: scale(1.05);
-    }
-}
-
-@keyframes scaleIn {
-    0% {
-        transform: scale(0);
-    }
-    100% {
-        transform: scale(1);
-    }
 }
 
 .collapsible {
