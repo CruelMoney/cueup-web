@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import useTranslate from 'components/hooks/useTranslate';
 
 import { appRoutes } from 'constants/locales/appRoutes';
+import { Container, Col } from 'components/Blocks';
 import Footer from '../../components/common/Footer';
 
 import Map from '../../components/common/Map';
@@ -18,10 +19,6 @@ const Location = () => {
     const { translate } = useTranslate();
     const title = translate('locationsOverview.title');
     const description = translate('locationsOverview.description');
-
-    // useEffect(() => {
-    //     window.countries = countries;
-    // }, []);
 
     return (
         <div className="locations-page">
@@ -61,21 +58,21 @@ const Location = () => {
                         locationName="playingLocation"
                     />
                     <article>
-                        <div className="container fix-top-mobile">
-                            <div className="col-md-5 col-sm-6">
+                        <Container className="container fix-top-mobile">
+                            <Col>
                                 <div className="card">
                                     <h1 key="title">
                                         <b>Locations</b>
                                     </h1>
                                 </div>
-                            </div>
-                        </div>
+                            </Col>
+                        </Container>
                     </article>
                 </header>
 
-                <div className="container">
+                <Container className="container">
                     <CountriesList countries={countries} />
-                </div>
+                </Container>
 
                 <img id="city-illustration" src={citySvg} />
             </div>
