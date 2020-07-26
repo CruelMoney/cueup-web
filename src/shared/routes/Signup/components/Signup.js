@@ -3,6 +3,7 @@ import React from 'react';
 import { Body } from 'components/Text';
 import { appRoutes } from 'constants/locales/appRoutes';
 
+import { Container } from 'components/Blocks';
 import Footer from '../../../components/common/Footer';
 import SignUpForm from './SignUpForm';
 import SignupHeader from './SignupHeader';
@@ -11,7 +12,7 @@ const Signup = ({ translate }) => {
     return (
         <>
             <SignupHeader />
-            <div className="container" style={{ marginBottom: '80px' }}>
+            <Container style={{ marginBottom: '80px' }}>
                 <div className="signup">
                     <Body style={{ marginBottom: 50 }}>
                         Fill out the form to create a profile. After you sign up, we will review
@@ -21,7 +22,7 @@ const Signup = ({ translate }) => {
                     </Body>
                     <SignUpForm translate={translate} />
                 </div>
-            </div>
+            </Container>
             <Footer
                 noSkew
                 firstTo={translate(appRoutes.howItWorks)}

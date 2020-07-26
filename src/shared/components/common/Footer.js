@@ -62,7 +62,7 @@ const Footer = ({
                             <span key="preFooterTitle" style={{ color: color }}>
                                 {title}
                             </span>
-                            {subTitle}
+                            <span>{subTitle}</span>
                         </div>
                         <div key="preFooterButtons" className="action-buttons">
                             <ButtonLink shadow to={firstTo}>
