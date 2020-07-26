@@ -13,6 +13,8 @@ import DatePickerPopup from 'components/DatePickerPopup';
 import { useForm } from 'components/hooks/useForm';
 import useUrlState from 'components/hooks/useUrlState';
 import { useCheckDjAvailability } from 'actions/EventActions';
+import ErrorMessage from 'components/common/ErrorMessage';
+import ErrorMessageApollo from 'components/common/ErrorMessageApollo';
 import Footer from '../../../components/common/Footer';
 
 import content from '../content.json';
@@ -26,7 +28,7 @@ const DjSearch = () => {
     const [form, setForm] = useUrlState();
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);
 
-    const [check] = useCheckDjAvailability();
+    const [check, { loading, error }] = useCheckDjAvailability();
 
     const submit = async (e) => {
         e.preventDefault();
@@ -44,6 +46,8 @@ const DjSearch = () => {
         const errors = runValidations();
         if (errors.length === 0) {
             const { result, date, timeZoneId, location } = await check(form);
+            console.log({ result });
+
             if (result === true) {
                 setForm((f) => ({
                     ...f,
@@ -64,48 +68,52 @@ const DjSearch = () => {
     }, [form.activeStep, history, match]);
 
     return (
-        <StyledSearchWrapper>
-            <SearchWrapperBg r1={Preset.iOS.r1} r2={Preset.iOS.r2} />
+        <>
+            <StyledSearchWrapper>
+                <SearchWrapperBg r1={Preset.iOS.r1} r2={Preset.iOS.r2} />
 
-            <LocationSelector
-                ref={locationRef}
-                name="query"
-                label={'LOCATION'}
-                placeholder={"Where's the event?"}
-                wrapperStyle={{ flex: 1.5, height: '100%', display: 'flex', marginBottom: 0 }}
-                onSave={(locationName) => setForm((f) => ({ ...f, locationName }))}
-                validation={(v) => (v ? null : 'Please select a location')}
-                registerValidation={registerValidation('locationName')}
-                unregisterValidation={unregisterValidation('locationName')}
-                defaultValue={form.locationName}
-            />
+                <LocationSelector
+                    ref={locationRef}
+                    name="query"
+                    label={'LOCATION'}
+                    placeholder={"Where's the event?"}
+                    wrapperStyle={{ flex: 1.5, height: '100%', display: 'flex', marginBottom: 0 }}
+                    onSave={(locationName) => setForm((f) => ({ ...f, locationName }))}
+                    validation={(v) => (v ? null : 'Please select a location')}
+                    registerValidation={registerValidation('locationName')}
+                    unregisterValidation={unregisterValidation('locationName')}
+                    defaultValue={form.locationName}
+                />
 
-            <Divider />
-            <DatePickerPopup
-                ref={dateRef}
-                label="WHEN"
-                buttonText="Add date"
-                validation={(v) => (v ? null : 'Please select a date')}
-                onSave={(date) => setForm((f) => ({ ...f, date }))}
-                registerValidation={registerValidation('date')}
-                unregisterValidation={unregisterValidation('date')}
-            />
+                <Divider />
+                <DatePickerPopup
+                    ref={dateRef}
+                    label="WHEN"
+                    buttonText="Add date"
+                    validation={(v) => (v ? null : 'Please select a date')}
+                    onSave={(date) => setForm((f) => ({ ...f, date }))}
+                    registerValidation={registerValidation('date')}
+                    unregisterValidation={unregisterValidation('date')}
+                />
 
-            <SuperEllipse
-                perEllipse
-                r1={Preset.iOS.r1}
-                r2={Preset.iOS.r2}
-                style={{ margin: '0.1em' }}
-            >
-                <SmartButton
-                    primary
-                    style={{ fontSize: '0.14em', height: '3em', minWidth: '6em' }}
-                    onClick={submit}
+                <SuperEllipse
+                    perEllipse
+                    r1={Preset.iOS.r1}
+                    r2={Preset.iOS.r2}
+                    style={{ margin: '0.1em' }}
                 >
-                    Find DJs
-                </SmartButton>
-            </SuperEllipse>
-        </StyledSearchWrapper>
+                    <SmartButton
+                        primary
+                        loading={loading}
+                        style={{ fontSize: '0.14em', height: '3em', minWidth: '6em' }}
+                        onClick={submit}
+                    >
+                        Find DJs
+                    </SmartButton>
+                </SuperEllipse>
+            </StyledSearchWrapper>
+            <ErrorMessageApollo style={{ marginTop: '0.1em' }} error={error} />
+        </>
     );
 };
 

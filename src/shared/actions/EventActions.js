@@ -100,8 +100,12 @@ export const useCheckDjAvailability = () => {
                 location,
             };
         } catch (err) {
+            console.log(err);
             Sentry.captureException(err);
-            setError(err.message);
+            setError(err);
+            return {
+                result: false,
+            };
         } finally {
             setLoading(false);
         }
