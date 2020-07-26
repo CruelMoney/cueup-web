@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Icon, InlineIcon } from '@iconify/react';
 import arrowForward from '@iconify/icons-ion/arrow-forward';
 import SuggestionList from 'components/SuggestionList';
-import { Input } from '../../../components/FormComponents';
+import { Input, Label } from '../../../components/FormComponents';
 import { Row, TeritaryButton, PrimaryButton } from '../../../components/Blocks';
 import Popup from '../../../components/common/Popup';
 import Slider from '../../../components/common/Slider';
@@ -69,29 +69,25 @@ const CancelationPolicyPopup = ({ initialValue, onClose, save, translate, isActi
                         ]}
                     />
                 </div>
-                <Input
-                    type="number"
-                    min={1}
-                    max={100}
-                    label="Percentage"
-                    defaultValue={cancelationPolicy.percentage}
-                    validation={(p) => {
-                        const val = parseInt(p, 10);
-                        if (val < 0 || val > 100) {
-                            return 'Enter a value between 0 and 100';
-                        }
-                        return null;
-                    }}
-                    onSave={(percentage) =>
+
+                <Label style={{ marginBottom: 12 }}>Percentage</Label>
+                <Slider
+                    name="refundPercentage"
+                    range={{ min: 0, max: 100 }}
+                    step={1}
+                    connect="lower"
+                    value={[cancelationPolicy.percentage]}
+                    color="#50E3C2"
+                    onChange={(values) =>
                         setCancelationPolicy((s) => ({
                             ...s,
-                            percentage: parseInt(percentage, 10),
+                            percentage: values[0],
                         }))
                     }
                 />
 
                 <PolicyDisplayer
-                    style={{ maxWidth: '350px', marginTop: 0 }}
+                    style={{ maxWidth: '350px' }}
                     cancelationPolicy={cancelationPolicy}
                     explanationText={`Organizer can cancel any time before ${cancelationPolicy.days} days, and get a 100%
 							refund, minus the service fee.`}
