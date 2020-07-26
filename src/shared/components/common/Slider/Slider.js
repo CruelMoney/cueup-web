@@ -98,17 +98,8 @@ class Slider extends Component {
     };
 
     render() {
-        const color = this.props.color || '#25F4D2';
-
         return (
-            <div
-                style={{
-                    visibility: 'hidden',
-                    display: 'flex',
-                    backgroundColor: color,
-                    borderColor: color,
-                }}
-            >
+            <div>
                 {this.props.value.length > 1 ? (
                     <Range
                         disabled={this.props.disabled}
