@@ -12,7 +12,7 @@ const Signup = ({ translate }) => {
     return (
         <>
             <SignupHeader />
-            <Container style={{ marginBottom: '80px' }}>
+            <Container style={{ marginTop: 50, marginBottom: 80, maxWidth: 900 }}>
                 <div className="signup">
                     <Body style={{ marginBottom: 50 }}>
                         Fill out the form to create a profile. After you sign up, we will review

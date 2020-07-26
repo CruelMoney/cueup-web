@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import styled from 'styled-components';
+import { Body } from 'components/Text';
 
 const RegistrationElement = forwardRef(
     ({ label, text, children, active, count, ...props }, ref) => {
@@ -23,15 +25,23 @@ const RegistrationElement = forwardRef(
 
         return (
             <div style={styles.base} ref={ref} {...props}>
-                <h2>{label}</h2>
-                <p>
+                <HeaderLabel>{label}</HeaderLabel>
+                <Body style={{ marginTop: 12, marginBottom: 12 }}>
                     {text}
                     {count}
-                </p>
+                </Body>
                 {children}
             </div>
         );
     }
 );
+
+const HeaderLabel = styled.h2`
+    font-size: 30px;
+    margin-top: 5px;
+    @media screen and (max-width: 900px) {
+        margin-left: 30px;
+    }
+`;
 
 export default RegistrationElement;

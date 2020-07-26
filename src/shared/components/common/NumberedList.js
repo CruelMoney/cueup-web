@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import lodashMap from 'lodash/map';
+import styled from 'styled-components';
 
 class NumberedList extends Component {
     displayName = 'Form';
@@ -31,11 +32,19 @@ class NumberedList extends Component {
                     if (!result) {
                         return null;
                     }
-                    return <li key={result.props.name + '-' + idx}>{result}</li>;
+                    return <ListItem key={result.props.name + '-' + idx}>{result}</ListItem>;
                 })}
             </ol>
         );
     }
 }
+
+const ListItem = styled.li`
+    @media screen and (max-width: 900px) {
+        &:before {
+            margin-left: 0 !important;
+        }
+    }
+`;
 
 export default NumberedList;
