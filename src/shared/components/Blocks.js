@@ -7,9 +7,10 @@ import arrowBack from '@iconify/icons-ion/arrow-back';
 import GracefullImage from './GracefullImage';
 
 export const Hr = styled.hr`
-    border-bottom: 1px solid #e9ecf0;
     margin: 0;
     width: 100%;
+    border-bottom: 2px solid #e9ecf0;
+    color: transparent;
     ${({ margin }) =>
         margin &&
         css`
@@ -104,8 +105,7 @@ export const FullWidthCol = styled(Col)`
     width: 100%;
 `;
 
-export const Divider = styled.hr`
-    border-top: 1px solid #e9ecf0;
+export const Divider = styled(Hr)`
     margin: 24px 0;
 `;
 

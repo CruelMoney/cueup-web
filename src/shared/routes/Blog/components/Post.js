@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Disqus from 'disqus-react';
 import { useServerContext } from 'components/hooks/useServerContext';
+import { Hr } from 'components/Blocks';
 import posts from '../posts.json';
 import Formatter from '../../../utils/Formatter';
 import Sharing from '../../../components/common/Sharing-v2';
@@ -81,7 +82,7 @@ const Post = ({ match }) => {
                     />
                     <Sharing shareUrl={url} title={post.title} />
                     <CallToBlock category={post.category} />
-                    <hr />
+                    <Hr />
                     <OnlyClientSide>
                         <Disqus.DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
                     </OnlyClientSide>

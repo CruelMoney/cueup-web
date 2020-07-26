@@ -10,7 +10,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import styled from 'styled-components';
 import { useMutation } from 'react-apollo';
 import { captureException } from '@sentry/core';
-import { inputStyle, SmartButton } from 'components/Blocks';
+import { inputStyle, SmartButton, Hr } from 'components/Blocks';
 import { BodySmall } from 'components/Text';
 import { useServerContext } from 'components/hooks/useServerContext';
 import ErrorMessageApollo from 'components/common/ErrorMessageApollo';
@@ -201,7 +201,7 @@ const PaymentRequestButtonWrapper = ({ selectedTier, startSubscription }) => {
                 className="PaymentRequestButton"
             />
             <div className="or-divider">
-                <hr />
+                <Hr />
                 <span style={{ backgroundColor: '#f6f8f9' }}>OR</span>
             </div>
         </>
