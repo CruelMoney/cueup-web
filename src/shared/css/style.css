@@ -2521,13 +2521,6 @@ header .info-boxes {
     display: none;
 }
 
-.terms-content,
-.faq-content,
-.about-content {
-    margin-top: 20px;
-    padding-top: 30px;
-}
-
 .showMobile {
     display: none;
 }
@@ -3105,18 +3098,6 @@ ol.breadcrumbs a {
         width: 80%;
     }
 
-    .terms-content .row,
-    .faq-content .row,
-    .about-content .row {
-        flex-direction: column;
-    }
-
-    .terms-content .fixed,
-    .faq-content .fixed,
-    .about-content .fixed {
-        position: relative;
-        top: initial;
-    }
     .user-container > .row {
         flex-direction: column;
     }

@@ -1,48 +1,35 @@
 import React, { Component } from 'react';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
+import { Container, Row, Col } from 'components/Blocks';
 import Footer from '../../../components/common/Footer';
 import ButtonLink from '../../../components/common/ButtonLink';
 
 class Faq extends Component {
-    componentDidMount() {
-        window.addEventListener('scroll', this.handleScroll);
-    }
-    componentWillUnmount() {
-        window.removeEventListener('scroll', this.handleScroll);
-    }
-    themeColor = '#25F4D2';
-
-    handleScroll = (event) => {
-        const scrollTop = window.pageYOffset;
-        if (scrollTop > 80) {
-            this.nav.className = 'fixed terms-navigation';
-        } else {
-            this.nav.className = 'terms-navigation';
-        }
-    };
     render() {
         const { t } = this.props;
 
         return (
-            <div className="faq-content">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-3">
-                            <div className="terms-navigation" ref={(ref) => (this.nav = ref)}>
-                                <ButtonLink color={this.themeColor} to={t(appRoutes.faqDj)}>
-                                    DJ
-                                </ButtonLink>
-                                <ButtonLink color={this.themeColor} to={t(appRoutes.faqOrganizer)}>
-                                    {t('Organizer')}
-                                </ButtonLink>
-                            </div>
-                        </div>
+            <div>
+                <Container>
+                    <Row>
+                        <Col style={{ marginRight: 30, position: 'sticky', top: 15 }}>
+                            <ButtonLink
+                                style={{ marginBottom: 6 }}
+                                color={this.themeColor}
+                                to={t(appRoutes.faqDj)}
+                            >
+                                DJ
+                            </ButtonLink>
+                            <ButtonLink color={this.themeColor} to={t(appRoutes.faqOrganizer)}>
+                                {t('Organizer')}
+                            </ButtonLink>
+                        </Col>
 
-                        <div className="col-md-10">
+                        <Col>
                             <div className="card terms">{this.props.children}</div>
-                        </div>
-                    </div>
-                </div>
+                        </Col>
+                    </Row>
+                </Container>
                 <Footer
                     color={this.themeColor}
                     firstTo={t(appRoutes.home)}
