@@ -1,6 +1,6 @@
 import React from 'react';
 import loadable from '@loadable/component';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import Popup from '../Popup';
 import Loading from './LoadingRequestForm';
 
@@ -8,6 +8,7 @@ const LazyRequestForm = loadable(() => import('./RequestForm'), { fallback: <Loa
 
 export const RequestFormPopup = () => {
     const history = useHistory();
+    const location = useLocation();
 
     return (
         <Popup
@@ -15,7 +16,8 @@ export const RequestFormPopup = () => {
             noPadding
             showing
             onClose={() => {
-                history.goBack();
+                const newRoute = location.pathname.split('book-dj')[0];
+                history.push(newRoute);
             }}
         >
             <LazyRequestForm transparent />

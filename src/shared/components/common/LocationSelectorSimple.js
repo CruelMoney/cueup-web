@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
 import SuggestionList from '../SuggestionList';
 import poweredByGoogle from '../../assets/powered_by_google.png';
@@ -12,9 +12,8 @@ function toTitleCase(str) {
     });
 }
 
-const LocationSelector = ({ placeholder, countries = [], ...props }) => {
+const LocationSelector = forwardRef(({ placeholder, countries = [], ...props }, ref) => {
     const [dataSource, setDataSource] = useState([]);
-    const [focus, setFocus] = useState(false);
     const locationService = useRef();
 
     const [startLoadingScript, { started, loaded }] = useLazyLoadScript(
@@ -61,36 +60,29 @@ const LocationSelector = ({ placeholder, countries = [], ...props }) => {
     };
 
     return (
-        <>
-            <SuggestionList
-                onChange={onChangeHandler}
-                placeholder={placeholder || 'City'}
-                suggestions={dataSource}
-                onFocus={() => setFocus(true)}
-                onBlur={() => setFocus(false)}
-                disableInput={false}
-                footer={
-                    <div
-                        className="powered-by-google"
-                        style={{
-                            position: 'absolute',
-                            top: '40px',
-                            right: '15px',
-                            pointerEvents: 'none',
-                            zIndex: 2,
-                        }}
-                    >
-                        <img
-                            style={{ width: '96px' }}
-                            src={poweredByGoogle}
-                            alt="powered by google"
-                        />
-                    </div>
-                }
-                {...props}
-            />
-        </>
+        <SuggestionList
+            ref={ref}
+            onChange={onChangeHandler}
+            placeholder={placeholder || 'City'}
+            suggestions={dataSource}
+            disableInput={false}
+            footer={
+                <div
+                    className="powered-by-google"
+                    style={{
+                        position: 'absolute',
+                        top: '40px',
+                        right: '15px',
+                        pointerEvents: 'none',
+                        zIndex: 2,
+                    }}
+                >
+                    <img style={{ width: '96px' }} src={poweredByGoogle} alt="powered by google" />
+                </div>
+            }
+            {...props}
+        />
     );
-};
+});
 
 export default LocationSelector;

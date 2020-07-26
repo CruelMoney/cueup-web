@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { withTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import SuperEllipse, { Preset } from 'react-superellipse';
@@ -11,6 +11,8 @@ import LocationSelector from 'components/common/LocationSelectorSimple';
 import { Label } from 'components/FormComponents';
 import DatePickerPopup from 'components/DatePickerPopup';
 import { useForm } from 'components/hooks/useForm';
+import useUrlState from 'components/hooks/useUrlState';
+import { useCheckDjAvailability } from 'actions/EventActions';
 import Footer from '../../../components/common/Footer';
 
 import content from '../content.json';
@@ -19,24 +21,59 @@ import AnimatedDjCards from './AnimatedDjCards';
 const DjSearch = () => {
     const match = useRouteMatch();
     const history = useHistory();
+    const locationRef = useRef();
+    const dateRef = useRef();
+    const [form, setForm] = useUrlState();
+    const { registerValidation, unregisterValidation, runValidations } = useForm(form);
 
-    const { registerValidation, unregisterValidation, runValidations, setValue, form } = useForm();
+    const [check] = useCheckDjAvailability();
 
-    const handleSubmit = () => {
-        const route = match.url + 'book-dj';
-        history.push(route);
+    const submit = async (e) => {
+        e.preventDefault();
+
+        if (!form.locationName) {
+            locationRef.current.focus();
+            return;
+        }
+
+        if (!form.date) {
+            dateRef.current.focus();
+            return;
+        }
+
+        const errors = runValidations();
+        if (errors.length === 0) {
+            const { result, date, timeZoneId, location } = await check(form);
+            if (result === true) {
+                setForm((f) => ({
+                    ...f,
+                    activeStep: 2,
+                    date,
+                    timeZoneId,
+                    location,
+                }));
+            }
+        }
     };
+
+    useEffect(() => {
+        if (form.activeStep === 2) {
+            const route = match.url + 'book-dj';
+            history.push(route);
+        }
+    }, [form.activeStep, history, match]);
 
     return (
         <StyledSearchWrapper>
             <SearchWrapperBg r1={Preset.iOS.r1} r2={Preset.iOS.r2} />
 
             <LocationSelector
+                ref={locationRef}
                 name="query"
                 label={'LOCATION'}
                 placeholder={"Where's the event?"}
                 wrapperStyle={{ flex: 1.5, height: '100%', display: 'flex', marginBottom: 0 }}
-                onSave={(locationName) => setValue({ locationName })}
+                onSave={(locationName) => setForm((f) => ({ ...f, locationName }))}
                 validation={(v) => (v ? null : 'Please select a location')}
                 registerValidation={registerValidation('locationName')}
                 unregisterValidation={unregisterValidation('locationName')}
@@ -45,9 +82,11 @@ const DjSearch = () => {
 
             <Divider />
             <DatePickerPopup
+                ref={dateRef}
                 label="WHEN"
                 buttonText="Add date"
                 validation={(v) => (v ? null : 'Please select a date')}
+                onSave={(date) => setForm((f) => ({ ...f, date }))}
                 registerValidation={registerValidation('date')}
                 unregisterValidation={unregisterValidation('date')}
             />
@@ -61,7 +100,7 @@ const DjSearch = () => {
                 <SmartButton
                     primary
                     style={{ fontSize: '0.14em', height: '3em', minWidth: '6em' }}
-                    onClick={handleSubmit}
+                    onClick={submit}
                 >
                     Find DJs
                 </SmartButton>
@@ -168,6 +207,9 @@ const StyledSearchWrapper = styled.div`
         top: 1.5em !important;
         display: flex;
         right: 1em !important;
+    }
+    .error {
+        display: none;
     }
 `;
 
