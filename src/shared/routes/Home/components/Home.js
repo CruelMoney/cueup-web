@@ -84,6 +84,7 @@ const DjSearch = () => {
                 <DatePickerPopup
                     ref={dateRef}
                     label="WHEN"
+                    maxDate={new Date().setFullYear(new Date().getFullYear() + 5)}
                     buttonText="Add date"
                     validation={(v) => (v ? null : 'Please select a date')}
                     onSave={(date) => setValue({ date })}
