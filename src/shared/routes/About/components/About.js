@@ -2,6 +2,7 @@ import React from 'react';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import { showOlark } from 'utils/olark/index';
+import { Container, Row, Col } from 'components/Blocks';
 import Footer from '../../../components/common/Footer';
 
 export default () => {
@@ -9,10 +10,9 @@ export default () => {
     const { translate } = useTranslate();
     return (
         <div className="">
-            <div className="about-content container">
-                <div style={{ marginBottom: '100px' }} className="row">
-                    <div className="col-sm-2" />
-                    <div className="col-sm-8">
+            <Container className="about-content container">
+                <Row center style={{ marginBottom: '100px' }}>
+                    <Col style={{ maxWidth: 600 }}>
                         <h1>About Cueup</h1>
                         <p style={{ marginBottom: '30px' }}>
                             Cueup was founded in 2016 by Christopher Dengsø in Copenhagen, Denmark.
@@ -43,9 +43,9 @@ export default () => {
                             By using Cueup, you agree to our{' '}
                             <a href={translate(appRoutes.termsAgreements)}>terms and conditions</a>
                         </p>
-                    </div>
-                </div>
-            </div>
+                    </Col>
+                </Row>
+            </Container>
             <Footer
                 noSkew
                 color={themeColor}
