@@ -47,7 +47,6 @@ export const getLocation = (location) => {
 export const useCheckDjAvailability = () => {
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
-    // const [mutate, { error: apolloError }] = useMutation(CHECK_DJ_AVAILABILITY);
 
     const check = async ({ locationName, date }) => {
         try {
@@ -80,22 +79,9 @@ export const useCheckDjAvailability = () => {
                 timeZoneId
             );
 
-            // next({
-            //     ...form,
-            //     date: newMoment,
-            //     timeZoneId,
-            //     location,
-            // });
-
-            // const variables = {
-            //     date,
-            //     location: geoData.location,
-            // };
-
-            // const { data = {} } = await mutate({ variables });
             return {
                 result: true,
-                date: newMoment,
+                date: newMoment.toDate(),
                 timeZoneId,
                 location,
             };

@@ -26,6 +26,7 @@ import content from './content.json';
 const MainForm = ({ initialCity, countries, transparent }) => {
     const { translate } = useNamespaceContent(content, 'requestForm');
     const history = useHistory();
+    const routeLocation = useLocation();
 
     const { data: userData } = useQuery(ME);
 
@@ -40,6 +41,7 @@ const MainForm = ({ initialCity, countries, transparent }) => {
         contactName: userData?.me?.userMetadata.fullName,
         contactEmail: userData?.me?.email,
         contactPhone: userData?.me?.userMetadata.phone,
+        ...routeLocation.state,
     });
 
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);

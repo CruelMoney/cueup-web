@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { withTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import SuperEllipse, { Preset } from 'react-superellipse';
-import { useHistory, useRouteMatch } from 'react-router';
+import { useHistory, useRouteMatch, useLocation } from 'react-router';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { Body } from 'components/Text';
@@ -21,12 +21,11 @@ import content from '../content.json';
 import AnimatedDjCards from './AnimatedDjCards';
 
 const DjSearch = () => {
-    const match = useRouteMatch();
+    const routeLocation = useLocation();
     const history = useHistory();
     const locationRef = useRef();
     const dateRef = useRef();
-    const [form, setForm] = useUrlState();
-    const { registerValidation, unregisterValidation, runValidations } = useForm(form);
+    const { registerValidation, unregisterValidation, runValidations, form, setValue } = useForm();
 
     const [check, { loading, error }] = useCheckDjAvailability();
 
@@ -46,26 +45,22 @@ const DjSearch = () => {
         const errors = runValidations();
         if (errors.length === 0) {
             const { result, date, timeZoneId, location } = await check(form);
-            console.log({ result });
 
             if (result === true) {
-                setForm((f) => ({
-                    ...f,
-                    activeStep: 2,
-                    date,
-                    timeZoneId,
-                    location,
-                }));
+                const route = routeLocation.pathname + 'book-dj';
+                console.log({ route });
+                history.push({
+                    pathname: route,
+                    state: {
+                        activeStep: 2,
+                        date,
+                        timeZoneId,
+                        location,
+                    },
+                });
             }
         }
     };
-
-    useEffect(() => {
-        if (form.activeStep === 2) {
-            const route = match.url + 'book-dj';
-            history.push(route);
-        }
-    }, [form.activeStep, history, match]);
 
     return (
         <>
@@ -78,7 +73,7 @@ const DjSearch = () => {
                     label={'LOCATION'}
                     placeholder={"Where's the event?"}
                     wrapperStyle={{ flex: 1.5, height: '100%', display: 'flex', marginBottom: 0 }}
-                    onSave={(locationName) => setForm((f) => ({ ...f, locationName }))}
+                    onSave={(locationName) => setValue({ locationName })}
                     validation={(v) => (v ? null : 'Please select a location')}
                     registerValidation={registerValidation('locationName')}
                     unregisterValidation={unregisterValidation('locationName')}
@@ -91,7 +86,7 @@ const DjSearch = () => {
                     label="WHEN"
                     buttonText="Add date"
                     validation={(v) => (v ? null : 'Please select a date')}
-                    onSave={(date) => setForm((f) => ({ ...f, date }))}
+                    onSave={(date) => setValue({ date })}
                     registerValidation={registerValidation('date')}
                     unregisterValidation={unregisterValidation('date')}
                 />
