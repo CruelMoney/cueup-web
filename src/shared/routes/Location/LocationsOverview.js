@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import useTranslate from 'components/hooks/useTranslate';
 
 import { appRoutes } from 'constants/locales/appRoutes';
-import { Container, Col } from 'components/Blocks';
+import { Container, Col, CardSimple } from 'components/Blocks';
 import Footer from '../../components/common/Footer';
 
 import Map from '../../components/common/Map';
@@ -60,11 +60,14 @@ const Location = () => {
                     <article>
                         <Container className="container fix-top-mobile">
                             <Col>
-                                <div className="card">
+                                <CardSimple
+                                    style={{ borderRadius: 0, zIndex: 999, padding: 40 }}
+                                    className="card"
+                                >
                                     <h1 key="title">
                                         <b>Locations</b>
                                     </h1>
-                                </div>
+                                </CardSimple>
                             </Col>
                         </Container>
                     </article>

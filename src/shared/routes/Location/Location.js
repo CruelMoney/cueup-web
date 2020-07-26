@@ -4,7 +4,18 @@ import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components';
 import useScript from '@charlietango/use-script';
 import GeoCoder from 'utils/GeoCoder';
-import { PrimaryButton, Row, Container, Col, RowMobileCol } from 'components/Blocks';
+import {
+    PrimaryButton,
+    Row,
+    Container,
+    Col,
+    RowMobileCol,
+    CardSimple,
+    CardInfo,
+    ShowBelow,
+} from 'components/Blocks';
+import { Body } from 'components/Text';
+
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { useServerContext } from 'components/hooks/useServerContext';
@@ -141,12 +152,15 @@ const Location = (props) => {
                     )}
 
                     <article>
-                        <Container className="container">
+                        <Container className="container fix-top-mobile">
                             <GoogleMapsLogo />
 
                             <Row className="row">
                                 <HeroContent>
-                                    <div className="card">
+                                    <CardSimple
+                                        className="card"
+                                        style={{ padding: 30, borderRadius: 0 }}
+                                    >
                                         <h1
                                             key="title"
                                             dangerouslySetInnerHTML={{
@@ -155,7 +169,9 @@ const Location = (props) => {
                                                 }),
                                             }}
                                         />
-                                        <p key="paragraph">{siteDescription}</p>
+                                        <Body key="paragraph" style={{ lineHeight: 1.75 }}>
+                                            {siteDescription}
+                                        </Body>
 
                                         <div style={{ float: 'left', marginTop: '20px' }}>
                                             <PrimaryButton active onClick={handleButtonClick}>
@@ -164,21 +180,21 @@ const Location = (props) => {
                                                 </div>
                                             </PrimaryButton>
                                         </div>
-                                    </div>
+                                    </CardSimple>
                                 </HeroContent>
                             </Row>
                         </Container>
                     </article>
                 </header>
-                <div className="show-tablet-down">
+                <ShowBelow width={768} className="tablet-header-content">
                     <Container className="container">
                         <Row className="row">
-                            <div className="col-xs-12">
-                                <p key="paragraph">{siteDescription}</p>
-                            </div>
+                            <Body style={{ color: '#fff' }} key="paragraph">
+                                {siteDescription}
+                            </Body>
                         </Row>
                     </Container>
-                </div>
+                </ShowBelow>
                 <Container className="container">
                     <FormRow center>
                         <div ref={requestForm} />
@@ -199,35 +215,35 @@ const Location = (props) => {
 
             <FloatingDJs {...translate(['copenhagen', 'denmark'])} location={title} />
 
-            <div className="info-boxes grey">
+            <div style={{ backgroundColor: '#f7f9fc' }}>
                 <Container className="container">
                     <RowMobileCol center>
                         <BottomCol>
-                            <div className="card">
+                            <CardInfo shadow style={{ padding: 30, zIndex: 2 }}>
                                 <NoteIcon altGradient={false} />
                                 <h2 style={{ color: themeColor }}>
                                     {translate('location:sections.left.header')}
                                 </h2>
-                                <p>
+                                <Body>
                                     {translate('location:sections.left.content', {
                                         location: title,
                                     })}
-                                </p>
-                            </div>
+                                </Body>
+                            </CardInfo>
                         </BottomCol>
                         <div style={{ minWidth: 30, minHeight: 30 }} />
                         <BottomCol>
-                            <div className="card">
+                            <CardInfo shadow style={{ padding: 30, zIndex: 2 }}>
                                 <MoneyIcon altGradient={false} />
                                 <h2 style={{ color: themeColor }}>
                                     {translate('location:sections.right.header')}
                                 </h2>
-                                <p>
+                                <Body>
                                     {translate('location:sections.right.content', {
                                         location: title,
                                     })}
-                                </p>
-                            </div>
+                                </Body>
+                            </CardInfo>
                         </BottomCol>
                     </RowMobileCol>
                 </Container>
@@ -253,6 +269,7 @@ const BottomCol = styled(Col)`
 
 const HeroContent = styled.div`
     max-width: 480px;
+    z-index: 999;
 `;
 
 const GoogleMapsLogoWrapper = styled.div`
@@ -291,6 +308,7 @@ const GoogleMapsLogo = () => (
 
 const FormRow = styled(Row)`
     padding-left: 200px;
+    margin-bottom: 100px;
     @media only screen and (max-width: 768px) {
         padding-left: 0px;
     }

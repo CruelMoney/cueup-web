@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
-import { Container, Row, Col } from 'components/Blocks';
+import { Container, Row, Col, CardSimple } from 'components/Blocks';
 import Footer from '../../../components/common/Footer';
 import ButtonLink from '../../../components/common/ButtonLink';
 
@@ -26,7 +26,9 @@ class Faq extends Component {
                         </Col>
 
                         <Col>
-                            <div className="card terms">{this.props.children}</div>
+                            <CardSimple shadow className="card terms" style={{ padding: 30 }}>
+                                {this.props.children}
+                            </CardSimple>
                         </Col>
                     </Row>
                 </Container>

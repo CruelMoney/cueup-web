@@ -1,6 +1,6 @@
 import React, { useEffect, useState, memo } from 'react';
 import Modal from 'react-modal';
-import { ClosePopupButton } from 'components/Blocks';
+import { ClosePopupButton, Card, CardSimple } from 'components/Blocks';
 
 const Popup = memo((props) => {
     const {
@@ -79,7 +79,7 @@ const Popup = memo((props) => {
                 }}
                 onClick={(_) => onClickOutside && onClickOutside()}
             >
-                <div
+                <CardSimple
                     style={{
                         padding: noPadding ? 0 : '20px',
                         paddingTop: hideClose || noPadding ? '0px' : '5px',
@@ -89,9 +89,7 @@ const Popup = memo((props) => {
                         zIndex: '1001',
                         ...style,
                     }}
-                    className={
-                        'card popup' + (showing ? ' active' : '') + (noPadding ? ' no-padding' : '')
-                    }
+                    className={'popup' + (showing ? ' active' : '')}
                     onClick={function (event) {
                         event.stopPropagation();
                     }}
@@ -121,7 +119,7 @@ const Popup = memo((props) => {
                         </div>
                     ) : null}
                     {!lazy || showingChildren ? <div>{children}</div> : null}
-                </div>
+                </CardSimple>
             </div>
         </Modal>
     );
