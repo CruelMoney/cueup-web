@@ -133,6 +133,7 @@ class ToggleButtonHandler extends Component {
                 return (
                     <td key={genre} data-key={genre}>
                         <ToggleButton
+                            colored={this.props.colored}
                             color={this.props.color}
                             label={name}
                             active={this.state.selectedValues.includes(name)}

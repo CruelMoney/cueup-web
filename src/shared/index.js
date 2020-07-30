@@ -29,7 +29,7 @@ const Setup = ({ location }) => {
     }, [environment.SETTING]);
 
     const thumb = defaultImage;
-    const title = t('Book DJs with ease') + ' | Cueup';
+    const title = 'DJs for parties and events | Cueup';
     const description = t('site-description');
 
     const pageURL = environment.WEBSITE_URL + location.pathname;

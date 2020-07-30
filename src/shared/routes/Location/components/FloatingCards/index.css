@@ -1,3 +1,130 @@
+.dj-card {
+    background: transparent;
+    display: flex;
+    flex-direction: row;
+    margin-left: 20px;
+    overflow: hidden;
+    padding: 0;
+    width: 276px;
+}
+.dj-card .profile-picture {
+    flex: 1;
+    position: relative;
+}
+.dj-card .profile-picture:after {
+    background: rgba(191, 191, 191, 0.1);
+    border-radius: 50%;
+    content: '';
+    height: 40%;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -90%);
+    width: 40%;
+    z-index: 0;
+}
+.dj-card .profile-picture:before {
+    background: rgba(191, 191, 191, 0.1);
+    border-radius: 20%;
+    content: '';
+    height: 70%;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translate(-50%, -90%);
+    -ms-transform: translate(-50%, -90%);
+    transform: translate(-50%, 10%);
+    width: 60%;
+    z-index: 0;
+}
+
+.dj-card .profile-picture img {
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+    width: 100%;
+    z-index: 1;
+}
+
+.dj-card .profile-picture,
+.dj-card .info {
+    height: 138px;
+    min-width: 138px;
+    width: 138px;
+}
+
+.dj-card .info {
+    background: #fff;
+    color: #32325d;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 20px;
+    text-transform: capitalize;
+}
+.dj-card h4,
+header .dj-card h4 {
+    font-size: 18px;
+    margin: 0;
+    text-transform: capitalize;
+}
+
+.dj-card p,
+header .dj-card p {
+    -webkit-box-orient: vertical;
+    color: #4d6480;
+    display: block; /* Fallback for non-webkit */
+    display: -webkit-box;
+    font-size: 12px;
+    -webkit-line-clamp: 3;
+    line-height: 15px;
+    margin: 0;
+    margin: 0 auto;
+    max-height: 54px; /* Fallback for non-webkit */
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.dj-card svg {
+    height: 15px;
+    margin-left: -5px;
+    margin-right: 5px;
+    width: 15px;
+}
+.dj-card svg path {
+    fill: #31daff;
+}
+
+.dj-card tr {
+    height: 45px;
+}
+.dj-card td {
+    vertical-align: middle;
+}
+
+.dj-cards {
+    overflow: visible;
+    position: absolute;
+    transform: rotate(-12deg) translateY(-100px) translateX(-40px) perspective(1px);
+    width: 1800px;
+    z-index: 2;
+}
+
+.dj-cards > div {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.dj-cards > div:nth-child(1) {
+    margin-left: 296px;
+}
+.dj-cards > div:nth-child(2) {
+    margin-left: 148px;
+}
+.dj-cards > div:nth-child(4) {
+    margin-left: 444px;
+}
+
 /* animation: float 6s ease-in-out infinite; */
 @keyframes float {
     0% {
@@ -37,7 +164,7 @@
     width: auto;
 }
 
-.floating-cards .card {
+.floating-cards .dj-card {
     overflow: visible;
 }
 .floating-cards .card-wrapper {
@@ -46,17 +173,17 @@
     padding: 4em 0;
     position: relative;
 }
-.floating-cards .card-wrapper .card {
+.floating-cards .card-wrapper .dj-card {
     animation: float 6s ease-in-out infinite;
     margin: 0em 1em;
 }
-.floating-cards .card-wrapper:nth-child(even) .card {
+.floating-cards .card-wrapper:nth-child(even) .dj-card {
     animation-delay: 1000ms;
 }
 .floating-cards .card-wrapper:nth-child(even) {
     margin-top: 2em;
 }
-.floating-cards .card .profile-picture {
+.floating-cards .dj-card .profile-picture {
     border-radius: 6px 0 0 6px;
     overflow: hidden;
 }

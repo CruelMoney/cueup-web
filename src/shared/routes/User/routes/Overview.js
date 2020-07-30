@@ -214,28 +214,27 @@ const Review = ({ isOwn, reviewsCount, highlightedReview }) => {
     if (!content) {
         return null;
     }
+
     return (
-        <Link to={'reviews'}>
-            <LeftItem>
-                <Title>Highlighted Review</Title>
+        <LeftItem>
+            <Title>Highlighted Review</Title>
 
-                <Row middle style={{ marginTop: '36px' }}>
-                    <Col style={{ width: '100%' }}>
-                        <div style={{ marginBottom: '9px' }}>
-                            <QuotationMarkIcon />
-                            <Cite>{author ? author.userMetadata.firstName : citation}</Cite>
-                        </div>
-                        <Citation>
-                            {content.length > 130 ? content.slice(0, 127) + '...' : content}
-                        </Citation>
-                    </Col>
-                </Row>
+            <Row middle style={{ marginTop: '36px' }}>
+                <Col style={{ width: '100%' }}>
+                    <div style={{ marginBottom: '9px' }}>
+                        <QuotationMarkIcon />
+                        <Cite>{author ? author.userMetadata.firstName : citation}</Cite>
+                    </div>
+                    <Citation>
+                        {content.length > 130 ? content.slice(0, 127) + '...' : content}
+                    </Citation>
+                </Col>
+            </Row>
 
+            <Link to={'reviews'}>
                 <ReadMore style={{ marginTop: '24px' }}>{reviewsCount} REVIEWS MORE</ReadMore>
-
-                {isOwn && <EditButton to={'reviews/add-new'} title="Add testimonial" />}
-            </LeftItem>
-        </Link>
+            </Link>
+        </LeftItem>
     );
 };
 const MapArea = ({ playingLocation, isOwn }) => {
@@ -408,7 +407,11 @@ const AddBlockPlaceholder = ({ label, directions, to }) => {
             <LeftItem>
                 <Title>{label}</Title>
                 <Body>{directions}</Body>
-                <Icon icon={addCircleIcon} color={'#50e3c2'} style={{ fontSize: '30px' }} />
+                <Icon
+                    icon={addCircleIcon}
+                    color={'#50e3c2'}
+                    style={{ fontSize: '30px', marginTop: 12 }}
+                />
             </LeftItem>
         </Link>
     );
@@ -480,11 +483,11 @@ const Overview = ({ user, loading, location, history }) => {
                         />
                     ) : null}
                     {user.isDj && (
-                        <MobileExpandWidth>
-                            <Show maxWidth="990px">
+                        <Show maxWidth="990px">
+                            <MobileExpandWidth>
                                 <MapArea playingLocation={playingLocation} isOwn={isOwn} />
-                            </Show>
-                        </MobileExpandWidth>
+                            </MobileExpandWidth>
+                        </Show>
                     )}
                     {user.isDj && (
                         <LeftItem>

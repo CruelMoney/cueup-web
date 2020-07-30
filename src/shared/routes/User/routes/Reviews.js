@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Query, useMutation } from 'react-apollo';
 
 import { Route, useHistory } from 'react-router';
+import { ME } from 'components/gql';
 import { Title, Body, BodySmall, BodyBold } from '../../../components/Text';
 import {
     Col,
@@ -13,7 +14,7 @@ import {
     AddButton,
 } from '../../../components/Blocks';
 
-import { REVIEWS, WRITE_TESTIMONIAL, REMOVE_TESTIMONIAL } from '../gql';
+import { REVIEWS, WRITE_TESTIMONIAL, REMOVE_TESTIMONIAL, USER } from '../gql';
 import { LoadingPlaceholder2 } from '../../../components/common/LoadingPlaceholder';
 
 import EmptyPage from '../../../components/common/EmptyPage';
@@ -66,6 +67,7 @@ const Reviews = ({ user, loading: loadingUser, updateUser }) => {
                         playedVenues={playedVenues}
                         reviews={edges}
                         isOwn={isOwn}
+                        permalink={user.permalink}
                         updateUser={updateUser}
                     />
                 );
@@ -108,7 +110,7 @@ const Cta = ({ onClick }) => (
     </>
 );
 
-const Content = ({ playedVenues, reviews, isOwn, userId, updateUser }) => {
+const Content = ({ playedVenues, reviews, isOwn, permalink, userId, updateUser }) => {
     const [isAddingVenue, setIsAddingVenue] = useState(false);
     const [newTestimonial, setNewTestimonial] = useState({});
     const history = useHistory();
@@ -137,12 +139,18 @@ const Content = ({ playedVenues, reviews, isOwn, userId, updateUser }) => {
 
     const [writeTestimonial, { loading, error }] = useMutation(WRITE_TESTIMONIAL, {
         variables: newTestimonial,
-        refetchQueries: [{ query: REVIEWS, variables: { id: userId } }],
+        refetchQueries: [
+            { query: REVIEWS, variables: { id: userId } },
+            { query: USER, variables: { permalink } },
+        ],
         awaitRefetchQueries: true,
     });
 
     const [removeTestimonial, { loading: loadingRemove }] = useMutation(REMOVE_TESTIMONIAL, {
-        refetchQueries: [{ query: REVIEWS, variables: { id: userId } }],
+        refetchQueries: [
+            { query: REVIEWS, variables: { id: userId } },
+            { query: USER, variables: { permalink } },
+        ],
         awaitRefetchQueries: true,
     });
 
@@ -209,51 +217,58 @@ const Content = ({ playedVenues, reviews, isOwn, userId, updateUser }) => {
                 )}
             </RowMobileCol>
 
-            <Route
-                path={'*/reviews/add-new'}
-                component={() => (
-                    <Popup lazy={false} width={450} showing onClickOutside={history.goBack}>
-                        <Input
-                            type="text"
-                            placeholder="Wedding"
-                            label="Title"
-                            onChange={(title) => setNewTestimonial((t) => ({ ...t, title }))}
-                        />
-                        <Input
-                            type="text"
-                            placeholder="Barack Obama"
-                            label="Testifier"
-                            onChange={(testifier) =>
-                                setNewTestimonial((t) => ({ ...t, testifier }))
-                            }
-                        />
-                        <Input
-                            style={{
-                                height: '250px',
-                            }}
-                            type="text-area"
-                            placeholder="Testimonial"
-                            onChange={(content) => setNewTestimonial((t) => ({ ...t, content }))}
-                        />
-                        <Row style={{ marginTop: '15px' }} right>
-                            <TeritaryButton type="button" onClick={history.goBack}>
-                                Cancel
-                            </TeritaryButton>
-                            <PrimaryButton
-                                type="button"
-                                loading={loading}
-                                onClick={() => {
-                                    writeTestimonial();
-                                    history.goBack();
-                                }}
-                            >
-                                Save
-                            </PrimaryButton>
-                        </Row>
-                    </Popup>
-                )}
-            />
+            <Route path={'*/reviews/add-new'}>
+                <EditPopup
+                    setNewTestimonial={setNewTestimonial}
+                    loading={loading}
+                    writeTestimonial={writeTestimonial}
+                />
+            </Route>
         </>
+    );
+};
+
+const EditPopup = ({ setNewTestimonial, loading, writeTestimonial }) => {
+    const history = useHistory();
+
+    return (
+        <Popup lazy={false} width={450} showing onClickOutside={history.goBack}>
+            <Input
+                type="text"
+                placeholder="Wedding"
+                label="Title"
+                onChange={(title) => setNewTestimonial((t) => ({ ...t, title }))}
+            />
+            <Input
+                type="text"
+                placeholder="Barack Obama"
+                label="Testifier"
+                onChange={(testifier) => setNewTestimonial((t) => ({ ...t, testifier }))}
+            />
+            <Input
+                style={{
+                    height: '250px',
+                }}
+                type="text-area"
+                placeholder="Testimonial"
+                onChange={(content) => setNewTestimonial((t) => ({ ...t, content }))}
+            />
+            <Row style={{ marginTop: '15px' }} right>
+                <TeritaryButton type="button" onClick={history.goBack}>
+                    Cancel
+                </TeritaryButton>
+                <PrimaryButton
+                    type="button"
+                    loading={loading}
+                    onClick={() => {
+                        writeTestimonial();
+                        history.goBack();
+                    }}
+                >
+                    Save
+                </PrimaryButton>
+            </Row>
+        </Popup>
     );
 };
 

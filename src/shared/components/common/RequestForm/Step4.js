@@ -11,12 +11,14 @@ import googleLogo from '../../../assets/icons/google.svg';
 const LoginStyle = styled.div`
     flex-direction: row;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     margin: 30px -5px;
     button {
         max-width: 100%;
-        width: 100%;
-        margin: 0 5px;
+        min-width: 200px;
+        flex: 1;
+        margin: 2.5px 5px;
         > span {
             width: 100%;
         }
@@ -131,6 +133,7 @@ const Step4 = ({
 
             <InputRow small>
                 <Input
+                    labelStyle={{ marginBottom: 0 }}
                     type="email"
                     name="contactEmail"
                     label={translate('requestForm:step-4.contact-email')}
@@ -141,9 +144,12 @@ const Step4 = ({
                     onSave={(contactEmail) => handleChange({ contactEmail })}
                     registerValidation={registerValidation('contactEmail')}
                     unregisterValidation={unregisterValidation('contactEmail')}
-                />
+                >
+                    <BodySmall>
+                        {translate('requestForm:step-4.contact-email-description')}
+                    </BodySmall>
+                </Input>
             </InputRow>
-            <BodySmall>{translate('requestForm:step-4.contact-email-description')}</BodySmall>
 
             <Hr style={{ margin: '15px 0' }} />
 
@@ -158,12 +164,12 @@ const Step4 = ({
                 <BodySmall>{translate('requestForm:step-4.contact-phone-description')}</BodySmall>
             </Input>
 
-            <Row right style={{ marginTop: '12px' }}>
+            <Row right>
                 <TeritaryButton type="button" onClick={back}>
                     {translate('back')}
                 </TeritaryButton>
                 <SmartButton data-cy="submit-event" type="submit" loading={loading}>
-                    {translate('get-offers')}
+                    Show DJs
                 </SmartButton>
             </Row>
         </form>

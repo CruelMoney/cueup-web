@@ -220,7 +220,7 @@ const SignupForm = ({ name }) => {
 const Hr = () => {
     return (
         <div className="divider">
-            <hr />
+            <Hr />
             <p>OR</p>
         </div>
     );

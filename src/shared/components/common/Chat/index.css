@@ -57,12 +57,16 @@
     height: 48px;
 }
 .speech-bubble .message-actions button {
+    color: #bbbbbb;
+    cursor: pointer;
     flex: 1;
+    font-size: inherit;
     font-weight: 600;
     height: 100%;
 }
 .speech-bubble .message-actions button:hover {
     background-color: #e9ecf0;
+    color: inherit;
 }
 .speech-bubble .message-actions button:nth-child(2) {
     border-left: 1px solid rgb(233, 236, 240, 1);
@@ -122,6 +126,7 @@
 }
 .message-input::placeholder {
     color: #98a4b3;
+    opacity: 1;
 }
 .message-composer {
     display: flex;

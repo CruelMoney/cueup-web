@@ -125,6 +125,7 @@
     "react-router-dom": "^5.1.2",
     "react-share": "^4.2.0",
     "react-spring": "^8.0.27",
+    "react-superellipse": "^0.0.6",
     "react-tag-autocomplete": "^6.0.0-beta.6",
     "react-throttle-render": "^2.0.0",
     "react-use-gesture": "^7.0.15",

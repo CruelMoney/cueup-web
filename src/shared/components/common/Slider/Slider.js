@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import RCSlider, { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
+const trackStyle = {
+    backgroundColor: '#25f4d2',
+};
+const handleStyle = {
+    borderColor: '#25f4d2',
+    height: 18,
+    width: 18,
+    marginTop: -7,
+};
 /**
  * The slider bar can have a set minimum and maximum, and the value can be
  * obtained through the value parameter fired on an onChange event.
@@ -98,17 +107,8 @@ class Slider extends Component {
     };
 
     render() {
-        const color = this.props.color || '#25F4D2';
-
         return (
-            <div
-                style={{
-                    visibility: 'hidden',
-                    display: 'flex',
-                    backgroundColor: color,
-                    borderColor: color,
-                }}
-            >
+            <div>
                 {this.props.value.length > 1 ? (
                     <Range
                         disabled={this.props.disabled}
@@ -117,6 +117,8 @@ class Slider extends Component {
                         step={this.props.step}
                         defaultValue={this.props.value}
                         onChange={this.handleChange}
+                        trackStyle={[trackStyle]}
+                        handleStyle={[handleStyle, handleStyle]}
                     />
                 ) : (
                     <RCSlider
@@ -126,6 +128,8 @@ class Slider extends Component {
                         step={this.props.step}
                         defaultValue={this.props.value[0]}
                         onChange={this.handleChange}
+                        trackStyle={trackStyle}
+                        handleStyle={handleStyle}
                     />
                 )}
             </div>

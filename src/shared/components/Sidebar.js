@@ -41,11 +41,11 @@ const Card = styled.div`
 `;
 
 const Shadow = styled.div`
-    box-shadow: 0 2px 50px 0 rgba(0, 0, 0, 0.5);
-    width: 85%;
-    height: 94%;
+    box-shadow: 0 0px 30px 0 rgba(0, 0, 0, 0.3);
+    width: 90%;
+    top: 0;
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 0;

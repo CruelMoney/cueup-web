@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Mutation } from 'react-apollo';
-import { SmartButton } from 'components/Blocks';
+import { SmartButton, Container } from 'components/Blocks';
 import { Input } from 'components/FormComponents';
 import RegistrationElement from 'components/common/RegistrationElement';
 import useTranslate from 'components/hooks/useTranslate';
@@ -61,6 +61,7 @@ const ResetPassword = () => {
     return (
         <div className="reset-password-screen">
             <Helmet>
+                <body className="white-theme" />
                 <title>{siteTitle + ' | Cueup'}</title>
                 <meta name="description" content={siteDescription} />
 
@@ -70,8 +71,11 @@ const ResetPassword = () => {
                 <meta name="twitter:title" content={siteTitle + ' | Cueup'} />
                 <meta name="twitter:description" content={siteDescription} />
             </Helmet>
-            <div className="container">
-                <div className="signup fix-top-mobile">
+            <Container>
+                <div
+                    className="signup fix-top-mobile"
+                    style={{ maxWidth: 900, margin: '60px auto' }}
+                >
                     <h1 style={{ marginBottom: '32px' }}>{siteTitle}</h1>
                     <Mutation
                         mutation={RESET_PASSWORD}
@@ -137,7 +141,7 @@ const ResetPassword = () => {
                         }}
                     </Mutation>
                 </div>
-            </div>
+            </Container>
             <Footer
                 color={'#31DAFF'}
                 noSkew={true}

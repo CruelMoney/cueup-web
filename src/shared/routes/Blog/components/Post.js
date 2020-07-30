@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Disqus from 'disqus-react';
 import { useServerContext } from 'components/hooks/useServerContext';
+import { Hr, Container, CardSimple } from 'components/Blocks';
 import posts from '../posts.json';
 import Formatter from '../../../utils/Formatter';
 import Sharing from '../../../components/common/Sharing-v2';
@@ -56,7 +57,12 @@ const Post = ({ match }) => {
                         publishedDate.getMonth() + 1
                     }-${publishedDate.getDate()}`}
                 >
-                    {Formatter.date.ToLocalString(publishedDate)}
+                    {publishedDate.toLocaleDateString(undefined, {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                    })}
                 </time>
                 {post.author_link ? (
                     <a className="author-link" href={post.author_link}>
@@ -74,23 +80,23 @@ const Post = ({ match }) => {
                         <img src={post.thumbnail_url} alt={post.thumbnail_alt} />
                     </div>
                 )}
-                <div className="container">
+                <Container className="container">
                     <div
                         className="post-content"
                         dangerouslySetInnerHTML={{ __html: post.content }}
                     />
                     <Sharing shareUrl={url} title={post.title} />
                     <CallToBlock category={post.category} />
-                    <hr />
+                    <Hr />
                     <OnlyClientSide>
                         <Disqus.DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
                     </OnlyClientSide>
-                </div>
+                </Container>
             </main>
             <footer className="newsletter-signup">
-                <div className="card">
+                <CardSimple shadow>
                     <NewsletterSignup />
-                </div>
+                </CardSimple>
             </footer>
         </article>
     );

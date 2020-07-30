@@ -106,9 +106,9 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                         </>
                     ) : null}
 
-                    <SmallHeader
-                        style={{ marginBottom: '15px' }}
-                    >{`Hi I'm ${userMetadata?.firstName}`}</SmallHeader>
+                    <SmallHeader style={{ marginBottom: '15px' }}>
+                        {`Hi I'm ${userMetadata?.firstName}`}
+                    </SmallHeader>
 
                     <Col
                         style={{

@@ -12,7 +12,7 @@ import styled from 'styled-components';
 import * as Sentry from '@sentry/react';
 import { Input, InputRow, LabelHalf } from 'components/FormComponents';
 import { validators, useForm } from 'components/hooks/useForm';
-import { inputStyle, SmartButton, TeritaryButton, RowMobileCol } from 'components/Blocks';
+import { inputStyle, SmartButton, TeritaryButton, RowMobileCol, Hr } from 'components/Blocks';
 import { useServerContext } from 'components/hooks/useServerContext';
 import useTranslate from 'components/hooks/useTranslate';
 import CountrySelector from './CountrySelector';
@@ -225,7 +225,7 @@ const PaymentRequestButtonWrapper = ({ paymentIntent, onPaymentConfirmed }) => {
                 className="PaymentRequestButton"
             />
             <div className="or-divider">
-                <hr />
+                <Hr />
                 <span>OR</span>
             </div>
         </>
@@ -263,6 +263,7 @@ const ConnectedCard = ({ refForward, onSave }) => {
                                 'lineHeight': '40px',
                                 '::placeholder': {
                                     color: '#98a4b3',
+                                    opacity: 1,
                                 },
                             },
                             invalid: {

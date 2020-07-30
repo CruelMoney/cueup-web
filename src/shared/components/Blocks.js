@@ -7,9 +7,10 @@ import arrowBack from '@iconify/icons-ion/arrow-back';
 import GracefullImage from './GracefullImage';
 
 export const Hr = styled.hr`
-    border-bottom: 1px solid #e9ecf0;
     margin: 0;
     width: 100%;
+    border-bottom: 2px solid #e9ecf0;
+    color: transparent;
     ${({ margin }) =>
         margin &&
         css`
@@ -26,6 +27,7 @@ export const Container = styled.div`
     width: 100%;
     margin: 0 auto;
     padding: 0 30px;
+    display: block;
     @media only screen and (max-width: 768px) {
         padding: 0 15px;
     }
@@ -103,8 +105,7 @@ export const FullWidthCol = styled(Col)`
     width: 100%;
 `;
 
-export const Divider = styled.hr`
-    border-top: 1px solid #e9ecf0;
+export const Divider = styled(Hr)`
     margin: 24px 0;
 `;
 
@@ -303,9 +304,11 @@ export const inputStyle = css`
     ::placeholder,
     ::-webkit-input-placeholder {
         color: #98a4b3;
+        opacity: 1;
     }
     :-ms-input-placeholder {
         color: #98a4b3;
+        opacity: 1;
     }
 
     :focus {
@@ -722,13 +725,29 @@ export const InfoPill = styled.span`
     }
 `;
 
-export const Card = styled.div`
-    display: flex;
-    overflow: hidden;
-    flex-direction: row;
-    border-radius: 4px;
-    flex-wrap: wrap;
+export const CardSimple = styled.div`
     background: #fff;
+    overflow: hidden;
+    border-radius: 4px;
+    ${({ shadow }) =>
+        shadow
+            ? 'box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 4px 6px 0 rgba(60, 50, 94, 0.11);'
+            : ''}
+`;
+
+export const CardInfo = styled(CardSimple)`
+    h2 {
+        margin: 15px 0;
+    }
+    p {
+        line-height: 1.75em;
+    }
+`;
+
+export const Card = styled(CardSimple)`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     z-index: 1;
     flex: 1;
 `;

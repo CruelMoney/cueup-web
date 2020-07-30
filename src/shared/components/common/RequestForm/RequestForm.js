@@ -1,18 +1,17 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory, useLocation } from 'react-router';
-import { captureException } from '@sentry/core';
 import { useQuery } from 'react-apollo';
 import { Card, CardShadow, Col, Hr, LinkButton } from 'components/Blocks';
-import { LabelHalf, InputRow } from 'components/FormComponents';
+import { LabelHalf, InputRow, Label, InputLabel } from 'components/FormComponents';
 import { BodySmall, TitleClean } from 'components/Text';
 import { useCreateEvent } from 'actions/EventActions';
 import { useForm } from 'components/hooks/useForm';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { trackPageView } from 'utils/analytics';
-import useDebounce from 'components/hooks/useDebounce';
 import { ME } from 'components/gql';
 import { appRoutes } from 'constants/locales/appRoutes';
+import useUrlState from 'components/hooks/useUrlState';
 import Login from '../Login';
 import ErrorMessageApollo from '../ErrorMessageApollo';
 import Progress from './ProgressSubmit';
@@ -22,77 +21,33 @@ import Step3 from './Step3';
 import Step4 from './Step4';
 import content from './content.json';
 
-const formToParams = (form) => {
-    try {
-        const searchParams = new URLSearchParams(window.location.search);
-        Object.keys(form).forEach((key) => {
-            const value = form[key];
-            if (value) {
-                searchParams.set(key, JSON.stringify(value));
-            }
-        });
-        return searchParams;
-    } catch (error) {
-        console.log({ error });
-        return '';
-    }
-};
+const MainForm = ({ initialCity, countries, transparent }) => {
+    const { translate } = useNamespaceContent(content, 'requestForm');
+    const history = useHistory();
+    const routeLocation = useLocation();
 
-const paramsToForm = (params, initialCity, user) => {
-    const form = {
-        date: new Date(),
+    const { data: userData } = useQuery(ME);
+
+    const [showLogin, setShowLogin] = useState(false);
+
+    const [form, setForm] = useUrlState({
+        activeStep: 1,
         locationName: initialCity,
         startMinute: 21 * 60,
         endMinute: 27 * 60,
         guestsCount: 100,
-        contactName: user?.userMetadata.fullName,
-        contactEmail: user?.email,
-        contactPhone: user?.userMetadata.phone,
-    };
-
-    try {
-        const searchParams = new URLSearchParams(params);
-
-        searchParams.forEach((val, key) => {
-            try {
-                const value = JSON.parse(val);
-
-                if (key === 'date') {
-                    form[key] = new Date(value);
-                } else {
-                    form[key] = value;
-                }
-            } catch (error) {}
-        });
-    } catch (error) {
-        captureException(error);
-    }
-    return form;
-};
-
-const MainForm = ({ initialCity, countries }) => {
-    const { translate } = useNamespaceContent(content, 'requestForm');
-    const history = useHistory();
-    const location = useLocation();
-
-    const initialUrlState = useRef();
-
-    const { data: userData } = useQuery(ME);
-
-    if (!initialUrlState.current) {
-        initialUrlState.current = paramsToForm(location.search, initialCity, userData?.me);
-    }
-
-    const [activeStep, setActiveStep] = useState(initialUrlState.current.activeStep || 1);
-    const [showLogin, setShowLogin] = useState(false);
-
-    // defaults
-    const [form, setForm] = useState(initialUrlState.current);
-    const debouncedForm = useDebounce(form, 500);
+        contactName: userData?.me?.userMetadata.fullName,
+        contactEmail: userData?.me?.email,
+        contactPhone: userData?.me?.userMetadata.phone,
+        ...routeLocation.state,
+    });
 
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);
+
     const [error, setError] = useState();
     const [mutate, { loading }] = useCreateEvent(form);
+
+    const { activeStep } = form;
 
     // track progress
     useEffect(() => {
@@ -100,16 +55,6 @@ const MainForm = ({ initialCity, countries }) => {
             trackPageView('/create-event-form-' + activeStep);
         }
     }, [activeStep]);
-
-    // save state to url
-    useEffect(() => {
-        if (activeStep > 1) {
-            const searchParams = formToParams(debouncedForm);
-            searchParams.set('activeStep', activeStep);
-
-            history.push(`?${searchParams.toString()}#book-dj`);
-        }
-    }, [debouncedForm, history, activeStep]);
 
     const createEvent = async () => {
         const errors = runValidations();
@@ -134,28 +79,33 @@ const MainForm = ({ initialCity, countries }) => {
         const errors = runValidations();
         if (errors.length === 0) {
             handleChange(data);
-            setActiveStep((s) => s + 1);
+            setForm((f) => ({ ...f, activeStep: activeStep + 1 }));
         }
     };
 
     const back = () => {
-        setActiveStep((s) => s - 1);
+        setForm((f) => ({ ...f, activeStep: activeStep - 1 }));
     };
 
     const setProgress = (step) => {
         if (step + 1 < activeStep) {
-            setActiveStep(step);
+            setForm((f) => ({ ...f, activeStep: step }));
         }
+    };
+
+    const extraStyle = {
+        borderRadius: 6,
+        backgroundColor: '#fff',
     };
 
     return (
         <div className="request-form" id="book-dj">
             <div className="request-columns">
-                <Wrapper style={{ padding: 0 }}>
+                <Wrapper style={{ padding: 0, marginBottom: transparent ? '0px' : '14px' }}>
                     <Progress setProgress={setProgress} currentStep={activeStep - 1} />
                 </Wrapper>
                 <Wrapper>
-                    <RequestCard>
+                    <RequestCard style={transparent ? null : extraStyle}>
                         {showLogin && (
                             <>
                                 <TitleClean center>Login</TitleClean>
@@ -235,16 +185,18 @@ const MainForm = ({ initialCity, countries }) => {
                             }}
                         />
                     </RequestCard>
-                    <CardShadow />
+                    {!transparent && <CardShadow />}
                 </Wrapper>
                 {activeStep === 4 && (
-                    <Wrapper>
-                        <BodySmall
-                            style={{ textAlign: 'center', marginTop: '12px' }}
-                            className="terms_link"
-                            dangerouslySetInnerHTML={{ __html: translate('terms-message-event') }}
-                        />
-                    </Wrapper>
+                    <BodySmall
+                        style={{
+                            textAlign: 'center',
+                            marginBottom: '12px',
+                            marginTop: transparent ? '-12px' : '12px',
+                        }}
+                        className="terms_link"
+                        dangerouslySetInnerHTML={{ __html: translate('terms-message-event') }}
+                    />
                 )}
             </div>
         </div>
@@ -264,8 +216,19 @@ const Wrapper = styled(Col)`
 
 const RequestCard = styled(Card)`
     padding: 24px 30px;
+    background: transparent;
+
+    h3 {
+        text-align: center;
+        max-width: 380px;
+        margin: 0 auto;
+    }
+
     form {
         width: 100%;
+    }
+    @media screen and (max-width: 480px) {
+        padding: 24px 9px;
     }
 `;
 
@@ -276,6 +239,12 @@ export const RequestSection = styled.section`
 
     ${InputRow} {
         margin-right: -10px;
+    }
+    ${InputLabel} {
+        margin-bottom: 0;
+    }
+    ${Label} {
+        margin-bottom: 0;
     }
     ${LabelHalf} {
         margin-bottom: 0;

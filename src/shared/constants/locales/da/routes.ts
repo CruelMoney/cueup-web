@@ -16,7 +16,7 @@ const routes: RouteKeys = {
     userEvents: '/da/user/:permalink/events',
     userGigs: '/da/user/:permalink/gigs',
     bookDj: '/da/lej-dj/:country/:city?',
-    bookDjOverview: '/da/lej-dj',
+    bookDjOverview: '/da/lokationer',
     blog: '/da/blog',
     faq: '/da/faq',
     faqDj: '/da/faq/dj',

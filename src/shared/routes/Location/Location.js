@@ -4,7 +4,18 @@ import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components';
 import useScript from '@charlietango/use-script';
 import GeoCoder from 'utils/GeoCoder';
-import { PrimaryButton, Row } from 'components/Blocks';
+import {
+    PrimaryButton,
+    Row,
+    Container,
+    Col,
+    RowMobileCol,
+    CardSimple,
+    CardInfo,
+    ShowBelow,
+} from 'components/Blocks';
+import { Body } from 'components/Text';
+
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { useServerContext } from 'components/hooks/useServerContext';
@@ -17,10 +28,10 @@ import ScrollToTop from '../../components/common/ScrollToTop';
 import AsyncRequestForm from '../../components/common/RequestForm';
 import defaultImage from '../../assets/images/cities/default.png';
 import FloatingDJs from './components/FloatingCards';
-import './index.css';
 import { countries } from './locations';
 import { CitiesList } from './components/CountriesList';
 import content from './content.json';
+import './index.css';
 
 const Location = (props) => {
     const secondColor = '#25F4D2';
@@ -141,12 +152,15 @@ const Location = (props) => {
                     )}
 
                     <article>
-                        <div className="container fix-top-mobile">
+                        <Container className="container fix-top-mobile">
                             <GoogleMapsLogo />
 
-                            <div className="row">
-                                <div className="col-md-5 col-sm-6">
-                                    <div className="card">
+                            <Row className="row">
+                                <HeroContent>
+                                    <CardSimple
+                                        className="card"
+                                        style={{ padding: 30, borderRadius: 0 }}
+                                    >
                                         <h1
                                             key="title"
                                             dangerouslySetInnerHTML={{
@@ -155,7 +169,9 @@ const Location = (props) => {
                                                 }),
                                             }}
                                         />
-                                        <p key="paragraph">{siteDescription}</p>
+                                        <Body key="paragraph" style={{ lineHeight: 1.75 }}>
+                                            {siteDescription}
+                                        </Body>
 
                                         <div style={{ float: 'left', marginTop: '20px' }}>
                                             <PrimaryButton active onClick={handleButtonClick}>
@@ -164,22 +180,22 @@ const Location = (props) => {
                                                 </div>
                                             </PrimaryButton>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                    </CardSimple>
+                                </HeroContent>
+                            </Row>
+                        </Container>
                     </article>
                 </header>
-                <div className="show-tablet-down">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-xs-12">
-                                <p key="paragraph">{siteDescription}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="container">
+                <ShowBelow width={768} className="tablet-header-content">
+                    <Container className="container">
+                        <Row className="row">
+                            <Body style={{ color: '#fff' }} key="paragraph">
+                                {siteDescription}
+                            </Body>
+                        </Row>
+                    </Container>
+                </ShowBelow>
+                <Container className="container">
                     <FormRow center>
                         <div ref={requestForm} />
                         <AsyncRequestForm initialCity={title} key={title} />
@@ -192,44 +208,45 @@ const Location = (props) => {
                             countrySlug={country}
                         />
                     )}
-                </div>
+                </Container>
 
                 <img id="city-illustration" src={citySvg} />
             </div>
 
             <FloatingDJs {...translate(['copenhagen', 'denmark'])} location={title} />
 
-            <div className="info-boxes grey">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-sm-6 col-md-5 col-md-push-1">
-                            <div className="card">
+            <div style={{ backgroundColor: '#f7f9fc' }}>
+                <Container className="container">
+                    <RowMobileCol center>
+                        <BottomCol>
+                            <CardInfo shadow style={{ padding: 30, zIndex: 2 }}>
                                 <NoteIcon altGradient={false} />
                                 <h2 style={{ color: themeColor }}>
                                     {translate('location:sections.left.header')}
                                 </h2>
-                                <p>
+                                <Body>
                                     {translate('location:sections.left.content', {
                                         location: title,
                                     })}
-                                </p>
-                            </div>
-                        </div>
-                        <div className="col-sm-6 col-md-5 col-md-push-1">
-                            <div className="card">
+                                </Body>
+                            </CardInfo>
+                        </BottomCol>
+                        <div style={{ minWidth: 30, minHeight: 30 }} />
+                        <BottomCol>
+                            <CardInfo shadow style={{ padding: 30, zIndex: 2 }}>
                                 <MoneyIcon altGradient={false} />
                                 <h2 style={{ color: themeColor }}>
                                     {translate('location:sections.right.header')}
                                 </h2>
-                                <p>
+                                <Body>
                                     {translate('location:sections.right.content', {
                                         location: title,
                                     })}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                </Body>
+                            </CardInfo>
+                        </BottomCol>
+                    </RowMobileCol>
+                </Container>
             </div>
 
             <Footer
@@ -245,6 +262,15 @@ const Location = (props) => {
         </div>
     );
 };
+
+const BottomCol = styled(Col)`
+    max-width: 480px;
+`;
+
+const HeroContent = styled.div`
+    max-width: 480px;
+    z-index: 999;
+`;
 
 const GoogleMapsLogoWrapper = styled.div`
     transform: translateX(-100%);
@@ -282,6 +308,7 @@ const GoogleMapsLogo = () => (
 
 const FormRow = styled(Row)`
     padding-left: 200px;
+    margin-bottom: 100px;
     @media only screen and (max-width: 768px) {
         padding-left: 0px;
     }

@@ -29,6 +29,7 @@
 .book-dj-location .menu-wrapper > .container:after,
 .book-dj-location .menu-wrapper > .container:before {
     background: rgba(255, 255, 255, 0.96);
+    content: '';
     height: 100%;
     position: absolute;
     width: 100%;
@@ -115,7 +116,7 @@
 }
 
 #city-illustration {
-    bottom: -2px;
+    bottom: -8px;
     height: auto;
     left: 50%;
     position: relative;
@@ -203,14 +204,14 @@
         display: none;
     }
 
-    .show-tablet-down {
+    .tablet-header-content {
         background: rgba(49, 217, 255, 0.95);
         color: white;
         padding: 2em 0;
         width: 100%;
     }
 
-    .show-tablet-down p {
+    .tablet-header-content p {
         font-weight: 600;
         margin: 0;
     }

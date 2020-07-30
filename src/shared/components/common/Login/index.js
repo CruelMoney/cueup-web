@@ -165,6 +165,7 @@ const Login = ({ redirect = true, error, onLogin }) => {
                             <RowWrap right fullWidth>
                                 <SmartButton
                                     glow
+                                    fullWidth
                                     active={isValid()}
                                     type={'submit'}
                                     loading={loading}
@@ -201,6 +202,7 @@ const Login = ({ redirect = true, error, onLogin }) => {
                                 </Col>
 
                                 <SmartButton
+                                    fullWidth
                                     level="secondary"
                                     onClick={onPressSocial('facebook')}
                                     loading={socialLoading === 'facebook'}
@@ -210,6 +212,7 @@ const Login = ({ redirect = true, error, onLogin }) => {
                                 </SmartButton>
 
                                 <SmartButton
+                                    fullWidth
                                     level="secondary"
                                     onClick={onPressSocial('google')}
                                     loading={socialLoading === 'google'}
@@ -223,6 +226,7 @@ const Login = ({ redirect = true, error, onLogin }) => {
                                         return (
                                             <>
                                                 <SmartButton
+                                                    fullWidth
                                                     type="button"
                                                     level="tertiary"
                                                     name="forgot_password"

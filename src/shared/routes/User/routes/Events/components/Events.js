@@ -4,7 +4,7 @@ import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import Formatter from '../../../../../utils/Formatter';
 import NavLink from '../../../../../components/common/Navlink';
-import LoadingPlaceholder from '../../../../../components/common/LoadingPlaceholder';
+import { LoadingPlaceholder2 } from '../../../../../components/common/LoadingPlaceholder';
 import { MY_EVENTS } from '../../../gql';
 
 const Events = () => {
@@ -58,7 +58,7 @@ const Events = () => {
             <Query query={MY_EVENTS}>
                 {({ loading, data }) => {
                     if (loading || !data) {
-                        return <LoadingPlaceholder key={1} />;
+                        return <LoadingPlaceholder2 key={1} />;
                     }
 
                     return data?.me?.events.edges.map((e, i) => renderEvent(e, i)) ?? null;

@@ -13,7 +13,7 @@ import { useLocation } from 'react-router';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import NavLink from 'components/common/Navlink';
-import { TeritaryButton } from 'components/Blocks';
+import { TeritaryButton, Hr } from 'components/Blocks';
 import { showOlark } from 'utils/olark';
 import UserRoute from '../../routes/User';
 import { useLogout } from '../hooks/useLogout';
@@ -150,7 +150,7 @@ const DropDownMenu = ({ user, ...props }) => {
                         </NavLink>
                     </li>
                 )}
-                <hr />
+                <Hr />
                 <li>
                     <a className="navLink" href={typeformUrl} target="_blank" rel="noreferrer">
                         <MenuButton>

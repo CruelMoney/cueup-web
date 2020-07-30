@@ -1,159 +1,165 @@
 import { isBoolean } from 'util';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, forwardRef } from 'react';
 import styled from 'styled-components';
 import { Input } from '../FormComponents';
 import { inputStyle } from '../Blocks';
 
-const SuggestionList = ({
-    suggestions: ogSuggestions = [], // can be either strings or {label, value}
-    value,
-    defaultValue,
-    onChange,
-    onBlur,
-    onFocus,
-    noShadow,
-    forceHeight,
-    disableInput,
-    half,
-    style,
-    children,
-    filter,
-    footer,
-    wrapperStyle,
-    ...props
-}) => {
-    let suggestions = ogSuggestions;
-    if (filter) {
-        suggestions = suggestions.filter(filter);
-    }
-
-    const inputRef = useRef();
-
-    const getDefaultValue = (v) => {
-        if (!suggestions || !suggestions.length) {
-            return v;
-        }
-        if (!suggestions[0].value) {
-            return v;
-        }
-        return suggestions.find((s) => s.value === v);
-    };
-
-    const [internalValue, setInternalValue] = useState(getDefaultValue(value || defaultValue));
-    const [focused, setFocused] = useState(false);
-    const [suggestionCursor, setSuggestionCursor] = useState(-1);
-
-    const handleChange = (v, wasSelected) => {
-        setInternalValue(v);
-        const selection = v ? v.value || v : null;
-        onChange && onChange(selection, wasSelected);
-    };
-
-    const handleBlur = () => {
-        onBlur && onBlur();
-        setFocused(false);
-    };
-
-    const handleFocus = () => {
-        setFocused(true);
-        onFocus && onFocus();
-    };
-
-    const handleKeyPress = (e) => {
-        e = e || window.event;
-
-        const keyCode = e.keyCode || e.which;
-        const arrowDown = keyCode == '40';
-        const arrowUp = keyCode == '38';
-        const isEnter = keyCode == '13';
-        const isTab = keyCode == '9';
-
-        if (isTab) {
-            handleChange(suggestions[Math.max(suggestionCursor, 0)], true);
-            setFocused(false);
-            return false;
+const SuggestionList = forwardRef(
+    (
+        {
+            suggestions: ogSuggestions = [], // can be either strings or {label, value}
+            value,
+            defaultValue,
+            onChange,
+            onBlur,
+            onFocus,
+            noShadow,
+            forceHeight,
+            disableInput,
+            half,
+            style,
+            children,
+            filter,
+            footer,
+            wrapperStyle,
+            ...props
+        },
+        ref
+    ) => {
+        let suggestions = ogSuggestions;
+        if (filter) {
+            suggestions = suggestions.filter(filter);
         }
 
-        if (isEnter) {
-            e.preventDefault();
-            handleChange(suggestions[Math.max(suggestionCursor, 0)], true);
-            setFocused(false);
-            inputRef.current && inputRef.current.blur();
-            return false;
-        }
+        const internalRef = useRef();
+        const inputRef = ref || internalRef;
 
-        if (arrowDown || arrowUp) {
-            const max = suggestions.length - 1;
-            e.preventDefault();
-            setSuggestionCursor((i) => Math.max(0, Math.min(max, i + (arrowDown ? 1 : -1))));
-            return false;
-        }
-    };
-
-    let displayValue = internalValue;
-
-    if (displayValue && displayValue.label) {
-        displayValue = displayValue.label;
-    }
-
-    // hide caret
-    if (disableInput) {
-        style = {
-            ...style,
-            color: 'transparent',
-            cursor: 'pointer',
-            textShadow: '0 0 0 black',
+        const getDefaultValue = (v) => {
+            if (!suggestions || !suggestions.length) {
+                return v;
+            }
+            if (!suggestions[0].value) {
+                return v;
+            }
+            return suggestions.find((s) => s.value === v);
         };
-    }
 
-    return (
-        <Wrapper
-            active={focused}
-            onKeyDown={handleKeyPress}
-            className={'suggestionList' + (half ? ' half' : '')}
-            style={wrapperStyle}
-        >
-            <Input
-                ref={inputRef}
-                errorOutside
-                type="text"
-                value={displayValue}
-                onChange={!disableInput && handleChange}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                style={style}
-                aria-autocomplete="list"
-                aria-expanded="false"
-                autoComplete="off"
-                autoCorrect="off"
-                spellCheck="false"
-                role="combobox"
-                {...props}
-            />
-            {focused && suggestions.length > 0 && (
-                <List
-                    noShadow={noShadow}
-                    forceHeight={forceHeight}
-                    topOffset={props.label ? 90 : 60}
-                >
-                    {suggestions.map((s, idx) => (
-                        <Suggestion
-                            key={idx}
-                            data-cy="suggestion-list-item"
-                            active={suggestionCursor === idx}
-                            onMouseEnter={() => setSuggestionCursor(idx)}
-                            onMouseDown={() => handleChange(s, true)}
-                        >
-                            {s.label || s}
-                        </Suggestion>
-                    ))}
-                    {footer}
-                </List>
-            )}
-            {children}
-        </Wrapper>
-    );
-};
+        const [internalValue, setInternalValue] = useState(getDefaultValue(value || defaultValue));
+        const [focused, setFocused] = useState(false);
+        const [suggestionCursor, setSuggestionCursor] = useState(-1);
+
+        const handleChange = (v, wasSelected) => {
+            setInternalValue(v);
+            const selection = v ? v.value || v : null;
+            onChange && onChange(selection, wasSelected);
+        };
+
+        const handleBlur = () => {
+            onBlur && onBlur();
+            setFocused(false);
+        };
+
+        const handleFocus = () => {
+            setFocused(true);
+            onFocus && onFocus();
+        };
+
+        const handleKeyPress = (e) => {
+            e = e || window.event;
+
+            const keyCode = e.keyCode || e.which;
+            const arrowDown = keyCode == '40';
+            const arrowUp = keyCode == '38';
+            const isEnter = keyCode == '13';
+            const isTab = keyCode == '9';
+
+            if (isTab) {
+                handleChange(suggestions[Math.max(suggestionCursor, 0)], true);
+                setFocused(false);
+                return false;
+            }
+
+            if (isEnter) {
+                e.preventDefault();
+                handleChange(suggestions[Math.max(suggestionCursor, 0)], true);
+                setFocused(false);
+                inputRef.current && inputRef.current.blur();
+                return false;
+            }
+
+            if (arrowDown || arrowUp) {
+                const max = suggestions.length - 1;
+                e.preventDefault();
+                setSuggestionCursor((i) => Math.max(0, Math.min(max, i + (arrowDown ? 1 : -1))));
+                return false;
+            }
+        };
+
+        let displayValue = internalValue;
+
+        if (displayValue && displayValue.label) {
+            displayValue = displayValue.label;
+        }
+
+        // hide caret
+        if (disableInput) {
+            style = {
+                ...style,
+                color: 'transparent',
+                cursor: 'pointer',
+                textShadow: '0 0 0 black',
+            };
+        }
+
+        return (
+            <Wrapper
+                active={focused}
+                onKeyDown={handleKeyPress}
+                className={'suggestionList' + (half ? ' half' : '')}
+                style={wrapperStyle}
+            >
+                <Input
+                    ref={inputRef}
+                    errorOutside
+                    type="text"
+                    value={displayValue}
+                    onChange={!disableInput && handleChange}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    style={style}
+                    aria-autocomplete="list"
+                    aria-expanded="false"
+                    autoComplete="off"
+                    autoCorrect="off"
+                    spellCheck="false"
+                    role="combobox"
+                    {...props}
+                />
+                {focused && suggestions.length > 0 && (
+                    <List
+                        noShadow={noShadow}
+                        forceHeight={forceHeight}
+                        topOffset={props.label ? 90 : 60}
+                    >
+                        {suggestions.map((s, idx) => (
+                            <Suggestion
+                                key={idx}
+                                data-cy="suggestion-list-item"
+                                active={suggestionCursor === idx}
+                                onMouseEnter={() => setSuggestionCursor(idx)}
+                                onMouseDown={() => handleChange(s, true)}
+                            >
+                                {s.label || s}
+                            </Suggestion>
+                        ))}
+                        {footer}
+                    </List>
+                )}
+                {children}
+            </Wrapper>
+        );
+    }
+);
 
 export const SearchableSuggestionList = ({ suggestions, onBlur, onChange, onSave, ...props }) => {
     const [filter, setFilter] = useState();

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
+import { CardSimple } from 'components/Blocks';
 import GracefullImage from '../GracefullImage';
 
 const DJCard = (props) => {
@@ -14,7 +15,7 @@ const DJCard = (props) => {
     const locationCountry = props[djCountry] || djCountry;
 
     return (
-        <div className={'card dj-card'} ref={ref}>
+        <CardSimple shadow className={'dj-card'} ref={ref}>
             <div className="profile-picture">
                 <GracefullImage animate src={inView && props.dj.img} alt="profile" />
             </div>
@@ -88,7 +89,7 @@ const DJCard = (props) => {
                     </tbody>
                 </table>
             </div>
-        </div>
+        </CardSimple>
     );
 };
 

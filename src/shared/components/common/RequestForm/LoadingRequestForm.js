@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Col, Card, CardShadow } from 'components/Blocks';
-import LoadingPlaceholder, {
-    LoadingPlaceholder2,
-} from '../../../components/common/LoadingPlaceholder';
+import { LoadingPlaceholder2 } from '../../../components/common/LoadingPlaceholder';
 
 class LoadingForm extends Component {
     render() {

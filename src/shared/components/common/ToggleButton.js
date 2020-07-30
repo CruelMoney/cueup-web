@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SecondaryButton } from 'components/Blocks';
 import Checkmark from '../../assets/Checkmark';
 
-const ToggleButton = ({ label, labelToggled, onClick, disabled, active, ...props }) => {
+const ToggleButton = ({ label, labelToggled, colored, onClick, disabled, active, ...props }) => {
     const [internalToggled, setToggled] = useState(active);
 
     const toggled = active || internalToggled;
@@ -22,7 +22,14 @@ const ToggleButton = ({ label, labelToggled, onClick, disabled, active, ...props
             type="button"
             muted
             flex
-            style={{ width: '100%', flex: 1, maxWidth: '100%', minWidth: '0px' }}
+            style={{
+                width: '100%',
+                flex: 1,
+                maxWidth: '100%',
+                minWidth: '0px',
+                color: colored && toggled ? '#fff' : null,
+                background: colored && toggled ? '#50e3c2' : null,
+            }}
             active={toggled}
             onClick={handleClick}
         >
@@ -36,7 +43,7 @@ const ToggleButton = ({ label, labelToggled, onClick, disabled, active, ...props
                         position: 'relative',
                         marginRight: '-15px',
                     }}
-                    color="#50e3c2"
+                    color={colored ? '#fff' : '#50e3c2'}
                 />
             )}
         </SecondaryButton>

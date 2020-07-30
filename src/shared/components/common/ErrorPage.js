@@ -14,27 +14,26 @@ const ErrorPage = ({ children }) => {
 
 const ErrorFallBack = () => {
     return (
-        <div className="error-screen">
-            <EmptyPage
-                title={'Something went wrong'}
-                message={
-                    <span>
-                        Sorry, something went wrong.
-                        <br />
-                        Try reloading the page or go back.
-                        <br />
-                        <SecondaryButton
-                            style={{ marginTop: '24px' }}
-                            onClick={() => {
-                                window.location = document.referrer;
-                            }}
-                        >
-                            Reload
-                        </SecondaryButton>
-                    </span>
-                }
-            />
-        </div>
+        <EmptyPage
+            style={{ height: '100vh' }}
+            title={'Something went wrong'}
+            message={
+                <span>
+                    Sorry, something went wrong.
+                    <br />
+                    Try reloading the page or go back.
+                    <br />
+                    <SecondaryButton
+                        style={{ marginTop: '24px' }}
+                        onClick={() => {
+                            window.location = document.referrer;
+                        }}
+                    >
+                        Reload
+                    </SecondaryButton>
+                </span>
+            }
+        />
     );
 };
 

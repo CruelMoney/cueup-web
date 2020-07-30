@@ -1,9 +1,8 @@
-import React, { useRef, useEffect, useState, forwardRef } from 'react';
+import React, { useEffect, forwardRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { useQuery } from 'react-apollo';
 import styled from 'styled-components';
-import { useMeasure } from '@softbind/hook-use-measure';
 import { useRouteMatch } from 'react-router';
 import { appRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
@@ -104,9 +103,7 @@ const Content = React.memo((props) => {
     return (
         <div>
             <ScrollToTop animate top={280} />
-
             <EventHeader theEvent={theEvent} loading={loading} pathname={match.url} />
-
             <Container>
                 <ContainerRow>
                     <BorderCol>
