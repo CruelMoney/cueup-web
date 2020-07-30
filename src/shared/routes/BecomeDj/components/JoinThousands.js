@@ -144,13 +144,20 @@ const JoinThousands = (props) => {
                     <H2 center white largeMargin>
                         {title}
                     </H2>
-                    <SubTitle
-                        white
-                        style={{ maxWidth: '520px', fontWeight: 500, whiteSpace: 'pre-line' }}
-                    >
-                        {description}
-                    </SubTitle>
-                    <NavLink to={to} style={{ margin: 'auto', marginTop: '42px' }}>
+                    {description && (
+                        <SubTitle
+                            white
+                            style={{
+                                maxWidth: '520px',
+                                fontWeight: 500,
+                                whiteSpace: 'pre-line',
+                                marginBottom: '42px',
+                            }}
+                        >
+                            {description}
+                        </SubTitle>
+                    )}
+                    <NavLink to={to} style={{ margin: 'auto' }}>
                         <ReadMore white size="18px" uppercase={false}>
                             {label}
                         </ReadMore>
