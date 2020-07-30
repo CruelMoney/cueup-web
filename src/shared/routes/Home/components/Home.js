@@ -70,7 +70,7 @@ const DjSearch = () => {
                     name="query"
                     label={'LOCATION'}
                     placeholder={"Where's the event?"}
-                    wrapperStyle={{ flex: 1.5, height: '100%', display: 'flex', marginBottom: 0 }}
+                    wrapperStyle={{ flex: 1, height: '100%', display: 'flex', marginBottom: 0 }}
                     onSave={(locationName) => setValue({ locationName })}
                     validation={(v) => (v ? null : 'Please select a location')}
                     registerValidation={registerValidation('locationName')}
@@ -90,12 +90,7 @@ const DjSearch = () => {
                     unregisterValidation={unregisterValidation('date')}
                 />
 
-                <SuperEllipse
-                    perEllipse
-                    r1={Preset.iOS.r1}
-                    r2={Preset.iOS.r2}
-                    style={{ margin: '0.1em' }}
-                >
+                <FindDjsButton perEllipse r1={Preset.iOS.r1} r2={Preset.iOS.r2}>
                     <SmartButton
                         primary
                         loading={loading}
@@ -104,7 +99,7 @@ const DjSearch = () => {
                     >
                         Find DJs
                     </SmartButton>
-                </SuperEllipse>
+                </FindDjsButton>
             </StyledSearchWrapper>
             <ErrorMessageApollo style={{ marginTop: '0.1em' }} error={error} />
         </>
@@ -304,6 +299,13 @@ const LeftSide = styled(Col)`
         padding-top: 1.2em;
         padding-bottom: 0.5em;
     }
+`;
+
+const FindDjsButton = styled(SuperEllipse)`
+    position: absolute;
+    right: 0.1em;
+    top: 50%;
+    transform: translateY(-50%);
 `;
 
 export default withTranslation()(Home);
