@@ -65,7 +65,7 @@ const DjSearch = () => {
     return (
         <>
             <StyledSearchWrapper>
-                <SearchWrapperBg r1={Preset.iOS.r1} r2={Preset.iOS.r2} />
+                <SearchWrapperBg />
 
                 <LocationSelector
                     ref={locationRef}
@@ -104,7 +104,7 @@ const DjSearch = () => {
                     unregisterValidation={unregisterValidation('date')}
                 />
 
-                <FindDjsButton perEllipse r1={Preset.iOS.r1} r2={Preset.iOS.r2}>
+                <FindDjsButton>
                     <SmartButton
                         primary
                         loading={loading}

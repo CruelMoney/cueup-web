@@ -93,14 +93,13 @@ const AnimatedDjCards = ({ djs }) => {
                                 ),
                             }}
                         >
-                            <Card p1={10} p2={32}>
-                                {item.isDj && (
-                                    <InnerContent
-                                        onMouseEnter={() => setPauseanimation(true)}
-                                        onMouseLeave={() => setPauseanimation(false)}
-                                        {...item}
-                                    />
-                                )}
+                            <Card
+                                p1={10}
+                                p2={32}
+                                onMouseEnter={() => setPauseanimation(true)}
+                                onMouseLeave={() => setPauseanimation(false)}
+                            >
+                                {item.isDj && <InnerContent {...item} />}
                             </Card>
                         </AnimateItem>
                     ))}
@@ -141,7 +140,7 @@ const InnerContent = ({
     const location = playingLocations?.[0]?.name;
 
     return (
-        <NavLink to={route} draggable={false} {...props}>
+        <NavLink to={route} draggable={false}>
             <GracefullImage
                 draggable={false}
                 src={picture?.path}
