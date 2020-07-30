@@ -395,13 +395,6 @@ li .link-look {
     margin-top: 40px;
 }
 
-.footer-columns {
-    display: flex;
-}
-.footer-columns > div,
-.footer-columns li {
-    margin-right: 40px;
-}
 .text-center {
     text-align: center;
 }
