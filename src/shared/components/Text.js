@@ -167,19 +167,25 @@ export const PageTitle = styled.h1`
     }
 `;
 
+const BaseText = css`
+    color: ${({ white }) => (white ? '#fff' : '#122b48')};
+`;
+
 export const H2 = styled.h2`
+    ${BaseText}
     font-weight: bold;
     font-size: 48px;
     line-height: 115.5%;
     text-align: center;
     letter-spacing: -1.5px;
-    color: #122b48;
+    margin-bottom: 0.8em;
+    white-space: pre;
 `;
 
 export const TextAccent = styled.span`
     color: #00d1ff;
     text-align: ${({ center }) => (center ? 'center' : 'left')};
-    font-size: max(15px, 0.31em);
+    font-size: max(18px, 0.31em);
     margin-bottom: 12px;
     font-weight: 600;
 `;

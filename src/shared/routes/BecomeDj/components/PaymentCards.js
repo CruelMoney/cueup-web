@@ -17,7 +17,6 @@ const Card = styled.div`
         0 20px 15px 0 rgba(0, 0, 0, 0.04);
     border-radius: 28px;
     padding: 39px 39px 0 39px;
-    margin: 12px;
     overflow: hidden;
     .read-more p {
         margin-top: 12px;
@@ -86,10 +85,12 @@ const CardsContainer = styled.div`
     display: flex;
     justify-content: center;
     position: relative;
+    margin-bottom: 30px;
     @media only screen and (max-width: 685px) {
         flex-direction: column;
     }
     margin: ${({ margin }) => (margin ? margin : '0')};
+    margin-bottom: 30px;
 `;
 
 export const PaymentCards = (props) => {
@@ -103,6 +104,8 @@ export const PaymentCards = (props) => {
                 imgSrc={paymentCard}
                 link={link}
             />
+
+            <div style={{ width: 30, height: 30 }} />
 
             <CardItem
                 accent={accent}

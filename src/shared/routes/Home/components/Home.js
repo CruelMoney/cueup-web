@@ -11,6 +11,9 @@ import content from '../content.json';
 import AnimatedDjCards from './AnimatedDjCards';
 import DjSearch from './DJSearch';
 import HowitworksSection from './HowItWorks';
+import PaymentSection from './Payment';
+import SocialProof from './SocialProof';
+import FeatureCards from './FeatureCards';
 
 const Hero = () => {
     return (
@@ -42,6 +45,9 @@ const Home = () => {
         <div>
             <Hero />
             <HowitworksSection />
+            <PaymentSection />
+            <FeatureCards />
+            <SocialProof />
             <Footer
                 noSkew
                 bgColor="#FFFFFF"

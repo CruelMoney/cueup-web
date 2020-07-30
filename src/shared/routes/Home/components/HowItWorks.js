@@ -15,9 +15,7 @@ const HowitworksSection = () => {
                         <br /> book a DJ anywhere
                     </H2>
                 </Col>
-                <div style={{ marginTop: 30 }}>
-                    <HowItWorksCards />
-                </div>
+                <HowItWorksCards />
             </Container>
         </Wrapper>
     );

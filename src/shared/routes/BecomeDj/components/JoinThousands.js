@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { Container, ReadMore } from 'components/Blocks';
 import GracefullImage from 'components/GracefullImage';
+import { H2 } from 'components/Text';
 import dj1 from '../assets/people/joinThousands/1.jpg';
 import dj2 from '../assets/people/joinThousands/2.jpg';
 import dj3 from '../assets/people/joinThousands/3.jpg';
@@ -140,9 +141,9 @@ const JoinThousands = (props) => {
                     </AvatarRow2>
                 </Wrapper>
                 <TextWrapper>
-                    <Header center white largeMargin>
+                    <H2 center white largeMargin>
                         {title}
-                    </Header>
+                    </H2>
                     <SubTitle
                         white
                         style={{ maxWidth: '520px', fontWeight: 500, whiteSpace: 'pre-line' }}
