@@ -1180,6 +1180,7 @@ ol.breadcrumbs a {
 }
 
 .link-look {
+    background: transparent;
     border: none;
     color: #31daff;
     font-weight: 600;

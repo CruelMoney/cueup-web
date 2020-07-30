@@ -11,9 +11,7 @@ import LocationSelector from 'components/common/LocationSelectorSimple';
 import { Label } from 'components/FormComponents';
 import DatePickerPopup from 'components/DatePickerPopup';
 import { useForm } from 'components/hooks/useForm';
-import useUrlState from 'components/hooks/useUrlState';
 import { useCheckDjAvailability } from 'actions/EventActions';
-import ErrorMessage from 'components/common/ErrorMessage';
 import ErrorMessageApollo from 'components/common/ErrorMessageApollo';
 import Footer from '../../../components/common/Footer';
 
@@ -169,6 +167,8 @@ const StyledSearchWrapper = styled.div`
     display: flex;
     align-items: center;
     flex-direction: row;
+    background-color: #fff;
+    border-radius: 20px;
     label,
     ${Label} {
         flex: 1;
