@@ -287,7 +287,7 @@ const BurgerButton = styled.button`
     min-height: 50px;
     min-width: 50px;
     position: absolute;
-    right: 15px;
+    right: 0px;
     top: 15px;
     width: 50px;
 

@@ -6,7 +6,7 @@ import { useHistory, useRouteMatch, useLocation } from 'react-router';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { Body } from 'components/Text';
-import { Col, SmartButton } from 'components/Blocks';
+import { Col, SmartButton, Container } from 'components/Blocks';
 import LocationSelector from 'components/common/LocationSelectorSimple';
 import { Label } from 'components/FormComponents';
 import DatePickerPopup from 'components/DatePickerPopup';
@@ -253,13 +253,6 @@ const MobileLayover = styled.div`
     @media only screen and (max-width: 480px) {
         display: block;
     }
-`;
-
-const Container = styled.div`
-    margin: 0 auto;
-    max-width: 1260px;
-    padding: 0 30px;
-    width: 100%;
 `;
 
 const Title = styled.h1`

@@ -53,7 +53,6 @@ const AnimatedDjCards = ({ djs }) => {
     }, [djs, pauseAnimation]);
 
     const currentDj = djs[index];
-    const nextDj = djs[index + 1];
 
     const mobileOptions = width <= 480 ? { opacity: 0 } : {};
     const mobileOptions2 = width <= 480 ? { opacity: 1 } : {};
@@ -81,46 +80,48 @@ const AnimatedDjCards = ({ djs }) => {
     );
 
     return (
-        <Container>
-            <CardColumn>
-                {transitions.map(({ item, key, props }) => (
-                    <AnimateItem
-                        key={key}
-                        style={{
-                            ...props,
-                            transform: props.translateY.interpolate(
-                                (y) => `translate3d(0,${y}%,0)`
-                            ),
-                        }}
-                    >
-                        <Card p1={10} p2={32}>
-                            {item.isDj && (
-                                <InnerContent
-                                    onMouseEnter={() => setPauseanimation(true)}
-                                    onMouseLeave={() => setPauseanimation(false)}
-                                    {...item}
-                                />
-                            )}
-                        </Card>
-                    </AnimateItem>
-                ))}
-            </CardColumn>
-            <CardColumn style={{ marginTop: '25%' }}>
-                {transitions.map(({ key, props }) => (
-                    <AnimateItem
-                        key={key}
-                        style={{
-                            ...props,
-                            transform: props.translateY.interpolate(
-                                (y) => `translate3d(0,${y}%,0)`
-                            ),
-                        }}
-                    >
-                        <Card p1={10} p2={32} />
-                    </AnimateItem>
-                ))}
-            </CardColumn>
-        </Container>
+        <OverflowWrapper>
+            <Container>
+                <CardColumn>
+                    {transitions.map(({ item, key, props }) => (
+                        <AnimateItem
+                            key={key}
+                            style={{
+                                ...props,
+                                transform: props.translateY.interpolate(
+                                    (y) => `translate3d(0,${y}%,0)`
+                                ),
+                            }}
+                        >
+                            <Card p1={10} p2={32}>
+                                {item.isDj && (
+                                    <InnerContent
+                                        onMouseEnter={() => setPauseanimation(true)}
+                                        onMouseLeave={() => setPauseanimation(false)}
+                                        {...item}
+                                    />
+                                )}
+                            </Card>
+                        </AnimateItem>
+                    ))}
+                </CardColumn>
+                <CardColumn style={{ marginTop: '25%' }}>
+                    {transitions.map(({ key, props }) => (
+                        <AnimateItem
+                            key={key}
+                            style={{
+                                ...props,
+                                transform: props.translateY.interpolate(
+                                    (y) => `translate3d(0,${y}%,0)`
+                                ),
+                            }}
+                        >
+                            <Card p1={10} p2={32} />
+                        </AnimateItem>
+                    ))}
+                </CardColumn>
+            </Container>
+        </OverflowWrapper>
     );
 };
 
@@ -234,6 +235,15 @@ const CardColumn = styled.div`
     margin-right: 0.3em;
     position: relative;
     width: 3.5em;
+`;
+
+const OverflowWrapper = styled.div`
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    overflow: hidden;
 `;
 
 const Container = styled.div`
