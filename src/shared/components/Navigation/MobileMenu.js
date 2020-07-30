@@ -384,6 +384,7 @@ const GlobalStyle = createGlobalStyle`
 
         .mobileMenu .menu li {
            height: 36px;
+           break-inside: avoid;
         }
         .mobileMenu li  a,
         .mobileMenu li  button {
