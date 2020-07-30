@@ -5,7 +5,7 @@ import { appRoutes } from 'constants/locales/appRoutes.ts';
 import useTranslate from 'components/hooks/useTranslate';
 import useAlternativePages from 'components/hooks/useAlternativePages';
 import { showOlark } from 'utils/olark/index';
-import { Container, Row } from 'components/Blocks';
+import { Container, Row, RowWrap } from 'components/Blocks';
 import InstagramLogo from '../../assets/InstagramLogo';
 // eslint-disable-next-line no-unused-vars
 import languageIcon from '../../assets/icons/language.svg';
@@ -57,22 +57,26 @@ const Footer = ({
                 id="preFooter"
             >
                 <Container>
-                    <Row between middle>
-                        <div key="preFooterText" className="action-title">
+                    <RowWrap between middle>
+                        <div
+                            key="preFooterText"
+                            className="action-title"
+                            style={{ marginRight: 30 }}
+                        >
                             <span key="preFooterTitle" style={{ color: color }}>
                                 {title}
                             </span>
                             <span>{subTitle}</span>
                         </div>
-                        <div key="preFooterButtons" className="action-buttons">
+                        <RowWrap key="preFooterButtons">
                             <ButtonLink shadow to={firstTo}>
                                 {firstLabel}
                             </ButtonLink>
                             <ButtonLink invert shadow to={secondTo}>
                                 {secondLabel}
                             </ButtonLink>
-                        </div>
-                    </Row>
+                        </RowWrap>
+                    </RowWrap>
                 </Container>
             </div>
             <footer style={{ backgroundColor: bgColor }}>
