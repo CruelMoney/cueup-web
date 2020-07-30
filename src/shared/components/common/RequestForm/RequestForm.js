@@ -93,14 +93,19 @@ const MainForm = ({ initialCity, countries, transparent }) => {
         }
     };
 
+    const extraStyle = {
+        borderRadius: 6,
+        backgroundColor: '#fff',
+    };
+
     return (
         <div className="request-form" id="book-dj">
             <div className="request-columns">
-                <Wrapper style={{ padding: 0 }}>
+                <Wrapper style={{ padding: 0, marginBottom: transparent ? '0px' : '14px' }}>
                     <Progress setProgress={setProgress} currentStep={activeStep - 1} />
                 </Wrapper>
                 <Wrapper>
-                    <RequestCard>
+                    <RequestCard style={transparent ? null : extraStyle}>
                         {showLogin && (
                             <>
                                 <TitleClean center>Login</TitleClean>
@@ -184,7 +189,11 @@ const MainForm = ({ initialCity, countries, transparent }) => {
                 </Wrapper>
                 {activeStep === 4 && (
                     <BodySmall
-                        style={{ textAlign: 'center', marginBottom: '12px', marginTop: '-12px' }}
+                        style={{
+                            textAlign: 'center',
+                            marginBottom: '12px',
+                            marginTop: transparent ? '-12px' : '12px',
+                        }}
                         className="terms_link"
                         dangerouslySetInnerHTML={{ __html: translate('terms-message-event') }}
                     />
@@ -208,6 +217,7 @@ const Wrapper = styled(Col)`
 const RequestCard = styled(Card)`
     padding: 24px 30px;
     background: transparent;
+
     h3 {
         text-align: center;
         max-width: 380px;
