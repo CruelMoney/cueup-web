@@ -125,6 +125,7 @@ span {
     position: relative;
 }
 button {
+    background: transparent;
     border: none;
     font-weight: 600;
     outline: none;
