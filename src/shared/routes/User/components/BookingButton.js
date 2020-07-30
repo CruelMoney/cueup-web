@@ -93,17 +93,6 @@ const Wrapper = (props) => {
         );
     }
 
-    if (user.isOwn) {
-        return (
-            <CTAButton
-                onClick={() => window.alert('Are you trying to book yourself? 🧐')}
-                data-cy="profile-cta"
-            >
-                REQUEST BOOKING
-            </CTAButton>
-        );
-    }
-
     const { gig } = data;
     const event = gig ? gig.event : null;
     const { offer } = gig || {};
