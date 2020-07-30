@@ -43,7 +43,7 @@ const Card = styled.div`
 const Shadow = styled.div`
     box-shadow: 0 0px 30px 0 rgba(0, 0, 0, 0.3);
     width: 90%;
-    height: 100%;
+    top: 0;
     position: absolute;
     bottom: 10px;
     left: 50%;
