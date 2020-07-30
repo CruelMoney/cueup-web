@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import SuperEllipse from 'react-superellipse';
 import { useTransition, animated } from 'react-spring';
 import { useQuery } from 'react-apollo';
 import { NavLink } from 'react-router-dom';
@@ -276,7 +275,9 @@ const AnimateItem = styled(animated.div)`
     left: 0;
 `;
 
-const Card = styled(SuperEllipse)`
+const Card = styled.div`
+    border-radius: 0.2em;
+    overflow: hidden;
     width: 100%;
     height: 100%;
     background: rgba(255, 255, 255, 0.1);

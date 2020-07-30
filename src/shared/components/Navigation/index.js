@@ -163,11 +163,14 @@ const MainMenu = styled.ul`
         cursor: pointer;
         fill: #fff;
         font-size: 17px;
-        /* Login: */
         font-weight: 600;
         height: 32px;
         letter-spacing: 0.3px;
         line-height: 32px;
+        &:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
     }
 
     @media screen and (max-width: 767px) {

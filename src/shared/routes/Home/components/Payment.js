@@ -24,7 +24,7 @@ const PaymentSection = () => {
             <Container>
                 <Col>
                     <TextAccent center>PAYMENT</TextAccent>
-                    <H2 white>
+                    <H2 white center>
                         Money back
                         <br />
                         guarantee

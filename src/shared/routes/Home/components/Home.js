@@ -14,6 +14,7 @@ import HowitworksSection from './HowItWorks';
 import PaymentSection from './Payment';
 import SocialProof from './SocialProof';
 import FeatureCards from './FeatureCards';
+import ComparisonSection from './ComparisonSection';
 
 const Hero = () => {
     return (
@@ -45,6 +46,7 @@ const Home = () => {
         <div>
             <Hero />
             <HowitworksSection />
+            <ComparisonSection />
             <PaymentSection />
             <FeatureCards />
             <SocialProof />

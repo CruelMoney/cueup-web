@@ -169,6 +169,7 @@ export const PageTitle = styled.h1`
 
 const BaseText = css`
     color: ${({ white }) => (white ? '#fff' : '#122b48')};
+    text-align: ${({ center }) => (center ? 'center' : 'left')};
 `;
 
 export const H2 = styled.h2`
@@ -176,7 +177,6 @@ export const H2 = styled.h2`
     font-weight: bold;
     font-size: 48px;
     line-height: 115.5%;
-    text-align: center;
     letter-spacing: -1.5px;
     margin-bottom: 0.8em;
     white-space: pre;
