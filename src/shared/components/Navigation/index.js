@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useQuery } from 'react-apollo';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 import Navlink from '../common/Navlink';
 import Login from '../common/Login';
@@ -51,7 +52,7 @@ const Menu = () => {
                         </div>
 
                         <MobileMenu />
-                        <ul className="main-menu">
+                        <MainMenu className="main-menu">
                             {loggedIn && !isPro && isDJ && (
                                 <li>
                                     <Navlink
@@ -126,13 +127,53 @@ const Menu = () => {
                                     <LoadingIndicator />
                                 </li>
                             ) : null}
-                        </ul>
+                        </MainMenu>
                     </nav>
                 </div>
             </Container>
         </div>
     );
 };
+
+const MainMenu = styled.ul`
+    align-items: center;
+    display: flex;
+    float: right;
+    height: 80px;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0;
+
+    > li {
+        margin-left: 30px;
+        position: relative;
+    }
+    .redirect-button {
+        height: 20px !important;
+        width: 20px !important;
+    }
+
+    > li:last-child {
+        margin-left: 30px;
+    }
+
+    a,
+    .link-look {
+        color: #fff;
+        cursor: pointer;
+        fill: #fff;
+        font-size: 17px;
+        /* Login: */
+        font-weight: 600;
+        height: 32px;
+        letter-spacing: 0.3px;
+        line-height: 32px;
+    }
+
+    @media screen and (max-width: 767px) {
+        display: none;
+    }
+`;
 
 const SmartNavigation = withRouter(Menu);
 
