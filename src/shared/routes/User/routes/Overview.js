@@ -214,28 +214,28 @@ const Review = ({ isOwn, reviewsCount, highlightedReview }) => {
     if (!content) {
         return null;
     }
+
     return (
-        <Link to={'reviews'}>
-            <LeftItem>
-                <Title>Highlighted Review</Title>
+        <LeftItem>
+            <Title>Highlighted Review</Title>
 
-                <Row middle style={{ marginTop: '36px' }}>
-                    <Col style={{ width: '100%' }}>
-                        <div style={{ marginBottom: '9px' }}>
-                            <QuotationMarkIcon />
-                            <Cite>{author ? author.userMetadata.firstName : citation}</Cite>
-                        </div>
-                        <Citation>
-                            {content.length > 130 ? content.slice(0, 127) + '...' : content}
-                        </Citation>
-                    </Col>
-                </Row>
+            <Row middle style={{ marginTop: '36px' }}>
+                <Col style={{ width: '100%' }}>
+                    <div style={{ marginBottom: '9px' }}>
+                        <QuotationMarkIcon />
+                        <Cite>{author ? author.userMetadata.firstName : citation}</Cite>
+                    </div>
+                    <Citation>
+                        {content.length > 130 ? content.slice(0, 127) + '...' : content}
+                    </Citation>
+                </Col>
+            </Row>
 
+            <Link to={'reviews'}>
                 <ReadMore style={{ marginTop: '24px' }}>{reviewsCount} REVIEWS MORE</ReadMore>
-
-                {isOwn && <EditButton to={'reviews/add-new'} title="Add testimonial" />}
-            </LeftItem>
-        </Link>
+            </Link>
+            {isOwn && <EditButton to={'reviews/add-new'} title="Add testimonial" />}
+        </LeftItem>
     );
 };
 const MapArea = ({ playingLocation, isOwn }) => {
