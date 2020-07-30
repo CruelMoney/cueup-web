@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useContext, memo, useCallback } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { NavLink, withRouter } from 'react-router-dom';
 import { MobileMenuContext } from './MobileMenu';
 
@@ -22,7 +22,7 @@ const Filler = styled.span`
     }
 `;
 
-const StyledLink = styled(({ indicateActive, ...rest }) => <NavLink {...rest} />)`
+const StyledLink = styled(NavLink)`
     font-size: 18px;
     height: 48px;
     line-height: 48px;
@@ -41,6 +41,15 @@ const StyledLink = styled(({ indicateActive, ...rest }) => <NavLink {...rest} />
     @media only screen and (max-width: 900px) {
         font-size: 15px;
     }
+
+    ${({ mobileOnly }) =>
+        mobileOnly &&
+        css`
+            display: none;
+            @media only screen and (max-width: 425px) {
+                display: inline-block;
+            }
+        `}
 `;
 
 const ActiveIndicator = styled.span`
@@ -93,7 +102,7 @@ const Navigation = (props) => {
     return (
         <StyledNav ref={navRef} onMouseLeave={resetIndicator} showMobile={showMobile}>
             <ActiveIndicator ref={indicator} />
-            {routes.map(({ route, label, className }) => {
+            {routes.map(({ route, label, mobileOnly }) => {
                 const active = pathname.includes(route);
                 return (
                     <StyledLink
@@ -111,8 +120,8 @@ const Navigation = (props) => {
                         }}
                         onMouseEnter={({ target }) => setActiveIndicatorFromElement(target)}
                         indicateActive={active}
-                        className={className}
                         data-cy={'navbutton-' + label}
+                        mobileOnly={mobileOnly}
                     >
                         {label}
                     </StyledLink>

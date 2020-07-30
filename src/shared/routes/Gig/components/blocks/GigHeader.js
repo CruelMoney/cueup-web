@@ -9,7 +9,7 @@ const routes = [
     { route: 'information', label: 'info', active: true },
     { route: 'offer', label: 'offer' },
     { route: 'review', label: 'review' },
-    { route: 'chat', label: 'chat', className: 'showMobile' },
+    { route: 'chat', label: 'chat', mobileOnly: true },
 ];
 
 const StyledGradientBg = styled(GradientBg)`
