@@ -674,12 +674,6 @@ input[type='file'] + label * {
                 }
             }
         }
-        .animated-background {
-            margin: 3em 0;
-            .background-masker {
-                background: #edf2f7;
-            }
-        }
     }
     form ~ .errors {
         margin-top: 2em;

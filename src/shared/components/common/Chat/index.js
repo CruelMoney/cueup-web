@@ -6,7 +6,7 @@ import sendIcon from '@iconify/icons-ion/send';
 import TextareaAutosize from 'react-autosize-textarea';
 import usePushNotifications from 'components/hooks/usePushNotifications';
 import { BodySmall } from 'components/Text';
-import LoadingPlaceholder from '../LoadingPlaceholder';
+import LoadingPlaceholder, { LoadingPlaceholder2 } from '../LoadingPlaceholder';
 import { Avatar } from '../../Blocks';
 import useChat from './useChat';
 
@@ -47,14 +47,7 @@ const Chat = ({
             <div ref={messagesContainer} className="messages">
                 <div style={{ flex: 1 }}> </div>
 
-                {!ready ? (
-                    <>
-                        <LoadingPlaceholder />
-                        <LoadingPlaceholder />
-                    </>
-                ) : messages.length > 0 ? null : (
-                    placeholder
-                )}
+                {!ready ? <LoadingPlaceholder2 /> : messages.length > 0 ? null : placeholder}
                 {datedMessages.map(([time, messages], idx) => (
                     <DateGroup
                         key={time}
