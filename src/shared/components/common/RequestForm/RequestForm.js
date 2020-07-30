@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory, useLocation } from 'react-router';
-import { captureException } from '@sentry/core';
 import { useQuery } from 'react-apollo';
 import { Card, CardShadow, Col, Hr, LinkButton } from 'components/Blocks';
 import { LabelHalf, InputRow, Label, InputLabel } from 'components/FormComponents';
@@ -10,7 +9,6 @@ import { useCreateEvent } from 'actions/EventActions';
 import { useForm } from 'components/hooks/useForm';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { trackPageView } from 'utils/analytics';
-import useDebounce from 'components/hooks/useDebounce';
 import { ME } from 'components/gql';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useUrlState from 'components/hooks/useUrlState';
