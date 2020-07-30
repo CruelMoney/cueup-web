@@ -97,6 +97,7 @@ const Step2 = ({
                             handleChange({ genres });
                             runValidation(genres);
                         }}
+                        colored
                         value={form.genres}
                         potentialValues={c.GENRES}
                         columns={4}

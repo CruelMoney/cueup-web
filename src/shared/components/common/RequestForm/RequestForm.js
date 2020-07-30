@@ -227,6 +227,9 @@ const RequestCard = styled(Card)`
     form {
         width: 100%;
     }
+    @media screen and (max-width: 480px) {
+        padding: 24px 9px;
+    }
 `;
 
 export const RequestSection = styled.section`
@@ -238,10 +241,10 @@ export const RequestSection = styled.section`
         margin-right: -10px;
     }
     ${InputLabel} {
-        margin-bottom: 0 !important;
+        margin-bottom: 0;
     }
     ${Label} {
-        margin-bottom: 0 !important;
+        margin-bottom: 0;
     }
     ${LabelHalf} {
         margin-bottom: 0;

@@ -7,17 +7,18 @@ import { Input, InputRow } from 'components/FormComponents';
 import useSocialLogin from 'components/hooks/useSocialLogin';
 import fbLogo from '../../../assets/icons/fb.svg';
 import googleLogo from '../../../assets/icons/google.svg';
-import { RequestSection } from './RequestForm';
 
 const LoginStyle = styled.div`
     flex-direction: row;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     margin: 30px -5px;
     button {
         max-width: 100%;
-        width: 100%;
-        margin: 0 5px;
+        min-width: 200px;
+        flex: 1;
+        margin: 2.5px 5px;
         > span {
             width: 100%;
         }
