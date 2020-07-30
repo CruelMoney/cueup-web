@@ -480,11 +480,11 @@ const Overview = ({ user, loading, location, history }) => {
                         />
                     ) : null}
                     {user.isDj && (
-                        <MobileExpandWidth>
-                            <Show maxWidth="990px">
+                        <Show maxWidth="990px">
+                            <MobileExpandWidth>
                                 <MapArea playingLocation={playingLocation} isOwn={isOwn} />
-                            </Show>
-                        </MobileExpandWidth>
+                            </MobileExpandWidth>
+                        </Show>
                     )}
                     {user.isDj && (
                         <LeftItem>
