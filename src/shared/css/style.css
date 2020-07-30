@@ -84,7 +84,7 @@ p {
     text-rendering: optimizelegibility !important;
 }
 a {
-    color: #ffffff;
+    color: inherit;
     cursor: pointer;
     outline: none !important;
     text-decoration: none;

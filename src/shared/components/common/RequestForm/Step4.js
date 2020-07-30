@@ -7,6 +7,7 @@ import { Input, InputRow } from 'components/FormComponents';
 import useSocialLogin from 'components/hooks/useSocialLogin';
 import fbLogo from '../../../assets/icons/fb.svg';
 import googleLogo from '../../../assets/icons/google.svg';
+import { RequestSection } from './RequestForm';
 
 const LoginStyle = styled.div`
     flex-direction: row;
@@ -131,6 +132,7 @@ const Step4 = ({
 
             <InputRow small>
                 <Input
+                    labelStyle={{ marginBottom: 0 }}
                     type="email"
                     name="contactEmail"
                     label={translate('requestForm:step-4.contact-email')}
@@ -141,9 +143,12 @@ const Step4 = ({
                     onSave={(contactEmail) => handleChange({ contactEmail })}
                     registerValidation={registerValidation('contactEmail')}
                     unregisterValidation={unregisterValidation('contactEmail')}
-                />
+                >
+                    <BodySmall>
+                        {translate('requestForm:step-4.contact-email-description')}
+                    </BodySmall>
+                </Input>
             </InputRow>
-            <BodySmall>{translate('requestForm:step-4.contact-email-description')}</BodySmall>
 
             <Hr style={{ margin: '15px 0' }} />
 
@@ -158,7 +163,7 @@ const Step4 = ({
                 <BodySmall>{translate('requestForm:step-4.contact-phone-description')}</BodySmall>
             </Input>
 
-            <Row right style={{ marginTop: '12px' }}>
+            <Row right>
                 <TeritaryButton type="button" onClick={back}>
                     {translate('back')}
                 </TeritaryButton>

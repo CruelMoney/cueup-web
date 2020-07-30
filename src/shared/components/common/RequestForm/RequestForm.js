@@ -4,7 +4,7 @@ import { useHistory, useLocation } from 'react-router';
 import { captureException } from '@sentry/core';
 import { useQuery } from 'react-apollo';
 import { Card, CardShadow, Col, Hr, LinkButton } from 'components/Blocks';
-import { LabelHalf, InputRow } from 'components/FormComponents';
+import { LabelHalf, InputRow, Label, InputLabel } from 'components/FormComponents';
 import { BodySmall, TitleClean } from 'components/Text';
 import { useCreateEvent } from 'actions/EventActions';
 import { useForm } from 'components/hooks/useForm';
@@ -185,13 +185,11 @@ const MainForm = ({ initialCity, countries, transparent }) => {
                     {!transparent && <CardShadow />}
                 </Wrapper>
                 {activeStep === 4 && (
-                    <Wrapper>
-                        <BodySmall
-                            style={{ textAlign: 'center', marginTop: '12px' }}
-                            className="terms_link"
-                            dangerouslySetInnerHTML={{ __html: translate('terms-message-event') }}
-                        />
-                    </Wrapper>
+                    <BodySmall
+                        style={{ textAlign: 'center', marginBottom: '12px', marginTop: '-12px' }}
+                        className="terms_link"
+                        dangerouslySetInnerHTML={{ __html: translate('terms-message-event') }}
+                    />
                 )}
             </div>
         </div>
@@ -211,6 +209,13 @@ const Wrapper = styled(Col)`
 
 const RequestCard = styled(Card)`
     padding: 24px 30px;
+    background: transparent;
+    h3 {
+        text-align: center;
+        max-width: 380px;
+        margin: 0 auto;
+    }
+
     form {
         width: 100%;
     }
@@ -223,6 +228,12 @@ export const RequestSection = styled.section`
 
     ${InputRow} {
         margin-right: -10px;
+    }
+    ${InputLabel} {
+        margin-bottom: 0 !important;
+    }
+    ${Label} {
+        margin-bottom: 0 !important;
     }
     ${LabelHalf} {
         margin-bottom: 0;

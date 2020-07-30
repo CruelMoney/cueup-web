@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useCheckDjAvailability } from 'actions/EventActions';
 import { BodySmall } from 'components/Text';
-import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
 import { Row, SmartButton } from '../../Blocks';
 import { Input } from '../../FormComponents';
 import LocationSelector from '../LocationSelectorSimple';
