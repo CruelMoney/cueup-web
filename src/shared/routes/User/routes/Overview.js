@@ -234,7 +234,6 @@ const Review = ({ isOwn, reviewsCount, highlightedReview }) => {
             <Link to={'reviews'}>
                 <ReadMore style={{ marginTop: '24px' }}>{reviewsCount} REVIEWS MORE</ReadMore>
             </Link>
-            {isOwn && <EditButton to={'reviews/add-new'} title="Add testimonial" />}
         </LeftItem>
     );
 };
@@ -408,7 +407,11 @@ const AddBlockPlaceholder = ({ label, directions, to }) => {
             <LeftItem>
                 <Title>{label}</Title>
                 <Body>{directions}</Body>
-                <Icon icon={addCircleIcon} color={'#50e3c2'} style={{ fontSize: '30px' }} />
+                <Icon
+                    icon={addCircleIcon}
+                    color={'#50e3c2'}
+                    style={{ fontSize: '30px', marginTop: 12 }}
+                />
             </LeftItem>
         </Link>
     );
