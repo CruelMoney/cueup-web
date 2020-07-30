@@ -904,15 +904,6 @@ p.error {
 .error button:hover {
     color: #32325d !important;
 }
-.event-submit-wrapper {
-    margin-bottom: 20px;
-    position: relative;
-}
-.event-submit-wrapper .errors {
-    margin: 0;
-    margin-top: 10px;
-    text-align: center;
-}
 
 .terms {
     margin-bottom: 80px;
@@ -936,86 +927,6 @@ p.error {
 
 .terms-navigation button {
     width: 100%;
-}
-
-.progrezz-wrapper {
-    height: auto;
-    pointer-events: none;
-    position: relative;
-    width: 100%;
-}
-
-.progrezz-wrapper .button {
-    height: 40px;
-}
-.progrezz {
-    align-items: center;
-    display: flex;
-    height: 100%;
-    justify-content: space-between;
-    margin-left: 16.666666%;
-    position: relative;
-    transition: all 0.25s ease;
-    width: 66.6666%;
-}
-.progrezz.done {
-    margin-left: 50%;
-    opacity: 0;
-    pointer-events: none;
-    width: 0;
-}
-
-.progrezz > div {
-    width: 100%;
-}
-.progrezz .step {
-    background: white;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
-    cursor: pointer;
-    height: 70px;
-    margin-bottom: -20px;
-    overflow: hidden;
-    pointer-events: all;
-    position: relative;
-    width: 50px;
-}
-.progrezz .step p {
-    color: white;
-    font-size: 22px;
-    font-weight: bold;
-    line-height: 48px;
-    margin: 0;
-    position: relative;
-    text-align: center;
-    z-index: 1;
-}
-.progrezz .step svg {
-    fill: #25f4d2;
-    left: 0;
-    position: absolute;
-    top: 0;
-    transition: opacity 0.3s;
-}
-.progrezz .step img {
-    height: 16px;
-    margin-top: -5px;
-}
-.progrezz .step .step-pin {
-    visibility: hidden;
-}
-.progrezz > .step:first-child {
-    margin-left: -25px;
-}
-.progrezz > .step:last-child {
-    margin-right: -25px;
-}
-.progrezz .step:not(.done) svg {
-    opacity: 0.2;
-}
-.step > .checkmark {
-    height: 20px;
-    margin-top: -5px;
 }
 
 .notification {
