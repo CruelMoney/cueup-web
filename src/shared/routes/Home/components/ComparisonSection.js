@@ -37,7 +37,7 @@ const ComparisonSection = () => {
                     <ComparisonTable>
                         <table cellSpacing={0}>
                             <thead>
-                                <th /> <th>Traditional</th> <th>Cueup</th>
+                                <th /> <th>Traditional Booking</th> <th>Cueup</th>
                             </thead>
                             <tbody>
                                 {data.map(({ label, traditional, cueup }, idx) => (
@@ -103,6 +103,9 @@ const ComparisonTable = styled.div`
         position: relative;
         svg {
             margin-right: 6px;
+            font-size: 1.3em;
+            top: 2px;
+            position: relative;
         }
     }
     th {

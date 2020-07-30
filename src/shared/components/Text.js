@@ -176,10 +176,20 @@ export const H2 = styled.h2`
     ${BaseText}
     font-weight: bold;
     font-size: 48px;
-    line-height: 115.5%;
-    letter-spacing: -1.5px;
+    line-height: 1.15em;
+    letter-spacing: -0.01em;
     margin-bottom: 0.8em;
-    white-space: pre;
+    white-space: pre-wrap;
+`;
+
+export const H3 = styled.h2`
+    ${BaseText}
+    font-weight: bold;
+    font-size: 38px;
+    line-height: 1.15em;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.8em;
+    white-space: pre-wrap;
 `;
 
 export const TextAccent = styled.span`
