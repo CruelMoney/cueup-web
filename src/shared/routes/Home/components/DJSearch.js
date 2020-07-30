@@ -1,10 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 
 import styled from 'styled-components';
 import SuperEllipse, { Preset } from 'react-superellipse';
 import { useHistory, useLocation } from 'react-router';
 
-import { SmartButton, HideBelow } from 'components/Blocks';
+import { SmartButton } from 'components/Blocks';
 import LocationSelector from 'components/common/LocationSelectorSimple';
 import { Label } from 'components/FormComponents';
 import DatePickerPopup from 'components/DatePickerPopup';
@@ -17,42 +17,50 @@ const DjSearch = () => {
     const history = useHistory();
     const locationRef = useRef();
     const dateRef = useRef();
+    const [runSubmit, setRunSubmit] = useState(false);
+
     const { registerValidation, unregisterValidation, runValidations, form, setValue } = useForm();
 
     const [check, { loading, error }] = useCheckDjAvailability();
 
-    const submit = async (e) => {
-        e.preventDefault();
-
-        if (!form.locationName) {
-            locationRef.current.focus();
-            return;
-        }
-
-        if (!form.date) {
-            dateRef.current.focus();
-            return;
-        }
-
-        const errors = runValidations();
-        if (errors.length === 0) {
-            const { result, date, timeZoneId, location } = await check(form);
-
-            if (result === true) {
-                const route = routeLocation.pathname + 'book-dj';
-                console.log({ route });
-                history.push({
-                    pathname: route,
-                    state: {
-                        activeStep: 2,
-                        date,
-                        timeZoneId,
-                        location,
-                    },
-                });
+    const submit = useCallback(
+        async (e) => {
+            if (e) {
+                e.preventDefault();
             }
-        }
-    };
+            setRunSubmit(false);
+
+            if (!form.locationName) {
+                locationRef.current.focus();
+                return;
+            }
+
+            if (!form.date) {
+                setRunSubmit(true);
+                dateRef.current.focus();
+                return;
+            }
+
+            const errors = runValidations();
+            if (errors.length === 0) {
+                const { result, date, timeZoneId, location } = await check(form);
+
+                if (result === true) {
+                    const route = routeLocation.pathname + 'book-dj';
+                    history.push({
+                        pathname: route,
+                        state: {
+                            activeStep: 2,
+                            date,
+                            timeZoneId,
+                            location,
+                        },
+                    });
+                }
+            }
+        },
+        [check, form, history, routeLocation.pathname, runValidations]
+    );
 
     return (
         <>
@@ -86,7 +94,12 @@ const DjSearch = () => {
                     maxDate={new Date().setFullYear(new Date().getFullYear() + 5)}
                     buttonText="Add date"
                     validation={(v) => (v ? null : 'Please select a date')}
-                    onSave={(date) => setValue({ date })}
+                    onSave={(date) => {
+                        setValue({ date });
+                        if (runSubmit) {
+                            submit();
+                        }
+                    }}
                     registerValidation={registerValidation('date')}
                     unregisterValidation={unregisterValidation('date')}
                 />
