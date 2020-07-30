@@ -413,9 +413,11 @@ footer .dropdown-selector-wrapper {
     font-weight: 400;
     margin: auto;
 }
-footer .dropdown-selector-wrapper {
+footer .dropdown-selector-wrapper,
+footer .dropdown-selector {
     color: inherit;
     fill: inherit;
+    font-size: 15px;
     font-weight: 600;
     svg {
         margin-right: 6px;
