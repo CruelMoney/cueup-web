@@ -166,3 +166,20 @@ export const PageTitle = styled.h1`
         font-weight: 500;
     }
 `;
+
+export const H2 = styled.h2`
+    font-weight: bold;
+    font-size: 48px;
+    line-height: 115.5%;
+    text-align: center;
+    letter-spacing: -1.5px;
+    color: #122b48;
+`;
+
+export const TextAccent = styled.span`
+    color: #00d1ff;
+    text-align: ${({ center }) => (center ? 'center' : 'left')};
+    font-size: max(15px, 0.31em);
+    margin-bottom: 12px;
+    font-weight: 600;
+`;

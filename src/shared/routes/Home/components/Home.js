@@ -10,6 +10,7 @@ import Footer from '../../../components/common/Footer';
 import content from '../content.json';
 import AnimatedDjCards from './AnimatedDjCards';
 import DjSearch from './DJSearch';
+import HowitworksSection from './HowItWorks';
 
 const Hero = () => {
     return (
@@ -40,6 +41,7 @@ const Home = () => {
     return (
         <div>
             <Hero />
+            <HowitworksSection />
             <Footer
                 noSkew
                 bgColor="#FFFFFF"
