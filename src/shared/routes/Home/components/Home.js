@@ -5,7 +5,6 @@ import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { Body, TextAccent } from 'components/Text';
 import { Col, Container } from 'components/Blocks';
 
-import { ScrollToTopOnMount } from 'components/common/ScrollToTop';
 import Footer from '../../../components/common/Footer';
 
 import content from '../content.json';
@@ -54,12 +53,12 @@ const Home = () => {
             <Footer
                 noSkew
                 bgColor="#FFFFFF"
-                firstTo={translate(appRoutes.signUp)}
-                secondTo={translate(appRoutes.howItWorks)}
-                firstLabel={translate('apply-to-become-dj')}
-                secondLabel={translate('how-it-works')}
-                title={translate('home:footer.first')}
-                subTitle={translate('home:footer.second')}
+                firstTo={'/book-dj'}
+                secondTo={translate(appRoutes.signUp)}
+                firstLabel={'Find a DJ'}
+                secondLabel={translate('apply-to-become-dj')}
+                title={'Ready to start the party?'}
+                subTitle={'Look for DJs now, or sign up as a DJ.'}
             />
         </div>
     );
