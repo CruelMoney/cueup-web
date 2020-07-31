@@ -180,6 +180,9 @@ export const H2 = styled.h2`
     letter-spacing: -0.01em;
     margin-bottom: 0.8em;
     white-space: pre-wrap;
+    @media screen and (max-width: 480px) {
+        font-size: 30px;
+    }
 `;
 
 export const H3 = styled.h2`
@@ -190,6 +193,9 @@ export const H3 = styled.h2`
     letter-spacing: -0.01em;
     margin-bottom: 0.8em;
     white-space: pre-wrap;
+    @media screen and (max-width: 480px) {
+        font-size: 24px;
+    }
 `;
 
 export const TextAccent = styled.span`

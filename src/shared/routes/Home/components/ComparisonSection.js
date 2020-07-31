@@ -21,13 +21,9 @@ const ComparisonSection = () => {
     return (
         <Wrapper>
             <Container>
-                <Col>
+                <Col style={{ maxWidth: 500 }}>
                     <TextAccent>Simplified process</TextAccent>
-                    <H2>
-                        Avoid the usual pains
-                        <br />
-                        of finding a good DJ
-                    </H2>
+                    <H2>Avoid the usual pains of finding a good DJ</H2>
                 </Col>
                 <RowWrap>
                     <Body>

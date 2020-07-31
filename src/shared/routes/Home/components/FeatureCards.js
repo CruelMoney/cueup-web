@@ -55,6 +55,7 @@ const Card = styled.div`
         0 20px 15px 0 rgba(0, 0, 0, 0.04);
     border-radius: 28px;
     padding: 39px;
+    min-width: 300px;
     ${H3} {
         margin-bottom: 0.5em;
         color: #00d1ff;
