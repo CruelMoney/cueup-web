@@ -2,9 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
-import { Body } from 'components/Text';
+import { Body, TextAccent } from 'components/Text';
 import { Col, Container } from 'components/Blocks';
 
+import { ScrollToTopOnMount } from 'components/common/ScrollToTop';
 import Footer from '../../../components/common/Footer';
 
 import content from '../content.json';
@@ -114,9 +115,8 @@ const LandingBody = styled(Body)`
     color: #fff;
 `;
 
-const Accent = styled.p`
+const Accent = styled(TextAccent)`
     color: #00d1ff;
-    font-weight: 700;
     font-size: 0.15em;
     margin-bottom: 0.75em;
 `;

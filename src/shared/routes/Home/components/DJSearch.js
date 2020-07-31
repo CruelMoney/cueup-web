@@ -135,6 +135,7 @@ const StyledSearchWrapper = styled.div`
     flex-direction: row;
     background-color: #fff;
     border-radius: 20px;
+
     label,
     ${Label} {
         flex: 1;

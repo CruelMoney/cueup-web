@@ -11,7 +11,7 @@ const HowitworksSection = () => {
                 <Col center middle>
                     <TextAccent center>How it works</TextAccent>
                     <H2 center>
-                        The easiest way to
+                        The easy way to
                         <br />
                         book a DJ anywhere
                     </H2>

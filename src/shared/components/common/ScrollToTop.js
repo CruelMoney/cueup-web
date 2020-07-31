@@ -25,4 +25,12 @@ const ScrollToTop = ({ location: { pathname }, top = 0, animate, alwaysScroll = 
     return null;
 };
 
+export function ScrollToTopOnMount() {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    return null;
+}
+
 export default withRouter(ScrollToTop);

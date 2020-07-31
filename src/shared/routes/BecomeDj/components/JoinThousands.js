@@ -78,7 +78,8 @@ const Filler = styled.div`
 
 const BlueRectangle = styled.div`
     background-image: radial-gradient(50% 80% at 50% 100%, #00d1ff 0%, #00d1ff 80%, #0092b3 160%);
-    box-shadow: 0 5px 22px -6px rgba(29, 44, 49, 0.05), 0 0 3px 0 rgba(33, 44, 49, 0.05);
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.06), 0 13px 13px 0 rgba(0, 0, 0, 0.08),
+        0 20px 15px 0 rgba(0, 0, 0, 0.04);
     border-radius: 28px;
     z-index: 1;
     display: flex;

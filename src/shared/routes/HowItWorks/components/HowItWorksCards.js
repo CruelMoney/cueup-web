@@ -14,6 +14,7 @@ const HowItWorksCardBox = styled.div`
     border-radius: 28px;
     background: #183659;
     margin: 15px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
 `;
 const HowItWorksCardHeader = styled.div`
     display: flex;
