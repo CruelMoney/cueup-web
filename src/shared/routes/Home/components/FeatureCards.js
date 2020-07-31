@@ -20,11 +20,6 @@ const FeatureCards = () => {
                         Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur,
                         inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.
                     </Body>
-                    <NavLink to="/">
-                        <ReadMore uppercase={false} color="#00d1ff" style={{ fontSize: 18 }}>
-                            Read more
-                        </ReadMore>
-                    </NavLink>
                 </Card>
                 <Card shadow>
                     <H3>
@@ -35,11 +30,6 @@ const FeatureCards = () => {
                         Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur,
                         inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.
                     </Body>
-                    <NavLink to="/">
-                        <ReadMore uppercase={false} color="#00d1ff" style={{ fontSize: 18 }}>
-                            Read more
-                        </ReadMore>
-                    </NavLink>
                 </Card>
             </RowMobileCol>
         </Container>

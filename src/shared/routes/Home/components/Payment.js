@@ -14,8 +14,8 @@ const Bg2 = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-bottom: 300px;
-    margin-bottom: -200px;
+    padding-bottom: 160px;
+    margin-bottom: -80px;
 `;
 
 const PaymentSection = () => {
