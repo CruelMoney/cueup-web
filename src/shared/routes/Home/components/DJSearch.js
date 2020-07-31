@@ -1,7 +1,7 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 
 import styled from 'styled-components';
-import SuperEllipse, { Preset } from 'react-superellipse';
+import SuperEllipse from 'react-superellipse';
 import { useHistory, useLocation } from 'react-router';
 
 import { SmartButton } from 'components/Blocks';
@@ -11,6 +11,8 @@ import DatePickerPopup from 'components/DatePickerPopup';
 import { useForm } from 'components/hooks/useForm';
 import { useCheckDjAvailability } from 'actions/EventActions';
 import ErrorMessageApollo from 'components/common/ErrorMessageApollo';
+import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
+import DatePicker from 'components/common/DatePicker';
 
 const DjSearch = () => {
     const routeLocation = useLocation();
@@ -18,6 +20,10 @@ const DjSearch = () => {
     const locationRef = useRef();
     const dateRef = useRef();
     const [runSubmit, setRunSubmit] = useState(false);
+
+    const [loadGoogleMaps, { started }] = useLazyLoadScript(
+        'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
+    );
 
     const { registerValidation, unregisterValidation, runValidations, form, setValue } = useForm();
 
@@ -64,7 +70,14 @@ const DjSearch = () => {
 
     return (
         <>
-            <StyledSearchWrapper>
+            <StyledSearchWrapper
+                onMouseOver={() => {
+                    DatePicker.preload();
+                    if (!started) {
+                        loadGoogleMaps();
+                    }
+                }}
+            >
                 <SearchWrapperBg />
 
                 <LocationSelector

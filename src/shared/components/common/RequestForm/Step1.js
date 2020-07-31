@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useCheckDjAvailability } from 'actions/EventActions';
 import { BodySmall } from 'components/Text';
+import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
 import { Row, SmartButton } from '../../Blocks';
 import { Input } from '../../FormComponents';
 import LocationSelector from '../LocationSelectorSimple';
@@ -21,6 +22,10 @@ const Step1 = ({
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [message, setMessage] = useState();
     const [check, { loading, error }] = useCheckDjAvailability(form);
+
+    const [loadGoogleMaps, { started }] = useLazyLoadScript(
+        'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
+    );
 
     const dateChanged = (date) => {
         handleChange({ date });
@@ -62,7 +67,14 @@ const Step1 = ({
             {showDatePicker ? (
                 <DatePicker dark initialDate={form.date} handleChange={dateChanged} />
             ) : (
-                <div>
+                <div
+                    onMouseOver={() => {
+                        DatePicker.preload();
+                        if (!started) {
+                            loadGoogleMaps();
+                        }
+                    }}
+                >
                     <RequestSection style={{ position: 'relative', zIndex: 5 }}>
                         <LocationSelector
                             noShadow
