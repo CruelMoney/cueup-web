@@ -59,8 +59,9 @@ const ComparisonSection = () => {
 const ComparisonTable = styled.div`
     flex: 1;
     word-break: break-word;
-    margin: 10px;
-    margin-top: -30px;
+    font-size: 16px;
+    margin: 0.625em;
+    margin-top: -2em;
     table {
         width: 100%;
         border-collapse: separate;
@@ -68,7 +69,7 @@ const ComparisonTable = styled.div`
     thead {
         th,
         td {
-            padding-bottom: 15px;
+            padding-bottom: 1em;
         }
     }
     tbody {
@@ -78,29 +79,29 @@ const ComparisonTable = styled.div`
     tbody::before {
         content: '';
         position: absolute;
-        top: -10px;
-        right: -10px;
-        bottom: -10px;
-        left: -10px;
-        border-radius: 20px;
-        padding: 10px;
+        top: -0.625em;
+        right: -0.625em;
+        bottom: -0.625em;
+        left: -0.625em;
+        border-radius: 1.25em;
+        padding: 0.625em;
         background-color: #122b48;
         box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
     }
     tr {
-        height: 42px;
+        height: 2.625em;
         position: relative;
     }
     td,
     th {
-        padding-left: 10px;
+        padding-left: 0.625em;
         margin: 0;
         font-weight: 100;
         position: relative;
         svg {
-            margin-right: 6px;
+            margin-right: 0.375em;
             font-size: 1.3em;
-            top: 2px;
+            top: 0.125em;
             position: relative;
         }
     }
@@ -115,12 +116,12 @@ const ComparisonTable = styled.div`
     }
 
     th {
-        border-top-left-radius: 10px;
-        border-bottom-left-radius: 10px;
+        border-top-left-radius: 0.625em;
+        border-bottom-left-radius: 0.625em;
     }
     td:last-of-type {
-        border-top-right-radius: 10px;
-        border-bottom-right-radius: 10px;
+        border-top-right-radius: 0.625em;
+        border-bottom-right-radius: 0.625em;
     }
     td:before {
         content: '';
@@ -132,6 +133,13 @@ const ComparisonTable = styled.div`
         height: 60%;
         background-color: rgba(255, 255, 255, 0.15);
     }
+
+    @media screen and (max-width: 768px) {
+        width: calc(100% - 15px);
+        min-width: calc(100% - 15px);
+        margin-top: 3em;
+        font-size: 12px;
+    }
 `;
 
 const Wrapper = styled.section`
@@ -142,7 +150,7 @@ const Wrapper = styled.section`
         max-width: 220px;
         margin-right: 50px;
     }
-    @media screen and (max-width: 480px) {
+    @media screen and (max-width: 768px) {
         ${Body} {
             max-width: 100%;
             margin-right: 0;
@@ -158,6 +166,14 @@ const CustomImage = styled(GracefullImage)`
     object-fit: cover;
     margin-top: -70px;
     z-index: -1;
+
+    @media screen and (max-width: 768px) {
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: -24px;
+        max-width: calc(100% - 15px);
+    }
 `;
 
 export default ComparisonSection;

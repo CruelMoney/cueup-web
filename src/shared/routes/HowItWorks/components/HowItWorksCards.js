@@ -15,6 +15,10 @@ const HowItWorksCardBox = styled.div`
     background: #183659;
     margin: 15px;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+    @media screen and (max-width: 480px) {
+        margin: 6px;
+        height: auto;
+    }
 `;
 const HowItWorksCardHeader = styled.div`
     display: flex;
