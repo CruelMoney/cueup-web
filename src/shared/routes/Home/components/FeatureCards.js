@@ -2,18 +2,18 @@ import React from 'react';
 
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import { Container, RowWrap, ReadMore } from 'components/Blocks';
+import { Container, RowWrap, ReadMore, RowMobileCol } from 'components/Blocks';
 import { H3, Body } from 'components/Text';
 import { ReactComponent as MusicNote } from '../assets/note.svg';
 import { ReactComponent as Padlock } from '../assets/padlock.svg';
 
 const FeatureCards = () => {
     return (
-        <Container style={{ marginBottom: 30 }}>
-            <RowWrap>
+        <Container>
+            <RowMobileCol style={{ margin: '0 -15px' }}>
                 <Card shadow>
                     <H3>
-                        <Padlock height={'1em'} width="auto" />
+                        <Padlock />
                         Secure booking
                     </H3>
                     <Body>
@@ -26,10 +26,9 @@ const FeatureCards = () => {
                         </ReadMore>
                     </NavLink>
                 </Card>
-                <div style={{ height: 30, width: 30 }} />
                 <Card shadow>
                     <H3>
-                        <MusicNote height={'1em'} width="auto" />
+                        <MusicNote />
                         Listen before booking
                     </H3>
                     <Body>
@@ -42,7 +41,7 @@ const FeatureCards = () => {
                         </ReadMore>
                     </NavLink>
                 </Card>
-            </RowWrap>
+            </RowMobileCol>
         </Container>
     );
 };
@@ -56,12 +55,16 @@ const Card = styled.div`
     border-radius: 28px;
     padding: 39px;
     min-width: 300px;
+    margin: 0 15px;
+    margin-bottom: 30px;
     ${H3} {
         margin-bottom: 0.5em;
         color: #00d1ff;
         svg {
             display: block;
             margin-bottom: 0.25em;
+            height: max(36px, 1em);
+            width: auto;
         }
     }
     a {
@@ -70,12 +73,11 @@ const Card = styled.div`
     }
 
     @media only screen and (max-width: 768px) {
-        padding: 30px 30px 0 30px;
+        padding: 30px;
+        margin-bottom: 15px;
     }
     @media only screen and (max-width: 425px) {
-        margin: 0px;
-        margin-top: 15px;
-        padding: 24px 36px 0 24px;
+        padding: 24px;
     }
 `;
 

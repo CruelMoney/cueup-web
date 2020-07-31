@@ -91,7 +91,7 @@ export const RowWrap = styled(Row)`
     flex-wrap: wrap;
 `;
 
-export const RowMobileCol = styled(Row)`
+export const RowMobileCol = styled(RowWrap)`
     @media only screen and (max-width: 425px) {
         flex-direction: ${({ reverse }) => (reverse ? 'column-reverse' : 'column')};
         button {

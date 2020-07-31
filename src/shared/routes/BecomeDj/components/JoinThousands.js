@@ -92,6 +92,7 @@ const BlueRectangle = styled.div`
 const TextWrapper = styled.div`
     padding: 0 0 50px 0;
     width: 100%;
+    max-width: 550px;
     display: flex;
     flex-direction: column;
     align-content: center;
