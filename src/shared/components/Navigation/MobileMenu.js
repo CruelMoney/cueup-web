@@ -156,16 +156,6 @@ const Content = ({
 
             <div className="menu">
                 <ul>
-                    {!isHome ? (
-                        <li>
-                            <Navlink
-                                onClick={() => setShow(false)}
-                                to={translate(appRoutes.howItWorks)}
-                                label={translate('how-it-works')}
-                            />
-                        </li>
-                    ) : null}
-
                     {isDJ ? (
                         <li>
                             <Navlink

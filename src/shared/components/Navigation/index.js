@@ -67,14 +67,6 @@ const Menu = () => {
                                 </li>
                             )}
 
-                            <li>
-                                <Navlink
-                                    to={t(appRoutes.howItWorks)}
-                                    label={t('how-it-works')}
-                                    important="true"
-                                />
-                            </li>
-
                             {loggedIn ? null : (
                                 <li>
                                     <Navlink
