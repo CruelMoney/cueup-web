@@ -13,6 +13,7 @@ import { useCheckDjAvailability } from 'actions/EventActions';
 import ErrorMessageApollo from 'components/common/ErrorMessageApollo';
 import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
 import DatePicker from 'components/common/DatePicker';
+import LazyRequestForm from 'components/common/RequestForm';
 
 const DjSearch = () => {
     const routeLocation = useLocation();
@@ -49,6 +50,7 @@ const DjSearch = () => {
 
             const errors = runValidations();
             if (errors.length === 0) {
+                await LazyRequestForm.load();
                 const { result, date, timeZoneId, location } = await check(form);
 
                 if (result === true) {
@@ -73,6 +75,7 @@ const DjSearch = () => {
             <StyledSearchWrapper
                 onMouseOver={() => {
                     DatePicker.preload();
+
                     if (!started) {
                         loadGoogleMaps();
                     }
