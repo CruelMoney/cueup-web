@@ -225,6 +225,7 @@ const FindDjsButton = styled(SuperEllipse)`
     top: 50%;
     transform: translateY(-50%);
     z-index: 1;
+    background-color: #31daff;
 `;
 
 export default DjSearch;
