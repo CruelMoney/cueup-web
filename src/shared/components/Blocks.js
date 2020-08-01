@@ -129,6 +129,9 @@ const ButtonIcon = styled.span`
     ${ReadMoreText}:hover & {
         transform: translateX(3px);
     }
+    ${ReadMoreText}.active & {
+        transform: translateX(3px);
+    }
 `;
 
 const ButtonIconBack = styled.span`
@@ -137,6 +140,9 @@ const ButtonIconBack = styled.span`
     display: inline-block;
     transition: transform 200ms ease;
     ${ReadMoreText}:hover & {
+        transform: translateX(-3px);
+    }
+    ${ReadMoreText}.active & {
         transform: translateX(-3px);
     }
 `;
@@ -150,6 +156,7 @@ export const ReadMore = ({
     uppercase = true,
     size,
     white,
+    active,
     ...props
 }) => {
     if (white) {
@@ -176,7 +183,7 @@ export const ReadMore = ({
     }
 
     return (
-        <ReadMoreText style={style} {...props}>
+        <ReadMoreText style={style} {...props} className={active ? 'active' : ''}>
             {!back && children}
             {back ? (
                 <ButtonIconBack>

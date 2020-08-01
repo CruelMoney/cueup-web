@@ -176,7 +176,7 @@ const StyledSearchWrapper = styled.div`
             margin-top: 0;
             margin-left: -1px;
             height: 1.4em;
-            line-height: 1em !important;
+            line-height: 1.4em !important;
             width: auto;
         }
         .empty {

@@ -97,13 +97,14 @@ const MainForm = ({ initialCity, countries, transparent }) => {
         borderRadius: 6,
         backgroundColor: '#fff',
     };
-
     return (
         <div className="request-form" id="book-dj">
             <div className="request-columns">
-                <Wrapper style={{ padding: 0, marginBottom: transparent ? '0px' : '14px' }}>
-                    <Progress setProgress={setProgress} currentStep={activeStep - 1} />
-                </Wrapper>
+                {transparent && activeStep === 1 ? null : (
+                    <Wrapper style={{ padding: 0, marginBottom: transparent ? '0px' : '14px' }}>
+                        <Progress setProgress={setProgress} currentStep={activeStep - 1} />
+                    </Wrapper>
+                )}
                 <Wrapper>
                     <RequestCard style={transparent ? null : extraStyle}>
                         {showLogin && (

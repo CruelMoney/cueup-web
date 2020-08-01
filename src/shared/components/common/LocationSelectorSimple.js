@@ -71,13 +71,17 @@ const LocationSelector = forwardRef(({ placeholder, countries = [], ...props }, 
                     className="powered-by-google"
                     style={{
                         position: 'absolute',
-                        top: '40px',
+                        top: '0px',
                         right: '15px',
                         pointerEvents: 'none',
                         zIndex: 2,
                     }}
                 >
-                    <img style={{ width: '96px' }} src={poweredByGoogle} alt="powered by google" />
+                    <img
+                        style={{ width: '96px', objectFit: 'contain' }}
+                        src={poweredByGoogle}
+                        alt="powered by google"
+                    />
                 </div>
             }
             {...props}

@@ -87,6 +87,7 @@ const Popup = memo((props) => {
                         width: width ? width : null,
                         backgroundColor: noBackground ? 'transparent' : 'white',
                         zIndex: '1001',
+                        position: 'relative',
                         ...style,
                     }}
                     className={'popup' + (showing ? ' active' : '')}
