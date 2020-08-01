@@ -180,6 +180,7 @@ const Avatar = ({ src, ...rest }) => (
             style={{
                 height: '100%',
                 width: '100%',
+                borderRadius: '50%',
                 alignSelf: 'center',
                 background: '#fff',
             }}
