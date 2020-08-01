@@ -24,7 +24,7 @@ const DataWrapper = () => {
 
     const filteredDjs = djs.filter((dj) => !!dj.picture && dj.genres.length);
 
-    return <AnimatedDjCards djs={filteredDjs} />;
+    return <AnimatedDjCards djs={djs} />;
 };
 
 const AnimatedDjCards = ({ djs }) => {
@@ -93,8 +93,6 @@ const AnimatedDjCards = ({ djs }) => {
                             }}
                         >
                             <Card
-                                p1={10}
-                                p2={32}
                                 onMouseEnter={() => setPauseanimation(true)}
                                 onMouseLeave={() => setPauseanimation(false)}
                             >
@@ -151,6 +149,7 @@ const InnerContent = ({
                     top: 0,
                     left: 0,
                     objectFit: 'cover',
+                    borderRadius: '0.2em',
                 }}
             />
             <BottomGradient />
@@ -226,6 +225,7 @@ const BottomGradient = styled.div`
     right: 0;
     bottom: 0;
     background: linear-gradient(0deg, #000000 22%, rgba(0, 0, 0, 0) 100%);
+    border-radius: 0 0 0.2em 0.2em;
 `;
 
 const CardColumn = styled.div`

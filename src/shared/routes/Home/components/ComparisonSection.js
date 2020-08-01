@@ -62,9 +62,23 @@ const ComparisonTable = styled.div`
     font-size: 16px;
     margin: 0.625em;
     margin-top: -2em;
+    z-index: 2;
     table {
         width: 100%;
         border-collapse: separate;
+        position: relative;
+    }
+    table::before {
+        content: '';
+        position: absolute;
+        top: 1.75em;
+        right: -0.625em;
+        bottom: -0.625em;
+        left: -0.625em;
+        border-radius: 1.25em;
+        padding: 0.625em;
+        background-color: #122b48;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
     }
     thead {
         th,
@@ -75,18 +89,6 @@ const ComparisonTable = styled.div`
     tbody {
         position: relative;
         color: #fff;
-    }
-    tbody::before {
-        content: '';
-        position: absolute;
-        top: -0.625em;
-        right: -0.625em;
-        bottom: -0.625em;
-        left: -0.625em;
-        border-radius: 1.25em;
-        padding: 0.625em;
-        background-color: #122b48;
-        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
     }
     tr {
         height: 2.625em;
