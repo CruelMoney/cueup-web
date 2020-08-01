@@ -46,8 +46,8 @@ const Popup = memo((props) => {
             right: 0,
             bottom: 0,
             backgroundColor: 'none',
-            zIndex: 98,
             pointerEvents: 'none',
+            zIndex: 99,
         },
         content: {
             position: 'absolute',
@@ -58,6 +58,10 @@ const Popup = memo((props) => {
             border: 'none',
             background: 'none',
             pointerEvents: 'none',
+            left: 0,
+            top: 0,
+            right: 0,
+            bottom: 0,
         },
     };
     return (
@@ -66,9 +70,10 @@ const Popup = memo((props) => {
                 className={'filter-background' + (showing ? ' active' : '')}
                 style={{
                     position: 'fixed',
-                    zIndex: '1000',
-                    left: '0',
-                    top: '0',
+                    left: 0,
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
                     width: '100%',
                     height: '100% ',
                     overflow: 'auto',
@@ -86,7 +91,6 @@ const Popup = memo((props) => {
                         minWidth: '300px',
                         width: width ? width : null,
                         backgroundColor: noBackground ? 'transparent' : 'white',
-                        zIndex: '1001',
                         position: 'relative',
                         ...style,
                     }}

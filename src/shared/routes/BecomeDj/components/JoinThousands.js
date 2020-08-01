@@ -24,7 +24,6 @@ import dj17 from '../assets/people/joinThousands/17.jpg';
 import dj18 from '../assets/people/joinThousands/18.jpg';
 import dj19 from '../assets/people/joinThousands/19.jpg';
 import dj20 from '../assets/people/joinThousands/20.jpg';
-import { Header } from './Text';
 import { SubTitle } from './SubTitle';
 
 const Wrapper = styled.div`

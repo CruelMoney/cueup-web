@@ -335,7 +335,7 @@ const GlobalStyle = createGlobalStyle`
             pointer-events: none;
             position: absolute;
             width: 100vw;
-            z-index: 101;
+            z-index: 2;
         }
         .mobileMenu .menuArea {
             backface-visibility: hidden;
