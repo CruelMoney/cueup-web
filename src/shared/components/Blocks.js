@@ -383,7 +383,7 @@ const ButtonTextStyle = css`
         `}
 `;
 
-const inputButtonStyle = css`
+export const inputButtonStyle = css`
     ${inputStyle}
     font-size: 18px;
     font-weight: 400;

@@ -5,6 +5,7 @@
     display: block;
     font-family: 'AvenirNext', Helvetica, sans-serif;
     font-size: 16px;
+    min-height: 360px;
     width: 280px;
 }
 
@@ -113,11 +114,4 @@ button.react-datepicker__navigation.react-datepicker__navigation--next {
 }
 .react-datepicker__header__dropdown {
     margin-top: 6px;
-}
-.react-datepicker__header__dropdown select {
-    background: #f6f8f9;
-    border: none;
-    cursor: pointer;
-    height: 30px;
-    outline: none;
 }
