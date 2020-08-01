@@ -141,6 +141,7 @@ const InnerContent = ({
     return (
         <NavLink to={route} draggable={false}>
             <GracefullImage
+                animate
                 draggable={false}
                 src={picture?.path}
                 style={{
