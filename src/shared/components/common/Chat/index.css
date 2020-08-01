@@ -140,15 +140,6 @@
     outline: none;
 }
 
-.popup .chat {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    max-width: 90vw;
-    min-height: 500px;
-    width: 600px;
-}
-
 .typing-indicator {
     animation: 2s bulge infinite ease-out;
     border-radius: 50px;
@@ -207,9 +198,6 @@
 
 /* Mobile */
 @media only screen and (max-width: 480px) {
-    .popup .chat {
-        max-width: 100%;
-    }
     .messages {
         max-width: 100%;
     }

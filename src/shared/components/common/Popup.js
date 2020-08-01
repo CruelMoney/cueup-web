@@ -1,5 +1,6 @@
 import React, { useEffect, useState, memo } from 'react';
 import Modal from 'react-modal';
+import styled, { createGlobalStyle } from 'styled-components';
 import { ClosePopupButton, Card, CardSimple } from 'components/Blocks';
 
 const Popup = memo((props) => {
@@ -15,28 +16,6 @@ const Popup = memo((props) => {
         lazy = true,
         style,
     } = props;
-    const [showingChildren, setShowingChildren] = useState(showing);
-
-    useEffect(() => {
-        if (!showing) {
-            document.body.classList.remove('popup-open');
-            //allow animation
-            const time = setTimeout(() => {
-                setShowingChildren(false);
-            }, 500);
-            return () => {
-                clearTimeout(time);
-            };
-        }
-        setShowingChildren(true);
-        const time = setTimeout(() => {
-            document.body.classList.add('popup-open');
-        }, 100);
-        return () => {
-            clearTimeout(time);
-            document.body.classList.remove('popup-open');
-        };
-    }, [showing]);
 
     const baseStyle = {
         overlay: {
@@ -45,58 +24,48 @@ const Popup = memo((props) => {
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: 'none',
-            pointerEvents: 'none',
+            padding: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
             zIndex: 99,
         },
         content: {
             position: 'absolute',
-            overflow: 'auto',
-            WebkitOverflowScrolling: 'touch',
             outline: 'none',
-            padding: noPadding ? 0 : '20px',
             border: 'none',
             background: 'none',
-            pointerEvents: 'none',
             left: 0,
             top: 0,
             right: 0,
             bottom: 0,
+            padding: 0,
         },
     };
+    const handleClose = (_) => {
+        if (onClose) {
+            onClose();
+            return;
+        }
+        onClickOutside && onClickOutside();
+    };
+
     return (
-        <Modal style={baseStyle} isOpen={true} contentLabel="popup">
-            <div
-                className={'filter-background' + (showing ? ' active' : '')}
-                style={{
-                    position: 'fixed',
-                    left: 0,
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    width: '100%',
-                    height: '100% ',
-                    overflow: 'auto',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    padding: noPadding ? 0 : '10px',
-                }}
-                onClick={(_) => onClickOutside && onClickOutside()}
+        <>
+            <GlobalStyle />
+            <Modal
+                style={baseStyle}
+                isOpen={showing}
+                contentLabel="popup"
+                bodyOpenClassName={'active'}
+                htmlOpenClassName="popup-open"
+                onRequestClose={handleClose}
             >
-                <CardSimple
+                <PopupContent
                     style={{
                         padding: noPadding ? 0 : '20px',
                         paddingTop: hideClose || noPadding ? '0px' : '5px',
-                        minWidth: '300px',
                         width: width ? width : null,
                         backgroundColor: noBackground ? 'transparent' : 'white',
-                        position: 'relative',
                         ...style,
-                    }}
-                    className={'popup' + (showing ? ' active' : '')}
-                    onClick={function (event) {
-                        event.stopPropagation();
                     }}
                 >
                     {!hideClose ? (
@@ -113,21 +82,36 @@ const Popup = memo((props) => {
                                 style={{
                                     right: '-10px',
                                 }}
-                                onClick={(_) => {
-                                    if (onClose) {
-                                        onClose();
-                                        return;
-                                    }
-                                    onClickOutside && onClickOutside();
-                                }}
+                                onClick={handleClose}
                             />
                         </div>
                     ) : null}
-                    {!lazy || showingChildren ? <div>{children}</div> : null}
-                </CardSimple>
-            </div>
-        </Modal>
+                    {!lazy || showing ? children : null}
+                </PopupContent>
+            </Modal>
+        </>
     );
 });
+
+const GlobalStyle = createGlobalStyle`
+    .popup-open{
+        overflow: hidden;
+    }
+`;
+
+const PopupContent = styled(CardSimple)`
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    min-width: 300px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    @media screen and (max-width: 480px) {
+        width: 100vw !important;
+        height: 100% !important;
+        border-radius: 0 !important;
+    }
+`;
 
 export default Popup;

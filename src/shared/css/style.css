@@ -817,35 +817,3 @@ ol.breadcrumbs a {
     top: 0;
     z-index: 99;
 }
-
-.popup {
-    max-height: 100vh;
-    opacity: 0;
-    overflow-y: scroll !important;
-    pointer-events: none;
-    transform: rotate3d(1, 1, 0, -20deg);
-    transform-origin: 100% 0;
-    transition-duration: 0.35s;
-    transition-property: transform, opacity;
-    will-change: transform, opacity;
-}
-
-.popup.active {
-    opacity: 1;
-    pointer-events: auto;
-    transform: none;
-}
-.filter-background {
-    background-color: rgba(0, 0, 0, 0.4);
-    opacity: 0;
-    perspective: 3000px;
-    pointer-events: none;
-    transition: opacity 0.35s;
-}
-.filter-background.active {
-    opacity: 1;
-    pointer-events: auto;
-}
-.popup-open {
-    overflow: hidden;
-}
