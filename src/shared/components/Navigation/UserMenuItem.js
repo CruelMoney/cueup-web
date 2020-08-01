@@ -38,7 +38,13 @@ class UserMenuItem extends Component {
                     ) : null}
                     <Avatar src={picture} />
                 </div>
-                <div style={{ display: 'inline-block', marginLeft: '9px', color: 'inherit' }}>
+                <div
+                    style={{
+                        display: 'inline-block',
+                        marginLeft: '9px',
+                        color: isInMenu ? '#32325d' : 'inherit',
+                    }}
+                >
                     {getLabel(name)}
                 </div>
                 {!isInMenu && (
