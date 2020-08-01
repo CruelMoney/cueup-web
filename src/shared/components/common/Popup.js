@@ -1,7 +1,7 @@
-import React, { useEffect, useState, memo } from 'react';
+import React, { memo } from 'react';
 import Modal from 'react-modal';
 import styled, { createGlobalStyle } from 'styled-components';
-import { ClosePopupButton, Card, CardSimple } from 'components/Blocks';
+import { ClosePopupButton, CardSimple } from 'components/Blocks';
 
 const Popup = memo((props) => {
     const {
