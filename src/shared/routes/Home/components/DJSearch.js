@@ -173,6 +173,7 @@ const StyledSearchWrapper = styled.div`
             outline: none;
             background: transparent;
             text-indent: 0px;
+            padding-left: 0px;
             margin-top: 0;
             margin-left: -1px;
             height: 1.4em;

@@ -95,7 +95,6 @@ const Step1 = ({
                         </LocationSelector>
                     </RequestSection>
                     <RequestSection
-                        className="cursor-pointer"
                         onClick={() => {
                             setShowDatePicker(true);
                         }}
@@ -103,9 +102,17 @@ const Step1 = ({
                         <Input
                             type="text"
                             name="date"
+                            placeholder="Select date"
                             label={translate('requestForm:step-1.event-date')}
                             disabled
-                            style={{ pointerEvents: 'none', zIndex: 2, position: 'relative' }}
+                            labelStyle={{
+                                cursor: 'pointer',
+                            }}
+                            style={{
+                                pointerEvents: 'none',
+                                zIndex: 2,
+                                position: 'relative',
+                            }}
                             value={eventDateString}
                             validation={(v) => (v ? null : 'Please select a date')}
                             registerValidation={registerValidation('date')}
