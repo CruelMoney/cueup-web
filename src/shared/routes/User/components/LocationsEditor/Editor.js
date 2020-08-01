@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react';
 
 import pinIcon from '@iconify/icons-ion/location';
 import { useRouteMatch, useHistory } from 'react-router';
-import { Row, Col, TeritaryButton, ShowBelow } from 'components/Blocks';
+import { Row, Col, TeritaryButton, ShowBelow, CardSimple } from 'components/Blocks';
 import { Title, BodyBold, BodySmall, Body } from 'components/Text';
 
 import { ProFeature } from 'components/FormComponents';
@@ -13,6 +13,8 @@ import { useServerContext } from 'components/hooks/useServerContext';
 import Map from './Map';
 import { MY_LOCATIONS } from './gql';
 import LocationEntry from './LocationEntry';
+import scaleGif from './assets/scale.gif';
+import moveGif from './assets/move.gif';
 
 const LocationEditor = (props) => {
     const { data, loading } = useQuery(MY_LOCATIONS);
@@ -163,10 +165,39 @@ const Editor = ({ userLocations, loading, isPro }) => {
                     editId={editId}
                     updateLocation={updateLocation}
                 />
+                {editId && editingLocation?.latitude && <HowToDo />}
             </MapWrapper>
         </EditorStyle>
     );
 };
+
+const HowToDo = () => {
+    return (
+        <GifsWrapper shadow>
+            <BodySmall>Move the area with the dot in the center of the circle.</BodySmall>
+            <img src={moveGif} title="Move the area" />
+            <BodySmall>Resize the area with the dots on the edge of the circle.</BodySmall>
+            <img src={scaleGif} title="Resize the area" />
+        </GifsWrapper>
+    );
+};
+
+const GifsWrapper = styled(CardSimple)`
+    display: flex;
+    flex-direction: column;
+    max-width: 200px;
+    align-items: center;
+    position: absolute;
+    top: 1em;
+    left: 1em;
+    padding: 1em 1em 0 1em;
+    > img {
+        height: 100px;
+        width: 150px;
+        margin-bottom: 12px;
+        object-fit: cover;
+    }
+`;
 
 const MapWrapper = styled.div`
     height: 900px;

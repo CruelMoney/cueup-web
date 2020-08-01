@@ -83,10 +83,19 @@ const SmartCircle = ({ id, latitude, longitude, radius, editable, updateLocation
         console.log('change radius');
 
         if (myCircle.current) {
-            const newRadius = Math.min(myCircle.current.getRadius(), 1000000);
-            updateLocation({ id, radius: newRadius });
+            const circleRadius = myCircle.current.getRadius();
+            updateLocation({ id, radius: circleRadius });
         }
     }, [updateLocation, id]);
+
+    // max size
+    useEffect(() => {
+        if (radius > 1000000) {
+            myCircle.current.setRadius(1000000);
+        }
+    }, [radius]);
+
+    console.log({ radius });
 
     const handleLocationChange = useCallback(() => {
         console.log('change location');
