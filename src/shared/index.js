@@ -33,6 +33,8 @@ const Setup = ({ location }) => {
     const description = t('site-description');
 
     const pageURL = environment.WEBSITE_URL + location.pathname;
+    const thumbURL = environment.WEBSITE_URL + thumb;
+
     return (
         <ErrorHandling>
             <Helmet>
@@ -52,7 +54,7 @@ const Setup = ({ location }) => {
                 <meta property="fb:app_id" content={environment.FACEBOOK_ID} />
                 <meta property="og:title" content={title} />
                 <meta property="og:description" content={description} />
-                <meta property="og:image" content={thumb} />
+                <meta property="og:image" content={thumbURL} />
                 <meta property="og:type" content={'website'} />
 
                 <meta name="twitter:card" content="summary_large_image" />
@@ -60,7 +62,7 @@ const Setup = ({ location }) => {
                 <meta name="twitter:creator" content="@@CueupDK" />
                 <meta name="twitter:title" content={title} />
                 <meta name="twitter:description" content={description} />
-                <meta name="twitter:image" content={thumb} />
+                <meta name="twitter:image" content={thumbURL} />
                 <meta name="twitter:url" content={pageURL} />
 
                 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
