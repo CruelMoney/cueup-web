@@ -174,9 +174,9 @@ const Editor = ({ userLocations, loading, isPro }) => {
 const HowToDo = () => {
     return (
         <GifsWrapper shadow>
-            <BodySmall>Move the area with the dot in the center of the circle.</BodySmall>
+            <BodySmall>Move:</BodySmall>
             <img src={moveGif} title="Move the area" />
-            <BodySmall>Resize the area with the dots on the edge of the circle.</BodySmall>
+            <BodySmall>Resize:</BodySmall>
             <img src={scaleGif} title="Resize the area" />
         </GifsWrapper>
     );

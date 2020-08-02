@@ -1,7 +1,7 @@
-import React, { useState, useEffect, ReactDOM, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useMutation } from 'react-apollo';
 import styled from 'styled-components';
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import saveIcon from '@iconify/icons-ion/ios-checkmark';
 import cancelIcon from '@iconify/icons-ion/close';
 import editIcon from '@iconify/icons-ion/pencil';

@@ -31,11 +31,10 @@ const EditorMap = ({ locations, editId, updateLocation }) => {
     }, [locations]);
 
     useEffect(() => {
-        if (map.current && bounds) {
-            console.log('Fitting bounds');
+        if (loaded && map.current && bounds) {
             map.current.fitBounds(bounds);
         }
-    }, [bounds]);
+    }, [bounds, loaded]);
 
     return (
         <GoogleMap
