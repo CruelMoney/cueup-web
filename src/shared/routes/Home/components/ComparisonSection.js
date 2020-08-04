@@ -8,13 +8,31 @@ import GracefullImage from 'components/GracefullImage';
 import comparisonImage from '../assets/the_lawn.jpg';
 
 const data = [
-    { label: 'Finding DJs', traditional: 'Manual', cueup: 'Automatic' },
-    { label: 'Finding DJs', traditional: 'Manual', cueup: 'Automatic' },
-    { label: 'Finding DJs', traditional: 'Manual', cueup: 'Automatic' },
-    { label: 'Finding DJs', traditional: 'Manual', cueup: 'Automatic' },
-    { label: 'Finding DJs', traditional: 'Manual', cueup: 'Automatic' },
-    { label: 'Finding DJs', traditional: 'Manual', cueup: 'Automatic' },
-    { label: 'Finding DJs', traditional: 'Manual', cueup: 'Automatic' },
+    { label: 'Price', traditional: 'Price bloated by agency', cueup: 'Real prices' },
+    {
+        label: 'Payment',
+        traditional: 'Cash or wire transfer only',
+        cueup: 'Card or method of your choice',
+    },
+    { label: 'Cancelation', traditional: 'No refund policy', cueup: 'Refund guarantee' },
+    { label: 'Backup DJ', traditional: 'No backup', cueup: 'Backup DJs on standby' },
+    {
+        label: 'Communication',
+        traditional: 'Through agency',
+        cueup: 'Contact directly with DJ',
+    },
+    { label: 'Selection', traditional: 'One choice', cueup: 'Pick among many DJs' },
+    {
+        label: 'Preview DJ skills',
+        traditional: 'No preview',
+        cueup: 'Listen, watch, and decide',
+    },
+    {
+        label: 'Musical style',
+        traditional: 'Take the music as is',
+        cueup: 'Choose your musical style',
+    },
+    { label: 'Reviews', traditional: 'No reviews', cueup: 'Reviews and testimonials' },
 ];
 
 const ComparisonSection = () => {
@@ -27,22 +45,27 @@ const ComparisonSection = () => {
                 </Col>
                 <RowWrap>
                     <Body>
-                        Cueup is the easiest way for you to get a great DJ for your event. Tell us
-                        about your event below, and check out 1000s of qualified DJs.
+                        Find your next DJ in a simpler, cheaper, and more secure way. Cueup
+                        simplifies every aspect of booking a DJ compared to the traditional booking
+                        process.
                     </Body>
                     <ComparisonTable>
                         <table cellSpacing={0}>
                             <thead>
-                                <th /> <th>Traditional Booking</th> <th>Cueup</th>
+                                <tr>
+                                    <th /> <th>Traditional</th> <th>Cueup</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 {data.map(({ label, traditional, cueup }, idx) => (
                                     <tr key={idx}>
                                         <th>{label}</th>
-                                        <td>{traditional}</td>
+                                        <td>
+                                            <span>{traditional}</span>
+                                        </td>
                                         <td>
                                             <InlineIcon icon={checkmarkCircle} color="#00D1FF" />
-                                            {cueup}
+                                            <span>{cueup}</span>
                                         </td>
                                     </tr>
                                 ))}
@@ -89,10 +112,21 @@ const ComparisonTable = styled.div`
     tbody {
         position: relative;
         color: #fff;
+        tr:nth-of-type(2n + 1) {
+            th,
+            td {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+        }
     }
     tr {
-        height: 2.625em;
         position: relative;
+        height: 2.625em;
+        padding: 0.5em 0;
+        span {
+            display: inline-block;
+            margin: 0.4em 0;
+        }
     }
     td,
     th {
@@ -100,21 +134,20 @@ const ComparisonTable = styled.div`
         margin: 0;
         font-weight: 100;
         position: relative;
+
         svg {
-            margin-right: 0.375em;
             font-size: 1.3em;
-            top: 0.125em;
-            position: relative;
+            position: absolute;
+            left: 0.375em;
+            top: 50%;
+            transform: translateY(-50%) !important;
         }
+    }
+    td:last-of-type {
+        padding-left: 2.2em;
     }
     th {
         font-weight: 500;
-    }
-    tr:nth-of-type(2n + 1) {
-        th,
-        td {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
     }
 
     th {

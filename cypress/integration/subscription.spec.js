@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
-describe('Update User', () => {
-    it('Updates permalink', () => {
+describe('Subscription', () => {
+    it('Can be paid', () => {
         const user = {
             email: 'test@email.com',
             password: 't5e3s4t5i8n18g12',
@@ -53,4 +53,6 @@ describe('Update User', () => {
         cy.get('[data-cy=submit-button]').click();
         cy.get('[data-cy=subscription-welcome]').should('exist', 10000);
     });
+
+    it('Shows gig contact info', () => {});
 });
