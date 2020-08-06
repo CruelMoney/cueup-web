@@ -9,6 +9,7 @@ import GracefullImage from './GracefullImage';
 export const Hr = styled.hr`
     margin: 0;
     width: 100%;
+    border-width: 0;
     border-bottom: 2px solid #e9ecf0;
     color: transparent;
     ${({ margin }) =>
