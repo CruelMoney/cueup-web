@@ -382,6 +382,7 @@ const SignupForm = ({ translate, user }) => {
                     <SmartButton
                         glow
                         type="submit"
+                        onClick={signup}
                         success={state.msg}
                         loading={loading}
                         name="signup"
