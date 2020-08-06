@@ -1,10 +1,18 @@
 /// <reference types="Cypress" />
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+    // returning false here prevents Cypress from
+    // failing the test
+    return false;
+});
+
 describe('Gig', () => {
     const dj = {
         email: 'test@email.com',
         password: 't5e3s4t5i8n18g12',
         firstName: 'Christopher',
         lastName: 'Dengsø',
+        genres: [1, 2, 3],
         playingLocation: {
             name: 'Copenhagen',
             latitude: 55.6760968,
@@ -22,6 +30,8 @@ describe('Gig', () => {
             cy.setCookie('x-token', response.body.token);
         });
 
+        cy.setCookie('testing', 'true');
+
         const event = {
             customerUserId: 1,
             gigs: [{ djId: 11 }],
@@ -30,8 +40,7 @@ describe('Gig', () => {
 
         cy.visit('/');
         cy.get('[data-cy=menu-user-link]').click();
-        cy.get('[data-cy=menu-profile-link]').click();
-        cy.get('.card.popup.active *[data-cy=close-popup-button]').click();
+        cy.get('[data-cy=menu-profile-link]').click({ force: true });
         cy.get('[data-cy=navbutton-gigs]').click();
         cy.get('[data-cy=gig-read-more]').click();
         cy.get('[data-cy=navbutton-offer]').click();
@@ -40,7 +49,7 @@ describe('Gig', () => {
         cy.get('[name=direct-description]').type('Hey ho lets go');
 
         cy.get('.payout-form button[type="submit"]').click();
-        cy.get('.card.popup.active *[data-cy=close-popup-button]').click();
+        cy.get('[data-cy=close-popup-button]').click();
 
         cy.get('[data-cy=payout-options] *[name=DIRECT]').click();
 
@@ -51,12 +60,13 @@ describe('Gig', () => {
         cy.get('[data-cy=gig-status]').should('contain', 'Waiting on confirmation from organizer');
     });
 
-    it.only('Shows up correctly after confirmed', () => {
+    it('Shows up correctly after confirmed', () => {
         cy.request('POST', '/test/clearDB');
         cy.request('POST', '/test/seed/djs', { count: 10 });
         cy.request('POST', '/test/seed/user', dj).then((response) => {
             cy.setCookie('x-token', response.body.token);
         });
+        cy.setCookie('testing', 'true');
 
         const event = {
             customerUserId: 1,
@@ -78,8 +88,7 @@ describe('Gig', () => {
 
         cy.visit('/');
         cy.get('[data-cy=menu-user-link]').click();
-        cy.get('[data-cy=menu-profile-link]').click();
-        cy.get('.card.popup.active *[data-cy=close-popup-button]').click();
+        cy.get('[data-cy=menu-profile-link]').click({ force: true });
         cy.get('[data-cy=navbutton-gigs]').click();
         cy.get('[data-cy=gig-read-more]').click();
 

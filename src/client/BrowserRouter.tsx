@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import ReactModal from 'react-modal';
 import { useSSR } from 'react-i18next';
+import { CookiesProvider } from 'react-cookie';
 import useExternals from 'External';
 import { ServerContextProvider } from 'components/hooks/useServerContext';
 import { CustomWindow } from 'global';
@@ -22,15 +23,17 @@ const BrowserRouter = () => {
 
     return (
         <React.StrictMode>
-            <Router>
-                <ServerContextProvider environment={window.__ENVIRONMENT__} isSSR={false}>
-                    <ApolloProvider>
-                        <HelmetProvider>
-                            <App />
-                        </HelmetProvider>
-                    </ApolloProvider>
-                </ServerContextProvider>
-            </Router>
+            <CookiesProvider>
+                <Router>
+                    <ServerContextProvider environment={window.__ENVIRONMENT__} isSSR={false}>
+                        <ApolloProvider>
+                            <HelmetProvider>
+                                <App />
+                            </HelmetProvider>
+                        </ApolloProvider>
+                    </ServerContextProvider>
+                </Router>
+            </CookiesProvider>
         </React.StrictMode>
     );
 };

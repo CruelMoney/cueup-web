@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { Row, Container, Col, ReadMore, LoadingIndicator } from 'components/Blocks';
 import { TextAccent } from 'routes/BecomeDj/components/blocks/TextAccent';
-import { Body } from 'components/Text';
+import { Body, PageTitle } from 'components/Text';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
 import Footer from '../../../components/common/Footer';
@@ -21,6 +21,7 @@ const Header = styled.header`
 `;
 
 const Layout = ({ loading, user }) => {
+    console.log({ user });
     const { translate } = useTranslate();
     return (
         <>
@@ -29,10 +30,10 @@ const Layout = ({ loading, user }) => {
                     <Row center>
                         <Col middle>
                             <TextAccent>SIGN UP</TextAccent>
-                            <h1 className="Header-title text-center common-PageTitle">
+                            <PageTitle className="Header-title text-center common-PageTitle">
                                 Complete application
                                 <span>Become DJ</span>
-                            </h1>
+                            </PageTitle>
                         </Col>
                     </Row>
                     <Row center style={{ margin: '24px 0' }}>
@@ -43,36 +44,35 @@ const Layout = ({ loading, user }) => {
                         </NavLink>
                     </Row>
                     <Row
+                        center
                         style={{
                             margin: '40px 0',
                             marginBottom: '40px',
                         }}
                     >
-                        <div className="col-xs-12 center">
-                            <a href="https://play.google.com/store/apps/details?id=io.cueup.gigs&utm_source=website&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
-                                <img
-                                    style={{
-                                        height: '60px',
-                                    }}
-                                    alt="Get it on Google Play"
-                                    src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
-                                />
-                            </a>
-                            <a href="https://apps.apple.com/us/app/cueup-gigs/id1458267647?mt=8">
-                                <img
-                                    style={{
-                                        marginTop: '9px',
-                                        marginRight: '18px',
-                                    }}
-                                    alt="Get it on App store"
-                                    src={appStoreBadge}
-                                />
-                            </a>
-                        </div>
+                        <a href="https://play.google.com/store/apps/details?id=io.cueup.gigs&utm_source=website&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+                            <img
+                                style={{
+                                    height: '60px',
+                                }}
+                                alt="Get it on Google Play"
+                                src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
+                            />
+                        </a>
+                        <a href="https://apps.apple.com/us/app/cueup-gigs/id1458267647?mt=8">
+                            <img
+                                style={{
+                                    marginTop: '9px',
+                                    marginRight: '18px',
+                                }}
+                                alt="Get it on App store"
+                                src={appStoreBadge}
+                            />
+                        </a>
                     </Row>
                 </Container>
             </Header>
-            <div className="container" style={{ marginBottom: '80px' }}>
+            <Container style={{ marginTop: 50, marginBottom: 80, maxWidth: 900 }}>
                 <div className="signup">
                     <Body style={{ marginBottom: 50 }}>
                         Fill out the form to create a profile. After you sign up, we will review
@@ -86,7 +86,7 @@ const Layout = ({ loading, user }) => {
                         <SignUpForm translate={translate} user={user} />
                     )}
                 </div>
-            </div>
+            </Container>
             <Footer
                 noSkew
                 firstTo={translate(appRoutes.howItWorks)}

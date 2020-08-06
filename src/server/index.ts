@@ -5,6 +5,7 @@ import chalk from 'chalk';
 import manifestHelpers from 'express-manifest-helpers';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
+import cookiesMiddleware from 'universal-cookie-express';
 import addApollo from 'middleware/addApollo';
 import addLoadableExtractor from 'middleware/addLoadableExtractor';
 import addRedis, { cache } from 'middleware/addRedis';
@@ -40,6 +41,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(cookiesMiddleware());
 
 const manifestPath = path.join(paths.clientBuild, paths.publicPath);
 

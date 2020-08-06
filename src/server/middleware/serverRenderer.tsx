@@ -7,6 +7,7 @@ import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 import { ChunkExtractorManager } from '@loadable/server';
 import { ApolloProvider } from 'react-apollo';
 import { I18nextProvider } from 'react-i18next';
+import { CookiesProvider } from 'react-cookie';
 import { languagesArray } from 'constants/locales/languages';
 import { ServerContextProvider } from 'components/hooks/useServerContext';
 import { Environment } from 'global';
@@ -39,21 +40,23 @@ const serverRenderer = () => async (req, res) => {
     const helmetContext = {};
 
     const Content = (
-        <StaticRouter location={req.url} context={routerContext}>
-            <ServerContextProvider environment={environment} isSSR={true}>
-                <I18nextProvider i18n={req.i18n}>
-                    <ApolloProvider client={res.locals.apolloClient}>
-                        <ChunkExtractorManager extractor={res.locals.chunkExtractor}>
-                            <StyleSheetManager sheet={sheet.instance}>
-                                <HelmetProvider context={helmetContext}>
-                                    <App />
-                                </HelmetProvider>
-                            </StyleSheetManager>
-                        </ChunkExtractorManager>
-                    </ApolloProvider>
-                </I18nextProvider>
-            </ServerContextProvider>
-        </StaticRouter>
+        <CookiesProvider cookies={req.universalCookies}>
+            <StaticRouter location={req.url} context={routerContext}>
+                <ServerContextProvider environment={environment} isSSR={true}>
+                    <I18nextProvider i18n={req.i18n}>
+                        <ApolloProvider client={res.locals.apolloClient}>
+                            <ChunkExtractorManager extractor={res.locals.chunkExtractor}>
+                                <StyleSheetManager sheet={sheet.instance}>
+                                    <HelmetProvider context={helmetContext}>
+                                        <App />
+                                    </HelmetProvider>
+                                </StyleSheetManager>
+                            </ChunkExtractorManager>
+                        </ApolloProvider>
+                    </I18nextProvider>
+                </ServerContextProvider>
+            </StaticRouter>
+        </CookiesProvider>
     );
 
     let content = '';

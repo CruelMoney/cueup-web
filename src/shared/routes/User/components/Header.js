@@ -5,6 +5,7 @@ import { useQuery } from 'react-apollo';
 import { useHistory } from 'react-router';
 import Icon from '@iconify/react';
 import starIcon from '@iconify/icons-ion/star';
+import { useCookies } from 'react-cookie';
 import Popup from 'components/common/Popup';
 import { ProFeature } from 'components/FormComponents';
 import Navigation from '../../../components/Navigation/SubNavigation';
@@ -182,7 +183,11 @@ const UserContent = ({ user }) => {
     const statusContent = content[profileStatus];
     const approvedKey = approved ? 'approved' : 'unapproved';
 
-    const [showing, setShowing] = useState(!approved && user.isOwn);
+    const [cookies] = useCookies();
+
+    const isTesting = cookies.testing;
+
+    const [showing, setShowing] = useState(!isTesting && !approved && user.isOwn);
 
     useEffect(() => {
         const dismissed = sessionStorage.getItem('dismissed-approval-modal');
