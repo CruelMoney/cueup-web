@@ -125,7 +125,7 @@ const StripeForm = ({ onPaymentConfirmed, goBack, paymentIntent }) => {
                             Go Back
                         </TeritaryButton>
                     )}
-                    <SmartButton type="submit" loading={loading}>
+                    <SmartButton type="submit" loading={loading} onClick={confirmPayment}>
                         {translate('Confirm & Pay')}
                     </SmartButton>
                 </RowMobileCol>

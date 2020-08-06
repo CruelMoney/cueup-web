@@ -155,7 +155,7 @@ const XenditForm = ({ paymentIntent, onPaymentConfirmed, goBack }) => {
                                 Go Back
                             </TeritaryButton>
                         )}
-                        <SmartButton type="submit" loading={loading}>
+                        <SmartButton type="submit" loading={loading} onClick={confirmPayment}>
                             {translate('Confirm & Pay')}
                         </SmartButton>
                     </RowMobileCol>

@@ -342,15 +342,16 @@ input[type='file'] + label * {
 }
 
 .terms_link {
+    font-size: 0.8em;
     line-height: 1.4em;
     margin: 0;
 }
 .pay-form {
     border-radius: 6px;
     display: flex;
-    max-width: 900px;
+    max-width: 100vw;
     overflow: hidden;
-    width: auto;
+    width: 900px;
 
     .text-element-wrapper {
         margin-bottom: 2em;

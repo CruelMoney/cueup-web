@@ -1,4 +1,11 @@
 /// <reference types="Cypress" />
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+    // returning false here prevents Cypress from
+    // failing the test
+    return false;
+});
+
 describe('Login', () => {
     it('Logs in with email', () => {
         const user = {
@@ -6,6 +13,7 @@ describe('Login', () => {
             password: 't5e3s4t5i8n18g12',
             firstName: 'Christopher',
             lastName: 'Dengsø',
+            genres: [1, 2, 3],
             playingLocation: {
                 name: 'Copenhagen',
                 latitude: 55.6760968,
