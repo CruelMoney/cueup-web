@@ -84,6 +84,7 @@ const DjSearch = () => {
                 <SearchWrapperBg />
 
                 <LocationSelector
+                    data-cy={'location-input'}
                     ref={locationRef}
                     name="query"
                     label={'LOCATION'}
@@ -105,6 +106,7 @@ const DjSearch = () => {
                 <Divider />
 
                 <DatePickerPopup
+                    data-cy={'date-input'}
                     ref={dateRef}
                     label="WHEN"
                     maxDate={new Date().setFullYear(new Date().getFullYear() + 5)}
@@ -123,6 +125,7 @@ const DjSearch = () => {
                 <FindDjsButton>
                     <SmartButton
                         primary
+                        type="submit"
                         loading={loading}
                         style={{ fontSize: '0.14em', height: '3em', minWidth: '6em' }}
                         onClick={submit}

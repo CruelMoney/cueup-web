@@ -47,10 +47,12 @@ const Booking = ({ user, loading, translate }) => {
         }
 
         try {
+            console.log('Trying', user);
             const { timeZoneId } = await GeoCoder.getTimeZone({
                 lat: user.playingLocation.latitude,
                 lng: user.playingLocation.longitude,
             });
+            console.log({ timeZoneId });
 
             const result = await create({
                 ...form,
@@ -63,6 +65,8 @@ const Booking = ({ user, loading, translate }) => {
                     name: user.playingLocation.name,
                 },
             });
+            console.log({ result });
+
             const { data } = result;
             setEventCreated(data?.createEvent);
         } catch (error) {
@@ -341,6 +345,7 @@ const BookingSidebar = ({ loading, values, requestBooking, showLogin, eventCreat
                 </SidebarContent>
 
                 <CTAButton
+                    data-cy="book-button"
                     disabled={createLoading || eventCreated}
                     loading={createLoading}
                     onClick={requestBooking(create)}
