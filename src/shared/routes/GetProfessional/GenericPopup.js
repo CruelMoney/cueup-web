@@ -22,7 +22,7 @@ export const GenericPopup = ({ children, showPayment = true }) => {
         <Popup
             lazy={false}
             noPadding
-            style={{ maxWidth: '1000px' }}
+            style={{ maxWidth: '100vw', width: '1000px' }}
             showing
             onClose={() => {
                 history.goBack();
@@ -185,7 +185,7 @@ function CountdownTimer() {
         );
     });
 
-    return <h3>{timerComponents.length ? timerComponents : <span>Time's up!</span>}</h3>;
+    return <strong>{timerComponents.length ? timerComponents : <span>Time's up!</span>}</strong>;
 }
 
 const Plans = ({ setTier, selectedTier }) => {
@@ -195,11 +195,11 @@ const Plans = ({ setTier, selectedTier }) => {
 
     return (
         <>
-            <div style={{ marginBottom: 24, textAlign: 'center' }}>
-                <Body>Launch offer ends in</Body>
+            <TopText style={{ marginBottom: 24, textAlign: 'center' }}>
+                <Body style={{ fontSize: '1em' }}>Launch offer ends in</Body>
                 <CountdownTimer />
-                <Body>Subscribe now and get this price forever.</Body>
-            </div>
+                <Body style={{ fontSize: '1em' }}>Subscribe now and get this price forever.</Body>
+            </TopText>
 
             {loading && (
                 <>
@@ -310,6 +310,13 @@ const TierWrapper = styled.button`
     border: 3px solid #fff !important;
     text-align: left;
     position: relative;
+    font-size: 1em;
+
+    @media screen and (max-width: 1000px) {
+        font-size: 0.8em;
+        padding: 0 1em;
+    }
+
     h3,
     p {
         font-weight: 600;
@@ -356,7 +363,7 @@ const LeftSection = styled.div`
 const RightSection = styled.div`
     max-width: 500px;
     background-color: #f6f8f9;
-    padding: 3em;
+    padding: 2em;
     ${PrimaryButton} {
         max-width: 100%;
         width: 100%;
@@ -365,7 +372,15 @@ const RightSection = styled.div`
     @media screen and (max-width: 1000px) {
         max-width: 100%;
         width: 100%;
-        padding: 2em;
+    }
+`;
+
+const TopText = styled.div`
+    margin-bottom: 24;
+    text-align: center;
+    font-size: 1.2em;
+    @media screen and (max-width: 1000px) {
+        font-size: 1em;
     }
 `;
 

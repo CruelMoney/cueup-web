@@ -65,6 +65,7 @@ const Popup = memo((props) => {
                         paddingTop: hideClose || noPadding ? '0px' : '5px',
                         width: width ? width : null,
                         backgroundColor: noBackground ? 'transparent' : 'white',
+                        maxHeight: '100vh',
                         ...style,
                     }}
                 >
