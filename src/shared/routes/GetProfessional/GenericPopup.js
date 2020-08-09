@@ -148,7 +148,7 @@ const RowCustom = styled(Row)`
 
 function CountdownTimer() {
     const calculateTimeLeft = () => {
-        const difference = Number(new Date('2020-08-07 19:31')) - Number(new Date());
+        const difference = Number(Date.UTC(2020, 7, 17, 0, 0, 0)) - Number(new Date().valueOf());
         let timeLeft = {};
 
         if (difference > 0) {
