@@ -9,7 +9,7 @@ executors:
     docker:
       - image: cypress/base:12.6.0
       - image: circleci/redis:5.0.5
-      - image: circleci/mysql:5.7-ram
+      - image: circleci/mysql:5.7
       - image: circleci/mongo:3.2
 
     environment:
