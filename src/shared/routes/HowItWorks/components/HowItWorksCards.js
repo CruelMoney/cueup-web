@@ -82,19 +82,19 @@ const HowItWorksCards = () => {
     const cardsData = [
         {
             number: '01',
-            title: 'Tell us about your event.',
+            title: 'Tell us about your event',
             description:
                 'Describe how you want your event to take place and your ideal DJ performance.',
         },
         {
             number: '02',
-            title: 'Message the DJs.',
+            title: 'Choose a DJ',
             description:
-                "We'll match you with the most qualified DJs. Message them to agree on the details and get a fair price.",
+                "We'll match you with the most qualified DJs. Message them to agree on the details and get a good price.",
         },
         {
             number: '03',
-            title: 'Confirm booking.',
+            title: 'Enjoy the music',
             description:
                 "Once you've found your perfect DJ, you can safely pay on Cueup, or use any form of payment you’d like.",
         },

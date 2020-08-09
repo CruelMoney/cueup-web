@@ -23,7 +23,7 @@ const PaymentSection = () => {
         <Bg2>
             <Container>
                 <Col>
-                    <TextAccent center>PAYMENT</TextAccent>
+                    <TextAccent center>Payment</TextAccent>
                     <H2 white center>
                         Money back
                         <br />

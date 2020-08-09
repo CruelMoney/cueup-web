@@ -14,21 +14,25 @@ const FeatureCards = () => {
                 <Card shadow>
                     <H3>
                         <Padlock />
-                        Secure booking
+                        Secure and easy
                     </H3>
                     <Body>
-                        Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur,
-                        inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.
+                        You can complete the booking using your preferred payment method, like cash
+                        or card, and when we act as the facilitator you can be sure that your money
+                        is kept safe until the event is finished. Probably the easiest way to book a
+                        DJ anywhere.
                     </Body>
                 </Card>
                 <Card shadow>
                     <H3>
                         <MusicNote />
-                        Listen before booking
+                        Music on your terms
                     </H3>
                     <Body>
-                        Tum dicere exorsus est laborum et via procedat oratio quaerimus igitur,
-                        inquit, sic agam, ut aliquid ex ea voluptate et rationibus confirmare.
+                        Every DJ has been screeened by us or even reviewed at previous events. You
+                        can also listen to mixes, see photos and videos from their other
+                        perfomances. At the end of the day, you will always find a DJ that suits
+                        your event.
                     </Body>
                 </Card>
             </RowMobileCol>
