@@ -24,7 +24,7 @@ const DataWrapper = () => {
 
     const filteredDjs = djs.filter((dj) => !!dj.picture && dj.genres.length);
 
-    return <AnimatedDjCards djs={djs} />;
+    return <AnimatedDjCards djs={filteredDjs} />;
 };
 
 const AnimatedDjCards = ({ djs }) => {
@@ -123,7 +123,7 @@ const AnimatedDjCards = ({ djs }) => {
 
 const InnerContent = ({
     userMetadata,
-    artistname,
+    artistName,
     playingLocations,
     picture,
     genres,
@@ -158,7 +158,7 @@ const InnerContent = ({
                 <div style={{ flex: 1 }} />
                 <Row between style={{ alignItems: 'flex-end' }}>
                     <Col>
-                        <h3>{artistname || userMetadata?.firstName}</h3>
+                        <h3>{artistName || userMetadata?.firstName}</h3>
                         {location && (
                             <Body
                                 white
@@ -214,6 +214,7 @@ const DjCardContent = styled.div`
         font-size: 0.2em;
         font-weight: 500;
         color: #fff;
+        text-transform: capitalize;
     }
 `;
 
