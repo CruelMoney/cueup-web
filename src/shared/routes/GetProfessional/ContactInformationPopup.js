@@ -21,9 +21,9 @@ export const BenefitsPopup = () => {
                     checked
                     label="Automatic refund each month if you don't receive any gig requests."
                 />
-                <CustomCheckBox checked label="Unlimited mixtape uploads in 320kbps." />
-                <CustomCheckBox checked label="Attach documents to offers." />
-                <CustomCheckBox checked label="...and so much more. Read more here." />
+                <CustomCheckBox checked label="Unlimited sound uploads." />
+                <CustomCheckBox checked label="Pro Badge" />
+                <CustomCheckBox checked label="And much more..." />
                 <Testimonial />
             </Col>
         </GenericPopup>

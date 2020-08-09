@@ -6,6 +6,7 @@ import starIcon from '@iconify/icons-ion/star';
 import { PrimaryButton, Col, RowWrap } from 'components/Blocks';
 
 import { BodySmall } from 'components/Text';
+import { ProFeature } from 'components/FormComponents';
 
 const ProSection = () => {
     const match = useRouteMatch();
@@ -47,12 +48,12 @@ const ProSection = () => {
                     >
                         ✔ No service fees
                         <br />✔ Priority on new events
-                        <br />✔ Unlimited playing locations
                         <br />✔ Direct contact to organizers
-                        <br />✔ Unlimited sound uploads
+                        <br />✔ Unlimited playing locations
                         <br />✔ Add website link to profile
                         <br />✔ Unlimited sound uploads
-                        <br />✔ And so much more...
+                        <br />✔ Pro Badge
+                        <br />✔ And much more...
                     </BodySmall>
                 </Col>
                 <Col style={{ flex: 1, minWidth: '200px' }}>

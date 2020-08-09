@@ -5,6 +5,7 @@ import { Row, Col, Avatar } from 'components/Blocks';
 import { BodySmall } from 'components/Text';
 import { DumbCheckbox } from 'components/Checkbox';
 
+import { ProFeature } from 'components/FormComponents';
 import GenericPopup from './GenericPopup';
 
 export const BenefitsPopup = () => {
@@ -26,9 +27,9 @@ export const BenefitsPopup = () => {
                     checked
                     label="Automatic refund each month if you don't receive any gig requests."
                 />
-                <CustomCheckBox checked label="Unlimited mixtape uploads in 320kbps." />
-                <CustomCheckBox checked label="Attach documents to offers." />
-                <CustomCheckBox checked label="...and so much more. Read more here." />
+                <CustomCheckBox checked label="Unlimited sound uploads." />
+                <CustomCheckBox checked label={'Pro DJ badge.'} />
+                <CustomCheckBox checked label="And much more..." />
                 <Testimonial />
             </Col>
         </GenericPopup>
