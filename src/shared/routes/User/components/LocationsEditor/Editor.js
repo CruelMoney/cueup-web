@@ -85,6 +85,8 @@ const Editor = ({ userLocations, loading, isPro }) => {
         history.push(match.url + '/get-pro');
     };
 
+    const addNewLocationDisabled = locations?.length > 0 && !isPro;
+
     return (
         <EditorStyle between>
             <LeftSide>
@@ -142,9 +144,10 @@ const Editor = ({ userLocations, loading, isPro }) => {
                             fullWidth
                             inverse
                             style={{ minHeight: '40px' }}
-                            onClick={() => (isPro ? addNewLocation() : goPro())}
+                            onClick={() => (addNewLocationDisabled ? goPro() : addNewLocation())}
                         >
-                            Add new {!isPro && <ProFeature style={{ top: 0 }} disabled />}
+                            Add new{' '}
+                            {addNewLocationDisabled && <ProFeature style={{ top: 0 }} disabled />}
                         </TeritaryButton>
                     )}
                 </LocationsList>
