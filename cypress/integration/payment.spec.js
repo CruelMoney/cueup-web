@@ -32,15 +32,15 @@ describe('Payment', () => {
                 const $body = $iframe.contents().find('body');
                 cy.wrap($body)
                     .find('input[name="cardnumber"]')
-                    .clear()
+                    .clear({ force: true })
                     .wait(100)
                     .type(cardNumber || '4242424242424242');
 
-                cy.wrap($body).find('input[name="exp-date"]').clear().type('0424');
-                cy.wrap($body).find('input[name="cvc"]').clear().type('242');
-                cy.wrap($body).find('input[name="postal"]').clear().type('424242');
+                cy.wrap($body).find('input[name="exp-date"]').clear({ force: true }).type('0424');
+                cy.wrap($body).find('input[name="cvc"]').clear({ force: true }).type('242');
+                cy.wrap($body).find('input[name="postal"]').clear({ force: true }).type('424242');
             });
-            cy.get('.pay-form button[type=submit]').click();
+            cy.get('.pay-form button[type=submit]').click({ force: true });
 
             if (withTwoFactor) {
                 confirm3DSecureDialog();
