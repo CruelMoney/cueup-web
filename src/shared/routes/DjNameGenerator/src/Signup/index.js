@@ -6,7 +6,7 @@ import * as Sentry from '@sentry/react';
 import { Input } from 'components/FormComponents';
 import { trackSignup } from 'utils/analytics';
 
-import { SmartButton } from 'components/Blocks';
+import { SmartButton, Hr } from 'components/Blocks';
 import useSocialLogin from 'components/hooks/useSocialLogin';
 import useOnLoggedIn from 'components/hooks/useOnLoggedIn';
 import { useServerContext } from 'components/hooks/useServerContext';
@@ -73,7 +73,7 @@ export const Signup = ({ name, history }) => {
 
                                 <div>
                                     <SignupForm name={name} />
-                                    <Hr />
+                                    <Divider />
 
                                     <SmartButton
                                         level="secondary"
@@ -217,7 +217,7 @@ const SignupForm = ({ name }) => {
     );
 };
 
-const Hr = () => {
+const Divider = () => {
     return (
         <div className="divider">
             <Hr />
