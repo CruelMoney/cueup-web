@@ -1,29 +1,29 @@
 import React, { useState } from 'react';
-import { useMutation, useQuery } from 'react-apollo';
+import { useMutation } from 'react-apollo';
 import emailValidator from 'email-validator';
+import { useRouteMatch } from 'react-router';
 import useTranslate from 'components/hooks/useTranslate';
 import { REQUEST_EMAIL_VERIFICATION } from 'components/gql';
-import { Col, Row, TeritaryButton, SmartButton } from '../../../../components/Blocks';
+import { Col } from '../../../../components/Blocks';
 import { SettingsSection, Input } from '../../../../components/FormComponents';
 
 import SavingIndicator from '../../../../components/SavingIndicator';
 import TextAreaPopup from '../../../../components/TextAreaPopup';
-import { Body, Title } from '../../../../components/Text';
+import { Body } from '../../../../components/Text';
 import GenreSelector from '../../../../components/GenreSelector';
 import PhoneInput from '../../../../components/common/PhoneInput';
-import Popup from '../../../../components/common/Popup';
-import { EVENT_REFUND, CANCEL_EVENT, UPDATE_EVENT } from '../../gql';
-import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
-import CheckboxTable from '../../../../components/CheckboxTable';
+import { UPDATE_EVENT } from '../../gql';
+
 import { eventStates } from '../../../../constants/constants';
 
 const required = (msg) => (val) => (!val ? msg : null);
 
-const Requirements = React.forwardRef(({ theEvent, history, pathname }, ref) => {
+const Requirements = React.forwardRef(({ theEvent, history }, ref) => {
     const { translate } = useTranslate();
 
+    const match = useRouteMatch();
+
     const [update, { loading, error }] = useMutation(UPDATE_EVENT);
-    const [cancelationPopup, setCancelationPopup] = useState();
 
     if (!theEvent) {
         return null;
@@ -36,7 +36,6 @@ const Requirements = React.forwardRef(({ theEvent, history, pathname }, ref) => 
         genres,
         contactName,
         contactPhone,
-        contactEmail,
         address,
         organizer,
     } = theEvent;
@@ -179,7 +178,7 @@ const Requirements = React.forwardRef(({ theEvent, history, pathname }, ref) => 
                         type="button"
                         label="Cancel event"
                         warning={true}
-                        onClick={() => setCancelationPopup(true)}
+                        onClick={() => history.push(match.url + '/cancel')}
                         buttonText="cancel"
                     />
                 )}
@@ -193,131 +192,9 @@ const Requirements = React.forwardRef(({ theEvent, history, pathname }, ref) => 
                     }}
                 />
             </SettingsSection>
-
-            {isCancable && (
-                <Popup
-                    width={530}
-                    showing={cancelationPopup}
-                    onClickOutside={() => setCancelationPopup(false)}
-                >
-                    <CancelationPopup
-                        onCancelled={() => {
-                            setCancelationPopup(false);
-                            history.push(pathname + '/overview');
-                        }}
-                        theEvent={theEvent}
-                        hide={() => setCancelationPopup(false)}
-                    />
-                </Popup>
-            )}
         </Col>
     );
 });
-
-const CancelationPopup = ({ theEvent, hide, onCancelled }) => {
-    const [reason, setReason] = useState();
-    const [mutate, { loading: cancelling }] = useMutation(CANCEL_EVENT, {
-        variables: {
-            reason,
-            id: theEvent.id,
-            hash: theEvent.hash,
-        },
-        onCompleted: () => {
-            onCancelled();
-        },
-    });
-
-    const cancel = () => {
-        if (!reason) {
-            window.alert('Please select a reason for cancelling');
-            return;
-        }
-        mutate();
-    };
-
-    const { loading, data } = useQuery(EVENT_REFUND, {
-        variables: {
-            id: theEvent.id,
-            hash: theEvent.hash,
-        },
-    });
-
-    if (loading) {
-        return <LoadingPlaceholder2 />;
-    }
-
-    const {
-        event: { chosenGig },
-    } = data;
-
-    return (
-        <div>
-            <Title>Cancel event</Title>
-            <Body>
-                Are you sure you want to cancel? Please let us know the reason for canceling and if
-                we can do anything better.
-            </Body>
-
-            <CheckboxTable
-                style={{ marginTop: '42px', marginBottom: '42px' }}
-                options={{
-                    0: {
-                        label: 'The event is not held anyway',
-                    },
-                    1: {
-                        label: 'The DJ asked me to cancel',
-                    },
-                    2: {
-                        label: 'We found a DJ somewhere else',
-                    },
-                    3: {
-                        label: 'We actually don’t need a DJ',
-                    },
-                }}
-                onSave={setReason}
-            />
-            {chosenGig && chosenGig.offer && <CancelationConsequences offer={chosenGig.offer} />}
-            <Row style={{ marginTop: '42px' }} right>
-                <TeritaryButton type="button" onClick={hide}>
-                    Keep event
-                </TeritaryButton>
-                <SmartButton
-                    warning
-                    loading={cancelling}
-                    level="secondary"
-                    onClick={() => cancel()}
-                >
-                    Cancel event
-                </SmartButton>
-            </Row>
-        </div>
-    );
-};
-
-const CancelationConsequences = ({ offer }) => {
-    const {
-        daysLeftInCancelationPolicy,
-        isWithinCancelationPolicy,
-        bestCaseRefund,
-        worstCaseRefund,
-    } = offer;
-
-    if (isWithinCancelationPolicy) {
-        return (
-            <Body>
-                Cancel now or within <b>{daysLeftInCancelationPolicy} days</b>, and receive a refund
-                of <b>{bestCaseRefund.formatted}</b> otherwise you’ll recieve a refund of{' '}
-                {<b>{worstCaseRefund.formatted}</b>}.
-            </Body>
-        );
-    }
-
-    return (
-        <Body>
-            Cancel now and receive a refund of <b>{worstCaseRefund.formatted}</b>.
-        </Body>
-    );
-};
 
 const VerifyEmailError = ({ email }) => {
     const [request, { data, loading }] = useMutation(REQUEST_EMAIL_VERIFICATION);

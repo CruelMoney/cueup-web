@@ -3,12 +3,13 @@ import { Helmet } from 'react-helmet-async';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { useQuery } from 'react-apollo';
 import styled from 'styled-components';
-import { useRouteMatch } from 'react-router';
+import { useRouteMatch, useHistory } from 'react-router';
 import { appRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { useServerContext } from 'components/hooks/useServerContext';
 import { useNotifications } from 'components/hooks/useNotifications';
 import { useAppState } from 'components/hooks/useAppState';
+import Popup from 'components/common/Popup';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col } from '../../components/Blocks';
@@ -19,6 +20,7 @@ import Overview from './routes/Overview';
 import Requirements from './routes/Requirements';
 import Review from './routes/Review';
 import content from './content.json';
+import CancelationPopup from './components/blocks/CancelationPopup';
 
 const Index = ({ location }) => {
     const match = useRouteMatch();
@@ -99,6 +101,7 @@ const Content = React.memo((props) => {
     const { match, ...eventProps } = props;
     const { theEvent, loading } = eventProps;
     const { isSSR } = useServerContext();
+    const history = useHistory();
 
     return (
         <div>
@@ -120,6 +123,21 @@ const Content = React.memo((props) => {
                     </Col>
                 </ContainerRow>
             </Container>
+            <Route path={'*/cancel'}>
+                <Popup
+                    width={530}
+                    showing={true}
+                    onClickOutside={() => history.push(match.url + '/overview')}
+                >
+                    <CancelationPopup
+                        onCancelled={() => {
+                            history.push(match.url + '/overview');
+                        }}
+                        theEvent={theEvent}
+                        hide={() => history.push(match.url + '/overview')}
+                    />
+                </Popup>
+            </Route>
         </div>
     );
 });
