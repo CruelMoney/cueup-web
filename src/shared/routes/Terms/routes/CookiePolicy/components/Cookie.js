@@ -1,6 +1,6 @@
-import React, { Component, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
-const Agreement = () => {
+const CookiePolicy = () => {
     useEffect(() => {
         (function (w, d) {
             const loader = function () {
@@ -16,14 +16,14 @@ const Agreement = () => {
     return (
         <div>
             <a
-                href="https://www.iubenda.com/terms-and-conditions/30255398"
-                className="iubenda-nostyle no-brand iubenda-embed iub-body-embed"
-                title="Terms and Conditions"
+                href="https://www.iubenda.com/privacy-policy/30255398/cookie-policy"
+                className="iubenda-white no-brand iubenda-embed iub-body-embed"
+                title="Cookie Policy"
             >
-                Terms and Conditions
+                Cookie Policy
             </a>
         </div>
     );
 };
 
-export default Agreement;
+export default CookiePolicy;

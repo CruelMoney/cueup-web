@@ -8,6 +8,7 @@ import ScrollToTop from '../../components/common/ScrollToTop';
 import Terms from './components/Terms';
 import Agreements from './routes/Agreements';
 import Privacy from './routes/Privacy';
+import CookiePolicy from './routes/CookiePolicy/components/Cookie';
 
 const Index = (props) => {
     const { translate } = useTranslate();
@@ -25,6 +26,7 @@ const Index = (props) => {
             <Switch>
                 <Route path={translate(appRoutes.termsAgreements)} component={Agreements} />
                 <Route path={translate(appRoutes.termsPrivacy)} component={Privacy} />
+                <Route path={translate(appRoutes.termsCookie)} component={CookiePolicy} />
                 <Redirect
                     exact
                     from={translate(appRoutes.terms)}

@@ -27,6 +27,7 @@ export const routeKeys = Object.freeze({
     terms: 'terms',
     termsAgreements: 'termsAgreements',
     termsPrivacy: 'termsPrivacy',
+    termsCookie: 'termsCookie',
     gig: 'gig',
     resetPassword: 'resetPassword',
     djNameGenerator: 'djNameGenerator',

@@ -26,6 +26,7 @@ const routes: RouteKeys = {
     completeSignup: '/complete-signup',
     terms: '/terms',
     termsAgreements: '/terms/agreements',
+    termsCookie: '/terms/cookies',
     termsPrivacy: '/terms/privacy',
     gig: '/gig',
     resetPassword: '/resetPassword',

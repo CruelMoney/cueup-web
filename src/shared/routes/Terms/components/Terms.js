@@ -21,8 +21,15 @@ class Terms extends Component {
                             >
                                 Terms of Service
                             </ButtonLink>
-                            <ButtonLink color={this.themeColor} to={t(appRoutes.termsPrivacy)}>
+                            <ButtonLink
+                                color={this.themeColor}
+                                to={t(appRoutes.termsPrivacy)}
+                                style={{ marginBottom: 6 }}
+                            >
                                 Privacy Policy
+                            </ButtonLink>
+                            <ButtonLink color={this.themeColor} to={t(appRoutes.termsCookie)}>
+                                Cookie Policy
                             </ButtonLink>
                         </Col>
 
