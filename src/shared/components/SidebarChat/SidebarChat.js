@@ -26,50 +26,83 @@ import {
 } from './blocks';
 import ChatConfirmBeforeContact from './ChatConfirmBeforeContact';
 
-const gigToChatConfig = ({ organizer, eventId, notifications }) => (gig) => ({
+const gigToChatConfig = ({
+    sender,
+    receiver,
+    dj,
+    eventId,
+    notifications,
+    gig,
+    systemMessages,
+}) => ({
     ...gig,
-    showPersonalInformation: gig.status === gigStates.CONFIRMED || gig.dj?.appMetadata?.isPro,
+    systemMessages,
+    showPersonalInformation: gig.status === gigStates.CONFIRMED || dj?.appMetadata?.isPro,
     chatId: gig.id,
     receiver: {
-        id: gig.dj?.id,
-        nickName: gig.dj?.artistName,
-        name: gig.dj?.userMetadata.firstName,
-        image: gig.dj?.picture.path,
-        permalink: gig.dj?.permalink,
+        id: receiver.id,
+        nickName: receiver.artistName,
+        name: receiver.userMetadata?.firstName,
+        image: receiver.picture?.path,
+        permalink: receiver.permalink,
     },
     sender: {
-        id: organizer.id,
-        nickName: organizer.artistName,
-        name: organizer.userMetadata.firstName,
-        image: organizer.picture.path,
+        id: sender.id,
+        nickName: sender.artistName,
+        name: sender.userMetadata?.firstName,
+        image: sender.picture.path,
     },
     hasMessage: notifications[gig.id] && notifications[gig.id].read < notifications[gig.id].total,
     eventId,
 });
 
 const SidebarChat = () => {
-    const { notifications, activeChat, activeEvent, setAppState } = useAppState();
+    const { notifications, activeChatId, chat, activeEvent, setAppState } = useAppState();
+
     const initialized = useRef(false);
 
-    const setActiveChat = useCallback((chat) => setAppState({ activeChat: chat }), [setAppState]);
+    const setActiveChat = useCallback((cId) => setAppState({ activeChatId: cId }), [setAppState]);
 
-    const { data } = useQuery(EVENT_GIGS, {
-        skip: !activeEvent?.id,
+    const { data: eventData } = useQuery(EVENT_GIGS, {
+        skip: !activeEvent?.hash,
         variables: {
             id: activeEvent?.id,
             hash: activeEvent?.hash,
         },
     });
 
-    const chats = data?.event?.gigs
-        .filter((g) => !!g.lastChatMessage || notifications[g.id] || activeChat === g.id)
-        .map(
+    let chats = [];
+
+    if (eventData) {
+        chats = eventData?.event?.gigs
+            .filter(
+                (g) => (!!g.lastChatMessage || notifications[g.id] || activeChatId === g.id) && g.dj
+            )
+            .map((gig) =>
+                gigToChatConfig({
+                    notifications,
+                    eventId: activeEvent?.id,
+                    receiver: gig.dj,
+                    sender: activeEvent.organizer,
+                    gig,
+                    dj: gig.dj,
+                })
+            );
+    }
+
+    if (chat) {
+        chats = [
             gigToChatConfig({
                 notifications,
-                organizer: activeEvent.organizer,
                 eventId: activeEvent?.id,
-            })
-        );
+                receiver: chat.receiver,
+                sender: chat.sender,
+                gig: chat.gig,
+                dj: chat.dj,
+                systemMessages: chat.systemMessages,
+            }),
+        ];
+    }
 
     // open the latest chat
     useEffect(() => {
@@ -93,7 +126,7 @@ const SidebarChat = () => {
                 initialized.current = true;
             }
         }
-    }, [activeChat, setActiveChat, chats]);
+    }, [activeChatId, setActiveChat, chats]);
 
     if (!activeEvent || !chats) {
         return null;
@@ -104,16 +137,16 @@ const SidebarChat = () => {
             chats={chats}
             event={activeEvent}
             setActiveChat={setActiveChat}
-            activeChat={activeChat}
+            activeChatId={activeChatId}
         />
     );
 };
 
-const InnerContent = ({ chats = [], event, activeChat, setActiveChat }) => {
+const InnerContent = ({ chats = [], event, activeChatId, setActiveChat }) => {
     const doesOverflow = chats.length > 7;
     const activeChats = chats.slice(0, doesOverflow ? 6 : 7);
     const remainingChats = chats.slice(6);
-    const chat = chats.find((c) => c.id === activeChat);
+    const chat = chats.find((c) => c.id === activeChatId);
 
     return (
         <FixedWrapper>
@@ -121,7 +154,7 @@ const InnerContent = ({ chats = [], event, activeChat, setActiveChat }) => {
             <ChatList>
                 {activeChats.map((c) => (
                     <ChatBubble
-                        active={c.id === activeChat}
+                        active={c.id === activeChatId}
                         key={c.id}
                         onClick={() => setActiveChat(c.id)}
                         {...c}
@@ -132,7 +165,7 @@ const InnerContent = ({ chats = [], event, activeChat, setActiveChat }) => {
                     <ExtraChats
                         setActiveChat={setActiveChat}
                         chats={remainingChats}
-                        active={remainingChats.some((c) => c.id === activeChat)}
+                        active={remainingChats.some((c) => c.id === activeChatId)}
                     />
                 )}
             </ChatList>

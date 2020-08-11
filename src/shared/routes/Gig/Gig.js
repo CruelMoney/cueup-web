@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { LazyContactInformationPopup, LazyChatGetProPopup } from 'routes/GetProfessional';
+import { useAppState } from 'components/hooks/useAppState';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col, TeritaryButton, SmartButton } from '../../components/Blocks';
@@ -21,12 +22,11 @@ import { GIG, DECLINE_GIG, CANCEL_GIG } from './gql.js';
 import GigHeader from './components/blocks/GigHeader';
 import Information from './routes/Information';
 import Offer from './routes/Offer';
-import ChatSidebar from './components/ChatSidebar';
 
 import BackToProfile from './components/BackToProfile';
 import GigReview from './routes/GigReview';
-import MobileChat from './routes/MobileChat';
 import content from './content.json';
+import { getSystemMessage } from './utils';
 
 const Index = ({ location, match, history }) => {
     const { translate } = useNamespaceContent(content, 'gig');
@@ -124,11 +124,33 @@ const Content = React.memo((props) => {
     const { theEvent, loading, gig, history, me } = props;
     const { organizer } = theEvent || {};
     const { statusHumanized } = gig || {};
+    const { setAppState } = useAppState();
 
     const [popup, setPopup] = useState(false);
 
     const showDecline = useCallback(() => setPopup(true), []);
     const navigateToOffer = useCallback(() => history.push('offer'), [history]);
+
+    useEffect(() => {
+        if (theEvent) {
+            const systemMessages = [];
+            systemMessages.push(getSystemMessage({ gig, navigateToOffer, showDecline }));
+
+            setAppState({
+                showSideBarChat: true,
+                activeEvent: theEvent,
+                chat: {
+                    id: gig.id,
+                    receiver: organizer,
+                    sender: me,
+                    dj: me,
+                    gig,
+                    systemMessages,
+                },
+                activeChatId: gig.id,
+            });
+        }
+    }, [setAppState, theEvent, gig, me, organizer]);
 
     const { width } = useWindowSize();
 
@@ -151,7 +173,7 @@ const Content = React.memo((props) => {
                     />
                     {width > 420 && (
                         <Col>
-                            <ChatSidebar
+                            {/* <ChatSidebar
                                 theEvent={theEvent}
                                 gig={gig}
                                 loading={loading}
@@ -159,7 +181,7 @@ const Content = React.memo((props) => {
                                 showDecline={showDecline}
                                 navigateToOffer={navigateToOffer}
                                 me={me}
-                            />
+                            /> */}
                         </Col>
                     )}
                 </ContainerRow>
@@ -220,10 +242,6 @@ const GigRoutes = forwardRef((props, ref) => {
             <Route
                 path={match.path + '/review'}
                 render={(navProps) => <GigReview {...navProps} {...props} />}
-            />
-            <Route
-                path={match.path + '/chat'}
-                render={(navProps) => <MobileChat {...navProps} {...props} />}
             />
         </Switch>
     );
