@@ -291,6 +291,7 @@ const BeforePrice = styled.span`
 `;
 
 const Price = styled.p`
+    text-align: right;
     > span {
         font-weight: 500;
         color: #98a4b3;
