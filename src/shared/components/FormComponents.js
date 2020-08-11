@@ -439,7 +439,7 @@ const ProSpan = styled.span`
     justify-content: center;
     display: inline-flex;
     flex-direction: row;
-    font-size: ${({ small }) => (small ? '13px' : '20px')};
+    font-size: ${({ small }) => (small ? '14px' : '20px')};
     padding: 0.15em;
     border-radius: 1em;
     position: relative;
