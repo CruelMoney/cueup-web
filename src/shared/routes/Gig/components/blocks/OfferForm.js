@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import debounce from 'lodash/debounce';
 import { useMutation } from 'react-apollo';
 import { InlineIcon } from '@iconify/react';
 import infoIcon from '@iconify/icons-ion/information-circle';
+import { useLocation } from 'react-router';
 import RadioSelect from 'components/RadioSelect';
 import useTranslate from 'components/hooks/useTranslate';
 import Tooltip from 'components/Tooltip';
@@ -31,6 +32,12 @@ const OfferForm = ({
     user,
     isPro,
 }) => {
+    const location = useLocation();
+
+    useEffect(() => {
+        console.log(location);
+    }, [location]);
+
     const { translate } = useTranslate();
     const initOffer = gig.offer || {
         offer: { amount: 0, formatted: 0 },
@@ -176,7 +183,7 @@ const OfferForm = ({
                 <InputRow small style={{ marginTop: '20px' }}>
                     <Input
                         half
-                        label="Price"
+                        label="Total Price"
                         name="amount"
                         placeholder="00,00"
                         //onUpdatePipeFunc={(oldVal,val)=>moneyPipe(oldVal,val,"DKK")}
@@ -223,7 +230,10 @@ const OfferForm = ({
 
             {!!canUpdatePrice && (
                 <div data-cy="payout-options">
-                    <TitleClean>Organizer payment</TitleClean>
+                    <TitleClean style={{ marginBottom: 6 }}>Organizer Payment</TitleClean>
+                    <Body style={{ marginBottom: 12 }}>
+                        Choose multiple to allow the organizer to pick one.
+                    </Body>
                     <RadioSelect
                         containerStyle={{ marginBottom: '30px' }}
                         multi
@@ -239,7 +249,7 @@ const OfferForm = ({
                             {
                                 checked: payoutMethods.DIRECT,
                                 title: 'Directly to you',
-                                description: 'Organizer can pay directly to you in cash etc.',
+                                description: 'Organizer can pay directly to you. ',
                                 value: PAYOUT_TYPES.DIRECT,
                             },
                         ]}
@@ -314,6 +324,7 @@ const RemainingPayment = ({ translate, payoutType, amountLeft, amountPaid, offer
 const OfferTable = ({ loading, translate, serviceFee, djFee, totalPayout, isPro }) => {
     return (
         <Col style={{ marginBottom: '30px', marginTop: '30px' }}>
+            <TitleClean>Your Payout</TitleClean>
             <div style={style1}>
                 <TableRow
                     label={translate('Service fee')}
