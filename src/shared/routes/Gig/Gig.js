@@ -150,7 +150,7 @@ const Content = React.memo((props) => {
                 activeChatId: gig.id,
             });
         }
-    }, [setAppState, theEvent, gig, me, organizer]);
+    }, [setAppState, theEvent, gig, me, organizer, navigateToOffer, showDecline]);
 
     const { width } = useWindowSize();
 

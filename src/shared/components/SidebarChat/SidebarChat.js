@@ -9,7 +9,6 @@ import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import { useAppState } from 'components/hooks/useAppState';
 import { BodySmall } from 'components/Text';
-import { LazyContactInformationPopup } from 'routes/GetProfessional';
 import {
     ShadowWrapper,
     ExtraChatsLayover,
@@ -34,8 +33,10 @@ const gigToChatConfig = ({
     notifications,
     gig,
     systemMessages,
+    isFromGig,
 }) => ({
     ...gig,
+    isFromGig,
     systemMessages,
     showPersonalInformation: gig.status === gigStates.CONFIRMED || dj?.appMetadata?.isPro,
     chatId: gig.id,
@@ -100,6 +101,7 @@ const SidebarChat = () => {
                 gig: chat.gig,
                 dj: chat.dj,
                 systemMessages: chat.systemMessages,
+                isFromGig: true,
             }),
         ];
     }
@@ -228,7 +230,8 @@ const ChatBubble = ({ receiver, onClick, active, hasMessage }) => {
 };
 
 const ChatWrapper = ({ chat, event, onClose }) => {
-    const { receiver, chatId } = chat;
+    const { receiver, chatId, isFromGig } = chat;
+
     const { translate } = useTranslate();
     const history = useHistory();
     const location = useLocation();
@@ -246,10 +249,10 @@ const ChatWrapper = ({ chat, event, onClose }) => {
             if (error.status === 403) {
                 // forbidden / trying to send contact info
                 const currentPath = location.pathname === '/' ? '' : location.pathname;
-                history.push(currentPath + '/chat-confirm-first');
+                history.push(currentPath + (isFromGig ? '/chat-get-pro' : '/chat-confirm-first'));
             }
         },
-        [history, location]
+        [history, location, isFromGig]
     );
 
     return (
