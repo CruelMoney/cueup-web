@@ -4,6 +4,8 @@ import { useLocation, Route } from 'react-router';
 import { useMutation } from 'react-apollo';
 import { useSpring, animated } from 'react-spring';
 import { useServerContext } from 'components/hooks/useServerContext';
+import { appRoutes } from 'constants/locales/appRoutes';
+import useTranslate from 'components/hooks/useTranslate';
 import useGenerateName, { TYPES } from './useGenerateName';
 import DraggableList from './DragableList';
 import ToggleSwitch from './ToggleSwitch';
@@ -48,6 +50,7 @@ const CATEGORIES = [
 ];
 
 function App({ match, history }) {
+    const { translate } = useTranslate();
     const [mutate] = useMutation(NAME_GENERATED);
 
     const [categories, setCategories] = useState([
@@ -201,10 +204,12 @@ function App({ match, history }) {
                 </div>
 
                 <div className="bottom-right">
-                    <div className="created-by">
-                        <h4>Created by</h4>
-                        <Logo />
-                    </div>
+                    <a href={translate(appRoutes.becomeDj) + '?ref=dj-name-generator'}>
+                        <div className="created-by">
+                            <h4>Created by</h4>
+                            <Logo />
+                        </div>
+                    </a>
                     <InstagramWidget />
                 </div>
 
