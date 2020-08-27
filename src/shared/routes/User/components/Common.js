@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 
 import shieldIcon from '@iconify/icons-entypo/shield';
 import shieldCheckmark from '@iconify/icons-ion/shield-checkmark';

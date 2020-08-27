@@ -114,8 +114,8 @@ const Content = React.forwardRef(
 
                     {!showInfo && (
                         <BodySmall>
-                            Information will be available when the gig is confirmed - until then,
-                            you can use the chat.
+                            Information will be available when the gig is confirmed - you can use
+                            the chat until then.
                             <br />
                             <NavLink to={match.url + '/contact-get-pro'}>
                                 <b style={{ color: '#4d6480' }}>Pro members</b>
