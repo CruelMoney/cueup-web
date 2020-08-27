@@ -3,7 +3,7 @@ import './polyfills';
 import React from 'react';
 import { hydrate, render } from 'react-dom';
 import { loadableReady } from '@loadable/component';
-// import * as serviceWorker from './serviceWorker';
+import * as serviceWorker from './ServiceWorker';
 import Router from './BrowserRouter';
 
 import './i18next';
@@ -23,4 +23,4 @@ if (process.env.NODE_ENV === 'development') {
         module.hot.accept();
     }
 }
-// serviceWorker.register();
+serviceWorker.unregister();
