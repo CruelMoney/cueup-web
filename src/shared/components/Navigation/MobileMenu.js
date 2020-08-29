@@ -103,6 +103,8 @@ const MobileMenu = ({ isHome }) => {
 
     return (
         <>
+            <GlobalStyle />
+
             <BurgerButton
                 className="mobileMenuButton link-look"
                 onClick={() => {
@@ -147,7 +149,6 @@ const Content = ({
     setLoginExpanded,
 }) => (
     <div className={'mobileMenu' + (show ? ' active' : '')}>
-        <GlobalStyle />
         <div className="menuArea">
             <ClosePopupButton
                 style={{ position: 'absolute', top: 10, right: 10 }}
@@ -415,20 +416,11 @@ const GlobalStyle = createGlobalStyle`
             width: 100%;
         }
 
-
         .white-theme .mobileMenuButton h2,
         .white-theme .mobileMenuButton h2:after,
         .white-theme .mobileMenuButton h2:before {
             background: #32325d;
         }
-
-        .white-theme .buttonFixed .mobileMenuButton h2,
-        .white-theme .buttonFixed .mobileMenuButton h2:after,
-        .white-theme .buttonFixed .mobileMenuButton h2:before {
-            background: white;
-        }
-
-
         
 
 `;
