@@ -33,6 +33,10 @@ import { CitiesList } from './components/CountriesList';
 import content from './content.json';
 import './index.css';
 
+const HeroCard = styled(CardSimple)`
+    padding: 30px;
+`;
+
 const Location = (props) => {
     const secondColor = '#25F4D2';
     const themeColor = '#31DAFF';
@@ -157,10 +161,7 @@ const Location = (props) => {
 
                             <Row className="row">
                                 <HeroContent>
-                                    <CardSimple
-                                        className="card"
-                                        style={{ padding: 30, borderRadius: 0 }}
-                                    >
+                                    <HeroCard className="card">
                                         <h1
                                             key="title"
                                             dangerouslySetInnerHTML={{
@@ -180,7 +181,7 @@ const Location = (props) => {
                                                 </div>
                                             </PrimaryButton>
                                         </div>
-                                    </CardSimple>
+                                    </HeroCard>
                                 </HeroContent>
                             </Row>
                         </Container>
