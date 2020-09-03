@@ -5,8 +5,8 @@ import styled, { createGlobalStyle } from 'styled-components';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 import useTranslate from 'components/hooks/useTranslate';
 import useAlternativePages from 'components/hooks/useAlternativePages';
-import { showOlark } from 'utils/olark/index';
 import { Container, Row, RowWrap } from 'components/Blocks';
+import { showSupportChat } from 'utils/supportChat';
 import InstagramLogo from '../../assets/InstagramLogo';
 // eslint-disable-next-line no-unused-vars
 import languageIcon from '../../assets/icons/language.svg';
@@ -239,7 +239,7 @@ const Footer = ({
                                     </Link>
                                 </li>
                                 <li>
-                                    <a className="link-look" onClick={showOlark}>
+                                    <a className="link-look" onClick={showSupportChat}>
                                         {translate('contact')}
                                     </a>
                                 </li>
@@ -278,7 +278,7 @@ const Footer = ({
                                 </li>
 
                                 <li>
-                                    <a className="link-look" onClick={showOlark}>
+                                    <a className="link-look" onClick={showSupportChat}>
                                         {translate('Feedback')}
                                     </a>
                                 </li>

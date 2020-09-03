@@ -1,7 +1,7 @@
 import React from 'react';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
-import { showOlark } from 'utils/olark/index';
+import { showSupportChat } from 'utils/supportChat';
 import { Container, Row, Col } from 'components/Blocks';
 import Footer from '../../../components/common/Footer';
 
@@ -33,7 +33,7 @@ export default () => {
                             <a
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    showOlark();
+                                    showSupportChat();
                                 }}
                             >
                                 Send a message

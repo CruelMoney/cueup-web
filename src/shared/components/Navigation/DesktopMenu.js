@@ -14,7 +14,7 @@ import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import NavLink from 'components/common/Navlink';
 import { TeritaryButton, Hr } from 'components/Blocks';
-import { showOlark } from 'utils/olark';
+import { showSupportChat } from 'utils/supportChat';
 import UserRoute from '../../routes/User';
 import { useLogout } from '../hooks/useLogout';
 import UserMenuItem from './UserMenuItem';
@@ -160,7 +160,7 @@ const DropDownMenu = ({ user, ...props }) => {
                     </a>
                 </li>
                 <li>
-                    <MenuButton onClick={showOlark}>
+                    <MenuButton onClick={showSupportChat}>
                         <InlineIcon icon={helpIcon} />
                         Help!?
                     </MenuButton>

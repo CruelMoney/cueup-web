@@ -11,7 +11,7 @@ import { Label, ProFeature } from 'components/FormComponents';
 import { ME, MY_GIGS } from 'components/gql';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
-import { showOlark } from 'utils/olark';
+import { showSupportChat } from 'utils/supportChat';
 import { SUBSCRIPTION_TIERS } from './gql';
 import PaymentForm from './PaymentForm';
 
@@ -132,7 +132,7 @@ const Success = ({ user }) => {
                 </RowCustom>
                 <RowCustom between middle>
                     <Label>Contact the Cueup team</Label>
-                    <SecondaryButton onClick={showOlark}>Go</SecondaryButton>
+                    <SecondaryButton onClick={showSupportChat}>Go</SecondaryButton>
                 </RowCustom>
             </Col>
         </div>
