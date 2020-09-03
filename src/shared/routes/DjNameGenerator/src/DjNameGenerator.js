@@ -6,6 +6,7 @@ import { useSpring, animated } from 'react-spring';
 import { useServerContext } from 'components/hooks/useServerContext';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
+import { hideChatButton } from 'utils/supportChat';
 import useGenerateName, { TYPES } from './useGenerateName';
 import DraggableList from './DragableList';
 import ToggleSwitch from './ToggleSwitch';
@@ -258,6 +259,10 @@ function useQuery() {
 }
 
 const AppWithMeta = (props) => {
+    useEffect(() => {
+        hideChatButton();
+    }, []);
+
     const params = useQuery();
     const location = useLocation();
     const name = params.get('name');
