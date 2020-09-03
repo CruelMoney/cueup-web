@@ -18,17 +18,20 @@ const initialEnvironment: Environment = {
 const initial = {
     environment: initialEnvironment,
     isSSR: false,
+    countryCode: null,
 };
 
 const ServerContext = createContext(initial);
 
 export const useServerContext = () => {
-    const { environment, isSSR } = useContext(ServerContext);
-    return { environment, isSSR };
+    const { environment, isSSR, countryCode } = useContext(ServerContext);
+    return { environment, isSSR, countryCode };
 };
 
-export const ServerContextProvider = ({ children, environment, isSSR }) => {
+export const ServerContextProvider = ({ children, environment, countryCode, isSSR }) => {
     return (
-        <ServerContext.Provider value={{ environment, isSSR }}>{children}</ServerContext.Provider>
+        <ServerContext.Provider value={{ environment, countryCode, isSSR }}>
+            {children}
+        </ServerContext.Provider>
     );
 };

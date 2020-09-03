@@ -35,6 +35,8 @@ const environment: Environment = {
 const serverRenderer = () => async (req, res) => {
     const sheet = new ServerStyleSheet();
 
+    const countryCode = req.header('cf-ipcountry');
+
     // these can be used to pass values to and from client code
     const routerContext = {
         request: req,
@@ -45,7 +47,11 @@ const serverRenderer = () => async (req, res) => {
     const Content = (
         <CookiesProvider cookies={req.universalCookies}>
             <StaticRouter location={req.url} context={routerContext}>
-                <ServerContextProvider environment={environment} isSSR={true}>
+                <ServerContextProvider
+                    environment={environment}
+                    countryCode={countryCode}
+                    isSSR={true}
+                >
                     <I18nextProvider i18n={req.i18n}>
                         <ApolloProvider client={res.locals.apolloClient}>
                             <ChunkExtractorManager extractor={res.locals.chunkExtractor}>

@@ -7,6 +7,7 @@ import useTranslate from 'components/hooks/useTranslate';
 import useAlternativePages from 'components/hooks/useAlternativePages';
 import { Container, Row, RowWrap } from 'components/Blocks';
 import { showSupportChat } from 'utils/supportChat';
+import { useServerContext } from 'components/hooks/useServerContext';
 import InstagramLogo from '../../assets/InstagramLogo';
 // eslint-disable-next-line no-unused-vars
 import languageIcon from '../../assets/icons/language.svg';
@@ -23,6 +24,10 @@ const Footer = ({
     secondLabel,
     secondTo,
 }) => {
+    const { countryCode } = useServerContext();
+
+    console.log({ countryCode });
+
     const { translate, currentLanguage } = useTranslate();
 
     const langaugePages = useAlternativePages();
