@@ -11,10 +11,17 @@ import { Col, Row, RowWrap } from 'components/Blocks';
 import useWindowSize from 'components/hooks/useWindowSize';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
+import { useServerContext } from 'components/hooks/useServerContext';
 import { FEATURED_DJS } from '../gql';
 
 const DataWrapper = () => {
-    const { data, loading } = useQuery(FEATURED_DJS);
+    const { environment } = useServerContext();
+
+    const { data, loading } = useQuery(FEATURED_DJS, {
+        variables: {
+            countryCode: environment.COUNTRY_CODE,
+        },
+    });
 
     const djs = data?.featuredDjs || [];
 
