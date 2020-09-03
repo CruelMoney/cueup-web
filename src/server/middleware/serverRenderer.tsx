@@ -30,12 +30,13 @@ const environment: Environment = {
         : 'AIzaSyDYsMT5dhTnBLMcAetq4NGVWUyijkrVSHs',
     SETTING: process.env.SETTING || 'development',
     ONE_SIGNAL_KEY: process.env.REACT_APP_ONE_SIGNAL_APP_ID!,
+    COUNTRY_CODE: null,
 };
 
 const serverRenderer = () => async (req, res) => {
     const sheet = new ServerStyleSheet();
 
-    const countryCode = req.header('cf-ipcountry');
+    const COUNTRY_CODE = req.header('cf-ipcountry');
 
     // these can be used to pass values to and from client code
     const routerContext = {
@@ -47,11 +48,7 @@ const serverRenderer = () => async (req, res) => {
     const Content = (
         <CookiesProvider cookies={req.universalCookies}>
             <StaticRouter location={req.url} context={routerContext}>
-                <ServerContextProvider
-                    environment={environment}
-                    countryCode={countryCode}
-                    isSSR={true}
-                >
+                <ServerContextProvider environment={{ ...environment, COUNTRY_CODE }} isSSR={true}>
                     <I18nextProvider i18n={req.i18n}>
                         <ApolloProvider client={res.locals.apolloClient}>
                             <ChunkExtractorManager extractor={res.locals.chunkExtractor}>

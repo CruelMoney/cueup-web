@@ -13,25 +13,23 @@ const initialEnvironment: Environment = {
     WEBSITE_URL: null,
     SETTING: 'development',
     ONE_SIGNAL_KEY: null,
+    COUNTRY_CODE: null,
 };
 
 const initial = {
     environment: initialEnvironment,
     isSSR: false,
-    countryCode: null,
 };
 
 const ServerContext = createContext(initial);
 
 export const useServerContext = () => {
-    const { environment, isSSR, countryCode } = useContext(ServerContext);
-    return { environment, isSSR, countryCode };
+    const { environment, isSSR } = useContext(ServerContext);
+    return { environment, isSSR };
 };
 
-export const ServerContextProvider = ({ children, environment, countryCode, isSSR }) => {
+export const ServerContextProvider = ({ children, environment, isSSR }) => {
     return (
-        <ServerContext.Provider value={{ environment, countryCode, isSSR }}>
-            {children}
-        </ServerContext.Provider>
+        <ServerContext.Provider value={{ environment, isSSR }}>{children}</ServerContext.Provider>
     );
 };

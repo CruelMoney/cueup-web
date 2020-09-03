@@ -47,8 +47,14 @@ const addRedis = (app) => {
     // so to reduce the amount we cache, it's only for 1 day
     app.get('/dj-name-generator', cache.route({ expire: 60 * 60 * 24 })); // 1 day
 
-    // otherwise cache forever
-    app.get('*', cache.route({ expire: -1 }));
+    // otherwise cache forever for the given geo location
+    app.get('*', setGeoCacheName, cache.route({ expire: -1 }));
+};
+
+const setGeoCacheName = (req, res, next) => {
+    const countryCode = req.header('cf-ipcountry');
+    res.express_redis_cache_name = req.originalUrl + (countryCode ? countryCode : '');
+    next();
 };
 
 export default addRedis;

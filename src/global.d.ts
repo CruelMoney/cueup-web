@@ -79,6 +79,7 @@ export interface Environment {
     WEBSITE_URL: ?string;
     SETTING: any;
     ONE_SIGNAL_KEY: ?string;
+    COUNTRY_CODE: ?string;
 }
 
 interface CustomWindow extends Window {

@@ -24,9 +24,9 @@ const Footer = ({
     secondLabel,
     secondTo,
 }) => {
-    const { countryCode } = useServerContext();
+    const { environment } = useServerContext();
 
-    console.log({ countryCode });
+    console.log('COUNTRY: ', environment.COUNTRY_CODE);
 
     const { translate, currentLanguage } = useTranslate();
 
