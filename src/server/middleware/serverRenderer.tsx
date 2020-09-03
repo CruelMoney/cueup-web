@@ -1,3 +1,4 @@
+import { Readable } from 'stream';
 import * as React from 'react';
 import { renderToString, renderToNodeStream } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
@@ -36,7 +37,7 @@ const environment: Environment = {
 const serverRenderer = () => async (req, res) => {
     const sheet = new ServerStyleSheet();
 
-    const COUNTRY_CODE = req.header('cf-ipcountry');
+    environment.COUNTRY_CODE = req.header('cf-ipcountry');
 
     // these can be used to pass values to and from client code
     const routerContext = {
@@ -48,7 +49,7 @@ const serverRenderer = () => async (req, res) => {
     const Content = (
         <CookiesProvider cookies={req.universalCookies}>
             <StaticRouter location={req.url} context={routerContext}>
-                <ServerContextProvider environment={{ ...environment, COUNTRY_CODE }} isSSR={true}>
+                <ServerContextProvider environment={environment} isSSR={true}>
                     <I18nextProvider i18n={req.i18n}>
                         <ApolloProvider client={res.locals.apolloClient}>
                             <ChunkExtractorManager extractor={res.locals.chunkExtractor}>
@@ -115,7 +116,7 @@ const serverRenderer = () => async (req, res) => {
     }
 
     res.setHeader('Content-Type', 'text/html');
-    // res.write('<!DOCTYPE html>');
+    res.write(Buffer.from('<!DOCTYPE html>', 'utf8'));
 
     return renderToNodeStream(
         <Html
