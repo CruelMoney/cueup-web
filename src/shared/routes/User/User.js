@@ -24,6 +24,7 @@ import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import ReactComment from 'components/ReactComment';
+import { hideChatButton, showChatButton } from 'utils/supportChat';
 import Sidebar, { SidebarContent } from '../../components/Sidebar';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col, Divider } from '../../components/Blocks';
@@ -391,6 +392,8 @@ const User = ({ match, location, user, error, loading, translate }) => {
 
     useEffect(() => {
         setHasScrolled(true);
+        hideChatButton();
+        return showChatButton;
     }, []);
 
     const title = user ? user.artistName || user.userMetadata?.firstName : null;

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions, no-script-url, no-sequences */
 
-const loaded = false;
+let loaded = false;
 
 export const loadSupportChat = () => {
     window.zEmbed ||
@@ -45,6 +45,7 @@ export const loadSupportChat = () => {
                 o.write('<body onload="document._l();">'),
                 o.close();
         })();
+    loaded = true;
 };
 
 export const showSupportChat = () => {
@@ -54,6 +55,29 @@ export const showSupportChat = () => {
     window.zE(() => {
         window.$zopim(() => {
             window.$zopim.livechat.window.show();
+        });
+    });
+};
+
+export const hideChatButton = () => {
+    if (!loaded) {
+        loadSupportChat();
+    }
+    window.zE(() => {
+        window.$zopim(() => {
+            window.$zopim.livechat.button.hide();
+        });
+    });
+};
+
+export const showChatButton = () => {
+    if (!loaded) {
+        loadSupportChat();
+    }
+    window.zE(() => {
+        window.$zopim(() => {
+            console.log('Show chat button');
+            window.$zopim.livechat.button.show();
         });
     });
 };
