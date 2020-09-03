@@ -125,6 +125,7 @@ const Footer = ({
                                         <a
                                             href="https://twitter.com/CueupDK"
                                             target="blank"
+                                            rel="noopener noreferrer"
                                             style={{
                                                 color: color,
                                                 fill: color,
@@ -150,6 +151,7 @@ const Footer = ({
                                         <a
                                             href="https://www.facebook.com/cueupdk"
                                             target="blank"
+                                            rel="noopener noreferrer"
                                             style={{
                                                 color: color,
                                                 fill: color,
@@ -175,6 +177,7 @@ const Footer = ({
                                         <a
                                             href="https://www.instagram.com/cueup.dj.booking/"
                                             target="blank"
+                                            rel="noopener noreferrer"
                                             style={{
                                                 color: color,
                                                 fill: color,
@@ -264,7 +267,14 @@ const Footer = ({
                             <h4>{translate('resources')}</h4>
                             <ul>
                                 <li>
-                                    <Link to={translate(appRoutes.faq)}>Help center</Link>
+                                    <a
+                                        className="link-look"
+                                        href={'https://cueup.zendesk.com/hc'}
+                                        target="blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Help center
+                                    </a>
                                 </li>
 
                                 <li>
