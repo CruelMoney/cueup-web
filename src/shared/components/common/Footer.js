@@ -239,7 +239,7 @@ const Footer = ({
                                     </Link>
                                 </li>
                                 <li>
-                                    <a className="link-look" onClick={showSupportChat}>
+                                    <a className="link-look" href="mailto:chris@cueup.io">
                                         {translate('contact')}
                                     </a>
                                 </li>
@@ -274,6 +274,11 @@ const Footer = ({
                                         rel="noopener noreferrer"
                                     >
                                         Help center
+                                    </a>
+                                </li>
+                                <li>
+                                    <a className="link-look" onClick={showSupportChat}>
+                                        {translate('Support chat')}
                                     </a>
                                 </li>
 
