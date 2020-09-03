@@ -28,16 +28,7 @@ const getBlogUrls = () => {
 };
 
 const getPublicUrls = () => {
-    const urls = [
-        '/',
-        '/how-it-works',
-        '/become-dj',
-        '/signup',
-        '/about',
-        '/faq/dj',
-        '/faq/organizer',
-        '/dj-name-generator',
-    ];
+    const urls = ['/', '/how-it-works', '/become-dj', '/signup', '/about', '/dj-name-generator'];
     return urls;
 };
 

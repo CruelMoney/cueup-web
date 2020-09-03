@@ -36,7 +36,10 @@ const serverRenderer = () => async (req, res) => {
     const sheet = new ServerStyleSheet();
 
     // these can be used to pass values to and from client code
-    const routerContext = {};
+    const routerContext = {
+        request: req,
+        response: res,
+    } as any;
     const helmetContext = {};
 
     const Content = (
@@ -68,6 +71,14 @@ const serverRenderer = () => async (req, res) => {
     } catch (error) {
         console.log({ error });
         content = renderToString(Content);
+    }
+
+    if (routerContext.url) {
+        res.writeHead(302, {
+            Location: routerContext.url,
+        });
+        res.end();
+        return;
     }
 
     const styleTags = sheet.getStyleElement();

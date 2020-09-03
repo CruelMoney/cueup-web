@@ -1,4 +1,9 @@
-import loadable from '@loadable/component';
-const LazyFaq = loadable(() => import('./Faq'));
+import React from 'react';
+import { Redirect } from 'react-router';
 
-export default LazyFaq;
+const zendeskUrl = 'https://cueup.zendesk.com/hc';
+const RedirectToZendesk = ({ staticContext }) => {
+    return <Redirect to={zendeskUrl} />;
+};
+
+export default RedirectToZendesk;
