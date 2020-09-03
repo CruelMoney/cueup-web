@@ -28,7 +28,7 @@ const getBlogUrls = () => {
 };
 
 const getPublicUrls = () => {
-    const urls = ['/', '/how-it-works', '/become-dj', '/signup', '/about', '/dj-name-generator'];
+    const urls = ['/', '/become-dj', '/signup', '/about', '/dj-name-generator'];
     return urls;
 };
 

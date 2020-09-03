@@ -73,13 +73,13 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "f7:9c:16:2f:55:98:08:cb:6d:38:b0:9d:83:ed:e1:e4"
-      - run: ssh-keyscan cueup.io >>  ~/.ssh/known_hosts
+      - run: ssh-keyscan ssh.cueup.io >>  ~/.ssh/known_hosts
       - run:
           name: Add staging remote git
-          command: git remote add staging dokku@cueup.io:staging.cueup
+          command: git remote add staging dokku@ssh.cueup.io:staging.cueup
       - run:
           name: Add production remote git
-          command: git remote add master dokku@cueup.io:cueup
+          command: git remote add master dokku@ssh.cueup.io:cueup
 
       - run: git push << pipeline.git.branch >> << pipeline.git.branch >>:master
 
