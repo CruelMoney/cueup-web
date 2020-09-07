@@ -1,7 +1,7 @@
 import React, { useRef, useState, useCallback } from 'react';
+import SuperEllipse from 'react-superellipse';
 
 import styled from 'styled-components';
-import SuperEllipse from 'react-superellipse';
 import { useHistory, useLocation } from 'react-router';
 
 import { SmartButton } from 'components/Blocks';
@@ -212,7 +212,14 @@ const StyledSearchWrapper = styled.div`
     }
 `;
 
-const SearchWrapperBg = styled(SuperEllipse)`
+const FallbackSuperllipsis = (props) => {
+    if (typeof window === 'undefined' || !window?.ResizeObserver) {
+        return <div {...props} style={{ borderRadius: '10px', ...props.style }} />;
+    }
+    return <SuperEllipse {...props} />;
+};
+
+const SearchWrapperBg = styled(FallbackSuperllipsis)`
     position: absolute;
     left: 0;
     top: 0;
@@ -222,7 +229,7 @@ const SearchWrapperBg = styled(SuperEllipse)`
     z-index: -1;
 `;
 
-const FindDjsButton = styled(SuperEllipse)`
+const FindDjsButton = styled(FallbackSuperllipsis)`
     position: absolute;
     right: 0.1em;
     top: 50%;
