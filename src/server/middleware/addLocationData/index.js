@@ -16,7 +16,7 @@ const getDB = async () => {
 };
 
 const addLocationData = async (app) => {
-    // add slugs
+    // add slugs on new entries
     // await addSlugs();
 
     // for fetching all countries
@@ -153,6 +153,21 @@ const fallbackCities = [
         citySlug: 'paris',
     },
 ];
+
+export const getLocationUrls = async () => {
+    const db = await getDB();
+
+    const result = await db.all(
+        SQL`
+                SELECT citySlug, countrySlug
+                FROM cities 
+            `
+    );
+
+    await db.close();
+
+    return result.map(({ citySlug, countrySlug }) => `/book-dj/${countrySlug}/${citySlug}`);
+};
 
 // const addSlugs = async () => {
 //     const db = await getDB();
