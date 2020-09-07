@@ -1,17 +1,19 @@
 window.OneSignal = window.OneSignal || [];
 
 window.OneSignal.push(() => {
-    window.OneSignal.init({
-        appId: window.__ENVIRONMENT__.ONE_SIGNAL_KEY,
-        autoResubscribe: true,
-        notifyButton: {
-            enable: false,
-        },
-        welcomeNotification: {
-            disable: true,
-        },
-        allowLocalhostAsSecureOrigin: true,
-    });
+    if (window.__ENVIRONMENT__.ONE_SIGNAL_KEY) {
+        window.OneSignal.init({
+            appId: window.__ENVIRONMENT__.ONE_SIGNAL_KEY,
+            autoResubscribe: true,
+            notifyButton: {
+                enable: false,
+            },
+            welcomeNotification: {
+                disable: true,
+            },
+            allowLocalhostAsSecureOrigin: true,
+        });
+    }
 });
 
 export const loadOneSignal = () => {
