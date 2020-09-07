@@ -10,7 +10,6 @@ import { useServerContext } from 'components/hooks/useServerContext.tsx';
 import { appRoutes } from 'constants/locales/appRoutes';
 import LazyDjNameGenerator from 'routes/DjNameGenerator';
 import { useAnalytics } from 'utils/analytics';
-import { loadSupportChat } from 'utils/supportChat';
 import defaultImage from './assets/images/default.png';
 import ErrorHandling from './components/common/ErrorPage';
 
@@ -28,10 +27,6 @@ const Setup = ({ location }) => {
             dsn: 'https://800ac4dbef6c44bcb65af9fddad9f964@sentry.io/1490082',
         });
     }, [environment.SETTING]);
-
-    useEffect(() => {
-        setTimeout(loadSupportChat, 4000);
-    }, []);
 
     const thumb = defaultImage;
     const title = 'DJs for parties and events | Cueup';

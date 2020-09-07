@@ -44,12 +44,6 @@ const addRedis = (app) => {
     app.get(['/gig', '/gig*'], disable);
     app.get(['/user', '/user*'], disable);
 
-    // special routes
-
-    // this route might have a lot of subroutes with paramters of the name,
-    // so to reduce the amount we cache, it's only for 1 day
-    app.get('/dj-name-generator', cache.route({ expire: 60 * 60 * 24 })); // 1 day
-
     // otherwise cache forever for the given geo location
     app.get('*', setGeoCacheName, cache.route({ expire: -1 }));
 };

@@ -1,5 +1,5 @@
 /* eslint-disable import/first */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
@@ -14,6 +14,7 @@ import LazyGig from 'routes/Gig';
 import LazySideBarChat from 'components/SidebarChat';
 import LazyGetProfessional from 'routes/GetProfessional';
 import { RequestFormPopup } from 'components/common/RequestForm';
+import { loadSupportChat } from 'utils/supportChat';
 
 import LazyFaq from 'routes/Faq';
 import LazyBecomeDj from 'routes/BecomeDj';
@@ -30,6 +31,10 @@ import BottomPlayer from './routes/User/routes/Sounds/BottomPlayer';
 import './css/style.css';
 
 const App = () => {
+    useEffect(() => {
+        setTimeout(loadSupportChat, 4000);
+    }, []);
+
     return (
         <ProvideAppState>
             <ProvideMobileMenu>
