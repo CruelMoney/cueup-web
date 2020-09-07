@@ -25,7 +25,10 @@ const addRedis = (app) => {
     const disableForLoggedIn = (req, res, next) => {
         // Use only cache if user not signed in
         const xToken = req.cookies['x-token'];
-        res.use_express_redis_cache = !xToken;
+        // And if no query params
+        const containsQuery = !!Object.keys(req.query).length;
+
+        res.use_express_redis_cache = !xToken && !containsQuery;
         next();
     };
 

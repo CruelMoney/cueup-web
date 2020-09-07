@@ -1,7 +1,6 @@
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 import SQL from 'sql-template-strings';
-import slugify from 'slugify';
 import * as geolib from 'geolib';
 import enRoutes from 'constants/locales/en/routes';
 import daRoutes from 'constants/locales/da/routes';
