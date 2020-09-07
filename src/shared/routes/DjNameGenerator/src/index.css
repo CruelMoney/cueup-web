@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;900&display=swap');
 
 @font-face {
-    font-display: optional;
+    font-display: swap;
     font-family: 'HangTheDj';
     font-style: normal;
     src: url('./HANGTHEDJ.ttf') format('truetype');
