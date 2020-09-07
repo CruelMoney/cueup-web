@@ -48,7 +48,9 @@ const serverRenderer = () => async (req, res) => {
     const clientData = {
         topCities: res.locals.top_cities,
         countries: res.locals.countries,
+        activeLocation: res.locals.activeLocation,
     };
+    console.log(res.locals.activeLocation);
 
     const Content = (
         <CookiesProvider cookies={req.universalCookies}>

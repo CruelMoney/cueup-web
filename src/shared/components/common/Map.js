@@ -44,10 +44,6 @@ const SimpleMap = ({
         if (map.current && value) {
             map.current.panTo(value);
 
-            if (offsetCenter) {
-                map.current.panBy(-200, 0);
-            }
-
             if (myCircle.current) {
                 const currentCenter = {
                     lat: myCircle.current.getCenter().lat(),
@@ -106,6 +102,9 @@ const SimpleMap = ({
         <GoogleMap
             onLoad={(m) => {
                 map.current = m;
+                if (offsetCenter) {
+                    map.current.panBy(-200, 0);
+                }
             }}
             center={defaultCenter || value || marker.position}
             zoom={getZoomLevel(radius)}

@@ -1,6 +1,7 @@
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 import SQL from 'sql-template-strings';
+import slugify from 'slugify';
 import enRoutes from 'constants/locales/en/routes';
 import daRoutes from 'constants/locales/da/routes';
 
@@ -14,19 +15,73 @@ const getDB = async () => {
     });
 };
 
-const addLocationData = (app) => {
+const addLocationData = async (app) => {
+    // add slugs
+    // await addSlugs();
+
     // for fetching all countries
     app.use([enRoutes.bookDjOverview, daRoutes.bookDjOverview], async (req, res, next) => {
         const db = await getDB();
 
         const result = await db.all(
             SQL`
-                    SELECT country, iso2
+                    SELECT country, countrySlug, iso2
                     FROM cities 
                     GROUP BY iso2
                 `
         );
         res.locals.countries = result;
+        await db.close();
+
+        next();
+    });
+
+    app.use([enRoutes.bookDj, daRoutes.bookDj], async (req, res, next) => {
+        const { country, city } = req.params;
+
+        const db = await getDB();
+
+        if (city) {
+            const result = await db.get(
+                SQL`
+                        SELECT *
+                        FROM cities
+                        WHERE countrySlug = ${country} AND citySlug = ${city}
+                    `
+            );
+            if (result) {
+                const { population, city, lat, lng } = result;
+                const radius = (Math.sqrt(population) / Math.log2(population)) * 500; // set based on population
+
+                res.locals.activeLocation = {
+                    name: city,
+                    coords: {
+                        lat: parseFloat(lat),
+                        lng: parseFloat(lng),
+                    },
+                    radius,
+                };
+            }
+        } else if (country) {
+            const result = await db.all(
+                SQL`
+                        SELECT *
+                        FROM cities
+                        WHERE countrySlug = ${country}
+                    `
+            );
+            if (result.length) {
+                // calculate based on cities
+                const coords = {};
+
+                res.locals.activeLocation = {
+                    name: result[0]?.country,
+                    coords,
+                    radius: 25000, // set based on bounding box
+                };
+            }
+        }
+
         await db.close();
 
         next();
@@ -62,19 +117,52 @@ const fallbackCities = [
     {
         id: 1,
         city: 'Copenhagen',
+        countrySlug: 'denmark',
+        citySlug: 'copenhagen',
     },
     {
         id: 2,
         city: 'Bali',
+        countrySlug: 'indonesia',
+        citySlug: 'bali',
     },
     {
         id: 3,
         city: 'Los Angeles',
+        countrySlug: 'united-states',
+        citySlug: 'los-angeles',
     },
     {
         id: 4,
         city: 'Paris',
+        countrySlug: 'france',
+        citySlug: 'paris',
     },
 ];
+
+// const addSlugs = async () => {
+//     const db = await getDB();
+
+//     const cities = await db.all(
+//         SQL`
+//             SELECT id, country, city_ascii
+//             FROM cities
+//         `
+//     );
+
+//     for (const city of cities) {
+//         const result = await db.run(
+//             SQL`UPDATE cities SET citySlug = ${slugify(city.city_ascii, {
+//                 replacement: '-',
+//                 lower: true,
+//             })}, countrySlug = ${slugify(city.country, {
+//                 replacement: '-',
+//                 lower: true,
+//             })} WHERE id = ${city.id}`
+//         );
+//     }
+
+//     await db.close();
+// };
 
 export default addLocationData;

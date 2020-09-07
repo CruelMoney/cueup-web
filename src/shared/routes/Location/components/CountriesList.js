@@ -14,13 +14,13 @@ const CountriesList = ({ countries = [] }) => {
                 <ul>
                     {countries.map(({ country, countrySlug, iso2 }, _idx) => (
                         <li key={iso2}>
-                            <NavLink
-                                to={`${translate(appRoutes.bookDj)
+                            <a
+                                href={`${translate(appRoutes.bookDj)
                                     .replace(':city?', '')
                                     .replace(':country', countrySlug)}`}
                             >
                                 <Body>DJs in {country}</Body>
-                            </NavLink>
+                            </a>
                         </li>
                     ))}
                 </ul>

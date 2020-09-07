@@ -28,7 +28,6 @@ import ScrollToTop from '../../components/common/ScrollToTop';
 import AsyncRequestForm from '../../components/common/RequestForm';
 import defaultImage from '../../assets/images/cities/default.png';
 import FloatingDJs from './components/FloatingCards';
-import { countries } from './locations';
 import { CitiesList } from './components/CountriesList';
 import content from './content.json';
 import './index.css';
@@ -43,8 +42,7 @@ const Location = (props) => {
     const requestForm = useRef();
     const [isMobile, setIsMobile] = useState(false);
 
-    const { translate } = useNamespaceContent(content, 'location');
-    const { environment } = useServerContext();
+    const { translate, activeLocation, environment } = props;
 
     useEffect(() => {
         setIsMobile(window.innerWidth < 768);
@@ -60,51 +58,28 @@ const Location = (props) => {
 
     const { match } = props;
     const { city, country } = match.params;
-    let location = null;
-    let initialCoordinates = null;
-    let title = null;
-    if (city) {
-        location = countries[country]?.cities?.find((c) => c.slug === city);
-        const { lat, ln: lng } = location || {};
-        initialCoordinates = {};
-        initialCoordinates.lat = parseFloat(lat);
-        initialCoordinates.lng = parseFloat(lng);
-        title = location?.cityascii;
-    } else {
-        location = countries[country];
-        title = location?.name;
-    }
-    const [loaded] = useScript(
-        'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
-    );
-    const [coordinates, setCoordinates] = useState(initialCoordinates);
-    useEffect(() => {
-        if (!city && loaded) {
-            GeoCoder.codeAddress(title, ({ position }) => {
-                position && setCoordinates(position);
-            });
-        }
-    }, [city, initialCoordinates, loaded, title]);
 
-    useEffect(() => {
-        if (initialCoordinates && coordinates.lat !== initialCoordinates.lat) {
-            setCoordinates(initialCoordinates);
-        }
-    }, [coordinates, initialCoordinates]);
+    const title = activeLocation.name;
 
-    // Redirect
-    if (!location) {
-        return <Redirect to={translate(appRoutes.notFound)} />;
-    }
-
-    const radius = city ? 25000 : isMobile ? 200000 : 100000;
+    // if (city) {
+    //     location = countryCities.find((c) => c.citySlug === city);
+    //     const { lat, ln: lng } = location || {};
+    //     initialCoordinates = {};
+    //     initialCoordinates.lat = parseFloat(lat);
+    //     initialCoordinates.lng = parseFloat(lng);
+    //     title = location?.cityascii;
+    // } else if (activeLocation) {
+    //     location = { ...activeLocation };
+    //     title = activeLocation.name;
+    // }
+    const coordinates = activeLocation.coords;
 
     const siteDescription = translate('location:description', {
-        location: title,
+        location: activeLocation.name,
     });
 
     const siteTitle = translate('location:title', { location: title });
-    const thumb = environment.CALLBACK_DOMAIN + (location.image || defaultImage);
+    const thumb = environment.CALLBACK_DOMAIN + (activeLocation.image || defaultImage);
 
     return (
         <div className="locations-page">
@@ -139,13 +114,11 @@ const Location = (props) => {
                     {coordinates && (
                         <Map
                             key={title}
-                            noCircle={!city || location.noCircle}
+                            noCircle={!city}
                             hideRoads={true}
-                            radius={radius}
-                            defaultCenter={{
-                                lat: coordinates.lat + (isMobile ? 0.125 : 0.05),
-                                lng: coordinates.lng - (isMobile ? 0 : city ? 0.5 : 2),
-                            }}
+                            offsetCenter
+                            radius={activeLocation.radius}
+                            defaultCenter={coordinates}
                             height={isMobile ? 500 : 600}
                             value={coordinates}
                             editable={false}
@@ -202,10 +175,10 @@ const Location = (props) => {
                         <AsyncRequestForm initialCity={title} key={title} />
                     </FormRow>
 
-                    {!city && location?.cities?.length > 1 && (
+                    {!city && activeLocation?.cities?.length > 1 && (
                         <CitiesList
-                            cities={location.cities}
-                            country={location}
+                            cities={activeLocation.cities}
+                            country={activeLocation.name}
                             countrySlug={country}
                         />
                     )}
@@ -216,42 +189,7 @@ const Location = (props) => {
 
             <FloatingDJs {...translate(['copenhagen', 'denmark'])} location={title} />
 
-            <div style={{ backgroundColor: '#f7f9fc' }}>
-                <Container className="container">
-                    <RowMobileCol center>
-                        <BottomCol>
-                            <CardInfo shadow style={{ padding: 30, zIndex: 2 }}>
-                                <NoteIcon altGradient={false} />
-                                <h2 style={{ color: themeColor }}>
-                                    {translate('location:sections.left.header')}
-                                </h2>
-                                <Body>
-                                    {translate('location:sections.left.content', {
-                                        location: title,
-                                    })}
-                                </Body>
-                            </CardInfo>
-                        </BottomCol>
-                        <div style={{ minWidth: 30, minHeight: 30 }} />
-                        <BottomCol>
-                            <CardInfo shadow style={{ padding: 30, zIndex: 2 }}>
-                                <MoneyIcon altGradient={false} />
-                                <h2 style={{ color: themeColor }}>
-                                    {translate('location:sections.right.header')}
-                                </h2>
-                                <Body>
-                                    {translate('location:sections.right.content', {
-                                        location: title,
-                                    })}
-                                </Body>
-                            </CardInfo>
-                        </BottomCol>
-                    </RowMobileCol>
-                </Container>
-            </div>
-
             <Footer
-                bgColor="#FFFFFF"
                 color={secondColor}
                 firstTo={translate(appRoutes.signUp)}
                 secondTo={translate(appRoutes.howItWorks)}
@@ -314,5 +252,27 @@ const FormRow = styled(Row)`
         padding-left: 0px;
     }
 `;
+
+const DataWrapper = (props) => {
+    const { environment, data } = useServerContext();
+    const { translate } = useNamespaceContent(content, 'location');
+
+    const { activeLocation } = data || {};
+
+    // Redirect
+    if (!activeLocation) {
+        return <Redirect to={translate(appRoutes.notFound)} />;
+    }
+
+    return (
+        <Location
+            {...props}
+            translate={translate}
+            activeLocation={activeLocation}
+            environment={environment}
+        />
+    );
+};
+
 // eslint-disable-next-line import/no-unused-modules
-export default Location;
+export default DataWrapper;
