@@ -1,16 +1,8 @@
 import fetch from 'node-fetch';
 import posts from 'routes/Blog/posts.json';
-import { countries } from 'routes/Location/locations';
+import { getLocationUrls } from './addLocationData';
 
 const expressSitemapXml = require('express-sitemap-xml');
-
-const getLocationUrls = () => {
-    const urls = [];
-    Object.entries(countries).map(([countrySlug, { cities }]) =>
-        cities.forEach((city) => urls.push(`/book-dj/${countrySlug}/${city.slug}`))
-    );
-    return urls;
-};
 
 const getUserUrls = async () => {
     try {
@@ -34,7 +26,8 @@ const getPublicUrls = () => {
 
 const getUrls = async () => {
     const userUrls = await getUserUrls();
-    return [...getPublicUrls(), ...getBlogUrls(), ...getLocationUrls(), ...userUrls];
+    const locationUrls = await getLocationUrls();
+    return [...getPublicUrls(), ...getBlogUrls(), ...locationUrls, ...userUrls];
 };
 
 const addSitemap = (app) => {

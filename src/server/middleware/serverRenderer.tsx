@@ -45,11 +45,16 @@ const serverRenderer = () => async (req, res) => {
         response: res,
     } as any;
     const helmetContext = {};
+    const clientData = {
+        topCities: res.locals.top_cities,
+        countries: res.locals.countries,
+        activeLocation: res.locals.activeLocation,
+    };
 
     const Content = (
         <CookiesProvider cookies={req.universalCookies}>
             <StaticRouter location={req.url} context={routerContext}>
-                <ServerContextProvider environment={environment} isSSR={true}>
+                <ServerContextProvider environment={environment} data={clientData} isSSR={true}>
                     <I18nextProvider i18n={req.i18n}>
                         <ApolloProvider client={res.locals.apolloClient}>
                             <ChunkExtractorManager extractor={res.locals.chunkExtractor}>
@@ -126,6 +131,7 @@ const serverRenderer = () => async (req, res) => {
             scriptTags={[...scriptTags, ...linkTags]}
             i18nState={i18nState}
             environment={environment}
+            clientData={clientData}
         >
             {content}
         </Html>

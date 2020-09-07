@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink as Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import styled, { createGlobalStyle } from 'styled-components';
+
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 import useTranslate from 'components/hooks/useTranslate';
 import useAlternativePages from 'components/hooks/useAlternativePages';
@@ -9,14 +10,11 @@ import { Container, Row, RowWrap } from 'components/Blocks';
 import { showSupportChat } from 'utils/supportChat';
 import { useServerContext } from 'components/hooks/useServerContext';
 import InstagramLogo from '../../assets/InstagramLogo';
-// eslint-disable-next-line no-unused-vars
-import languageIcon from '../../assets/icons/language.svg';
 import ButtonLink from './ButtonLink';
 
 const Footer = ({
     color = '#31DAFF',
     bgColor = '#F6F9FC',
-    noSkew,
     title,
     subTitle,
     firstLabel,
@@ -24,10 +22,6 @@ const Footer = ({
     secondLabel,
     secondTo,
 }) => {
-    const { environment } = useServerContext();
-
-    console.log('COUNTRY: ', environment.COUNTRY_CODE);
-
     const { translate, currentLanguage } = useTranslate();
 
     const langaugePages = useAlternativePages();
@@ -58,11 +52,7 @@ const Footer = ({
                     />
                 ))}
             </Helmet>
-            <div
-                style={{ backgroundColor: bgColor }}
-                className={noSkew ? 'noSkew' : ''}
-                id="preFooter"
-            >
+            <div style={{ backgroundColor: bgColor }} className={'noSkew'} id="preFooter">
                 <Container>
                     <RowWrap between middle>
                         <div
@@ -196,45 +186,7 @@ const Footer = ({
                             </div>
                         </div>
 
-                        <div>
-                            <h4>{translate('top-locations')}</h4>
-                            <ul>
-                                <li>
-                                    <Link
-                                        to={translate(appRoutes.bookDj)
-                                            .replace(':city?', 'los-angeles')
-                                            .replace(':country', 'united-states')}
-                                    >
-                                        {translate('Los Angeles')}
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to={translate(appRoutes.bookDj)
-                                            .replace(':city?', 'copenhagen')
-                                            .replace(':country', 'denmark')}
-                                    >
-                                        {translate('copenhagen')}
-                                    </Link>
-                                </li>
-
-                                <li>
-                                    <Link
-                                        to={translate(appRoutes.bookDj)
-                                            .replace(':city?', 'bali')
-                                            .replace(':country', 'indonesia')}
-                                    >
-                                        Bali
-                                    </Link>
-                                </li>
-
-                                <li>
-                                    <Link to={translate(appRoutes.bookDjOverview)}>
-                                        More places
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
+                        <TopLocations />
                         <div>
                             <h4>{translate('company')}</h4>
                             <ul>
@@ -317,6 +269,37 @@ const Footer = ({
                     <div className="copyright">© Cueup {new Date().getFullYear()}</div>
                 </Container>
             </FooterWrapper>
+        </div>
+    );
+};
+
+/* eslint-disable camelcase */
+const TopLocations = () => {
+    const { translate } = useTranslate();
+    const { data } = useServerContext();
+
+    const cities = data?.topCities || [];
+
+    return (
+        <div>
+            <h4>{translate('top-locations')}</h4>
+            <ul>
+                {cities.map(({ id, city, citySlug, countrySlug }) => (
+                    <li key={id}>
+                        <a
+                            href={translate(appRoutes.bookDj)
+                                .replace(':city?', citySlug)
+                                .replace(':country', countrySlug)}
+                        >
+                            {city}
+                        </a>
+                    </li>
+                ))}
+
+                <li>
+                    <a href={translate(appRoutes.bookDjOverview)}>More places</a>
+                </li>
+            </ul>
         </div>
     );
 };

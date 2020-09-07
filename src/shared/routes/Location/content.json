@@ -1,6 +1,6 @@
 {
     "en": {
-        "title": "Book a DJ in {{location}}",
+        "title": "{{location}}'s best DJs",
         "title-2": "Book a DJ in <b>{{location}}</b>",
         "description": "Cueup is the easiest way for you to find DJs in {{location}}. Just tell us about your event, and within 1 day you will receive non-binding offers from DJs near you.",
         "sections": {
@@ -15,7 +15,7 @@
         }
     },
     "da": {
-        "title": "Book DJ i {{location}}",
+        "title": "{{location}}'s bedste DJs",
         "title-2": "Book DJ i <b>{{location}}</b>",
         "description": "Cueup er den nemmeste måde at finde en DJ i {{location}}. Fortæl os om dit event og modtag ikke-bindende tilbud inden for 1 dag fra vores dygtige DJs i nærheden af dig.",
         "sections": {

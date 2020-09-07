@@ -17,6 +17,7 @@ import addSocialImages from 'middleware/addSocialImages';
 import paths from '../../config/paths';
 import errorHandler from './middleware/errorHandler';
 import serverRenderer from './middleware/serverRenderer';
+import addLocationData from './middleware/addLocationData';
 
 require('dotenv').config();
 
@@ -59,6 +60,7 @@ addSitemap(app);
 
 app.use(addLanguage);
 
+addLocationData(app);
 app.use(serverRenderer());
 
 app.use(errorHandler);

@@ -751,7 +751,7 @@ ol.breadcrumbs li {
 }
 
 ol.breadcrumbs li:before {
-    content: '➡';
+    content: '>';
     position: relative;
 }
 ol.breadcrumbs li > div {

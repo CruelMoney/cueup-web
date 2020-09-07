@@ -1,6 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import useTranslate from 'components/hooks/useTranslate';
+import { useServerContext } from 'components/hooks/useServerContext';
 
 import { appRoutes } from 'constants/locales/appRoutes';
 import { Container, Col, CardSimple } from 'components/Blocks';
@@ -8,17 +9,17 @@ import Footer from '../../components/common/Footer';
 
 import Map from '../../components/common/Map';
 import citySvg from '../../assets/City.svg';
-import ScrollToTop from '../../components/common/ScrollToTop';
 import './index.css';
-import { countries } from './locations';
 import CountriesList from './components/CountriesList';
 
 const Location = () => {
     const themeColor = '#31DAFF';
     const secondColor = '#25F4D2';
     const { translate } = useTranslate();
-    const title = translate('locationsOverview.title');
-    const description = translate('locationsOverview.description');
+    const title = 'DJs all over the world';
+    const description = 'Find DJs in any of these countries.';
+
+    const { data } = useServerContext();
 
     return (
         <div className="locations-page">
@@ -35,7 +36,6 @@ const Location = () => {
                 <meta name="twitter:title" content={title + ' | Cueup'} />
                 <meta name="twitter:description" content={description} />
             </Helmet>
-            <ScrollToTop />
             <div className="span-wrapper">
                 <header
                     style={{
@@ -65,8 +65,9 @@ const Location = () => {
                                     className="card"
                                 >
                                     <h1 key="title">
-                                        <b>Locations</b>
+                                        <b>{title}</b>
                                     </h1>
+                                    <p>{description}</p>
                                 </CardSimple>
                             </Col>
                         </Container>
@@ -74,7 +75,7 @@ const Location = () => {
                 </header>
 
                 <Container className="container">
-                    <CountriesList countries={countries} />
+                    <CountriesList countries={data.countries} />
                 </Container>
 
                 <img id="city-illustration" src={citySvg} />

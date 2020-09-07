@@ -1,7 +1,6 @@
 import React, { Component, useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import useScript from '@charlietango/use-script';
-import { GoogleMap, useGoogleMap, Circle } from '@react-google-maps/api';
+import { GoogleMap, Circle } from '@react-google-maps/api';
 
 /*
  * This is the modify version of:
@@ -32,6 +31,7 @@ const SimpleMap = ({
     hideRoads,
     noCircle,
     offsetCenter,
+    bounds,
     ...props
 }) => {
     const [radius, setRadius] = useState(initialRadius);
@@ -43,10 +43,6 @@ const SimpleMap = ({
     useEffect(() => {
         if (map.current && value) {
             map.current.panTo(value);
-
-            if (offsetCenter) {
-                map.current.panBy(-200, 0);
-            }
 
             if (myCircle.current) {
                 const currentCenter = {
@@ -106,6 +102,16 @@ const SimpleMap = ({
         <GoogleMap
             onLoad={(m) => {
                 map.current = m;
+                if (bounds) {
+                    const setBounds = new window.google.maps.LatLngBounds(
+                        { lat: bounds.minLat, lng: bounds.minLng },
+                        { lat: bounds.maxLat, lng: bounds.maxLng }
+                    );
+                    map.current.fitBounds(setBounds);
+                }
+                if (offsetCenter) {
+                    map.current.panBy(-200, 0);
+                }
             }}
             center={defaultCenter || value || marker.position}
             zoom={getZoomLevel(radius)}

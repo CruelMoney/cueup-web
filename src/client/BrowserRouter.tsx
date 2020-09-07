@@ -25,7 +25,11 @@ const BrowserRouter = () => {
         <React.StrictMode>
             <CookiesProvider>
                 <Router>
-                    <ServerContextProvider environment={window.__ENVIRONMENT__} isSSR={false}>
+                    <ServerContextProvider
+                        environment={window.__ENVIRONMENT__}
+                        data={window.__CLIENT_DATA__}
+                        isSSR={false}
+                    >
                         <ApolloProvider>
                             <HelmetProvider>
                                 <App />

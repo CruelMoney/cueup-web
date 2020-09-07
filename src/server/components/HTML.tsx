@@ -9,6 +9,7 @@ type Props = {
     scriptTags: any[];
     i18nState: any;
     environment: any;
+    clientData: any;
 };
 
 const HTML = ({
@@ -19,6 +20,7 @@ const HTML = ({
     helmetContext: { helmet },
     i18nState,
     environment,
+    clientData,
 }: Props) => {
     const htmlAttrs = helmet.htmlAttributes.toComponent();
     const bodyAttrs = helmet.bodyAttributes.toComponent();
@@ -32,6 +34,10 @@ const HTML = ({
         isScriptContext: true,
     });
     const i18nString = jsesc(JSON.stringify(i18nState), {
+        json: true,
+        isScriptContext: true,
+    });
+    const clientDataString = jsesc(JSON.stringify(clientData), {
         json: true,
         isScriptContext: true,
     });
@@ -60,6 +66,7 @@ const HTML = ({
                     window.__APOLLO_STATE__ = JSON.parse(${apolloString});
                     window.__I18N_STATE__ = JSON.parse(${i18nString});
                     window.__ENVIRONMENT__ =  JSON.parse(${environmentString});
+                    window.__CLIENT_DATA__ =  JSON.parse(${clientDataString});
                     `,
                     }}
                 />
