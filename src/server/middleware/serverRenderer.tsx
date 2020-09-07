@@ -47,6 +47,7 @@ const serverRenderer = () => async (req, res) => {
     const helmetContext = {};
     const clientData = {
         topCities: res.locals.top_cities,
+        countries: res.locals.countries,
     };
 
     const Content = (

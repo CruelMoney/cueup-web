@@ -293,7 +293,7 @@ const TopLocations = () => {
                 ))}
 
                 <li>
-                    <Link to={translate(appRoutes.bookDjOverview)}>More places</Link>
+                    <a href={translate(appRoutes.bookDjOverview)}>More places</a>
                 </li>
             </ul>
         </div>

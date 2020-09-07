@@ -6,27 +6,24 @@ import { Col } from 'components/Blocks';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
 
-const CountriesList = ({ countries }) => {
+const CountriesList = ({ countries = [] }) => {
     const { translate } = useTranslate();
     return (
         <FormRow middle center>
             <Overview>
-                {Object.entries(countries).map(([countrySlug, { cities, name }], _idx) => (
-                    <ul key={countrySlug}>
-                        <Title style={{ textTransform: 'capitalize' }}>{name}</Title>
-                        {cities.map((city, idx) => (
-                            <li key={idx}>
-                                <NavLink
-                                    to={`${translate(appRoutes.bookDj)
-                                        .replace(':city?', city.slug)
-                                        .replace(':country', countrySlug)}`}
-                                >
-                                    <Body>DJs in {city.cityascii}</Body>
-                                </NavLink>
-                            </li>
-                        ))}
-                    </ul>
-                ))}
+                <ul>
+                    {countries.map(({ country, countrySlug, iso2 }, _idx) => (
+                        <li key={iso2}>
+                            <NavLink
+                                to={`${translate(appRoutes.bookDj)
+                                    .replace(':city?', '')
+                                    .replace(':country', countrySlug)}`}
+                            >
+                                <Body>DJs in {country}</Body>
+                            </NavLink>
+                        </li>
+                    ))}
+                </ul>
             </Overview>
         </FormRow>
     );
@@ -56,22 +53,30 @@ export const CitiesList = ({ cities, country, countrySlug }) => {
 const FormRow = styled(Col)`
     margin: 60px 0;
     width: 100%;
-    padding-left: 200px;
+    padding-left: 170px;
     @media only screen and (max-width: 768px) {
         padding-left: 0px;
     }
 `;
 
 const Overview = styled.div`
-    columns: 4;
     ul {
-        margin-top: 0;
-        margin-bottom: 16px;
-        width: 200px;
-        margin-right: 16px;
-    }
-    @media only screen and (max-width: 767px) {
-        columns: 1;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-left: 2em;
+        li {
+            width: 200px;
+            margin: 0 1em;
+            a:hover {
+                text-decoration: underline;
+            }
+            p {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+        }
     }
 `;
 
