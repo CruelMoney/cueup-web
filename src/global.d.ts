@@ -87,6 +87,7 @@ interface CustomWindow extends Window {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
     __ENVIRONMENT__: Environment;
     __I18N_STATE__: any;
+    __CLIENT_DATA__: any;
     google: any;
 }
 
