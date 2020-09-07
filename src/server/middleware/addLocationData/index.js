@@ -50,11 +50,13 @@ const addLocationData = async (app) => {
                     `
             );
             if (result) {
-                const { population, city, lat, lng } = result;
+                const { population, city, country: countryName, lat, lng } = result;
                 const radius = (Math.sqrt(population) / Math.log2(population)) * 500; // set based on population
 
                 res.locals.activeLocation = {
                     name: city,
+                    city,
+                    country: countryName,
                     coords: {
                         lat: parseFloat(lat),
                         lng: parseFloat(lng),
@@ -68,7 +70,7 @@ const addLocationData = async (app) => {
                         SELECT *
                         FROM cities
                         WHERE countrySlug = ${country}
-                        LIMIT 25
+                        LIMIT 50
                     `
             );
             if (result.length) {
@@ -77,6 +79,8 @@ const addLocationData = async (app) => {
 
                 res.locals.activeLocation = {
                     name: result[0]?.country,
+                    city: null,
+                    country: result[0]?.country,
                     coords,
                     radius: 25000, // set based on bounding box
                     cities: result,

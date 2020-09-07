@@ -61,17 +61,6 @@ const Location = (props) => {
 
     const title = activeLocation.name;
 
-    // if (city) {
-    //     location = countryCities.find((c) => c.citySlug === city);
-    //     const { lat, ln: lng } = location || {};
-    //     initialCoordinates = {};
-    //     initialCoordinates.lat = parseFloat(lat);
-    //     initialCoordinates.lng = parseFloat(lng);
-    //     title = location?.cityascii;
-    // } else if (activeLocation) {
-    //     location = { ...activeLocation };
-    //     title = activeLocation.name;
-    // }
     const coordinates = activeLocation.coords;
 
     const siteDescription = translate('location:description', {
@@ -172,7 +161,13 @@ const Location = (props) => {
                 <Container className="container">
                     <FormRow center>
                         <div ref={requestForm} />
-                        <AsyncRequestForm initialCity={title} key={title} />
+                        <AsyncRequestForm
+                            initialCity={
+                                (activeLocation.city ? activeLocation.city + ', ' : '') +
+                                activeLocation.country
+                            }
+                            key={title}
+                        />
                     </FormRow>
 
                     <CitiesList
