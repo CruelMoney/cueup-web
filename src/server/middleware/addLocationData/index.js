@@ -1,13 +1,11 @@
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 import SQL from 'sql-template-strings';
-import { appRoutes } from 'constants/locales/appRoutes';
-import routes from 'constants/locales/en/routes';
-
-const overviewKey = routes.bookDjOverview;
+import enRoutes from 'constants/locales/en/routes';
+import daRoutes from 'constants/locales/da/routes';
 
 // for fetching specific country
-const locationKey = routes.bookDj;
+// const locationKey = routes.bookDj;
 
 const getDB = async () => {
     return await open({
@@ -18,7 +16,7 @@ const getDB = async () => {
 
 const addLocationData = (app) => {
     // for fetching all countries
-    app.use(routes.bookDjOverview, async (req, res, next) => {
+    app.use([enRoutes.bookDjOverview, daRoutes.bookDjOverview], async (req, res, next) => {
         const db = await getDB();
 
         const result = await db.all(
@@ -29,6 +27,7 @@ const addLocationData = (app) => {
                 `
         );
         res.locals.countries = result;
+        await db.close();
 
         next();
     });
