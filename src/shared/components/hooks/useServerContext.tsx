@@ -46,7 +46,7 @@ export const ServerContextProvider = ({ children, environment, data, isSSR }) =>
 };
 
 function useStaticContent() {
-    const ref = useRef(null);
+    const ref = useRef(null as any);
     const [render, setRender] = useState(typeof window === 'undefined');
 
     useEffect(() => {

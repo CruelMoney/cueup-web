@@ -1,4 +1,3 @@
-import { Readable } from 'stream';
 import * as React from 'react';
 import { renderToString, renderToNodeStream } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
