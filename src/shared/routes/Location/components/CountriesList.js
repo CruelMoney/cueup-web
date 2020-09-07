@@ -35,7 +35,7 @@ export const CitiesList = ({ cities, country }) => {
     }
     return (
         <FormRow middle center>
-            <TitleClean>Other locations in {country}</TitleClean>
+            <TitleClean>Top locations in {country}</TitleClean>
             <Overview>
                 <ul>
                     {cities.map(({ countrySlug, city, citySlug, id }) => (

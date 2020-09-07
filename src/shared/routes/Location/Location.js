@@ -18,13 +18,11 @@ import { Body } from 'components/Text';
 
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
-import StaticContent, { useServerContext } from 'components/hooks/useServerContext';
+import { useServerContext } from 'components/hooks/useServerContext';
 import Footer from '../../components/common/Footer';
-import MoneyIcon from '../../components/graphics/Money';
-import NoteIcon from '../../components/graphics/Note';
+
 import Map from '../../components/common/Map';
 import citySvg from '../../assets/City.svg';
-import ScrollToTop from '../../components/common/ScrollToTop';
 import AsyncRequestForm from '../../components/common/RequestForm';
 import defaultImage from '../../assets/images/cities/default.png';
 import FloatingDJs from './components/FloatingCards';
@@ -92,7 +90,6 @@ const Location = (props) => {
                 <meta name="geo.placename" content={title} />
                 <meta name="geo.region" content={title} />
             </Helmet>
-            <ScrollToTop />
             <div className="span-wrapper">
                 <header
                     style={{
@@ -114,6 +111,7 @@ const Location = (props) => {
                             themeColor={themeColor}
                             radiusName="playingRadius"
                             locationName="playingLocation"
+                            bounds={activeLocation.bounds}
                         />
                     )}
 

@@ -2,9 +2,9 @@ import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 import SQL from 'sql-template-strings';
 import slugify from 'slugify';
+import * as geolib from 'geolib';
 import enRoutes from 'constants/locales/en/routes';
 import daRoutes from 'constants/locales/da/routes';
-
 // for fetching specific country
 // const locationKey = routes.bookDj;
 
@@ -75,7 +75,14 @@ const addLocationData = async (app) => {
             );
             if (result.length) {
                 // calculate based on cities
-                const coords = {};
+                const points = result.map(({ lat, lng }) => ({ latitude: lat, longitude: lng }));
+                const center = geolib.getCenterOfBounds(points);
+                const bounds = geolib.getBounds(points);
+
+                const coords = {
+                    lat: center.latitude,
+                    lng: center.longitude,
+                };
 
                 res.locals.activeLocation = {
                     name: result[0]?.country,
@@ -84,6 +91,7 @@ const addLocationData = async (app) => {
                     coords,
                     radius: 25000, // set based on bounding box
                     cities: result,
+                    bounds,
                 };
             }
         }

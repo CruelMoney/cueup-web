@@ -9,7 +9,6 @@ import Footer from '../../components/common/Footer';
 
 import Map from '../../components/common/Map';
 import citySvg from '../../assets/City.svg';
-import ScrollToTop from '../../components/common/ScrollToTop';
 import './index.css';
 import CountriesList from './components/CountriesList';
 
@@ -37,7 +36,6 @@ const Location = () => {
                 <meta name="twitter:title" content={title + ' | Cueup'} />
                 <meta name="twitter:description" content={description} />
             </Helmet>
-            <ScrollToTop />
             <div className="span-wrapper">
                 <header
                     style={{
