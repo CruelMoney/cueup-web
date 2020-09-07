@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;900&display=swap');
 
 @font-face {
+    font-display: optional;
     font-family: 'HangTheDj';
     font-style: normal;
     src: url('./HANGTHEDJ.ttf') format('truetype');
@@ -74,6 +75,7 @@ a {
 .instructions {
     margin-bottom: 30px;
     margin-top: 10px;
+    min-height: 204px;
     text-align: center;
 }
 
