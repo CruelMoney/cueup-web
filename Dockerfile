@@ -1,4 +1,5 @@
 FROM node:12-alpine as stage1
+RUN apk --no-cache add git
 WORKDIR /usr/src/app
 COPY package*.json  yarn.lock ./
 RUN yarn install --frozen-lockfile

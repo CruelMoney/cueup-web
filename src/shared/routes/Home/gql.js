@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 const FEATURED_DJS = gql`
-    query FeaturedDjs {
-        featuredDjs {
+    query FeaturedDjs($countryCode: String) {
+        featuredDjs(countryCode: $countryCode) {
             id
             artistName
             permalink
