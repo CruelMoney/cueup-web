@@ -1,6 +1,5 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import Navlink from './common/Navlink';
 import { useServerContext } from './hooks/useServerContext';
 
 const BreadCrumbs = ({ location }) => {
@@ -24,17 +23,17 @@ const BreadCrumbs = ({ location }) => {
                         itemScope
                         itemType="http://schema.org/ListItem"
                     >
-                        <Navlink
+                        <a
                             itemID={`${environment.CALLBACK_DOMAIN}${crumbs
                                 .slice(0, idx + endIdx)
                                 .join('/')}`}
                             itemScope
                             itemType="http://schema.org/Thing"
                             itemProp="item"
-                            to={`${crumbs.slice(0, idx + endIdx).join('/')}`}
+                            href={`${crumbs.slice(0, idx + endIdx).join('/')}`}
                         >
                             <span itemProp="name">{crumb.replace('-', ' ')}</span>
-                        </Navlink>
+                        </a>
                         <meta itemProp="position" content={idx + 1} />
                     </li>
                 );

@@ -68,6 +68,7 @@ const addLocationData = async (app) => {
                         SELECT *
                         FROM cities
                         WHERE countrySlug = ${country}
+                        LIMIT 25
                     `
             );
             if (result.length) {
@@ -78,6 +79,7 @@ const addLocationData = async (app) => {
                     name: result[0]?.country,
                     coords,
                     radius: 25000, // set based on bounding box
+                    cities: result,
                 };
             }
         }

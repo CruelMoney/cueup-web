@@ -29,24 +29,25 @@ const CountriesList = ({ countries = [] }) => {
     );
 };
 
-export const CitiesList = ({ cities, country, countrySlug }) => {
+export const CitiesList = ({ cities, country }) => {
+    if (!cities?.length) {
+        return null;
+    }
     return (
-        <>
-            <FormRow middle center>
-                <TitleClean>Other locations in {country.name}</TitleClean>
-                <Overview>
-                    <ul>
-                        {cities.map((city, idx) => (
-                            <li key={idx}>
-                                <NavLink to={`/book-dj/${countrySlug}/${city.slug}`}>
-                                    <Body>{city.cityascii}</Body>
-                                </NavLink>
-                            </li>
-                        ))}
-                    </ul>
-                </Overview>
-            </FormRow>
-        </>
+        <FormRow middle center>
+            <TitleClean>Other locations in {country}</TitleClean>
+            <Overview>
+                <ul>
+                    {cities.map(({ countrySlug, city, citySlug, id }) => (
+                        <li key={id}>
+                            <a href={`/book-dj/${countrySlug}/${citySlug}`}>
+                                <Body>{city}</Body>
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </Overview>
+        </FormRow>
     );
 };
 

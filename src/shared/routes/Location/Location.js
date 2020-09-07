@@ -18,7 +18,7 @@ import { Body } from 'components/Text';
 
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
-import { useServerContext } from 'components/hooks/useServerContext';
+import StaticContent, { useServerContext } from 'components/hooks/useServerContext';
 import Footer from '../../components/common/Footer';
 import MoneyIcon from '../../components/graphics/Money';
 import NoteIcon from '../../components/graphics/Note';
@@ -175,13 +175,11 @@ const Location = (props) => {
                         <AsyncRequestForm initialCity={title} key={title} />
                     </FormRow>
 
-                    {!city && activeLocation?.cities?.length > 1 && (
-                        <CitiesList
-                            cities={activeLocation.cities}
-                            country={activeLocation.name}
-                            countrySlug={country}
-                        />
-                    )}
+                    <CitiesList
+                        cities={activeLocation.cities}
+                        country={activeLocation.name}
+                        countrySlug={country}
+                    />
                 </Container>
 
                 <img id="city-illustration" src={citySvg} />
@@ -258,7 +256,6 @@ const DataWrapper = (props) => {
     const { translate } = useNamespaceContent(content, 'location');
 
     const { activeLocation } = data || {};
-
     // Redirect
     if (!activeLocation) {
         return <Redirect to={translate(appRoutes.notFound)} />;
