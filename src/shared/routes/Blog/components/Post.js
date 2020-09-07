@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Disqus from 'disqus-react';
 import { useServerContext } from 'components/hooks/useServerContext';
-import { Hr, Container, CardSimple } from 'components/Blocks';
+import { Hr, Container, CardSimple, Row, Col } from 'components/Blocks';
 import posts from '../posts.json';
 import Formatter from '../../../utils/Formatter';
 import Sharing from '../../../components/common/Sharing-v2';
@@ -94,9 +94,11 @@ const Post = ({ match }) => {
                 </Container>
             </main>
             <footer className="newsletter-signup">
-                <CardSimple shadow>
-                    <NewsletterSignup />
-                </CardSimple>
+                <Row center style={{ width: '100%' }}>
+                    <CardSimple shadow style={{ padding: '2em 4em' }}>
+                        <NewsletterSignup />
+                    </CardSimple>
+                </Row>
             </footer>
         </article>
     );

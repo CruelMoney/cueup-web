@@ -15,7 +15,6 @@ import ButtonLink from './ButtonLink';
 const Footer = ({
     color = '#31DAFF',
     bgColor = '#F6F9FC',
-    noSkew,
     title,
     subTitle,
     firstLabel,
@@ -23,8 +22,6 @@ const Footer = ({
     secondLabel,
     secondTo,
 }) => {
-    const { environment } = useServerContext();
-
     const { translate, currentLanguage } = useTranslate();
 
     const langaugePages = useAlternativePages();
