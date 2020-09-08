@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 import SuperEllipse from 'react-superellipse';
 
 import styled from 'styled-components';
@@ -41,7 +41,6 @@ const DjSearch = () => {
                 locationRef.current.focus();
                 return;
             }
-
             if (!form.date) {
                 setRunSubmit(true);
                 dateRef.current.focus();
@@ -69,6 +68,12 @@ const DjSearch = () => {
         },
         [check, form, history, routeLocation.pathname, runValidations]
     );
+
+    useEffect(() => {
+        if (runSubmit) {
+            submit();
+        }
+    }, [runSubmit, submit]);
 
     return (
         <>
@@ -114,9 +119,6 @@ const DjSearch = () => {
                     validation={(v) => (v ? null : 'Please select a date')}
                     onSave={(date) => {
                         setValue({ date });
-                        if (runSubmit) {
-                            submit();
-                        }
                     }}
                     registerValidation={registerValidation('date')}
                     unregisterValidation={unregisterValidation('date')}

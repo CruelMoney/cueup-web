@@ -230,6 +230,7 @@ const RequestCard = styled(Card)`
     }
     @media screen and (max-width: 480px) {
         padding: 24px 9px;
+        padding-bottom: 100px;
     }
 `;
 

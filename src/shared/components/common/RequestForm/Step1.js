@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useCheckDjAvailability } from 'actions/EventActions';
 import { BodySmall } from 'components/Text';
 import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
@@ -27,10 +27,13 @@ const Step1 = ({
         'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
     );
 
-    const dateChanged = (date) => {
-        handleChange({ date });
-        setShowDatePicker(false);
-    };
+    const dateChanged = useCallback(
+        (date) => {
+            handleChange({ date });
+            setShowDatePicker(false);
+        },
+        [handleChange]
+    );
 
     const submit = async (e) => {
         e.preventDefault();
