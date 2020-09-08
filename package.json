@@ -16,7 +16,7 @@
     "i18n:push": "node scripts/i18n-push",
     "i18n:scan": "cross-env NODE_ENV=i18n yarn-or-npm transpile && yarn-or-npm i18next-scanner './build/transpiled/**/*.js' && yarn clean:transpiled",
     "link-react": "yarn-or-npm link react react-dom",
-    "lint": "concurrently \"yarn-or-npm lint:js\" \"yarn-or-npm lint:css\"",
+    "lint": "yarn-or-npm lint:js",
     "lint:js": "eslint src",
     "lint:css": "stylelint src/**/*.css",
     "lint:deps": "depcruise -c .dependency-cruiser.js src/",
