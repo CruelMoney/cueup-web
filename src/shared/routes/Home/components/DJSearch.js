@@ -170,7 +170,7 @@ const StyledSearchWrapper = styled.div`
         max-width: 90%;
         > input,
         > button {
-            font-size: 1.5em;
+            font-size: 1.6em;
             display: block;
             border: none;
             outline: none;
