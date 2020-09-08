@@ -20,6 +20,7 @@
     height: 100%;
     justify-content: center;
     perspective: 1000px;
+    margin-bottom: 1em;
 }
 
 .signup-wrapper img {
@@ -45,7 +46,7 @@
     margin-top: 1em;
 }
 .signup-header {
-    margin-bottom: 2em;
+    margin-bottom: 1em;
     min-height: 100px;
     text-align: center;
 }
@@ -150,6 +151,7 @@
     .signup-wrapper .inner-content {
         display: block;
     }
+
 }
 
 @media only screen and (max-width: 425px) {

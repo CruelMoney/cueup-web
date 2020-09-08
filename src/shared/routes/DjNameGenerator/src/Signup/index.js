@@ -71,6 +71,28 @@ export const Signup = ({ name, history }) => {
                                     </a>
                                 </div>
 
+                                <div className="app-buttons">
+                                    <a href="https://play.google.com/store/apps/details?id=io.cueup.gigs&utm_source=website&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+                                        <img
+                                            style={{
+                                                height: '60px',
+                                            }}
+                                            alt="Get it on Google Play"
+                                            src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
+                                        />
+                                    </a>
+                                    <a href="https://apps.apple.com/us/app/cueup-gigs/id1458267647?mt=8">
+                                        <img
+                                            style={{
+                                                height: '40px',
+                                                marginRight: '18px',
+                                            }}
+                                            alt="Get it on App store"
+                                            src={appStoreBadge}
+                                        />
+                                    </a>
+                                </div>
+
                                 <div>
                                     <SignupForm name={name} />
                                     <Divider />
@@ -96,28 +118,6 @@ export const Signup = ({ name, history }) => {
                             </animated.div>
                         )
                 )}
-
-                <div className="app-buttons">
-                    <a href="https://play.google.com/store/apps/details?id=io.cueup.gigs&utm_source=website&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
-                        <img
-                            style={{
-                                height: '60px',
-                            }}
-                            alt="Get it on Google Play"
-                            src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
-                        />
-                    </a>
-                    <a href="https://apps.apple.com/us/app/cueup-gigs/id1458267647?mt=8">
-                        <img
-                            style={{
-                                height: '40px',
-                                marginRight: '18px',
-                            }}
-                            alt="Get it on App store"
-                            src={appStoreBadge}
-                        />
-                    </a>
-                </div>
             </div>
         </div>
     );

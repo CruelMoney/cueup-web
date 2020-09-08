@@ -525,6 +525,7 @@ svg.logo {
     .instructions {
         margin-bottom: 10px;
         margin-top: 10px;
+        min-height: 140px;
     }
     .app {
         left: -100%;
@@ -625,4 +626,6 @@ svg.logo {
     .continue-button {
         transform: none;
     }
+
+  
 }
