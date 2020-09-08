@@ -156,16 +156,25 @@ const fallbackCities = [
 export const getLocationUrls = async () => {
     const db = await getDB();
 
-    const result = await db.all(
+    const cities = await db.all(
         SQL`
                 SELECT citySlug, countrySlug
                 FROM cities 
             `
     );
+    const countries = await db.all(
+        SQL`
+                SELECT countrySlug, iso2
+                FROM cities 
+                GROUP BY iso2
+            `
+    );
 
     await db.close();
 
-    return result.map(({ citySlug, countrySlug }) => `/book-dj/${countrySlug}/${citySlug}`);
+    return [...countries, ...cities].map(
+        ({ citySlug, countrySlug }) => `/book-dj/${countrySlug}` + (citySlug ? `/${citySlug}` : '')
+    );
 };
 
 // const addSlugs = async () => {
