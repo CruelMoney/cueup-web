@@ -110,9 +110,7 @@
     color: white !important;
 }
 
-.locations-page .request-form {
-    margin-top: 50px;
-}
+
 .locations-page .request-form .col-md-6,
 .location-page .thank-you-text {
     margin-left: 26%;
@@ -169,6 +167,11 @@
 
 /* Tablet */
 @media only screen and (max-width: 768px) {
+    .locations-page header article {
+       
+        position: relative;
+        
+    }
     .gm-style a img {
         display: block;
     }
@@ -197,7 +200,7 @@
         padding: 15px;
         padding-bottom: 2em;
         padding-top: 0;
-        position: absolute;
+        position: relative;
         width: 100vw;
     }
 
@@ -221,13 +224,12 @@
     .tablet-header-content {
         background: rgba(49, 217, 255, 0.95);
         color: white;
-        padding: 2em 0;
         width: 100%;
     }
 
     .tablet-header-content p {
         font-weight: 600;
-        margin: 0;
+        margin: 1em 0;
     }
 
     .locations-page .request-form .col-md-6 {

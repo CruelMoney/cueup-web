@@ -93,19 +93,19 @@ const Location = (props) => {
             <div className="span-wrapper">
                 <header
                     style={{
-                        height: isMobile ? '500px' : '600px',
+                        height: isMobile ? 'auto' : '600px',
                         backgroundColor: '#ebebeb',
                     }}
                 >
-                    {coordinates && (
+                    {coordinates && !isMobile && (
                         <Map
                             key={title}
                             noCircle={!city}
                             hideRoads={true}
-                            offsetCenter
+                            offsetCenter={!isMobile}
                             radius={activeLocation.radius}
                             defaultCenter={coordinates}
-                            height={isMobile ? 500 : 600}
+                            height={isMobile ? 400 : 600}
                             value={coordinates}
                             editable={false}
                             themeColor={themeColor}
@@ -148,6 +148,24 @@ const Location = (props) => {
                     </article>
                 </header>
                 <ShowBelow width={768} className="tablet-header-content">
+                    {coordinates && (
+                        <Map
+                            key={title}
+                            noCircle={!city}
+                            hideRoads={true}
+                            offsetCenter={!isMobile}
+                            radius={activeLocation.radius}
+                            defaultCenter={coordinates}
+                            height={isMobile ? 400 : 600}
+                            value={coordinates}
+                            editable={false}
+                            themeColor={themeColor}
+                            radiusName="playingRadius"
+                            locationName="playingLocation"
+                            bounds={activeLocation.bounds}
+                        />
+                    )}
+
                     <Container className="container">
                         <Row className="row">
                             <Body style={{ color: '#fff' }} key="paragraph">
