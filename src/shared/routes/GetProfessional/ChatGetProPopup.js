@@ -15,7 +15,7 @@ export const ChatGoProPopup = () => {
             {showGoPro ? (
                 <Col>
                     <h1>
-                        Get more gigs
+                        Play more gigs
                         <br />
                         with Cueup Pro
                     </h1>

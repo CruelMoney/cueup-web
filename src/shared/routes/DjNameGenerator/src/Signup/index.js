@@ -54,7 +54,7 @@ export const Signup = ({ name, history }) => {
                                     <span className="adjecent">signup</span>
                                     <h2>
                                         Apply to become DJ at Cueup.
-                                        <span>Get more gigs.</span>
+                                        <span>Play more gigs.</span>
                                     </h2>
 
                                     <a href={'/become-dj'}>
