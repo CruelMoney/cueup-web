@@ -45,6 +45,7 @@ export const loadSupportChat = () => {
                 o.write('<body onload="document._l();">'),
                 o.close();
         })();
+
     loaded = true;
 };
 
@@ -54,6 +55,7 @@ export const showSupportChat = () => {
     }
     window.zE(() => {
         window.$zopim(() => {
+            window.$zopim.livechat.button.setPosition('bl');
             window.$zopim.livechat.window.show();
         });
     });
@@ -76,7 +78,7 @@ export const showChatButton = () => {
     }
     window.zE(() => {
         window.$zopim(() => {
-            console.log('Show chat button');
+            window.$zopim.livechat.button.setPosition('bl');
             window.$zopim.livechat.button.show();
         });
     });
