@@ -3,7 +3,6 @@ import React, { useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { Icon, InlineIcon } from '@iconify/react';
 import arrowForward from '@iconify/icons-ion/arrow-forward';
-import useMouse from '@react-hook/mouse-position';
 import { LoadingIndicator } from './Blocks';
 
 const Sticky = styled.div`
