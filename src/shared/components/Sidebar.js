@@ -38,6 +38,8 @@ const Card = styled.div`
     height: 100%;
     position: relative;
     z-index: 1;
+    border-radius: 10px;
+    overflow: hidden;
 `;
 
 const Shadow = styled.div`
@@ -49,6 +51,7 @@ const Shadow = styled.div`
     left: 50%;
     transform: translateX(-50%);
     z-index: 0;
+    border-radius: 10px;
 `;
 
 export const SidebarContent = styled.div`
@@ -79,6 +82,7 @@ const GradientMouseAnimation = styled.span`
 `;
 
 const InnerGradient = styled.span`
+    border-radius: 8px;
     display: block !important;
     width: 100% !important;
     height: 100% !important;
@@ -108,8 +112,9 @@ const CTAIcon = styled.div`
 `;
 
 const CTA = styled.button`
-    width: 100%;
+    width: calc(100% - 20px);
     height: 60px;
+    box-sizing: border-box;
     background: linear-gradient(to right, #02abd0 0%, #00b5dd 50%, #31daff 100%) !important;
     border: none;
     outline: none;
@@ -124,6 +129,8 @@ const CTA = styled.button`
     transition: all 250ms ease;
     position: relative;
     touch-action: manipulation !important;
+    border-radius: 8px;
+    margin: 10px;
     &:hover {
         color: #ffffff !important;
         background-color: ${({ disabled }) => (disabled ? '#31daff' : '#00d1ff')};
