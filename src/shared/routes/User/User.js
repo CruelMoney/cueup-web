@@ -396,9 +396,10 @@ const User = ({ match, location, user, error, loading, translate }) => {
         return showChatButton;
     }, []);
 
-    const title = user ? user.artistName || user.userMetadata?.firstName : null;
+    let title = user ? user.artistName || user.userMetadata?.firstName : 'Unnamed';
+    title = title + ' · Book now · Cueup';
     const thumb = user?.picture?.path || null;
-    const description = user ? user.userMetadata?.bio : null;
+    const description = user ? user.userMetadata?.bio : title;
     if (user) {
         user.title = title;
     }
