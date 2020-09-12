@@ -41,8 +41,8 @@ export const Testimonial = () => {
         <TestimonialWrapper>
             <Avatar size="large" src={'https://i.vimeocdn.com/portrait/13325432_640x640'} />
             <BodySmall style={{ marginLeft: 12 }}>
-                "I like to travel and thanks to Cueup I’ve had a steady stream of gigs while
-                traveling. Best investment I’ve made was becoming Pro."
+                "I like to dj and travel and thanks to Cueup I’ve had a steady stream of gigs. Best
+                investment I’ve made was becoming Pro."
                 <Quotee>- Oscar Bandersen, DJ & Producer</Quotee>
             </BodySmall>
         </TestimonialWrapper>

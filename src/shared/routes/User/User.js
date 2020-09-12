@@ -248,7 +248,7 @@ const UserContainer = styled(Container)`
 const Content = React.memo(({ match, ...userProps }) => {
     const { user, loading, location } = userProps;
     const showPrivateRoutes = loading || user?.isOwn;
-    const bookingEnabled = user?.isDj && !user.userSettings.standby;
+    const bookingEnabled = user?.isDj;
     const history = useHistory();
 
     // check for event
