@@ -8,13 +8,12 @@ import paymentCard from '../assets/credit_card.jpg';
 import invoice from '../assets/Invoice.jpg';
 import { Header, GrayText } from './Text';
 
-const Card = styled.div`
+export const Card = styled.div`
     display: flex;
     flex: 1;
     flex-direction: column;
     background: #ffffff;
-    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.06), 0 13px 13px 0 rgba(0, 0, 0, 0.08),
-        0 20px 15px 0 rgba(0, 0, 0, 0.04);
+    box-shadow: 0 50px 100px -20px rgba(50, 50, 93, 0.25), 0 30px 60px -30px rgba(0, 0, 0, 0.3);
     border-radius: 28px;
     padding: 39px 39px 0 39px;
     overflow: hidden;

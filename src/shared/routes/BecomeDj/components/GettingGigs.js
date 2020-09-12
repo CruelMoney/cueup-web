@@ -302,9 +302,9 @@ const GettingGigs = () => {
                             At Cueup we constantly work on bringing gigs to our DJs. You just have
                             to chat the organizer - make your offer - play - get paid.
                         </GrayText>
-                        <NavLink to={t(appRoutes.blog) + '/stop-missing-dj-gigs'}>
+                        <NavLink to={t(appRoutes.signUp)}>
                             <ReadMore size="18px" uppercase={false}>
-                                {t('read-more')}
+                                Sign up
                             </ReadMore>
                         </NavLink>
                     </TextCol>

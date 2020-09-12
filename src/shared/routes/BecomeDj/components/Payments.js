@@ -10,7 +10,9 @@ const Bg = styled.div`
     justify-content: center;
     width: 100%;
     order: 6;
-    margin-bottom: -84px;
+    margin-top: -300px;
+    z-index: 0;
+    position: relative;
 `;
 
 const Payments = () => {

@@ -21,6 +21,7 @@ const CancelationContainer = styled(Container)`
     flex-direction: column;
     align-items: center;
     margin: 120px 0;
+    margin-bottom: 400px;
     @media only screen and (max-width: 685px) {
         margin: 80px 0;
     }
@@ -110,9 +111,9 @@ const CancelationPolicy = () => {
                     When accepting payments using Cueup, your cancelation policy will automatically
                     be enforced, and you can define the policy exactly how you want.
                 </CancelationSubTitle>
-                <NavLink to={t(appRoutes.blog)} style={{ marginTop: '42px' }}>
+                <NavLink to={t(appRoutes.signUp)} style={{ marginTop: '42px' }}>
                     <ReadMore white size="18px" uppercase={false}>
-                        {t('read-more')}
+                        Sign up
                     </ReadMore>
                 </NavLink>
                 <GraphWrapper>
