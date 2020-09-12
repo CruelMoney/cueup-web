@@ -101,7 +101,7 @@ const SoundBarStyle = styled.span.attrs(({ pressure, active, halfActive, hoverin
     style: {
         height: `${pressure}%`,
         background: active ? '#50e3c2' : halfActive ? '#50e3c299' : '#E9ECF0',
-        transition: hovering ? 'none' : 'all 1000ms ease',
+        transition: 'height 1000ms ease',
     },
 }))`
     flex: 1;
