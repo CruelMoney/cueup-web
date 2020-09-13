@@ -1,9 +1,9 @@
+import * as THREE from 'three';
 import { easings } from 'utils/easings';
 import { numbers } from 'utils/numbers';
 import { timings } from 'utils/timings';
 
 /* eslint-disable no-unused-expressions, no-sequences, babel/no-invalid-this */
-const THREE = require('three');
 
 const Dh = {
     ad: [42.5, 1.5],
@@ -307,7 +307,7 @@ class Xh extends THREE.Group {
             })),
             (this.active = !1),
             (this.mesh = new THREE.Mesh(this.geometry, this.material)),
-            this.add(this.mesh),
+            // this.add(this.mesh),
             (this.material.uniforms.u_texture.value = this.texture),
             (this.circleMaterial1 = new THREE.MeshBasicMaterial({
                 map: s,
@@ -462,7 +462,7 @@ class Jh extends THREE.Group {
                 vertexShader:
                     '\n        uniform float u_time;\n        uniform float u_drag_time;\n        uniform vec2 u_resolution;\n        attribute float rndId;\n        varying float vRndId;\n\n        varying float pct;\n\n        void main() {\n          vRndId = rndId;\n          vec2 st = position.xy/u_resolution;\n\n          pct = min(1.0, u_time / (1000. / max(0.2, 0.2 * sin(fract(rndId)))));\n          float vNormal = rndId + ((1.0 - rndId) * pct);\n          vNormal = rndId + ((1.0 - rndId));\n          vNormal = smoothstep(0., 1.0, vNormal);\n          if (u_drag_time > 0.) {\n            vNormal -= ((sin(u_time / 400.0 * vRndId) + 1.0) * 0.02) * min(1., u_drag_time / 1200.0);\n          }\n          vec4 modelViewPosition = modelViewMatrix * vec4(position, vNormal);\n          gl_Position = projectionMatrix * modelViewPosition;\n        }\n    ',
                 fragmentShader:
-                    '\n        uniform bool u_dragging;\n        uniform float u_time;\n        uniform float u_drag_time;\n        varying float vRndId;\n        varying float pct;\n\n        void main() {\n          float v = sin(u_time / 200.0 * vRndId);\n          float alpha = pct * 0.7 + v * 0.2;\n          float r = 0.19;\n          float g = 0.42;\n          float b = 0.65;\n          float dragDur = 1200.0;\n          vec3 color = vec3(r, g, b);\n          float rInc = min(1.0, u_drag_time / dragDur) * (sin(u_drag_time / (dragDur * 0.5) + 1.0) * 0.1);\n          float gInc = min(1.0, u_drag_time / dragDur) * (sin(u_drag_time / (dragDur * 0.75) - 1.0) * 0.1);\n          float bInc = min(1.0, u_drag_time / dragDur) * (sin(u_drag_time / dragDur) * 0.1);\n          if (u_dragging) {\n            color.r = r + rInc;\n            color.g = g + gInc;\n            color.b = b + bInc;\n          }\n\n          gl_FragColor = vec4(color, alpha);\n        }\n    ',
+                    '\n        uniform bool u_dragging;\n        uniform float u_time;\n        uniform float u_drag_time;\n        varying float vRndId;\n        varying float pct;\n\n        void main() {\n          float v = sin(u_time / 200.0 * vRndId);\n          float alpha = pct * 0.4 + v * 0.2;\n          float r = 0.3;\n          float g = 0.392;\n          float b = 0.5;\n          float dragDur = 1200.0;\n          vec3 color = vec3(r, g, b);\n          float rInc = min(1.0, u_drag_time / dragDur) * (sin(u_drag_time / (dragDur * 0.5) + 1.0) * 0.1);\n          float gInc = min(1.0, u_drag_time / dragDur) * (sin(u_drag_time / (dragDur * 0.75) - 1.0) * 0.1);\n          float bInc = min(1.0, u_drag_time / dragDur) * (sin(u_drag_time / dragDur) * 0.1);\n          if (u_dragging) {\n            color.r = r + rInc;\n            color.g = g + gInc;\n            color.b = b + bInc;\n          }\n\n          gl_FragColor = vec4(color, alpha);\n        }\n    ',
             })),
             (this.material.side = 2);
         const u = new THREE.Mesh(h, this.material);
@@ -561,10 +561,10 @@ class Globe {
             (this.globeOpacity = 0),
             (this.lineCount = 0),
             (this.arcColors = [
-                [16335176, 16763735],
-                [11232234, 9494783],
-                [16335176, 11232234],
-                [16763735, 9494783],
+                [0x00d1ff, 0x00d1ff],
+                [0x00d1ff, 0x00d1ff],
+                [0x00d1ff, 0x00d1ff],
+                [0x00d1ff, 0x00d1ff],
             ]),
             (this.scene = new THREE.Scene()),
             (this.globeRadius = 250 + 0.3 * Math.min(document.documentElement.clientWidth, 1080)),
@@ -759,12 +759,12 @@ class Globe {
             this.dom.container.appendChild(this.renderer.domElement);
     }
     addLighting() {
-        const t = new THREE.AmbientLight(10086140, 1);
+        const t = new THREE.AmbientLight(0xf7f9fc, 1);
         this.scene.add(t);
-        const e = new THREE.PointLight(12775677, 2, 0, 2);
-        e.position.set(-1e3, -1100, -3300), this.scene.add(e);
-        const i = new THREE.PointLight(10593711, 0.8, 0, 20);
-        i.position.set(-3e3, 3e3, 3300), this.scene.add(i);
+        // const e = new THREE.PointLight(0xffffff, 2, 0, 2);
+        // e.position.set(-1e3, -1100, -3300), this.scene.add(e);
+        // const i = new THREE.PointLight(0x000000, 0.8, 0, 20);
+        // i.position.set(-3e3, 3e3, 3300), this.scene.add(i);
     }
     addGlobe() {
         (this.globeContainer = new THREE.Group()),
@@ -791,7 +791,7 @@ class Globe {
         (this.globeFillMaterial = new THREE.MeshLambertMaterial({
             transparent: !0,
             opacity: 0,
-            color: 1056824,
+            color: 0xf7f9fc,
         })),
             (this.globeFillSphere = new THREE.SphereGeometry(
                 this.globeRadius - 0.1,
