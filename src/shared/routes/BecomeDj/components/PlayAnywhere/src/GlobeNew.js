@@ -307,9 +307,6 @@ class Xh extends THREE.Group {
                     '\n        uniform float u_time;\n        uniform sampler2D u_texture;\n        varying vec2 vUv;\n        uniform float speedEpsilon;\n\n        void main() {\n          float ramp = vUv.x * 0.5;\n          float pct = fract(ramp - u_time * speedEpsilon);\n          vec4 color = vec4(0.0, 0.0, 0.0, 1.0);\n          color = texture2D(u_texture, vec2(pct, 0.6));\n          gl_FragColor = vec4(color);\n        }\n      ',
             })),
             (this.active = !1),
-            (this.mesh = new THREE.Mesh(this.geometry, this.material)),
-            // this.add(this.mesh),
-            (this.material.uniforms.u_texture.value = this.texture),
             (this.circleMaterial1 = new THREE.MeshBasicMaterial({
                 map: s,
                 color: a[0],
@@ -350,10 +347,7 @@ class Xh extends THREE.Group {
         (this.active = !1), this.eraseLine();
     }
     disposeLine() {
-        this.mesh.geometry.dispose(),
-            this.texture.dispose(),
-            this.mesh.material.dispose(),
-            this.circle1.geometry.dispose(),
+        this.circle1.geometry.dispose(),
             this.circle1.material.dispose(),
             this.circle2.geometry.dispose(),
             this.circle2.material.dispose(),

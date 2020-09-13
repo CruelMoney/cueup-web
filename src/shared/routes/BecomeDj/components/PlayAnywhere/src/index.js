@@ -1,18 +1,21 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import Globe from './GlobeNew';
 
 const GlobeRender = () => {
     const ref = useRef();
 
     useEffect(() => {
-        const g = new Globe(ref.current);
-        g.load();
-        g.play();
+        const init = async () => {
+            const Globe = await (await import('./GlobeNew')).default;
+            const g = new Globe(ref.current);
+            g.load();
+            g.play();
 
-        return () => {
-            g.disconnect();
+            return () => {
+                g.disconnect();
+            };
         };
+        init();
     }, []);
 
     return <GlobeWrapper id="globe" ref={ref} />;
