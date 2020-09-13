@@ -19,6 +19,7 @@ import CancelationPolicy from './components/CancelationPolicy';
 import AvailableOn from './components/AvailableOn';
 import content from './content.json';
 import Mixtapes from './components/Mixtapes';
+import PlayAnywhere from './components/PlayAnywhere';
 
 const Bg = styled.div`
     background-image: radial-gradient(50% 58% at 50% 33%, #122b48 12%, #0b1b2d 90%);
@@ -52,7 +53,7 @@ const Index = () => {
                     content="app-id=1458267647, app-argument=userProfile"
                 />
             </Helmet>
-            <ScrollToTop />
+            {/* <ScrollToTop /> */}
             <Bg>
                 <Hero
                     firstTo={translate(appRoutes.signUp)}
@@ -74,7 +75,7 @@ const Index = () => {
                 <Integrations />
             </Bg>
             <GettingGigs />
-
+            <PlayAnywhere />
             <CancelationPolicy />
             <Payments />
             <Mixtapes />
