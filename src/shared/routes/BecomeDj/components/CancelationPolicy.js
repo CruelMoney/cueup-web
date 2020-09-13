@@ -11,8 +11,10 @@ import { SubTitle } from './SubTitle';
 const Bg = styled.div`
     display: flex;
     justify-content: center;
+    position: relative;
     width: 100%;
     order: 7;
+    z-index: 1;
     background-image: radial-gradient(40% 50%, #122b48 20%, #0b1b2d 95%);
 `;
 

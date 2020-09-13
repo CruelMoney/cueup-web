@@ -14,9 +14,9 @@ const ContainerWrapper = styled.div`
     height: 1000px;
     margin-top: -400px;
     position: relative;
-    overflow: hidden;
     display: flex;
     justify-content: flex-end;
+    z-index: 0;
 `;
 
 const GlobeWrapper = styled.div`

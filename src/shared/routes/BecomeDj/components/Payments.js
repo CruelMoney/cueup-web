@@ -11,7 +11,7 @@ const Bg = styled.div`
     width: 100%;
     order: 6;
     margin-top: -300px;
-    z-index: 0;
+    z-index: 2;
     position: relative;
 `;
 
