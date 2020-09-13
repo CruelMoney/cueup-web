@@ -55,15 +55,23 @@ const AvatarRow2 = styled.div`
 const AvatarWrapper = styled.div`
     width: 100px;
     height: 100px;
-    border-radius: 50%;
+    border-radius: 50px;
+    img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50px;
+    }
     overflow: hidden;
     background-color: white;
     box-shadow: 0 0 4px 0 rgba(18, 43, 72, 0.1), 0 5px 10px -2px rgba(18, 43, 72, 0.64);
     margin-bottom: ${({ offset }) => (offset ? offset : '0px')};
     cursor: default;
     @media only screen and (max-width: 685px) {
-        width: 70px;
-        height: 70px;
+        img {
+            width: 70px;
+            height: 70px;
+            border-radius: 35px;
+        }
     }
 `;
 
@@ -101,12 +109,9 @@ const TextWrapper = styled.div`
     }
 `;
 
-const OverflowContainer = styled(Container)`
-    position: relative;
-    z-index: 1;
-    @media only screen and (max-width: 1260px) {
-        overflow: hidden;
-    }
+const OverflowContainer = styled.div`
+    max-width: 100vw;
+    overflow: hidden;
 `;
 
 const JoinThousands = (props) => {
@@ -114,81 +119,72 @@ const JoinThousands = (props) => {
     const { title, description, label, to } = props;
     return (
         <OverflowContainer>
-            <NavLink to={to}>
-                <BlueRectangle
-                    onMouseEnter={() => setHover(true)}
-                    onMouseLeave={() => setHover(false)}
-                >
-                    <Wrapper>
-                        <AvatarRow1>
-                            <Avatar src={dj1} offset="20px" />
-                            <Avatar src={dj2} offset="66px" />
-                            <Avatar src={dj3} offset="10px" />
-                            <Avatar src={dj4} offset="50px" />
-                            <Avatar src={dj5} offset="0px" />
-                            <Avatar src={dj6} offset="40px" />
-                            <Avatar src={dj7} offset="0px" />
-                            <Avatar src={dj8} offset="50px" />
-                            <Avatar src={dj9} offset="10px" />
-                            <Avatar src={dj10} offset="66px" />
-                            <Avatar src={dj11} offset="20px" />
-                        </AvatarRow1>
-                        <AvatarRow2>
-                            <Filler />
-                            <Avatar src={dj12} offset="66px" />
-                            <Avatar src={dj13} offset="10px" />
-                            <Avatar src={dj14} offset="50px" />
-                            <Avatar src={dj15} offset="0px" />
-                            <Avatar src={dj16} offset="45px" />
-                            <Avatar src={dj17} offset="0px" />
-                            <Avatar src={dj18} offset="50px" />
-                            <Avatar src={dj19} offset="10px" />
-                            <Avatar src={dj20} offset="66px" />
-                            <Filler />
-                        </AvatarRow2>
-                    </Wrapper>
-                    <TextWrapper>
-                        <H2 center white largeMargin>
-                            {title}
-                        </H2>
-                        {description && (
-                            <SubTitle
-                                white
-                                style={{
-                                    maxWidth: '520px',
-                                    fontWeight: 500,
-                                    whiteSpace: 'pre-line',
-                                    marginBottom: '42px',
-                                }}
-                            >
-                                {description}
-                            </SubTitle>
-                        )}
+            <Container>
+                <NavLink to={to}>
+                    <BlueRectangle
+                        onMouseEnter={() => setHover(true)}
+                        onMouseLeave={() => setHover(false)}
+                    >
+                        <Wrapper>
+                            <AvatarRow1>
+                                <Avatar src={dj1} offset="20px" />
+                                <Avatar src={dj2} offset="66px" />
+                                <Avatar src={dj3} offset="10px" />
+                                <Avatar src={dj4} offset="50px" />
+                                <Avatar src={dj5} offset="0px" />
+                                <Avatar src={dj6} offset="40px" />
+                                <Avatar src={dj7} offset="0px" />
+                                <Avatar src={dj8} offset="50px" />
+                                <Avatar src={dj9} offset="10px" />
+                                <Avatar src={dj10} offset="66px" />
+                                <Avatar src={dj11} offset="20px" />
+                            </AvatarRow1>
+                            <AvatarRow2>
+                                <Filler />
+                                <Avatar src={dj12} offset="66px" />
+                                <Avatar src={dj13} offset="10px" />
+                                <Avatar src={dj14} offset="50px" />
+                                <Avatar src={dj15} offset="0px" />
+                                <Avatar src={dj16} offset="45px" />
+                                <Avatar src={dj17} offset="0px" />
+                                <Avatar src={dj18} offset="50px" />
+                                <Avatar src={dj19} offset="10px" />
+                                <Avatar src={dj20} offset="66px" />
+                                <Filler />
+                            </AvatarRow2>
+                        </Wrapper>
+                        <TextWrapper>
+                            <H2 center white largeMargin>
+                                {title}
+                            </H2>
+                            {description && (
+                                <SubTitle
+                                    white
+                                    style={{
+                                        maxWidth: '520px',
+                                        fontWeight: 500,
+                                        whiteSpace: 'pre-line',
+                                        marginBottom: '42px',
+                                    }}
+                                >
+                                    {description}
+                                </SubTitle>
+                            )}
 
-                        <ReadMore center white size="18px" uppercase={false} active={hover}>
-                            {label}
-                        </ReadMore>
-                    </TextWrapper>
-                </BlueRectangle>
-            </NavLink>
+                            <ReadMore center white size="18px" uppercase={false} active={hover}>
+                                {label}
+                            </ReadMore>
+                        </TextWrapper>
+                    </BlueRectangle>
+                </NavLink>
+            </Container>
         </OverflowContainer>
     );
 };
 
 const Avatar = ({ src, ...rest }) => (
     <AvatarWrapper {...rest}>
-        <GracefullImage
-            animate
-            src={src}
-            lazyload
-            alt="DJ-Avatar"
-            style={{
-                height: '100%',
-                width: '100%',
-                alignSelf: 'center',
-                background: '#fff',
-            }}
-        />
+        <GracefullImage animate src={src} lazyload alt="DJ-Avatar" />
     </AvatarWrapper>
 );
 

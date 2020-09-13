@@ -34,7 +34,7 @@ function useImageLoaded({ src }) {
     return loaded;
 }
 
-const GracefullImage = ({ src, style, alt, animate, lazyload, ...props }) => {
+const GracefullImage = ({ src, style, placeholderStyle, alt, animate, lazyload, ...props }) => {
     const [ref, inView] = useInView({
         rootMargin: '200px',
         triggerOnce: true,
@@ -61,6 +61,7 @@ const GracefullImage = ({ src, style, alt, animate, lazyload, ...props }) => {
                 style={{
                     backgroundColor: '#EFF2F5',
                     ...style,
+                    ...placeholderStyle,
                 }}
                 {...props}
             />

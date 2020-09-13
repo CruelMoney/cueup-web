@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useInView } from 'react-intersection-observer';
 
@@ -9,13 +9,14 @@ const GlobeRender = () => {
     });
     const g = useRef();
     const ref = useRef();
+    const [loaded, setLoaded] = useState(false);
 
     const prepareGlobe = useCallback(async () => {
         if (ref.current) {
             const Globe = await (await import('./GlobeNew')).default;
             g.current = new Globe(ref.current);
             g.current.load();
-            g.current.play();
+            setLoaded(true);
         }
     }, [ref]);
 
@@ -25,12 +26,17 @@ const GlobeRender = () => {
                 await prepareGlobe();
             };
             start();
+        }
+    }, [inView, prepareGlobe]);
 
+    useEffect(() => {
+        if (loaded) {
+            g.current.play();
             return () => {
                 g.current.disconnect();
             };
         }
-    }, [inView, prepareGlobe]);
+    }, [loaded]);
 
     const setRefs = useCallback(
         (node) => {
