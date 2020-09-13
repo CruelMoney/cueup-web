@@ -53,21 +53,17 @@ const PlayAnywhere = () => {
                         <GrayText
                             mobileTextAlign="left"
                             style={{
-                                maxWidth: 300,
+                                maxWidth: 400,
                                 marginBottom: '30px',
                             }}
                         >
-                            Upload or share your mixtapes directly from SoundCloud.
+                            For ambitious DJs around the world, Cueup lets you set your location to
+                            wherever you want. You can even add multiple places you want to get gigs
+                            around.
                         </GrayText>
-                        <NavLink
-                            to={
-                                t(appRoutes.blog) +
-                                '/how-to-use-soundcloud-and-mixcloud-on-your-cueup-profile'
-                            }
-                            style={{ marginBottom: '42px' }}
-                        >
+                        <NavLink to={t(appRoutes.signUp)} style={{ marginBottom: '42px' }}>
                             <ReadMore size="18px" uppercase={false}>
-                                Read more
+                                Apply to become DJ
                             </ReadMore>
                         </NavLink>
                     </div>
