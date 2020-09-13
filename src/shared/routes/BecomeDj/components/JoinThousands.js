@@ -67,6 +67,9 @@ const AvatarWrapper = styled.div`
     margin-bottom: ${({ offset }) => (offset ? offset : '0px')};
     cursor: default;
     @media only screen and (max-width: 685px) {
+        width: 70px;
+        height: 70px;
+        border-radius: 35px;
         img {
             width: 70px;
             height: 70px;
