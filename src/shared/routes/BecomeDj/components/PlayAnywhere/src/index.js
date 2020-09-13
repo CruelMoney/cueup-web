@@ -1,24 +1,46 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import { useInView } from 'react-intersection-observer';
 
 const GlobeRender = () => {
+    const [inViewRef, inView] = useInView({
+        rootMargin: '0px',
+        triggerOnce: true,
+    });
+    const g = useRef();
     const ref = useRef();
 
-    useEffect(() => {
-        const init = async () => {
+    const prepareGlobe = useCallback(async () => {
+        if (ref.current) {
             const Globe = await (await import('./GlobeNew')).default;
-            const g = new Globe(ref.current);
-            g.load();
-            g.play();
+            g.current = new Globe(ref.current);
+            g.current.load();
+            g.current.play();
+        }
+    }, [ref]);
+
+    useEffect(() => {
+        if (inView) {
+            const start = async () => {
+                await prepareGlobe();
+            };
+            start();
 
             return () => {
-                g.disconnect();
+                g.current.disconnect();
             };
-        };
-        init();
-    }, []);
+        }
+    }, [inView, prepareGlobe]);
 
-    return <GlobeWrapper id="globe" ref={ref} />;
+    const setRefs = useCallback(
+        (node) => {
+            ref.current = node;
+            inViewRef(node);
+        },
+        [inViewRef]
+    );
+
+    return <GlobeWrapper id="globe" ref={setRefs} />;
 };
 
 const GlobeWrapper = styled.div`

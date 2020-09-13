@@ -53,7 +53,7 @@ const Index = () => {
                     content="app-id=1458267647, app-argument=userProfile"
                 />
             </Helmet>
-            {/* <ScrollToTop /> */}
+            <ScrollToTop />
             <Bg>
                 <Hero
                     firstTo={translate(appRoutes.signUp)}
