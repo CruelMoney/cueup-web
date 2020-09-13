@@ -2,6 +2,8 @@ import * as THREE from 'three';
 import { easings } from 'utils/easings';
 import { numbers } from 'utils/numbers';
 import { timings } from 'utils/timings';
+import discTexture from '../resources/disc_texture.png';
+import mapFill from '../resources/map_fill.png';
 
 /* eslint-disable no-unused-expressions, no-sequences, babel/no-invalid-this */
 
@@ -229,7 +231,7 @@ function qh(t, e, i) {
     );
 }
 class Xh extends THREE.Group {
-    constructor(e, n, a, o, s, c, h) {
+    constructor(e, n, a, _o, s, c, h) {
         super(),
             (this.animationFrame = undefined),
             (this.drawAnimatedLine = () => {
@@ -280,7 +282,6 @@ class Xh extends THREE.Group {
                     (this.animationFrame = requestAnimationFrame(this.eraseLine));
             }),
             (this.colors = a),
-            (this.texture = o),
             (this.isStatic = h),
             (this.startLat = e[0]),
             (this.startLng = e[1]);
@@ -396,20 +397,17 @@ class Jh extends THREE.Group {
             (this.radius = e),
             (this.isDragging = !1),
             (this.dragTime = 0),
-            new THREE.ImageLoader().load(
-                'https://images.ctfassets.net/fzn2n1nzq965/11064gUb2CgTJXKVwAt5J9/297a98a65d04d4fbb979072ce60466ab/map_fill-a78643e8.png',
-                (t) => {
-                    const e = (function (t) {
-                        const e = t.width;
-                        const i = t.height;
-                        const n = document.createElement('canvas');
-                        (n.width = e), (n.height = i);
-                        const r = n.getContext('2d');
-                        return r.drawImage(t, 0, 0), r.getImageData(0, 0, e, i);
-                    })(t);
-                    this.mapLoaded(e);
-                }
-            );
+            new THREE.ImageLoader().load(mapFill, (t) => {
+                const e = (function (t) {
+                    const e = t.width;
+                    const i = t.height;
+                    const n = document.createElement('canvas');
+                    (n.width = e), (n.height = i);
+                    const r = n.getContext('2d');
+                    return r.drawImage(t, 0, 0), r.getImageData(0, 0, e, i);
+                })(t);
+                this.mapLoaded(e);
+            });
     }
     mapLoaded(t) {
         const e = this.radius / 450;
@@ -503,12 +501,7 @@ const $h = Math.PI;
 const tl = 0.1 * Math.PI;
 const el = -0.5 * Math.PI;
 const il = 0.25 * Math.PI;
-const nl = [
-    'https://images.ctfassets.net/fzn2n1nzq965/21KQEBsC7QG4IYZV5RuhDz/d3180249af4082f42a22cb5f3ccc8e09/arc-texture-1.png',
-    'https://images.ctfassets.net/fzn2n1nzq965/22Apsqcv7VIDzlCuSOEzPQ/2194c40aac8bced46d48582d5d712bf6/arc-texture-2.png',
-    'https://images.ctfassets.net/fzn2n1nzq965/79YUdAMNjtlQuuFLN0RBLG/f779fbfcc31d6360893844a29ec5fb4f/arc-texture-3.png',
-    'https://images.ctfassets.net/fzn2n1nzq965/7ez6kk9Dk9uuhgdRLFyhZX/220a177ca8529de208f8ae3cc3b10609/arc-texture-4.png',
-];
+
 class Globe {
     constructor(i) {
         (this.el = undefined),
@@ -759,12 +752,12 @@ class Globe {
             this.dom.container.appendChild(this.renderer.domElement);
     }
     addLighting() {
-        const t = new THREE.AmbientLight(0xf7f9fc, 1);
+        const t = new THREE.AmbientLight(0xf7fafc, 1);
         this.scene.add(t);
-        // const e = new THREE.PointLight(0xffffff, 2, 0, 2);
-        // e.position.set(-1e3, -1100, -3300), this.scene.add(e);
-        // const i = new THREE.PointLight(0x000000, 0.8, 0, 20);
-        // i.position.set(-3e3, 3e3, 3300), this.scene.add(i);
+        const e = new THREE.PointLight(0xffffff, 2, 0, 2);
+        e.position.set(-1e3, -1100, -3300), this.scene.add(e);
+        const i = new THREE.PointLight(10593711, 0.1, 0, 20);
+        i.position.set(-3e3, 3e3, 3300), this.scene.add(i);
     }
     addGlobe() {
         (this.globeContainer = new THREE.Group()),
@@ -818,17 +811,9 @@ class Globe {
                 }));
     }
     addLines() {
-        (this.circleTexture = new THREE.TextureLoader().load(
-            'https://images.ctfassets.net/fzn2n1nzq965/2wn0qc94lx6dbfTVt1vpuO/cf3e66080a3cddeb7275a8fefbca5134/disc_texture.png',
-            () => {
-                this.isDiscTextureLoaded = !0;
-            }
-        )),
-            (this.arcTextures = nl.map((t) =>
-                new THREE.TextureLoader().load(t, () => {
-                    this.arcTexturesLoaded += 1;
-                })
-            )),
+        (this.circleTexture = new THREE.TextureLoader().load(discTexture, () => {
+            this.isDiscTextureLoaded = !0;
+        })),
             (this.linesContainer = new THREE.Group()),
             this.globeContainer.add(this.linesContainer),
             this.drawLines();
@@ -874,7 +859,7 @@ class Globe {
             r,
             a,
             s,
-            this.arcTextures[o],
+            null,
             this.circleTexture,
             1.001 * this.globeRadius + 0.01 * Math.random(),
             this.isStatic
@@ -938,10 +923,7 @@ class Globe {
                 this.isRevealed || this.revealAnimation(),
                 this.renderer.render(this.scene, this.camera)),
             (this.renderAnimationFrame = requestAnimationFrame(() => {
-                this.isRevealed &&
-                this.isStatic &&
-                this.arcTexturesLoaded === nl.length &&
-                this.isDiscTextureLoaded
+                this.isRevealed && this.isStatic && this.isDiscTextureLoaded
                     ? this.renderer.render(this.scene, this.camera)
                     : this.render(t + 1);
             }));
