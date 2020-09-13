@@ -33,9 +33,12 @@ const Bg = styled.div`
     justify-content: center;
     width: 100%;
     z-index: 0;
-    position: relative;
     background-color: #f7f9fc;
     padding: 200px 0;
+
+    @media only screen and (max-width: 768px) {
+        padding: 120px 0;
+    }
 `;
 
 const PlayAnywhere = () => {
@@ -44,10 +47,11 @@ const PlayAnywhere = () => {
         <ContainerWrapper>
             <Bg>
                 <Container>
-                    <div style={{ zIndex: 2, position: 'relative', maxWidth: '500px' }}>
+                    <div style={{ maxWidth: '500px', position: 'relative', zIndex: 2 }}>
                         <TextAccent margin="0 0 15px 0">LOCATIONS</TextAccent>
-                        <Header mobileTextAlign="center">Play anywhere</Header>
+                        <Header mobileTextAlign="left">Play anywhere</Header>
                         <GrayText
+                            mobileTextAlign="left"
                             style={{
                                 maxWidth: 300,
                                 marginBottom: '30px',
@@ -67,11 +71,11 @@ const PlayAnywhere = () => {
                             </ReadMore>
                         </NavLink>
                     </div>
+                    <GlobeWrapper>
+                        <GlobeRender />
+                    </GlobeWrapper>
                 </Container>
             </Bg>
-            <GlobeWrapper>
-                <GlobeRender />
-            </GlobeWrapper>
         </ContainerWrapper>
     );
 };
