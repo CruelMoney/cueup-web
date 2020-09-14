@@ -55,6 +55,10 @@ const GlobeWrapper = styled.div`
     left: 0;
     bottom: 0;
     right: 0;
+    cursor: grab;
+    &:active {
+        cursor: grabbing;
+    }
 `;
 
 export default GlobeRender;
