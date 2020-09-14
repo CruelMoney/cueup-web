@@ -29,7 +29,7 @@ import { SubTitle } from './SubTitle';
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
-    z-index: 2;
+    z-index: 3;
     width: 1600px;
     margin-top: 42px;
     margin-bottom: 50px;
@@ -92,12 +92,13 @@ const BlueRectangle = styled.div`
     box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.06), 0 13px 13px 0 rgba(0, 0, 0, 0.08),
         0 20px 15px 0 rgba(0, 0, 0, 0.04);
     border-radius: 28px;
-    z-index: 1;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
     padding: 0 1em;
+    z-index: 1;
+    position: relative;
 `;
 
 const TextWrapper = styled.div`
@@ -114,7 +115,9 @@ const TextWrapper = styled.div`
 
 const OverflowContainer = styled.div`
     max-width: 100vw;
-    overflow: hidden;
+    overflow-x: hidden;
+    padding-bottom: 60px;
+    margin-bottom: -60px;
 `;
 
 const JoinThousands = (props) => {

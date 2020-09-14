@@ -58,8 +58,8 @@ const PlayAnywhere = () => {
                             }}
                         >
                             For ambitious DJs around the world, Cueup lets you set your location to
-                            wherever you want. You can even add multiple places you want to get gigs
-                            around.
+                            wherever you want. You can even add multiple places you want to get
+                            gigs.
                         </GrayText>
                         <NavLink to={t(appRoutes.signUp)} style={{ marginBottom: '42px' }}>
                             <ReadMore size="18px" uppercase={false}>
