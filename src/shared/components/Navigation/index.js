@@ -56,7 +56,7 @@ const Menu = () => {
                             {loggedIn && !isPro && isDJ && (
                                 <li>
                                     <Navlink
-                                        label={'Go Pro'}
+                                        label={'Go Pro % Discount this week'}
                                         to={
                                             t(appRoutes.userSettings).replace(
                                                 ':permalink',

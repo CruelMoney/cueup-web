@@ -148,7 +148,7 @@ const RowCustom = styled(Row)`
 
 function CountdownTimer() {
     const calculateTimeLeft = () => {
-        const difference = Number(Date.UTC(2020, 7, 17, 0, 0, 0)) - Number(new Date().valueOf());
+        const difference = Number(Date.UTC(2020, 8, 23, 10, 0, 0)) - Number(new Date().valueOf());
         let timeLeft = {};
 
         if (difference > 0) {
@@ -196,8 +196,8 @@ const Plans = ({ setTier, selectedTier }) => {
     return (
         <>
             <TopText style={{ marginBottom: 24, textAlign: 'center' }}>
-                {/* <Body style={{ fontSize: '1em' }}>Launch offer ends in</Body> */}
-                {/* <CountdownTimer /> */}
+                <Body style={{ fontSize: '1em' }}>Launch offer ends in</Body>
+                <CountdownTimer />
                 <Body style={{ fontSize: '1em' }}>Subscribe now and get this price forever.</Body>
             </TopText>
 
