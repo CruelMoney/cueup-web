@@ -1,8 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Disqus from 'disqus-react';
+import styled from 'styled-components';
 import { useServerContext } from 'components/hooks/useServerContext';
-import { Hr, Container, CardSimple, Row, Col } from 'components/Blocks';
+import { Hr, Container, CardSimple, Row, Col, Card } from 'components/Blocks';
 import posts from '../posts.json';
 import Sharing from '../../../components/common/Sharing-v2';
 import ButtonLink from '../../../components/common/ButtonLink';
@@ -26,8 +27,6 @@ const Post = ({ match }) => {
     };
 
     const siteTitle = post.title + ' | Cueup Blog';
-
-    console.log(post.updated_date, { publishedDate });
 
     return (
         <article className="blog-post">
@@ -127,22 +126,32 @@ const CallToBlock = ({ category }) => {
         organizer: 'Find a DJ',
     };
     return (
-        <div className="signup">
+        <CTACard shadow className="signup">
             <h3>{title[category] ?? title.dj}</h3>
             <p>{content[category] ?? content.dj}</p>
-            <div className="row center" style={{ margin: '3em 0' }}>
-                <ButtonLink
-                    active
-                    glow
-                    color={'rgb(37, 244, 210)'}
-                    className="button"
-                    to={link[category] ?? link.dj}
-                >
-                    {button[category] ?? button.dj}
-                </ButtonLink>
-            </div>
-        </div>
+            <ButtonLink
+                active
+                glow
+                color={'rgb(37, 244, 210)'}
+                className="button"
+                to={link[category] ?? link.dj}
+            >
+                {button[category] ?? button.dj}
+            </ButtonLink>
+        </CTACard>
     );
 };
+
+const CTACard = styled(Card)`
+    padding: 2em 4em;
+    margin-bottom: 60px;
+    text-align: center;
+
+    button,
+    h3,
+    a {
+        margin: auto;
+    }
+`;
 
 export default Post;
