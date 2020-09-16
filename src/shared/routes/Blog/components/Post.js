@@ -4,7 +4,6 @@ import Disqus from 'disqus-react';
 import { useServerContext } from 'components/hooks/useServerContext';
 import { Hr, Container, CardSimple, Row, Col } from 'components/Blocks';
 import posts from '../posts.json';
-import Formatter from '../../../utils/Formatter';
 import Sharing from '../../../components/common/Sharing-v2';
 import ButtonLink from '../../../components/common/ButtonLink';
 import OnlyClientSide from '../../../components/higher-order/onlyClientSide';
@@ -17,7 +16,7 @@ const Post = ({ match }) => {
     const { postTitle } = params;
 
     const post = posts.find((p) => p.slug === postTitle);
-    const publishedDate = new Date(post.updated_date);
+    const publishedDate = new Date(post.updated_date.split(' ')[0]);
 
     const disqusShortname = 'cueup';
     const disqusConfig = {
@@ -27,6 +26,8 @@ const Post = ({ match }) => {
     };
 
     const siteTitle = post.title + ' | Cueup Blog';
+
+    console.log(post.updated_date, { publishedDate });
 
     return (
         <article className="blog-post">
