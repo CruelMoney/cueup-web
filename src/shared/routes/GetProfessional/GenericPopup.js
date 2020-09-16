@@ -219,6 +219,11 @@ const Plans = ({ setTier, selectedTier }) => {
                         {...t}
                     />
                 ))}
+
+            <BodySmall style={{ textAlign: 'center', marginTop: 12 }}>
+                You will receive your money back each month, if you don't receive any gig requests.
+                Cancel any time.
+            </BodySmall>
         </>
     );
 };

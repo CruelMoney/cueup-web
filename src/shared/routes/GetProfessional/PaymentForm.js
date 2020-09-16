@@ -133,10 +133,6 @@ function PaymentForm({ selectedTier }) {
                     {selectedTier ? `Buy now - ${selectedTier.price.formatted}` : 'Buy now'}
                 </SmartButton>
             </form>
-            <BodySmall style={{ textAlign: 'center', marginTop: 12 }}>
-                You will receive your money back each month, if you don't receive any gig requests.
-                Cancel any time.
-            </BodySmall>
         </div>
     );
 }
