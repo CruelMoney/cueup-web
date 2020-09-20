@@ -185,7 +185,7 @@ export const H2 = styled.h2`
             ? css`
                   font-size: 32px;
                   font-weight: 600;
-                  margin-bottom: 0.4em;
+                  margin-bottom: 0.2em;
               `
             : ''}
     @media screen and (max-width: 480px) {

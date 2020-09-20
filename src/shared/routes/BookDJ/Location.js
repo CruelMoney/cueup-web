@@ -18,6 +18,13 @@ import firstWeddingDance from './assets/first_wedding_dance_of_newlywed.webp';
 import birthdayParty from './assets/birthday_party.webp';
 import officeParty from './assets/office_party.webp';
 
+import { ReactComponent as HipHopIcon } from './assets/icons/hiphop.svg';
+import { ReactComponent as PartyLightsIcon } from './assets/icons/partyLights.svg';
+import { ReactComponent as SmokeIcon } from './assets/icons/smoke.svg';
+import { ReactComponent as SpeakerIcon } from './assets/icons/speaker.svg';
+import { ReactComponent as VinylIcon } from './assets/icons/vinyl.svg';
+import { ReactComponent as Top40Icon } from './assets/icons/top40.svg';
+
 const Location = ({ translate, activeLocation, environment, match }) => {
     const { location } = match.params;
 
@@ -56,7 +63,7 @@ const Location = ({ translate, activeLocation, environment, match }) => {
             <SmartNavigation dark relative />
             <Hero activeLocation={activeLocation} />
             <Occasions />
-
+            <PopularRequests activeLocation={activeLocation} />
             <Footer
                 color={'#31DAFF'}
                 noSkew={true}
@@ -198,6 +205,96 @@ const Occasions = () => {
                         <OccationItem key={idx} idx={idx} {...item} />
                     ))}
                 </ResponsiveRow>
+            </Container>
+        </CustomSection>
+    );
+};
+
+const ScrollableFullWidthGrid = styled.ol`
+    display: flex;
+    list-style: none;
+    overflow: scroll;
+    margin-left: calc((100vw - 100%) / -2);
+    margin-right: calc((100vw - 100%) / -2);
+    padding-left: calc((100vw - 100%) / 2);
+    padding-right: calc((100vw - 100%) / 2);
+    scrollbar-width: none;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-bottom: -15px;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+    -webkit-box-pack: start;
+`;
+
+const RequestWrapper = styled.li`
+    box-shadow: 0 3px 10px 0 rgba(18, 43, 72, 0.15);
+    min-width: 230px;
+    padding: 1em;
+    padding-bottom: 0.5em;
+    border-radius: 20px;
+    margin-right: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+`;
+
+const RequestItem = ({ label, Icon, idx }) => {
+    return (
+        <RequestWrapper
+            ariaLabel={label}
+            itemprop="itemListElement"
+            itemscope=""
+            itemtype="https://schema.org/ListItem"
+        >
+            <meta itemProp="position" content={idx + 1} />
+            <meta itemProp="name" content={label} />
+            {/* <meta itemprop="url" content={url}></meta> */}
+            <Icon />
+            <H3 small aria-hidden="true" style={{ marginTop: '0.75em' }}>
+                {label}
+            </H3>
+        </RequestWrapper>
+    );
+};
+
+const requestdata = [
+    {
+        label: 'Top 40',
+        Icon: Top40Icon,
+    },
+    {
+        label: 'Hip Hop',
+        Icon: HipHopIcon,
+    },
+    {
+        label: 'Vinyls',
+        Icon: VinylIcon,
+    },
+    {
+        label: 'Sound system',
+        Icon: SpeakerIcon,
+    },
+    {
+        label: 'Party lights',
+        Icon: PartyLightsIcon,
+    },
+    {
+        label: 'Smoke machine',
+        Icon: SmokeIcon,
+    },
+];
+
+const PopularRequests = ({ activeLocation }) => {
+    return (
+        <CustomSection>
+            <Container>
+                <H2 small>Popular requests for {activeLocation.name} DJs</H2>
+                <ScrollableFullWidthGrid>
+                    {requestdata.map((item, idx) => (
+                        <RequestItem key={idx} idx={idx} {...item} />
+                    ))}
+                </ScrollableFullWidthGrid>
             </Container>
         </CustomSection>
     );
