@@ -180,6 +180,14 @@ export const H2 = styled.h2`
     letter-spacing: -0.01em;
     margin-bottom: 0.8em;
     white-space: pre-wrap;
+    ${({ small }) =>
+        small
+            ? css`
+                  font-size: 32px;
+                  font-weight: 600;
+                  margin-bottom: 0.4em;
+              `
+            : ''}
     @media screen and (max-width: 480px) {
         font-size: 30px;
     }
@@ -193,6 +201,14 @@ export const H3 = styled.h2`
     letter-spacing: -0.01em;
     margin-bottom: 0.8em;
     white-space: pre-wrap;
+    ${({ small }) =>
+        small
+            ? css`
+                  font-size: 18px !important;
+                  font-weight: 600;
+                  margin-bottom: 0.4em;
+              `
+            : ''}
     @media screen and (max-width: 480px) {
         font-size: 24px;
     }
