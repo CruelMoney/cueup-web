@@ -14,6 +14,7 @@ import { addLanguage } from 'middleware/i18next';
 import addLogging from 'middleware/addLogging';
 import addTestEndpoints from 'middleware/addTestEndpoints';
 import addSocialImages from 'middleware/addSocialImages';
+import { addRedirects } from 'middleware/addRedirects';
 import paths from '../../config/paths';
 import errorHandler from './middleware/errorHandler';
 import serverRenderer from './middleware/serverRenderer';
@@ -51,6 +52,8 @@ app.use(
         manifestPath: `${manifestPath}/manifest.json`,
     })
 );
+
+addRedirects(app);
 
 addRedis(app);
 app.use(addApollo);

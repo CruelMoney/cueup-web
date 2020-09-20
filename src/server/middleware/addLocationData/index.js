@@ -36,17 +36,45 @@ const addLocationData = async (app) => {
     });
 
     app.use([enRoutes.bookDj, daRoutes.bookDj], async (req, res, next) => {
-        const { country, city } = req.params;
+        const { location } = req.params;
 
         const db = await getDB();
 
-        if (city) {
-            const result = await db.get(
-                SQL`
+        const countryResult = await db.all(
+            SQL`
                         SELECT *
                         FROM cities
-                        WHERE countrySlug = ${country} AND citySlug = ${city}
+                        WHERE countrySlug = ${location}
+                        LIMIT 50
                     `
+        );
+        if (countryResult.length) {
+            // calculate based on cities
+            const points = countryResult.map(({ lat, lng }) => ({ latitude: lat, longitude: lng }));
+            const center = geolib.getCenterOfBounds(points);
+            const bounds = geolib.getBounds(points);
+
+            const coords = {
+                lat: center.latitude,
+                lng: center.longitude,
+            };
+
+            res.locals.activeLocation = {
+                name: countryResult[0]?.country,
+                city: null,
+                country: countryResult[0]?.country,
+                coords,
+                radius: 25000, // set based on bounding box
+                cities: countryResult,
+                bounds,
+            };
+        } else {
+            const result = await db.get(
+                SQL`
+                            SELECT *
+                            FROM cities
+                            WHERE citySlug = ${location}
+                        `
             );
             if (result) {
                 const { population, city, country: countryName, lat, lng } = result;
@@ -61,36 +89,6 @@ const addLocationData = async (app) => {
                         lng: parseFloat(lng),
                     },
                     radius,
-                };
-            }
-        } else if (country) {
-            const result = await db.all(
-                SQL`
-                        SELECT *
-                        FROM cities
-                        WHERE countrySlug = ${country}
-                        LIMIT 50
-                    `
-            );
-            if (result.length) {
-                // calculate based on cities
-                const points = result.map(({ lat, lng }) => ({ latitude: lat, longitude: lng }));
-                const center = geolib.getCenterOfBounds(points);
-                const bounds = geolib.getBounds(points);
-
-                const coords = {
-                    lat: center.latitude,
-                    lng: center.longitude,
-                };
-
-                res.locals.activeLocation = {
-                    name: result[0]?.country,
-                    city: null,
-                    country: result[0]?.country,
-                    coords,
-                    radius: 25000, // set based on bounding box
-                    cities: result,
-                    bounds,
                 };
             }
         }
@@ -173,7 +171,7 @@ export const getLocationUrls = async () => {
     await db.close();
 
     return [...countries, ...cities].map(
-        ({ citySlug, countrySlug }) => `/book-dj/${countrySlug}` + (citySlug ? `/${citySlug}` : '')
+        ({ citySlug, countrySlug }) => `/${citySlug || countrySlug}/book-dj`
     );
 };
 

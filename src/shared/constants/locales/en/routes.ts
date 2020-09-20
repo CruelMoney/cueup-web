@@ -15,7 +15,7 @@ const routes: RouteKeys = {
     userSettings: '/user/:permalink/settings',
     userEvents: '/user/:permalink/events',
     userGigs: '/user/:permalink/gigs',
-    bookDj: '/book-dj/:country/:city?',
+    bookDj: '/:location/book-dj',
     bookDjOverview: '/locations',
     blog: '/blog',
     faq: '/faq',
@@ -31,6 +31,10 @@ const routes: RouteKeys = {
     gig: '/gig',
     resetPassword: '/resetPassword',
     djNameGenerator: '/dj-name-generator',
+};
+
+export const oldRoutes = {
+    bookDj: '/book-dj/:country/:city?',
 };
 
 export default routes;

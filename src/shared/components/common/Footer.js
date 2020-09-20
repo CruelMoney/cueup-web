@@ -287,9 +287,10 @@ const TopLocations = () => {
                 {cities.map(({ id, city, citySlug, countrySlug }) => (
                     <li key={id}>
                         <a
-                            href={translate(appRoutes.bookDj)
-                                .replace(':city?', citySlug)
-                                .replace(':country', countrySlug)}
+                            href={translate(appRoutes.bookDj).replace(
+                                ':location',
+                                citySlug || countrySlug
+                            )}
                         >
                             {city}
                         </a>

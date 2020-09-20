@@ -15,7 +15,7 @@ const routes: RouteKeys = {
     userSettings: '/da/user/:permalink/settings',
     userEvents: '/da/user/:permalink/events',
     userGigs: '/da/user/:permalink/gigs',
-    bookDj: '/da/lej-dj/:country/:city?',
+    bookDj: '/da/:location/lej-dj',
     bookDjOverview: '/da/lokationer',
     blog: '/da/blog',
     faq: '/da/faq',
@@ -31,6 +31,10 @@ const routes: RouteKeys = {
     termsPrivacy: '/da/betingelser/privatliv',
     termsCookie: '/da/betingelser/cookies',
     djNameGenerator: '/da/dj-name-generator',
+};
+
+export const oldRoutes = {
+    bookDj: '/da/lej-dj/:country/:city?',
 };
 
 export default routes;

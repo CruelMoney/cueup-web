@@ -40,7 +40,7 @@ export const CitiesList = ({ cities, country }) => {
                 <ul>
                     {cities.map(({ countrySlug, city, citySlug, id }) => (
                         <li key={id}>
-                            <a href={`/book-dj/${countrySlug}/${citySlug}`}>
+                            <a href={`/${citySlug || countrySlug}/book-dj`}>
                                 <Body>{city}</Body>
                             </a>
                         </li>

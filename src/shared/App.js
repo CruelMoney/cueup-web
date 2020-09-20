@@ -9,7 +9,8 @@ import LazyCompleteSignup from 'routes/CompleteSignup';
 import LazyTerms from 'routes/Terms';
 import LazyEvent from 'routes/Event';
 import ResetPassword from 'routes/ResetPassword';
-import LazyLocation, { LazyLocationsOverview } from 'routes/Location';
+import LazyLocation from 'routes/BookDJ';
+import { LazyLocationsOverview } from 'routes/Location';
 import LazyGig from 'routes/Gig';
 import LazySideBarChat from 'components/SidebarChat';
 import LazyGetProfessional from 'routes/GetProfessional';
@@ -84,7 +85,7 @@ const RouteWrapper = () => {
 
             <Route path={'*/get-pro'} exact component={LazyGetProfessional} />
 
-            <Route path={'*/book-dj'} exact component={RequestFormPopup} />
+            <Route path={'/book-dj'} exact component={RequestFormPopup} />
         </div>
     );
 };
