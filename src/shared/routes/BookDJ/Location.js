@@ -213,7 +213,7 @@ const Occasions = () => {
 const ScrollableFullWidthGrid = styled.ol`
     display: flex;
     list-style: none;
-    overflow: scroll;
+    overflow: auto;
     margin-left: calc((100vw - 100%) / -2);
     margin-right: calc((100vw - 100%) / -2);
     padding-left: calc((100vw - 100%) / 2);
@@ -225,11 +225,15 @@ const ScrollableFullWidthGrid = styled.ol`
     -webkit-overflow-scrolling: touch;
     justify-content: flex-start;
     -webkit-box-pack: start;
+    &:after {
+        content: '';
+        padding: 16px;
+    }
 `;
 
 const RequestWrapper = styled.li`
     box-shadow: 0 3px 10px 0 rgba(18, 43, 72, 0.15);
-    min-width: 230px;
+    min-width: 240px;
     padding: 1em;
     padding-bottom: 0.5em;
     border-radius: 20px;
