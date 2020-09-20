@@ -173,6 +173,10 @@ ol.numbered-list {
     z-index: 10;
 }
 
+.relative .navigation {
+    position: relative;
+}
+
 body.pre-header-content .navigation {
     margin-top: 42px;
 }
@@ -194,9 +198,6 @@ li .link-look {
 .white-theme .navigation .logo {
     color: #32325d;
     fill: #32325d;
-}
-.white-theme nav {
-    border-bottom: 1px solid #f6f9fc;
 }
 
 .white-theme {

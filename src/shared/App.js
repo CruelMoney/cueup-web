@@ -39,7 +39,6 @@ const App = () => {
     return (
         <ProvideAppState>
             <ProvideMobileMenu>
-                <Navigation />
                 <RouteWrapper />
             </ProvideMobileMenu>
             <div id="popup-container" />
@@ -52,41 +51,50 @@ const RouteWrapper = () => {
     const { showBottomPlayer, showSideBarChat } = useAppState();
 
     return (
-        <div id="content">
-            <Switch>
-                <Route
-                    exact
-                    path={[t(appRoutes.home), '/verifyEmail', '/connectInstagram', '/book-dj']}
-                    component={Home}
-                />
-                <Route path={t(appRoutes.about)} component={About} />
-                <Route path={t(appRoutes.faq)} component={LazyFaq} />
-                <Route path={t(appRoutes.becomeDj)} component={LazyBecomeDj} />
-                <Route path={t(appRoutes.blog)} component={LazyBlog} />
+        <>
+            {/* TODO move navigation into each route */}
+            <Route
+                render={({ location }) => {
+                    return !location.pathname.includes('/book-dj') ? <Navigation /> : null;
+                }}
+            />
 
-                <Route path={t(appRoutes.howItWorks)} component={LazyHowItWorks} />
-                <Route path={t(appRoutes.signUp)} component={LazySignup} />
+            <div id="content">
+                <Switch>
+                    <Route
+                        exact
+                        path={[t(appRoutes.home), '/verifyEmail', '/connectInstagram', '/book-dj']}
+                        component={Home}
+                    />
+                    <Route path={t(appRoutes.about)} component={About} />
+                    <Route path={t(appRoutes.faq)} component={LazyFaq} />
+                    <Route path={t(appRoutes.becomeDj)} component={LazyBecomeDj} />
+                    <Route path={t(appRoutes.blog)} component={LazyBlog} />
 
-                <Route path={t(appRoutes.user) + '/:permalink'} component={LazyUser} />
-                <Route path={t(appRoutes.completeSignup)} component={LazyCompleteSignup} />
-                <Route path={t(appRoutes.terms)} component={LazyTerms} />
-                <Route path={t(appRoutes.event) + '/:id/:hash'} component={LazyEvent} />
-                <Route path={t(appRoutes.gig) + '/:id'} component={LazyGig} />
-                <Route path={t(appRoutes.bookDj)} component={LazyLocation} />
-                <Route path={t(appRoutes.bookDjOverview)} component={LazyLocationsOverview} />
+                    <Route path={t(appRoutes.howItWorks)} component={LazyHowItWorks} />
+                    <Route path={t(appRoutes.signUp)} component={LazySignup} />
 
-                <Route path={t(appRoutes.resetPassword)} component={ResetPassword} />
+                    <Route path={t(appRoutes.user) + '/:permalink'} component={LazyUser} />
+                    <Route path={t(appRoutes.completeSignup)} component={LazyCompleteSignup} />
+                    <Route path={t(appRoutes.terms)} component={LazyTerms} />
+                    <Route path={t(appRoutes.event) + '/:id/:hash'} component={LazyEvent} />
+                    <Route path={t(appRoutes.gig) + '/:id'} component={LazyGig} />
+                    <Route path={t(appRoutes.bookDj)} component={LazyLocation} />
+                    <Route path={t(appRoutes.bookDjOverview)} component={LazyLocationsOverview} />
 
-                <Route component={NotFound} />
-            </Switch>
-            {showBottomPlayer && <BottomPlayer />}
+                    <Route path={t(appRoutes.resetPassword)} component={ResetPassword} />
 
-            {showSideBarChat && <LazySideBarChat />}
+                    <Route component={NotFound} />
+                </Switch>
+                {showBottomPlayer && <BottomPlayer />}
 
-            <Route path={'*/get-pro'} exact component={LazyGetProfessional} />
+                {showSideBarChat && <LazySideBarChat />}
 
-            <Route path={'/book-dj'} exact component={RequestFormPopup} />
-        </div>
+                <Route path={'*/get-pro'} exact component={LazyGetProfessional} />
+
+                <Route path={'/book-dj'} exact component={RequestFormPopup} />
+            </div>
+        </>
     );
 };
 

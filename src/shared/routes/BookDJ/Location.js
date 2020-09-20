@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { useServerContext } from 'components/hooks/useServerContext';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
+import SmartNavigation from 'components/Navigation';
 import defaultImage from '../../assets/images/cities/default.png';
 import BookDJForm from './BookDJForm';
 import { HeroCard } from './Components';
@@ -26,7 +27,6 @@ const Location = ({ translate, activeLocation, environment, match }) => {
         <>
             <Helmet>
                 <title>{siteTitle + ' | Cueup'}</title>
-                <body className="book-dj-location white-theme" />
                 <meta name="description" content={siteDescription} />
 
                 <meta property="og:title" content={siteTitle + ' | Cueup'} />
@@ -44,7 +44,7 @@ const Location = ({ translate, activeLocation, environment, match }) => {
                 <meta name="geo.placename" content={title} />
                 <meta name="geo.region" content={title} />
             </Helmet>
-
+            <SmartNavigation dark relative />
             <Hero activeLocation={activeLocation} />
         </>
     );

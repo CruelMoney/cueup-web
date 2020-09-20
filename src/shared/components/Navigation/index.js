@@ -7,7 +7,6 @@ import { appRoutes } from 'constants/locales/appRoutes.ts';
 import Navlink from '../common/Navlink';
 import Login from '../common/Login';
 import Logo from '../common/Logo';
-import BreadCrumbs from '../BreadCrumbs';
 import EmailVerifier from '../EmailVerifier';
 import { ME } from '../gql';
 import Popup from '../common/Popup';
@@ -16,7 +15,7 @@ import { LoadingIndicator, Container } from '../Blocks';
 import DesktopMenu from './DesktopMenu';
 import MobileMenu from './MobileMenu';
 
-const Menu = () => {
+const Menu = ({ dark, relative }) => {
     const { t } = useTranslation();
     const [loginExpanded, setLoginExpanded] = useState(false);
 
@@ -37,7 +36,11 @@ const Menu = () => {
     const isDJ = user?.appMetadata?.roles?.includes('DJ');
 
     return (
-        <div className="menu-wrapper">
+        <div
+            className={
+                'menu-wrapper' + (dark ? ' white-theme' : '') + (relative ? ' relative' : '')
+            }
+        >
             <EmailVerifier onVerified={() => setLoginExpanded(true)} />
             <InstagramConnect />
 
@@ -48,7 +51,6 @@ const Menu = () => {
                             <Navlink to={t(appRoutes.home)}>
                                 <Logo />
                             </Navlink>
-                            <BreadCrumbs />
                         </div>
 
                         <MobileMenu />
