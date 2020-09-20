@@ -93,7 +93,7 @@ const SimpleMap = ({
         if (radius === 0) {
             return 10;
         }
-        const scale = radius / 500;
+        const scale = radius / 800;
         const zoomLevel = 15 - Math.log(scale) / Math.log(2);
         return parseInt(zoomLevel, 10);
     };
