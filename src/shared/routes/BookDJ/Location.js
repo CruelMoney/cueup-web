@@ -35,6 +35,9 @@ const Location = ({ translate, activeLocation, environment, match }) => {
     const siteTitle = `${title}'s best DJs · Cueup`;
     const thumb = environment.CALLBACK_DOMAIN + (activeLocation.image || defaultImage);
 
+    const topDjs = [];
+    const checkAvailability = topDjs.length < 3;
+
     return (
         <>
             <Helmet>
@@ -57,7 +60,11 @@ const Location = ({ translate, activeLocation, environment, match }) => {
                 <meta name="geo.region" content={title} />
             </Helmet>
             <SmartNavigation dark relative />
-            <Hero activeLocation={activeLocation} siteDescription={siteDescription} />
+            <Hero
+                activeLocation={activeLocation}
+                siteDescription={siteDescription}
+                checkAvailability={checkAvailability}
+            />
             <Occasions />
             <PopularRequests activeLocation={activeLocation} />
             <Footer
@@ -74,7 +81,7 @@ const Location = ({ translate, activeLocation, environment, match }) => {
     );
 };
 
-const Hero = ({ activeLocation, siteDescription }) => {
+const Hero = ({ activeLocation, siteDescription, checkAvailability }) => {
     const { name, coords, city } = activeLocation;
     return (
         <Container>
@@ -85,7 +92,7 @@ const Hero = ({ activeLocation, siteDescription }) => {
                         {name}
                     </PageTitle>
                     <BodySmall style={{ marginBottom: '0.7em' }}>{siteDescription}</BodySmall>
-                    <BookDJForm />
+                    <BookDJForm checkAvailability={checkAvailability} />
                 </HeroCard>
                 {coords && (
                     <MapWrapper>

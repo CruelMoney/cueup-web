@@ -7,7 +7,7 @@ import { Input } from 'components/FormComponents';
 import { CTAButton } from 'components/CTAButton';
 import { StyledLabelComponent } from './Components';
 
-const BookDJForm = (props) => {
+const BookDJForm = ({ checkAvailability }) => {
     const locationRef = useRef();
     const dateRef = useRef();
     const { registerValidation, unregisterValidation, runValidations, form, setValue } = useForm();
@@ -75,7 +75,7 @@ const BookDJForm = (props) => {
                 // loading={loading}
                 // onClick={submit}
             >
-                Find DJs
+                {checkAvailability ? 'Check availability' : 'Find DJs'}
             </CustomCTAButton>
         </form>
     );
@@ -91,6 +91,7 @@ const CustomCTAButton = styled(CTAButton)`
     padding: 0;
     font-size: 18px;
     font-weight: 600;
+    letter-spacing: 0;
 `;
 
 export default BookDJForm;

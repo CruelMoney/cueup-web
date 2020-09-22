@@ -57,7 +57,7 @@ const CTA = styled.button`
     font-weight: 700;
     font-size: 15px;
     color: #ffffff !important;
-    letter-spacing: 1.2px;
+    letter-spacing: 0.05em;
     text-align: left;
     padding-left: 24px;
     display: flex;
