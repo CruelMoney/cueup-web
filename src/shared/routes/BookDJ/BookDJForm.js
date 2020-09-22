@@ -7,11 +7,12 @@ import { Input } from 'components/FormComponents';
 import { CTAButton } from 'components/CTAButton';
 import { StyledLabelComponent } from './Components';
 
-const BookDJForm = ({ checkAvailability }) => {
+const BookDJForm = ({ checkAvailability, activeLocation }) => {
     const locationRef = useRef();
     const dateRef = useRef();
     const { registerValidation, unregisterValidation, runValidations, form, setValue } = useForm();
 
+    const { iso2 } = activeLocation;
     return (
         <form>
             <StyledLabelComponent>
@@ -28,6 +29,7 @@ const BookDJForm = ({ checkAvailability }) => {
                         position: 'initial',
                         marginBottom: 0,
                     }}
+                    countries={iso2 ? [iso2] : null}
                     onSave={(locationName) => setValue({ locationName })}
                     defaultValue={form.locationName}
                 />

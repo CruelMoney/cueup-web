@@ -30,7 +30,7 @@ const Location = ({ translate, activeLocation, environment, match }) => {
 
     const coordinates = activeLocation.coords;
 
-    const siteDescription = `Find and book the best DJs near ${title}.`;
+    const siteDescription = `Find and book the best DJs in ${title}.`;
 
     const siteTitle = `${title}'s best DJs · Cueup`;
     const thumb = environment.CALLBACK_DOMAIN + (activeLocation.image || defaultImage);
@@ -92,7 +92,10 @@ const Hero = ({ activeLocation, siteDescription, checkAvailability }) => {
                         {name}
                     </PageTitle>
                     <BodySmall style={{ marginBottom: '0.7em' }}>{siteDescription}</BodySmall>
-                    <BookDJForm checkAvailability={checkAvailability} />
+                    <BookDJForm
+                        checkAvailability={checkAvailability}
+                        activeLocation={activeLocation}
+                    />
                 </HeroCard>
                 {coords && (
                     <MapWrapper>

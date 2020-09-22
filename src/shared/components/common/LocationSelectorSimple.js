@@ -29,6 +29,8 @@ const LocationSelector = forwardRef(({ placeholder, countries = [], ...props }, 
     const updateSuggestions = (predictions, _status) => {
         const li = [];
 
+        console.log({ countries, predictions, _status });
+
         if (predictions) {
             predictions.forEach((prediction) => {
                 li.push(prediction.description);

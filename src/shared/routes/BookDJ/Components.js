@@ -19,6 +19,7 @@ export const StyledLabelComponent = styled.div`
     margin-top: 6px;
     display: flex;
     align-items: center;
+    position: relative;
     label,
     ${Label} {
         flex: 1;
@@ -49,5 +50,19 @@ export const StyledLabelComponent = styled.div`
         width: 1px;
         background-color: #e9ecf0;
         height: 40px;
+    }
+    ul {
+        top: -12px;
+        left: -12px;
+        right: -12px;
+        padding-top: 4em;
+        box-shadow: none;
+        border: 1px solid #e9ecf0;
+        border-radius: 8px;
+    }
+    .powered-by-google {
+        top: 0.7em !important;
+        display: flex;
+        right: 0.7em !important;
     }
 `;

@@ -67,6 +67,7 @@ const addLocationData = async (app) => {
                 radius: 25000, // set based on bounding box
                 cities: countryResult,
                 bounds,
+                iso2: countryResult[0]?.iso2,
             };
         } else {
             const result = await db.get(
@@ -77,7 +78,7 @@ const addLocationData = async (app) => {
                         `
             );
             if (result) {
-                const { population, city, country: countryName, lat, lng } = result;
+                const { population, city, country: countryName, lat, lng, iso2 } = result;
                 const radius = (Math.sqrt(population) / Math.log2(population)) * 500; // set based on population
 
                 res.locals.activeLocation = {
@@ -89,6 +90,7 @@ const addLocationData = async (app) => {
                         lng: parseFloat(lng),
                     },
                     radius,
+                    iso2,
                 };
             }
         }
