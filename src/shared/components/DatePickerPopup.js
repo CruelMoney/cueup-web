@@ -23,6 +23,7 @@ const DatePickerPopup = forwardRef(
             disabled,
             buttonText,
             removable,
+            showInside,
             ...props
         },
         forwardRef
@@ -84,25 +85,51 @@ const DatePickerPopup = forwardRef(
                     removable={selectedDate && removable}
                     {...props}
                 />
-                <Popup
-                    width="380px"
-                    showing={showing}
-                    onClickOutside={() => {
-                        setShowing(false);
-                        runValidation(selectedDate);
-                    }}
-                >
-                    <DatePicker
-                        dark
-                        initialDate={initialDate}
-                        minDate={minDate}
-                        maxDate={maxDate}
-                        handleChange={save}
-                        showMonthDropdown={showMonthDropdown}
-                        showYearDropdown={showYearDropdown}
-                        dropdownMode="select"
-                    />
-                </Popup>
+                {showInside && showing ? (
+                    <div
+                        style={{
+                            position: 'absolute',
+                            zIndex: 99,
+                            backgroundColor: '#fff',
+                            top: '0',
+                            paddingTop: '30px',
+                            left: '-22px',
+                            right: '-22px',
+                            transform: 'translateY(-50%)',
+                        }}
+                    >
+                        <DatePicker
+                            dark
+                            initialDate={initialDate}
+                            minDate={minDate}
+                            maxDate={maxDate}
+                            handleChange={save}
+                            showMonthDropdown={showMonthDropdown}
+                            showYearDropdown={showYearDropdown}
+                            dropdownMode="select"
+                        />
+                    </div>
+                ) : (
+                    <Popup
+                        width="380px"
+                        showing={showing}
+                        onClickOutside={() => {
+                            setShowing(false);
+                            runValidation(selectedDate);
+                        }}
+                    >
+                        <DatePicker
+                            dark
+                            initialDate={initialDate}
+                            minDate={minDate}
+                            maxDate={maxDate}
+                            handleChange={save}
+                            showMonthDropdown={showMonthDropdown}
+                            showYearDropdown={showYearDropdown}
+                            dropdownMode="select"
+                        />
+                    </Popup>
+                )}
             </>
         );
     }

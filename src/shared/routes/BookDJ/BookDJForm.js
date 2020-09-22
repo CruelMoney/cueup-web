@@ -14,7 +14,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
 
     const { iso2 } = activeLocation;
     return (
-        <form>
+        <>
             <StyledLabelComponent>
                 <LocationSelector
                     data-cy={'location-input'}
@@ -37,6 +37,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
 
             <StyledLabelComponent>
                 <DatePickerPopup
+                    showInside
                     data-cy={'date-input'}
                     ref={dateRef}
                     label="WHEN"
@@ -48,26 +49,32 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
                 />
                 <span className="divider" />
                 <Input
-                    blurOnEnter={false}
-                    label="BUDGET"
-                    placeholder="Add budget"
-                    onChange={(budget) => setValue({ budget })}
+                    label="GUESTS"
+                    placeholder="Add guest count"
+                    value={form.guests}
+                    onChange={(guests) => {
+                        if (!isNaN(guests)) {
+                            setValue({ guests });
+                        }
+                    }}
                 />
             </StyledLabelComponent>
 
             <StyledLabelComponent>
                 <Input
-                    blurOnEnter={false}
-                    label="SPEAKERS"
-                    placeholder="Add speakers"
-                    onChange={(speakers) => setValue({ speakers })}
+                    className={form.speakers ? '' : 'empty'}
+                    label="SOUND SYSTEM"
+                    type="button"
+                    buttonText={form.speakers ? 'Yes' : 'Add sound system'}
+                    onClick={() => setValue({ speakers: !form.speakers })}
                 />
                 <span className="divider" />
                 <Input
-                    blurOnEnter={false}
+                    className={form.lights ? '' : 'empty'}
                     label="LIGHTS"
-                    placeholder="Add lights"
-                    onChange={(lights) => setValue({ lights })}
+                    type="button"
+                    buttonText={form.lights ? 'Yes' : 'Add lights'}
+                    onClick={() => setValue({ lights: !form.lights })}
                 />
             </StyledLabelComponent>
             <CustomCTAButton
@@ -79,7 +86,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
             >
                 {checkAvailability ? 'Check availability' : 'Find DJs'}
             </CustomCTAButton>
-        </form>
+        </>
     );
 };
 
