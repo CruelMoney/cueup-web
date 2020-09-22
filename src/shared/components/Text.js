@@ -80,7 +80,7 @@ export const BodyBold = styled(Body)`
 `;
 
 export const BodySmall = styled.p`
-    font-size: 15px;
+    font-size: 16px;
     color: #4d6480;
     line-height: 22.5px;
 `;
@@ -161,6 +161,14 @@ export const HeaderTitle = styled.h1`
 export const PageTitle = styled.h1`
     font-size: 42px;
     font-weight: bold;
+    white-space: pre-wrap;
+    ${({ small }) =>
+        small
+            ? css`
+                  font-size: 32px;
+                  margin-bottom: 0.1em;
+              `
+            : ''}
     > span {
         display: block;
         font-weight: 500;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Label } from 'components/FormComponents';
 
 export const HeroCard = styled.div`
     padding: 1.5em;
@@ -7,7 +8,46 @@ export const HeroCard = styled.div`
     box-shadow: 0 6px 21px 0 rgba(18, 43, 72, 0.2);
     position: relative;
     z-index: 1;
-    width: 420px;
+    width: 370px;
     top: 50%;
     transform: translateY(-50%);
+`;
+
+export const StyledLabelComponent = styled.div`
+    border: 1px solid #e9ecf0;
+    border-radius: 8px;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    label,
+    ${Label} {
+        flex: 1;
+        min-width: 0;
+        color: #32325d;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        font-size: 10px;
+        margin-left: 9px;
+        margin-top: 8px;
+        margin-bottom: 0px;
+
+        > input,
+        > button {
+            font-size: 1.6em;
+            margin: 0 -9px;
+            margin-top: -4px;
+            background-color: transparent;
+            padding-left: 0px;
+            text-align: left;
+            justify-content: flex-start;
+        }
+        .empty {
+            color: #98a4b3;
+        }
+    }
+    .divider {
+        width: 1px;
+        background-color: #e9ecf0;
+        height: 40px;
+    }
 `;

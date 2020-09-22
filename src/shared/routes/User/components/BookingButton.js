@@ -5,7 +5,7 @@ import queryString from 'query-string';
 import { appRoutes, userRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import { useAppState } from 'components/hooks/useAppState';
-import { CTAButton } from '../../../components/Sidebar';
+import { CTAButton } from 'components/CTAButton';
 import { GIG } from '../gql';
 import { LoadingIndicator } from '../../../components/Blocks';
 

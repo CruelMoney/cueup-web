@@ -7,7 +7,7 @@ import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
 import SmartNavigation from 'components/Navigation';
 import { Container, RowMobileCol } from 'components/Blocks';
-import { Body, H2, H3, PageTitle } from 'components/Text';
+import { Body, BodySmall, H2, H3, PageTitle } from 'components/Text';
 import GracefullImage from 'components/GracefullImage';
 import Footer from 'components/common/Footer';
 import defaultImage from '../../assets/images/cities/default.png';
@@ -26,31 +26,27 @@ import { ReactComponent as VinylIcon } from './assets/icons/vinyl.svg';
 import { ReactComponent as Top40Icon } from './assets/icons/top40.svg';
 
 const Location = ({ translate, activeLocation, environment, match }) => {
-    const { location } = match.params;
-
     const title = activeLocation.name;
 
     const coordinates = activeLocation.coords;
 
-    const siteDescription = translate('location:description', {
-        location: activeLocation.name,
-    });
+    const siteDescription = `Find and book the best DJs near ${title}.`;
 
-    const siteTitle = translate('location:title', { location: title });
+    const siteTitle = `${title}'s best DJs · Cueup`;
     const thumb = environment.CALLBACK_DOMAIN + (activeLocation.image || defaultImage);
 
     return (
         <>
             <Helmet>
-                <title>{siteTitle + ' | Cueup'}</title>
+                <title>{siteTitle}</title>
                 <meta name="description" content={siteDescription} />
 
-                <meta property="og:title" content={siteTitle + ' | Cueup'} />
+                <meta property="og:title" content={siteTitle} />
                 <meta property="og:type" content={'website'} />
                 <meta property="og:description" content={siteDescription} />
                 <meta property="og:image" content={thumb} />
 
-                <meta name="twitter:title" content={siteTitle + ' | Cueup'} />
+                <meta name="twitter:title" content={siteTitle} />
                 <meta name="twitter:description" content={siteDescription} />
                 <meta name="twitter:image" content={thumb} />
 
@@ -61,7 +57,7 @@ const Location = ({ translate, activeLocation, environment, match }) => {
                 <meta name="geo.region" content={title} />
             </Helmet>
             <SmartNavigation dark relative />
-            <Hero activeLocation={activeLocation} />
+            <Hero activeLocation={activeLocation} siteDescription={siteDescription} />
             <Occasions />
             <PopularRequests activeLocation={activeLocation} />
             <Footer
@@ -78,17 +74,17 @@ const Location = ({ translate, activeLocation, environment, match }) => {
     );
 };
 
-const Hero = ({ activeLocation }) => {
+const Hero = ({ activeLocation, siteDescription }) => {
     const { name, coords, city } = activeLocation;
     return (
         <Container>
             <HeroSection>
                 <HeroCard>
-                    <PageTitle>
+                    <PageTitle small>
                         <span>Find DJs in</span>
                         {name}
                     </PageTitle>
-                    <Body>Find and book the best DJs near {name}.</Body>
+                    <BodySmall style={{ marginBottom: '0.7em' }}>{siteDescription}</BodySmall>
                     <BookDJForm />
                 </HeroCard>
                 {coords && (
