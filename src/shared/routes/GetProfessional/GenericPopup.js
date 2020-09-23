@@ -195,11 +195,11 @@ const Plans = ({ setTier, selectedTier }) => {
 
     return (
         <>
-            <TopText style={{ marginBottom: 24, textAlign: 'center' }}>
+            {/* <TopText style={{ marginBottom: 24, textAlign: 'center' }}>
                 <Body style={{ fontSize: '1em' }}>Launch offer ends in</Body>
                 <CountdownTimer />
                 <Body style={{ fontSize: '1em' }}>Subscribe now and get this price forever.</Body>
-            </TopText>
+            </TopText> */}
 
             {loading && (
                 <>
