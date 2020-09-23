@@ -18,7 +18,7 @@
             "event-rider": "Speakers and light",
             "event-rider-description": "Do you need speakers and lights for the event?",
             "event-genres": "Music genres and style",
-            "event-genres-description": "Choose what kind of music do you need, or let us choose suitable music genres based on your other selections and event description."
+            "event-genres-description": "What kind of music do your want?"
         },
         "step-3": {
             "header": "Thanks! <span>Please tell us a bit more.</span>",

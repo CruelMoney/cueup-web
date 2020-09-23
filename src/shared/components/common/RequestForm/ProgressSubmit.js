@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const ProgressWrapper = styled.div`
@@ -7,7 +7,6 @@ const ProgressWrapper = styled.div`
     width: 100px;
     justify-content: space-around;
     margin: 0 auto;
-    margin-bottom: 12px;
 `;
 
 const Step = styled.span`
@@ -20,6 +19,10 @@ const Step = styled.span`
 
 const ProgressSubmit = ({ currentStep, setProgress }) => {
     const steps = [0, 1, 2];
+
+    if (currentStep === 3) {
+        return null;
+    }
 
     return (
         <ProgressWrapper>

@@ -21,7 +21,7 @@ import Step3 from './Step3';
 import Step4 from './Step4';
 import content from './content.json';
 
-const MainForm = ({ initialCity, countries, transparent, noPadding }) => {
+const MainForm = ({ initialCity, countries, transparent, fromNewSearch }) => {
     const { translate } = useNamespaceContent(content, 'requestForm');
     const history = useHistory();
     const routeLocation = useLocation();
@@ -101,12 +101,18 @@ const MainForm = ({ initialCity, countries, transparent, noPadding }) => {
         <div className={'request-form'} id="book-dj">
             <div className="request-columns">
                 {transparent && activeStep === 1 ? null : (
-                    <Wrapper style={{ padding: 0, marginBottom: transparent ? '0px' : '14px' }}>
+                    <Wrapper
+                        style={{
+                            padding: 0,
+                            marginBottom: '12px',
+                            marginTop: transparent ? '12px' : '0',
+                        }}
+                    >
                         <Progress setProgress={setProgress} currentStep={activeStep - 1} />
                     </Wrapper>
                 )}
                 <Wrapper>
-                    <RequestCard noPadding={noPadding} style={transparent ? null : extraStyle}>
+                    <RequestCard noPadding={fromNewSearch} style={transparent ? null : extraStyle}>
                         {showLogin && (
                             <>
                                 <TitleClean center>Login</TitleClean>
@@ -141,6 +147,7 @@ const MainForm = ({ initialCity, countries, transparent, noPadding }) => {
                                 handleChange={handleChange}
                                 runValidations={runValidations}
                                 registerValidation={registerValidation}
+                                fromNewSearch={fromNewSearch}
                                 unregisterValidation={unregisterValidation}
                                 next={next}
                                 back={back}
@@ -152,6 +159,7 @@ const MainForm = ({ initialCity, countries, transparent, noPadding }) => {
                                 translate={translate}
                                 form={form}
                                 handleChange={handleChange}
+                                fromNewSearch={fromNewSearch}
                                 runValidations={runValidations}
                                 registerValidation={registerValidation}
                                 unregisterValidation={unregisterValidation}
@@ -192,8 +200,8 @@ const MainForm = ({ initialCity, countries, transparent, noPadding }) => {
                     <BodySmall
                         style={{
                             textAlign: 'center',
-                            marginBottom: '12px',
-                            marginTop: transparent ? '-12px' : '12px',
+                            marginBottom: fromNewSearch ? 0 : '12px',
+                            marginTop: !fromNewSearch && transparent ? '-12px' : '12px',
                         }}
                         className="terms_link"
                         dangerouslySetInnerHTML={{ __html: translate('terms-message-event') }}

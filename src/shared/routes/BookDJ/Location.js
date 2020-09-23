@@ -91,7 +91,11 @@ const Hero = ({ activeLocation, siteDescription, checkAvailability }) => {
                     <Switch>
                         <Route
                             path="*/form"
-                            render={() => <LazyRequestForm transparent noPadding />}
+                            render={() => (
+                                <div style={{ marginTop: '-12px' }}>
+                                    <LazyRequestForm transparent fromNewSearch />
+                                </div>
+                            )}
                         />
 
                         <div style={{ width: '350px' }}>

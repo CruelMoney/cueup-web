@@ -15,6 +15,7 @@ const Step3 = ({
     handleChange,
     registerValidation,
     unregisterValidation,
+    fromNewSearch,
 }) => {
     return (
         <form>
@@ -37,39 +38,43 @@ const Step3 = ({
                 />
             </RequestSection>
 
-            <RequestSection>
-                <Label style={{ marginBottom: '12px', display: 'block' }}>
-                    {translate('requestForm:step-3.guests')}
-                </Label>
-                <div>
-                    <Slider
-                        name="guests"
-                        range={{
-                            'min': 1,
-                            '50%': 100,
-                            '80%': 500,
-                            'max': 1000,
+            {!fromNewSearch && (
+                <RequestSection>
+                    <Label style={{ marginBottom: '12px', display: 'block' }}>
+                        {translate('requestForm:step-3.guests')}
+                    </Label>
+                    <div>
+                        <Slider
+                            name="guests"
+                            range={{
+                                'min': 1,
+                                '50%': 100,
+                                '80%': 500,
+                                'max': 1000,
+                            }}
+                            step={1}
+                            connect="lower"
+                            value={[form.guestsCount || 100]}
+                            onChange={([guestsCount]) => handleChange({ guestsCount })}
+                            format={wNumb({
+                                decimals: 0,
+                            })}
+                        />
+                    </div>
+                    <BodySmall
+                        style={{ marginTop: '15px' }}
+                        dangerouslySetInnerHTML={{
+                            __html: translate('requestForm:step-3.guests-description', {
+                                prefix:
+                                    form.guestsCount === 1000
+                                        ? translate('over')
+                                        : translate('around'),
+                                amount: form.guestsCount,
+                            }),
                         }}
-                        step={1}
-                        connect="lower"
-                        value={[form.guestsCount || 100]}
-                        onChange={([guestsCount]) => handleChange({ guestsCount })}
-                        format={wNumb({
-                            decimals: 0,
-                        })}
                     />
-                </div>
-                <BodySmall
-                    style={{ marginTop: '15px' }}
-                    dangerouslySetInnerHTML={{
-                        __html: translate('requestForm:step-3.guests-description', {
-                            prefix:
-                                form.guestsCount === 1000 ? translate('over') : translate('around'),
-                            amount: form.guestsCount,
-                        }),
-                    }}
-                />
-            </RequestSection>
+                </RequestSection>
+            )}
             <RequestSection>
                 <Input
                     type="text-area"
@@ -91,7 +96,7 @@ const Step3 = ({
                     {translate('back')}
                 </TeritaryButton>
                 <PrimaryButton type="button" onClick={() => next()}>
-                    {translate('continue')}
+                    {translate('continue') + ' 2/3'}
                 </PrimaryButton>
             </Row>
         </form>

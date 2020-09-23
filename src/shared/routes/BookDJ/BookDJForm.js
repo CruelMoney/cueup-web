@@ -15,7 +15,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
     const history = useHistory();
     const locationRef = useRef();
     const dateRef = useRef();
-    const { registerValidation, unregisterValidation, runValidations, form, setValue } = useForm();
+    const { runValidations, form, setValue } = useForm();
 
     const { iso2 } = activeLocation;
 
@@ -50,6 +50,9 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
                             date,
                             timeZoneId,
                             location,
+                            speakers: !!form.speakers,
+                            lights: !!form.lights,
+                            guestsCount: form.guestsCount,
                         },
                     });
                 }
@@ -98,7 +101,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
                     placeholder="Add guest count"
                     value={form.guests}
                     onChange={(guests) => {
-                        setValue({ guests: guests.replace(/\D/g, '') });
+                        setValue({ guestsCount: guests.replace(/\D/g, '') });
                     }}
                 />
             </StyledLabelComponent>

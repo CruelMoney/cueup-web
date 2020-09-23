@@ -18,6 +18,7 @@ const Step2 = ({
     handleChange,
     registerValidation,
     unregisterValidation,
+    fromNewSearch,
 }) => {
     const genreErrorRef = useRef();
 
@@ -56,28 +57,30 @@ const Step2 = ({
                     <BodySmall>{translate('requestForm:step-2.event-name-description')}</BodySmall>
                 </Input>
             </RequestSection>
-            <RequestSection>
-                <InputRow small>
-                    <LabelHalf>
-                        {translate('speakers')}
-                        <ToggleButton
-                            onClick={(speakers) => handleChange({ speakers })}
-                            active={form.speakers}
-                            label={translate('Not required')}
-                            labelToggled={translate('Required')}
-                        />
-                    </LabelHalf>
-                    <LabelHalf>
-                        {translate('lights')}
-                        <ToggleButton
-                            onClick={(lights) => handleChange({ lights })}
-                            label={translate('Not required')}
-                            labelToggled={translate('Required')}
-                            active={form.lights}
-                        />
-                    </LabelHalf>
-                </InputRow>
-            </RequestSection>
+            {!fromNewSearch && (
+                <RequestSection>
+                    <InputRow small>
+                        <LabelHalf>
+                            {translate('speakers')}
+                            <ToggleButton
+                                onClick={(speakers) => handleChange({ speakers })}
+                                active={form.speakers}
+                                label={translate('Not required')}
+                                labelToggled={translate('Required')}
+                            />
+                        </LabelHalf>
+                        <LabelHalf>
+                            {translate('lights')}
+                            <ToggleButton
+                                onClick={(lights) => handleChange({ lights })}
+                                label={translate('Not required')}
+                                labelToggled={translate('Required')}
+                                active={form.lights}
+                            />
+                        </LabelHalf>
+                    </InputRow>
+                </RequestSection>
+            )}
             <RequestSection>
                 <Label>{translate('requestForm:step-2.event-genres')} </Label>
                 <BodySmall style={{ marginBottom: '10px' }}>
@@ -112,7 +115,7 @@ const Step2 = ({
                     {translate('back')}
                 </TeritaryButton>
                 <PrimaryButton type="button" onClick={() => next()}>
-                    {translate('continue')}
+                    {translate('continue') + ' 1/3'}
                 </PrimaryButton>
             </Row>
         </form>
