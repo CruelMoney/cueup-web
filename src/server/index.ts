@@ -38,7 +38,11 @@ addSocialImages(app);
 // lines to use the express.static middleware to serve assets for production (not recommended!)
 app.use('/', express.static(path.join(paths.clientBuild), { maxAge: '365 days' }));
 
-app.use(cors());
+app.use(
+    cors({
+        origin: 'http://localhost:8500',
+    })
+);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

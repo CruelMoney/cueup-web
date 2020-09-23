@@ -115,15 +115,15 @@ const MainForm = ({ initialCity, countries, transparent, fromNewSearch }) => {
                     <RequestCard noPadding={fromNewSearch} style={transparent ? null : extraStyle}>
                         {showLogin && (
                             <>
-                                <TitleClean center>Login</TitleClean>
-                                <BodySmall>{translate('email-exists-message')}</BodySmall>
+                                <BodySmall style={{ marginBottom: 12 }}>
+                                    {translate('email-exists-message')}
+                                </BodySmall>
                                 <Login
                                     redirect={false}
                                     onLogin={() => {
                                         setShowLogin(false);
                                     }}
                                 />
-                                <Hr margin />
                                 <LinkButton onClick={() => setShowLogin(false)}>Back</LinkButton>
                             </>
                         )}
@@ -196,17 +196,6 @@ const MainForm = ({ initialCity, countries, transparent, fromNewSearch }) => {
                     </RequestCard>
                     {!transparent && <CardShadow />}
                 </Wrapper>
-                {activeStep === 4 && (
-                    <BodySmall
-                        style={{
-                            textAlign: 'center',
-                            marginBottom: fromNewSearch ? 0 : '12px',
-                            marginTop: !fromNewSearch && transparent ? '-12px' : '12px',
-                        }}
-                        className="terms_link"
-                        dangerouslySetInnerHTML={{ __html: translate('terms-message-event') }}
-                    />
-                )}
             </div>
         </div>
     );
