@@ -8,9 +8,9 @@ export const HeroCard = styled.div`
     box-shadow: 0 6px 21px 0 rgba(18, 43, 72, 0.2);
     position: relative;
     z-index: 1;
-    width: 370px;
-    top: 50%;
-    transform: translateY(-50%);
+    max-width: 450px;
+    display: inline-block;
+    margin: auto 0;
 `;
 
 export const StyledLabelComponent = styled.div`

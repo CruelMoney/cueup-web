@@ -1,18 +1,63 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import styled from 'styled-components';
+import { Route, Switch, useHistory, useLocation } from 'react-router';
 import LocationSelector from 'components/common/LocationSelectorSimple';
 import { useForm } from 'components/hooks/useForm';
 import DatePickerPopup from 'components/DatePickerPopup';
 import { Input } from 'components/FormComponents';
 import { CTAButton } from 'components/CTAButton';
+import { useCheckDjAvailability } from 'actions/EventActions';
+import LazyRequestForm from 'components/common/RequestForm';
 import { StyledLabelComponent } from './Components';
 
 const BookDJForm = ({ checkAvailability, activeLocation }) => {
+    const routeLocation = useLocation();
+    const history = useHistory();
     const locationRef = useRef();
     const dateRef = useRef();
     const { registerValidation, unregisterValidation, runValidations, form, setValue } = useForm();
 
     const { iso2 } = activeLocation;
+
+    const [check, { loading, error }] = useCheckDjAvailability();
+
+    const submit = useCallback(
+        async (e) => {
+            if (e) {
+                e.preventDefault();
+            }
+
+            if (!form.locationName) {
+                locationRef.current.focus();
+                return;
+            }
+            if (!form.date) {
+                dateRef.current.focus();
+                return;
+            }
+
+            const errors = runValidations();
+            if (errors.length === 0) {
+                await LazyRequestForm.load();
+                const { result, date, timeZoneId, location } = await check(form);
+
+                if (result === true) {
+                    const route = routeLocation.pathname + '/form';
+                    history.push({
+                        pathname: route,
+                        state: {
+                            activeStep: 2,
+                            date,
+                            timeZoneId,
+                            location,
+                        },
+                    });
+                }
+            }
+        },
+        [check, form, history, routeLocation.pathname, runValidations]
+    );
+
     return (
         <>
             <StyledLabelComponent>
@@ -75,13 +120,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
                     onClick={() => setValue({ lights: !form.lights })}
                 />
             </StyledLabelComponent>
-            <CustomCTAButton
-                noMargin
-                noIcon
-                type="submit"
-                // loading={loading}
-                // onClick={submit}
-            >
+            <CustomCTAButton noMargin noIcon type="submit" loading={loading} onClick={submit}>
                 {checkAvailability ? 'Check availability' : 'Find DJs'}
             </CustomCTAButton>
         </>

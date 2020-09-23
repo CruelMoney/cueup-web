@@ -201,7 +201,7 @@ const SimpleMap = ({
 };
 
 const Wrapper = (props) => {
-    return <div style={{ height: props.height }}>{props.children}</div>;
+    return <div style={{ height: '100%' }}>{props.children}</div>;
 };
 
 const MapLoader = ({ ...props }) => {

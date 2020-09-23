@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components';
 import { useServerContext } from 'components/hooks/useServerContext';
@@ -10,6 +10,7 @@ import { Container, RowMobileCol } from 'components/Blocks';
 import { Body, BodySmall, H2, H3, PageTitle } from 'components/Text';
 import GracefullImage from 'components/GracefullImage';
 import Footer from 'components/common/Footer';
+import LazyRequestForm from 'components/common/RequestForm';
 import defaultImage from '../../assets/images/cities/default.png';
 import Map from '../../components/common/Map';
 import BookDJForm from './BookDJForm';
@@ -87,15 +88,26 @@ const Hero = ({ activeLocation, siteDescription, checkAvailability }) => {
         <Container>
             <HeroSection>
                 <HeroCard>
-                    <PageTitle small>
-                        <span>Find DJs in</span>
-                        {name}
-                    </PageTitle>
-                    <BodySmall style={{ marginBottom: '0.7em' }}>{siteDescription}</BodySmall>
-                    <BookDJForm
-                        checkAvailability={checkAvailability}
-                        activeLocation={activeLocation}
-                    />
+                    <Switch>
+                        <Route
+                            path="*/form"
+                            render={() => <LazyRequestForm transparent noPadding />}
+                        />
+
+                        <div style={{ width: '350px' }}>
+                            <PageTitle small>
+                                <span>Find DJs in</span>
+                                {name}
+                            </PageTitle>
+                            <BodySmall style={{ marginBottom: '0.7em' }}>
+                                {siteDescription}
+                            </BodySmall>
+                            <BookDJForm
+                                checkAvailability={checkAvailability}
+                                activeLocation={activeLocation}
+                            />
+                        </div>
+                    </Switch>
                 </HeroCard>
                 {coords && (
                     <MapWrapper>
@@ -104,7 +116,7 @@ const Hero = ({ activeLocation, siteDescription, checkAvailability }) => {
                             hideRoads={true}
                             radius={activeLocation.radius}
                             defaultCenter={coords}
-                            height={470}
+                            height={'100%'}
                             value={coords}
                             editable={false}
                             radiusName="playingRadius"
@@ -348,7 +360,8 @@ const MapWrapper = styled.div`
 `;
 
 const HeroSection = styled(CustomSection)`
-    height: 470px;
+    min-height: 470px;
+    display: flex;
 `;
 
 export default DataWrapper;

@@ -21,7 +21,7 @@ import Step3 from './Step3';
 import Step4 from './Step4';
 import content from './content.json';
 
-const MainForm = ({ initialCity, countries, transparent }) => {
+const MainForm = ({ initialCity, countries, transparent, noPadding }) => {
     const { translate } = useNamespaceContent(content, 'requestForm');
     const history = useHistory();
     const routeLocation = useLocation();
@@ -98,7 +98,7 @@ const MainForm = ({ initialCity, countries, transparent }) => {
         backgroundColor: '#fff',
     };
     return (
-        <div className="request-form" id="book-dj">
+        <div className={'request-form'} id="book-dj">
             <div className="request-columns">
                 {transparent && activeStep === 1 ? null : (
                     <Wrapper style={{ padding: 0, marginBottom: transparent ? '0px' : '14px' }}>
@@ -106,7 +106,7 @@ const MainForm = ({ initialCity, countries, transparent }) => {
                     </Wrapper>
                 )}
                 <Wrapper>
-                    <RequestCard style={transparent ? null : extraStyle}>
+                    <RequestCard noPadding={noPadding} style={transparent ? null : extraStyle}>
                         {showLogin && (
                             <>
                                 <TitleClean center>Login</TitleClean>
@@ -216,7 +216,7 @@ const Wrapper = styled(Col)`
 `;
 
 const RequestCard = styled(Card)`
-    padding: 24px 30px;
+    padding: ${({ noPadding }) => (noPadding ? '0' : '24px 30px')};
     background: transparent;
 
     h3 {
