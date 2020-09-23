@@ -53,9 +53,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
                     placeholder="Add guest count"
                     value={form.guests}
                     onChange={(guests) => {
-                        if (!isNaN(guests)) {
-                            setValue({ guests });
-                        }
+                        setValue({ guests: guests.replace(/\D/g, '') });
                     }}
                 />
             </StyledLabelComponent>
