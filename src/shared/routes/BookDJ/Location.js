@@ -27,6 +27,7 @@ import { ReactComponent as SmokeIcon } from './assets/icons/smoke.svg';
 import { ReactComponent as SpeakerIcon } from './assets/icons/speaker.svg';
 import { ReactComponent as VinylIcon } from './assets/icons/vinyl.svg';
 import { ReactComponent as Top40Icon } from './assets/icons/top40.svg';
+import heroImg from './assets/hero_1.jpg';
 import { SEARCH } from './gql';
 
 const Location = ({ translate, activeLocation, environment, topDjs }) => {
@@ -67,6 +68,7 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
             </Helmet>
             <SmartNavigation dark relative />
             <Hero
+                image={heroImg}
                 activeLocation={activeLocation}
                 siteDescription={siteDescription}
                 checkAvailability={checkAvailability}
@@ -92,7 +94,7 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
     );
 };
 
-const Hero = ({ activeLocation, siteDescription, checkAvailability }) => {
+const Hero = ({ activeLocation, siteDescription, checkAvailability, image }) => {
     const { name, coords, city } = activeLocation;
     return (
         <Container>
@@ -123,8 +125,10 @@ const Hero = ({ activeLocation, siteDescription, checkAvailability }) => {
                         </div>
                     </Switch>
                 </HeroCard>
-                {coords && (
-                    <MapWrapper>
+
+                <HeroImageWrapper>
+                    {image && <GracefullImage src={image} />}
+                    {!image && coords && (
                         <Map
                             noCircle={!city}
                             hideRoads={true}
@@ -138,8 +142,8 @@ const Hero = ({ activeLocation, siteDescription, checkAvailability }) => {
                             bounds={activeLocation.bounds}
                             largeScale
                         />
-                    </MapWrapper>
-                )}
+                    )}
+                </HeroImageWrapper>
             </HeroSection>
         </Container>
     );
@@ -446,7 +450,7 @@ const CustomSection = styled.section`
     width: 100%;
 `;
 
-const MapWrapper = styled.div`
+const HeroImageWrapper = styled.div`
     width: 75%;
     height: 100%;
     border-radius: 20px;
@@ -456,6 +460,11 @@ const MapWrapper = styled.div`
     box-shadow: 0 3px 10px 0 rgba(18, 43, 72, 0.15);
     pointer-events: none;
     overflow: hidden;
+    > img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+    }
 `;
 
 const HeroSection = styled(CustomSection)`
