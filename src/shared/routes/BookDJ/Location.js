@@ -63,7 +63,7 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
             label: activeLocation.country,
         },
     ];
-    if (activeLocation.countryResult) {
+    if (activeLocation.citySlug) {
         breadCrumbs.push({
             url: translate(appRoutes.bookDj).replace(':location', activeLocation.citySlug),
             label: activeLocation.name,
@@ -550,7 +550,6 @@ const TopLocationsGrid = styled.ol`
     grid-template-columns: repeat(5, 1fr);
     padding: 0;
     list-style: none;
-    margin-bottom: 30px;
     a:hover {
         text-decoration: underline;
     }
@@ -608,7 +607,18 @@ const DataWrapper = (props) => {
     const { activeLocation } = data || {};
     const { coords } = activeLocation || {};
 
-    const { data: searchData, loading } = useQuery(SEARCH, {
+    const filter = {};
+
+    if (activeLocation.citySlug) {
+        filter.location = {
+            latitude: coords?.lat,
+            longitude: coords?.lng,
+        };
+    } else {
+        filter.countryCode = activeLocation.iso2;
+    }
+
+    const { data: searchData } = useQuery(SEARCH, {
         skip: !coords,
         variables: {
             pagination: {
@@ -616,12 +626,7 @@ const DataWrapper = (props) => {
                 page: 1,
                 limit: 11,
             },
-            filter: {
-                location: {
-                    latitude: coords?.lat,
-                    longitude: coords?.lng,
-                },
-            },
+            filter,
         },
     });
 
