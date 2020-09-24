@@ -45,7 +45,8 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
 
     const checkAvailability = topDjs.length < 3;
 
-    const onClickElement = () => {
+    const onClickElement = (e) => {
+        e.preventDefault();
         window.scroll({
             top: 0,
             left: 0,
@@ -110,7 +111,8 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
                 color={'#31DAFF'}
                 bgColor="transparent"
                 noSkew={true}
-                firstTo={translate(appRoutes.home)}
+                firstTo={translate(appRoutes.bookDj)}
+                firstAction={onClickElement}
                 secondTo={translate(appRoutes.signUp)}
                 firstLabel={translate('arrange-event')}
                 secondLabel={translate('apply-to-become-dj')}

@@ -21,6 +21,7 @@ const Footer = ({
     firstTo,
     secondLabel,
     secondTo,
+    firstAction,
 }) => {
     const { translate, currentLanguage } = useTranslate();
 
@@ -66,7 +67,7 @@ const Footer = ({
                             <span>{subTitle}</span>
                         </div>
                         <RowWrap key="preFooterButtons">
-                            <ButtonLink shadow to={firstTo}>
+                            <ButtonLink shadow to={firstTo} onClick={firstAction}>
                                 {firstLabel}
                             </ButtonLink>
                             <ButtonLink invert shadow to={secondTo}>
