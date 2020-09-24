@@ -158,6 +158,27 @@ const Hero = ({ activeLocation, siteDescription, checkAvailability, image }) => 
     );
 };
 
+const DJsMapped = ({ djs }) => {
+    const { translate } = useTranslate();
+
+    return djs.map((item, idx) => {
+        const url = `${translate(appRoutes.user)}/${item.permalink}/overview`;
+
+        return (
+            <FeaturedDjWrapper
+                key={item.id}
+                ariaLabel={item.artistName || item.userMetadata?.firstName}
+                itemScope=""
+                itemType="https://schema.org/Person"
+            >
+                <meta itemProp="position" content={idx + 1} />
+
+                <FeaturedDJCard item={item} animate={false} />
+            </FeaturedDjWrapper>
+        );
+    });
+};
+
 const FeaturedDjs = ({ djs, activeLocation }) => {
     return (
         <CustomSection>
@@ -165,11 +186,7 @@ const FeaturedDjs = ({ djs, activeLocation }) => {
                 <H2 small>Featured DJs in {activeLocation.name}</H2>
                 <Body>Find and book the best DJs in {activeLocation.name}.</Body>
                 <ResponsiveRow>
-                    {djs.map((item) => (
-                        <FeaturedDjWrapper key={item.id}>
-                            <FeaturedDJCard item={item} animate={false} />
-                        </FeaturedDjWrapper>
-                    ))}
+                    <DJsMapped djs={djs} />
                 </ResponsiveRow>
             </Container>
         </CustomSection>
@@ -182,11 +199,7 @@ const OtherDjs = ({ djs, activeLocation }) => {
             <Container>
                 <H2 small>Other great DJs in {activeLocation.name}</H2>
                 <ResponsiveRowFour>
-                    {djs.map((item) => (
-                        <FeaturedDjWrapper key={item.id}>
-                            <FeaturedDJCard item={item} animate={false} />
-                        </FeaturedDjWrapper>
-                    ))}
+                    <DJsMapped djs={djs} />
                 </ResponsiveRowFour>
             </Container>
         </CustomSection>
@@ -259,16 +272,15 @@ const OccationItem = ({ src, alt, title, description, idx, ...props }) => {
     return (
         <ResponsiveCell
             ariaLabel={description}
-            itemprop="itemListElement"
-            itemscope=""
-            itemtype="https://schema.org/ListItem"
+            itemProp="itemListElement"
+            itemScope=""
+            itemType="https://schema.org/ListItem"
             {...props}
         >
             <meta itemProp="position" content={idx + 1} />
             <meta itemProp="name" content={title} />
             <meta itemProp="description" content={description} />
             <meta itemProp="image" content={src} />
-            {/* <meta itemprop="url" content={url}></meta> */}
             <ImageWrapper>
                 <GracefullImage animate src={src} alt={alt} />
             </ImageWrapper>

@@ -27,9 +27,10 @@ const InnerContent = ({
     const location = playingLocations?.[0]?.name;
 
     return (
-        <NavLink to={route} draggable={false}>
+        <NavLink to={route} draggable={false} itemProp="url">
             <GracefullImage
                 animate
+                itemProp="image"
                 draggable={false}
                 src={picture?.path}
                 style={{
@@ -57,7 +58,7 @@ const InnerContent = ({
                 <div style={{ flex: 1 }} />
                 <Row between style={{ alignItems: 'flex-end' }}>
                     <Col>
-                        <h3>{artistName || userMetadata?.firstName}</h3>
+                        <h3 itemProp="name">{artistName || userMetadata?.firstName}</h3>
                         {location && (
                             <Body
                                 white
