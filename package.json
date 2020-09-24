@@ -224,7 +224,7 @@
     "cross-spawn": "^7.0.3",
     "css-hot-loader": "^1.4.4",
     "css-loader": "^3.6.0",
-    "cypress": "4.12.1",
+    "cypress": "5.2.0",
     "cypress-file-upload": "^4.0.7",
     "depcheck": "^0.9.2",
     "dependency-cruiser": "^9.7.0",
