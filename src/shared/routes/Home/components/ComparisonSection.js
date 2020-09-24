@@ -8,11 +8,11 @@ import GracefullImage from 'components/GracefullImage';
 import comparisonImage from '../assets/the_lawn.jpg';
 
 const data = [
-    { label: 'Price', traditional: 'Price bloated by agency', cueup: 'Real prices' },
+    { label: 'Price', traditional: 'Price bloated by agency', cueup: 'Actual prices' },
     {
         label: 'Payment',
         traditional: 'Cash or wire transfer only',
-        cueup: 'Card or method of your choice',
+        cueup: 'Card or any method of your choice',
     },
     { label: 'Cancelation', traditional: 'No refund policy', cueup: 'Refund guarantee' },
     { label: 'Backup DJ', traditional: 'No backup', cueup: 'Backup DJs on standby' },
@@ -21,7 +21,7 @@ const data = [
         traditional: 'Through agency',
         cueup: 'Contact directly with DJ',
     },
-    { label: 'Selection', traditional: 'One choice', cueup: 'Pick among many DJs' },
+    { label: 'Selection', traditional: 'One choice', cueup: 'Pick from many fantastic DJs' },
     {
         label: 'Preview DJ skills',
         traditional: 'No preview',
