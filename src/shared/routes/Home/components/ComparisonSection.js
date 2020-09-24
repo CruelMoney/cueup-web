@@ -65,7 +65,9 @@ const ComparisonSection = () => {
                                         </td>
                                         <td>
                                             <InlineIcon icon={checkmarkCircle} color="#00D1FF" />
-                                            <span>{cueup}</span>
+                                            <span style={{ color: '#00D1FF', fontWeight: 500 }}>
+                                                {cueup}
+                                            </span>
                                         </td>
                                     </tr>
                                 ))}
