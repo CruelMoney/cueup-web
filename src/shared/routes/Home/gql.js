@@ -16,6 +16,9 @@ const FEATURED_DJS = gql`
             userMetadata {
                 firstName
             }
+            appMetadata {
+                isPro
+            }
         }
     }
 `;

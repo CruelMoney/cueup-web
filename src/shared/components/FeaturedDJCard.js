@@ -9,9 +9,11 @@ import { Body } from 'components/Text';
 import { Col, Row, RowWrap } from 'components/Blocks';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
+import { ProFeature } from './FormComponents';
 
 const InnerContent = ({
     userMetadata,
+    appMetadata,
     artistName,
     playingLocations,
     picture,
@@ -42,7 +44,16 @@ const InnerContent = ({
             />
             <BottomGradient />
             <DjCardContent>
-                <Row>{isNew && <Pill style={{ marginLeft: 0, marginTop: 0 }}>NEW</Pill>}</Row>
+                <Row between>
+                    {appMetadata?.isPro ? (
+                        <ProFeature disabled style={{ marginLeft: 0, marginRight: 6 }}>
+                            Pro
+                        </ProFeature>
+                    ) : (
+                        <span />
+                    )}
+                    {isNew && <Pill style={{ marginLeft: 0, marginTop: 0 }}>NEW</Pill>}
+                </Row>
                 <div style={{ flex: 1 }} />
                 <Row between style={{ alignItems: 'flex-end' }}>
                     <Col>
