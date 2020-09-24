@@ -458,6 +458,11 @@ const TopLocationsGrid = styled.ol`
 
 const TopLocations = ({ country, coords, radius, bounds, cities }) => {
     const { translate } = useTranslate();
+
+    if (!cities?.length) {
+        return null;
+    }
+
     return (
         <CustomSection style={{ marginBottom: 0 }}>
             <Container>
