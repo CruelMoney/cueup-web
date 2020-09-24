@@ -14,6 +14,40 @@ const getDB = async () => {
     });
 };
 
+const getCountryResult = ({ db }) => async (countrySlug) => {
+    const countryResult = await db.all(
+        SQL`
+                    SELECT *
+                    FROM cities
+                    WHERE countrySlug = ${countrySlug}
+                    LIMIT 50
+                `
+    );
+    if (countryResult.length) {
+        // calculate based on cities
+        const points = countryResult.map(({ lat, lng }) => ({ latitude: lat, longitude: lng }));
+        const center = geolib.getCenterOfBounds(points);
+        const bounds = geolib.getBounds(points);
+
+        const coords = {
+            lat: center.latitude,
+            lng: center.longitude,
+        };
+
+        return {
+            name: countryResult[0]?.country,
+            city: null,
+            country: countryResult[0]?.country,
+            coords,
+            radius: 25000, // set based on bounding box
+            cities: countryResult,
+            bounds,
+            iso2: countryResult[0]?.iso2,
+        };
+    }
+    return null;
+};
+
 const addLocationData = async (app) => {
     // add slugs on new entries
     // await addSlugs();
@@ -40,35 +74,10 @@ const addLocationData = async (app) => {
 
         const db = await getDB();
 
-        const countryResult = await db.all(
-            SQL`
-                        SELECT *
-                        FROM cities
-                        WHERE countrySlug = ${location}
-                        LIMIT 50
-                    `
-        );
-        if (countryResult.length) {
-            // calculate based on cities
-            const points = countryResult.map(({ lat, lng }) => ({ latitude: lat, longitude: lng }));
-            const center = geolib.getCenterOfBounds(points);
-            const bounds = geolib.getBounds(points);
+        let countryResult = await getCountryResult({ db })(location);
 
-            const coords = {
-                lat: center.latitude,
-                lng: center.longitude,
-            };
-
-            res.locals.activeLocation = {
-                name: countryResult[0]?.country,
-                city: null,
-                country: countryResult[0]?.country,
-                coords,
-                radius: 25000, // set based on bounding box
-                cities: countryResult,
-                bounds,
-                iso2: countryResult[0]?.iso2,
-            };
+        if (countryResult) {
+            res.locals.activeLocation = countryResult;
         } else {
             const result = await db.get(
                 SQL`
@@ -78,13 +87,24 @@ const addLocationData = async (app) => {
                         `
             );
             if (result) {
-                const { population, city, country: countryName, lat, lng, iso2 } = result;
+                const {
+                    population,
+                    city,
+                    country: countryName,
+                    lat,
+                    lng,
+                    iso2,
+                    countrySlug,
+                } = result;
                 const radius = (Math.sqrt(population) / Math.log2(population)) * 500; // set based on population
+
+                countryResult = await getCountryResult({ db })(countrySlug);
 
                 res.locals.activeLocation = {
                     name: city,
                     city,
                     country: countryName,
+                    countryResult,
                     coords: {
                         lat: parseFloat(lat),
                         lng: parseFloat(lng),

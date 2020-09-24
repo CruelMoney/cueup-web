@@ -73,21 +73,22 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
                 siteDescription={siteDescription}
                 checkAvailability={checkAvailability}
             />
-            {featuredDjs.length && (
+            {!!featuredDjs.length && (
                 <FeaturedDjs djs={featuredDjs} activeLocation={activeLocation} />
             )}
             <Occasions />
             <PopularRequests activeLocation={activeLocation} />
-            {otherDjs.length && <OtherDjs djs={otherDjs} activeLocation={activeLocation} />}
-
+            {!!otherDjs.length && <OtherDjs djs={otherDjs} activeLocation={activeLocation} />}
+            <TopLocations {...(activeLocation?.countryResult || activeLocation)} />
             <Footer
                 color={'#31DAFF'}
+                bgColor="transparent"
                 noSkew={true}
                 firstTo={translate(appRoutes.home)}
                 secondTo={translate(appRoutes.signUp)}
                 firstLabel={translate('arrange-event')}
                 secondLabel={translate('apply-to-become-dj')}
-                title={translate('ready-to-get-started')}
+                title={'Ready to start the Party?'}
                 subTitle={translate('arrange-event-or-become-dj')}
             />
         </>
@@ -404,46 +405,6 @@ const PopularRequests = ({ activeLocation }) => {
     );
 };
 
-const DataWrapper = (props) => {
-    const { translate } = useTranslate();
-    const { environment, data } = useServerContext();
-    const { activeLocation } = data || {};
-    const { coords } = activeLocation || {};
-
-    const { data: searchData, loading } = useQuery(SEARCH, {
-        skip: !coords,
-        variables: {
-            pagination: {
-                orderBy: 'UPDATED_AT_DESCENDING',
-                page: 1,
-                limit: 11,
-            },
-            filter: {
-                location: {
-                    latitude: coords?.lat,
-                    longitude: coords?.lng,
-                },
-            },
-        },
-    });
-
-    const topDjs = searchData?.searchDjs?.edges || [];
-    console.log({ topDjs });
-    if (!activeLocation) {
-        return <Redirect to={translate(appRoutes.notFound)} />;
-    }
-
-    return (
-        <Location
-            {...props}
-            translate={translate}
-            activeLocation={activeLocation}
-            environment={environment}
-            topDjs={topDjs}
-        />
-    );
-};
-
 const CustomSection = styled.section`
     margin-bottom: 60px;
     position: relative;
@@ -471,5 +432,105 @@ const HeroSection = styled(CustomSection)`
     min-height: 470px;
     display: flex;
 `;
+
+const MapWrapper = styled(HeroImageWrapper)`
+    width: 100%;
+    height: 450px;
+    position: relative;
+    box-shadow: 0 6px 65px 0 rgba(18, 43, 72, 0.15);
+`;
+
+const TopLocationsGrid = styled.ol`
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 0;
+    list-style: none;
+    margin-bottom: 30px;
+    a:hover {
+        text-decoration: underline;
+    }
+    @media only screen and (max-width: 768px) {
+        grid-template-columns: 3fr;
+        grid-row-gap: 30px;
+    }
+`;
+
+const TopLocations = ({ country, coords, radius, bounds, cities }) => {
+    const { translate } = useTranslate();
+    return (
+        <CustomSection style={{ marginBottom: 0 }}>
+            <Container>
+                <H2 small>Top locations in {country}</H2>
+                <TopLocationsGrid>
+                    {cities.map(({ id, city, citySlug }) => (
+                        <li key={id}>
+                            <a href={translate(appRoutes.bookDj).replace(':location', citySlug)}>
+                                <BodySmall>{city}</BodySmall>
+                            </a>
+                        </li>
+                    ))}
+                </TopLocationsGrid>
+                {coords && (
+                    <MapWrapper>
+                        <Map
+                            noCircle={true}
+                            hideRoads={true}
+                            radius={radius}
+                            defaultCenter={coords}
+                            height={'100%'}
+                            value={coords}
+                            editable={false}
+                            radiusName="playingRadius"
+                            locationName="playingLocation"
+                            bounds={bounds}
+                            largeScale
+                        />
+                    </MapWrapper>
+                )}
+            </Container>
+        </CustomSection>
+    );
+};
+
+const DataWrapper = (props) => {
+    const { translate } = useTranslate();
+    const { environment, data } = useServerContext();
+    const { activeLocation } = data || {};
+    const { coords } = activeLocation || {};
+
+    const { data: searchData, loading } = useQuery(SEARCH, {
+        skip: !coords,
+        variables: {
+            pagination: {
+                orderBy: 'UPDATED_AT_DESCENDING',
+                page: 1,
+                limit: 11,
+            },
+            filter: {
+                location: {
+                    latitude: coords?.lat,
+                    longitude: coords?.lng,
+                },
+            },
+        },
+    });
+
+    const topDjs = searchData?.searchDjs?.edges || [];
+
+    if (!activeLocation) {
+        return <Redirect to={translate(appRoutes.notFound)} />;
+    }
+
+    return (
+        <Location
+            {...props}
+            translate={translate}
+            activeLocation={activeLocation}
+            environment={environment}
+            topDjs={topDjs}
+        />
+    );
+};
 
 export default DataWrapper;
