@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components';
+import { useQuery } from 'react-apollo';
 import { useServerContext } from 'components/hooks/useServerContext';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
@@ -11,6 +12,7 @@ import { Body, BodySmall, H2, H3, PageTitle } from 'components/Text';
 import GracefullImage from 'components/GracefullImage';
 import Footer from 'components/common/Footer';
 import LazyRequestForm from 'components/common/RequestForm';
+import FeaturedDJCard from 'components/FeaturedDJCard';
 import defaultImage from '../../assets/images/cities/default.png';
 import Map from '../../components/common/Map';
 import BookDJForm from './BookDJForm';
@@ -25,8 +27,9 @@ import { ReactComponent as SmokeIcon } from './assets/icons/smoke.svg';
 import { ReactComponent as SpeakerIcon } from './assets/icons/speaker.svg';
 import { ReactComponent as VinylIcon } from './assets/icons/vinyl.svg';
 import { ReactComponent as Top40Icon } from './assets/icons/top40.svg';
+import { SEARCH } from './gql';
 
-const Location = ({ translate, activeLocation, environment, match }) => {
+const Location = ({ translate, activeLocation, environment, topDjs }) => {
     const title = activeLocation.name;
 
     const coordinates = activeLocation.coords;
@@ -36,7 +39,9 @@ const Location = ({ translate, activeLocation, environment, match }) => {
     const siteTitle = `${title}'s best DJs · Cueup`;
     const thumb = environment.CALLBACK_DOMAIN + (activeLocation.image || defaultImage);
 
-    const topDjs = [];
+    const featuredDjs = topDjs.slice(0, 3);
+    const otherDjs = topDjs.slice(3, 11);
+
     const checkAvailability = topDjs.length < 3;
 
     return (
@@ -66,8 +71,13 @@ const Location = ({ translate, activeLocation, environment, match }) => {
                 siteDescription={siteDescription}
                 checkAvailability={checkAvailability}
             />
+            {featuredDjs.length && (
+                <FeaturedDjs djs={featuredDjs} activeLocation={activeLocation} />
+            )}
             <Occasions />
             <PopularRequests activeLocation={activeLocation} />
+            {otherDjs.length && <OtherDjs djs={otherDjs} activeLocation={activeLocation} />}
+
             <Footer
                 color={'#31DAFF'}
                 noSkew={true}
@@ -126,6 +136,7 @@ const Hero = ({ activeLocation, siteDescription, checkAvailability }) => {
                             radiusName="playingRadius"
                             locationName="playingLocation"
                             bounds={activeLocation.bounds}
+                            largeScale
                         />
                     </MapWrapper>
                 )}
@@ -133,6 +144,56 @@ const Hero = ({ activeLocation, siteDescription, checkAvailability }) => {
         </Container>
     );
 };
+
+const FeaturedDjs = ({ djs, activeLocation }) => {
+    return (
+        <CustomSection>
+            <Container>
+                <H2 small>Featured DJs in {activeLocation.name}</H2>
+                <Body>Find and book the best DJs in {activeLocation.name}.</Body>
+                <ResponsiveRow>
+                    {djs.map((item) => (
+                        <FeaturedDjWrapper key={item.id}>
+                            <FeaturedDJCard item={item} animate={false} />
+                        </FeaturedDjWrapper>
+                    ))}
+                </ResponsiveRow>
+            </Container>
+        </CustomSection>
+    );
+};
+
+const OtherDjs = ({ djs, activeLocation }) => {
+    return (
+        <CustomSection>
+            <Container>
+                <H2 small>Other great DJs in {activeLocation.name}</H2>
+                <ResponsiveRowFour>
+                    {djs.map((item) => (
+                        <FeaturedDjWrapper key={item.id}>
+                            <FeaturedDJCard item={item} animate={false} />
+                        </FeaturedDjWrapper>
+                    ))}
+                </ResponsiveRowFour>
+            </Container>
+        </CustomSection>
+    );
+};
+
+const FeaturedDjWrapper = styled.li`
+    font-size: 100px;
+    position: relative;
+    > * {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    :after {
+        content: '';
+        display: block;
+        padding-top: 115%;
+    }
+`;
 
 const ResponsiveCell = styled.li`
     flex: 1;
@@ -164,6 +225,15 @@ const ResponsiveRow = styled.ol`
     grid-template-columns: repeat(3, 1fr);
     padding: 0;
     list-style: none;
+
+    @media only screen and (max-width: 768px) {
+        grid-template-columns: 1fr;
+        grid-row-gap: 30px;
+    }
+`;
+
+const ResponsiveRowFour = styled(ResponsiveRow)`
+    grid-template-columns: repeat(4, 1fr);
 
     @media only screen and (max-width: 768px) {
         grid-template-columns: 1fr;
@@ -249,7 +319,8 @@ const ScrollableFullWidthGrid = styled.ol`
     -webkit-box-pack: start;
     &:after {
         content: '';
-        padding: 16px;
+        padding: 16px 0;
+        padding-right: calc((100vw - 100%) / 2);
     }
 `;
 
@@ -263,6 +334,9 @@ const RequestWrapper = styled.li`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    &:last-child {
+        margin-right: 0;
+    }
 `;
 
 const RequestItem = ({ label, Icon, idx }) => {
@@ -330,7 +404,27 @@ const DataWrapper = (props) => {
     const { translate } = useTranslate();
     const { environment, data } = useServerContext();
     const { activeLocation } = data || {};
+    const { coords } = activeLocation || {};
 
+    const { data: searchData, loading } = useQuery(SEARCH, {
+        skip: !coords,
+        variables: {
+            pagination: {
+                orderBy: 'UPDATED_AT_DESCENDING',
+                page: 1,
+                limit: 11,
+            },
+            filter: {
+                location: {
+                    latitude: coords?.lat,
+                    longitude: coords?.lng,
+                },
+            },
+        },
+    });
+
+    const topDjs = searchData?.searchDjs?.edges || [];
+    console.log({ topDjs });
     if (!activeLocation) {
         return <Redirect to={translate(appRoutes.notFound)} />;
     }
@@ -341,6 +435,7 @@ const DataWrapper = (props) => {
             translate={translate}
             activeLocation={activeLocation}
             environment={environment}
+            topDjs={topDjs}
         />
     );
 };
