@@ -102,7 +102,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
                 <Input
                     label="GUESTS"
                     placeholder="Add guest count"
-                    value={form.guests}
+                    value={form.guestsCount}
                     onChange={(guests) => {
                         setValue({ guestsCount: guests.replace(/\D/g, '') });
                     }}
