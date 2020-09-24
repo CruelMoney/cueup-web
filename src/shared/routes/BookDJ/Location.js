@@ -620,13 +620,15 @@ const DataWrapper = (props) => {
 
     const filter = {};
 
-    if (activeLocation.citySlug) {
-        filter.location = {
-            latitude: coords?.lat,
-            longitude: coords?.lng,
-        };
-    } else {
-        filter.countryCode = activeLocation.iso2;
+    if (activeLocation) {
+        if (activeLocation.citySlug) {
+            filter.location = {
+                latitude: coords?.lat,
+                longitude: coords?.lng,
+            };
+        } else {
+            filter.countryCode = activeLocation.iso2;
+        }
     }
 
     const { data: searchData } = useQuery(SEARCH, {

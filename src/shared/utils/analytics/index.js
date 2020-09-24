@@ -26,7 +26,7 @@ export const trackPageView = (url) => {
 export const trackCheckAvailability = (locationName) => {
     analytics.track('Search', {
         category: 'Events',
-        value: locationName,
+        label: locationName,
     });
 };
 

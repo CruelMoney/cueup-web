@@ -5,10 +5,21 @@ import { oldRoutes as daOldRoutes } from 'constants/locales/da/routes';
 
 // /book-dj/country/city -> /location/book-dj
 const redirectOldBookDJ = (req, res, next) => {
-    const { country, city } = req.params;
+    let { country, city } = req.params;
+
+    if (city === 'koebenhavn') {
+        city = 'copenhagen';
+    }
+    if (country === 'danmark') {
+        country = 'denmark';
+    }
+
     res.redirect(enRoutes.bookDj.replace(':location', city || country));
 };
 
 export const addRedirects = (app) => {
-    app.use([daOldRoutes.bookDj, enOldRoutes.bookDj], redirectOldBookDJ);
+    app.use(
+        ['/dk/book-dj/:country/:city?', daOldRoutes.bookDj, enOldRoutes.bookDj],
+        redirectOldBookDJ
+    );
 };
