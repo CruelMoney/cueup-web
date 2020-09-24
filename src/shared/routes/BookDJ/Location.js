@@ -3,11 +3,14 @@ import { Redirect, Route, Switch } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components';
 import { useQuery } from 'react-apollo';
+import { NavLink } from 'react-router-dom';
+import { InlineIcon } from '@iconify/react';
+import forwardIcon from '@iconify/icons-ion/arrow-forward';
 import { useServerContext } from 'components/hooks/useServerContext';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
 import SmartNavigation from 'components/Navigation';
-import { Container, RowMobileCol } from 'components/Blocks';
+import { Container, SmartButton } from 'components/Blocks';
 import { Body, BodySmall, H2, H3, PageTitle } from 'components/Text';
 import GracefullImage from 'components/GracefullImage';
 import Footer from 'components/common/Footer';
@@ -104,7 +107,9 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
             )}
             <Occasions onClick={onClickElement} />
             <PopularRequests activeLocation={activeLocation} onClick={onClickElement} />
-            {!!otherDjs.length && <OtherDjs djs={otherDjs} activeLocation={activeLocation} />}
+            {!!otherDjs.length && (
+                <OtherDjs djs={otherDjs} activeLocation={activeLocation} onClick={onClickElement} />
+            )}
             <TopLocations {...(activeLocation?.countryResult || activeLocation)} />
             <BreadCrumbs items={breadCrumbs} />
             <Footer
@@ -209,7 +214,7 @@ const FeaturedDjs = ({ djs, activeLocation }) => {
     );
 };
 
-const OtherDjs = ({ djs, activeLocation }) => {
+const OtherDjs = ({ djs, activeLocation, onClick }) => {
     return (
         <CustomSection>
             <Container>
@@ -217,6 +222,10 @@ const OtherDjs = ({ djs, activeLocation }) => {
                 <ResponsiveRowFour>
                     <DJsMapped djs={djs} />
                 </ResponsiveRowFour>
+
+                <NavLink to="/" onClick={onClick} style={{ fontSize: '18px', maxWidth: 'initial' }}>
+                    See all DJs in {activeLocation.name} <InlineIcon icon={forwardIcon} />
+                </NavLink>
             </Container>
         </CustomSection>
     );
@@ -343,7 +352,7 @@ const ResponsiveRow = styled.ol`
 
 const ResponsiveRowFour = styled(ResponsiveRow)`
     grid-template-columns: repeat(4, 1fr);
-
+    margin-bottom: 30px;
     @media only screen and (max-width: 768px) {
         grid-template-columns: 1fr;
         grid-row-gap: 30px;
