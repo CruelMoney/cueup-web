@@ -18,6 +18,7 @@ describe('Event', () => {
         cy.get('button').contains('Continue').click({ force: true });
         cy.get('textarea[name=description]').type('Test event description', { force: true });
         cy.get('button').contains('Continue').click({ force: true });
+        cy.get('button').contains('email').click({ force: true });
         cy.get('input[name=contactName]').type('Test organizer', { force: true });
         cy.get('input[name=contactPhone]').type('24658061', { force: true });
         cy.get('input[name=contactEmail]').type('organizer@email.com', { force: true });

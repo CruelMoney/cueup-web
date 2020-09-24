@@ -55,7 +55,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
                             location,
                             speakers: !!form.speakers,
                             lights: !!form.lights,
-                            guestsCount: form.guestsCount,
+                            guestsCount: form.guestsCount || 0,
                         },
                     });
                 }
