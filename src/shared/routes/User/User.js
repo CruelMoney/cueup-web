@@ -396,10 +396,10 @@ const User = ({ match, location, user, error, loading, translate }) => {
         return showChatButton;
     }, []);
 
-    let title = user ? user.artistName || user.userMetadata?.firstName : 'Unnamed';
-    title = title + ' · Book now · Cueup';
+    const title = user ? user.artistName || user.userMetadata?.firstName : 'Unnamed';
+    const metaTitle = title + ' · Book now · Cueup';
     const thumb = user?.picture?.path || null;
-    const description = user ? user.userMetadata?.bio : title;
+    const description = user ? user.userMetadata?.bio : metaTitle;
     if (user) {
         user.title = title;
     }
@@ -409,9 +409,9 @@ const User = ({ match, location, user, error, loading, translate }) => {
             {!hasScrolled && <ScrollToTop />}
             {user && (
                 <Helmet>
-                    <title>{title}</title>
-                    <meta property="og:title" content={title} />
-                    <meta name="twitter:title" content={title} />
+                    <title>{metaTitle}</title>
+                    <meta property="og:title" content={metaTitle} />
+                    <meta name="twitter:title" content={metaTitle} />
 
                     <meta property="og:image" content={thumb} />
                     <meta name="twitter:image" content={thumb} />
