@@ -42,7 +42,8 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
                 const { result, date, timeZoneId, location } = await check(form);
 
                 if (result === true) {
-                    const route = routeLocation.pathname + '/form';
+                    const route = routeLocation.pathname.replace(/\/$/, '') + '/form';
+
                     history.push({
                         pathname: route,
                         state: {
@@ -123,7 +124,13 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
                     onClick={() => setValue({ lights: !form.lights })}
                 />
             </StyledLabelComponent>
-            <CustomCTAButton noMargin noIcon type="submit" loading={loading} onClick={submit}>
+            <CustomCTAButton
+                noMargin
+                noIcon={!loading}
+                type="submit"
+                loading={loading}
+                onClick={submit}
+            >
                 {checkAvailability ? 'Check availability' : 'Find DJs'}
             </CustomCTAButton>
         </>

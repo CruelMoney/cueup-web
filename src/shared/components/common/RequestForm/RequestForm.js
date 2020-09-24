@@ -84,7 +84,12 @@ const MainForm = ({ initialCity, countries, transparent, fromNewSearch }) => {
     };
 
     const back = () => {
-        setForm((f) => ({ ...f, activeStep: activeStep - 1 }));
+        if (fromNewSearch && activeStep === 2) {
+            history.goBack();
+            history.goBack();
+        } else {
+            setForm((f) => ({ ...f, activeStep: activeStep - 1 }));
+        }
     };
 
     const setProgress = (step) => {

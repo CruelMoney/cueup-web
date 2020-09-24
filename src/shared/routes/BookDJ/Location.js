@@ -435,7 +435,7 @@ const HeroSection = styled(CustomSection)`
 
 const MapWrapper = styled(HeroImageWrapper)`
     width: 100%;
-    height: 450px;
+    height: 470px;
     position: relative;
     box-shadow: 0 6px 65px 0 rgba(18, 43, 72, 0.15);
 `;
