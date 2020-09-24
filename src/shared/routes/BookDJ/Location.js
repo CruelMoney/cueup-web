@@ -45,6 +45,14 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
 
     const checkAvailability = topDjs.length < 3;
 
+    const onClickElement = () => {
+        window.scroll({
+            top: 0,
+            left: 0,
+            behavior: 'smooth',
+        });
+    };
+
     return (
         <>
             <Helmet>
@@ -76,8 +84,8 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
             {!!featuredDjs.length && (
                 <FeaturedDjs djs={featuredDjs} activeLocation={activeLocation} />
             )}
-            <Occasions />
-            <PopularRequests activeLocation={activeLocation} />
+            <Occasions onClick={onClickElement} />
+            <PopularRequests activeLocation={activeLocation} onClick={onClickElement} />
             {!!otherDjs.length && <OtherDjs djs={otherDjs} activeLocation={activeLocation} />}
             <TopLocations {...(activeLocation?.countryResult || activeLocation)} />
             <Footer
@@ -202,6 +210,7 @@ const FeaturedDjWrapper = styled.li`
 
 const ResponsiveCell = styled.li`
     flex: 1;
+    cursor: pointer;
     ${H3} {
         margin-top: 0.6em;
     }
@@ -246,13 +255,14 @@ const ResponsiveRowFour = styled(ResponsiveRow)`
     }
 `;
 
-const OccationItem = ({ src, alt, title, description, idx }) => {
+const OccationItem = ({ src, alt, title, description, idx, ...props }) => {
     return (
         <ResponsiveCell
             ariaLabel={description}
             itemprop="itemListElement"
             itemscope=""
             itemtype="https://schema.org/ListItem"
+            {...props}
         >
             <meta itemProp="position" content={idx + 1} />
             <meta itemProp="name" content={title} />
@@ -291,7 +301,7 @@ const occationData = [
     },
 ];
 
-const Occasions = () => {
+const Occasions = ({ onClick }) => {
     return (
         <CustomSection>
             <Container>
@@ -299,7 +309,7 @@ const Occasions = () => {
                 <Body>Get a DJ that knows what you need.</Body>
                 <ResponsiveRow>
                     {occationData.map((item, idx) => (
-                        <OccationItem key={idx} idx={idx} {...item} />
+                        <OccationItem key={idx} idx={idx} onClick={onClick} {...item} />
                     ))}
                 </ResponsiveRow>
             </Container>
@@ -339,18 +349,20 @@ const RequestWrapper = styled.li`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    cursor: pointer;
     &:last-child {
         margin-right: 0;
     }
 `;
 
-const RequestItem = ({ label, Icon, idx }) => {
+const RequestItem = ({ label, Icon, idx, ...props }) => {
     return (
         <RequestWrapper
             ariaLabel={label}
             itemprop="itemListElement"
             itemscope=""
             itemtype="https://schema.org/ListItem"
+            {...props}
         >
             <meta itemProp="position" content={idx + 1} />
             <meta itemProp="name" content={label} />
@@ -390,14 +402,14 @@ const requestdata = [
     },
 ];
 
-const PopularRequests = ({ activeLocation }) => {
+const PopularRequests = ({ activeLocation, onClick }) => {
     return (
         <CustomSection>
             <Container>
                 <H2 small>Popular requests for {activeLocation.name} DJs</H2>
                 <ScrollableFullWidthGrid>
                     {requestdata.map((item, idx) => (
-                        <RequestItem key={idx} idx={idx} {...item} />
+                        <RequestItem key={idx} idx={idx} onClick={onClick} {...item} />
                     ))}
                 </ScrollableFullWidthGrid>
             </Container>

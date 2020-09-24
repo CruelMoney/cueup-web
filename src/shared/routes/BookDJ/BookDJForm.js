@@ -15,7 +15,9 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
     const history = useHistory();
     const locationRef = useRef();
     const dateRef = useRef();
-    const { runValidations, form, setValue } = useForm();
+    const { runValidations, form, setValue } = useForm(null, {
+        locationName: activeLocation.name,
+    });
 
     const { iso2 } = activeLocation;
 
