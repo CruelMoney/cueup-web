@@ -27,7 +27,13 @@ const InnerContent = ({
     const location = playingLocations?.[0]?.name;
 
     return (
-        <NavLink to={route} draggable={false} itemProp="url">
+        <NavLink
+            to={route}
+            draggable={false}
+            itemProp="url"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
             <GracefullImage
                 animate
                 itemProp="image"
