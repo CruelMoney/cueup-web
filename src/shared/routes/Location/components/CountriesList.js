@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
-import { Title, Body, TitleClean } from 'components/Text';
+import { Body, TitleClean } from 'components/Text';
 import { Col } from 'components/Blocks';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
