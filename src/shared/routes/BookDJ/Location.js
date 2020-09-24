@@ -27,7 +27,7 @@ import { ReactComponent as SmokeIcon } from './assets/icons/smoke.svg';
 import { ReactComponent as SpeakerIcon } from './assets/icons/speaker.svg';
 import { ReactComponent as VinylIcon } from './assets/icons/vinyl.svg';
 import { ReactComponent as Top40Icon } from './assets/icons/top40.svg';
-import heroImg from './assets/hero_1.jpg';
+import heroImg from './assets/hero_1.webp';
 import { SEARCH } from './gql';
 
 const Location = ({ translate, activeLocation, environment, topDjs }) => {
