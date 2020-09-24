@@ -15,9 +15,10 @@ const CountriesList = ({ countries = [] }) => {
                     {countries.map(({ country, countrySlug, iso2 }, _idx) => (
                         <li key={iso2}>
                             <a
-                                href={`${translate(appRoutes.bookDj)
-                                    .replace(':city?', '')
-                                    .replace(':country', countrySlug)}`}
+                                href={`${translate(appRoutes.bookDj).replace(
+                                    ':location',
+                                    countrySlug
+                                )}`}
                             >
                                 <Body>DJs in {country}</Body>
                             </a>
