@@ -193,7 +193,7 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                                 />
                                 <IconRowLink
                                     target="_blank"
-                                    rel="noopener noreferrer nofollow"
+                                    rel="noopener noreferrer nofollow ugc"
                                     href={website}
                                     title="Visit website"
                                 >
