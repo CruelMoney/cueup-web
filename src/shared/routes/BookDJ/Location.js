@@ -53,6 +53,23 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
         });
     };
 
+    const breadCrumbs = [
+        {
+            url: '/',
+            label: 'DJs',
+        },
+        {
+            url: translate(appRoutes.bookDj).replace(':location', activeLocation.countrySlug),
+            label: activeLocation.country,
+        },
+    ];
+    if (activeLocation.countryResult) {
+        breadCrumbs.push({
+            url: translate(appRoutes.bookDj).replace(':location', activeLocation.citySlug),
+            label: activeLocation.name,
+        });
+    }
+
     return (
         <>
             <Helmet>
@@ -88,6 +105,7 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
             <PopularRequests activeLocation={activeLocation} onClick={onClickElement} />
             {!!otherDjs.length && <OtherDjs djs={otherDjs} activeLocation={activeLocation} />}
             <TopLocations {...(activeLocation?.countryResult || activeLocation)} />
+            <BreadCrumbs items={breadCrumbs} />
             <Footer
                 color={'#31DAFF'}
                 bgColor="transparent"
@@ -159,11 +177,7 @@ const Hero = ({ activeLocation, siteDescription, checkAvailability, image }) => 
 };
 
 const DJsMapped = ({ djs }) => {
-    const { translate } = useTranslate();
-
     return djs.map((item, idx) => {
-        const url = `${translate(appRoutes.user)}/${item.permalink}/overview`;
-
         return (
             <FeaturedDjWrapper
                 key={item.id}
@@ -203,6 +217,72 @@ const OtherDjs = ({ djs, activeLocation }) => {
                 </ResponsiveRowFour>
             </Container>
         </CustomSection>
+    );
+};
+
+const BreadCrumbsList = styled.ol`
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+        display: inline-block;
+    }
+    a {
+        padding: 0 6px;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    a.current {
+        pointer-events: none;
+        cursor: default;
+    }
+    .breadcrumb-arrow {
+        pointer-events: none;
+        user-select: none;
+        white-space: pre-wrap;
+        padding-left: 0px;
+        padding-right: 0px;
+        font-size: 18px;
+    }
+`;
+
+const BreadCrumbs = ({ items }) => {
+    return (
+        <Container>
+            <BreadCrumbsList
+                itemScope=""
+                itemType="https://schema.org/BreadcrumbList"
+                aria-label="breadcrumb"
+            >
+                {items.map(({ url, label }, idx) => (
+                    <li
+                        key={url}
+                        itemProp="itemListElement"
+                        itemScope=""
+                        itemType="https://schema.org/ListItem"
+                    >
+                        {idx > 0 && (
+                            <span className="breadcrumb-arrow" aria-hidden="true">
+                                {' '}
+                                ›{' '}
+                            </span>
+                        )}
+                        <a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href={url}
+                            itemType="https://schema.org/Thing"
+                            itemProp="item"
+                            className={idx === items.length - 1 ? 'current' : ''}
+                        >
+                            <span itemProp="name">{label}</span>
+                        </a>
+                        <meta itemProp="position" content={idx + 1} />
+                    </li>
+                ))}
+            </BreadCrumbsList>
+        </Container>
     );
 };
 

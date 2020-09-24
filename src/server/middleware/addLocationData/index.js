@@ -95,6 +95,7 @@ const addLocationData = async (app) => {
                     lng,
                     iso2,
                     countrySlug,
+                    citySlug,
                 } = result;
                 const radius = (Math.sqrt(population) / Math.log2(population)) * 500; // set based on population
 
@@ -103,7 +104,9 @@ const addLocationData = async (app) => {
                 res.locals.activeLocation = {
                     name: city,
                     city,
+                    citySlug,
                     country: countryName,
+                    countrySlug,
                     countryResult,
                     coords: {
                         lat: parseFloat(lat),
