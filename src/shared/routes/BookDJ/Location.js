@@ -6,6 +6,7 @@ import { useQuery } from 'react-apollo';
 import { NavLink } from 'react-router-dom';
 import { InlineIcon } from '@iconify/react';
 import forwardIcon from '@iconify/icons-ion/arrow-forward';
+import { useInView } from 'react-intersection-observer';
 import { useServerContext } from 'components/hooks/useServerContext';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
@@ -559,6 +560,7 @@ const MapWrapper = styled.div`
     border-radius: 20px;
     pointer-events: none;
     overflow: hidden;
+    background-color: #fff;
     > img {
         object-fit: cover;
         height: 100%;
@@ -591,6 +593,10 @@ const TopLocationsGrid = styled.ol`
 
 const TopLocations = ({ country, coords, radius, bounds, cities }) => {
     const { translate } = useTranslate();
+    const [ref, inView] = useInView({
+        rootMargin: '200px',
+        triggerOnce: true,
+    });
 
     if (!cities?.length) {
         return null;
@@ -610,20 +616,22 @@ const TopLocations = ({ country, coords, radius, bounds, cities }) => {
                     ))}
                 </TopLocationsGrid>
                 {coords && (
-                    <MapWrapper>
-                        <Map
-                            noCircle={true}
-                            hideRoads={true}
-                            radius={radius}
-                            defaultCenter={coords}
-                            height={'100%'}
-                            value={coords}
-                            editable={false}
-                            radiusName="playingRadius"
-                            locationName="playingLocation"
-                            bounds={bounds}
-                            largeScale
-                        />
+                    <MapWrapper ref={ref}>
+                        {inView && (
+                            <Map
+                                noCircle={true}
+                                hideRoads={true}
+                                radius={radius}
+                                defaultCenter={coords}
+                                height={'100%'}
+                                value={coords}
+                                editable={false}
+                                radiusName="playingRadius"
+                                locationName="playingLocation"
+                                bounds={bounds}
+                                largeScale
+                            />
+                        )}
                     </MapWrapper>
                 )}
             </Container>
