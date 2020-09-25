@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import * as Sentry from '@sentry/react';
 import getCookie from 'utils/getCookie';
+import { loadOneSignal } from 'External/oneSignal';
 
 const DISABLE_NOTIFICATIONS_COOKIE = 'disable-notifications';
 
@@ -10,6 +11,10 @@ const usePushNotifications = (options = {}) => {
     const [loading, setLoading] = useState(true);
     const [pushIsEnabled, setPushIsEnabled] = useState(false);
     const [pushShouldBeEnabled, setPushShouldBeEnabled] = useState(false);
+
+    useEffect(() => {
+        loadOneSignal();
+    }, []);
 
     useEffect(() => {
         if (!hasOptedOut) {
