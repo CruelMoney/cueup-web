@@ -1,7 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import styled from 'styled-components';
-import { Route, Switch, useHistory, useLocation } from 'react-router';
-import { LoadScript } from '@react-google-maps/api';
+import { useHistory, useLocation } from 'react-router';
 import LocationSelector from 'components/common/LocationSelectorSimple';
 import { useForm } from 'components/hooks/useForm';
 import DatePickerPopup from 'components/DatePickerPopup';
@@ -54,7 +53,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
                 if (result === true) {
                     const route = routeLocation.pathname.replace(/\/$/, '') + '/form';
 
-                    history.push({
+                    history.replace({
                         pathname: route,
                         state: {
                             activeStep: 2,

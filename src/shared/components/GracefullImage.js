@@ -76,6 +76,7 @@ export const GracefullPicture = ({ children, style }) => {
         <div
             style={{
                 backgroundColor: '#EFF2F5',
+                color: 'transparent',
                 ...style,
             }}
         >

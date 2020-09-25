@@ -85,8 +85,8 @@ const MainForm = ({ initialCity, countries, transparent, fromNewSearch }) => {
 
     const back = () => {
         if (fromNewSearch && activeStep === 2) {
-            history.goBack();
-            history.goBack();
+            const route = routeLocation.pathname.replace('/form', '');
+            history.replace(route);
         } else {
             setForm((f) => ({ ...f, activeStep: activeStep - 1 }));
         }
