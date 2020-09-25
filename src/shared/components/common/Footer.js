@@ -50,6 +50,7 @@ const Footer = ({
                         href={url}
                         hrefLang={code}
                         rel={active ? 'canonical' : 'alternate'}
+                        itemProp="url"
                     />
                 ))}
             </Helmet>

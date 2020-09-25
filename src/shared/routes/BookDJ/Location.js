@@ -192,7 +192,7 @@ const DJsMapped = ({ djs }) => {
             <FeaturedDjWrapper
                 key={item.id}
                 ariaLabel={item.artistName || item.userMetadata?.firstName}
-                itemScope=""
+                itemScope=" "
                 itemType="https://schema.org/Person"
             >
                 <meta itemProp="position" content={idx + 1} />
@@ -265,7 +265,7 @@ const BreadCrumbs = ({ items }) => {
     return (
         <Container>
             <BreadCrumbsList
-                itemScope=""
+                itemScope=" "
                 itemType="https://schema.org/BreadcrumbList"
                 aria-label="breadcrumb"
             >
@@ -273,7 +273,7 @@ const BreadCrumbs = ({ items }) => {
                     <li
                         key={url}
                         itemProp="itemListElement"
-                        itemScope=""
+                        itemScope=" "
                         itemType="https://schema.org/ListItem"
                     >
                         {idx > 0 && (
@@ -367,7 +367,7 @@ const OccationItem = ({ src, alt, title, description, idx, ...props }) => {
         <ResponsiveCell
             ariaLabel={description}
             itemProp="itemListElement"
-            itemScope=""
+            itemScope=" "
             itemType="https://schema.org/ListItem"
             {...props}
         >
@@ -468,9 +468,9 @@ const RequestItem = ({ label, Icon, idx, ...props }) => {
     return (
         <RequestWrapper
             ariaLabel={label}
-            itemprop="itemListElement"
-            itemscope=""
-            itemtype="https://schema.org/ListItem"
+            itemProp="itemListElement"
+            itemScope=" "
+            itemType="https://schema.org/ListItem"
             {...props}
         >
             <meta itemProp="position" content={idx + 1} />

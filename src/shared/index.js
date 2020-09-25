@@ -39,10 +39,11 @@ const Setup = ({ location }) => {
         <ErrorHandling>
             <Helmet>
                 <html lang={i18n.language} xmlLang={i18n.language} />
-
+                <head itemScope itemType="http://schema.org/WebSite" />
                 {environment.SETTING !== 'production' && <meta name="robots" content="noindex" />}
 
                 <title>{title}</title>
+                <meta itemProp="name" content={'Cueup'} />
 
                 <meta name="description" content={description} />
                 <meta
