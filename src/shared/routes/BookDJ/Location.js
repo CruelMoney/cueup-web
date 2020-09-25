@@ -17,7 +17,7 @@ import GracefullImage from 'components/GracefullImage';
 import Footer from 'components/common/Footer';
 import LazyRequestForm from 'components/common/RequestForm';
 import FeaturedDJCard from 'components/FeaturedDJCard';
-import defaultImage from '../../assets/images/cities/default.png';
+import defaultImage from '../../assets/images/default.png';
 import Map from '../../components/common/Map';
 import BookDJForm from './BookDJForm';
 import { HeroCard } from './Components';
