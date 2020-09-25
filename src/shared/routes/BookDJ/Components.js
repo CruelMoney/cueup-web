@@ -11,6 +11,12 @@ export const HeroCard = styled.div`
     max-width: 450px;
     display: inline-block;
     margin: auto 0;
+    @media only screen and (max-width: 744px) {
+        max-width: 100%;
+        box-shadow: none;
+        padding: 0;
+        width: 100% !important;
+    }
 `;
 
 export const StyledLabelComponent = styled.div`

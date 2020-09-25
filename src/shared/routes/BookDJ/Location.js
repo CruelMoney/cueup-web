@@ -102,12 +102,12 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
                 siteDescription={siteDescription}
                 checkAvailability={checkAvailability}
             />
-            {!!featuredDjs.length && (
+            {featuredDjs.length >= 3 && (
                 <FeaturedDjs djs={featuredDjs} activeLocation={activeLocation} />
             )}
             <Occasions onClick={onClickElement} />
             <PopularRequests activeLocation={activeLocation} onClick={onClickElement} />
-            {!!otherDjs.length && (
+            {otherDjs.length >= 4 && (
                 <OtherDjs djs={otherDjs} activeLocation={activeLocation} onClick={onClickElement} />
             )}
             <TopLocations {...(activeLocation?.countryResult || activeLocation)} />
@@ -144,7 +144,7 @@ const Hero = ({ activeLocation, siteDescription, checkAvailability, image }) => 
                             )}
                         />
 
-                        <div style={{ width: '350px' }}>
+                        <div>
                             <PageTitle small>
                                 <span>Find DJs in</span>
                                 {name}
@@ -541,18 +541,36 @@ const HeroImageWrapper = styled.div`
         height: 100%;
         width: 100%;
     }
+    @media only screen and (max-width: 744px) {
+        display: none;
+    }
 `;
 
 const HeroSection = styled(CustomSection)`
     min-height: 470px;
     display: flex;
+    @media only screen and (max-width: 744px) {
+        min-height: 0;
+        margin-top: 15px;
+    }
 `;
 
-const MapWrapper = styled(HeroImageWrapper)`
+const MapWrapper = styled.div`
+    border-radius: 20px;
+    pointer-events: none;
+    overflow: hidden;
+    > img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+    }
     width: 100%;
     height: 470px;
     position: relative;
     box-shadow: 0 6px 65px 0 rgba(18, 43, 72, 0.15);
+    @media only screen and (max-width: 744px) {
+        height: 250px;
+    }
 `;
 
 const TopLocationsGrid = styled.ol`
@@ -565,8 +583,9 @@ const TopLocationsGrid = styled.ol`
         text-decoration: underline;
     }
     @media only screen and (max-width: 768px) {
-        grid-template-columns: 3fr;
+        grid-template-columns: repeat(2, 1fr);
         grid-row-gap: 30px;
+        grid-gap: 9px;
     }
 `;
 
