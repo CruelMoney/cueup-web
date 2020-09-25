@@ -51,6 +51,35 @@ const HTML = ({
                     content="width=device-width, initial-scale=1.0, viewport-fit=cover"
                 />
 
+                <link
+                    rel="preload"
+                    href="static/assets/Avenir-Next-Demi-Bold.woff2"
+                    as="font"
+                    type="font/woff2"
+                    crossOrigin="anonymous"
+                />
+                <link
+                    rel="preload"
+                    href="static/assets/Avenir-Next-Bold.woff2"
+                    as="font"
+                    type="font/woff2"
+                    crossOrigin="anonymous"
+                />
+                <link
+                    rel="preload"
+                    href="static/assets/Avenir-Next-Medium.woff2"
+                    as="font"
+                    type="font/woff2"
+                    crossOrigin="anonymous"
+                />
+                <link
+                    rel="preload"
+                    href="static/assets/Avenir-Next-Regular.woff2"
+                    as="font"
+                    type="font/woff2"
+                    crossOrigin="anonymous"
+                />
+
                 {helmet.title.toComponent()}
                 {helmet.meta.toComponent()}
                 {helmet.base.toComponent()}

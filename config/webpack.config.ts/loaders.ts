@@ -119,7 +119,7 @@ const urlLoaderServer = {
 };
 
 const fileLoaderClient = {
-    exclude: [/\.(js|jsx|ts|tsx|css|mjs|html|ejs|json)$/],
+    exclude: [/\.(js|jsx|ts|tsx|css|mjs|html|ejs|json|woff|woff2)$/],
     use: [
         {
             loader: require.resolve('file-loader'),
@@ -131,12 +131,37 @@ const fileLoaderClient = {
 };
 
 const fileLoaderServer = {
-    exclude: [/\.(js|tsx|ts|tsx|css|mjs|html|ejs|json)$/],
+    exclude: [/\.(js|tsx|ts|tsx|css|mjs|html|ejs|json|woff|woff2)$/],
     use: [
         {
             loader: require.resolve('file-loader'),
             options: {
                 name: 'assets/[name].[hash:8].[ext]',
+                emitFile: false,
+            },
+        },
+    ],
+};
+
+const fontLoaderClient = {
+    test: [/\.(woff|woff2)$/],
+    use: [
+        {
+            loader: require.resolve('file-loader'),
+            options: {
+                name: 'assets/[name].[ext]',
+            },
+        },
+    ],
+};
+
+const fontLoaderServer = {
+    test: [/\.(woff|woff2)$/],
+    use: [
+        {
+            loader: require.resolve('file-loader'),
+            options: {
+                name: 'assets/[name].[ext]',
                 emitFile: false,
             },
         },
@@ -151,6 +176,7 @@ export const client = [
             cssLoaderClient,
             urlLoaderClient,
             fileLoaderClient,
+            fontLoaderClient,
         ],
     },
 ];
@@ -163,6 +189,7 @@ export const server = [
             cssLoaderServer,
             urlLoaderServer,
             fileLoaderServer,
+            fontLoaderServer,
         ],
     },
 ];
