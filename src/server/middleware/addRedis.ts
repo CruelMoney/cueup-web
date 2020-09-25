@@ -44,8 +44,16 @@ const addRedis = (app) => {
     app.get(['/gig', '/gig*'], disable);
     app.get(['/user', '/user*'], disable);
 
-    // otherwise cache forever for the given geo location
-    app.get('*', setGeoCacheName, cache.route({ expire: -1 }));
+    app.get('*', setGeoCacheName);
+
+    // cache forever routes
+    app.get(
+        ['/', '/blog', '/blog*', '/dj-name-generator', '/become-dj', '/signup'],
+        cache.route({ expire: -1 })
+    );
+
+    // cache 60 seconds routes
+    app.get(['/*/book-dj'], cache.route({ expire: 60 }));
 };
 
 const setGeoCacheName = (req, res, next) => {
