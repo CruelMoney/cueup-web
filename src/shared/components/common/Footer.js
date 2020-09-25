@@ -190,7 +190,7 @@ const Footer = ({
 
                         <TopLocations />
                         <div>
-                            <h2 small>{translate('company')}</h2>
+                            <h2>{translate('company')}</h2>
                             <ul>
                                 <li>
                                     <Link to={translate(appRoutes.about)}>
@@ -223,7 +223,7 @@ const Footer = ({
                             </ul>
                         </div>
                         <div>
-                            <h2 small>{translate('resources')}</h2>
+                            <h2>{translate('resources')}</h2>
                             <ul>
                                 <li>
                                     <a
@@ -284,7 +284,7 @@ const TopLocations = () => {
 
     return (
         <div>
-            <h2 small>{translate('top-locations')}</h2>
+            <h2>{translate('top-locations')}</h2>
             <ul>
                 {cities.map(({ id, city, citySlug, countrySlug }) => (
                     <li key={id}>
