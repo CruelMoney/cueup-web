@@ -43,7 +43,6 @@ const addRedis = (app) => {
     app.get(['/event', '/event*'], disable);
     app.get(['/gig', '/gig*'], disable);
     app.get(['/user', '/user*'], disable);
-    app.get(['/*/book-dj'], disable);
 
     // otherwise cache forever for the given geo location
     app.get('*', setGeoCacheName, cache.route({ expire: -1 }));
