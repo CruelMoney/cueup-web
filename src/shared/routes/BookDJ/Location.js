@@ -432,6 +432,9 @@ const ScrollableFullWidthGrid = styled.ol`
     padding-left: calc((100vw - 100%) / 2);
     padding-right: calc((100vw - 100%) / 2);
     scrollbar-width: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
     padding-top: 15px;
     padding-bottom: 15px;
     margin-bottom: -15px;
@@ -513,6 +516,7 @@ const PopularRequests = ({ activeLocation, onClick }) => {
         <CustomSection>
             <Container>
                 <H2 small>Popular requests for {activeLocation.name} DJs</H2>
+
                 <ScrollableFullWidthGrid>
                     {requestdata.map((item, idx) => (
                         <RequestItem key={idx} idx={idx} onClick={onClick} {...item} />
