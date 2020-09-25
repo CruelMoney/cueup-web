@@ -194,7 +194,7 @@ const DJsMapped = ({ djs }) => {
             >
                 <meta itemProp="position" content={idx + 1} />
 
-                <FeaturedDJCard item={item} animate={false} />
+                <FeaturedDJCard item={item} animate={false} lazyload />
             </FeaturedDjWrapper>
         );
     });
@@ -373,7 +373,7 @@ const OccationItem = ({ src, alt, title, description, idx, ...props }) => {
             <meta itemProp="description" content={description} />
             <meta itemProp="image" content={src} />
             <ImageWrapper>
-                <GracefullImage animate src={src} alt={alt} />
+                <GracefullImage animate src={src} alt={alt} lazyload />
             </ImageWrapper>
             <H3 small aria-hidden="true">
                 {title}

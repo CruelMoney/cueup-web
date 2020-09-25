@@ -38,6 +38,7 @@ const InnerContent = ({
                 animate
                 itemProp="image"
                 draggable={false}
+                lazyload
                 src={picture?.path}
                 style={{
                     width: '100%',
