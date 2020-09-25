@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { useInView } from 'react-intersection-observer';
 
@@ -69,6 +69,19 @@ const GracefullImage = ({ src, style, placeholderStyle, alt, animate, lazyload, 
     }
 
     return <StyledImg src={src} style={style} alt={alt} animate={animate} {...props} />;
+};
+
+export const GracefullPicture = ({ children, style }) => {
+    return (
+        <div
+            style={{
+                backgroundColor: '#EFF2F5',
+                ...style,
+            }}
+        >
+            <picture style={style}>{children}</picture>
+        </div>
+    );
 };
 
 export default GracefullImage;

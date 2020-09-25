@@ -13,7 +13,7 @@ import { appRoutes } from 'constants/locales/appRoutes';
 import SmartNavigation from 'components/Navigation';
 import { Container, SmartButton } from 'components/Blocks';
 import { Body, BodySmall, H2, H3, PageTitle } from 'components/Text';
-import GracefullImage from 'components/GracefullImage';
+import { GracefullPicture } from 'components/GracefullImage';
 import Footer from 'components/common/Footer';
 import LazyRequestForm from 'components/common/RequestForm';
 import FeaturedDJCard from 'components/FeaturedDJCard';
@@ -25,6 +25,10 @@ import firstWeddingDance from './assets/first_wedding_dance_of_newlywed.webp';
 import birthdayParty from './assets/birthday_party.webp';
 import officeParty from './assets/office_party.webp';
 
+import firstWeddingDanceJPG from './assets/first_wedding_dance_of_newlywed.jpg';
+import birthdayPartyJPG from './assets/birthday_party.jpg';
+import officePartyJPG from './assets/office_party.jpg';
+
 import { ReactComponent as HipHopIcon } from './assets/icons/hiphop.svg';
 import { ReactComponent as PartyLightsIcon } from './assets/icons/partyLights.svg';
 import { ReactComponent as SmokeIcon } from './assets/icons/smoke.svg';
@@ -32,6 +36,7 @@ import { ReactComponent as SpeakerIcon } from './assets/icons/speaker.svg';
 import { ReactComponent as VinylIcon } from './assets/icons/vinyl.svg';
 import { ReactComponent as Top40Icon } from './assets/icons/top40.svg';
 import heroImg from './assets/hero_1.webp';
+import heroImgJPG from './assets/hero_1_compressed.jpg';
 import { SEARCH } from './gql';
 
 const Location = ({ translate, activeLocation, environment, topDjs }) => {
@@ -98,7 +103,6 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
             </Helmet>
             <SmartNavigation dark relative />
             <Hero
-                image={heroImg}
                 activeLocation={activeLocation}
                 siteDescription={siteDescription}
                 checkAvailability={checkAvailability}
@@ -129,7 +133,7 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
     );
 };
 
-const Hero = ({ activeLocation, siteDescription, checkAvailability, image }) => {
+const Hero = ({ activeLocation, siteDescription, checkAvailability }) => {
     const { name, coords, city } = activeLocation;
     return (
         <Container>
@@ -162,10 +166,18 @@ const Hero = ({ activeLocation, siteDescription, checkAvailability, image }) => 
                 </HeroCard>
 
                 <HeroImageWrapper>
-                    {image && (
-                        <GracefullImage src={image} alt="Female DJ playing vinyls" lazyload />
-                    )}
-                    {!image && coords && (
+                    <GracefullPicture lazyload>
+                        <source srcSet={heroImg} type="image/webp" />
+                        <source srcSet={heroImgJPG} type="image/jpeg" />
+                        <img
+                            alt="Female DJ playing vinyls"
+                            src={heroImgJPG}
+                            style={{ borderRadius: '20px' }}
+                            loading="lazy"
+                        />
+                    </GracefullPicture>
+
+                    {/* {!image && coords && (
                         <Map
                             noCircle={!city}
                             hideRoads={true}
@@ -179,7 +191,7 @@ const Hero = ({ activeLocation, siteDescription, checkAvailability, image }) => 
                             bounds={activeLocation.bounds}
                             largeScale
                         />
-                    )}
+                    )} */}
                 </HeroImageWrapper>
             </HeroSection>
         </Container>
@@ -327,7 +339,9 @@ const ImageWrapper = styled.div`
     border-radius: 2.5%;
     overflow: hidden;
     position: relative;
-    > * {
+    img,
+    picture,
+    div {
         position: absolute;
         object-fit: cover;
         height: 100%;
@@ -362,7 +376,7 @@ const ResponsiveRowFour = styled(ResponsiveRow)`
     }
 `;
 
-const OccationItem = ({ src, alt, title, description, idx, ...props }) => {
+const OccationItem = ({ src, jpg, alt, title, description, idx, ...props }) => {
     return (
         <ResponsiveCell
             ariaLabel={description}
@@ -376,7 +390,11 @@ const OccationItem = ({ src, alt, title, description, idx, ...props }) => {
             <meta itemProp="description" content={description} />
             <meta itemProp="image" content={src} />
             <ImageWrapper>
-                <GracefullImage animate src={src} alt={alt} lazyload />
+                <GracefullPicture lazyload>
+                    <source srcSet={src} type="image/webp" />
+                    <source srcSet={jpg} type="image/jpeg" />
+                    <img alt={alt} src={jpg} loading="lazy" />
+                </GracefullPicture>
             </ImageWrapper>
             <H3 small aria-hidden="true">
                 {title}
@@ -389,18 +407,21 @@ const OccationItem = ({ src, alt, title, description, idx, ...props }) => {
 const occationData = [
     {
         src: firstWeddingDance,
+        jpg: firstWeddingDanceJPG,
         alt: 'First wedding dance with glitter',
         title: 'Weddings',
         description: 'Wedding DJs that knows how to create a magical night.',
     },
     {
         src: officeParty,
+        jpg: officePartyJPG,
         alt: 'First wedding dance with glitter',
         title: 'Corporate events',
         description: 'DJs that knows exactly how a corporate event should be pulled off.',
     },
     {
         src: birthdayParty,
+        jpg: birthdayPartyJPG,
         alt: 'First wedding dance with glitter',
         title: 'Birthday parties',
         description: 'DJs for birthdays, anniversaries, and other private events.',
@@ -540,13 +561,15 @@ const HeroImageWrapper = styled.div`
     position: absolute;
     right: 0;
     top: 0;
-    box-shadow: 0 3px 10px 0 rgba(18, 43, 72, 0.15);
     pointer-events: none;
     overflow: hidden;
-    > img {
+    div,
+    img,
+    picture {
         object-fit: cover;
         height: 100%;
         width: 100%;
+        display: block;
     }
     @media only screen and (max-width: 744px) {
         display: none;
@@ -567,11 +590,6 @@ const MapWrapper = styled.div`
     pointer-events: none;
     overflow: hidden;
     background-color: #fff;
-    > img {
-        object-fit: cover;
-        height: 100%;
-        width: 100%;
-    }
     width: 100%;
     height: 470px;
     position: relative;
