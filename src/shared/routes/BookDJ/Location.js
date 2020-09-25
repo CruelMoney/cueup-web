@@ -176,22 +176,6 @@ const Hero = ({ activeLocation, siteDescription, checkAvailability }) => {
                             loading="lazy"
                         />
                     </GracefullPicture>
-
-                    {/* {!image && coords && (
-                        <Map
-                            noCircle={!city}
-                            hideRoads={true}
-                            radius={activeLocation.radius}
-                            defaultCenter={coords}
-                            height={'100%'}
-                            value={coords}
-                            editable={false}
-                            radiusName="playingRadius"
-                            locationName="playingLocation"
-                            bounds={activeLocation.bounds}
-                            largeScale
-                        />
-                    )} */}
                 </HeroImageWrapper>
             </HeroSection>
         </Container>

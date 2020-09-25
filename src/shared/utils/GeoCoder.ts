@@ -18,6 +18,7 @@ export default {
                 });
             });
         } catch (error) {
+            console.log(error);
             return callback({
                 error: 'Geocode was not successful',
                 position: null,

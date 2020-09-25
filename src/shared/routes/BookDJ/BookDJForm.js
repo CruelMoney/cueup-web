@@ -8,6 +8,8 @@ import { Input } from 'components/FormComponents';
 import { CTAButton } from 'components/CTAButton';
 import { useCheckDjAvailability } from 'actions/EventActions';
 import LazyRequestForm from 'components/common/RequestForm';
+import { BodySmall } from 'components/Text';
+import { loadScript } from 'components/hooks/useLazyLoadScript';
 import { StyledLabelComponent } from './Components';
 
 const BookDJForm = ({ checkAvailability, activeLocation }) => {
@@ -40,7 +42,11 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
 
             const errors = runValidations();
             if (errors.length === 0) {
+                await loadScript(
+                    'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
+                );
                 await LazyRequestForm.load();
+
                 const { result, date, timeZoneId, location } = await check(form);
 
                 if (result === true) {
@@ -135,6 +141,11 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
             >
                 {checkAvailability ? 'Check availability' : 'Find DJs'}
             </CustomCTAButton>
+            {error && (
+                <BodySmall className="error" style={{ marginTop: 12 }}>
+                    {error}
+                </BodySmall>
+            )}
         </>
     );
 };
