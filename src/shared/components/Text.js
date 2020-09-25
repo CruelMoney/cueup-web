@@ -64,7 +64,7 @@ export const TitleClean = styled.h3`
 `;
 
 export const Body = styled.p`
-    font-size: 18px;
+    font-size: ${({ small }) => (small ? '16px' : '18px')};
     color: ${({ white }) => (white ? '#fff' : '#4d6480')};
     line-height: 27px;
     letter-spacing: 0;

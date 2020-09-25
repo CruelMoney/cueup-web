@@ -162,7 +162,9 @@ const Hero = ({ activeLocation, siteDescription, checkAvailability, image }) => 
                 </HeroCard>
 
                 <HeroImageWrapper>
-                    {image && <GracefullImage src={image} lazyload />}
+                    {image && (
+                        <GracefullImage src={image} alt="Female DJ playing vinyls" lazyload />
+                    )}
                     {!image && coords && (
                         <Map
                             noCircle={!city}

@@ -103,6 +103,7 @@ const Footer = ({
                                             id="language-selector"
                                             className="dropdown-selector"
                                             name="language-selector"
+                                            aria-label="Choose language"
                                             onChange={(e) => setActiveLanguage(e.target.value)}
                                             defaultValue={currentLanguage}
                                         >
@@ -189,7 +190,7 @@ const Footer = ({
 
                         <TopLocations />
                         <div>
-                            <h4>{translate('company')}</h4>
+                            <h2 small>{translate('company')}</h2>
                             <ul>
                                 <li>
                                     <Link to={translate(appRoutes.about)}>
@@ -222,7 +223,7 @@ const Footer = ({
                             </ul>
                         </div>
                         <div>
-                            <h4>{translate('resources')}</h4>
+                            <h2 small>{translate('resources')}</h2>
                             <ul>
                                 <li>
                                     <a
@@ -283,7 +284,7 @@ const TopLocations = () => {
 
     return (
         <div>
-            <h4>{translate('top-locations')}</h4>
+            <h2 small>{translate('top-locations')}</h2>
             <ul>
                 {cities.map(({ id, city, citySlug, countrySlug }) => (
                     <li key={id}>
@@ -319,6 +320,9 @@ const FooterColumns = styled.div`
     > div {
         width: 200px;
     }
+    ul {
+        margin-top: 0;
+    }
     @media only screen and (max-width: 768px) {
         > div {
             margin-bottom: 15px;
@@ -348,10 +352,11 @@ const GlobalStyle = createGlobalStyle`
             margin-top: 3px;
         }
     }
-    footer h4 {
-        font-size: 14px;
-        font-weight: 600;
+    footer h2 {
+        font-size: 16px;
+        font-weight: 500;
         line-height: 30px;
+        color: #4d6480;
     }
     footer .locales {
         margin-top: 0;

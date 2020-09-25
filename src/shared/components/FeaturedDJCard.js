@@ -40,6 +40,7 @@ const InnerContent = ({
                 draggable={false}
                 lazyload
                 src={picture?.path}
+                alt={artistName || userMetadata?.firstName}
                 style={{
                     width: '100%',
                     height: '100%',
