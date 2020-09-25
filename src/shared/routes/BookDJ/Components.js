@@ -9,6 +9,7 @@ export const HeroCard = styled.div`
     position: relative;
     z-index: 1;
     max-width: 450px;
+    min-width: 370px;
     display: inline-block;
     margin: auto 0;
     @media only screen and (max-width: 744px) {
@@ -16,6 +17,7 @@ export const HeroCard = styled.div`
         box-shadow: none;
         padding: 0;
         width: 100% !important;
+        min-width: 0;
     }
 `;
 
