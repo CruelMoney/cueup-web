@@ -1,6 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import { Route, Switch, useHistory, useLocation } from 'react-router';
+import { LoadScript } from '@react-google-maps/api';
 import LocationSelector from 'components/common/LocationSelectorSimple';
 import { useForm } from 'components/hooks/useForm';
 import DatePickerPopup from 'components/DatePickerPopup';
@@ -9,7 +10,7 @@ import { CTAButton } from 'components/CTAButton';
 import { useCheckDjAvailability } from 'actions/EventActions';
 import LazyRequestForm from 'components/common/RequestForm';
 import { BodySmall } from 'components/Text';
-import { loadScript } from 'components/hooks/useLazyLoadScript';
+import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
 import { StyledLabelComponent } from './Components';
 
 const BookDJForm = ({ checkAvailability, activeLocation }) => {
@@ -24,6 +25,10 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
     const { iso2 } = activeLocation;
 
     const [check, { loading, error }] = useCheckDjAvailability();
+
+    const [startLoadingScript] = useLazyLoadScript(
+        'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
+    );
 
     const submit = useCallback(
         async (e) => {
@@ -42,9 +47,6 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
 
             const errors = runValidations();
             if (errors.length === 0) {
-                await loadScript(
-                    'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
-                );
                 await LazyRequestForm.load();
 
                 const { result, date, timeZoneId, location } = await check(form);
@@ -71,7 +73,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
     );
 
     return (
-        <>
+        <div onMouseEnter={startLoadingScript}>
             <StyledLabelComponent>
                 <LocationSelector
                     data-cy={'location-input'}
@@ -146,7 +148,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
                     {error}
                 </BodySmall>
             )}
-        </>
+        </div>
     );
 };
 

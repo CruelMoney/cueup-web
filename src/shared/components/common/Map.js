@@ -1,4 +1,4 @@
-import React, { Component, useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import useScript from '@charlietango/use-script';
 import { GoogleMap, Circle } from '@react-google-maps/api';
 
