@@ -89,12 +89,12 @@ const Layout = ({ loading, user }) => {
             </Container>
             <Footer
                 noSkew
-                firstTo={translate(appRoutes.howItWorks)}
-                secondTo={translate(appRoutes.home)}
-                firstLabel={translate('how-it-works')}
-                secondLabel={translate('arrange-event')}
-                title={translate('Wonder how it works?')}
-                subTitle={translate('See how it works, or arrange an event.')}
+                firstTo={translate(appRoutes.becomeDj)}
+                secondTo={translate(appRoutes.blog)}
+                firstLabel={'Cueup for DJs'}
+                secondLabel={'Blog'}
+                title={'Join thousands of other DJs.'}
+                subTitle={translate('Check the benefits, or read more on our blog.')}
             />
         </>
     );
