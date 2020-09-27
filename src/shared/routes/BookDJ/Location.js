@@ -46,7 +46,7 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
 
     const siteDescription = `Find and book the best DJs in ${title}.`;
 
-    const siteTitle = `${title}'s best DJs · Cueup`;
+    const siteTitle = `Book a DJ in ${title} · Cueup`;
     const thumb = environment.CALLBACK_DOMAIN + (activeLocation.image || defaultImage);
 
     const featuredDjs = topDjs.slice(0, 3);
