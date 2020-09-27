@@ -44,7 +44,7 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
 
     const coordinates = activeLocation.coords;
 
-    const siteDescription = `Find and book the best DJs in ${title}.`;
+    const siteDescription = `Find and book the best DJs in ${title}. Explore the DJs and book the perfect DJ for your event.`;
 
     const siteTitle = `Book a DJ in ${title} · Cueup`;
     const thumb = environment.CALLBACK_DOMAIN + (activeLocation.image || defaultImage);
