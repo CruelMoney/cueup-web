@@ -193,7 +193,7 @@ const DJsMapped = ({ djs }) => {
             >
                 <meta itemProp="position" content={idx + 1} />
 
-                <FeaturedDJCard item={item} animate={false} lazyload />
+                <FeaturedDJCard border item={item} animate={false} lazyload />
             </FeaturedDjWrapper>
         );
     });

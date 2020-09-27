@@ -148,6 +148,7 @@ const Card = styled.div`
     height: 100%;
     background: rgba(255, 255, 255, 0.1);
     transition: transform 1000ms ease;
+    border: ${({ border }) => (border ? '0.5px solid rgba(207, 215, 223, 0.5)' : 'none')}}
     ${({ animate }) =>
         animate
             ? css`
