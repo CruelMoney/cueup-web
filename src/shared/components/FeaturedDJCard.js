@@ -40,15 +40,6 @@ const InnerContent = ({
                 lazyload
                 src={picture?.path}
                 alt={artistName || userMetadata?.firstName}
-                style={{
-                    width: '100%',
-                    height: '100%',
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    objectFit: 'cover',
-                    borderRadius: '0.2em',
-                }}
             />
             <BottomGradient />
             <DjCardContent>
@@ -147,7 +138,7 @@ const Card = styled.div`
     height: 100%;
     background: rgba(255, 255, 255, 0.1);
     transition: transform 1000ms ease;
-    border: ${({ border }) => (border ? '0.5px solid rgba(207, 215, 223, 0.5)' : 'none')}}
+    border: ${({ border }) => (border ? '0.5px solid rgba(207, 215, 223, 0.5)' : 'none')};
     ${({ animate }) =>
         animate
             ? css`
@@ -156,7 +147,17 @@ const Card = styled.div`
                       transform: scale(1.05);
                   }
               `
-            : null}
+            : null};
+
+    img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        object-fit: cover;
+        border-radius: 0.2em;
+    }
 `;
 
 export default FeaturedDJCard;
