@@ -120,7 +120,7 @@ const serverRenderer = () => async (req, res) => {
     }
 
     // we serve a static site to crawlers to improve performance
-    const isCrawler = req.useragent.isBot;
+    const staticOnly = req.useragent.isBot;
 
     res.setHeader('Content-Type', 'text/html');
     res.write(Buffer.from('<!DOCTYPE html>', 'utf8'));
@@ -129,11 +129,11 @@ const serverRenderer = () => async (req, res) => {
         <Html
             helmetContext={helmetContext}
             styleTags={[...styleTags, ...cssTags]}
-            scriptTags={isCrawler ? [] : [...scriptTags, ...linkTags]}
-            i18nState={isCrawler ? {} : i18nState}
-            environment={isCrawler ? {} : environment}
-            clientData={isCrawler ? {} : clientData}
-            apolloState={isCrawler ? {} : apolloState}
+            scriptTags={staticOnly ? [] : [...scriptTags, ...linkTags]}
+            i18nState={staticOnly ? {} : i18nState}
+            environment={staticOnly ? {} : environment}
+            clientData={staticOnly ? {} : clientData}
+            apolloState={staticOnly ? {} : apolloState}
         >
             {content}
         </Html>

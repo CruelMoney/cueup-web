@@ -35,7 +35,6 @@ const InnerContent = ({
             rel="noopener noreferrer"
         >
             <GracefullImage
-                animate
                 itemProp="image"
                 draggable={false}
                 lazyload

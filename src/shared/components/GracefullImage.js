@@ -5,10 +5,8 @@ const StyledImg = styled.img`
     color: transparent;
 `;
 
-const GracefullImage = ({ src, style, alt, animate, ...props }) => {
-    return (
-        <StyledImg src={src} style={style} loading="lazy" alt={alt} animate={animate} {...props} />
-    );
+const GracefullImage = ({ ...props }) => {
+    return <StyledImg loading="lazy" {...props} />;
 };
 
 export const GracefullPicture = ({ children, style }) => {
