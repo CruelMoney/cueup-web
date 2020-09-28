@@ -58,7 +58,8 @@ const addRedis = (app) => {
 
 const setGeoCacheName = (req, res, next) => {
     const countryCode = req.header('cf-ipcountry');
-    res.express_redis_cache_name = req.originalUrl + (countryCode ? countryCode : '');
+    res.express_redis_cache_name =
+        req.originalUrl + (countryCode ? countryCode : '') + (req.useragent.isBot ? ':bot' : '');
     next();
 };
 

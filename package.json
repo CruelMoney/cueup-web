@@ -82,6 +82,7 @@
     "express-manifest-helpers": "^0.6.0",
     "express-redis-cache": "https://github.com/fikander/express-redis-cache#streamed-responses",
     "express-sitemap-xml": "^1.1.0",
+    "express-useragent": "^1.0.15",
     "geolib": "^3.3.1",
     "glob": "^7.1.6",
     "graphql": "14",

@@ -6,6 +6,7 @@ import manifestHelpers from 'express-manifest-helpers';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cookiesMiddleware from 'universal-cookie-express';
+import useragent from 'express-useragent';
 import addApollo from 'middleware/addApollo';
 import addLoadableExtractor from 'middleware/addLoadableExtractor';
 import addRedis, { cache } from 'middleware/addRedis';
@@ -31,6 +32,7 @@ if (!isProduction) {
     app.use(addLogging);
 }
 
+app.use(useragent.express());
 addTestEndpoints(app);
 addSocialImages(app);
 
