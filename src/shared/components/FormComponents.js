@@ -347,8 +347,10 @@ const Input = React.forwardRef(
         return (
             <>
                 <LabelComponent style={labelStyle}>
-                    {label}
-                    {proFeature && <ProFeature small disabled={isPro} />}
+                    <span>
+                        {label}
+                        {proFeature && <ProFeature small disabled={isPro} />}
+                    </span>
                     <InputType
                         type={type}
                         save={save}

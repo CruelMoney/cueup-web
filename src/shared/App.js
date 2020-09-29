@@ -9,7 +9,7 @@ import LazyCompleteSignup from 'routes/CompleteSignup';
 import LazyTerms from 'routes/Terms';
 import LazyEvent from 'routes/Event';
 import ResetPassword from 'routes/ResetPassword';
-import LazyLocation from 'routes/BookDJ';
+import LazyLocation, { LazySearch } from 'routes/BookDJ';
 import { LazyLocationsOverview } from 'routes/Location';
 import LazyGig from 'routes/Gig';
 import LazySideBarChat from 'components/SidebarChat';
@@ -81,7 +81,7 @@ const RouteWrapper = () => {
                     <Route path={t(appRoutes.gig) + '/:id'} component={LazyGig} />
                     <Route path={t(appRoutes.bookDj)} component={LazyLocation} />
                     <Route path={t(appRoutes.bookDjOverview)} component={LazyLocationsOverview} />
-
+                    <Route path={t(appRoutes.search)} component={LazySearch} />
                     <Route path={t(appRoutes.resetPassword)} component={ResetPassword} />
 
                     <Route component={NotFound} />

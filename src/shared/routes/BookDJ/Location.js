@@ -20,7 +20,15 @@ import FeaturedDJCard from 'components/FeaturedDJCard';
 import defaultImage from '../../assets/images/default.png';
 import Map from '../../components/common/Map';
 import BookDJForm from './BookDJForm';
-import { HeroCard } from './Components';
+import {
+    BreadCrumbs,
+    CustomSection,
+    HeroCard,
+    HeroImageWrapper,
+    HeroSection,
+    ImageWrapper,
+    MapWrapper,
+} from './Components';
 import firstWeddingDance from './assets/first_wedding_dance_of_newlywed.webp';
 import birthdayParty from './assets/birthday_party.webp';
 import officeParty from './assets/office_party.webp';
@@ -133,6 +141,54 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
     );
 };
 
+const DJsMapped = ({ djs }) => {
+    return djs.map((item, idx) => {
+        return (
+            <FeaturedDjWrapper
+                key={item.id}
+                ariaLabel={item.artistName || item.userMetadata?.firstName}
+                itemScope=" "
+                itemType="https://schema.org/Person"
+            >
+                <meta itemProp="position" content={idx + 1} />
+
+                <FeaturedDJCard border item={item} animate={false} lazyload />
+            </FeaturedDjWrapper>
+        );
+    });
+};
+
+const FeaturedDjs = ({ djs, activeLocation }) => {
+    return (
+        <CustomSection>
+            <Container>
+                <H2 small>Featured DJs in {activeLocation.name}</H2>
+                <Body>Find and book the best DJs in {activeLocation.name}.</Body>
+                <ResponsiveRow>
+                    <DJsMapped djs={djs} />
+                </ResponsiveRow>
+            </Container>
+        </CustomSection>
+    );
+};
+
+const OtherDjs = ({ djs, activeLocation, onClick }) => {
+    return (
+        <CustomSection>
+            <Container>
+                <H2 small>Other great DJs in {activeLocation.name}</H2>
+                <ResponsiveRowFour>
+                    <DJsMapped djs={djs} />
+                </ResponsiveRowFour>
+
+                <NavLink to="/" onClick={onClick} style={{ fontSize: '18px', maxWidth: 'initial' }}>
+                    See all DJs in {activeLocation.name} <InlineIcon icon={forwardIcon} />
+                </NavLink>
+            </Container>
+        </CustomSection>
+    );
+};
+
 const Hero = ({ activeLocation, siteDescription, checkAvailability }) => {
     const { name, coords, city } = activeLocation;
     return (
@@ -182,120 +238,6 @@ const Hero = ({ activeLocation, siteDescription, checkAvailability }) => {
     );
 };
 
-const DJsMapped = ({ djs }) => {
-    return djs.map((item, idx) => {
-        return (
-            <FeaturedDjWrapper
-                key={item.id}
-                ariaLabel={item.artistName || item.userMetadata?.firstName}
-                itemScope=" "
-                itemType="https://schema.org/Person"
-            >
-                <meta itemProp="position" content={idx + 1} />
-
-                <FeaturedDJCard border item={item} animate={false} lazyload />
-            </FeaturedDjWrapper>
-        );
-    });
-};
-
-const FeaturedDjs = ({ djs, activeLocation }) => {
-    return (
-        <CustomSection>
-            <Container>
-                <H2 small>Featured DJs in {activeLocation.name}</H2>
-                <Body>Find and book the best DJs in {activeLocation.name}.</Body>
-                <ResponsiveRow>
-                    <DJsMapped djs={djs} />
-                </ResponsiveRow>
-            </Container>
-        </CustomSection>
-    );
-};
-
-const OtherDjs = ({ djs, activeLocation, onClick }) => {
-    return (
-        <CustomSection>
-            <Container>
-                <H2 small>Other great DJs in {activeLocation.name}</H2>
-                <ResponsiveRowFour>
-                    <DJsMapped djs={djs} />
-                </ResponsiveRowFour>
-
-                <NavLink to="/" onClick={onClick} style={{ fontSize: '18px', maxWidth: 'initial' }}>
-                    See all DJs in {activeLocation.name} <InlineIcon icon={forwardIcon} />
-                </NavLink>
-            </Container>
-        </CustomSection>
-    );
-};
-
-const BreadCrumbsList = styled.ol`
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    li {
-        display: inline-block;
-    }
-    a {
-        padding: 0 6px;
-    }
-    a:hover {
-        text-decoration: underline;
-    }
-    a.current {
-        pointer-events: none;
-        cursor: default;
-    }
-    .breadcrumb-arrow {
-        pointer-events: none;
-        user-select: none;
-        white-space: pre-wrap;
-        padding-left: 0px;
-        padding-right: 0px;
-        font-size: 18px;
-    }
-`;
-
-const BreadCrumbs = ({ items }) => {
-    return (
-        <Container>
-            <BreadCrumbsList
-                itemScope=" "
-                itemType="https://schema.org/BreadcrumbList"
-                aria-label="breadcrumb"
-            >
-                {items.map(({ url, label }, idx) => (
-                    <li
-                        key={url}
-                        itemProp="itemListElement"
-                        itemScope=" "
-                        itemType="https://schema.org/ListItem"
-                    >
-                        {idx > 0 && (
-                            <span className="breadcrumb-arrow" aria-hidden="true">
-                                {' '}
-                                ›{' '}
-                            </span>
-                        )}
-                        <a
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href={url}
-                            itemType="https://schema.org/Thing"
-                            itemProp="item"
-                            className={idx === items.length - 1 ? 'current' : ''}
-                        >
-                            <span itemProp="name">{label}</span>
-                        </a>
-                        <meta itemProp="position" content={idx + 1} />
-                    </li>
-                ))}
-            </BreadCrumbsList>
-        </Container>
-    );
-};
-
 const FeaturedDjWrapper = styled.li`
     font-size: 100px;
     position: relative;
@@ -316,25 +258,6 @@ const ResponsiveCell = styled.li`
     cursor: pointer;
     ${H3} {
         margin-top: 0.6em;
-    }
-`;
-
-const ImageWrapper = styled.div`
-    border-radius: 2.5%;
-    overflow: hidden;
-    position: relative;
-    img,
-    picture,
-    div {
-        position: absolute;
-        object-fit: cover;
-        height: 100%;
-        width: 100%;
-    }
-    :after {
-        content: '';
-        display: block;
-        padding-top: 100%;
     }
 `;
 
@@ -531,57 +454,6 @@ const PopularRequests = ({ activeLocation, onClick }) => {
         </CustomSection>
     );
 };
-
-const CustomSection = styled.section`
-    margin-bottom: 60px;
-    position: relative;
-    width: 100%;
-`;
-
-const HeroImageWrapper = styled.div`
-    width: 75%;
-    height: 100%;
-    border-radius: 20px;
-    position: absolute;
-    right: 0;
-    top: 0;
-    pointer-events: none;
-    overflow: hidden;
-    div,
-    img,
-    picture {
-        object-fit: cover;
-        height: 100%;
-        width: 100%;
-        display: block;
-    }
-    @media only screen and (max-width: 744px) {
-        display: none;
-    }
-`;
-
-const HeroSection = styled(CustomSection)`
-    min-height: 470px;
-    display: flex;
-    @media only screen and (max-width: 744px) {
-        min-height: 0;
-        margin-top: 15px;
-    }
-`;
-
-const MapWrapper = styled.div`
-    border-radius: 20px;
-    pointer-events: none;
-    overflow: hidden;
-    background-color: #fff;
-    width: 100%;
-    height: 470px;
-    position: relative;
-    box-shadow: 0 6px 65px 0 rgba(18, 43, 72, 0.15);
-    @media only screen and (max-width: 744px) {
-        height: 250px;
-    }
-`;
 
 const TopLocationsGrid = styled.ol`
     display: grid;

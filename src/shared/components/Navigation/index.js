@@ -15,7 +15,7 @@ import { LoadingIndicator, Container } from '../Blocks';
 import DesktopMenu from './DesktopMenu';
 import MobileMenu from './MobileMenu';
 
-const Menu = ({ dark, relative }) => {
+const Menu = ({ dark, relative, fullWidth }) => {
     const { t } = useTranslation();
     const [loginExpanded, setLoginExpanded] = useState(false);
 
@@ -44,7 +44,7 @@ const Menu = ({ dark, relative }) => {
             <EmailVerifier onVerified={() => setLoginExpanded(true)} />
             <InstagramConnect />
 
-            <Container className="container">
+            <Container fullWidth={fullWidth} className="container">
                 <div className={'nav-container location_'}>
                     <nav className="navigation">
                         <div className="logo-area">

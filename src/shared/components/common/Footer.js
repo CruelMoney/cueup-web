@@ -22,6 +22,7 @@ const Footer = ({
     secondLabel,
     secondTo,
     firstAction,
+    fullWidth,
 }) => {
     const { translate, currentLanguage } = useTranslate();
 
@@ -55,7 +56,7 @@ const Footer = ({
                 ))}
             </Helmet>
             <div style={{ backgroundColor: bgColor }} className={'noSkew'} id="preFooter">
-                <Container>
+                <Container fullWidth={fullWidth}>
                     <RowWrap between middle>
                         <div
                             key="preFooterText"
@@ -79,7 +80,7 @@ const Footer = ({
                 </Container>
             </div>
             <FooterWrapper style={{ backgroundColor: bgColor }}>
-                <Container>
+                <Container fullWidth={fullWidth}>
                     <FooterColumns>
                         <div>
                             <ul className="locales">

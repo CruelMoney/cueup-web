@@ -32,6 +32,11 @@ export const Container = styled.div`
     @media only screen and (max-width: 768px) {
         padding: 0 15px;
     }
+    ${({ fullWidth }) =>
+        fullWidth &&
+        css`
+            max-width: 100%;
+        `}
 `;
 
 export const Col = styled.div`

@@ -10,7 +10,7 @@ import { useCheckDjAvailability } from 'actions/EventActions';
 import LazyRequestForm from 'components/common/RequestForm';
 import { BodySmall } from 'components/Text';
 import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
-import { StyledLabelComponent } from './Components';
+import { CustomCTAButton, StyledLabelComponent } from './Components';
 
 const BookDJForm = ({ checkAvailability, activeLocation }) => {
     const routeLocation = useLocation();
@@ -150,18 +150,5 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
         </div>
     );
 };
-
-const CustomCTAButton = styled(CTAButton)`
-    width: 100%;
-    border-radius: 8px;
-    margin: 0;
-    height: 55px;
-    margin-top: 6px;
-    justify-content: center;
-    padding: 0;
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: 0;
-`;
 
 export default BookDJForm;

@@ -17,6 +17,7 @@ export const routeKeys = Object.freeze({
     userGigs: 'userGigs',
     bookDj: 'bookDj',
     bookDjOverview: 'bookDjOverview',
+    search: 'search',
     blog: 'blog',
     faq: 'faq',
     faqDj: 'faqDj',
