@@ -70,6 +70,8 @@ export const StyledLabelComponent = styled.div`
         box-shadow: none;
         border: 1px solid #e9ecf0;
         border-radius: 8px;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
     .powered-by-google {
         top: 0.7em !important;

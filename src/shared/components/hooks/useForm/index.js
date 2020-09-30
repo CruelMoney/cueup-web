@@ -84,6 +84,10 @@ export const useForm = (externalForm, initialValues = {}) => {
         name,
     });
 
+    const clearForm = useCallback(() => {
+        setForm({});
+    }, []);
+
     return {
         registerValidation,
         unregisterValidation,
@@ -91,6 +95,7 @@ export const useForm = (externalForm, initialValues = {}) => {
         form,
         setValue,
         getInputProps,
+        clearForm,
     };
 };
 

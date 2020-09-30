@@ -24,6 +24,7 @@ const DatePickerPopup = forwardRef(
             buttonText,
             removable,
             showInside,
+            insideStyle,
             ...props
         },
         forwardRef
@@ -96,6 +97,7 @@ const DatePickerPopup = forwardRef(
                             left: '-22px',
                             right: '-22px',
                             transform: 'translateY(-50%)',
+                            ...insideStyle,
                         }}
                     >
                         <DatePicker

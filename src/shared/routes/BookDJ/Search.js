@@ -1,23 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import { useQuery } from 'react-apollo';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { InlineIcon } from '@iconify/react';
 import speechIcon from '@iconify/icons-ion/ios-text';
 import { useServerContext } from 'components/hooks/useServerContext';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
 import SmartNavigation from 'components/Navigation';
-import { Container, Row, RowWrap, SmartButton } from 'components/Blocks';
-import { Body, BodyBold, BodySmall } from 'components/Text';
+import { Col, Container, Row, RowWrap, SmartButton } from 'components/Blocks';
+import { BodyBold, BodySmall } from 'components/Text';
 import Footer from 'components/common/Footer';
 import LocationSelector from 'components/common/LocationSelectorSimple';
-import { Input, InputRow, Label } from 'components/FormComponents';
+import { Input, Label } from 'components/FormComponents';
 import DatePickerPopup from 'components/DatePickerPopup';
 
 import TimeSlider from 'components/common/TimeSlider/TimeSlider';
 import { useForm } from 'components/hooks/useForm';
+import { CheckBoxRow } from 'components/CheckboxTable';
+import Checkmark from 'assets/Checkmark';
 import { CustomCTAButton } from './Components';
 import { SEARCH } from './gql';
 
@@ -93,34 +95,39 @@ const GreyBox = styled.section`
     padding: 20px;
     margin-bottom: 15px;
     position: relative;
-    label,
-    ${Label} {
-        flex: 1;
-        min-width: 0;
+    > label {
         color: #32325d;
         font-weight: 600;
         letter-spacing: 0.08em;
         font-size: 10px;
-        margin-top: 0px;
-        margin-right: 9px;
-        margin-bottom: 12px;
-        > span {
-            margin-left: 9px;
-        }
-        > input,
-        > button {
-            font-size: 1.6em;
-            background-color: white;
-            padding-left: 0px;
-            margin-top: 4px;
-            height: 40px;
-            text-align: left;
-            justify-content: flex-start;
-        }
     }
-
     ${RowWrap} {
         margin-right: -9px;
+        label,
+        ${Label} {
+            flex: 1;
+            min-width: 0;
+            color: #32325d;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            font-size: 10px;
+            margin-top: 0px;
+            margin-right: 9px;
+            margin-bottom: 12px;
+            > span {
+                margin-left: 9px;
+            }
+            > input,
+            > button {
+                font-size: 1.6em;
+                background-color: white;
+                padding-left: 0px;
+                margin-top: 4px;
+                height: 40px;
+                text-align: left;
+                justify-content: flex-start;
+            }
+        }
     }
     .time-slider-data {
         padding: 0 9px;
@@ -143,13 +150,36 @@ const GreyBox = styled.section`
         box-shadow: none;
         border: 1px solid #e9ecf0;
         border-radius: 27px;
-        -ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
     .powered-by-google {
         top: 0.7em !important;
         display: flex;
         right: 0.7em !important;
+    }
+`;
+
+const InsidePopup = styled.div`
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    padding: 20px;
+    box-shadow: none;
+    background: #fff;
+    border: 1px solid #e9ecf0;
+    border-radius: 27px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    z-index: 1;
+    button.withIcon span {
+        justify-content: space-between;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        align-items: center;
     }
 `;
 
@@ -164,17 +194,227 @@ const FilterPill = styled.button`
     margin-right: 6px !important;
     margin-top: 6px !important;
     margin-left: 0px !important;
+
+    ${({ active }) =>
+        active &&
+        css`
+            box-shadow: inset 0 0 0px 2px #4d6480;
+        `}
 `;
 
-const FilterPills = () => {
+const FilterPills = ({ form, setValue }) => {
+    const [showEventTypes, setShowEventTypes] = useState(false);
+    const [showBudget, setShowBudget] = useState(false);
+
     return (
-        <RowWrap style={{ marginBottom: 30, marginTop: 20 }}>
-            <FilterPill>Music genres</FilterPill>
-            <FilterPill>Sound system</FilterPill>
-            <FilterPill>Lights</FilterPill>
-            <FilterPill>Budget</FilterPill>
-            <FilterPill>Type of event</FilterPill>
-        </RowWrap>
+        <>
+            <RowWrap style={{ marginBottom: 30, marginTop: 20 }}>
+                <FilterPill
+                    onClick={() => setValue({ speakers: !form.speakers })}
+                    active={!!form.genres}
+                >
+                    Music genres
+                </FilterPill>
+                <FilterPill
+                    onClick={() => setShowEventTypes(true)}
+                    active={form.equipment && Object.values(form.equipment).filter(Boolean).length}
+                >
+                    Equipment
+                </FilterPill>
+
+                <FilterPill active={form.budget} onClick={() => setShowBudget(true)}>
+                    {form.budget?.label || 'Budget'}
+                </FilterPill>
+                <FilterPill
+                    active={
+                        form.eventTypes && Object.values(form.eventTypes).filter(Boolean).length
+                    }
+                    onClick={() => setShowEventTypes(true)}
+                >
+                    Type of event
+                </FilterPill>
+            </RowWrap>
+            {showEventTypes && (
+                <EventTypeSelector
+                    initialvalues={form.eventTypes}
+                    onSave={(eventTypes) => {
+                        setValue({ eventTypes });
+                        setShowEventTypes(false);
+                    }}
+                />
+            )}
+
+            {showBudget && (
+                <BudgetSelector
+                    initialvalue={form.budget}
+                    onSave={(budget) => {
+                        setValue({ budget });
+                        setShowBudget(false);
+                    }}
+                />
+            )}
+        </>
+    );
+};
+
+const EventTypeSelector = ({ initialvalues, onSave, loading }) => {
+    const { form, setValue, clearForm } = useForm(null, initialvalues);
+    const [key, setKey] = useState(0);
+
+    const handleSave = () => {
+        onSave(form);
+    };
+
+    return (
+        <InsidePopup>
+            <Col key={key} style={{ height: '100%' }}>
+                <RowWrap>
+                    <label>EVENT TYPE</label>
+                </RowWrap>
+                <CheckBoxRow
+                    label="Wedding"
+                    checked={form.wedding}
+                    onChange={(wedding) => setValue({ wedding })}
+                />
+                <CheckBoxRow
+                    label="Birthday"
+                    checked={form.birthday}
+                    onChange={(birthday) => setValue({ birthday })}
+                />
+                <CheckBoxRow
+                    label="Corporate event"
+                    checked={form.corporate}
+                    onChange={(corporate) => setValue({ corporate })}
+                />
+                <CheckBoxRow
+                    label="Club"
+                    checked={form.club}
+                    onChange={(club) => setValue({ club })}
+                />
+                <CheckBoxRow
+                    label="Festival"
+                    checked={form.festival}
+                    onChange={(festival) => setValue({ festival })}
+                />
+                <CheckBoxRow
+                    label="School"
+                    checked={form.school}
+                    onChange={(school) => setValue({ school })}
+                />
+                <CheckBoxRow
+                    label="Outdoor"
+                    checked={form.outdoor}
+                    onChange={(outdoor) => setValue({ outdoor })}
+                />
+                <Row style={{ marginTop: 'auto' }} right>
+                    <SmartButton
+                        level="tertiary"
+                        onClick={() => {
+                            clearForm();
+                            setKey((k) => k + 1);
+                        }}
+                    >
+                        Clear
+                    </SmartButton>
+                    <SmartButton level="secondary" loading={loading} onClick={handleSave}>
+                        Save
+                    </SmartButton>
+                </Row>
+            </Col>
+        </InsidePopup>
+    );
+};
+
+const BudgetButton = ({ value, label, setBudget, budget }) => (
+    <SmartButton
+        fullWidth
+        level="secondary"
+        className="withIcon"
+        style={{ marginBottom: 6 }}
+        onClick={() => setBudget({ value, label })}
+    >
+        {label}{' '}
+        {budget?.value === value && (
+            <Checkmark
+                style={{
+                    height: 24,
+                    width: 24,
+                    borderRadius: 12,
+                    backgroundColor: '#fff',
+                    padding: 6,
+                }}
+                color={'#25F4D2'}
+            />
+        )}
+    </SmartButton>
+);
+
+const BudgetSelector = ({ initialvalue, onSave, loading }) => {
+    const [budget, setBudget] = useState(initialvalue);
+
+    const handleSave = () => {
+        onSave(budget);
+    };
+
+    return (
+        <InsidePopup>
+            <Col style={{ height: '100%' }}>
+                <RowWrap>
+                    <label>BUDGET</label>
+                </RowWrap>
+
+                <BudgetButton
+                    value={250}
+                    setBudget={setBudget}
+                    budget={budget}
+                    label={'Up to 250 USD'}
+                />
+                <BudgetButton
+                    value={500}
+                    setBudget={setBudget}
+                    budget={budget}
+                    label={'Up to 500 USD'}
+                />
+                <BudgetButton
+                    value={750}
+                    setBudget={setBudget}
+                    budget={budget}
+                    label={'Up to 750 USD'}
+                />
+                <BudgetButton
+                    value={1000}
+                    setBudget={setBudget}
+                    budget={budget}
+                    label={'Up to 1.000 USD'}
+                />
+                <BudgetButton
+                    value={1500}
+                    setBudget={setBudget}
+                    budget={budget}
+                    label={'Up to 1.500 USD'}
+                />
+                <BudgetButton
+                    value={2000}
+                    setBudget={setBudget}
+                    budget={budget}
+                    label={'More than 1.500 USD'}
+                />
+
+                <Row style={{ marginTop: 'auto' }} right>
+                    <SmartButton
+                        level="tertiary"
+                        onClick={() => {
+                            setBudget(null);
+                        }}
+                    >
+                        Clear
+                    </SmartButton>
+                    <SmartButton level="secondary" loading={loading} onClick={handleSave}>
+                        Save
+                    </SmartButton>
+                </Row>
+            </Col>
+        </InsidePopup>
     );
 };
 
@@ -207,9 +447,19 @@ const Filters = () => {
             <RowWrap>
                 <DatePickerPopup
                     half
-                    className={'empty'}
+                    showInside
                     data-cy={'date-input'}
                     label="WHEN"
+                    insideStyle={{
+                        transform: 'none',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        border: '1px solid #e9ecf0',
+                        borderRadius: '27px',
+                    }}
+                    initialDate={form.date}
                     maxDate={new Date().setFullYear(new Date().getFullYear() + 5)}
                     buttonText="Add date"
                     onSave={(date) => {
@@ -227,7 +477,12 @@ const Filters = () => {
                 />
             </RowWrap>
 
-            <label style={{ marginBottom: 8, marginLeft: 9, display: 'block' }}>DURATION</label>
+            <label
+                className="input-label-small"
+                style={{ marginBottom: 8, marginLeft: 9, display: 'block' }}
+            >
+                DURATION
+            </label>
             <TimeSlider
                 hoursLabel={translate('hours')}
                 startLabel={translate('start')}
@@ -240,13 +495,13 @@ const Filters = () => {
                 }}
             />
 
-            <FilterPills />
+            <FilterPills form={form} setValue={setValue} />
 
             <CustomCTAButton
                 style={{ height: '50px' }}
                 noMargin
                 noIcon
-                // type="submit"
+                type="submit"
                 // loading={loading}
                 // onClick={submit}
             >
@@ -286,7 +541,7 @@ const RequestOffers = () => {
                 Request offers
             </SmartButton>
         </GreyBox>
-    ); /* Rectangle 10 */
+    );
 };
 
 const LeftSide = () => {
