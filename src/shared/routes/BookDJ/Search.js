@@ -19,7 +19,9 @@ import DatePickerPopup from 'components/DatePickerPopup';
 import TimeSlider from 'components/common/TimeSlider/TimeSlider';
 import { useForm } from 'components/hooks/useForm';
 import { CheckBoxRow } from 'components/CheckboxTable';
-import Checkmark from 'assets/Checkmark';
+import ToggleButtonHandler from 'components/common/ToggleButtonHandler';
+import { GENRES } from 'constants/constants';
+import Checkmark from '../../assets/Checkmark';
 import { CustomCTAButton } from './Components';
 import { SEARCH } from './gql';
 
@@ -95,6 +97,8 @@ const GreyBox = styled.section`
     padding: 20px;
     margin-bottom: 15px;
     position: relative;
+    display: flex;
+    flex-direction: column;
     > label {
         color: #32325d;
         font-weight: 600;
@@ -181,6 +185,9 @@ const InsidePopup = styled.div`
         width: 100%;
         align-items: center;
     }
+    .toggle-button-handler button {
+        text-transform: capitalize;
+    }
 `;
 
 const FilterPill = styled.button`
@@ -206,15 +213,15 @@ const FilterPills = ({ form, setValue }) => {
     const [showEventTypes, setShowEventTypes] = useState(false);
     const [showBudget, setShowBudget] = useState(false);
     const [showEquipment, setShowEquipment] = useState(false);
+    const [showGenres, setShowGenres] = useState(false);
+
+    const selectedGenre = form.genres?.length === 1 && form.genres[0];
 
     return (
         <>
             <RowWrap style={{ marginBottom: 30, marginTop: 20 }}>
-                <FilterPill
-                    onClick={() => setValue({ speakers: !form.speakers })}
-                    active={!!form.genres}
-                >
-                    Music genres
+                <FilterPill onClick={() => setShowGenres(true)} active={!!form.genres?.length}>
+                    {selectedGenre || 'Music genres'}
                 </FilterPill>
                 <FilterPill
                     onClick={() => setShowEquipment(true)}
@@ -247,7 +254,7 @@ const FilterPills = ({ form, setValue }) => {
 
             {showBudget && (
                 <BudgetSelector
-                    initialvalue={form.budget}
+                    initialvalues={form.budget}
                     onSave={(budget) => {
                         setValue({ budget });
                         setShowBudget(false);
@@ -257,10 +264,20 @@ const FilterPills = ({ form, setValue }) => {
 
             {showEquipment && (
                 <EquipmentSelector
-                    initialvalue={form.equipment}
+                    initialvalues={form.equipment}
                     onSave={(equipment) => {
                         setValue({ equipment });
                         setShowEquipment(false);
+                    }}
+                />
+            )}
+
+            {showGenres && (
+                <GenreSelector
+                    initialvalues={form.genres}
+                    onSave={(genres) => {
+                        setValue({ genres });
+                        setShowGenres(false);
                     }}
                 />
             )}
@@ -360,8 +377,8 @@ const BudgetButton = ({ value, label, setBudget, budget }) => (
     </SmartButton>
 );
 
-const BudgetSelector = ({ initialvalue, onSave, loading }) => {
-    const [budget, setBudget] = useState(initialvalue);
+const BudgetSelector = ({ initialvalues, onSave, loading }) => {
+    const [budget, setBudget] = useState(initialvalues);
 
     const handleSave = () => {
         onSave(budget);
@@ -483,6 +500,48 @@ const EquipmentSelector = ({ initialvalues, onSave, loading }) => {
     );
 };
 
+const GenreSelector = ({ initialvalues, onSave, loading }) => {
+    const [genres, setgenres] = useState(initialvalues || []);
+
+    const handleSave = () => {
+        onSave(genres);
+    };
+
+    return (
+        <InsidePopup>
+            <Col style={{ height: '100%' }}>
+                <RowWrap>
+                    <label>MUSIC GENRES</label>
+                </RowWrap>
+                <ToggleButtonHandler
+                    key={genres.length}
+                    onChange={(genres) => {
+                        setgenres(genres);
+                    }}
+                    colored
+                    value={genres}
+                    potentialValues={GENRES}
+                    columns={3}
+                />
+
+                <Row style={{ marginTop: 'auto' }} right>
+                    <SmartButton
+                        level="tertiary"
+                        onClick={() => {
+                            setgenres([]);
+                        }}
+                    >
+                        Clear
+                    </SmartButton>
+                    <SmartButton level="secondary" loading={loading} onClick={handleSave}>
+                        Save
+                    </SmartButton>
+                </Row>
+            </Col>
+        </InsidePopup>
+    );
+};
+
 const Filters = () => {
     const { translate } = useTranslate();
 
@@ -491,7 +550,7 @@ const Filters = () => {
     });
 
     return (
-        <GreyBox>
+        <GreyBox style={{ minHeight: 450 }}>
             <RowWrap>
                 <LocationSelector
                     data-cy={'location-input'}
@@ -563,7 +622,7 @@ const Filters = () => {
             <FilterPills form={form} setValue={setValue} />
 
             <CustomCTAButton
-                style={{ height: '50px' }}
+                style={{ height: '50px', marginTop: 'auto' }}
                 noMargin
                 noIcon
                 type="submit"
