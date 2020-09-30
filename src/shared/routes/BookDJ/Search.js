@@ -89,6 +89,7 @@ const Search = (props) => {
 
 const LeftSideWrapper = styled.div`
     max-width: 415px;
+    min-width: 415px;
     width: 100%;
     top: 15px;
     position: sticky;
