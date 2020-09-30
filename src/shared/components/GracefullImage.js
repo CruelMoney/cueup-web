@@ -6,7 +6,9 @@ const StyledImg = styled.img`
 `;
 
 const GracefullImage = ({ ...props }) => {
-    return <StyledImg loading="lazy" {...props} />;
+    return (
+        <StyledImg loading="lazy" onError={(e) => (e.target.style.display = 'none')} {...props} />
+    );
 };
 
 export const GracefullPicture = ({ children, style }) => {

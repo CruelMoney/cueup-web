@@ -2,11 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { InlineIcon } from '@iconify/react';
 import pinIcon from '@iconify/icons-ion/location-sharp';
+import { NavLink } from 'react-router-dom';
 import { Col, Pill, Row, RowWrap } from 'components/Blocks';
-import { BodySmall, H2 } from 'components/Text';
+import { BodyBold, BodySmall, H2 } from 'components/Text';
 import GracefullImage from 'components/GracefullImage';
 import GracefullVideo from 'components/GracefullVideo';
 import { ProFeature } from 'components/FormComponents';
+import { appRoutes } from 'constants/locales/appRoutes';
+import useTranslate from 'components/hooks/useTranslate';
 
 const ImagePreviews = ({ media, picture, playingLocations }) => {
     const renderItems = media.edges || [];
@@ -66,7 +69,7 @@ const BioText = styled(BodySmall)`
 const ArtistBio = ({ userMetadata, genres }) => {
     const { bio } = userMetadata;
 
-    const maxNum = genres.length > 7 ? 6 : 7;
+    const maxNum = genres.length > 5 ? 4 : 5;
     const renderGenres = genres.slice(0, maxNum);
     const missing = genres.length - renderGenres.length;
 
@@ -75,7 +78,7 @@ const ArtistBio = ({ userMetadata, genres }) => {
             <BioText>{bio}</BioText>
             <RowWrap style={{ margin: '9px 0' }}>
                 {renderGenres.map((g) => (
-                    <Pill key={g} style={{ marginRight: 4 }}>
+                    <Pill key={g} style={{ marginRight: 4, marginBottom: 4 }}>
                         {g}
                     </Pill>
                 ))}
@@ -85,15 +88,29 @@ const ArtistBio = ({ userMetadata, genres }) => {
     );
 };
 
-const SearchEntry = (props) => {
+const Price = () => {
     return (
-        <SearchEntryWrapper>
-            <ImagePreviews {...props} />
-            <SearchEntryRightSide>
-                <ArtistName {...props} />
-                <ArtistBio {...props} />
-            </SearchEntryRightSide>
-        </SearchEntryWrapper>
+        <BodyBold style={{ fontSize: 16, marginTop: 'auto', display: 'block' }}>
+            Request Price
+        </BodyBold>
+    );
+};
+
+const SearchEntry = (props) => {
+    const { translate } = useTranslate();
+    const route = `${translate(appRoutes.user)}/${props.permalink}/overview`;
+
+    return (
+        <NavLink to={route} target="_blank" rel="noopener noreferrer">
+            <SearchEntryWrapper>
+                <ImagePreviews {...props} />
+                <SearchEntryRightSide>
+                    <ArtistName {...props} />
+                    <ArtistBio {...props} />
+                    <Price />
+                </SearchEntryRightSide>
+            </SearchEntryWrapper>
+        </NavLink>
     );
 };
 
@@ -112,16 +129,22 @@ const SearchResults = ({ topDjs }) => {
 };
 
 const SearchEntryRightSide = styled(Col)`
-    padding: 15px;
+    padding: 12px 15px;
+    height: 180px;
 `;
 
 const SearchEntryWrapper = styled(Row)`
     margin-bottom: 30px;
-
+    cursor: pointer;
     h3 {
         font-weight: 600;
         font-size: 18px;
         margin-bottom: 0.5em;
+    }
+    &:hover {
+        h3 {
+            text-decoration: underline;
+        }
     }
 `;
 

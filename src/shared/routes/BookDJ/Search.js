@@ -58,8 +58,8 @@ const Search = (props) => {
                 <meta name="geo.placename" content={title} />
                 <meta name="geo.region" content={title} /> */}
             </Helmet>
-            <SmartNavigation dark relative fullWidth />
-            <Container fullWidth>
+            <SmartNavigation dark relative />
+            <Container>
                 <Row>
                     <LeftSide {...props} />
                     <SearchResults {...props} />
@@ -74,7 +74,6 @@ const Search = (props) => {
             {/* <BreadCrumbs items={breadCrumbs} /> */}
             <Footer
                 color={'#31DAFF'}
-                fullWidth
                 firstTo={translate(appRoutes.bookDj)}
                 firstAction={onClickElement}
                 secondTo={translate(appRoutes.signUp)}
@@ -165,9 +164,9 @@ const GreyBox = styled.section`
         scrollbar-width: none;
     }
     .powered-by-google {
-        top: 0.7em !important;
+        top: 1em !important;
         display: flex;
-        right: 0.7em !important;
+        right: 1em !important;
     }
 `;
 
