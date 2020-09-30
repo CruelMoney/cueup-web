@@ -30,3 +30,49 @@ export const SEARCH = gql`
         }
     }
 `;
+
+export const SEARCH_DEEP = gql`
+    query Search($pagination: Pagination!, $filter: SearchFilter!) {
+        searchDjs(pagination: $pagination, filter: $filter) {
+            edges {
+                id
+                artistName
+                permalink
+                genres
+                picture {
+                    path
+                }
+                userMetadata {
+                    firstName
+                    bio
+                }
+                appMetadata {
+                    isPro
+                }
+                playingLocations {
+                    name
+                }
+                media(pagination: { page: 1, limit: 4, orderBy: ORDER_KEY }) {
+                    edges {
+                        id
+                        path
+                        type
+                        orderBy
+                    }
+                    pageInfo {
+                        totalDocs
+                    }
+                }
+            }
+            pageInfo {
+                hasPrevPage
+                hasNextPage
+                page
+                totalPages
+                prevPage
+                nextPage
+                totalDocs
+            }
+        }
+    }
+`;
