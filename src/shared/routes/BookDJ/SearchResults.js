@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { InlineIcon } from '@iconify/react';
 import pinIcon from '@iconify/icons-ion/location-sharp';
 import { NavLink } from 'react-router-dom';
@@ -10,22 +10,22 @@ import GracefullVideo from 'components/GracefullVideo';
 import { ProFeature } from 'components/FormComponents';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
+import Map from '../../components/common/Map';
 
 const ImagePreviews = ({ media, picture, playingLocations }) => {
     const renderItems = media.edges || [];
 
-    const placeholder = 4 - renderItems.length;
+    const location = playingLocations[0];
 
-    const locationName = playingLocations[0]?.name;
-
+    console.log({ location });
     return (
-        <ImageGrid>
+        <ImageGrid images={renderItems.length || 1}>
             <li>
                 <GracefullImage src={picture.path} />
 
                 <Pill>
                     <InlineIcon icon={pinIcon} style={{ marginRight: 3, marginBottom: -1 }} />
-                    {locationName}
+                    {location?.name}
                 </Pill>
             </li>
             {renderItems.map((m, idx) => (
@@ -37,9 +37,27 @@ const ImagePreviews = ({ media, picture, playingLocations }) => {
                     )}
                 </li>
             ))}
-            {Array.from({ length: placeholder }).map((_, idx) => (
-                <li key={idx} />
-            ))}
+
+            {!renderItems.length && (
+                <li className="with-border">
+                    <Map
+                        zoomScaler={150}
+                        hideRoads
+                        hideNames
+                        radius={location?.radius}
+                        defaultCenter={{
+                            lat: location.latitude,
+                            lng: location.longitude,
+                        }}
+                        height={'100%'}
+                        value={{
+                            lat: location.latitude,
+                            lng: location.longitude,
+                        }}
+                        editable={false}
+                    />
+                </li>
+            )}
         </ImageGrid>
     );
 };
@@ -154,22 +172,47 @@ const ImageGrid = styled.ol`
     padding: 0;
     margin: 0;
     grid-gap: 4px;
-    grid-template:
-        'a a b c'
-        'a a d e';
 
+    border-radius: 0 10px 10px 0;
+    overflow: hidden;
     height: 180px;
     width: 366px;
     min-width: 366px;
+
+    ${({ images }) => {
+        switch (images) {
+            case 1:
+                return css`
+                    grid-template:
+                        'a a b b'
+                        'a a b b';
+                `;
+            case 2:
+                return css`
+                    grid-template:
+                        'a a b b'
+                        'a a c c';
+                `;
+            case 3:
+                return css`
+                    grid-template:
+                        'a a b b'
+                        'a a c d';
+                `;
+
+            default:
+                return css`
+                    grid-template:
+                        'a a b c'
+                        'a a d e';
+                `;
+        }
+    }}
+
     li {
         position: relative;
         background-color: #f7f9fc;
 
-        :after {
-            content: '';
-            display: block;
-            padding-bottom: 100%;
-        }
         > * {
             position: absolute;
             top: 0;
@@ -188,19 +231,31 @@ const ImageGrid = styled.ol`
             font-size: 10px;
         }
     }
+    li.with-border {
+        border: 0.5px solid rgba(207, 215, 223, 0.5);
+        border-radius: 0 10px 10px 0;
+        pointer-events: none;
+        margin-bottom: -25px;
+    }
     li:first-child {
         grid-area: a;
-        border: 0.5px solid rgba(207, 215, 223, 0.5);
         border-radius: 10px 0 0 10px;
         overflow: hidden;
+        border: 0.5px solid rgba(207, 215, 223, 0.5);
+    }
+
+    li:nth-child(2) {
+        grid-area: b;
     }
     li:nth-child(3) {
-        border-radius: 0px 10px 0 0px;
-        overflow: hidden;
+        grid-area: c;
+    }
+
+    li:nth-child(4) {
+        grid-area: d;
     }
     li:nth-child(5) {
-        border-radius: 0px 0 10px 0px;
-        overflow: hidden;
+        grid-area: e;
     }
     img,
     video {

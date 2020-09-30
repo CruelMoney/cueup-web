@@ -51,6 +51,9 @@ export const SEARCH_DEEP = gql`
                 }
                 playingLocations {
                     name
+                    latitude
+                    longitude
+                    radius
                 }
                 media(pagination: { page: 1, limit: 4, orderBy: ORDER_KEY }) {
                     edges {

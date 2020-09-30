@@ -33,6 +33,8 @@ const SimpleMap = ({
     offsetCenter,
     bounds,
     largeScale,
+    zoomScaler,
+    hideNames,
     ...props
 }) => {
     const [radius, setRadius] = useState(initialRadius);
@@ -94,7 +96,7 @@ const SimpleMap = ({
         if (radius === 0) {
             return 10;
         }
-        const scale = radius / (largeScale ? 800 : 500);
+        const scale = radius / (zoomScaler || (largeScale ? 800 : 500));
         const zoomLevel = 15 - Math.log(scale) / Math.log(2);
         return parseInt(zoomLevel, 10);
     };
@@ -133,48 +135,11 @@ const SimpleMap = ({
                         stylers: [{ visibility: 'on' }, { color: '#32325D' }],
                     },
                     {
-                        featureType: 'administrative.locality',
-                        elementType: 'labels',
-                        stylers: [{ color: '#ffffff' }, { visibility: 'on' }],
-                    },
-                    {
-                        featureType: 'administrative.locality',
-                        elementType: 'labels.text.stroke',
-                        stylers: [{ color: '#32325D' }, { visibility: 'on' }],
-                    },
-                    {
                         featureType: 'road.arterial',
                         elementType: 'geometry',
                         stylers: [{ visibility: hideRoads ? 'off' : 'simplified' }],
                     },
-                    {
-                        featureType: 'administrative.province',
-                        stylers: [{ visibility: 'on' }],
-                    },
-                    {
-                        featureType: 'administrative.province',
-                        elementType: 'labels.text.fill',
-                        stylers: [{ color: '#ffffff' }, { visibility: 'on' }],
-                    },
-                    {
-                        featureType: 'administrative.province',
-                        elementType: 'labels.text.stroke',
-                        stylers: [{ color: '#32325D' }, { visibility: 'on' }],
-                    },
-                    {
-                        featureType: 'administrative.country',
-                        stylers: [{ visibility: 'on' }],
-                    },
-                    {
-                        featureType: 'administrative.country',
-                        elementType: 'labels.text.fill',
-                        stylers: [{ color: '#ffffff' }, { visibility: 'on' }],
-                    },
-                    {
-                        featureType: 'administrative.country',
-                        elementType: 'labels.text.stroke',
-                        stylers: [{ color: '#32325D' }, { visibility: 'on' }],
-                    },
+                    ...(!hideNames ? textStyles : []),
                 ],
                 ...mapOptions,
             }}
@@ -224,5 +189,47 @@ const MapLoader = ({ ...props }) => {
         </Wrapper>
     );
 };
+
+const textStyles = [
+    {
+        featureType: 'administrative.locality',
+        elementType: 'labels',
+        stylers: [{ color: '#ffffff' }, { visibility: 'on' }],
+    },
+    {
+        featureType: 'administrative.locality',
+        elementType: 'labels.text.stroke',
+        stylers: [{ color: '#32325D' }, { visibility: 'on' }],
+    },
+
+    {
+        featureType: 'administrative.province',
+        stylers: [{ visibility: 'on' }],
+    },
+    {
+        featureType: 'administrative.province',
+        elementType: 'labels.text.fill',
+        stylers: [{ color: '#ffffff' }, { visibility: 'on' }],
+    },
+    {
+        featureType: 'administrative.province',
+        elementType: 'labels.text.stroke',
+        stylers: [{ color: '#32325D' }, { visibility: 'on' }],
+    },
+    {
+        featureType: 'administrative.country',
+        stylers: [{ visibility: 'on' }],
+    },
+    {
+        featureType: 'administrative.country',
+        elementType: 'labels.text.fill',
+        stylers: [{ color: '#ffffff' }, { visibility: 'on' }],
+    },
+    {
+        featureType: 'administrative.country',
+        elementType: 'labels.text.stroke',
+        stylers: [{ color: '#32325D' }, { visibility: 'on' }],
+    },
+];
 
 export default MapLoader;
