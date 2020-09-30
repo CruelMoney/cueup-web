@@ -3,35 +3,22 @@ import { Redirect, Route, Switch } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import { useQuery } from 'react-apollo';
 import styled from 'styled-components';
+import { InlineIcon } from '@iconify/react';
+import speechIcon from '@iconify/icons-ion/ios-text';
 import { useServerContext } from 'components/hooks/useServerContext';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
 import SmartNavigation from 'components/Navigation';
 import { Container, Row, RowWrap, SmartButton } from 'components/Blocks';
-import { Body, BodyBold, BodySmall, H2, H3, HeaderTitle, PageTitle } from 'components/Text';
-import { GracefullPicture } from 'components/GracefullImage';
+import { Body, BodyBold, BodySmall } from 'components/Text';
 import Footer from 'components/common/Footer';
-import LazyRequestForm from 'components/common/RequestForm';
-import FeaturedDJCard from 'components/FeaturedDJCard';
 import LocationSelector from 'components/common/LocationSelectorSimple';
 import { Input, InputRow, Label } from 'components/FormComponents';
 import DatePickerPopup from 'components/DatePickerPopup';
-import defaultImage from '../../assets/images/default.png';
-import Map from '../../components/common/Map';
-import BookDJForm from './BookDJForm';
-import {
-    BreadCrumbs,
-    CustomCTAButton,
-    CustomSection,
-    HeroCard,
-    HeroImageWrapper,
-    HeroSection,
-    ImageWrapper,
-    MapWrapper,
-} from './Components';
 
-import heroImg from './assets/hero_1.webp';
-import heroImgJPG from './assets/hero_1_compressed.jpg';
+import TimeSlider from 'components/common/TimeSlider/TimeSlider';
+import { useForm } from 'components/hooks/useForm';
+import { CustomCTAButton } from './Components';
 import { SEARCH } from './gql';
 
 const Search = ({ translate, environment }) => {
@@ -43,23 +30,6 @@ const Search = ({ translate, environment }) => {
             behavior: 'smooth',
         });
     };
-
-    // const breadCrumbs = [
-    //     {
-    //         url: '/',
-    //         label: 'DJs',
-    //     },
-    //     {
-    //         url: translate(appRoutes.bookDj).replace(':location', activeLocation.countrySlug),
-    //         label: activeLocation.country,
-    //     },
-    // ];
-    // if (activeLocation.citySlug) {
-    //     breadCrumbs.push({
-    //         url: translate(appRoutes.bookDj).replace(':location', activeLocation.citySlug),
-    //         label: activeLocation.name,
-    //     });
-    // }
 
     return (
         <>
@@ -122,6 +92,7 @@ const GreyBox = styled.section`
     width: 100%;
     padding: 20px;
     margin-bottom: 15px;
+    position: relative;
     label,
     ${Label} {
         flex: 1;
@@ -151,9 +122,69 @@ const GreyBox = styled.section`
     ${RowWrap} {
         margin-right: -9px;
     }
+    .time-slider-data {
+        padding: 0 9px;
+        margin-top: 6px !important;
+        margin-bottom: 17px !important;
+        p {
+            font-size: 16px;
+        }
+    }
+    .empty {
+        color: #98a4b3;
+    }
+    ul {
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        padding: 7px;
+        padding-top: 5em;
+        box-shadow: none;
+        border: 1px solid #e9ecf0;
+        border-radius: 27px;
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+    .powered-by-google {
+        top: 0.7em !important;
+        display: flex;
+        right: 0.7em !important;
+    }
 `;
 
+const FilterPill = styled.button`
+    padding: 0.5em 1em;
+    background: #ffffff;
+    border: 0.5px solid rgba(77, 100, 128, 0.2);
+    border-radius: 20px;
+    color: #4d6480;
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 6px !important;
+    margin-top: 6px !important;
+    margin-left: 0px !important;
+`;
+
+const FilterPills = () => {
+    return (
+        <RowWrap style={{ marginBottom: 30, marginTop: 20 }}>
+            <FilterPill>Music genres</FilterPill>
+            <FilterPill>Sound system</FilterPill>
+            <FilterPill>Lights</FilterPill>
+            <FilterPill>Budget</FilterPill>
+            <FilterPill>Type of event</FilterPill>
+        </RowWrap>
+    );
+};
+
 const Filters = () => {
+    const { translate } = useTranslate();
+
+    const { runValidations, form, setValue } = useForm(null, {
+        // locationName: activeLocation.name,
+    });
+
     return (
         <GreyBox>
             <RowWrap>
@@ -169,50 +200,48 @@ const Filters = () => {
                         position: 'initial',
                         marginBottom: 0,
                     }}
-                    //    onSave={(locationName) => setValue({ locationName })}
-                    //    defaultValue={form.locationName}
+                    onSave={(locationName) => setValue({ locationName })}
+                    defaultValue={form.locationName}
                 />
             </RowWrap>
             <RowWrap>
                 <DatePickerPopup
                     half
-                    showInside
+                    className={'empty'}
                     data-cy={'date-input'}
                     label="WHEN"
                     maxDate={new Date().setFullYear(new Date().getFullYear() + 5)}
                     buttonText="Add date"
-                    // onSave={(date) => {
-                    //     setValue({ date });
-                    // }}
+                    onSave={(date) => {
+                        setValue({ date });
+                    }}
                 />
                 <Input
                     half
                     label="GUESTS"
                     placeholder="Add guest count"
-                    // value={form.guestsCount}
-                    // onChange={(guests) => {
-                    //     setValue({ guestsCount: guests.replace(/\D/g, '') });
-                    // }}
+                    value={form.guestsCount}
+                    onChange={(guests) => {
+                        setValue({ guestsCount: guests.replace(/\D/g, '') });
+                    }}
                 />
             </RowWrap>
 
-            <RowWrap>
-                <Input
-                    // className={form.speakers ? '' : 'empty'}
-                    label="SOUND SYSTEM"
-                    type="button"
-                    //     buttonText={form.speakers ? 'Yes' : 'Add sound system'}
-                    //     onClick={() => setValue({ speakers: !form.speakers })}
-                />
-                <span className="divider" />
-                <Input
-                    // className={form.lights ? '' : 'empty'}
-                    label="LIGHTS"
-                    type="button"
-                    // buttonText={form.lights ? 'Yes' : 'Add lights'}
-                    // onClick={() => setValue({ lights: !form.lights })}
-                />
-            </RowWrap>
+            <label style={{ marginBottom: 8, marginLeft: 9, display: 'block' }}>DURATION</label>
+            <TimeSlider
+                hoursLabel={translate('hours')}
+                startLabel={translate('start')}
+                endLabel={translate('end')}
+                date={form.date}
+                initialValues={form.startMinute && [form.startMinute, form.endMinute]}
+                onChange={([startMinute, endMinute]) => {
+                    setValue({ startMinute });
+                    setValue({ endMinute });
+                }}
+            />
+
+            <FilterPills />
+
             <CustomCTAButton
                 style={{ height: '50px' }}
                 noMargin
@@ -230,7 +259,16 @@ const Filters = () => {
 const RequestOffers = () => {
     return (
         <GreyBox>
-            <BodyBold>Tired of searching?</BodyBold>
+            <BodyBold>
+                <InlineIcon
+                    icon={speechIcon}
+                    color="#25F4D2"
+                    width={'1.5em'}
+                    height={'1.5em'}
+                    style={{ marginRight: 9, marginBottom: -6 }}
+                />
+                Tired of searching?
+            </BodyBold>
             <BodySmall style={{ marginBottom: 15 }}>
                 Get tailored prices directly from the DJs. We’ll find the most suitable DJs and
                 inquire them to send their best offers for your event.

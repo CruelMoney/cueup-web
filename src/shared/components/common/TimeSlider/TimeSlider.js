@@ -67,6 +67,7 @@ const TimeSlider = ({
                 />
             </div>
             <div
+                className="time-slider-data"
                 style={{
                     display: 'flex',
                     justifyContent: 'space-between',

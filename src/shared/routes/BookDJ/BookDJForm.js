@@ -1,11 +1,9 @@
 import React, { useCallback, useRef } from 'react';
-import styled from 'styled-components';
 import { useHistory, useLocation } from 'react-router';
 import LocationSelector from 'components/common/LocationSelectorSimple';
 import { useForm } from 'components/hooks/useForm';
 import DatePickerPopup from 'components/DatePickerPopup';
 import { Input } from 'components/FormComponents';
-import { CTAButton } from 'components/CTAButton';
 import { useCheckDjAvailability } from 'actions/EventActions';
 import LazyRequestForm from 'components/common/RequestForm';
 import { BodySmall } from 'components/Text';
