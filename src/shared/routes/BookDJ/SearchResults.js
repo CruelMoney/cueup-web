@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Col, Row } from 'components/Blocks';
+import { InlineIcon } from '@iconify/react';
+import pinIcon from '@iconify/icons-ion/location-sharp';
+import { Col, Pill, Row, RowWrap } from 'components/Blocks';
 import { BodySmall, H2 } from 'components/Text';
 import GracefullImage from 'components/GracefullImage';
 import GracefullVideo from 'components/GracefullVideo';
@@ -11,10 +13,17 @@ const ImagePreviews = ({ media, picture, playingLocations }) => {
 
     const placeholder = 4 - renderItems.length;
 
+    const locationName = playingLocations[0]?.name;
+
     return (
         <ImageGrid>
             <li>
                 <GracefullImage src={picture.path} />
+
+                <Pill>
+                    <InlineIcon icon={pinIcon} style={{ marginRight: 3, marginBottom: -1 }} />
+                    {locationName}
+                </Pill>
             </li>
             {renderItems.map((m, idx) => (
                 <li key={m.id}>
@@ -54,9 +63,26 @@ const BioText = styled(BodySmall)`
     max-height: 3em;
 `;
 
-const ArtistBio = ({ userMetadata }) => {
+const ArtistBio = ({ userMetadata, genres }) => {
     const { bio } = userMetadata;
-    return <BioText>{bio}</BioText>;
+
+    const maxNum = genres.length > 7 ? 6 : 7;
+    const renderGenres = genres.slice(0, maxNum);
+    const missing = genres.length - renderGenres.length;
+
+    return (
+        <>
+            <BioText>{bio}</BioText>
+            <RowWrap style={{ margin: '9px 0' }}>
+                {renderGenres.map((g) => (
+                    <Pill key={g} style={{ marginRight: 4 }}>
+                        {g}
+                    </Pill>
+                ))}
+                {missing > 1 && <Pill>...{missing} more</Pill>}
+            </RowWrap>
+        </>
+    );
 };
 
 const SearchEntry = (props) => {
@@ -127,6 +153,16 @@ const ImageGrid = styled.ol`
             left: 0;
             width: 100%;
             height: 100%;
+        }
+        ${Pill} {
+            top: 1em;
+            left: 1em;
+            width: auto;
+            height: auto;
+            text-transform: capitalize;
+            letter-spacing: 0;
+            font-weight: 500;
+            font-size: 10px;
         }
     }
     li:first-child {
