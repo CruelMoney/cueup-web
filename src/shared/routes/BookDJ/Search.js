@@ -65,13 +65,7 @@ const Search = (props) => {
                     <SearchResults {...props} />
                 </Row>
             </Container>
-            {/* <Hero
-                activeLocation={activeLocation}
-                siteDescription={siteDescription}
-                checkAvailability={checkAvailability}
-            /> */}
 
-            {/* <BreadCrumbs items={breadCrumbs} /> */}
             <Footer
                 color={'#31DAFF'}
                 firstTo={translate(appRoutes.bookDj)}

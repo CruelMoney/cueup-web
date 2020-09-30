@@ -17,7 +17,6 @@ const ImagePreviews = ({ media, picture, playingLocations }) => {
 
     const location = playingLocations[0];
 
-    console.log({ location });
     return (
         <ImageGrid images={renderItems.length || 1}>
             <li>
@@ -132,12 +131,12 @@ const SearchEntry = (props) => {
     );
 };
 
-const SearchResults = ({ topDjs }) => {
-    console.log({ topDjs });
+const SearchResults = ({ topDjs, form }) => {
     return (
         <Col>
             <H2 small style={{ marginBottom: 24 }}>
-                DJs in <strong style={{ fontWeight: 700 }}>Copenhagen</strong>
+                DJs in{' '}
+                <strong style={{ fontWeight: 700 }}>{form?.locationName?.split(', ')[0]}</strong>
             </H2>
             {topDjs.map((dj) => (
                 <SearchEntry key={dj.id} {...dj} />

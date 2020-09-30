@@ -70,9 +70,6 @@ const CTA = styled.button`
     &:hover {
         color: #ffffff !important;
         background-color: ${({ disabled }) => (disabled ? '#31daff' : '#00d1ff')};
-        ${CTAIcon} {
-            transform: translate(3px, -50%);
-        }
         ${InnerGradient} {
             opacity: 1;
         }
