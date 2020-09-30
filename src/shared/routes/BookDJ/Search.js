@@ -205,6 +205,7 @@ const FilterPill = styled.button`
 const FilterPills = ({ form, setValue }) => {
     const [showEventTypes, setShowEventTypes] = useState(false);
     const [showBudget, setShowBudget] = useState(false);
+    const [showEquipment, setShowEquipment] = useState(false);
 
     return (
         <>
@@ -216,7 +217,7 @@ const FilterPills = ({ form, setValue }) => {
                     Music genres
                 </FilterPill>
                 <FilterPill
-                    onClick={() => setShowEventTypes(true)}
+                    onClick={() => setShowEquipment(true)}
                     active={form.equipment && Object.values(form.equipment).filter(Boolean).length}
                 >
                     Equipment
@@ -250,6 +251,16 @@ const FilterPills = ({ form, setValue }) => {
                     onSave={(budget) => {
                         setValue({ budget });
                         setShowBudget(false);
+                    }}
+                />
+            )}
+
+            {showEquipment && (
+                <EquipmentSelector
+                    initialvalue={form.equipment}
+                    onSave={(equipment) => {
+                        setValue({ equipment });
+                        setShowEquipment(false);
                     }}
                 />
             )}
@@ -405,6 +416,60 @@ const BudgetSelector = ({ initialvalue, onSave, loading }) => {
                         level="tertiary"
                         onClick={() => {
                             setBudget(null);
+                        }}
+                    >
+                        Clear
+                    </SmartButton>
+                    <SmartButton level="secondary" loading={loading} onClick={handleSave}>
+                        Save
+                    </SmartButton>
+                </Row>
+            </Col>
+        </InsidePopup>
+    );
+};
+
+const EquipmentSelector = ({ initialvalues, onSave, loading }) => {
+    const { form, setValue, clearForm } = useForm(null, initialvalues);
+    const [key, setKey] = useState(0);
+
+    const handleSave = () => {
+        onSave(form);
+    };
+
+    return (
+        <InsidePopup>
+            <Col key={key} style={{ height: '100%' }}>
+                <RowWrap>
+                    <label>EQUIPMENT</label>
+                </RowWrap>
+                <CheckBoxRow
+                    label="Sound system"
+                    checked={form.speakers}
+                    onChange={(speakers) => setValue({ speakers })}
+                />
+                <CheckBoxRow
+                    label="Lights"
+                    checked={form.lights}
+                    onChange={(lights) => setValue({ lights })}
+                />
+                <CheckBoxRow
+                    label="Microphone"
+                    checked={form.microphone}
+                    onChange={(microphone) => setValue({ microphone })}
+                />
+                <CheckBoxRow
+                    label="Smoke machine"
+                    checked={form.smokeMachine}
+                    onChange={(smokeMachine) => setValue({ smokeMachine })}
+                />
+
+                <Row style={{ marginTop: 'auto' }} right>
+                    <SmartButton
+                        level="tertiary"
+                        onClick={() => {
+                            clearForm();
+                            setKey((k) => k + 1);
                         }}
                     >
                         Clear
