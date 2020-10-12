@@ -4,7 +4,7 @@ import { InlineIcon } from '@iconify/react';
 import pinIcon from '@iconify/icons-ion/location-sharp';
 import { NavLink, useLocation } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
-import { Col, Pill, Row, RowWrap } from 'components/Blocks';
+import { Col, Hr, Pill, Row, RowWrap } from 'components/Blocks';
 import { BodyBold, BodySmall, H2 } from 'components/Text';
 import GracefullImage from 'components/GracefullImage';
 import GracefullVideo from 'components/GracefullVideo';
@@ -21,7 +21,7 @@ const loadingGraceStyle = {
     lineHeight: '2em',
 };
 
-const ImagePreviews = ({ media, picture, playingLocations, loading }) => {
+const ImagePreviews = ({ appMetadata, media, picture, playingLocations, loading }) => {
     const renderItems = media.edges || [];
 
     const location = playingLocations[0];
@@ -32,7 +32,7 @@ const ImagePreviews = ({ media, picture, playingLocations, loading }) => {
     }
 
     return (
-        <ImageGrid images={imagecount}>
+        <ImageGrid images={imagecount} large={appMetadata?.isPro}>
             <li>
                 {loading ? (
                     <Skeleton style={loadingGraceStyle} />
@@ -112,11 +112,7 @@ const ArtistName = ({ loading, artistName, userMetadata, appMetadata }) => {
     return (
         <h3>
             {artistName || userMetadata?.firstName}
-            {appMetadata?.isPro && (
-                <ProFeature small disabled>
-                    Pro
-                </ProFeature>
-            )}
+            {appMetadata?.isPro && <ProFeature disabled>Pro</ProFeature>}
         </h3>
     );
 };
@@ -177,23 +173,19 @@ const SearchEntry = (props) => {
     const route = `${translate(appRoutes.user)}/${props.permalink}/overview`;
 
     return (
-        <NavLink
-            to={route}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-                marginBottom: '30px',
-            }}
-        >
-            <SearchEntryWrapper>
-                <ImagePreviews {...props} />
-                <SearchEntryRightSide>
-                    <ArtistName {...props} />
-                    <ArtistBio {...props} />
-                    <Price {...props} />
-                </SearchEntryRightSide>
-            </SearchEntryWrapper>
-        </NavLink>
+        <>
+            <NavLink to={route} target="_blank" rel="noopener noreferrer">
+                <SearchEntryWrapper>
+                    <ImagePreviews {...props} />
+                    <SearchEntryRightSide>
+                        <ArtistName {...props} />
+                        <ArtistBio {...props} />
+                        <Price {...props} />
+                    </SearchEntryRightSide>
+                </SearchEntryWrapper>
+            </NavLink>
+            <Hr style={{ marginTop: 30, marginBottom: 30 }} />
+        </>
     );
 };
 const SearchResults = ({ topDjs, form, pagination, loading, setPagination }) => {
