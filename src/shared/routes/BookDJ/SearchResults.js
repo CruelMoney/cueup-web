@@ -128,6 +128,7 @@ const BioText = styled(BodySmall)`
     -webkit-box-orient: vertical;
     overflow: hidden;
     max-height: 3em;
+    word-wrap: anywhere;
 `;
 
 const ArtistBio = ({ userMetadata, genres, loading }) => {
