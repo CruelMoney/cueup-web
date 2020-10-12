@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Redirect, Route, Switch } from 'react-router';
+import { Redirect, Route, Switch, useLocation, useParams } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import { useLazyQuery, useQuery } from 'react-apollo';
 import styled, { css } from 'styled-components';
@@ -297,11 +297,14 @@ const LeftSide = (props) => {
 
 const DataWrapper = (props) => {
     const { translate } = useTranslate();
+
+    const { search } = useLocation();
+    const searchParams = new URLSearchParams(search);
+    const initialPage = Number(searchParams.get('page'));
     const [pagination, setPagination] = useState({
-        orderBy: 'UPDATED_AT_DESCENDING',
-        page: 1,
-        limit: 9,
+        page: initialPage || 1,
     });
+
     const { environment, data } = useServerContext();
 
     const [filter, setFilter] = useState({
@@ -319,7 +322,11 @@ const DataWrapper = (props) => {
         skip: !filter.location && !filter.countryCode,
         variables: {
             filter,
-            pagination,
+            pagination: {
+                orderBy: 'UPDATED_AT_DESCENDING',
+                limit: 9,
+                page: pagination.page,
+            },
         },
     });
 
@@ -360,7 +367,10 @@ const DataWrapper = (props) => {
             setValue={setValue}
             doSearch={doSearch}
             loading={loading || loading2}
-            pageInfo={pageInfo}
+            pagination={{
+                ...pageInfo,
+                ...pagination,
+            }}
             setPagination={setPagination}
         />
     );

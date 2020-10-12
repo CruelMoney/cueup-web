@@ -4,9 +4,11 @@ import { Icon } from '@iconify/react';
 import backIcon from '@iconify/icons-ion/ios-arrow-back';
 import forwardIcon from '@iconify/icons-ion/ios-arrow-forward';
 
-const PaginationItem = styled.li`
+const PaginationItem = styled.a`
+    display: inline-block;
+    width: 2.5em;
+    height: 2.5em;
     border-radius: 50%;
-    cursor: pointer;
     ${({ active }) =>
         active &&
         css`
@@ -32,11 +34,11 @@ const PaginationWrapper = styled.ul`
     display: flex;
     margin: 0 auto;
     > li {
-        width: 2.5em;
-        height: 2.5em;
         text-align: center;
         margin: 0 0.1em;
         line-height: 2.5em;
+        width: 2.5em;
+        height: 2.5em;
     }
 `;
 
@@ -49,20 +51,31 @@ const Pagination = ({
     disabledPages = [],
 }) => {
     const previousPage = activePage - 1;
-    const previousHref = hrefConstructor && hrefConstructor(previousPage);
+    const previousHref = previousPage > 0 && hrefConstructor && hrefConstructor(previousPage);
 
     const nextPage = activePage + 1;
-    const nextHref = hrefConstructor && hrefConstructor(nextPage);
+    const nextHref = nextPage < totalPages && hrefConstructor && hrefConstructor(nextPage);
 
     const pages = Array(totalPages)
         .fill(0)
         .map((item, index) => index + 1);
 
+    const handleClick = (page) => (e) => {
+        e.preventDefault();
+        if (onPageChange) {
+            onPageChange(page);
+        }
+    };
+
     return (
         <PaginationWrapper>
-            <PaginationItem>
-                <Icon icon={backIcon} />
-            </PaginationItem>
+            {previousHref && (
+                <li>
+                    <PaginationItem onClick={handleClick(previousPage)} href={previousHref}>
+                        <Icon icon={backIcon} />
+                    </PaginationItem>
+                </li>
+            )}
             {(ellipsisBuffer
                 ? getEllipsisItems(
                       {
@@ -81,23 +94,25 @@ const Pagination = ({
                 React.isValidElement(page) ? (
                     React.cloneElement(page, { key: `ellipsis${index}` })
                 ) : (
-                    <PaginationItem
-                        active={page === activePage}
-                        disabled={page === activePage || disabledPages.includes(page)}
-                        key={page}
-                    >
-                        <a
+                    <li key={page}>
+                        <PaginationItem
+                            active={page === activePage}
+                            disabled={page === activePage || disabledPages.includes(page)}
                             href={hrefConstructor && hrefConstructor(page)}
-                            onClick={() => onPageChange && onPageChange(page)}
+                            onClick={handleClick(page)}
                         >
                             {page}
-                        </a>
-                    </PaginationItem>
+                        </PaginationItem>
+                    </li>
                 )
             )}
-            <PaginationItem>
-                <Icon icon={forwardIcon} />
-            </PaginationItem>
+            {nextHref && (
+                <li>
+                    <PaginationItem href={nextHref} onClick={handleClick(nextPage)}>
+                        <Icon icon={forwardIcon} />
+                    </PaginationItem>
+                </li>
+            )}
         </PaginationWrapper>
     );
 };

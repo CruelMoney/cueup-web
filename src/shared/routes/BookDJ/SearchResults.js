@@ -2,7 +2,8 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { InlineIcon } from '@iconify/react';
 import pinIcon from '@iconify/icons-ion/location-sharp';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
+import Skeleton from 'react-loading-skeleton';
 import { Col, Pill, Row, RowWrap } from 'components/Blocks';
 import { BodyBold, BodySmall, H2 } from 'components/Text';
 import GracefullImage from 'components/GracefullImage';
@@ -13,32 +14,69 @@ import useTranslate from 'components/hooks/useTranslate';
 import Map from '../../components/common/Map';
 import Pagination from './Pagination';
 
-const ImagePreviews = ({ media, picture, playingLocations }) => {
+const loadingGraceStyle = {
+    height: '100%',
+    width: '100%',
+    borderRadius: 0,
+    lineHeight: '2em',
+};
+
+const ImagePreviews = ({ media, picture, playingLocations, loading }) => {
     const renderItems = media.edges || [];
 
     const location = playingLocations[0];
 
+    let imagecount = renderItems.length || 1;
+    if (loading) {
+        imagecount = 4;
+    }
+
     return (
-        <ImageGrid images={renderItems.length || 1}>
+        <ImageGrid images={imagecount}>
             <li>
-                <GracefullImage src={picture.path} />
+                {loading ? (
+                    <Skeleton style={loadingGraceStyle} />
+                ) : (
+                    <GracefullImage src={picture.path} />
+                )}
 
-                <Pill>
-                    <InlineIcon icon={pinIcon} style={{ marginRight: 3, marginBottom: -1 }} />
-                    {location?.name}
-                </Pill>
+                {!loading && (
+                    <Pill>
+                        <InlineIcon icon={pinIcon} style={{ marginRight: 3, marginBottom: -1 }} />
+                        {location?.name}
+                    </Pill>
+                )}
             </li>
-            {renderItems.map((m, idx) => (
-                <li key={m.id}>
-                    {m.type === 'VIDEO' ? (
-                        <GracefullVideo src={m.path} loop autoPlay muted playsInline animate />
-                    ) : (
-                        <GracefullImage src={m.path} animate />
-                    )}
-                </li>
-            ))}
 
-            {!renderItems.length && (
+            {!loading &&
+                renderItems.map((m) => (
+                    <li key={m.id}>
+                        {m.type === 'VIDEO' ? (
+                            <GracefullVideo src={m.path} loop autoPlay muted playsInline animate />
+                        ) : (
+                            <GracefullImage src={m.path} animate />
+                        )}
+                    </li>
+                ))}
+
+            {loading && (
+                <>
+                    <li>
+                        <Skeleton style={loadingGraceStyle} />
+                    </li>
+                    <li>
+                        <Skeleton style={loadingGraceStyle} />
+                    </li>
+                    <li>
+                        <Skeleton style={loadingGraceStyle} />
+                    </li>
+                    <li>
+                        <Skeleton style={loadingGraceStyle} />
+                    </li>
+                </>
+            )}
+
+            {!loading && !renderItems.length && (
                 <li className="with-border">
                     <Map
                         zoomScaler={150}
@@ -62,7 +100,15 @@ const ImagePreviews = ({ media, picture, playingLocations }) => {
     );
 };
 
-const ArtistName = ({ artistName, userMetadata, appMetadata }) => {
+const ArtistName = ({ loading, artistName, userMetadata, appMetadata }) => {
+    if (loading) {
+        return (
+            <h3>
+                <Skeleton />
+            </h3>
+        );
+    }
+
     return (
         <h3>
             {artistName || userMetadata?.firstName}
@@ -84,7 +130,11 @@ const BioText = styled(BodySmall)`
     max-height: 3em;
 `;
 
-const ArtistBio = ({ userMetadata, genres }) => {
+const ArtistBio = ({ userMetadata, genres, loading }) => {
+    if (loading) {
+        return <Skeleton count={3} height={'1em'} style={{ height: 100 }} width={300} />;
+    }
+
     const { bio } = userMetadata;
 
     const maxNum = genres.length > 5 ? 4 : 5;
@@ -106,7 +156,14 @@ const ArtistBio = ({ userMetadata, genres }) => {
     );
 };
 
-const Price = () => {
+const Price = ({ loading }) => {
+    if (loading) {
+        return (
+            <BodyBold style={{ fontSize: 16, marginTop: 'auto', display: 'block' }}>
+                <Skeleton width={80} />
+            </BodyBold>
+        );
+    }
     return (
         <BodyBold style={{ fontSize: 16, marginTop: 'auto', display: 'block' }}>
             Request Price
@@ -132,13 +189,15 @@ const SearchEntry = (props) => {
                 <SearchEntryRightSide>
                     <ArtistName {...props} />
                     <ArtistBio {...props} />
-                    <Price />
+                    <Price {...props} />
                 </SearchEntryRightSide>
             </SearchEntryWrapper>
         </NavLink>
     );
 };
-const SearchResults = ({ topDjs, form, pageInfo, setPagination }) => {
+const SearchResults = ({ topDjs, form, pagination, loading, setPagination }) => {
+    const { pathname } = useLocation();
+
     return (
         <Col>
             <H2 small style={{ marginBottom: 24 }}>
@@ -146,16 +205,23 @@ const SearchResults = ({ topDjs, form, pageInfo, setPagination }) => {
                 <strong style={{ fontWeight: 700 }}>{form?.locationName?.split(', ')[0]}</strong>
             </H2>
             {topDjs.map((dj) => (
-                <SearchEntry key={dj.id} {...dj} />
+                <SearchEntry key={dj.id} {...dj} loading={loading} />
             ))}
-            {pageInfo && (
+            {pagination && (
                 <Row style={{ marginBottom: 30 }}>
                     <Pagination
-                        activePage={pageInfo.page}
+                        activePage={pagination.page}
                         ellipsisBuffer={2}
-                        onPageChange={(page) => setPagination((pp) => ({ ...pp, page }))}
-                        totalPages={pageInfo.totalPages}
-                        hrefConstructor={(page) => `page=${page}`}
+                        onPageChange={(page) => {
+                            window.scroll({
+                                top: 0,
+                                left: 0,
+                                behavior: 'smooth',
+                            });
+                            setPagination((pp) => ({ ...pagination, ...pp, page }));
+                        }}
+                        totalPages={pagination.totalPages}
+                        hrefConstructor={(page) => `${pathname}?page=${page}`}
                     />
                 </Row>
             )}
