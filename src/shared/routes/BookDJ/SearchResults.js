@@ -304,7 +304,8 @@ const ImageGrid = styled.ol`
             cursor: pointer !important;
         }
         ${Pill} {
-            top: 1em;
+            top: auto;
+            bottom: 1em;
             left: 1em;
             width: auto;
             height: auto;
