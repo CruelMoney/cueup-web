@@ -5,6 +5,7 @@ import { CheckBoxRow } from 'components/CheckboxTable';
 import { useForm } from 'components/hooks/useForm';
 import ToggleButtonHandler from 'components/common/ToggleButtonHandler';
 import { GENRES } from 'constants/constants';
+import { Label } from 'components/FormComponents';
 import Checkmark from '../../assets/Checkmark';
 
 const InsidePopup = styled.div`
@@ -143,36 +144,43 @@ const EventTypeSelector = ({ initialvalues, onSave, loading }) => {
                     <label>EVENT TYPE</label>
                 </RowWrap>
                 <CheckBoxRow
+                    withBorder={false}
                     label="Wedding"
                     checked={form.wedding}
                     onChange={(wedding) => setValue({ wedding })}
                 />
                 <CheckBoxRow
+                    withBorder={false}
                     label="Birthday"
                     checked={form.birthday}
                     onChange={(birthday) => setValue({ birthday })}
                 />
                 <CheckBoxRow
+                    withBorder={false}
                     label="Corporate event"
                     checked={form.corporate}
                     onChange={(corporate) => setValue({ corporate })}
                 />
                 <CheckBoxRow
+                    withBorder={false}
                     label="Club"
                     checked={form.club}
                     onChange={(club) => setValue({ club })}
                 />
                 <CheckBoxRow
+                    withBorder={false}
                     label="Festival"
                     checked={form.festival}
                     onChange={(festival) => setValue({ festival })}
                 />
                 <CheckBoxRow
+                    withBorder={false}
                     label="School"
                     checked={form.school}
                     onChange={(school) => setValue({ school })}
                 />
                 <CheckBoxRow
+                    withBorder={false}
                     label="Outdoor"
                     checked={form.outdoor}
                     onChange={(outdoor) => setValue({ outdoor })}
@@ -197,27 +205,32 @@ const EventTypeSelector = ({ initialvalues, onSave, loading }) => {
 };
 
 const BudgetButton = ({ value, label, setBudget, budget }) => (
-    <SmartButton
+    <Row
         fullWidth
         level="secondary"
         className="withIcon"
-        style={{ marginBottom: 6 }}
         onClick={() => setBudget({ value, label })}
+        style={{
+            marginBottom: 6,
+            height: 40,
+            width: '100%',
+            justifyContent: 'space-between',
+            cursor: 'pointer',
+        }}
     >
-        {label}{' '}
-        {budget?.value === value && (
-            <Checkmark
-                style={{
-                    height: 24,
-                    width: 24,
-                    borderRadius: 12,
-                    backgroundColor: '#fff',
-                    padding: 6,
-                }}
-                color={'#25F4D2'}
-            />
-        )}
-    </SmartButton>
+        <Label>{label} </Label>
+
+        <Checkmark
+            style={{
+                height: 24,
+                width: 24,
+                borderRadius: 12,
+                backgroundColor: budget?.value === value ? '#25F4D2' : '#E9ECF0',
+                padding: 6,
+            }}
+            color={budget?.value === value ? '#fff' : '#E9ECF0'}
+        />
+    </Row>
 );
 
 const BudgetSelector = ({ initialvalues, onSave, loading }) => {
@@ -304,21 +317,25 @@ const EquipmentSelector = ({ initialvalues, onSave, loading }) => {
                     <label>EQUIPMENT</label>
                 </RowWrap>
                 <CheckBoxRow
+                    withBorder={false}
                     label="Sound system"
                     checked={form.speakers}
                     onChange={(speakers) => setValue({ speakers })}
                 />
                 <CheckBoxRow
+                    withBorder={false}
                     label="Lights"
                     checked={form.lights}
                     onChange={(lights) => setValue({ lights })}
                 />
                 <CheckBoxRow
+                    withBorder={false}
                     label="Microphone"
                     checked={form.microphone}
                     onChange={(microphone) => setValue({ microphone })}
                 />
                 <CheckBoxRow
+                    withBorder={false}
                     label="Smoke machine"
                     checked={form.smokeMachine}
                     onChange={(smokeMachine) => setValue({ smokeMachine })}

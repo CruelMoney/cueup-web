@@ -92,7 +92,7 @@ const LeftSideWrapper = styled.div`
 
 const GreyBox = styled.section`
     background-color: #f7f9fc;
-    border-radius: 27px;
+    border-radius: 12px;
     width: 100%;
     padding: 20px;
     margin-bottom: 15px;
@@ -153,7 +153,7 @@ const GreyBox = styled.section`
         padding-top: 5em;
         box-shadow: none;
         border: 1px solid #e9ecf0;
-        border-radius: 27px;
+        border-radius: 12px;
         -ms-overflow-style: none;
         scrollbar-width: none;
     }
@@ -199,7 +199,7 @@ const Filters = ({ form, setValue, doSearch, loading }) => {
                         right: 0,
                         bottom: 0,
                         border: '1px solid #e9ecf0',
-                        borderRadius: '27px',
+                        borderRadius: '12px',
                     }}
                     initialDate={form.date}
                     maxDate={new Date().setFullYear(new Date().getFullYear() + 5)}
@@ -297,20 +297,26 @@ const LeftSide = (props) => {
 
 const DataWrapper = (props) => {
     const { translate } = useTranslate();
-    const [filter, setFilter] = useState({});
     const [pagination, setPagination] = useState({
         orderBy: 'UPDATED_AT_DESCENDING',
         page: 1,
         limit: 9,
     });
     const { environment, data } = useServerContext();
+
+    const [filter, setFilter] = useState({
+        countryCode: data?.topCities[0]?.iso2,
+    });
+
+    const fallBackLocation = data?.topCities[0]?.country;
+
     const { runValidations, form, setValue } = useForm(null, {
-        // locationName: activeLocation.name,
+        locationName: fallBackLocation,
     });
 
     const { data: searchData, loading } = useQuery(SEARCH_DEEP, {
-        fetchPolicy: 'network-only',
-        skip: !filter.location,
+        fetchPolicy: 'cache-first',
+        skip: !filter.location && !filter.countryCode,
         variables: {
             filter,
             pagination,
@@ -338,7 +344,7 @@ const DataWrapper = (props) => {
         }
     }, [form, check, runValidations]);
 
-    const topDjs = searchData?.searchDjs?.edges || [];
+    const { edges: topDjs = [], pageInfo } = searchData?.searchDjs || {};
 
     // if (!activeLocation) {
     //     return <Redirect to={translate(appRoutes.notFound)} />;
@@ -354,6 +360,8 @@ const DataWrapper = (props) => {
             setValue={setValue}
             doSearch={doSearch}
             loading={loading || loading2}
+            pageInfo={pageInfo}
+            setPagination={setPagination}
         />
     );
 };

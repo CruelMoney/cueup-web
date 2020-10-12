@@ -154,25 +154,33 @@ const fallbackCities = [
         id: 1,
         city: 'Copenhagen',
         countrySlug: 'denmark',
+        country: 'Denmark',
         citySlug: 'copenhagen',
+        iso2: 'DK',
     },
     {
         id: 2,
         city: 'Bali',
         countrySlug: 'indonesia',
+        country: 'Indonesia',
         citySlug: 'bali',
+        iso2: 'ID',
     },
     {
         id: 3,
         city: 'Los Angeles',
         countrySlug: 'united-states',
+        country: 'United States',
         citySlug: 'los-angeles',
+        iso2: 'US',
     },
     {
         id: 4,
         city: 'Paris',
         countrySlug: 'france',
+        country: 'France',
         citySlug: 'paris',
+        iso2: 'FR',
     },
 ];
 

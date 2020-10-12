@@ -3,6 +3,7 @@ import { useMutation } from 'react-apollo';
 import { useState } from 'react';
 import { CREATE_EVENT } from 'components/common/RequestForm/gql';
 import { trackCheckAvailability, trackEventPosted } from 'utils/analytics';
+import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
 import GeoCoder from '../utils/GeoCoder';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -48,8 +49,13 @@ export const useCheckDjAvailability = () => {
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
 
+    const [loadGoogleMaps] = useLazyLoadScript(
+        'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
+    );
+
     const check = async ({ locationName, date }) => {
         try {
+            await loadGoogleMaps();
             setLoading(true);
             try {
                 trackCheckAvailability(locationName);

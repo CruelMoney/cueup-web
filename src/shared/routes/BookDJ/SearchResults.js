@@ -11,6 +11,7 @@ import { ProFeature } from 'components/FormComponents';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import Map from '../../components/common/Map';
+import Pagination from './Pagination';
 
 const ImagePreviews = ({ media, picture, playingLocations }) => {
     const renderItems = media.edges || [];
@@ -118,7 +119,14 @@ const SearchEntry = (props) => {
     const route = `${translate(appRoutes.user)}/${props.permalink}/overview`;
 
     return (
-        <NavLink to={route} target="_blank" rel="noopener noreferrer">
+        <NavLink
+            to={route}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+                marginBottom: '30px',
+            }}
+        >
             <SearchEntryWrapper>
                 <ImagePreviews {...props} />
                 <SearchEntryRightSide>
@@ -130,8 +138,7 @@ const SearchEntry = (props) => {
         </NavLink>
     );
 };
-
-const SearchResults = ({ topDjs, form }) => {
+const SearchResults = ({ topDjs, form, pageInfo, setPagination }) => {
     return (
         <Col>
             <H2 small style={{ marginBottom: 24 }}>
@@ -141,6 +148,17 @@ const SearchResults = ({ topDjs, form }) => {
             {topDjs.map((dj) => (
                 <SearchEntry key={dj.id} {...dj} />
             ))}
+            {pageInfo && (
+                <Row style={{ marginBottom: 30 }}>
+                    <Pagination
+                        activePage={pageInfo.page}
+                        ellipsisBuffer={2}
+                        onPageChange={(page) => setPagination((pp) => ({ ...pp, page }))}
+                        totalPages={pageInfo.totalPages}
+                        hrefConstructor={(page) => `page=${page}`}
+                    />
+                </Row>
+            )}
         </Col>
     );
 };
@@ -151,8 +169,6 @@ const SearchEntryRightSide = styled(Col)`
 `;
 
 const SearchEntryWrapper = styled(Row)`
-    margin-bottom: 30px;
-    cursor: pointer;
     h3 {
         font-weight: 600;
         font-size: 18px;
@@ -218,6 +234,7 @@ const ImageGrid = styled.ol`
             left: 0;
             width: 100%;
             height: 100%;
+            cursor: pointer !important;
         }
         ${Pill} {
             top: 1em;

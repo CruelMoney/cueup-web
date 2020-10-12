@@ -29,7 +29,7 @@ export const StyledCheckbox = styled.div`
     height: 24px;
     min-width: 24px;
     min-height: 24px;
-    background: ${(props) => (props.checked ? '#50E3C2 !important' : '#F6F8F9')};
+    background: ${(props) => (props.checked ? '#50E3C2 !important' : '#e9ecf0')};
     border-radius: 3px;
     cursor: pointer;
 
