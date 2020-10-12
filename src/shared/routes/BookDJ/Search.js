@@ -347,7 +347,7 @@ const DataWrapper = (props) => {
                 };
 
                 setFilter(newFilter);
-                setPagination((pp) => ({ ...pp, page: 1 }));
+                setPagination({ page: 1 });
             }
         }
     }, [form, check, runValidations]);
