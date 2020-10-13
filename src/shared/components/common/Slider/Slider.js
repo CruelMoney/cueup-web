@@ -97,8 +97,7 @@ class Slider extends Component {
         return this.getValue(withinRange[1][1], withinRange[0][1], middlePerc);
     };
 
-    handleChange = (values, dragging) => {
-        console.log({ dragging });
+    handleChange = (values) => {
         values = Array.isArray(values) ? values : [values];
 
         if (this.nonLinear) {
