@@ -5,8 +5,9 @@ import './index.css';
 const config = { mass: 5, tension: 2000, friction: 200 };
 
 function AnimatedText({ content, onAnimated }) {
-    const [items, setItems] = useState([]);
-    const [hide, setHide] = useState(true);
+    const [items, setItems] = useState(content.split(' '));
+    const [hide, setHide] = useState(false);
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
         const run = async () => {
@@ -19,7 +20,12 @@ function AnimatedText({ content, onAnimated }) {
             setHide(false);
             onAnimated(true);
         };
-        run();
+
+        if (mounted) {
+            run();
+        } else {
+            setMounted(true);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [content]);
 
@@ -28,6 +34,7 @@ function AnimatedText({ content, onAnimated }) {
         opacity: !hide ? 1 : 0,
         x: !hide ? 0 : 20,
         height: !hide ? 100 : 0,
+        immediate: !mounted,
         from: { opacity: 0, x: 20, height: 0 },
     });
 

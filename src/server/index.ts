@@ -33,18 +33,18 @@ if (!isProduction) {
 }
 
 app.use(useragent.express());
-addTestEndpoints(app);
+
+if (process.env.SETTING === 'test') {
+    addTestEndpoints(app);
+}
+
 addSocialImages(app);
 
 // Use Nginx or Apache to serve static assets in production or remove the if() around the following
 // lines to use the express.static middleware to serve assets for production (not recommended!)
 app.use('/', express.static(path.join(paths.clientBuild), { maxAge: '365 days' }));
 
-app.use(
-    cors({
-        origin: 'http://localhost:8500',
-    })
-);
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

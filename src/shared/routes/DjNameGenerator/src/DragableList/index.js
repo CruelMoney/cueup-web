@@ -10,7 +10,7 @@ import { useMeasure } from '@softbind/hook-use-measure';
 const GAP = 10;
 
 function DraggableList({ items, onOrderChanged }) {
-    const [ITEM_HEIGHT, setHeight] = useState(100);
+    const [ITEM_HEIGHT, setHeight] = useState(80);
     const cardRef = useRef();
     const SPACE = ITEM_HEIGHT + GAP;
 

@@ -14,11 +14,11 @@ if (REDIS_URL) {
     options.port = redisUrl.port;
     options.auth_pass = redisUrl.password;
 }
-
 const cache = redis(options);
 
 if (process.env.SETTING === 'development') {
     cache.on('message', console.log);
+    cache.on('error', console.log);
 }
 
 const addRedis = (app) => {

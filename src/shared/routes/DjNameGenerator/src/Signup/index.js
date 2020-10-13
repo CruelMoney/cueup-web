@@ -20,7 +20,7 @@ import { SLIM_SIGNUP } from '../gql';
 
 import './index.css';
 
-export const Signup = ({ name, history }) => {
+const Signup = ({ name, history }) => {
     const { environment } = useServerContext();
 
     const transitions = useTransition(true, null, {
@@ -225,3 +225,5 @@ const Divider = () => {
         </div>
     );
 };
+
+export default Signup;

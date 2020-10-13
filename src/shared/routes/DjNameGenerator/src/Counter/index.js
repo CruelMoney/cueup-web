@@ -21,7 +21,11 @@ const DataWrapper = () => {
     const count = data?.countUpdated || countData?.getGeneratedNamesCount;
 
     if (!count) {
-        return null;
+        return (
+            <p className="counter">
+                <span>.....</span> DJ names generated
+            </p>
+        );
     }
 
     return <DebouncedCounter count={count} />;

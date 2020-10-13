@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import * as Sentry from '@sentry/react';
 import loadable from '@loadable/component';
+
 import { useServerContext } from 'components/hooks/useServerContext.tsx';
 
 import { appRoutes } from 'constants/locales/appRoutes';

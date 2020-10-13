@@ -1,8 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;900&display=swap');
-
 @font-face {
     font-display: swap;
-    font-family: 'HangTheDj';
+    font-family: 'Hang the DJ';
     font-style: normal;
     src: url('./HANGTHEDJ.ttf') format('truetype');
 }
@@ -16,7 +14,7 @@ body {
     background: #f0f0f0;
     color: rgb(77, 100, 128);
     display: flex;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Avenir Next', Open Sans, Segoe UI, Helvetica, sans-serif;
     height: 100%;
     margin: 0;
     overflow: hidden;
@@ -98,7 +96,7 @@ a {
     border-radius: 15px;
     color: white;
     cursor: move;
-    height: 100px;
+    height: 80px;
     overflow: hidden;
     padding: 1em;
     pointer-events: auto;
@@ -162,7 +160,7 @@ a {
 
 .category-content h4 {
     color: #fff;
-    font-family: 'HangTheDj', sans-serif;
+    font-family: 'Hang the DJ', sans-serif;
     font-size: 1.5em;
     letter-spacing: 2px;
     margin-bottom: 0.5em;
@@ -215,8 +213,12 @@ a {
     min-width: 500px;
     -webkit-overflow-scrolling: touch;
     overflow-y: scroll;
+    scrollbar-width: none;
     width: 500px;
     z-index: 2;
+}
+.left-area::-webkit-scrollbar {
+    display: none;
 }
 
 .left-area button {
@@ -308,7 +310,7 @@ svg.logo {
 }
 
 .dj-name {
-    font-family: 'HangTheDj', sans-serif;
+    font-family: 'Hang the DJ', sans-serif;
     font-size: 1em;
     text-align: center;
 }
@@ -449,7 +451,7 @@ svg.logo {
 }
 .counter span {
     font-size: 1.3em;
-    font-weight: 900;
+    font-weight: 700;
     margin-right: 5px;
 }
 
@@ -470,11 +472,12 @@ svg.logo {
     justify-content: center;
     padding: 1em;
     position: relative;
-    svg {
-        height: 24px;
-        margin-left: 10px;
-        width: 24px;
-    }
+}
+
+.instagram-filter-link svg {
+    height: 24px;
+    margin-left: 10px;
+    width: 24px;
 }
 
 @media only screen and (max-width: 1440px) {
@@ -484,9 +487,6 @@ svg.logo {
     .left-area {
         min-width: 450px;
         width: 450px;
-    }
-    .dragable-card {
-        height: 80px;
     }
 }
 
@@ -626,6 +626,4 @@ svg.logo {
     .continue-button {
         transform: none;
     }
-
-  
 }

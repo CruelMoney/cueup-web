@@ -213,7 +213,7 @@ const ConnectedCard = ({ onSave }) => {
                     containerClassName={'card-container '}
                     inputStyle={{
                         'color': '#32325d',
-                        'fontFamily': '"AvenirNext", Helvetica, sans-serif',
+                        'fontFamily': '"Avenir Next", Helvetica, sans-serif',
                         'fontSmoothing': 'antialiased',
                         'fontSize': '18px',
                         'background': 'transparent',
