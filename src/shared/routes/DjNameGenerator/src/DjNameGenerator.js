@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation, Route } from 'react-router';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import { useSpring, animated } from 'react-spring';
 import loadable from '@loadable/component';
 import { useServerContext } from 'components/hooks/useServerContext';

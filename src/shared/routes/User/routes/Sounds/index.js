@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { Helmet } from 'react-helmet-async';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
 import Popup from '../../../../components/common/Popup';

@@ -1,15 +1,7 @@
-import { ApolloLink } from 'apollo-link';
-import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
-import { ApolloClient } from 'apollo-client';
-import { createHttpLink } from 'apollo-link-http';
-import { onError } from 'apollo-link-error';
+import { ApolloClient, InMemoryCache, ApolloLink, createHttpLink } from '@apollo/client';
+import { onError } from '@apollo/client/link/error';
 import fetch from 'node-fetch';
 import resolvers from '../../shared/actions/resolvers';
-import introspectionQueryResultData from '../../../fragmentTypes.json';
-
-const fragmentMatcher = new IntrospectionFragmentMatcher({
-    introspectionQueryResultData,
-});
 
 const addApollo = (_req, res, next) => {
     const headers = {
@@ -40,7 +32,16 @@ const addApollo = (_req, res, next) => {
     const apolloClient = new ApolloClient({
         ssrMode: true,
         link,
-        cache: new InMemoryCache({ fragmentMatcher }),
+        cache: new InMemoryCache({
+            possibleTypes: {
+                PayoutMethod: ['Bank', 'Direct'],
+                PaymentIntent: [
+                    'DirectPaymentIntent',
+                    'StripePaymentIntent',
+                    'XenditPaymentIntent',
+                ],
+            },
+        }),
         resolvers,
     });
 

@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { NavLink, useRouteMatch, useHistory } from 'react-router-dom';
 import queryString from 'query-string';
 import { appRoutes, userRoutes, eventRoutes } from 'constants/locales/appRoutes';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import styled, { css } from 'styled-components';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 
 import Skeleton from 'react-loading-skeleton';
 import Popup from 'components/common/Popup';

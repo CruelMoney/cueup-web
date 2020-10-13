@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Query } from 'react-apollo';
+import { Query } from '@apollo/client/react/components';
 import usePushNotifications from 'components/hooks/usePushNotifications';
 import useTranslate from 'components/hooks/useTranslate';
 import { useNotifications } from 'components/hooks/useNotifications';

@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
 const EVENT = gql`
     query Event($id: ID!, $hash: String!, $locale: String, $currency: Currency) {

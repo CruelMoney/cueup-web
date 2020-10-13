@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mutation } from 'react-apollo';
+import { Mutation } from '@apollo/client/react/components';
 import { useServerContext } from 'components/hooks/useServerContext';
 import { REQUEST_EMAIL_VERIFICATION } from '../gql';
 

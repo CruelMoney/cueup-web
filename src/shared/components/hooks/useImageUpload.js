@@ -1,4 +1,4 @@
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import { useState } from 'react';
 import { UPLOAD_FILE } from 'routes/User/gql';
 import { ImageCompressor } from '../../utils/ImageCompressor';

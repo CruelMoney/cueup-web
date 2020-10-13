@@ -8,7 +8,7 @@ import {
 } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import styled from 'styled-components';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import { captureException } from '@sentry/core';
 import { inputStyle, SmartButton, Hr } from 'components/Blocks';
 import { BodySmall } from 'components/Text';

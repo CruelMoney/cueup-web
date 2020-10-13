@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useQuery, useMutation } from 'react-apollo';
+import { useQuery, useMutation } from '@apollo/client';
 import styled from 'styled-components';
 import { useForm } from 'components/hooks/useForm';
 import CountrySelector from 'components/common/CountrySelector';

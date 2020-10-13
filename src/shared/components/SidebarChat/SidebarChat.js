@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useCallback } from 'react';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { NavLink, useHistory, useLocation, Route } from 'react-router-dom';
 import { Avatar, ClosePopupButton, Row, TeritaryButton, Col } from 'components/Blocks';
 import { EVENT_GIGS } from 'routes/Event/gql';

@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
 const NAME_GENERATED = gql`
     mutation NameGenerated($name: String) {

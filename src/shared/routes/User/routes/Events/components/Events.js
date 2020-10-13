@@ -1,5 +1,5 @@
 import React from 'react';
-import { Query } from 'react-apollo';
+import { Query } from '@apollo/client/react/components';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import Formatter from '../../../../../utils/Formatter';

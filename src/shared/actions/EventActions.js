@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/react';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import { useState } from 'react';
 import { CHECK_DJ_AVAILABILITY, CREATE_EVENT } from 'components/common/RequestForm/gql';
 import { trackCheckAvailability, trackEventPosted } from 'utils/analytics';

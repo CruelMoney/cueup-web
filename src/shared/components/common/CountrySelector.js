@@ -1,6 +1,6 @@
 import React from 'react';
 import { getData } from 'country-list';
-import { Query } from 'react-apollo';
+import { Query } from '@apollo/client/react/components';
 import { SearchableSuggestionList } from 'components/SuggestionList/SuggestionList';
 import { AVAILABLE_BANKS } from './PayoutForm/gql';
 

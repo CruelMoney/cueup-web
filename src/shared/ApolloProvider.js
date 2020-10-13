@@ -1,26 +1,18 @@
 import React from 'react';
-import { ApolloProvider } from 'react-apollo';
-import { ApolloClient } from 'apollo-client';
-import { split, ApolloLink } from 'apollo-link';
-import { getMainDefinition } from 'apollo-utilities';
-import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
-import { onError } from 'apollo-link-error';
+import { ApolloClient, ApolloProvider, InMemoryCache, ApolloLink, split } from '@apollo/client';
+import { onError } from '@apollo/client/link/error';
+import { getMainDefinition } from '@apollo/client/utilities';
 
-import { setContext } from 'apollo-link-context';
+import { setContext } from '@apollo/client/link/context';
 import { createUploadLink } from 'apollo-upload-client';
-import { WebSocketLink } from 'apollo-link-ws';
+import { WebSocketLink } from '@apollo/client/link/ws';
 import { useServerContext } from 'components/hooks/useServerContext';
-import introspectionQueryResultData from '../../fragmentTypes.json';
 import resolvers from './actions/resolvers';
 import { authService } from './utils/AuthService';
 import customFetch from './utils/uploadProgress';
 
 const APIProvider = ({ children }) => {
     const { environment } = useServerContext();
-
-    const fragmentMatcher = new IntrospectionFragmentMatcher({
-        introspectionQueryResultData,
-    });
 
     // custome error handling, only logging errors atm
     const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -60,7 +52,12 @@ const APIProvider = ({ children }) => {
         };
     });
 
-    const cache = new InMemoryCache({ fragmentMatcher }).restore(window.__APOLLO_STATE__);
+    const cache = new InMemoryCache({
+        possibleTypes: {
+            PayoutMethod: ['Bank', 'Direct'],
+            PaymentIntent: ['DirectPaymentIntent', 'StripePaymentIntent', 'XenditPaymentIntent'],
+        },
+    }).restore(window.__APOLLO_STATE__);
 
     const uploadLink = createUploadLink({
         uri: environment.GQL_DOMAIN,

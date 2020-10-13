@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Mutation } from 'react-apollo';
+import { Mutation } from '@apollo/client/react/components';
 import { SmartButton, Container } from 'components/Blocks';
 import { Input } from 'components/FormComponents';
 import RegistrationElement from 'components/common/RegistrationElement';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { useHistory } from 'react-router';
 import Icon from '@iconify/react';
 import starIcon from '@iconify/icons-ion/star';

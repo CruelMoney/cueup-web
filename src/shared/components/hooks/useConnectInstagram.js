@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import { CONNECT_INSTAGRAM, DISCONNECT_INSTAGRAM } from '../../routes/User/gql';
 import { ME } from '../gql';
 import { useServerContext } from './useServerContext';

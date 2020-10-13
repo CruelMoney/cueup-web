@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery, useMutation } from 'react-apollo';
+import { useQuery, useMutation } from '@apollo/client';
 import { useHistory, Route } from 'react-router';
 import useTranslate from 'components/hooks/useTranslate';
 import { InputRow } from 'components/FormComponents';

@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
 const USER_SOUNDS = gql`
     query UserSounds($userId: ID!, $pagination: Pagination) {

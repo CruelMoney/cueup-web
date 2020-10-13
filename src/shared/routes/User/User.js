@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Switch, Route, Redirect, useHistory } from 'react-router';
 import styled from 'styled-components';
-import { Query, useMutation, useQuery } from 'react-apollo';
+import { Query, useMutation, useQuery } from '@apollo/client';
 import queryString from 'query-string';
 
 import moment from 'moment';

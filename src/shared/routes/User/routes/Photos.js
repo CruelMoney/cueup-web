@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
-import { useQuery, useMutation } from 'react-apollo';
+import { useQuery, useMutation } from '@apollo/client';
 
 import { Icon } from '@iconify/react';
 import removeCircle from '@iconify/icons-ion/remove-circle';

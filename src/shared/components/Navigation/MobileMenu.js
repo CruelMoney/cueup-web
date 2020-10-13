@@ -1,7 +1,7 @@
 import React, { useState, createContext, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 
-import { Query, useQuery } from 'react-apollo';
+import { Query, useQuery } from '@apollo/client';
 import styled, { createGlobalStyle } from 'styled-components';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import { ClosePopupButton } from 'components/Blocks';

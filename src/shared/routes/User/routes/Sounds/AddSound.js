@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { useMutation, useQuery } from 'react-apollo';
+import { useMutation, useQuery } from '@apollo/client';
 import styled from 'styled-components';
 import * as Sentry from '@sentry/react';
 import { useHistory, useRouteMatch } from 'react-router';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory, useLocation } from 'react-router';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { Card, CardShadow, Col, Hr, LinkButton } from 'components/Blocks';
 import { LabelHalf, InputRow, Label, InputLabel } from 'components/FormComponents';
 import { BodySmall, TitleClean } from 'components/Text';

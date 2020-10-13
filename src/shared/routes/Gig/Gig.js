@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback, forwardRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { useQuery, useMutation } from 'react-apollo';
+import { useQuery, useMutation } from '@apollo/client';
 import styled from 'styled-components';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';

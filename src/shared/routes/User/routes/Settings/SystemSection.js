@@ -1,5 +1,6 @@
 import React from 'react';
-import { Mutation, useLazyQuery } from 'react-apollo';
+import { useLazyQuery } from '@apollo/client';
+import { Mutation } from '@apollo/client/react/components';
 import { useHistory } from 'react-router';
 import { SettingsSection, Input } from 'components/FormComponents';
 import useTranslate from 'components/hooks/useTranslate';

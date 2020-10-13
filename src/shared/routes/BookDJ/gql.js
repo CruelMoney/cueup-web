@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
 export const SEARCH = gql`
     query Search($pagination: Pagination!, $filter: SearchFilter!) {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import emailValidator from 'email-validator';
 
-import { Mutation } from 'react-apollo';
+import { Mutation } from '@apollo/client/react/components';
 import styled from 'styled-components';
 import { SmartButton, RowWrap, Hr, Col } from 'components/Blocks';
 import { BodySmall } from 'components/Text';

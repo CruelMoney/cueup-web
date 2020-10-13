@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useSubscription, useQuery } from 'react-apollo';
+import { useSubscription, useQuery } from '@apollo/client';
 import throttle from 'react-throttle-render';
 import { COUNT_UPDATED_SUB, GET_GENERATED_NAMES_COUNT } from '../gql';
 

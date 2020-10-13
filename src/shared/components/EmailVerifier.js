@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import { useHistory, useLocation } from 'react-router';
 import Notification from './common/Notification';
 import { VERIFY_EMAIL } from './gql';

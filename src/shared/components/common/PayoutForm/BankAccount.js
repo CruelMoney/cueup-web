@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Elements, useStripe } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import { useMutation, useQuery } from 'react-apollo';
+import { useMutation, useQuery } from '@apollo/client';
 import { Title, BodySmall } from 'components/Text';
 import { Input, InputRow, Label } from 'components/FormComponents';
 import CurrencySelector from 'components/CurrencySelector';

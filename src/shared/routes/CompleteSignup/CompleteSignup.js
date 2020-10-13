@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { Redirect } from 'react-router-dom';
 import { ME } from 'components/gql';
 import { appRoutes } from 'constants/locales/appRoutes';

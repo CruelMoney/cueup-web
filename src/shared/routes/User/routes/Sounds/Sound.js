@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import { Label } from 'components/FormComponents';
 import { Title, BodySmall, SmallBold } from '../../../../components/Text';
 import { Row, Pill, SecondaryButton, SmartButton, Col } from '../../../../components/Blocks';

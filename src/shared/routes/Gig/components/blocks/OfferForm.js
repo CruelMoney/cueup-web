@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import debounce from 'lodash/debounce';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import { InlineIcon } from '@iconify/react';
 import infoIcon from '@iconify/icons-ion/information-circle';
 import { useLocation } from 'react-router';

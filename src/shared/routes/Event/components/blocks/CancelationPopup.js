@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMutation, useQuery } from 'react-apollo';
+import { useMutation, useQuery } from '@apollo/client';
 
 import { Row, TeritaryButton, SmartButton } from '../../../../components/Blocks';
 

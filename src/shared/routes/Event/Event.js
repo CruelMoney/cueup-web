@@ -1,7 +1,7 @@
 import React, { useEffect, forwardRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import styled from 'styled-components';
 import { useRouteMatch, useHistory } from 'react-router';
 import { appRoutes, eventRoutes } from 'constants/locales/appRoutes';

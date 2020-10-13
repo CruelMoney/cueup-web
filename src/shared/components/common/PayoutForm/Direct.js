@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMutation, useQuery } from 'react-apollo';
+import { useMutation, useQuery } from '@apollo/client';
 import { Title, BodySmall } from 'components/Text';
 import { Input, InputRow } from 'components/FormComponents';
 import { SmartButton, Row, TeritaryButton, LoadingIndicator } from 'components/Blocks';

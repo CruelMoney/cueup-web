@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 import { EDIT_STATUS } from 'constants/constants';
 import { ME } from '../../components/gql';
 

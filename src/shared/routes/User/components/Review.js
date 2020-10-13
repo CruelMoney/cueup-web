@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 
 import styled from 'styled-components';
 import moment from 'moment-timezone';

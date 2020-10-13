@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
 const CHECK_DJ_AVAILABILITY = gql`
     mutation DjsAvailable($location: Area!, $date: DateTime) {

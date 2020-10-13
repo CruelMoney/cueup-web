@@ -1,4 +1,4 @@
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { LOG_ACTIVITY } from '../../routes/User/gql';

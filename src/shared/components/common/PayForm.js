@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import useComponentSize from '@rehooks/component-size';
-import { useMutation, useLazyQuery, useQuery } from 'react-apollo';
+import { useMutation, useLazyQuery, useQuery } from '@apollo/client';
 import { Icon } from '@iconify/react';
 import checkmarkCircle from '@iconify/icons-ion/checkmark-circle';
 

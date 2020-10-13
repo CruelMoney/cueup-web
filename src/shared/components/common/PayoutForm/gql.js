@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
 const UPDATE_USER_PAYOUT = gql`
     mutation UpdateUserPayout($provider: PaymentProvider!, $type: PayoutType!, $data: JSON!) {

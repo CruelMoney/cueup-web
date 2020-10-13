@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { NavLink } from 'react-router-dom';
 import { InlineIcon } from '@iconify/react';
 import forwardIcon from '@iconify/icons-ion/arrow-forward';

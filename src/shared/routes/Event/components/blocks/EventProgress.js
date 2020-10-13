@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { NavLink } from 'react-router-dom';
 import { eventRoutes } from 'constants/locales/appRoutes';
 import { eventStates } from 'constants/constants';

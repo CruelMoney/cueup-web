@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery, useMutation } from 'react-apollo';
+import { useQuery, useMutation } from '@apollo/client';
 import styled from 'styled-components';
 import { EVENT_REVIEW, WRITE_REVIEW } from '../../gql';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';

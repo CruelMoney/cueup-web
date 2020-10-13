@@ -1,5 +1,5 @@
 import React, { useRef, useState, useCallback } from 'react';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { Icon } from '@iconify/react';
 import timeIcon from '@iconify/icons-ion/time';
 import checkmarkIcon from '@iconify/icons-ion/checkmark-circle';

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Query, useMutation } from 'react-apollo';
+import { Query, useMutation } from '@apollo/client';
 
 import { Route, useHistory } from 'react-router';
 import { ME } from 'components/gql';

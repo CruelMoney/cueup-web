@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Redirect, Route, Switch, useLocation, useParams } from 'react-router';
 import { Helmet } from 'react-helmet-async';
-import { useLazyQuery, useQuery } from 'react-apollo';
+import { useLazyQuery, useQuery } from '@apollo/client';
 import styled, { css } from 'styled-components';
 import { InlineIcon } from '@iconify/react';
 import speechIcon from '@iconify/icons-ion/ios-text';

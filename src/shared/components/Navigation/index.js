@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { appRoutes } from 'constants/locales/appRoutes.ts';

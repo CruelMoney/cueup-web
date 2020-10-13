@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useTransition, animated } from 'react-spring';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import useWindowSize from 'components/hooks/useWindowSize';
 
 import { useServerContext } from 'components/hooks/useServerContext';

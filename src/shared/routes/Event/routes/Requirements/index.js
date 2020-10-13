@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import emailValidator from 'email-validator';
 import { useRouteMatch } from 'react-router';
 import useTranslate from 'components/hooks/useTranslate';
