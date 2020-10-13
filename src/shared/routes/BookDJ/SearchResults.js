@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { InlineIcon } from '@iconify/react';
 import pinIcon from '@iconify/icons-ion/location-sharp';
@@ -21,10 +21,10 @@ const loadingGraceStyle = {
     lineHeight: '2em',
 };
 
-const ImagePreviews = ({ appMetadata, media, picture, playingLocations, loading }) => {
-    const renderItems = media.edges || [];
+const ImagePreviews = ({ appMetadata, media, id, picture, playingLocations, loading }) => {
+    const renderItems = media?.edges || [];
 
-    const location = playingLocations[0];
+    const location = playingLocations?.[0];
 
     let imagecount = renderItems.length || 1;
     if (loading) {
@@ -76,13 +76,14 @@ const ImagePreviews = ({ appMetadata, media, picture, playingLocations, loading 
                 </>
             )}
 
-            {!loading && !renderItems.length && (
+            {!loading && !renderItems.length && location?.radius && (
                 <li className="with-border">
                     <Map
                         zoomScaler={150}
                         hideRoads
                         hideNames
-                        radius={location?.radius}
+                        noCircle
+                        radius={location.radius}
                         defaultCenter={{
                             lat: location.latitude,
                             lng: location.longitude,
@@ -197,8 +198,8 @@ const SearchResults = ({ topDjs, form, pagination, loading, setPagination }) => 
                 DJs in{' '}
                 <strong style={{ fontWeight: 700 }}>{form?.locationName?.split(', ')[0]}</strong>
             </H2>
-            {topDjs.map((dj) => (
-                <SearchEntry key={dj.id} {...dj} loading={loading} />
+            {topDjs.map((dj, idx) => (
+                <SearchEntry key={dj?.id || idx} {...dj} loading={loading} />
             ))}
             {pagination && (
                 <Row style={{ marginBottom: 30 }}>

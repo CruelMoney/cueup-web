@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/react';
 import { useMutation } from 'react-apollo';
 import { useState } from 'react';
-import { CREATE_EVENT } from 'components/common/RequestForm/gql';
+import { CHECK_DJ_AVAILABILITY, CREATE_EVENT } from 'components/common/RequestForm/gql';
 import { trackCheckAvailability, trackEventPosted } from 'utils/analytics';
 import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
 import GeoCoder from '../utils/GeoCoder';
@@ -48,6 +48,7 @@ export const getLocation = (location) => {
 export const useCheckDjAvailability = () => {
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
+    const [mutate, { error: apolloError }] = useMutation(CHECK_DJ_AVAILABILITY);
 
     const [loadGoogleMaps] = useLazyLoadScript(
         'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
@@ -85,8 +86,15 @@ export const useCheckDjAvailability = () => {
                 timeZoneId
             );
 
+            const variables = {
+                date,
+                location,
+            };
+
+            const { data = {} } = await mutate({ variables });
+
             return {
-                result: true,
+                result: data?.djsAvailable,
                 date: newMoment.toDate(),
                 timeZoneId,
                 location,

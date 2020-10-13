@@ -14,8 +14,11 @@ import ErrorMessageApollo from 'components/common/ErrorMessageApollo';
 import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
 import DatePicker from 'components/common/DatePicker';
 import LazyRequestForm from 'components/common/RequestForm';
+import { appRoutes } from 'constants/locales/appRoutes';
+import useTranslate from 'components/hooks/useTranslate';
 
 const DjSearch = () => {
+    const { translate } = useTranslate();
     const routeLocation = useLocation();
     const history = useHistory();
     const locationRef = useRef();
@@ -53,6 +56,16 @@ const DjSearch = () => {
                 const { result, date, timeZoneId, location } = await check(form);
 
                 if (result === true) {
+                    history.push({
+                        pathname: translate(appRoutes.search),
+                        state: {
+                            activeStep: 2,
+                            date: form.date,
+                            timeZoneId,
+                            location,
+                        },
+                    });
+                } else {
                     const route = routeLocation.pathname + 'book-dj';
                     history.push({
                         pathname: route,
@@ -66,7 +79,7 @@ const DjSearch = () => {
                 }
             }
         },
-        [check, form, history, routeLocation.pathname, runValidations]
+        [check, form, history, routeLocation.pathname, runValidations, translate]
     );
 
     useEffect(() => {

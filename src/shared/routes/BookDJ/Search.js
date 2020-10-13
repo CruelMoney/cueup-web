@@ -280,7 +280,7 @@ const RequestOffers = () => {
                     border: '0.5px solid rgba(77, 100, 128, 0.2)',
                 }}
             >
-                Get offers - Save time
+                Get quotes - let us find the DJs
             </SmartButton>
         </GreyBox>
     );
@@ -298,7 +298,8 @@ const LeftSide = (props) => {
 const DataWrapper = (props) => {
     const { translate } = useTranslate();
 
-    const { search } = useLocation();
+    const { search, state: navState } = useLocation();
+
     const searchParams = new URLSearchParams(search);
     const initialPage = Number(searchParams.get('page'));
     const [pagination, setPagination] = useState({
@@ -309,12 +310,14 @@ const DataWrapper = (props) => {
 
     const [filter, setFilter] = useState({
         countryCode: data?.topCities[0]?.iso2,
+        location: navState?.location,
     });
 
     const fallBackLocation = data?.topCities[0]?.country;
 
     const { runValidations, form, setValue } = useForm(null, {
-        locationName: fallBackLocation,
+        locationName: navState?.location?.name || fallBackLocation,
+        ...navState,
     });
 
     const { data: searchData, loading } = useQuery(SEARCH_DEEP, {
@@ -352,7 +355,12 @@ const DataWrapper = (props) => {
         }
     }, [form, check, runValidations]);
 
-    const { edges: topDjs = [], pageInfo } = searchData?.searchDjs || {};
+    const { edges, pageInfo } = searchData?.searchDjs || {};
+
+    let topDjs = edges || [];
+    if (loading || loading2) {
+        topDjs = [null, null, null, null, null, null, null, null, null];
+    }
 
     // if (!activeLocation) {
     //     return <Redirect to={translate(appRoutes.notFound)} />;
