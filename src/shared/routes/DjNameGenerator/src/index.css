@@ -1,5 +1,5 @@
 @font-face {
-    font-display: optional;
+    font-display: swap;
     font-family: 'Hang the DJ';
     font-style: normal;
     src: url('./HANGTHEDJ.ttf') format('truetype');

@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useLocation, Route } from 'react-router';
 import { useMutation } from 'react-apollo';
 import { useSpring, animated } from 'react-spring';
+import loadable from '@loadable/component';
 import { useServerContext } from 'components/hooks/useServerContext';
 import useGenerateName, { TYPES } from './useGenerateName';
 import DraggableList from './DragableList';
@@ -17,9 +18,10 @@ import TextInput from './TextInput';
 import './index.css';
 import Counter from './Counter';
 import { NAME_GENERATED } from './gql';
-import { Signup } from './Signup';
 import RefreshButton, { RefreshButtonNaked } from './RefreshButton';
 import InstagramWidget from './InstagramWidget';
+
+const LazySignup = loadable(() => import('./Signup'));
 
 const description =
     "Are you even a real DJ if you don't have a name? Find your next DJ name by clicking generate. Toggle the categories to customize the name, best to only use 2 at a time, unless you like it wild. There's 19 billion possibilities - how much time do you have to waste?";
@@ -179,6 +181,7 @@ function App({ match, history }) {
                     <div
                         className={'dj-name-wrapper' + (hasGenerated ? ' active' : '')}
                         onClick={() => hasGenerated && history.push(match.url + '/signup')}
+                        onMouseEnter={() => LazySignup.preload()}
                     >
                         <h1 className="dj-name">
                             <AnimatedText content={name} onAnimated={setAnimated} />
@@ -222,7 +225,7 @@ function App({ match, history }) {
 
             <Route
                 path={match.url + '/signup'}
-                render={(props) => <Signup name={name} {...props} />}
+                render={(props) => <LazySignup name={name} {...props} />}
             />
         </>
     );
