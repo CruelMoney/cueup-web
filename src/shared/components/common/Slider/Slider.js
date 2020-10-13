@@ -97,7 +97,8 @@ class Slider extends Component {
         return this.getValue(withinRange[1][1], withinRange[0][1], middlePerc);
     };
 
-    handleChange = (values) => {
+    handleChange = (values, dragging) => {
+        console.log({ dragging });
         values = Array.isArray(values) ? values : [values];
 
         if (this.nonLinear) {
@@ -117,6 +118,7 @@ class Slider extends Component {
                         step={this.props.step}
                         defaultValue={this.props.value}
                         onChange={this.handleChange}
+                        onAfterChange={this.props.onAfterChange}
                         trackStyle={[trackStyle]}
                         handleStyle={[handleStyle, handleStyle]}
                     />
@@ -128,6 +130,7 @@ class Slider extends Component {
                         step={this.props.step}
                         defaultValue={this.props.value[0]}
                         onChange={this.handleChange}
+                        onAfterChange={this.props.onAfterChange}
                         trackStyle={trackStyle}
                         handleStyle={handleStyle}
                     />

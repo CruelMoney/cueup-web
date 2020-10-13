@@ -29,9 +29,6 @@ const TimeSlider = ({
 
     const handleChange = (values) => {
         setValues(values);
-        if (onChange) {
-            onChange(values);
-        }
     };
 
     const getValues = (values) => {
@@ -61,6 +58,7 @@ const TimeSlider = ({
                     step={30} //Steps of half hour
                     value={values}
                     onChange={handleChange}
+                    onAfterChange={onChange}
                     format={wNumb({
                         decimals: 0,
                     })}
