@@ -280,7 +280,7 @@ const RequestOffers = () => {
                     border: '0.5px solid rgba(77, 100, 128, 0.2)',
                 }}
             >
-                Request offers
+                Get offers - Save time
             </SmartButton>
         </GreyBox>
     );

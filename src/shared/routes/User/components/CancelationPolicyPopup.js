@@ -89,8 +89,8 @@ const CancelationPolicyPopup = ({ initialValue, onClose, save, translate, isActi
                 <PolicyDisplayer
                     style={{ maxWidth: '350px' }}
                     cancelationPolicy={cancelationPolicy}
-                    explanationText={`Organizer can cancel any time before ${cancelationPolicy.days} days, and get a 100%
-							refund, minus the service fee.`}
+                    explanationText={`Organizer can cancel any time ${cancelationPolicy.days} days before the event, and get a 100%
+							refund.`}
                 />
 
                 <Row style={{ marginTop: '15px' }} right>
@@ -133,8 +133,7 @@ export const PolicyDisplayer = ({ cancelationPolicy, style, explanationText }) =
         </Row>
         <BodySmall style={{ marginBottom: 0 }}>
             {explanationText ||
-                `Cancel any time before ${cancelationPolicy.days} days, and get a 100%
-			refund, minus the service fee.`}
+                `Cancel any time ${cancelationPolicy.days} days before the event, and get a 100% refund.`}
         </BodySmall>
     </>
 );
