@@ -7,6 +7,11 @@ import * as serviceWorker from './ServiceWorker';
 import Router from './BrowserRouter';
 
 import './i18next';
+// import { getCLS, getFID, getLCP } from 'web-vitals';
+
+// getCLS(console.log, true);
+// getFID(console.log); // Does not take a `reportAllChanges` param.
+// getLCP(console.log, true);
 
 const rootElement = document.getElementById('app');
 if (rootElement && rootElement.hasChildNodes()) {

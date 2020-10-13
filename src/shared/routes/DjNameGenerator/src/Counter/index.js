@@ -21,7 +21,7 @@ const DataWrapper = () => {
     const count = data?.countUpdated || countData?.getGeneratedNamesCount;
 
     if (!count) {
-        return null;
+        return <span />;
     }
 
     return <DebouncedCounter count={count} />;

@@ -50,7 +50,7 @@ function* getParts(lists = [], startLetter) {
     const count = lists.length;
     for (let i = 0; i < count; i += 1) {
         const list = lists?.[i] ?? lists[0] ?? WORD_LISTS.ARTISTS;
-        console.log({ list, lists, startLetter });
+
         const idx = Math.floor(Math.random() * list.length);
 
         if (startLetter) {
