@@ -119,7 +119,7 @@ const urlLoaderServer = {
 };
 
 const fileLoaderClient = {
-    exclude: [/\.(js|jsx|ts|tsx|css|mjs|html|ejs|json|woff|woff2)$/],
+    exclude: [/\.(js|jsx|ts|tsx|css|mjs|html|ejs|json|woff|woff2|ttf)$/],
     use: [
         {
             loader: require.resolve('file-loader'),
@@ -131,7 +131,7 @@ const fileLoaderClient = {
 };
 
 const fileLoaderServer = {
-    exclude: [/\.(js|tsx|ts|tsx|css|mjs|html|ejs|json|woff|woff2)$/],
+    exclude: [/\.(js|tsx|ts|tsx|css|mjs|html|ejs|json|woff|woff2|ttf)$/],
     use: [
         {
             loader: require.resolve('file-loader'),
@@ -144,7 +144,7 @@ const fileLoaderServer = {
 };
 
 const fontLoaderClient = {
-    test: [/\.(woff|woff2)$/],
+    test: [/\.(woff|woff2|ttf)$/],
     use: [
         {
             loader: require.resolve('file-loader'),
@@ -156,7 +156,7 @@ const fontLoaderClient = {
 };
 
 const fontLoaderServer = {
-    test: [/\.(woff|woff2)$/],
+    test: [/\.(woff|woff2|ttf)$/],
     use: [
         {
             loader: require.resolve('file-loader'),

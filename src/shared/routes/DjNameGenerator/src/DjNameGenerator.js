@@ -270,6 +270,12 @@ const AppWithMeta = (props) => {
     return (
         <>
             <Helmet>
+                <link
+                    rel="preload"
+                    href="/static/assets/HANGTHEDJ.ttf"
+                    as="font"
+                    crossOrigin="anonymous"
+                />
                 <title>{title}</title>
 
                 <meta name="description" content={description} />
