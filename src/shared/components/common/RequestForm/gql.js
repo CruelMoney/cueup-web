@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const CHECK_DJ_AVAILABILITY = gql`
-    mutation DjsAvailable($location: Area!, $date: DateTime!) {
+    mutation DjsAvailable($location: Area!, $date: DateTime) {
         djsAvailable(location: $location, date: $date)
     }
 `;

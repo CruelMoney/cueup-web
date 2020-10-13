@@ -339,7 +339,7 @@ const DataWrapper = (props) => {
         const errors = runValidations();
 
         if (errors.length === 0) {
-            const { result, date, timeZoneId, location } = await check({
+            const { result, location } = await check({
                 locationName: form.locationName,
                 date: form.date,
             });
@@ -365,6 +365,8 @@ const DataWrapper = (props) => {
     // if (!activeLocation) {
     //     return <Redirect to={translate(appRoutes.notFound)} />;
     // }
+
+    console.log({ form, filter });
 
     return (
         <Search
