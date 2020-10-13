@@ -545,7 +545,7 @@ const DataWrapper = (props) => {
         return <Redirect to={translate(appRoutes.notFound)} />;
     }
 
-    let user = profileUser || {};
+    let user = { ...profileUser } || {};
     user.isOwn = match.params.permalink === me?.permalink;
 
     if (me && !me.appMetadata.onboarded && user?.isOwn) {

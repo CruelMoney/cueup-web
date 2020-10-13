@@ -191,7 +191,7 @@ function CountdownTimer() {
 const Plans = ({ setTier, selectedTier }) => {
     const { loading, data } = useQuery(SUBSCRIPTION_TIERS);
 
-    const tiers = data?.subscriptionTiers || [];
+    const tiers = [...(data?.subscriptionTiers || [])];
 
     return (
         <>

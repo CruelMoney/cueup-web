@@ -38,7 +38,7 @@ const Gigs = (props) => {
         setFilter((ff) => (val ? [...ff, key] : ff.filter((f2) => f2 !== key)));
 
     const renderGigs = (gigs) => {
-        const renderGigs = gigs
+        const rrGigs = gigs
             .filter(
                 ({ status }) =>
                     // never show declined and cancelled
@@ -50,15 +50,15 @@ const Gigs = (props) => {
                     // show what filter requires, or everything if empty
                     (filter.length === 0 || filter.includes(status))
             )
-            .map((gig) => {
-                gig.hasMessage =
+            .map((gig) => ({
+                ...gig,
+                hasMessage:
                     notifications[gig.id] &&
-                    notifications[gig.id].read < notifications[gig.id].total;
-                return gig;
-            })
+                    notifications[gig.id].read < notifications[gig.id].total,
+            }))
             .sort((g1, g2) => getPriority(g1) - getPriority(g2));
 
-        if (renderGigs.length === 0) {
+        if (rrGigs.length === 0) {
             if (!approved) {
                 return (
                     <EmptyPage
@@ -74,7 +74,7 @@ const Gigs = (props) => {
             }
             return <EmptyPage message={<div>{translate('no-gigs-description')}</div>} />;
         }
-        return renderGigs.map((gig, idx) => (
+        return rrGigs.map((gig, idx) => (
             <GigCard
                 onMouseEnter={() => lazyGig.preload()}
                 idx={idx}

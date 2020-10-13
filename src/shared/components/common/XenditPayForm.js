@@ -3,7 +3,7 @@ import React, { useState, useReducer, useEffect, useCallback } from 'react';
 import Card from 'react-credit-card-input';
 import useScript from '@charlietango/use-script';
 import Iframe from 'react-iframe';
-import { withApollo, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import styled from 'styled-components';
 import { Input, LabelHalf, InputRow } from 'components/FormComponents';
 import { SmartButton, inputStyle, RowMobileCol, TeritaryButton } from 'components/Blocks';
@@ -285,4 +285,4 @@ const Wrapper = styled.div`
         justify-content: center;
     }
 `;
-export default withApollo(XenditForm);
+export default XenditForm;

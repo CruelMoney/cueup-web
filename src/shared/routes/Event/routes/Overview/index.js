@@ -44,11 +44,10 @@ const EventGigs = React.forwardRef((props, ref) => {
     let gigs = data.event ? data.event.gigs : [];
     gigs = gigs
         .filter((g) => g.status !== 'LOST')
-        .map((g) => {
-            g.hasMessage =
-                notifications[g.id] && notifications[g.id].read < notifications[g.id].total;
-            return g;
-        });
+        .map((g) => ({
+            ...g,
+            hasMessage: notifications[g.id] && notifications[g.id].read < notifications[g.id].total,
+        }));
 
     // event polling for djs
     useEffect(() => {

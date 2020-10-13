@@ -44,7 +44,8 @@ const Index = ({ location, match, history }) => {
     const { loading: loadingMe, data: meData } = useQuery(ME);
     const { me } = meData || {};
 
-    const { gig } = data;
+    let { gig } = data;
+    gig = { ...gig };
 
     const loading = loadingGig || loadingMe;
 
