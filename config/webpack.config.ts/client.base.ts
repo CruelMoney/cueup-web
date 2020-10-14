@@ -37,6 +37,7 @@ export default {
         child_process: 'empty',
     },
     optimization: {
+        minimize: process.env.NODE_ENV === 'production',
         minimizer: [
             new TerserPlugin({
                 // TerserPlugin config is taken entirely from react-scripts

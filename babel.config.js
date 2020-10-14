@@ -9,7 +9,7 @@ module.exports = (api) => {
         compact: true,
         presets: [
             [
-                '@babel/env',
+                '@babel/preset-env',
                 {
                     modules: false,
                     useBuiltIns: 'usage',
@@ -24,8 +24,13 @@ module.exports = (api) => {
                     }),
                 },
             ],
-            '@babel/react',
-            '@babel/typescript',
+            [
+                '@babel/preset-react',
+                {
+                    development: isDev,
+                },
+            ],
+            '@babel/preset-typescript',
         ],
         plugins: [
             '@loadable/babel-plugin',
