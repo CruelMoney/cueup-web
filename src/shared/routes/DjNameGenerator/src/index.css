@@ -6,6 +6,7 @@
 }
 
 * {
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -13,6 +14,8 @@ html,
 body {
     background: #f0f0f0;
     color: rgb(77, 100, 128);
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     font-family: 'Avenir Next', Open Sans, Segoe UI, Helvetica, sans-serif;
     height: 100%;
@@ -32,6 +35,8 @@ body {
 }
 
 .app {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     padding: 2em;
     padding-right: 0;
@@ -78,6 +83,14 @@ a {
 }
 
 .content {
+    background: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        from(rgba(213, 222, 231, 0.5)),
+        color-stop(50%, rgba(232, 235, 242, 0.5)),
+        to(rgba(226, 231, 237, 0.5))
+    );
     background: linear-gradient(
         to bottom,
         rgba(213, 222, 231, 0.5) 0%,
@@ -86,6 +99,7 @@ a {
     );
     background-blend-mode: normal, color-burn;
     border-radius: 24px;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     padding: 10px;
     position: relative;
@@ -101,6 +115,7 @@ a {
     padding: 1em;
     pointer-events: auto;
     position: absolute;
+    -webkit-transform-origin: 50% 50% 0px;
     transform-origin: 50% 50% 0px;
     width: calc(100% - 20px);
 }
@@ -149,11 +164,21 @@ a {
 }
 
 .category-content {
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -webkit-box-pack: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -ms-flex-direction: column;
     flex-direction: column;
+    -ms-flex-pack: center;
     height: 100%;
     justify-content: center;
     position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
     z-index: 2;
 }
@@ -168,6 +193,8 @@ a {
 }
 
 .category-content .row {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
 }
 
@@ -184,6 +211,7 @@ a {
     position: absolute;
     right: 0px;
     top: 50%;
+    -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
     width: 2em;
 }
@@ -193,12 +221,17 @@ a {
 }
 
 .options .tgl-wrapper {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
 }
 
 .card {
     background-color: #fff;
     border-radius: 30px;
+    -webkit-box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.006), 0 6.7px 5.3px rgba(0, 0, 0, 0.008),
+        0 12.5px 10px rgba(0, 0, 0, 0.01), 0 22.3px 17.9px rgba(0, 0, 0, 0.012),
+        0 41.8px 33.4px rgba(0, 0, 0, 0.014), 0 100px 80px rgba(0, 0, 0, 0.02);
     box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.006), 0 6.7px 5.3px rgba(0, 0, 0, 0.008),
         0 12.5px 10px rgba(0, 0, 0, 0.01), 0 22.3px 17.9px rgba(0, 0, 0, 0.012),
         0 41.8px 33.4px rgba(0, 0, 0, 0.014), 0 100px 80px rgba(0, 0, 0, 0.02);
@@ -206,8 +239,15 @@ a {
 }
 
 .left-area {
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -webkit-box-pack: start;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -ms-flex-direction: column;
     flex-direction: column;
+    -ms-flex-pack: start;
     justify-content: flex-start;
     min-height: 100%;
     min-width: 500px;
@@ -227,9 +267,20 @@ a {
 
 .right-area {
     align-items: center;
+    -webkit-box-align: center;
+    -webkit-box-direction: normal;
+    -webkit-box-flex: 1;
+    -webkit-box-orient: vertical;
+    -webkit-box-pack: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex: 1;
+    -ms-flex: 1 1;
+    flex: 1 1;
+    -ms-flex-align: center;
+    -ms-flex-direction: column;
     flex-direction: column;
+    -ms-flex-pack: center;
     justify-content: center;
     overflow: hidden;
     padding: 2em;
@@ -238,7 +289,12 @@ a {
 }
 .bottom-right {
     bottom: 2em;
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -ms-flex-direction: row;
     flex-direction: row;
     position: absolute;
     right: 2em;
@@ -249,7 +305,11 @@ a {
 
 .created-by {
     align-items: flex-end;
+    -webkit-box-align: end;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -ms-flex-align: end;
     font-size: 16px;
     height: 2.4em;
     opacity: 0.2;
@@ -286,6 +346,7 @@ svg.logo {
     padding: 2em;
     padding-bottom: 1em;
     text-decoration: none;
+    -webkit-transition: all 1000ms ease;
     transition: all 1000ms ease;
     will-change: transform, box-shadow;
 }
@@ -299,13 +360,19 @@ svg.logo {
 }
 .dj-name-wrapper.active:hover {
     background-color: #fff;
+    -webkit-box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.006), 0 6.7px 5.3px rgba(0, 0, 0, 0.008),
+        0 12.5px 10px rgba(0, 0, 0, 0.01), 0 22.3px 17.9px rgba(0, 0, 0, 0.012),
+        0 41.8px 33.4px rgba(0, 0, 0, 0.014), 0 100px 80px rgba(0, 0, 0, 0.02);
     box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.006), 0 6.7px 5.3px rgba(0, 0, 0, 0.008),
         0 12.5px 10px rgba(0, 0, 0, 0.01), 0 22.3px 17.9px rgba(0, 0, 0, 0.012),
         0 41.8px 33.4px rgba(0, 0, 0, 0.014), 0 100px 80px rgba(0, 0, 0, 0.02);
+    -webkit-transform: scale(1.05);
     transform: scale(1.05);
 }
 
 .dj-name-wrapper.active .share-options > * {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
 }
 
@@ -316,7 +383,11 @@ svg.logo {
 }
 
 .actions {
+    -webkit-box-pack: justify;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -ms-flex-pack: justify;
     justify-content: space-between;
     margin-bottom: 1em;
     margin-top: 2em;
@@ -325,19 +396,24 @@ svg.logo {
 
 .actions button {
     opacity: 0;
+    -webkit-transition: opacity 500ms ease;
     transition: opacity 500ms ease;
 }
 
 .dj-name-wrapper.active:hover .actions button {
+    -webkit-transition-delay: 0ms;
     transition-delay: 0ms;
 }
 .dj-name-wrapper.active:hover .actions button:nth-child(2) {
+    -webkit-transition-delay: 100ms;
     transition-delay: 100ms;
 }
 .dj-name-wrapper.active:hover .actions button:nth-child(3) {
+    -webkit-transition-delay: 200ms;
     transition-delay: 200ms;
 }
 .dj-name-wrapper.active:hover .actions button:nth-child(4) {
+    -webkit-transition-delay: 300ms;
     transition-delay: 300ms;
 }
 
@@ -350,10 +426,16 @@ svg.logo {
     background-color: #111;
     border: medium none;
     border-radius: 50%;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
     color: inherit;
     cursor: pointer;
     display: inline-block;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -ms-flex-align: center;
+    -ms-flex-pack: center;
     font: inherit;
     height: 32px;
     justify-content: center;
@@ -372,6 +454,8 @@ svg.logo {
 }
 
 .share-options {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     height: 35px;
     margin-right: 2em;
@@ -385,6 +469,7 @@ svg.logo {
 
 .share-options button:hover {
     opacity: 0.75;
+    -webkit-transition: none;
     transition: none;
 }
 
@@ -398,19 +483,30 @@ svg.logo {
     padding: 5px;
     position: absolute;
     text-align: center;
+    -webkit-transform: translate(-50%, 110%);
     transform: translate(-50%, 110%);
     width: 130px;
 }
 
 .continue-button {
     align-items: center;
+    -webkit-box-align: center;
+    -webkit-box-pack: end;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -ms-flex-align: center;
+    -ms-flex-pack: end;
     justify-content: flex-end;
     opacity: 0;
     pointer-events: none;
     position: absolute;
+    -webkit-transform: scale(1.3) translateX(calc(-50% + 20px));
     transform: scale(1.3) translateX(calc(-50% + 20px));
+    -webkit-transition: opacity, -webkit-transform 500ms ease;
+    transition: opacity, -webkit-transform 500ms ease;
     transition: opacity, transform 500ms ease;
+    transition: opacity, transform 500ms ease, -webkit-transform 500ms ease;
     width: 100%;
     will-change: opacity, transform;
 }
@@ -423,13 +519,18 @@ svg.logo {
 }
 .continue-button h4 {
     opacity: 0;
+    -webkit-transition: opacity 500ms ease;
     transition: opacity 500ms ease;
 }
 .continue-button.active {
     opacity: 1;
+    -webkit-transition: opacity 500ms ease 500ms, -webkit-transform 500ms ease;
+    transition: opacity 500ms ease 500ms, -webkit-transform 500ms ease;
     transition: opacity 500ms ease 500ms, transform 500ms ease;
+    transition: opacity 500ms ease 500ms, transform 500ms ease, -webkit-transform 500ms ease;
 }
 .dj-name-wrapper.active:hover .continue-button {
+    -webkit-transform: none;
     transform: none;
 }
 
@@ -439,7 +540,11 @@ svg.logo {
 
 .menu {
     align-items: center;
+    -webkit-box-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -ms-flex-align: center;
     position: absolute;
     right: 0;
     top: 0;
@@ -463,12 +568,21 @@ svg.logo {
     align-items: center;
     background: white;
     border-radius: 15px;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+    -webkit-box-shadow: 0 0.5px 2.7px rgba(0, 0, 0, 0.017), 0 1.3px 6.5px rgba(0, 0, 0, 0.024),
+        0 2.4px 12.3px rgba(0, 0, 0, 0.03), 0 4.2px 21.9px rgba(0, 0, 0, 0.036),
+        0 7.9px 40.9px rgba(0, 0, 0, 0.043), 0 19px 98px rgba(0, 0, 0, 0.06);
     box-shadow: 0 0.5px 2.7px rgba(0, 0, 0, 0.017), 0 1.3px 6.5px rgba(0, 0, 0, 0.024),
         0 2.4px 12.3px rgba(0, 0, 0, 0.03), 0 4.2px 21.9px rgba(0, 0, 0, 0.036),
         0 7.9px 40.9px rgba(0, 0, 0, 0.043), 0 19px 98px rgba(0, 0, 0, 0.06);
     color: #111;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     fill: #e1306c;
+    -ms-flex-align: center;
+    -ms-flex-pack: center;
     justify-content: center;
     padding: 1em;
     position: relative;
@@ -500,6 +614,8 @@ svg.logo {
     }
 
     .menu {
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
         justify-content: space-between;
         padding: 0.5em;
         padding-right: 0;
@@ -507,11 +623,16 @@ svg.logo {
     }
     .bottom-right {
         bottom: 1em;
+        -webkit-box-direction: normal;
+        -webkit-box-orient: vertical;
+        -ms-flex-direction: column;
         flex-direction: column;
         right: 0.5em;
     }
     .created-by {
         bottom: 0.6em;
+        -webkit-box-pack: end;
+        -ms-flex-pack: end;
         justify-content: flex-end;
         position: relative;
         right: 0.9em;
@@ -520,6 +641,7 @@ svg.logo {
         bottom: -0.2em;
         position: relative;
         right: -0.8em;
+        -webkit-transform: scale(0.8);
         transform: scale(0.8);
     }
     .instructions {
@@ -538,6 +660,7 @@ svg.logo {
     }
     .card {
         background: transparent;
+        -webkit-box-shadow: none;
         box-shadow: none;
         padding: 0;
     }
@@ -568,13 +691,18 @@ svg.logo {
     }
 
     .continue-button {
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
         justify-content: center;
         margin-top: 1em;
+        -webkit-transform: scale(1.2);
         transform: scale(1.2);
     }
 
     .mobile-action-buttons {
         bottom: 0.5em;
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
         left: 101vw;
         position: absolute;
@@ -588,6 +716,7 @@ svg.logo {
     }
 
     .show-options-button svg {
+        -webkit-transform: rotate(180deg);
         transform: rotate(180deg);
     }
 
@@ -596,6 +725,8 @@ svg.logo {
     }
 
     .mobile-only {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
     }
     .continue-button.mobile-only {
@@ -603,11 +734,15 @@ svg.logo {
         pointer-events: all;
     }
     .continue-button.mobile-only.active {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
     }
     .dj-name-wrapper.active:hover {
         background-color: transparent;
+        -webkit-box-shadow: none;
         box-shadow: none;
+        -webkit-transform: none;
         transform: none;
     }
     .dj-name-wrapper.active:hover button {
@@ -624,6 +759,7 @@ svg.logo {
     }
 
     .continue-button {
+        -webkit-transform: none;
         transform: none;
     }
 }

@@ -13,6 +13,11 @@
     width: 80%;
 }
 
+.text-input::-moz-selection {
+    background: rgba(255, 255, 255, 0.5);
+    color: #111;
+}
+
 .text-input::selection {
     background: rgba(255, 255, 255, 0.5);
     color: #111;

@@ -22,6 +22,7 @@
     outline: none;
     padding-bottom: 17px;
     padding-top: 17px;
+    -webkit-transition: all 0.1s;
     transition: all 0.1s;
     width: calc(99% / 7) !important;
 }
@@ -73,7 +74,14 @@ button.react-datepicker__navigation.react-datepicker__navigation--next {
 
 .calendar-container {
     align-items: center;
+    -webkit-box-align: center;
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -ms-flex-align: center;
+    -ms-flex-direction: column;
     flex-direction: column;
     height: inherit;
 }

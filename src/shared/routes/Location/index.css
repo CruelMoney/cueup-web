@@ -63,7 +63,11 @@
 
 .locations-page header .container {
     align-items: center;
+    -webkit-box-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -ms-flex-align: center;
     height: 100%;
     position: relative;
 }
@@ -75,6 +79,7 @@
     opacity: 0.85;
     position: absolute;
     top: 0;
+    -webkit-transform: translateX(-100%);
     transform: translateX(-100%);
     width: 100%;
     z-index: 1;
@@ -82,7 +87,11 @@
 
 .locations-page header article {
     align-items: center;
+    -webkit-box-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -ms-flex-align: center;
     height: calc(100% - 80px);
     left: 0;
     margin-top: 80px;
@@ -93,6 +102,7 @@
 }
 .locations-page header .card {
     border-radius: 0;
+    -webkit-box-shadow: none;
     box-shadow: none;
     overflow: auto;
 }
@@ -110,7 +120,6 @@
     color: white !important;
 }
 
-
 .locations-page .request-form .col-md-6,
 .location-page .thank-you-text {
     margin-left: 26%;
@@ -120,6 +129,7 @@
 .locations-page .request-form .card {
     border: 2px solid #eee;
     border-radius: 0;
+    -webkit-box-shadow: none;
     box-shadow: none;
     padding: 40px;
 }
@@ -132,9 +142,15 @@
     height: auto;
     left: 50%;
     position: relative;
+    -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     width: 100%;
     z-index: 2;
+}
+@-webkit-keyframes blink {
+    100% {
+        opacity: 1;
+    }
 }
 @keyframes blink {
     100% {
@@ -142,22 +158,28 @@
     }
 }
 #window-lights > path {
+    -webkit-animation: blink 500ms ease infinite;
     animation: blink 500ms ease infinite;
     opacity: 0.3;
 }
 #window-lights > path:nth-child(2) {
+    -webkit-animation-delay: 32ms;
     animation-delay: 32ms;
 }
 #window-lights > path:nth-child(3) {
+    -webkit-animation-delay: 845ms;
     animation-delay: 845ms;
 }
 #window-lights > path:nth-child(4) {
+    -webkit-animation-delay: 46ms;
     animation-delay: 46ms;
 }
 #window-lights > path:nth-child(5) {
+    -webkit-animation-delay: 98ms;
     animation-delay: 98ms;
 }
 #window-lights > path:nth-child(6) {
+    -webkit-animation-delay: 256ms;
     animation-delay: 256ms;
 }
 
@@ -168,9 +190,7 @@
 /* Tablet */
 @media only screen and (max-width: 768px) {
     .locations-page header article {
-       
         position: relative;
-        
     }
     .gm-style a img {
         display: block;
@@ -194,7 +214,13 @@
     .book-dj-location header .card {
         align-items: flex-end;
         background: rgba(255, 255, 255, 0.96);
+        -webkit-box-align: end;
+        -webkit-box-pack: justify;
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
+        -ms-flex-align: end;
+        -ms-flex-pack: justify;
         justify-content: space-between;
         left: 0;
         padding: 15px;

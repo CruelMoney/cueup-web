@@ -13,7 +13,11 @@
 }
 .message {
     align-items: flex-end;
+    -webkit-box-align: end;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -ms-flex-align: end;
 }
 .message-wrapper {
     margin-bottom: 2px;
@@ -25,13 +29,20 @@
     padding-right: 0px;
 }
 .flex {
+    -webkit-box-pack: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -ms-flex-pack: center;
     justify-content: center;
 }
 .flex > * {
     margin: 0 0.5em;
 }
 .message.send {
+    -webkit-box-direction: reverse;
+    -webkit-box-orient: horizontal;
+    -ms-flex-direction: row-reverse;
     flex-direction: row-reverse;
 }
 .message > * {
@@ -53,13 +64,17 @@
 }
 .speech-bubble .message-actions {
     border-top: 1px solid rgb(233, 236, 240, 1);
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     height: 48px;
 }
 .speech-bubble .message-actions button {
+    -webkit-box-flex: 1;
     color: #bbbbbb;
     cursor: pointer;
-    flex: 1;
+    -ms-flex: 1 1;
+    flex: 1 1;
     font-size: inherit;
     font-weight: 600;
     height: 100%;
@@ -96,6 +111,8 @@
     max-width: 600px;
 }
 .chat form {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     margin: 0;
     padding: 0;
@@ -103,7 +120,9 @@
 .message-composer .input-wrapper {
     background: rgba(230, 230, 230, 0.3);
     border-radius: 25px;
-    flex: 1;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1;
+    flex: 1 1;
     overflow: hidden;
     padding: 5px 15px;
     padding-bottom: 2px;
@@ -124,11 +143,29 @@
     resize: none;
     width: 100%;
 }
+.message-input::-webkit-input-placeholder {
+    color: #98a4b3;
+    opacity: 1;
+}
+.message-input::-moz-placeholder {
+    color: #98a4b3;
+    opacity: 1;
+}
+.message-input:-ms-input-placeholder {
+    color: #98a4b3;
+    opacity: 1;
+}
+.message-input::-ms-input-placeholder {
+    color: #98a4b3;
+    opacity: 1;
+}
 .message-input::placeholder {
     color: #98a4b3;
     opacity: 1;
 }
 .message-composer {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     position: relative;
 }
@@ -136,11 +173,13 @@
     align-self: flex-end;
     -webkit-appearance: none;
     border: none;
+    -ms-flex-item-align: end;
     margin-left: 15px;
     outline: none;
 }
 
 .typing-indicator {
+    -webkit-animation: 2s bulge infinite ease-out;
     animation: 2s bulge infinite ease-out;
     border-radius: 50px;
     position: relative;
@@ -158,12 +197,15 @@
     width: 7px;
 }
 .typing-indicator span:nth-child(1) {
+    -webkit-animation: 1s blink infinite 0.3333s;
     animation: 1s blink infinite 0.3333s;
 }
 .typing-indicator span:nth-child(2) {
+    -webkit-animation: 1s blink infinite 0.6666s;
     animation: 1s blink infinite 0.6666s;
 }
 .typing-indicator span:nth-child(3) {
+    -webkit-animation: 1s blink infinite 0.9999s;
     animation: 1s blink infinite 0.9999s;
 }
 

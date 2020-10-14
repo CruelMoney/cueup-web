@@ -19,6 +19,7 @@
     padding: 0px 1em;
     text-align: center;
     text-decoration: none;
+    -webkit-transition-duration: 250ms;
     transition-duration: 250ms;
     white-space: nowrap;
     width: 100%;

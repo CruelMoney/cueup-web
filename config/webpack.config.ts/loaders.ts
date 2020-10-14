@@ -49,12 +49,6 @@ const cssModuleLoaderClient = {
                 sourceMap: generateSourceMap,
             },
         },
-        {
-            loader: require.resolve('postcss-loader'),
-            options: {
-                sourceMap: generateSourceMap,
-            },
-        },
     ],
 };
 
@@ -65,12 +59,6 @@ const cssLoaderClient = {
         require.resolve('css-hot-loader'),
         MiniCssExtractPlugin.loader,
         require.resolve('css-loader'),
-        {
-            loader: require.resolve('postcss-loader'),
-            options: {
-                sourceMap: generateSourceMap,
-            },
-        },
     ],
 };
 
@@ -84,12 +72,6 @@ const cssModuleLoaderServer = {
                 localsConvention: 'camelCase',
                 importLoaders: 1,
                 modules: cssModuleOptions,
-            },
-        },
-        {
-            loader: require.resolve('postcss-loader'),
-            options: {
-                sourceMap: generateSourceMap,
             },
         },
     ],
