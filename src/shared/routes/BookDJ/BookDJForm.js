@@ -8,9 +8,12 @@ import { useCheckDjAvailability } from 'actions/EventActions';
 import LazyRequestForm from 'components/common/RequestForm';
 import { BodySmall } from 'components/Text';
 import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
+import useTranslate from 'components/hooks/useTranslate';
+import { appRoutes } from 'constants/locales/appRoutes';
 import { CustomCTAButton, StyledLabelComponent } from './Components';
 
 const BookDJForm = ({ checkAvailability, activeLocation }) => {
+    const { translate } = useTranslate();
     const routeLocation = useLocation();
     const history = useHistory();
     const locationRef = useRef();
@@ -37,10 +40,6 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
                 locationRef.current.focus();
                 return;
             }
-            if (!form.date) {
-                dateRef.current.focus();
-                return;
-            }
 
             const errors = runValidations();
             if (errors.length === 0) {
@@ -49,6 +48,20 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
                 const { result, date, timeZoneId, location } = await check(form);
 
                 if (result === true) {
+                    history.push({
+                        pathname: translate(appRoutes.search),
+                        state: {
+                            ...form,
+                            equipment: {
+                                lights: form.lights,
+                                speakers: form.speakers,
+                            },
+                            date: form.date,
+                            timeZoneId,
+                            location,
+                        },
+                    });
+                } else {
                     const route = routeLocation.pathname.replace(/\/$/, '') + '/form';
 
                     history.replace({
