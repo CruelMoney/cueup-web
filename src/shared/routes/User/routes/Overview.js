@@ -347,7 +347,7 @@ const PhotosArea = ({ media, isOwn }) => {
             { path: null, id: 5 },
         ];
     } else {
-        renderItems = photos.sort((a, b) => a.orderBy - b.orderBy);
+        renderItems = [...photos].sort((a, b) => a.orderBy - b.orderBy);
     }
 
     return (

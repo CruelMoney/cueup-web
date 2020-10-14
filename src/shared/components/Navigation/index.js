@@ -78,15 +78,6 @@ const Menu = ({ dark, relative, fullWidth }) => {
                                     />
                                 </li>
                             )}
-                            {loggedIn ? null : (
-                                <li>
-                                    <Navlink
-                                        to={t(appRoutes.signUp)}
-                                        label={t('sign up')}
-                                        important="true"
-                                    />
-                                </li>
-                            )}
 
                             {!loggedIn && !loading ? (
                                 <li>
