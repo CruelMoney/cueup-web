@@ -134,7 +134,6 @@ const ComparisonTable = styled.div`
     th {
         padding-left: 0.625em;
         margin: 0;
-        font-weight: 100;
         position: relative;
 
         svg {
