@@ -1,9 +1,9 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Query, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 
 import { Route, useHistory } from 'react-router';
-import { ME } from 'components/gql';
+import { Query } from '@apollo/client/react/components';
 import { Title, Body, BodySmall, BodyBold } from '../../../components/Text';
 import {
     Col,

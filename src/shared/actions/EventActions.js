@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/react';
 import { useMutation } from '@apollo/client';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { CHECK_DJ_AVAILABILITY, CREATE_EVENT } from 'components/common/RequestForm/gql';
 import { trackCheckAvailability, trackEventPosted } from 'utils/analytics';
 import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
@@ -54,62 +54,65 @@ export const useCheckDjAvailability = () => {
         'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
     );
 
-    const check = async ({ locationName, date }) => {
-        try {
-            await loadGoogleMaps();
-            setLoading(true);
+    const check = useCallback(
+        async ({ locationName, date }) => {
             try {
-                trackCheckAvailability(locationName);
-            } catch (error) {
-                Sentry.captureException(error);
+                await loadGoogleMaps();
+                setLoading(true);
+                try {
+                    trackCheckAvailability(locationName);
+                } catch (error) {
+                    Sentry.captureException(error);
+                }
+
+                const geoResult = await getLocation(locationName);
+
+                const geoData = {
+                    location: {
+                        latitude: geoResult.position.lat,
+                        longitude: geoResult.position.lng,
+                        name: locationName,
+                    },
+                    timeZoneId: geoResult.timeZoneId,
+                };
+
+                const moment = await import('moment-timezone');
+                const momentDate = moment.default(date);
+
+                const { timeZoneId, location } = geoData;
+
+                const newMoment = moment.tz(
+                    momentDate.format('YYYY-MM-DDTHH:mm:ss'),
+                    'YYYY-MM-DDTHH:mm:ss',
+                    timeZoneId
+                );
+
+                const variables = {
+                    date,
+                    location,
+                };
+
+                const { data = {} } = await mutate({ variables });
+
+                return {
+                    result: data?.djsAvailable,
+                    date: newMoment.toDate(),
+                    timeZoneId,
+                    location,
+                };
+            } catch (err) {
+                console.log(err);
+                Sentry.captureException(err);
+                setError(err);
+                return {
+                    result: false,
+                };
+            } finally {
+                setLoading(false);
             }
-
-            const geoResult = await getLocation(locationName);
-
-            const geoData = {
-                location: {
-                    latitude: geoResult.position.lat,
-                    longitude: geoResult.position.lng,
-                    name: locationName,
-                },
-                timeZoneId: geoResult.timeZoneId,
-            };
-
-            const moment = await import('moment-timezone');
-            const momentDate = moment.default(date);
-
-            const { timeZoneId, location } = geoData;
-
-            const newMoment = moment.tz(
-                momentDate.format('YYYY-MM-DDTHH:mm:ss'),
-                'YYYY-MM-DDTHH:mm:ss',
-                timeZoneId
-            );
-
-            const variables = {
-                date,
-                location,
-            };
-
-            const { data = {} } = await mutate({ variables });
-
-            return {
-                result: data?.djsAvailable,
-                date: newMoment.toDate(),
-                timeZoneId,
-                location,
-            };
-        } catch (err) {
-            console.log(err);
-            Sentry.captureException(err);
-            setError(err);
-            return {
-                result: false,
-            };
-        } finally {
-            setLoading(false);
-        }
-    };
+        },
+        [mutate]
+    );
 
     return [check, { loading, error: error }];
 };

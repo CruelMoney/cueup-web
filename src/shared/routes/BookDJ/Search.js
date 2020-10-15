@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Redirect, Route, Switch, useLocation, useParams } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import { useLazyQuery, useQuery } from '@apollo/client';
@@ -21,6 +21,7 @@ import { useForm } from 'components/hooks/useForm';
 
 import { useCheckDjAvailability } from 'actions/EventActions';
 import { ScrollToTopOnMount } from 'components/common/ScrollToTop';
+import useUrlState from 'components/hooks/useUrlState';
 import { CustomCTAButton, GreyBox } from './Components';
 import { SEARCH_DEEP } from './gql';
 import SearchResults from './SearchResults';
@@ -175,6 +176,7 @@ const Filters = ({ form, setValue, doSearch, loading }) => {
                 noIcon={!loading}
                 type="submit"
                 loading={loading}
+                disabled={loading}
                 onClick={doSearch}
             >
                 Find DJs
@@ -194,34 +196,36 @@ const LeftSide = (props) => {
 
 const DataWrapper = (props) => {
     const { translate } = useTranslate();
-
+    const mounted = useRef(false);
     const { search, state: navState } = useLocation();
 
     const searchParams = new URLSearchParams(search);
-    const initialPage = Number(searchParams.get('page'));
+    const initialPage = Number(searchParams.get('page')) || 1;
     const [pagination, setPagination] = useState({
-        page: initialPage || 1,
+        page: initialPage,
     });
 
     const { environment, data } = useServerContext();
-
-    const [filter, setFilter] = useState({
-        countryCode: data?.topCities[0]?.iso2,
-        location: navState?.location,
-    });
-
     const fallBackLocation = data?.topCities[0]?.country;
 
-    const { runValidations, form, setValue } = useForm(null, {
+    const [form, setForm] = useUrlState({
+        countryCode: data?.topCities[0]?.iso2,
+        location: navState?.location,
         locationName: navState?.location?.name || fallBackLocation,
         ...navState,
     });
+    const setValue = useCallback(
+        (val) => {
+            setForm((ff) => ({ ...ff, ...val }));
+        },
+        [setForm]
+    );
 
-    const { data: searchData, loading } = useQuery(SEARCH_DEEP, {
+    const { data: searchData, loading, refetch } = useQuery(SEARCH_DEEP, {
         fetchPolicy: 'cache-first',
-        skip: !filter.location && !filter.countryCode,
+        skip: !form.location && !form.countryCode,
         variables: {
-            filter,
+            filter: formToFilter(form),
             pagination: {
                 orderBy: 'UPDATED_AT_DESCENDING',
                 limit: 9,
@@ -232,25 +236,29 @@ const DataWrapper = (props) => {
 
     const [check, { loading: loading2 }] = useCheckDjAvailability();
 
-    const doSearch = useCallback(async () => {
-        const errors = runValidations();
-
-        if (errors.length === 0) {
+    const checkAvailable = useCallback(async () => {
+        if (form.locationName && mounted.current) {
             const { result, location } = await check({
                 locationName: form.locationName,
                 date: form.date,
             });
-
             if (result === true) {
-                const newFilter = {
-                    location,
-                };
-
-                setFilter(newFilter);
-                setPagination({ page: 1 });
+                setValue({ location });
+            } else {
+                // handle no djs available
+                return null;
             }
         }
-    }, [form, check, runValidations]);
+    }, [form.locationName, form.date, check, setValue]);
+
+    useEffect(() => {
+        checkAvailable();
+        mounted.current = true;
+    }, [checkAvailable, form.locationName, form.date]);
+
+    useEffect(() => {
+        setPagination({ page: 1 });
+    }, [form]);
 
     const { edges, pageInfo } = searchData?.searchDjs || {};
 
@@ -258,12 +266,6 @@ const DataWrapper = (props) => {
     if (loading || loading2) {
         topDjs = [null, null, null, null, null, null, null, null, null];
     }
-
-    // if (!activeLocation) {
-    //     return <Redirect to={translate(appRoutes.notFound)} />;
-    // }
-
-    console.log({ form, filter });
 
     return (
         <Search
@@ -273,7 +275,7 @@ const DataWrapper = (props) => {
             topDjs={topDjs}
             form={form}
             setValue={setValue}
-            doSearch={doSearch}
+            doSearch={checkAvailable}
             loading={loading || loading2}
             pagination={{
                 ...pageInfo,
@@ -283,5 +285,11 @@ const DataWrapper = (props) => {
         />
     );
 };
+
+const formToFilter = ({ countryCode, location, genres }) => ({
+    countryCode,
+    location,
+    genres,
+});
 
 export default DataWrapper;
