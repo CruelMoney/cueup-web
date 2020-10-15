@@ -175,7 +175,14 @@ const SearchEntry = (props) => {
 
     return (
         <>
-            <NavLink to={route} target="_blank" rel="noopener noreferrer">
+            <NavLink
+                style={{
+                    pointerEvents: props.loading ? 'none' : 'auto',
+                }}
+                to={route}
+                target="_blank"
+                rel="noopener noreferrer"
+            >
                 <SearchEntryWrapper>
                     <ImagePreviews {...props} />
                     <SearchEntryRightSide>
