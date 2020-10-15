@@ -175,7 +175,6 @@ const MainForm = ({ initialCity, countries, transparent, fromNewSearch }) => {
 
                         {!showLogin && activeStep === 4 && (
                             <Step4
-                                translate={translate}
                                 form={form}
                                 handleChange={handleChange}
                                 runValidations={runValidations}

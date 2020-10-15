@@ -492,7 +492,7 @@ export const SecondaryButtonLink = styled.a`
 export const PrimaryButton = styled.button`
     ${ButtonTextStyle}
     color: ${({ invert }) => (invert ? '#31daff' : '#fff')};
-    background:  ${({ invert, warning }) => (invert ? '#fff' : warning ? '#D0021B' : '#31daff')}; 
+    background: ${({ invert, warning }) => (invert ? '#fff' : warning ? '#D0021B' : '#31daff')};
     opacity: ${({ loading }) => (loading ? 0.5 : 1)};
     pointer-events: ${({ loading }) => (loading ? 'none' : 'auto')};
     :hover {

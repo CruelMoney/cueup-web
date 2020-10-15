@@ -3,12 +3,15 @@ import emailValidator from 'email-validator';
 import styled from 'styled-components';
 import mailIcon from '@iconify/icons-ion/mail';
 import { InlineIcon } from '@iconify/react';
-import { Row, TeritaryButton, SmartButton, Hr, Col } from 'components/Blocks';
+import { Row, TeritaryButton, SmartButton } from 'components/Blocks';
 import { BodySmall } from 'components/Text';
 import { Input, InputRow } from 'components/FormComponents';
 import useSocialLogin from 'components/hooks/useSocialLogin';
+import useTranslate from 'components/hooks/useTranslate';
+import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import fbLogo from '../../../assets/icons/fb.svg';
 import googleLogo from '../../../assets/icons/google.svg';
+import content from './content.json';
 
 const LoginStyle = styled.div`
     flex-direction: row;
@@ -42,7 +45,6 @@ const LoginStyle = styled.div`
 `;
 
 const Step4 = ({
-    translate,
     form,
     next,
     back,
@@ -51,7 +53,11 @@ const Step4 = ({
     unregisterValidation,
     loading,
     user,
+    style,
+    hideHeadline,
 }) => {
+    const { translate } = useNamespaceContent(content, 'requestForm');
+
     const isLoggedIn = user;
 
     const [useEmail, setUseEmail] = useState(isLoggedIn);
@@ -63,8 +69,8 @@ const Step4 = ({
     const [onPressSocial, { socialLoading }] = useSocialLogin();
 
     return (
-        <form onSubmit={submit} style={{ width: '600px' }}>
-            {!useEmail && (
+        <form onSubmit={submit} style={{ width: '600px', ...style }}>
+            {!useEmail && !hideHeadline && (
                 <h3 dangerouslySetInnerHTML={{ __html: translate('requestForm:step-4.header') }} />
             )}
             {!isLoggedIn && !useEmail && (

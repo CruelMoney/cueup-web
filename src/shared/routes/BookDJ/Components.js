@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Label } from 'components/FormComponents';
-import { Container } from 'components/Blocks';
+import { Container, RowWrap } from 'components/Blocks';
 import { CTAButton } from 'components/CTAButton';
 
 export const HeroCard = styled.div`
@@ -31,30 +31,13 @@ export const StyledLabelComponent = styled.div`
     display: flex;
     align-items: center;
     position: relative;
-    label,
-    ${Label} {
-        flex: 1;
-        min-width: 0;
-        color: #32325d;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        font-size: 10px;
-        margin-left: 9px;
-        margin-top: 8px;
-        margin-bottom: 0px;
 
-        > input,
-        > button {
-            font-size: 1.6em;
-            margin: 0 -9px;
-            margin-top: -4px;
-            background-color: transparent;
-            padding-left: 0px;
-            text-align: left;
-            justify-content: flex-start;
-        }
-        .empty {
-            color: #98a4b3;
+    label {
+        > span {
+            margin-bottom: -4px;
+            & ~ * {
+                margin-top: -4px;
+            }
         }
     }
     .divider {
@@ -227,4 +210,65 @@ export const CustomCTAButton = styled(CTAButton)`
     font-size: 18px;
     font-weight: 600;
     letter-spacing: 0;
+`;
+
+export const GreyBox = styled.section`
+    background-color: #f7f9fc;
+    border-radius: 12px;
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 15px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    > label {
+        color: #32325d;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        font-size: 10px;
+    }
+    ${RowWrap} {
+        margin-right: -9px;
+    }
+    label,
+    ${Label} {
+        flex: 1;
+        min-width: 0;
+        margin-top: 0px;
+        margin-right: 9px;
+        margin-bottom: 12px;
+        > input,
+        > button {
+            background-color: white;
+        }
+    }
+    .time-slider-data {
+        padding: 0 9px;
+        margin-top: 6px !important;
+        margin-bottom: 17px !important;
+        p {
+            font-size: 16px;
+        }
+    }
+    .empty {
+        color: #98a4b3;
+    }
+    ul {
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        padding: 7px;
+        padding-top: 5em;
+        box-shadow: none;
+        border: 1px solid #e9ecf0;
+        border-radius: 12px;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .powered-by-google {
+        top: 1em !important;
+        display: flex;
+        right: 1em !important;
+    }
 `;

@@ -183,6 +183,9 @@ const StyledSearchWrapper = styled.div`
         margin-bottom: 0;
         min-width: 0;
         max-width: 90%;
+        > span {
+            margin-left: 0 !important;
+        }
         > input,
         > button {
             font-size: 1.6em;

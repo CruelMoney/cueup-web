@@ -31,16 +31,54 @@ const Label = styled.label`
     .error {
         margin-bottom: 0;
     }
+
+    ${({ v2 }) =>
+        v2 &&
+        css`
+            flex: 1;
+            min-width: 0;
+            color: #32325d;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            font-size: 10px;
+
+            margin-top: 8px;
+            margin-bottom: 0px;
+            > span {
+                margin-bottom: 3px;
+                display: inline-block;
+            }
+            > input,
+            > button {
+                font-size: 1.6em;
+                margin: 0 -9px;
+                background-color: transparent;
+                padding-left: 0px;
+                text-align: left;
+                justify-content: flex-start;
+                &:focus,
+                &:hover {
+                    background: inherit;
+                }
+            }
+            .empty {
+                color: #98a4b3;
+            }
+        `}
 `;
 
 export const InputLabel = styled(Label)`
     margin-bottom: 30px;
     min-width: 100%;
     flex: 2;
-    position: relative;
-    > * {
-        margin-top: 6px;
-    }
+    ${({ v2 }) =>
+        v2 &&
+        css`
+            margin-left: 9px;
+            flex: 1;
+            min-width: 0;
+            margin-bottom: 0;
+        `}
 `;
 
 export const LabelHalf = styled(InputLabel)`
@@ -67,6 +105,7 @@ const LeftCol = styled(Col)`
 
 export const InputRow = styled(Row)`
     flex-wrap: wrap;
+
     ${({ small }) =>
         small
             ? css`
@@ -293,6 +332,7 @@ const Input = React.forwardRef(
             proFeature,
             isPro,
             removable,
+            v2,
             ...props
         },
         fRef
@@ -346,11 +386,13 @@ const Input = React.forwardRef(
 
         return (
             <>
-                <LabelComponent style={labelStyle}>
-                    <span>
-                        {label}
-                        {proFeature && <ProFeature small disabled={isPro} />}
-                    </span>
+                <LabelComponent style={labelStyle} v2={v2}>
+                    {!!label && (
+                        <span>
+                            {label}
+                            {proFeature && <ProFeature small disabled={isPro} />}
+                        </span>
+                    )}
                     <InputType
                         type={type}
                         save={save}

@@ -13,17 +13,18 @@ import { Col, Container, Row, RowWrap, SmartButton } from 'components/Blocks';
 import { BodyBold, BodySmall } from 'components/Text';
 import Footer from 'components/common/Footer';
 import LocationSelector from 'components/common/LocationSelectorSimple';
-import { Input, Label } from 'components/FormComponents';
+import { Input, InputLabel, Label } from 'components/FormComponents';
 import DatePickerPopup from 'components/DatePickerPopup';
 
 import TimeSlider from 'components/common/TimeSlider/TimeSlider';
 import { useForm } from 'components/hooks/useForm';
 
 import { useCheckDjAvailability } from 'actions/EventActions';
-import { CustomCTAButton } from './Components';
+import { CustomCTAButton, GreyBox } from './Components';
 import { SEARCH_DEEP } from './gql';
 import SearchResults from './SearchResults';
 import { FilterPills } from './Filters';
+import { RequestOffers } from './RequestOffers';
 
 const Search = (props) => {
     const { translate } = props;
@@ -90,80 +91,6 @@ const LeftSideWrapper = styled.div`
     margin-right: 30px;
 `;
 
-const GreyBox = styled.section`
-    background-color: #f7f9fc;
-    border-radius: 12px;
-    width: 100%;
-    padding: 20px;
-    margin-bottom: 15px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    > label {
-        color: #32325d;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        font-size: 10px;
-    }
-    ${RowWrap} {
-        margin-right: -9px;
-        label,
-        ${Label} {
-            flex: 1;
-            min-width: 0;
-            color: #32325d;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            font-size: 10px;
-            margin-top: 0px;
-            margin-right: 9px;
-            margin-bottom: 12px;
-            > span {
-                margin-left: 9px;
-            }
-            > input,
-            > button {
-                font-size: 1.6em;
-                background-color: white;
-                padding-left: 0px;
-                margin-top: 4px;
-                height: 40px;
-                text-align: left;
-                justify-content: flex-start;
-            }
-        }
-    }
-    .time-slider-data {
-        padding: 0 9px;
-        margin-top: 6px !important;
-        margin-bottom: 17px !important;
-        p {
-            font-size: 16px;
-        }
-    }
-    .empty {
-        color: #98a4b3;
-    }
-    ul {
-        top: 0px;
-        left: 0px;
-        right: 0px;
-        bottom: 0px;
-        padding: 7px;
-        padding-top: 5em;
-        box-shadow: none;
-        border: 1px solid #e9ecf0;
-        border-radius: 12px;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
-    .powered-by-google {
-        top: 1em !important;
-        display: flex;
-        right: 1em !important;
-    }
-`;
-
 const Filters = ({ form, setValue, doSearch, loading }) => {
     const { translate } = useTranslate();
 
@@ -171,6 +98,7 @@ const Filters = ({ form, setValue, doSearch, loading }) => {
         <GreyBox style={{ minHeight: 450 }}>
             <RowWrap>
                 <LocationSelector
+                    v2
                     data-cy={'location-input'}
                     name="query"
                     label={'LOCATION'}
@@ -189,6 +117,7 @@ const Filters = ({ form, setValue, doSearch, loading }) => {
             <RowWrap>
                 <DatePickerPopup
                     half
+                    v2
                     showInside
                     data-cy={'date-input'}
                     label="WHEN"
@@ -210,6 +139,7 @@ const Filters = ({ form, setValue, doSearch, loading }) => {
                 />
                 <Input
                     half
+                    v2
                     label="GUESTS"
                     placeholder="Add guest count"
                     value={form.guestsCount}
@@ -219,12 +149,9 @@ const Filters = ({ form, setValue, doSearch, loading }) => {
                 />
             </RowWrap>
 
-            <label
-                className="input-label-small"
-                style={{ marginBottom: 8, marginLeft: 9, display: 'block' }}
-            >
+            <InputLabel v2 style={{ flex: 0 }}>
                 DURATION
-            </label>
+            </InputLabel>
             <TimeSlider
                 hoursLabel={translate('hours')}
                 startLabel={translate('start')}
@@ -249,39 +176,6 @@ const Filters = ({ form, setValue, doSearch, loading }) => {
             >
                 Find DJs
             </CustomCTAButton>
-        </GreyBox>
-    );
-};
-
-const RequestOffers = () => {
-    return (
-        <GreyBox>
-            <BodyBold>
-                <InlineIcon
-                    icon={speechIcon}
-                    color="#25F4D2"
-                    width={'1.5em'}
-                    height={'1.5em'}
-                    style={{ marginRight: 9, marginBottom: -6 }}
-                />
-                Tired of searching?
-            </BodyBold>
-            <BodySmall style={{ marginBottom: 15 }}>
-                Get tailored prices directly from the DJs. We’ll find the most suitable DJs and
-                inquire them to send their best offers for your event.
-            </BodySmall>
-            <SmartButton
-                level="secondary"
-                fullWidth
-                style={{
-                    height: '50px',
-                    backgroundColor: '#fff',
-                    borderRadius: 13,
-                    border: '0.5px solid rgba(77, 100, 128, 0.2)',
-                }}
-            >
-                Get quotes - let us find the DJs
-            </SmartButton>
         </GreyBox>
     );
 };

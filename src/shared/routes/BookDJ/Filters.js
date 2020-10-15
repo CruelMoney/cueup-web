@@ -18,7 +18,7 @@ const InsidePopup = styled.div`
     box-shadow: none;
     background: #fff;
     border: 1px solid #e9ecf0;
-    border-radius: 27px;
+    border-radius: 12px;
     -ms-overflow-style: none;
     scrollbar-width: none;
     z-index: 1;
@@ -141,7 +141,7 @@ const EventTypeSelector = ({ initialvalues, onSave, loading }) => {
         <InsidePopup>
             <Col key={key} style={{ height: '100%' }}>
                 <RowWrap>
-                    <label>EVENT TYPE</label>
+                    <Label v2>EVENT TYPE</Label>
                 </RowWrap>
                 <CheckBoxRow
                     withBorder={false}
@@ -244,7 +244,7 @@ const BudgetSelector = ({ initialvalues, onSave, loading }) => {
         <InsidePopup>
             <Col style={{ height: '100%' }}>
                 <RowWrap>
-                    <label>BUDGET</label>
+                    <Label v2>BUDGET</Label>
                 </RowWrap>
 
                 <BudgetButton
@@ -314,7 +314,7 @@ const EquipmentSelector = ({ initialvalues, onSave, loading }) => {
         <InsidePopup>
             <Col key={key} style={{ height: '100%' }}>
                 <RowWrap>
-                    <label>EQUIPMENT</label>
+                    <Label v2>EQUIPMENT</Label>
                 </RowWrap>
                 <CheckBoxRow
                     withBorder={false}
@@ -371,7 +371,7 @@ const GenreSelector = ({ initialvalues, onSave, loading }) => {
         <InsidePopup>
             <Col style={{ height: '100%' }}>
                 <RowWrap>
-                    <label>MUSIC GENRES</label>
+                    <Label v2>MUSIC GENRES</Label>
                 </RowWrap>
                 <ToggleButtonHandler
                     key={genres.length}

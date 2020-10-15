@@ -86,6 +86,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
         <div onMouseEnter={startLoadingScript}>
             <StyledLabelComponent>
                 <LocationSelector
+                    v2
                     data-cy={'location-input'}
                     ref={locationRef}
                     name="query"
@@ -106,6 +107,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
 
             <StyledLabelComponent>
                 <DatePickerPopup
+                    v2
                     showInside
                     data-cy={'date-input'}
                     ref={dateRef}
@@ -118,6 +120,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
                 />
                 <span className="divider" />
                 <Input
+                    v2
                     label="GUESTS"
                     placeholder="Add guest count"
                     value={form.guestsCount}
@@ -129,6 +132,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
 
             <StyledLabelComponent>
                 <Input
+                    v2
                     className={form.speakers ? '' : 'empty'}
                     label="SOUND SYSTEM"
                     type="button"
@@ -137,6 +141,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
                 />
                 <span className="divider" />
                 <Input
+                    v2
                     className={form.lights ? '' : 'empty'}
                     label="LIGHTS"
                     type="button"
