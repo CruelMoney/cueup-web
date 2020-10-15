@@ -141,7 +141,9 @@ const EventTypeSelector = ({ initialvalues, onSave, loading }) => {
         <InsidePopup>
             <Col key={key} style={{ height: '100%' }}>
                 <RowWrap>
-                    <Label v2>EVENT TYPE</Label>
+                    <Label v2>
+                        <span>EVENT TYPE</span>
+                    </Label>
                 </RowWrap>
                 <CheckBoxRow
                     withBorder={false}
@@ -218,7 +220,9 @@ const BudgetButton = ({ value, label, setBudget, budget }) => (
             cursor: 'pointer',
         }}
     >
-        <Label>{label} </Label>
+        <Label>
+            <span>{label}</span>
+        </Label>
 
         <Checkmark
             style={{
@@ -244,7 +248,9 @@ const BudgetSelector = ({ initialvalues, onSave, loading }) => {
         <InsidePopup>
             <Col style={{ height: '100%' }}>
                 <RowWrap>
-                    <Label v2>BUDGET</Label>
+                    <Label v2>
+                        <span>BUDGET</span>
+                    </Label>
                 </RowWrap>
 
                 <BudgetButton
@@ -314,7 +320,9 @@ const EquipmentSelector = ({ initialvalues, onSave, loading }) => {
         <InsidePopup>
             <Col key={key} style={{ height: '100%' }}>
                 <RowWrap>
-                    <Label v2>EQUIPMENT</Label>
+                    <Label v2>
+                        <span>EQUIPMENT</span>
+                    </Label>
                 </RowWrap>
                 <CheckBoxRow
                     withBorder={false}
@@ -371,7 +379,9 @@ const GenreSelector = ({ initialvalues, onSave, loading }) => {
         <InsidePopup>
             <Col style={{ height: '100%' }}>
                 <RowWrap>
-                    <Label v2>MUSIC GENRES</Label>
+                    <Label v2>
+                        <span>MUSIC GENRES</span>
+                    </Label>
                 </RowWrap>
                 <ToggleButtonHandler
                     key={genres.length}

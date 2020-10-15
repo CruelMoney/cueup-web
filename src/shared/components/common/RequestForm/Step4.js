@@ -108,6 +108,7 @@ const Step4 = ({
             {useEmail && (
                 <>
                     <Input
+                        v2
                         label={translate('requestForm:step-4.contact-name')}
                         name="contactName"
                         placeholder={translate('first-last')}
@@ -119,6 +120,7 @@ const Step4 = ({
 
                     <InputRow small>
                         <Input
+                            v2
                             type="email"
                             name="contactEmail"
                             label={translate('requestForm:step-4.contact-email')}
@@ -139,6 +141,7 @@ const Step4 = ({
                     </InputRow>
 
                     <Input
+                        v2
                         type="tel"
                         label={translate('requestForm:step-4.contact-phone')}
                         placeholder={translate('optional')}

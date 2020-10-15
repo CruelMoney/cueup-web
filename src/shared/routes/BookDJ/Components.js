@@ -33,13 +33,26 @@ export const StyledLabelComponent = styled.div`
     position: relative;
 
     label {
+        margin-top: 8px;
+
         > span {
             margin-bottom: -4px;
             & ~ * {
                 margin-top: -4px;
             }
         }
+
+        input,
+        button {
+            background-color: transparent;
+
+            &:focus,
+            &:hover {
+                background: inherit;
+            }
+        }
     }
+
     .divider {
         width: 1px;
         background-color: #e9ecf0;
@@ -85,10 +98,12 @@ export const ImageWrapper = styled.div`
 export const HeroImageWrapper = styled.div`
     width: 75%;
     height: 100%;
+    max-height: 470px;
     border-radius: 20px;
     position: absolute;
     right: 0;
-    top: 0;
+    top: 50%;
+    transform: translateY(-50%);
     pointer-events: none;
     overflow: hidden;
     div,
@@ -221,38 +236,15 @@ export const GreyBox = styled.section`
     position: relative;
     display: flex;
     flex-direction: column;
-    > label {
-        color: #32325d;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        font-size: 10px;
-    }
-    ${RowWrap} {
-        margin-right: -9px;
-    }
+
     label,
     ${Label} {
-        flex: 1;
-        min-width: 0;
-        margin-top: 0px;
-        margin-right: 9px;
-        margin-bottom: 12px;
         > input,
         > button {
             background-color: white;
         }
     }
-    .time-slider-data {
-        padding: 0 9px;
-        margin-top: 6px !important;
-        margin-bottom: 17px !important;
-        p {
-            font-size: 16px;
-        }
-    }
-    .empty {
-        color: #98a4b3;
-    }
+
     ul {
         top: 0px;
         left: 0px;

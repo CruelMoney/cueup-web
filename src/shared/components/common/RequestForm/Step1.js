@@ -81,6 +81,7 @@ const Step1 = ({
                     <RequestSection style={{ position: 'relative', zIndex: 5 }}>
                         <LocationSelector
                             noShadow
+                            v2
                             data-cy={'location-input'}
                             countries={countries}
                             forceHeight
@@ -104,6 +105,7 @@ const Step1 = ({
                         }}
                     >
                         <Input
+                            v2
                             data-cy="date-input"
                             type="text"
                             name="date"

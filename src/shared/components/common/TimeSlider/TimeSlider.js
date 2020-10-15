@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import wNumb from 'wnumb';
 import moment from 'moment-timezone';
+import styled, { css } from 'styled-components';
 import Slider from '../Slider/Slider';
 
 const TimeSlider = ({
@@ -13,6 +14,7 @@ const TimeSlider = ({
     color,
     disabled,
     initialValues = [18 * 60, 24 * 60],
+    v2,
 }) => {
     const [values, setValues] = useState(initialValues);
 
@@ -64,22 +66,30 @@ const TimeSlider = ({
                     })}
                 />
             </div>
-            <div
-                className="time-slider-data"
-                style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    marginTop: '10px',
-                }}
-            >
+            <TimeSliderData className="time-slider-data" v2={v2}>
                 <p>{`${startLabel}: ${formatNumber(startHour)}:${formatNumber(startMinute)}`}</p>
                 <p>
                     <span>{`${difHours} ${hoursLabel}`}</span>
                 </p>
                 <p>{`${endLabel}: ${formatNumber(endHour)}:${formatNumber(endMinute)}`}</p>
-            </div>
+            </TimeSliderData>
         </div>
     );
 };
+
+const TimeSliderData = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    ${({ v2 }) =>
+        v2 &&
+        css`
+            padding: 0 9px;
+            margin-top: 6px !important;
+            p {
+                font-size: 16px;
+            }
+        `}
+`;
 
 export default TimeSlider;

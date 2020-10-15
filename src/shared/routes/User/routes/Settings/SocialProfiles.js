@@ -38,7 +38,6 @@ const SocialProfiles = ({ user }) => {
                 <LabelHalf>
                     Connect Mixcloud
                     <ConnectMixcloudButton mixcloudConnected={mixcloudConnected} userId={user.id} />
-                    <BodySmall>Mixcloud shows cannot be displayed on Cueup.</BodySmall>
                 </LabelHalf>
             )}
             <LabelHalf />

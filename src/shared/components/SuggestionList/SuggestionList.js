@@ -237,7 +237,7 @@ const List = styled.ul`
     overflow-y: scroll;
     box-shadow: ${({ noShadow }) => (noShadow ? 'none' : '0px 1px 4px 0px rgba(0, 0, 0, 0.3)')};
     height: ${({ forceHeight }) =>
-        forceHeight ? (isBoolean(forceHeight) ? '400px' : forceHeight + 'px') : 'auto'};
+        forceHeight ? (typeof forceHeight === Boolean ? '400px' : forceHeight + 'px') : 'auto'};
     border-radius: 4px;
     ${({ forceHeight }) => (forceHeight ? 'margin-top' : 'padding-top')}: ${({ topOffset }) =>
         topOffset}px;

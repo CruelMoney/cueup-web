@@ -20,6 +20,7 @@ import TimeSlider from 'components/common/TimeSlider/TimeSlider';
 import { useForm } from 'components/hooks/useForm';
 
 import { useCheckDjAvailability } from 'actions/EventActions';
+import { ScrollToTopOnMount } from 'components/common/ScrollToTop';
 import { CustomCTAButton, GreyBox } from './Components';
 import { SEARCH_DEEP } from './gql';
 import SearchResults from './SearchResults';
@@ -59,6 +60,7 @@ const Search = (props) => {
                 <meta name="geo.placename" content={title} />
                 <meta name="geo.region" content={title} /> */}
             </Helmet>
+            <ScrollToTopOnMount />
             <SmartNavigation dark relative />
             <Container>
                 <Row>
@@ -108,7 +110,7 @@ const Filters = ({ form, setValue, doSearch, loading }) => {
                         height: '100%',
                         display: 'flex',
                         position: 'initial',
-                        marginBottom: 0,
+                        marginBottom: 20,
                     }}
                     onSave={(locationName) => setValue({ locationName })}
                     defaultValue={form.locationName}
@@ -149,10 +151,11 @@ const Filters = ({ form, setValue, doSearch, loading }) => {
                 />
             </RowWrap>
 
-            <InputLabel v2 style={{ flex: 0 }}>
-                DURATION
+            <InputLabel v2 style={{ flex: 0, marginBottom: 8 }}>
+                <span>DURATION</span>
             </InputLabel>
             <TimeSlider
+                v2
                 hoursLabel={translate('hours')}
                 startLabel={translate('start')}
                 endLabel={translate('end')}

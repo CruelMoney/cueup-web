@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { TeritaryButton, Row, PrimaryButton } from 'components/Blocks';
 import { useValidation } from 'components/hooks/useForm';
-import { Input, Label, LabelHalf, InputRow } from 'components/FormComponents';
+import { Input, Label, LabelHalf, InputRow, InputLabel } from 'components/FormComponents';
 import { BodySmall } from 'components/Text';
 import ToggleButtonHandler from '../ToggleButtonHandler';
 import c from '../../../constants/constants';
@@ -46,6 +46,7 @@ const Step2 = ({
             <h3 dangerouslySetInnerHTML={{ __html: translate('requestForm:step-2.header') }} />
             <RequestSection>
                 <Input
+                    v2
                     name="eventName"
                     label={translate('requestForm:step-2.event-name')}
                     onSave={(name) => handleChange({ name })}
@@ -60,7 +61,7 @@ const Step2 = ({
             {!fromNewSearch && (
                 <RequestSection>
                     <InputRow small>
-                        <LabelHalf>
+                        <LabelHalf v2>
                             {translate('speakers')}
                             <ToggleButton
                                 onClick={(speakers) => handleChange({ speakers })}
@@ -69,7 +70,7 @@ const Step2 = ({
                                 labelToggled={translate('Required')}
                             />
                         </LabelHalf>
-                        <LabelHalf>
+                        <LabelHalf v2>
                             {translate('lights')}
                             <ToggleButton
                                 onClick={(lights) => handleChange({ lights })}
@@ -82,10 +83,13 @@ const Step2 = ({
                 </RequestSection>
             )}
             <RequestSection>
-                <Label>{translate('requestForm:step-2.event-genres')} </Label>
-                <BodySmall style={{ marginBottom: '10px' }}>
-                    {translate('requestForm:step-2.event-genres-description')}
-                </BodySmall>
+                <InputLabel v2>
+                    <span>{translate('requestForm:step-2.event-genres')}</span>
+                    <BodySmall style={{ marginBottom: '10px' }}>
+                        {translate('requestForm:step-2.event-genres-description')}
+                    </BodySmall>
+                </InputLabel>
+
                 <GenreChooser
                     letCueupDecide={form.letCueupDecide}
                     setLetcueupDecide={handleGenreSelection}

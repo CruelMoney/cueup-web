@@ -1,7 +1,7 @@
 import React from 'react';
 import wNumb from 'wnumb';
 import { TeritaryButton, PrimaryButton, Row } from 'components/Blocks';
-import { Input, Label } from 'components/FormComponents';
+import { Input, InputLabel, Label } from 'components/FormComponents';
 import { BodySmall } from 'components/Text';
 import Slider from '../Slider';
 import TimeSlider from '../TimeSlider';
@@ -22,10 +22,11 @@ const Step3 = ({
             <h3 dangerouslySetInnerHTML={{ __html: translate('requestForm:step-3.header') }} />
 
             <RequestSection>
-                <Label style={{ marginBottom: '12px', display: 'block' }}>
-                    {translate('requestForm:step-3.music-duration')}
-                </Label>
+                <InputLabel v2 style={{ marginBottom: '12px', display: 'block' }}>
+                    <span> {translate('requestForm:step-3.music-duration')}</span>
+                </InputLabel>
                 <TimeSlider
+                    v2
                     hoursLabel={translate('hours')}
                     startLabel={translate('start')}
                     endLabel={translate('end')}
@@ -40,9 +41,9 @@ const Step3 = ({
 
             {!fromNewSearch && (
                 <RequestSection>
-                    <Label style={{ marginBottom: '12px', display: 'block' }}>
+                    <InputLabel v2 style={{ marginBottom: '12px', display: 'block' }}>
                         {translate('requestForm:step-3.guests')}
-                    </Label>
+                    </InputLabel>
                     <div>
                         <Slider
                             name="guests"
@@ -62,7 +63,7 @@ const Step3 = ({
                         />
                     </div>
                     <BodySmall
-                        style={{ marginTop: '15px' }}
+                        style={{ marginTop: '15px', marginLeft: 9 }}
                         dangerouslySetInnerHTML={{
                             __html: translate('requestForm:step-3.guests-description', {
                                 prefix:
@@ -77,6 +78,7 @@ const Step3 = ({
             )}
             <RequestSection>
                 <Input
+                    v2
                     type="text-area"
                     style={{
                         height: '120px',

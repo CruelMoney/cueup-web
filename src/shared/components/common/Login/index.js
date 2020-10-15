@@ -134,6 +134,7 @@ const Login = ({ redirect = true, error, onLogin }) => {
                         >
                             <div>
                                 <Input
+                                    v2
                                     blurOnEnter={false}
                                     label="Email"
                                     placeholder="mail@email.com"
@@ -148,6 +149,7 @@ const Login = ({ redirect = true, error, onLogin }) => {
                             </div>
                             <div>
                                 <Input
+                                    v2
                                     blurOnEnter={false}
                                     label="Password"
                                     placeholder="min. 6 characters"
@@ -166,6 +168,7 @@ const Login = ({ redirect = true, error, onLogin }) => {
                                 <SmartButton
                                     glow
                                     fullWidth
+                                    style={{ marginBottom: 0, marginTop: 12 }}
                                     active={isValid()}
                                     type={'submit'}
                                     loading={loading}

@@ -37,32 +37,40 @@ const Label = styled.label`
         css`
             flex: 1;
             min-width: 0;
+            width: 100%;
             color: #32325d;
-            font-weight: 600;
-            letter-spacing: 0.08em;
             font-size: 10px;
-
-            margin-top: 8px;
-            margin-bottom: 0px;
+            margin-top: 0px;
+            margin-bottom: 15px;
             > span {
                 margin-bottom: 3px;
                 display: inline-block;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                font-weight: 600;
             }
             > input,
-            > button {
+            > button,
+            > textarea {
                 font-size: 1.6em;
                 margin: 0 -9px;
-                background-color: transparent;
                 padding-left: 0px;
                 text-align: left;
                 justify-content: flex-start;
-                &:focus,
-                &:hover {
-                    background: inherit;
-                }
+            }
+            > textarea {
+                padding-left: 9px;
             }
             .empty {
                 color: #98a4b3;
+            }
+            .error,
+            p {
+                font-size: 1.6em;
+                font-weight: 500;
+            }
+            ${BodySmall} {
+                font-size: 1.4em;
             }
         `}
 `;
@@ -77,7 +85,7 @@ export const InputLabel = styled(Label)`
             margin-left: 9px;
             flex: 1;
             min-width: 0;
-            margin-bottom: 0;
+            margin-bottom: 20px;
         `}
 `;
 
