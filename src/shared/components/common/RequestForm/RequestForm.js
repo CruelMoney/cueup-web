@@ -210,6 +210,9 @@ const Wrapper = styled(Col)`
     margin: auto;
     max-width: 600px;
     box-sizing: border-box;
+    h3 {
+        margin-bottom: 15px !important;
+    }
     .error,
     .errors p {
         font-size: 14px;

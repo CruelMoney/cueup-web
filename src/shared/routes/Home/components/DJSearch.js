@@ -44,11 +44,6 @@ const DjSearch = () => {
                 locationRef.current.focus();
                 return;
             }
-            if (!form.date) {
-                setRunSubmit(true);
-                dateRef.current.focus();
-                return;
-            }
 
             const errors = runValidations();
             if (errors.length === 0) {
@@ -133,8 +128,6 @@ const DjSearch = () => {
                     onSave={(date) => {
                         setValue({ date });
                     }}
-                    registerValidation={registerValidation('date')}
-                    unregisterValidation={unregisterValidation('date')}
                 />
 
                 <FindDjsButton>

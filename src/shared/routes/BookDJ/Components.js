@@ -34,7 +34,7 @@ export const StyledLabelComponent = styled.div`
 
     label {
         margin-top: 8px;
-
+        margin-bottom: 0;
         > span {
             margin-bottom: -4px;
             & ~ * {
