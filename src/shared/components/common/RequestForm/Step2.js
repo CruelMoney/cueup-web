@@ -61,8 +61,10 @@ const Step2 = ({
             {!fromNewSearch && (
                 <RequestSection>
                     <InputRow small>
-                        <LabelHalf v2>
-                            {translate('speakers')}
+                        <LabelHalf>
+                            <InputLabel v2>
+                                <span>{translate('speakers')}</span>
+                            </InputLabel>
                             <ToggleButton
                                 onClick={(speakers) => handleChange({ speakers })}
                                 active={form.speakers}
@@ -70,8 +72,11 @@ const Step2 = ({
                                 labelToggled={translate('Required')}
                             />
                         </LabelHalf>
-                        <LabelHalf v2>
-                            {translate('lights')}
+                        <LabelHalf>
+                            <InputLabel v2>
+                                <span>{translate('lights')}</span>
+                            </InputLabel>
+
                             <ToggleButton
                                 onClick={(lights) => handleChange({ lights })}
                                 label={translate('Not required')}

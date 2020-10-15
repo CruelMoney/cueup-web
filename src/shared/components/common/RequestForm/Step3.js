@@ -42,7 +42,7 @@ const Step3 = ({
             {!fromNewSearch && (
                 <RequestSection>
                     <InputLabel v2 style={{ marginBottom: '12px', display: 'block' }}>
-                        {translate('requestForm:step-3.guests')}
+                        <span>{translate('requestForm:step-3.guests')}</span>
                     </InputLabel>
                     <div>
                         <Slider

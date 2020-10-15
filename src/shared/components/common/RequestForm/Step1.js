@@ -94,7 +94,7 @@ const Step1 = ({
                             unregisterValidation={unregisterValidation('locationName')}
                             defaultValue={form.locationName}
                         >
-                            <BodySmall>
+                            <BodySmall style={{ marginLeft: 9 }}>
                                 {translate('requestForm:step-1.event-location-description')}
                             </BodySmall>
                         </LocationSelector>
