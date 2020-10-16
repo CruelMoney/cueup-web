@@ -120,7 +120,7 @@ const SuggestionList = forwardRef(
             >
                 <Input
                     ref={inputRef}
-                    errorOutside
+                    // errorOutside
                     type="text"
                     value={displayValue}
                     onChange={!disableInput && handleChange}

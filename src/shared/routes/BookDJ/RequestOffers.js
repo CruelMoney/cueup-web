@@ -16,24 +16,26 @@ import { GreyBox } from './Components';
 
 export const RequestOffers = ({
     form,
-    setForm,
+    setValue,
     registerValidation,
     unregisterValidation,
     runValidations,
 }) => {
-    const [showForm, setShowForm] = useState(false);
     const { data: userData } = useQuery(ME);
-    const routeLocation = useLocation();
     const [error, setError] = useState();
 
     const handleChange = (data) => {
         setError(null);
-        setForm((f) => ({ ...f, ...data }));
+        setValue(data);
+    };
+
+    const handleSubmit = () => {
+        runValidations();
     };
 
     return (
         <GreyBox>
-            {showForm ? (
+            {form.showContactInfo ? (
                 <Step4
                     hideHeadline
                     form={form}
@@ -41,14 +43,14 @@ export const RequestOffers = ({
                     runValidations={runValidations}
                     registerValidation={registerValidation}
                     unregisterValidation={unregisterValidation}
-                    next={console.log}
-                    back={() => setShowForm(false)}
+                    next={handleSubmit}
+                    back={() => setValue({ showContactInfo: false })}
                     // loading={loading}
                     user={userData?.me}
                     style={{
-                        marginTop: -30,
                         width: 'auto',
                     }}
+                    buttonLabel="Get quotes"
                 />
             ) : (
                 <>
@@ -67,7 +69,7 @@ export const RequestOffers = ({
                         and inquire them to send their best offers for your event.
                     </BodySmall>
                     <SmartButton
-                        onClick={() => setShowForm(true)}
+                        onClick={() => setValue({ showContactInfo: true })}
                         level="secondary"
                         fullWidth
                         style={{

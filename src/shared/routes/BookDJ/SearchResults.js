@@ -128,16 +128,26 @@ const BioText = styled(BodySmall)`
     word-wrap: anywhere;
 `;
 
-const ArtistBio = ({ userMetadata, genres, loading }) => {
+const ArtistBio = ({ userMetadata, genres, loading, filterGenres }) => {
     if (loading) {
         return <Skeleton count={3} height={'1em'} style={{ height: 100 }} width={300} />;
     }
 
     const { bio } = userMetadata;
 
-    const maxNum = genres.length > 5 ? 4 : 5;
-    const renderGenres = genres.slice(0, maxNum);
-    const missing = genres.length - renderGenres.length;
+    const sortedGenres = [...genres];
+    // sort to show searched for genres
+    if (filterGenres?.length) {
+        sortedGenres.sort((a, b) => {
+            const aVal = filterGenres.includes(a.toLowerCase()) ? 0 : 1;
+            const bVal = filterGenres.includes(b.toLowerCase()) ? 0 : 1;
+            return aVal - bVal;
+        });
+    }
+
+    const maxNum = sortedGenres.length > 5 ? 4 : 5;
+    const renderGenres = sortedGenres.slice(0, maxNum);
+    const missing = sortedGenres.length - renderGenres.length;
 
     return (
         <>
@@ -172,7 +182,6 @@ const Price = ({ loading }) => {
 const SearchEntry = (props) => {
     const { translate } = useTranslate();
     const route = `${translate(appRoutes.user)}/${props.permalink}/overview`;
-
     return (
         <>
             <NavLink
@@ -199,6 +208,7 @@ const SearchEntry = (props) => {
 const SearchResults = ({ topDjs, form, pagination, loading, setPagination }) => {
     const { pathname } = useLocation();
 
+    const { genres } = form;
     return (
         <Col>
             <H2 small style={{ marginBottom: 24 }}>
@@ -206,7 +216,12 @@ const SearchResults = ({ topDjs, form, pagination, loading, setPagination }) => 
                 <strong style={{ fontWeight: 700 }}>{form?.locationName?.split(', ')[0]}</strong>
             </H2>
             {topDjs.map((dj, idx) => (
-                <SearchEntry key={dj?.id || idx} {...dj} loading={loading} />
+                <SearchEntry
+                    key={dj?.id || idx}
+                    {...dj}
+                    loading={loading}
+                    filterGenres={genres?.map((s) => s.toLowerCase())}
+                />
             ))}
             {pagination && (
                 <Row style={{ marginBottom: 30 }}>

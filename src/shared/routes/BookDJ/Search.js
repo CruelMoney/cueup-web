@@ -22,6 +22,7 @@ import { useForm } from 'components/hooks/useForm';
 import { useCheckDjAvailability } from 'actions/EventActions';
 import { ScrollToTopOnMount } from 'components/common/ScrollToTop';
 import useUrlState from 'components/hooks/useUrlState';
+import { ME } from 'components/gql';
 import { CustomCTAButton, GreyBox } from './Components';
 import { SEARCH_DEEP } from './gql';
 import SearchResults from './SearchResults';
@@ -94,7 +95,14 @@ const LeftSideWrapper = styled.div`
     margin-right: 30px;
 `;
 
-const Filters = ({ form, setValue, doSearch, loading }) => {
+const Filters = ({
+    form,
+    setValue,
+    doSearch,
+    loading,
+    registerValidation,
+    unregisterValidation,
+}) => {
     const { translate } = useTranslate();
 
     return (
@@ -110,11 +118,15 @@ const Filters = ({ form, setValue, doSearch, loading }) => {
                         flex: 1,
                         height: '100%',
                         display: 'flex',
+                        flexDirection: 'column',
                         position: 'initial',
                         marginBottom: 20,
                     }}
                     onSave={(locationName) => setValue({ locationName })}
                     defaultValue={form.locationName}
+                    validation={(v) => (v ? null : 'Please select a location')}
+                    registerValidation={registerValidation('locationName')}
+                    unregisterValidation={unregisterValidation('locationName')}
                 />
             </RowWrap>
             <RowWrap>
@@ -204,6 +216,7 @@ const DataWrapper = (props) => {
     const [pagination, setPagination] = useState({
         page: initialPage,
     });
+    const { data: userData } = useQuery(ME);
 
     const { environment, data } = useServerContext();
     const fallBackLocation = data?.topCities[0]?.country;
@@ -212,6 +225,9 @@ const DataWrapper = (props) => {
         countryCode: data?.topCities[0]?.iso2,
         location: navState?.location,
         locationName: navState?.location?.name || fallBackLocation,
+        contactName: userData?.me?.userMetadata.fullName,
+        contactEmail: userData?.me?.email,
+        contactPhone: userData?.me?.userMetadata.phone,
         ...navState,
     });
     const setValue = useCallback(
@@ -220,6 +236,7 @@ const DataWrapper = (props) => {
         },
         [setForm]
     );
+    const { registerValidation, unregisterValidation, runValidations } = useForm(form);
 
     const { data: searchData, loading, refetch } = useQuery(SEARCH_DEEP, {
         fetchPolicy: 'cache-first',
@@ -281,6 +298,9 @@ const DataWrapper = (props) => {
                 ...pageInfo,
                 ...pagination,
             }}
+            registerValidation={registerValidation}
+            unregisterValidation={unregisterValidation}
+            runValidations={runValidations}
             setPagination={setPagination}
         />
     );

@@ -55,6 +55,7 @@ const Step4 = ({
     user,
     style,
     hideHeadline,
+    buttonLabel,
 }) => {
     const { translate } = useNamespaceContent(content, 'requestForm');
 
@@ -68,6 +69,13 @@ const Step4 = ({
     };
     const [onPressSocial, { socialLoading }] = useSocialLogin();
 
+    const handleBack = () => {
+        if (useEmail && !isLoggedIn) {
+            setUseEmail(false);
+        } else {
+            back();
+        }
+    };
     return (
         <form onSubmit={submit} style={{ width: '600px', ...style }}>
             {!useEmail && !hideHeadline && (
@@ -155,10 +163,7 @@ const Step4 = ({
                     </Input>
 
                     <Row right>
-                        <TeritaryButton
-                            type="button"
-                            onClick={useEmail ? () => setUseEmail(false) : back}
-                        >
+                        <TeritaryButton type="button" onClick={handleBack}>
                             {translate('back')}
                         </TeritaryButton>
                         {useEmail && (
@@ -168,7 +173,7 @@ const Step4 = ({
                                 loading={loading}
                                 onClick={submit}
                             >
-                                Show DJs
+                                {buttonLabel || 'Show DJs'}
                             </SmartButton>
                         )}
                     </Row>
@@ -186,11 +191,7 @@ const Step4 = ({
             )}
 
             {!useEmail && (
-                <TeritaryButton
-                    type="button"
-                    style={{ minWidth: 0 }}
-                    onClick={useEmail ? () => setUseEmail(false) : back}
-                >
+                <TeritaryButton type="button" style={{ minWidth: 0 }} onClick={handleBack}>
                     {translate('back')}
                 </TeritaryButton>
             )}
