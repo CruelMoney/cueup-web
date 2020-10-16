@@ -52,9 +52,11 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
 
     const coordinates = activeLocation.coords;
 
-    const siteDescription = `Find and book the best DJs in ${title}. Explore the DJs and book the perfect DJ for your event.`;
+    const metaDescription = `Find and book the best DJs in ${title} on Cueup DJ booking. With Cueup it’s simple to post your event and we’ll quickly match you with great DJs in ${title} for your event.`;
+    const siteDescription =
+        'Hire the best DJs on Cueup - the top booking website trusted by 1000s of event organizers.';
 
-    const siteTitle = `Book a DJ in ${title} · Cueup`;
+    const siteTitle = `Book a DJ in ${title} · Cueup DJ Booking`;
     const thumb = environment.CALLBACK_DOMAIN + (activeLocation.image || defaultImage);
 
     const featuredDjs = topDjs.slice(0, 3);
@@ -92,15 +94,15 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
         <>
             <Helmet>
                 <title>{siteTitle}</title>
-                <meta name="description" content={siteDescription} />
+                <meta name="description" content={metaDescription} />
 
                 <meta property="og:title" content={siteTitle} />
                 <meta property="og:type" content={'website'} />
-                <meta property="og:description" content={siteDescription} />
+                <meta property="og:description" content={metaDescription} />
                 <meta property="og:image" content={thumb} />
 
                 <meta name="twitter:title" content={siteTitle} />
-                <meta name="twitter:description" content={siteDescription} />
+                <meta name="twitter:description" content={metaDescription} />
                 <meta name="twitter:image" content={thumb} />
 
                 {coordinates && (
@@ -207,7 +209,7 @@ const Hero = ({ activeLocation, siteDescription, checkAvailability }) => {
 
                         <div>
                             <PageTitle small>
-                                <span>Find DJs in</span>
+                                <span>Book DJs in</span>
                                 {name}
                             </PageTitle>
                             <BodySmall style={{ marginBottom: '0.7em' }}>

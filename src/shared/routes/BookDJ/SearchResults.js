@@ -13,6 +13,7 @@ import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import Map from '../../components/common/Map';
 import Pagination from './Pagination';
+import { GreyBox } from './Components';
 
 const loadingGraceStyle = {
     height: '100%',
@@ -205,15 +206,27 @@ const SearchEntry = (props) => {
         </>
     );
 };
+
+const EmptySearch = ({ locationName }) => {
+    return (
+        <GreyBox style={{ width: '100%' }}>
+            <h3>No DJs found in {locationName}</h3>
+        </GreyBox>
+    );
+};
+
 const SearchResults = ({ topDjs, form, pagination, loading, setPagination }) => {
     const { pathname } = useLocation();
+    const locationName = form?.locationName?.split(', ')[0];
+    if (!topDjs.length) {
+        return <EmptySearch locationName={locationName} />;
+    }
 
     const { genres } = form;
     return (
         <Col>
             <H2 small style={{ marginBottom: 24 }}>
-                DJs in{' '}
-                <strong style={{ fontWeight: 700 }}>{form?.locationName?.split(', ')[0]}</strong>
+                DJs in <strong style={{ fontWeight: 700 }}>{locationName}</strong>
             </H2>
             {topDjs.map((dj, idx) => (
                 <SearchEntry
