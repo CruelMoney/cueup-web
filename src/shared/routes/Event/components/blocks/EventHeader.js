@@ -45,14 +45,14 @@ const Content = ({ theEvent }) => {
                 <Col style={{ flex: 1, alignItems: 'flex-start' }}>
                     <HeaderTitle>{name}</HeaderTitle>
                     <BodyBold white opacity={0.75} style={{ margin: 0 }}>
-                        {location.name}
+                        {location?.name}
                         {'  ·  '}
-                        {start.formattedDate}
+                        {start?.formattedDate}
                     </BodyBold>
                     <BodyBold white opacity={0.75} style={{ margin: 0 }}>
-                        {start.formattedTime}
+                        {start?.formattedTime}
                         {' to '}
-                        {end.formattedTime}
+                        {end?.formattedTime}
                     </BodyBold>
                 </Col>
             </Row>

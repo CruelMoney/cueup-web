@@ -151,6 +151,9 @@ const Filters = ({
                     onSave={(date) => {
                         setValue({ date });
                     }}
+                    validation={(v) => (v ? null : 'Please select a date')}
+                    registerValidation={registerValidation('date')}
+                    unregisterValidation={unregisterValidation('date')}
                 />
                 <Input
                     half
@@ -159,7 +162,10 @@ const Filters = ({
                     placeholder="Add guest count"
                     value={form.guestsCount}
                     onChange={(guests) => {
-                        setValue({ guestsCount: guests.replace(/\D/g, '') });
+                        const guestsCount = guests.replace(/\D/g, '');
+                        setValue({
+                            guestsCount: guestsCount ? parseInt(guestsCount, 10) : guestsCount,
+                        });
                     }}
                 />
             </RowWrap>
@@ -224,6 +230,8 @@ const DataWrapper = (props) => {
     const [form, setForm] = useUrlState({
         countryCode: data?.topCities[0]?.iso2,
         location: navState?.location,
+        startMinute: 18 * 60,
+        endMinute: 24 * 60,
         locationName: navState?.location?.name || fallBackLocation,
         contactName: userData?.me?.userMetadata.fullName,
         contactEmail: userData?.me?.email,
@@ -259,8 +267,9 @@ const DataWrapper = (props) => {
                 locationName: form.locationName,
                 date: form.date,
             });
+            setValue({ location });
             if (result === true) {
-                setValue({ location });
+                // handle djs available
             } else {
                 // handle no djs available
                 return null;

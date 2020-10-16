@@ -18,8 +18,8 @@ const CREATE_EVENT = gql`
         $date: DateTime!
         $startMinute: Int!
         $endMinute: Int!
-        $genres: [String!]!
-        $guestsCount: Int!
+        $genres: [String!]
+        $guestsCount: Int
         $location: Area!
         $timeZone: String
         $djId: ID

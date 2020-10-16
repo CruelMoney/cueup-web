@@ -240,7 +240,8 @@ export const GreyBox = styled.section`
     label,
     ${Label} {
         > input,
-        > button {
+        > button,
+        > textarea {
             background-color: white;
         }
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, forwardRef } from 'react';
+import React, { useEffect, forwardRef, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
@@ -35,7 +35,10 @@ const Index = ({ location }) => {
         },
     });
 
-    const { event: theEvent } = data || {};
+    const theEvent = useMemo(() => ({ ...data?.event }), [data]);
+    if (theEvent) {
+        theEvent.hash = match.params.hash;
+    }
 
     const [notifications] = useNotifications({
         userId: theEvent?.organizer?.id,
@@ -55,10 +58,6 @@ const Index = ({ location }) => {
 
     const title = theEvent ? theEvent.name : 'Cueup | Event';
     const description = theEvent ? theEvent.description : null;
-
-    if (theEvent) {
-        theEvent.hash = match.params.hash;
-    }
 
     return (
         <div>

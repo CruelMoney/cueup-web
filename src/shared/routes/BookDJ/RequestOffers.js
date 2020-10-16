@@ -5,13 +5,16 @@ import speechIcon from '@iconify/icons-ion/ios-text';
 
 import { useQuery } from '@apollo/client';
 import { useLocation } from 'react-router';
-import { RowWrap, SmartButton } from 'components/Blocks';
+import { PrimaryButton, Row, RowWrap, SmartButton, TeritaryButton } from 'components/Blocks';
 import { BodyBold, BodySmall } from 'components/Text';
 
 import Step4 from 'components/common/RequestForm/Step4';
 import { useForm } from 'components/hooks/useForm';
 import { ME } from 'components/gql';
 import useUrlState from 'components/hooks/useUrlState';
+import { useCreateEvent } from 'actions/EventActions';
+import { Input } from 'components/FormComponents';
+import useTranslate from 'components/hooks/useTranslate';
 import { GreyBox } from './Components';
 
 export const RequestOffers = ({
@@ -24,18 +27,41 @@ export const RequestOffers = ({
     const { data: userData } = useQuery(ME);
     const [error, setError] = useState();
 
+    const [mutate, { loading }] = useCreateEvent(form);
+
     const handleChange = (data) => {
         setError(null);
         setValue(data);
     };
 
+    const next = (step) => {
+        const errors = runValidations();
+        if (!errors.length) {
+            setValue({ requestStep: step });
+        }
+    };
+
     const handleSubmit = () => {
-        runValidations();
+        const errors = runValidations();
+        if (!errors.length) {
+            mutate();
+        }
     };
 
     return (
         <GreyBox>
-            {form.showContactInfo ? (
+            {form.requestStep === 1 && (
+                <Step3
+                    form={form}
+                    handleChange={handleChange}
+                    runValidations={runValidations}
+                    registerValidation={registerValidation}
+                    unregisterValidation={unregisterValidation}
+                    next={() => next(2)}
+                    back={() => setValue({ requestStep: false })}
+                />
+            )}
+            {form.requestStep === 2 && (
                 <Step4
                     hideHeadline
                     form={form}
@@ -44,15 +70,17 @@ export const RequestOffers = ({
                     registerValidation={registerValidation}
                     unregisterValidation={unregisterValidation}
                     next={handleSubmit}
-                    back={() => setValue({ showContactInfo: false })}
-                    // loading={loading}
+                    back={() => setValue({ requestStep: 1 })}
+                    loading={loading}
                     user={userData?.me}
                     style={{
                         width: 'auto',
                     }}
                     buttonLabel="Get quotes"
                 />
-            ) : (
+            )}
+
+            {!form.requestStep && (
                 <>
                     <BodyBold>
                         <InlineIcon
@@ -69,7 +97,7 @@ export const RequestOffers = ({
                         and inquire them to send their best offers for your event.
                     </BodySmall>
                     <SmartButton
-                        onClick={() => setValue({ showContactInfo: true })}
+                        onClick={() => next(1)}
                         level="secondary"
                         fullWidth
                         style={{
@@ -84,5 +112,49 @@ export const RequestOffers = ({
                 </>
             )}
         </GreyBox>
+    );
+};
+
+const Step3 = ({ form, registerValidation, unregisterValidation, handleChange, next, back }) => {
+    const { translate } = useTranslate();
+
+    return (
+        <>
+            <Input
+                v2
+                autoFocus
+                name="eventName"
+                label={translate('requestForm:step-2.event-name')}
+                onSave={(name) => handleChange({ name })}
+                validation={(v) => (v ? null : 'Please write a name')}
+                registerValidation={registerValidation('name')}
+                unregisterValidation={unregisterValidation('name')}
+                defaultValue={form.name}
+                placeholder="Anniversary party etc."
+            />
+            <Input
+                v2
+                type="text-area"
+                style={{
+                    height: '120px',
+                }}
+                defaultValue={form.description}
+                label={translate('requestForm:step-3.event-description')}
+                placeholder={translate('event-description-placeholder')}
+                name="description"
+                onSave={(description) => handleChange({ description })}
+                validation={(v) => (v ? null : 'Please write a description')}
+                registerValidation={registerValidation('description')}
+                unregisterValidation={unregisterValidation('description')}
+            />
+            <Row right>
+                <TeritaryButton type="button" onClick={back}>
+                    {translate('back')}
+                </TeritaryButton>
+                <PrimaryButton data-cy="next-button" type="submit" onClick={next}>
+                    {'Next'}
+                </PrimaryButton>
+            </Row>
+        </>
     );
 };
