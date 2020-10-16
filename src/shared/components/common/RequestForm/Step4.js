@@ -117,6 +117,7 @@ const Step4 = ({
                 <>
                     <Input
                         v2
+                        autoFocus
                         label={translate('requestForm:step-4.contact-name')}
                         name="contactName"
                         placeholder={translate('first-last')}

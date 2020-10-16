@@ -246,7 +246,7 @@ const DataWrapper = (props) => {
     );
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);
 
-    const { data: searchData, loading, refetch } = useQuery(SEARCH_DEEP, {
+    const { data: searchData, loading } = useQuery(SEARCH_DEEP, {
         fetchPolicy: 'cache-first',
         skip: !form.location && !form.countryCode,
         variables: {

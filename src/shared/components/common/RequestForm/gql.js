@@ -23,6 +23,7 @@ const CREATE_EVENT = gql`
         $location: Area!
         $timeZone: String
         $djId: ID
+        $maxPrice: Int
     ) {
         createEvent(
             name: $name
@@ -40,6 +41,7 @@ const CREATE_EVENT = gql`
             guestsCount: $guestsCount
             location: $location
             djId: $djId
+            maxPrice: $maxPrice
         ) {
             id
             hash

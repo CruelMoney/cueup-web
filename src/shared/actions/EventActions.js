@@ -117,6 +117,11 @@ export const useCheckDjAvailability = () => {
     return [check, { loading, error: error }];
 };
 
+const parseEventForm = ({ budget, ...rest }) => ({
+    ...rest,
+    maxPrice: budget?.value,
+});
+
 export const useCreateEvent = (theEvent) => {
     const [mutate, { loading, error, ...rest }] = useMutation(CREATE_EVENT);
 
@@ -128,10 +133,10 @@ export const useCreateEvent = (theEvent) => {
                 trackEventPosted();
             }
             return await mutate({
-                variables: {
+                variables: parseEventForm({
                     ...theEvent,
                     ...variables,
-                },
+                }),
             });
         } catch (error) {
             console.log({ error });
