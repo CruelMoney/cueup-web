@@ -210,7 +210,7 @@ const SearchEntry = (props) => {
 const EmptySearch = ({ locationName }) => {
     return (
         <GreyBox style={{ width: '100%' }}>
-            <h3>No DJs found in {locationName}</h3>
+            <h3>No DJs found, but we can still help you!</h3>
         </GreyBox>
     );
 };
