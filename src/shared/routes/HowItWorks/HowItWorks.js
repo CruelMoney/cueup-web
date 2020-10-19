@@ -154,7 +154,7 @@ const Index = () => {
                 color={themeColor}
                 firstTo={translate(appRoutes.home) + '#book-dj'}
                 secondTo={translate(appRoutes.blog)}
-                firstLabel={translate('Arrange event')}
+                firstLabel={translate('Find DJs')}
                 secondLabel={translate('Blog')}
                 title={translate('Ready to get started?')}
                 subTitle={translate('Arrange an event or read our blog.')}
