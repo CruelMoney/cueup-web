@@ -237,7 +237,7 @@ const EmptySearch = ({ locationName }) => {
     );
 };
 
-const SearchResults = ({ topDjs, form, pagination, loading, setPagination }) => {
+const SearchResults = ({ topDjs, form, pagination, loading, setPagination, searchRef }) => {
     const { pathname } = useLocation();
     const locationName = form?.locationName?.split(', ')[0];
     if (!topDjs.length) {
@@ -246,7 +246,7 @@ const SearchResults = ({ topDjs, form, pagination, loading, setPagination }) => 
 
     const { genres } = form;
     return (
-        <Col style={{ flexGrow: 1, width: '100%' }}>
+        <Col ref={searchRef} style={{ flexGrow: 1, width: '100%' }}>
             <H2 small style={{ marginBottom: 24 }}>
                 DJs in <strong style={{ fontWeight: 700 }}>{locationName}</strong>
             </H2>
@@ -264,11 +264,6 @@ const SearchResults = ({ topDjs, form, pagination, loading, setPagination }) => 
                         activePage={pagination.page}
                         ellipsisBuffer={2}
                         onPageChange={(page) => {
-                            window.scroll({
-                                top: 0,
-                                left: 0,
-                                behavior: 'smooth',
-                            });
                             setPagination((pp) => ({ ...pagination, ...pp, page }));
                         }}
                         totalPages={pagination.totalPages}

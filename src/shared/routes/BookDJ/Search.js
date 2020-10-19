@@ -225,6 +225,7 @@ const LeftSide = (props) => {
 };
 
 const DataWrapper = (props) => {
+    const searchRef = useRef();
     const { translate } = useTranslate();
     const mounted = useRef(false);
     const { search, state: navState } = useLocation();
@@ -258,6 +259,24 @@ const DataWrapper = (props) => {
     );
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);
 
+    const scrollToSearchResults = useCallback(() => {
+        let top = 0;
+        if (searchRef.current) {
+            const bodyRectTop = document.body.getBoundingClientRect().top;
+            const searchTop = searchRef.current.getBoundingClientRect().top;
+            top = searchTop - bodyRectTop - 20;
+        }
+        if (mounted.current) {
+            setTimeout(() => {
+                window.scrollTo({
+                    top,
+                    left: 0,
+                    behavior: 'smooth',
+                });
+            }, 100);
+        }
+    }, []);
+
     const { data: searchData, loading } = useQuery(SEARCH_DEEP, {
         fetchPolicy: 'cache-first',
         skip: !form.location && !form.countryCode,
@@ -273,30 +292,38 @@ const DataWrapper = (props) => {
 
     const [check, { loading: loading2 }] = useCheckDjAvailability();
 
-    const checkAvailable = useCallback(async () => {
-        if (form.locationName && mounted.current) {
-            const { result, location } = await check({
-                locationName: form.locationName,
-                date: form.date,
-            });
-            setValue({ location });
-            if (result === true) {
-                // handle djs available
-            } else {
-                // handle no djs available
-                return null;
+    const checkAvailable = useCallback(
+        async (doScroll) => {
+            if (form.locationName && mounted.current) {
+                if (doScroll) {
+                    scrollToSearchResults();
+                }
+                const { location } = await check({
+                    locationName: form.locationName,
+                    date: form.date,
+                });
+                setValue({ location });
             }
-        }
-    }, [form.locationName, form.date, check, setValue]);
+        },
+        [form.locationName, form.date, check, setValue, scrollToSearchResults]
+    );
+    useEffect(() => {
+        scrollToSearchResults();
+    }, [pagination, scrollToSearchResults]);
 
     useEffect(() => {
         checkAvailable();
-        mounted.current = true;
     }, [checkAvailable, form.locationName, form.date]);
 
     useEffect(() => {
-        setPagination({ page: 1 });
+        if (mounted.current) {
+            setPagination({ page: 1 });
+        }
     }, [form]);
+
+    useEffect(() => {
+        mounted.current = true;
+    }, []);
 
     const { edges, pageInfo } = searchData?.searchDjs || {};
 
@@ -317,7 +344,7 @@ const DataWrapper = (props) => {
             topDjs={topDjs}
             form={form}
             setValue={setValue}
-            doSearch={checkAvailable}
+            doSearch={() => checkAvailable(true)}
             loading={loading || loading2}
             pagination={{
                 ...pageInfo,
@@ -327,6 +354,7 @@ const DataWrapper = (props) => {
             unregisterValidation={unregisterValidation}
             runValidations={runValidations}
             setPagination={setPagination}
+            searchRef={searchRef}
         />
     );
 };
