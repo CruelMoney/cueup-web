@@ -12,6 +12,7 @@ import { ProFeature } from 'components/FormComponents';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import ButtonLink from 'components/common/ButtonLink';
+import { trackEmptySearch } from 'utils/analytics';
 import Map from '../../components/common/Map';
 import Pagination from './Pagination';
 import { GreyBox } from './Components';
@@ -130,6 +131,13 @@ const BioText = styled(BodySmall)`
     word-wrap: anywhere;
 `;
 
+const GenresRow = styled(RowWrap)`
+    margin: 9px 0;
+    /* @media only screen and (max-width: 445px) {
+       display none;
+    } */
+`;
+
 const ArtistBio = ({ userMetadata, genres, loading, filterGenres }) => {
     if (loading) {
         return <Skeleton count={3} height={'1em'} style={{ height: 100 }} width={300} />;
@@ -154,14 +162,14 @@ const ArtistBio = ({ userMetadata, genres, loading, filterGenres }) => {
     return (
         <>
             <BioText>{bio}</BioText>
-            <RowWrap style={{ margin: '9px 0' }}>
+            <GenresRow>
                 {renderGenres.map((g) => (
                     <Pill key={g} style={{ marginRight: 4, marginBottom: 4 }}>
                         {g}
                     </Pill>
                 ))}
                 {missing > 1 && <Pill>...{missing} more</Pill>}
-            </RowWrap>
+            </GenresRow>
         </>
     );
 };
@@ -210,6 +218,13 @@ const SearchEntry = (props) => {
 
 const EmptySearch = ({ locationName }) => {
     const { search } = useLocation();
+
+    useEffect(() => {
+        try {
+            trackEmptySearch(locationName);
+        } catch (error) {}
+    }, [locationName]);
+
     return (
         <GreyBox>
             <h3>We didn't find any DJs for this search</h3>
@@ -231,7 +246,7 @@ const SearchResults = ({ topDjs, form, pagination, loading, setPagination }) => 
 
     const { genres } = form;
     return (
-        <Col>
+        <Col style={{ flexGrow: 1, width: '100%' }}>
             <H2 small style={{ marginBottom: 24 }}>
                 DJs in <strong style={{ fontWeight: 700 }}>{locationName}</strong>
             </H2>
@@ -279,6 +294,12 @@ const SearchEntryWrapper = styled(Row)`
     &:hover {
         h3 {
             text-decoration: underline;
+        }
+    }
+    @media only screen and (max-width: 768px) {
+        flex-direction: column;
+        ${SearchEntryRightSide} {
+            padding: 12px 0;
         }
     }
 `;
@@ -381,6 +402,25 @@ const ImageGrid = styled.ol`
         width: 100%;
         height: 100%;
         object-fit: cover;
+    }
+
+    @media only screen and (max-width: 1200px) and (min-width: 769px) {
+        width: 180px;
+        min-width: 180px;
+        grid-template:
+            'a a'
+            'a a';
+        li {
+            display: none;
+        }
+        li:first-child {
+            display: block;
+        }
+    }
+    @media only screen and (max-width: 768px) {
+        width: 100%;
+        min-width: 100%;
+        height: 46vw;
     }
 `;
 

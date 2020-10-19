@@ -3,13 +3,11 @@ import { Redirect, Route, Switch, useLocation, useParams } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import styled, { css } from 'styled-components';
-import { InlineIcon } from '@iconify/react';
-import speechIcon from '@iconify/icons-ion/ios-text';
 import { useServerContext } from 'components/hooks/useServerContext';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
 import SmartNavigation from 'components/Navigation';
-import { Col, Container, Row, RowWrap, SmartButton } from 'components/Blocks';
+import { Col, Container, Row, RowMobileCol, RowWrap, SmartButton } from 'components/Blocks';
 import { BodyBold, BodySmall } from 'components/Text';
 import Footer from 'components/common/Footer';
 import LocationSelector from 'components/common/LocationSelectorSimple';
@@ -65,10 +63,10 @@ const Search = (props) => {
             <ScrollToTopOnMount />
             <SmartNavigation dark relative />
             <Container>
-                <Row>
+                <SearchLayout>
                     <LeftSide {...props} />
                     <SearchResults {...props} />
-                </Row>
+                </SearchLayout>
             </Container>
 
             <Footer
@@ -93,6 +91,20 @@ const LeftSideWrapper = styled.div`
     position: sticky;
     margin-bottom: 15px;
     margin-right: 30px;
+    @media only screen and (max-width: 768px) {
+        position: relative;
+        max-width: 100%;
+        min-width: 100%;
+    }
+`;
+
+const SearchLayout = styled.div`
+    display: flex;
+    position: relative;
+    align-items: flex-start;
+    @media only screen and (max-width: 768px) {
+        flex-direction: column;
+    }
 `;
 
 const Filters = ({

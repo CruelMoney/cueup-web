@@ -61,3 +61,10 @@ export const useAnalytics = () => {
         trackPageView(window.location.href);
     }, [location.pathname]);
 };
+
+export const trackEmptySearch = (label) => {
+    analytics.track('emptySearch', {
+        category: 'Events',
+        label,
+    });
+};
