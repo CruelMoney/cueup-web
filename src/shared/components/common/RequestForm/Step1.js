@@ -1,8 +1,9 @@
 import React, { useState, useCallback } from 'react';
+import { useHistory } from 'react-router';
 import { useCheckDjAvailability } from 'actions/EventActions';
 import { BodySmall } from 'components/Text';
 import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
-import { Row, SmartButton } from '../../Blocks';
+import { Row, SmartButton, TeritaryButton } from '../../Blocks';
 import { Input } from '../../FormComponents';
 import LocationSelector from '../LocationSelectorSimple';
 import DatePicker from '../DatePicker';
@@ -19,8 +20,8 @@ const Step1 = ({
     runValidations,
     countries,
 }) => {
+    const history = useHistory();
     const [showDatePicker, setShowDatePicker] = useState(false);
-    const [message, setMessage] = useState();
     const [check, { loading, error }] = useCheckDjAvailability(form);
 
     const [loadGoogleMaps, { started }] = useLazyLoadScript(
@@ -40,19 +41,14 @@ const Step1 = ({
         const errors = runValidations();
 
         if (errors.length === 0) {
-            const { result, date, timeZoneId, location } = await check(form);
-            if (result === true) {
-                next({
-                    ...form,
-                    date,
-                    timeZoneId,
-                    location,
-                });
+            const { date, timeZoneId, location } = await check(form);
 
-                //not available
-            } else {
-                setMessage(translate('requestForm:no-djs-message'));
-            }
+            next({
+                ...form,
+                date,
+                timeZoneId,
+                location,
+            });
         }
     };
 
@@ -63,6 +59,7 @@ const Step1 = ({
             : typeof form.date?.toLocaleDateString === 'function'
             ? form.date?.toLocaleDateString()
             : null;
+
     return (
         <form name="requestForm-step-1" onSubmit={submit}>
             <h3 className="center">{translate('requestForm:step-1.header')}</h3>
@@ -131,16 +128,15 @@ const Step1 = ({
                         </Input>
                     </RequestSection>
                     <Row right>
-                        {error && <ErrorMessageApollo error={error} />}
-                        {message && (
-                            <BodySmall style={{ marginTop: '5px' }} className={'center'}>
-                                {message}
-                            </BodySmall>
-                        )}
+                        <TeritaryButton type="button" onClick={() => history.goBack()}>
+                            {translate('back')}
+                        </TeritaryButton>
                         <SmartButton type="submit" onClick={submit} loading={loading}>
                             {translate('continue')}
                         </SmartButton>
                     </Row>
+
+                    {error && <ErrorMessageApollo error={error} />}
                 </div>
             )}
         </form>

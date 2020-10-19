@@ -52,7 +52,6 @@ const RouteWrapper = () => {
 
     return (
         <>
-            {/* TODO move navigation into each route */}
             <Route
                 render={({ location }) => {
                     return !location.pathname.includes('/book-dj') ? <Navigation /> : null;
@@ -63,7 +62,7 @@ const RouteWrapper = () => {
                 <Switch>
                     <Route
                         exact
-                        path={[t(appRoutes.home), '/verifyEmail', '/connectInstagram', '/book-dj']}
+                        path={[t(appRoutes.home), '/verifyEmail', '/connectInstagram']}
                         component={Home}
                     />
                     <Route path={t(appRoutes.about)} component={About} />
@@ -83,6 +82,7 @@ const RouteWrapper = () => {
                     <Route path={t(appRoutes.bookDjOverview)} component={LazyLocationsOverview} />
                     <Route path={t(appRoutes.search)} component={LazySearch} />
                     <Route path={t(appRoutes.resetPassword)} component={ResetPassword} />
+                    <Route path={'/book-dj'} exact component={RequestFormPopup} />
 
                     <Route component={NotFound} />
                 </Switch>
@@ -91,8 +91,6 @@ const RouteWrapper = () => {
                 {showSideBarChat && <LazySideBarChat />}
 
                 <Route path={'*/get-pro'} exact component={LazyGetProfessional} />
-
-                <Route path={'/book-dj'} exact component={RequestFormPopup} />
             </div>
         </>
     );

@@ -1,7 +1,7 @@
 import React from 'react';
 import loadable from '@loadable/component';
 import { useHistory, useLocation } from 'react-router';
-import Popup from '../Popup';
+import styled from 'styled-components';
 import Loading from './LoadingRequestForm';
 
 const LazyRequestForm = loadable(() => import('./RequestForm'), { fallback: <Loading /> });
@@ -11,18 +11,14 @@ export const RequestFormPopup = () => {
     const location = useLocation();
 
     return (
-        <Popup
-            lazy={false}
-            noPadding
-            showing
-            onClose={() => {
-                const newRoute = location.pathname.split('book-dj')[0];
-                history.push(newRoute);
-            }}
-        >
+        <Wrapper>
             <LazyRequestForm transparent />
-        </Popup>
+        </Wrapper>
     );
 };
+
+const Wrapper = styled.div`
+    background-color: '#fff';
+`;
 
 export default LazyRequestForm;

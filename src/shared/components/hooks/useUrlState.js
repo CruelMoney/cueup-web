@@ -53,7 +53,7 @@ const useUrlState = (initialState) => {
     useEffect(() => {
         if (debouncedState) {
             const searchParams = formToParams(debouncedState);
-            history.push(`?${searchParams.toString()}`);
+            history.replace(`?${searchParams.toString()}`);
         }
     }, [debouncedState, history]);
 

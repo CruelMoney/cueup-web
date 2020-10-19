@@ -77,7 +77,7 @@ export const useCheckDjAvailability = () => {
                 };
 
                 const moment = await import('moment-timezone');
-                const momentDate = moment.default(date);
+                const momentDate = date ? moment.default(date) : moment.default().add(4, 'months');
 
                 const { timeZoneId, location } = geoData;
 
