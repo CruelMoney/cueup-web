@@ -4,17 +4,13 @@ import { InlineIcon } from '@iconify/react';
 import speechIcon from '@iconify/icons-ion/ios-text';
 
 import { useQuery } from '@apollo/client';
-import { useLocation } from 'react-router';
 import { PrimaryButton, Row, RowWrap, SmartButton, TeritaryButton } from 'components/Blocks';
 import { Body, BodyBold, BodySmall } from 'components/Text';
 
 import Step4 from 'components/common/RequestForm/Step4';
-import { useForm } from 'components/hooks/useForm';
 import { ME } from 'components/gql';
-import useUrlState from 'components/hooks/useUrlState';
 import { useCreateEvent } from 'actions/EventActions';
 import { Input } from 'components/FormComponents';
-import useTranslate from 'components/hooks/useTranslate';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import content from 'components/common/RequestForm/content.json';
 import ErrorMessageApollo from 'components/common/ErrorMessageApollo';
@@ -31,7 +27,7 @@ export const RequestOffers = ({
 
     const [mutate, { loading, data, error }] = useCreateEvent(form);
 
-    const hasSubmittet = !!data?.createEvent?.id;
+    const hasSubmitted = !!data?.createEvent?.id;
 
     const handleChange = (data) => {
         setValue(data);
@@ -50,7 +46,7 @@ export const RequestOffers = ({
             mutate();
         }
     };
-    if (hasSubmittet) {
+    if (hasSubmitted) {
         return (
             <GreyBox>
                 <h3>Thank you!</h3>

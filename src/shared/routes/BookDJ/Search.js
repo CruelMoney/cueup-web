@@ -7,7 +7,15 @@ import { useServerContext } from 'components/hooks/useServerContext';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
 import SmartNavigation from 'components/Navigation';
-import { Col, Container, Row, RowMobileCol, RowWrap, SmartButton } from 'components/Blocks';
+import {
+    Col,
+    Container,
+    HideBelow,
+    Row,
+    RowMobileCol,
+    RowWrap,
+    SmartButton,
+} from 'components/Blocks';
 import { BodyBold, BodySmall } from 'components/Text';
 import Footer from 'components/common/Footer';
 import LocationSelector from 'components/common/LocationSelectorSimple';
@@ -66,6 +74,7 @@ const Search = (props) => {
                 <SearchLayout>
                     <LeftSide {...props} />
                     <SearchResults {...props} />
+                    <RequestOffers {...props} />
                 </SearchLayout>
             </Container>
 
@@ -163,9 +172,6 @@ const Filters = ({
                     onSave={(date) => {
                         setValue({ date });
                     }}
-                    validation={(v) => (v ? null : 'Please select a date')}
-                    registerValidation={registerValidation('date')}
-                    unregisterValidation={unregisterValidation('date')}
                 />
                 <Input
                     half
@@ -219,7 +225,9 @@ const LeftSide = (props) => {
     return (
         <LeftSideWrapper>
             <Filters {...props} />
-            <RequestOffers {...props} />
+            <HideBelow>
+                <RequestOffers {...props} />
+            </HideBelow>
         </LeftSideWrapper>
     );
 };
@@ -319,7 +327,7 @@ const DataWrapper = (props) => {
         if (mounted.current) {
             setPagination({ page: 1 });
         }
-    }, [form]);
+    }, [form.locationName, form.genres]);
 
     useEffect(() => {
         mounted.current = true;
