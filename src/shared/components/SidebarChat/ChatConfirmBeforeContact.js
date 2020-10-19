@@ -5,13 +5,12 @@ import styled from 'styled-components';
 import Popup from 'components/common/Popup';
 import { Col, PrimaryButton, TeritaryButton } from 'components/Blocks';
 import { Body } from 'components/Text';
-import { eventRoutes, appRoutes } from 'constants/locales/appRoutes';
+import { eventRoutes } from 'constants/locales/appRoutes';
 
 export const ChatConfirmBeforeContact = ({ event, gigId }) => {
     const history = useHistory();
 
     const onInitiateBooking = () => {
-        console.log({ event });
         history.push(
             `/event/${event.id}/${event.hash}/` + eventRoutes.checkout.replace(':gigId', gigId)
         );

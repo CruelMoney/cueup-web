@@ -50,9 +50,9 @@ const Home = () => {
             <Hero />
             <HowitworksSection />
             <Occasions
+                v2
                 onClick={(state) => () =>
                     history.push({ pathname: translate(appRoutes.search), state })}
-                v2
             />
             <ComparisonSection />
             <PaymentSection />

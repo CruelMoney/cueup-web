@@ -18,7 +18,7 @@ import RadioSelect from 'components/RadioSelect';
 import { PAYOUT_TYPES, PAYMENT_PROVIDERS, gigStates } from 'constants/constants';
 import { Body, SmallHeader } from 'components/Text';
 import useTranslate from 'components/hooks/useTranslate';
-import { trackPageView, trackEventPaid } from 'utils/analytics';
+import { trackPageView, trackEventPaid, trackCheckout } from 'utils/analytics';
 import useWhyDidYouUpdate from 'components/hooks/useWhyDidYouUpdate';
 import { REQUEST_PAYMENT_INTENT, PAYMENT_CONFIRMED, EVENT_GIGS } from '../../routes/Event/gql';
 import TextWrapper from './TextElement';
@@ -351,6 +351,12 @@ const WithProps = ({ currency, location, eventId, eventHash, onClose, ...props }
         availablePayoutMethods.find((p) => p.payoutType === initialType) ||
         availablePayoutMethods[0]
     )?.payoutType;
+
+    useEffect(() => {
+        try {
+            trackCheckout();
+        } catch (error) {}
+    }, []);
 
     useEffect(() => {
         if (status !== gigStates.ACCEPTED && status !== gigStates.CONFIRMED) {
