@@ -1,8 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Label } from 'components/FormComponents';
 import { Container, RowWrap } from 'components/Blocks';
 import { CTAButton } from 'components/CTAButton';
+import { H3 } from 'components/Text';
 
 export const HeroCard = styled.div`
     padding: 1.5em;
@@ -264,4 +265,49 @@ export const GreyBox = styled.section`
         display: flex;
         right: 1em !important;
     }
+`;
+
+export const ResponsiveRow = styled.ol`
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0;
+    list-style: none;
+
+    @media only screen and (max-width: 768px) {
+        grid-template-columns: 1fr;
+        grid-row-gap: 30px;
+    }
+`;
+
+export const ResponsiveRowFour = styled(ResponsiveRow)`
+    grid-template-columns: repeat(4, 1fr);
+    margin-bottom: 30px;
+    @media only screen and (max-width: 768px) {
+        grid-template-columns: 1fr;
+        grid-row-gap: 30px;
+    }
+`;
+
+export const ResponsiveCell = styled.li`
+    flex: 1;
+    cursor: pointer;
+    ${H3} {
+        margin-top: 0.6em;
+    }
+    ${({ v2 }) =>
+        v2 &&
+        css`
+            background-color: #fff;
+            border-radius: 2.5%;
+            box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.06), 0 13px 13px 0 rgba(0, 0, 0, 0.08),
+                0 20px 15px 0 rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            > ${ImageWrapper} {
+                border-radius: 0;
+            }
+            > .content {
+                padding: 0 15px 15px 15px;
+            }
+        `}
 `;

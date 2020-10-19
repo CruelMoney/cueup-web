@@ -26,16 +26,10 @@ import {
     HeroCard,
     HeroImageWrapper,
     HeroSection,
-    ImageWrapper,
     MapWrapper,
+    ResponsiveRow,
+    ResponsiveRowFour,
 } from './Components';
-import firstWeddingDance from './assets/first_wedding_dance_of_newlywed.webp';
-import birthdayParty from './assets/birthday_party.webp';
-import officeParty from './assets/office_party.webp';
-
-import firstWeddingDanceJPG from './assets/first_wedding_dance_of_newlywed.jpg';
-import birthdayPartyJPG from './assets/birthday_party.jpg';
-import officePartyJPG from './assets/office_party.jpg';
 
 import { ReactComponent as HipHopIcon } from './assets/icons/hiphop.svg';
 import { ReactComponent as PartyLightsIcon } from './assets/icons/partyLights.svg';
@@ -46,6 +40,7 @@ import { ReactComponent as Top40Icon } from './assets/icons/top40.svg';
 import heroImg from './assets/hero_1.webp';
 import heroImgJPG from './assets/hero_1_compressed.jpg';
 import { SEARCH } from './gql';
+import Occasions from './Occassions';
 
 const Location = ({ translate, activeLocation, environment, topDjs }) => {
     const history = useHistory();
@@ -266,114 +261,6 @@ const FeaturedDjWrapper = styled.li`
         padding-top: 115%;
     }
 `;
-
-const ResponsiveCell = styled.li`
-    flex: 1;
-    cursor: pointer;
-    ${H3} {
-        margin-top: 0.6em;
-    }
-`;
-
-const ResponsiveRow = styled.ol`
-    display: grid;
-    grid-gap: 15px;
-    grid-template-columns: repeat(3, 1fr);
-    padding: 0;
-    list-style: none;
-
-    @media only screen and (max-width: 768px) {
-        grid-template-columns: 1fr;
-        grid-row-gap: 30px;
-    }
-`;
-
-const ResponsiveRowFour = styled(ResponsiveRow)`
-    grid-template-columns: repeat(4, 1fr);
-    margin-bottom: 30px;
-    @media only screen and (max-width: 768px) {
-        grid-template-columns: 1fr;
-        grid-row-gap: 30px;
-    }
-`;
-
-const OccationItem = ({ src, jpg, alt, title, description, idx, ...props }) => {
-    return (
-        <ResponsiveCell
-            ariaLabel={description}
-            itemProp="itemListElement"
-            itemScope=" "
-            itemType="https://schema.org/ListItem"
-            {...props}
-        >
-            <meta itemProp="position" content={idx + 1} />
-            <meta itemProp="name" content={title} />
-            <meta itemProp="description" content={description} />
-            <meta itemProp="image" content={src} />
-            <ImageWrapper>
-                <GracefullPicture lazyload>
-                    <source srcSet={src} type="image/webp" />
-                    <source srcSet={jpg} type="image/jpeg" />
-                    <img alt={alt} src={jpg} loading="lazy" />
-                </GracefullPicture>
-            </ImageWrapper>
-            <H3 small aria-hidden="true">
-                {title}
-            </H3>
-            <Body aria-hidden="true">{description}</Body>
-        </ResponsiveCell>
-    );
-};
-
-const occationData = [
-    {
-        src: firstWeddingDance,
-        jpg: firstWeddingDanceJPG,
-        alt: 'First wedding dance with glitter',
-        title: 'Weddings',
-        description: 'Wedding DJs that knows how to create a magical night.',
-        value: 'wedding',
-    },
-    {
-        src: officeParty,
-        jpg: officePartyJPG,
-        alt: 'First wedding dance with glitter',
-        title: 'Corporate events',
-        description: 'DJs that knows exactly how a corporate event should be pulled off.',
-        value: 'corporate',
-    },
-    {
-        src: birthdayParty,
-        jpg: birthdayPartyJPG,
-        alt: 'First wedding dance with glitter',
-        title: 'Birthday parties',
-        description: 'DJs for birthdays, anniversaries, and other private events.',
-        value: 'birthday',
-    },
-];
-
-const Occasions = ({ onClick }) => {
-    return (
-        <CustomSection>
-            <Container>
-                <H2 small>DJs for every occasion</H2>
-                <Body>Get a DJ that knows what you need.</Body>
-                <ResponsiveRow>
-                    {occationData.map((item, idx) => (
-                        <OccationItem
-                            key={idx}
-                            idx={idx}
-                            onClick={onClick({
-                                eventTypes: [item.value],
-                            })}
-                            {...item}
-                        />
-                    ))}
-                </ResponsiveRow>
-            </Container>
-        </CustomSection>
-    );
-};
 
 const ScrollableFullWidthGrid = styled.ol`
     display: flex;

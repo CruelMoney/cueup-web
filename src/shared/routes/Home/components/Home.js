@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { Body, TextAccent } from 'components/Text';
 import { Col, Container } from 'components/Blocks';
 
+import Occasions from 'routes/BookDJ/Occassions';
 import Footer from '../../../components/common/Footer';
 
 import content from '../content.json';
@@ -41,11 +43,17 @@ const Hero = () => {
 
 const Home = () => {
     const { translate } = useNamespaceContent(content, 'home');
+    const history = useHistory();
 
     return (
         <div>
             <Hero />
             <HowitworksSection />
+            <Occasions
+                onClick={(state) => () =>
+                    history.push({ pathname: translate(appRoutes.search), state })}
+                v2
+            />
             <ComparisonSection />
             <PaymentSection />
             <FeatureCards />
@@ -53,7 +61,7 @@ const Home = () => {
             <Footer
                 noSkew
                 bgColor="#FFFFFF"
-                firstTo={'/book-dj'}
+                firstTo={translate(appRoutes.search)}
                 secondTo={translate(appRoutes.signUp)}
                 firstLabel={'Find a DJ'}
                 secondLabel={translate('apply-to-become-dj')}
