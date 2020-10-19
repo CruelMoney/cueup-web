@@ -11,6 +11,7 @@ import GracefullVideo from 'components/GracefullVideo';
 import { ProFeature } from 'components/FormComponents';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
+import ButtonLink from 'components/common/ButtonLink';
 import Map from '../../components/common/Map';
 import Pagination from './Pagination';
 import { GreyBox } from './Components';
@@ -209,8 +210,12 @@ const SearchEntry = (props) => {
 
 const EmptySearch = ({ locationName }) => {
     return (
-        <GreyBox style={{ width: '100%' }}>
+        <GreyBox>
             <h3>No DJs found, but we can still help you!</h3>
+            <BodySmall style={{ margin: '12px 0' }}>
+                Tell us about your event, and we'll find DJs for your event.
+            </BodySmall>
+            <ButtonLink to="/book-dj">Post event</ButtonLink>
         </GreyBox>
     );
 };

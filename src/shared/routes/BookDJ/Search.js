@@ -293,6 +293,10 @@ const DataWrapper = (props) => {
         topDjs = [null, null, null, null, null, null, null, null, null];
     }
 
+    if (!topDjs.length) {
+        return <Redirect to={'/book-dj' + search} />;
+    }
+
     return (
         <Search
             {...props}
