@@ -119,7 +119,7 @@ export const useCheckDjAvailability = () => {
 
 const parseEventForm = ({ budget, eventTypes, ...rest }) => ({
     ...rest,
-    eventType: eventTypes ? Object.keys(eventTypes) : null,
+    eventType: eventTypes ? eventTypes : null,
     maxPrice: budget?.value,
 });
 

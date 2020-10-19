@@ -64,7 +64,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
                 } else {
                     const route = routeLocation.pathname.replace(/\/$/, '') + '/form';
 
-                    history.replace({
+                    history.push({
                         pathname: route,
                         state: {
                             activeStep: 2,

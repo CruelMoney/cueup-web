@@ -8,7 +8,7 @@ import { inputButtonStyle } from 'components/Blocks';
 
 const MyDatePicker = ({ initialDate, minDate, dark, handleChange, ...props }) => {
     const [startDate, setStartDate] = useState(
-        initialDate ? moment(initialDate).toDate() : moment().add(1, 'year').toDate()
+        initialDate ? moment(initialDate).toDate() : new Date()
     );
 
     const onChange = useCallback(

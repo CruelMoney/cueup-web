@@ -45,11 +45,11 @@ const FilterPill = styled.button`
     margin-right: 6px !important;
     margin-top: 6px !important;
     margin-left: 0px !important;
-
     ${({ active }) =>
         active &&
         css`
             box-shadow: inset 0 0 0px 2px #4d6480;
+            text-transform: capitalize;
         `}
 `;
 
@@ -60,6 +60,7 @@ export const FilterPills = ({ form, setValue }) => {
     const [showGenres, setShowGenres] = useState(false);
 
     const selectedGenre = form.genres?.length === 1 && form.genres[0];
+    const selectedEventType = form.eventTypes?.length === 1 && form.eventTypes[0];
 
     return (
         <>
@@ -78,12 +79,10 @@ export const FilterPills = ({ form, setValue }) => {
                     {form.budget?.label || 'Budget'}
                 </FilterPill>
                 <FilterPill
-                    active={
-                        form.eventTypes && Object.values(form.eventTypes).filter(Boolean).length
-                    }
+                    active={form.eventTypes?.length}
                     onClick={() => setShowEventTypes(true)}
                 >
-                    Type of event
+                    {selectedEventType || 'Type of event'}
                 </FilterPill>
             </RowWrap>
             {showEventTypes && (
@@ -130,16 +129,23 @@ export const FilterPills = ({ form, setValue }) => {
 };
 
 const EventTypeSelector = ({ initialvalues, onSave, loading }) => {
-    const { form, setValue, clearForm } = useForm(null, initialvalues);
-    const [key, setKey] = useState(0);
+    const [eventTypes, setEventTypes] = useState(initialvalues || []);
 
     const handleSave = () => {
-        onSave(form);
+        onSave(eventTypes);
+    };
+
+    const handleToggle = (key) => (value) => {
+        if (value) {
+            setEventTypes((ee) => [...ee, key]);
+        } else {
+            setEventTypes((ee) => ee.filter((e) => e !== key));
+        }
     };
 
     return (
         <InsidePopup>
-            <Col key={key} style={{ height: '100%' }}>
+            <Col style={{ height: '100%' }}>
                 <RowWrap>
                     <Label v2>
                         <span>EVENT TYPE</span>
@@ -148,51 +154,50 @@ const EventTypeSelector = ({ initialvalues, onSave, loading }) => {
                 <CheckBoxRow
                     withBorder={false}
                     label="Wedding"
-                    checked={form.wedding}
-                    onChange={(wedding) => setValue({ wedding })}
+                    checked={eventTypes.includes('wedding')}
+                    onChange={handleToggle('wedding')}
                 />
                 <CheckBoxRow
                     withBorder={false}
                     label="Birthday"
-                    checked={form.birthday}
-                    onChange={(birthday) => setValue({ birthday })}
+                    checked={eventTypes.includes('birthday')}
+                    onChange={handleToggle('birthday')}
                 />
                 <CheckBoxRow
                     withBorder={false}
                     label="Corporate event"
-                    checked={form.corporate}
-                    onChange={(corporate) => setValue({ corporate })}
+                    checked={eventTypes.includes('corporate')}
+                    onChange={handleToggle('corporate')}
                 />
                 <CheckBoxRow
                     withBorder={false}
                     label="Club"
-                    checked={form.club}
-                    onChange={(club) => setValue({ club })}
+                    checked={eventTypes.includes('club')}
+                    onChange={handleToggle('club')}
                 />
                 <CheckBoxRow
                     withBorder={false}
                     label="Festival"
-                    checked={form.festival}
-                    onChange={(festival) => setValue({ festival })}
+                    checked={eventTypes.includes('festival')}
+                    onChange={handleToggle('festival')}
                 />
                 <CheckBoxRow
                     withBorder={false}
                     label="School"
-                    checked={form.school}
-                    onChange={(school) => setValue({ school })}
+                    checked={eventTypes.includes('school')}
+                    onChange={handleToggle('school')}
                 />
                 <CheckBoxRow
                     withBorder={false}
                     label="Outdoor"
-                    checked={form.outdoor}
-                    onChange={(outdoor) => setValue({ outdoor })}
+                    checked={eventTypes.includes('outdoor')}
+                    onChange={handleToggle('outdoor')}
                 />
                 <Row style={{ marginTop: 'auto' }} right>
                     <SmartButton
                         level="tertiary"
                         onClick={() => {
-                            clearForm();
-                            setKey((k) => k + 1);
+                            setEventTypes([]);
                         }}
                     >
                         Clear

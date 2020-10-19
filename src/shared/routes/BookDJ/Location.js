@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route, Switch } from 'react-router';
+import { Redirect, Route, Switch, useHistory } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
@@ -48,6 +48,8 @@ import heroImgJPG from './assets/hero_1_compressed.jpg';
 import { SEARCH } from './gql';
 
 const Location = ({ translate, activeLocation, environment, topDjs }) => {
+    const history = useHistory();
+
     const title = activeLocation.name;
 
     const coordinates = activeLocation.coords;
@@ -64,13 +66,23 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
 
     const checkAvailability = topDjs.length < 3;
 
-    const onClickElement = (e) => {
+    const onClickElement = (state) => (e) => {
         e.preventDefault();
-        window.scroll({
-            top: 0,
-            left: 0,
-            behavior: 'smooth',
-        });
+        if (checkAvailability) {
+            window.scroll({
+                top: 0,
+                left: 0,
+                behavior: 'smooth',
+            });
+        } else {
+            history.push({
+                pathname: translate(appRoutes.search),
+                state: {
+                    locationName: activeLocation.name,
+                    ...state,
+                },
+            });
+        }
     };
 
     const breadCrumbs = [
@@ -132,7 +144,7 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
                 bgColor="transparent"
                 noSkew={true}
                 firstTo={translate(appRoutes.bookDj)}
-                firstAction={onClickElement}
+                firstAction={onClickElement()}
                 secondTo={translate(appRoutes.signUp)}
                 firstLabel={translate('arrange-event')}
                 secondLabel={translate('apply-to-become-dj')}
@@ -320,6 +332,7 @@ const occationData = [
         alt: 'First wedding dance with glitter',
         title: 'Weddings',
         description: 'Wedding DJs that knows how to create a magical night.',
+        value: 'wedding',
     },
     {
         src: officeParty,
@@ -327,6 +340,7 @@ const occationData = [
         alt: 'First wedding dance with glitter',
         title: 'Corporate events',
         description: 'DJs that knows exactly how a corporate event should be pulled off.',
+        value: 'corporate',
     },
     {
         src: birthdayParty,
@@ -334,6 +348,7 @@ const occationData = [
         alt: 'First wedding dance with glitter',
         title: 'Birthday parties',
         description: 'DJs for birthdays, anniversaries, and other private events.',
+        value: 'birthday',
     },
 ];
 
@@ -345,7 +360,14 @@ const Occasions = ({ onClick }) => {
                 <Body>Get a DJ that knows what you need.</Body>
                 <ResponsiveRow>
                     {occationData.map((item, idx) => (
-                        <OccationItem key={idx} idx={idx} onClick={onClick} {...item} />
+                        <OccationItem
+                            key={idx}
+                            idx={idx}
+                            onClick={onClick({
+                                eventTypes: [item.value],
+                            })}
+                            {...item}
+                        />
                     ))}
                 </ResponsiveRow>
             </Container>
@@ -418,26 +440,44 @@ const requestdata = [
     {
         label: 'Top 40',
         Icon: Top40Icon,
+        state: { genres: ['Top 40'] },
     },
     {
         label: 'Hip Hop',
         Icon: HipHopIcon,
+        state: { genres: ['Hip Hop'] },
     },
     {
         label: 'Vinyls',
         Icon: VinylIcon,
+        state: { genres: ['Vinyl'] },
     },
     {
         label: 'Sound system',
         Icon: SpeakerIcon,
+        state: {
+            equipment: {
+                speakers: true,
+            },
+        },
     },
     {
         label: 'Party lights',
         Icon: PartyLightsIcon,
+        state: {
+            equipment: {
+                lights: true,
+            },
+        },
     },
     {
         label: 'Smoke machine',
         Icon: SmokeIcon,
+        state: {
+            equipment: {
+                smokeMachine: true,
+            },
+        },
     },
 ];
 
@@ -449,7 +489,7 @@ const PopularRequests = ({ activeLocation, onClick }) => {
 
                 <ScrollableFullWidthGrid>
                     {requestdata.map((item, idx) => (
-                        <RequestItem key={idx} idx={idx} onClick={onClick} {...item} />
+                        <RequestItem key={idx} idx={idx} onClick={onClick(item.state)} {...item} />
                     ))}
                 </ScrollableFullWidthGrid>
             </Container>
