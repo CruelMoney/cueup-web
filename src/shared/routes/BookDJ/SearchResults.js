@@ -5,7 +5,7 @@ import pinIcon from '@iconify/icons-ion/location-sharp';
 import { NavLink, useLocation } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import { Col, Hr, Pill, Row, RowWrap } from 'components/Blocks';
-import { BodyBold, BodySmall, H2 } from 'components/Text';
+import { Body, BodyBold, BodySmall, H2 } from 'components/Text';
 import GracefullImage from 'components/GracefullImage';
 import GracefullVideo from 'components/GracefullVideo';
 import { ProFeature } from 'components/FormComponents';
@@ -209,13 +209,15 @@ const SearchEntry = (props) => {
 };
 
 const EmptySearch = ({ locationName }) => {
+    const { search } = useLocation();
     return (
         <GreyBox>
-            <h3>No DJs found, but we can still help you!</h3>
-            <BodySmall style={{ margin: '12px 0' }}>
-                Tell us about your event, and we'll find DJs for your event.
-            </BodySmall>
-            <ButtonLink to="/book-dj">Post event</ButtonLink>
+            <h3>We didn't find any DJs for this search</h3>
+            <Body style={{ margin: '12px 0' }}>
+                Try another search <br />
+                Or post your event to receive quotes from DJs in {locationName}.
+            </Body>
+            <ButtonLink to={'/book-dj' + search}>Post event</ButtonLink>
         </GreyBox>
     );
 };
