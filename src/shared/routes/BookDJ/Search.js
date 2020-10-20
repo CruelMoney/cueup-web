@@ -1,25 +1,16 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Redirect, Route, Switch, useLocation, useParams } from 'react-router';
+import { useLocation } from 'react-router';
 import { Helmet } from 'react-helmet-async';
-import { useLazyQuery, useQuery } from '@apollo/client';
-import styled, { css } from 'styled-components';
+import { useQuery } from '@apollo/client';
+import styled from 'styled-components';
 import { useServerContext } from 'components/hooks/useServerContext';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
 import SmartNavigation from 'components/Navigation';
-import {
-    Col,
-    Container,
-    HideBelow,
-    Row,
-    RowMobileCol,
-    RowWrap,
-    SmartButton,
-} from 'components/Blocks';
-import { BodyBold, BodySmall } from 'components/Text';
+import { Container, HideBelow, RowWrap } from 'components/Blocks';
 import Footer from 'components/common/Footer';
 import LocationSelector from 'components/common/LocationSelectorSimple';
-import { Input, InputLabel, Label } from 'components/FormComponents';
+import { Input, InputLabel } from 'components/FormComponents';
 import DatePickerPopup from 'components/DatePickerPopup';
 
 import TimeSlider from 'components/common/TimeSlider/TimeSlider';
@@ -36,8 +27,8 @@ import { FilterPills } from './Filters';
 import { RequestOffers } from './RequestOffers';
 
 const Search = (props) => {
-    const { translate } = props;
-
+    const { translate, form } = props;
+    const { location, locationName } = form;
     const onClickElement = (e) => {
         e.preventDefault();
         window.scroll({
@@ -47,26 +38,30 @@ const Search = (props) => {
         });
     };
 
+    const siteTitle = locationName + ' · DJs · Cueup';
+    const siteDescription =
+        'Hire the best DJs on Cueup - the top booking website trusted by 1000s of event organizers.';
+
     return (
         <>
             <Helmet>
-                {/* <title>{siteTitle}</title>
+                <title>{siteTitle}</title>
                 <meta name="description" content={siteDescription} />
 
                 <meta property="og:title" content={siteTitle} />
                 <meta property="og:type" content={'website'} />
                 <meta property="og:description" content={siteDescription} />
-                <meta property="og:image" content={thumb} />
 
                 <meta name="twitter:title" content={siteTitle} />
                 <meta name="twitter:description" content={siteDescription} />
-                <meta name="twitter:image" content={thumb} />
 
-                {coordinates && (
-                    <meta name="geo.position" content={`${coordinates.lat}; ${coordinates.lng}`} />
+                {location && (
+                    <meta
+                        name="geo.position"
+                        content={`${location.latitude}; ${location.longitude}`}
+                    />
                 )}
-                <meta name="geo.placename" content={title} />
-                <meta name="geo.region" content={title} /> */}
+                <meta name="geo.placename" content={locationName} />
             </Helmet>
             <ScrollToTopOnMount />
             <SmartNavigation dark relative />
@@ -74,7 +69,6 @@ const Search = (props) => {
                 <SearchLayout>
                     <LeftSide {...props} />
                     <SearchResults {...props} />
-                    <RequestOffers {...props} />
                 </SearchLayout>
             </Container>
 
