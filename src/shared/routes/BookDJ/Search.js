@@ -7,7 +7,7 @@ import { useServerContext } from 'components/hooks/useServerContext';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
 import SmartNavigation from 'components/Navigation';
-import { Container, HideBelow, RowWrap } from 'components/Blocks';
+import { Container, HideBelow, RowWrap, ShowBelow } from 'components/Blocks';
 import Footer from 'components/common/Footer';
 import LocationSelector from 'components/common/LocationSelectorSimple';
 import { Input, InputLabel } from 'components/FormComponents';
@@ -69,6 +69,9 @@ const Search = (props) => {
                 <SearchLayout>
                     <LeftSide {...props} />
                     <SearchResults {...props} />
+                    <ShowBelow width={768} style={{ width: '100%' }}>
+                        <RequestOffers {...props} />
+                    </ShowBelow>
                 </SearchLayout>
             </Container>
 
@@ -219,7 +222,7 @@ const LeftSide = (props) => {
     return (
         <LeftSideWrapper>
             <Filters {...props} />
-            <HideBelow>
+            <HideBelow width={768}>
                 <RequestOffers {...props} />
             </HideBelow>
         </LeftSideWrapper>

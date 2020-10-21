@@ -193,7 +193,13 @@ const EventTypeSelector = ({ initialvalues, onSave, loading }) => {
                     checked={eventTypes.includes('outdoor')}
                     onChange={handleToggle('outdoor')}
                 />
-                <Row style={{ marginTop: 'auto' }} right>
+                <CheckBoxRow
+                    withBorder={false}
+                    label="Virtual"
+                    checked={eventTypes.includes('virtual')}
+                    onChange={handleToggle('virtual')}
+                />
+                <Row style={{ marginTop: 12 }} right>
                     <SmartButton
                         level="tertiary"
                         onClick={() => {
