@@ -14,9 +14,11 @@ const GlobeRender = () => {
     const prepareGlobe = useCallback(async () => {
         if (ref.current) {
             const Globe = await (await import('./GlobeNew')).default;
-            g.current = new Globe(ref.current);
-            g.current.load();
-            setLoaded(true);
+            if (ref.current) {
+                g.current = new Globe(ref.current);
+                g.current.load();
+                setLoaded(true);
+            }
         }
     }, [ref]);
 
