@@ -14,7 +14,7 @@ export const Header = styled.h2`
     font-size: 64px;
     color: #122b48;
     line-height: 1.2em;
-    margin-bottom:  ${({ largeMargin }) => (largeMargin ? '32px' : '20px')};;
+    margin-bottom: ${({ largeMargin }) => (largeMargin ? '32px' : '20px')};
     white-space: pre-wrap;
     @media only screen and (max-width: 425px) {
         text-align: ${({ mobileTextAlign }) => (mobileTextAlign ? mobileTextAlign : 'center')};
