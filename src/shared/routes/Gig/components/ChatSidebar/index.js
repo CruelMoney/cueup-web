@@ -117,10 +117,10 @@ const ChatSidebar = (props) => {
                         <Chat
                             hideComposer
                             showPersonalInformation={gig.showInfo}
-                            eventId={theEvent.id}
+                            eventId={theEvent?.id}
                             sender={sender}
                             receiver={receiver}
-                            chatId={gig.id}
+                            chatId={gig?.id}
                             chat={chat}
                             systemMessages={systemMessages}
                         />

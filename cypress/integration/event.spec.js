@@ -27,7 +27,7 @@ describe('Event', () => {
     describe('Creating', () => {
         it('Post event from front page', () => {
             cy.request('POST', '/test/clearDB');
-            cy.request('POST', '/test/seed/djs');
+            // cy.request('POST', '/test/seed/djs');
             cy.visit('/');
 
             fillOuteventForm();
@@ -38,7 +38,7 @@ describe('Event', () => {
 
         it('Post event from location page', () => {
             cy.request('POST', '/test/clearDB');
-            cy.request('POST', '/test/seed/djs');
+            // cy.request('POST', '/test/seed/djs');
             cy.visit('/book-dj/denmark/copenhagen');
 
             fillOuteventForm();

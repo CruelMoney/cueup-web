@@ -126,8 +126,10 @@ const enrichMessages = ({ sender, receiver, messages }) => {
 const toDateGroups = (messages) => {
     let prevDate = new Date(0);
     let currentKey = null;
-
     return messages.reduce((dateGroups, msg) => {
+        if (!msg) {
+            return dateGroups;
+        }
         const msgDate = new Date(msg.createdAt);
         const insertDate = Math.floor((msgDate - prevDate) / 1000 / 60) > 60;
 
