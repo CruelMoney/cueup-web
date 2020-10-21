@@ -148,7 +148,7 @@ const Footer = ({
                                     </li>
                                     <li>
                                         <a
-                                            href="https://www.facebook.com/cueupdk"
+                                            href="https://www.facebook.com/cueup.dj.booking"
                                             target="blank"
                                             rel="noopener noreferrer"
                                             style={{
