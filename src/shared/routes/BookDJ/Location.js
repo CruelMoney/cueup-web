@@ -190,7 +190,11 @@ const OtherDjs = ({ djs, activeLocation, onClick }) => {
                     <DJsMapped djs={djs} />
                 </ResponsiveRowFour>
 
-                <NavLink to="/" onClick={onClick} style={{ fontSize: '18px', maxWidth: 'initial' }}>
+                <NavLink
+                    to="/"
+                    onClick={onClick()}
+                    style={{ fontSize: '18px', maxWidth: 'initial' }}
+                >
                     See all DJs in {activeLocation.name} <InlineIcon icon={forwardIcon} />
                 </NavLink>
             </Container>
