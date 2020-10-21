@@ -213,6 +213,14 @@ const Footer = ({
                                     </a>
                                 </li>
                                 <li>
+                                    <a
+                                        className="link-look"
+                                        href={'mailto:chris@cueup.io?subject=Press inquiry'}
+                                    >
+                                        {translate('Press')}
+                                    </a>
+                                </li>
+                                <li>
                                     <Link to={translate(appRoutes.becomeDj)}>
                                         {translate('Become DJ')}
                                     </Link>
@@ -252,12 +260,9 @@ const Footer = ({
                                     <Link to={translate(appRoutes.blog)}>Blog</Link>
                                 </li>
                                 <li>
-                                    <a
-                                        className="link-look"
-                                        href={'mailto:chris@cueup.io?subject=Press inquiry'}
-                                    >
-                                        {translate('Press')}
-                                    </a>
+                                    <Link to={translate(appRoutes.search)}>
+                                        {translate('Search DJs')}
+                                    </Link>
                                 </li>
                                 <li>
                                     <a
