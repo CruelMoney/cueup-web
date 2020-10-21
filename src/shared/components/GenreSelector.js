@@ -27,7 +27,7 @@ const GenreSelector = ({ initialGenres = [], save, half, isActive, onClose }) =>
                 <ToggleButtonHandler
                     enableAdditions
                     color={'#50E3C2'}
-                    potentialValues={constants.GENRES}
+                    potentialValues={[...new Set([...constants.GENRES, ...initialGenres])]}
                     errors={[]}
                     value={initialGenres}
                     onChange={setGenres}

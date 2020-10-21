@@ -26,8 +26,9 @@ class ToggleButtonHandler extends Component {
             .filter((v) => !!v)
             .map((v) => {
                 const name = typeof v === 'string' ? v : v.name;
-                return name.toLowerCase();
-            });
+                return name.trim().toLowerCase();
+            })
+            .filter((v) => !!v);
     };
 
     spliceHelper(list, index) {
@@ -42,7 +43,7 @@ class ToggleButtonHandler extends Component {
     updateContext = () => {
         const concatList = [
             ...new Set([
-                ...this.state.addedGenres.filter((g) => !!g.trim()).map((g) => g.toLowerCase()),
+                ...this.state.addedGenres.filter((g) => !!g?.trim()).map((g) => g.toLowerCase()),
                 ...this.state.selectedValues.map((g) => g.toLowerCase()),
             ]),
         ];
@@ -74,31 +75,33 @@ class ToggleButtonHandler extends Component {
     };
 
     inputUpdate = (val, id) => {
-        if (!val.trim()) {
+        if (typeof val === 'string') {
+            if (!val.trim()) {
+                this.setState((state) => {
+                    const addedGenres = state.addedGenres.filter((g, idx) => {
+                        if (idx === id) {
+                            return false;
+                        }
+                        return true;
+                    });
+                    return {
+                        addedGenres,
+                    };
+                }, this.updateContext);
+                return;
+            }
             this.setState((state) => {
-                const addedGenres = state.addedGenres.filter((g, idx) => {
+                const addedGenres = state.addedGenres.map((g, idx) => {
                     if (idx === id) {
-                        return false;
+                        return val;
                     }
-                    return true;
+                    return g;
                 });
                 return {
                     addedGenres,
                 };
             }, this.updateContext);
-            return;
         }
-        this.setState((state) => {
-            const addedGenres = state.addedGenres.map((g, idx) => {
-                if (idx === id) {
-                    return val;
-                }
-                return g;
-            });
-            return {
-                addedGenres,
-            };
-        }, this.updateContext);
     };
 
     getButton = (genre, type, idx) => {

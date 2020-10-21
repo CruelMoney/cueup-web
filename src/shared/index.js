@@ -26,6 +26,7 @@ const Setup = ({ location }) => {
             environment: environment.SETTING,
             enabled: environment.SETTING === 'production',
             dsn: 'https://800ac4dbef6c44bcb65af9fddad9f964@sentry.io/1490082',
+            ignoreErrors: ['ResizeObserver', 'The network connection was lost'],
         });
     }, [environment.SETTING]);
 

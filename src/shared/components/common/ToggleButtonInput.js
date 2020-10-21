@@ -14,7 +14,7 @@ class ToggleButton extends Component {
     render() {
         return (
             <SecondaryButton {...this.props} className="edit-text-button" onClick={null}>
-                <input onChange={this.onChange} type="text" />
+                <input autoFocus onChange={this.onChange} type="text" />
                 <Checkmark
                     style={{
                         right: '6px',
