@@ -6,7 +6,7 @@ import checkmarkCircle from '@iconify/icons-ion/checkmark-circle';
 
 import styled from 'styled-components';
 import { captureException } from '@sentry/core';
-import { useParams, Route, useHistory, Switch, useRouteMatch } from 'react-router';
+import { useParams, Route, useHistory, Switch, useRouteMatch, useLocation } from 'react-router';
 import {
     LoadingIndicator,
     Col,
@@ -124,7 +124,7 @@ const PaymentWrapper = (props) => {
     const [tempPayoutType, settempPayoutType] = useState(initialMethod);
 
     const history = useHistory();
-
+    const { search } = useLocation();
     const goBack = () => {
         history.goBack();
     };
@@ -133,7 +133,7 @@ const PaymentWrapper = (props) => {
 
     const { loading, data } = useQuery(REQUEST_PAYMENT_INTENT, {
         onError: captureException,
-        skip: !tempPayoutType || !id || !gigOffer.canBePaid,
+        skip: !tempPayoutType || !id || !gigOffer?.canBePaid,
         variables: {
             id,
             currency,
@@ -165,7 +165,7 @@ const PaymentWrapper = (props) => {
             captureException(error);
         },
         onCompleted: () => {
-            history.push(match.url + '/thank-you');
+            history.push(match.url + '/thank-you' + search);
         },
     });
 
@@ -335,7 +335,8 @@ const WithProps = ({ currency, location, eventId, eventHash, onClose, ...props }
     const history = useHistory();
     const { gigId } = useParams();
     const match = useRouteMatch();
-    const { data } = useQuery(EVENT_GIGS, {
+    const { data, error } = useQuery(EVENT_GIGS, {
+        skip: !eventId || !eventHash,
         variables: { id: eventId, hash: eventHash, currency },
     });
 

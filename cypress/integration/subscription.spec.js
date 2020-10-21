@@ -55,6 +55,6 @@ describe('Subscription', () => {
         });
 
         cy.get('[data-cy=submit-button]').click();
-        cy.get('[data-cy=subscription-welcome]').should('exist', 20000);
+        cy.get('[data-cy=subscription-welcome]', { timeout: 20000 }).should('exist');
     });
 });
