@@ -48,10 +48,10 @@
     tslib "^1.10.0"
     zen-observable "^0.8.14"
 
-"@apollo/client@^3.2.4":
-  version "3.2.4"
-  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.2.4.tgz#d9a308a900bd9e7053348367f66f3962804ed385"
-  integrity sha512-lfsxKINoc11+g4NQFyKFuxszc/GlecHrxkJYvx/oWkdpscSU5bm/c+BwI/yvk1/E3yfbR7Afi9XIYrt212xrtA==
+"@apollo/client@^3.2.5":
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.2.5.tgz#24e0a6faa1d231ab44807af237c6227410c75c4d"
+  integrity sha512-zpruxnFMz6K94gs2pqc3sidzFDbQpKT5D6P/J/I9s8ekHZ5eczgnRp6pqXC86Bh7+44j/btpmOT0kwiboyqTnA==
   dependencies:
     "@graphql-typed-document-node/core" "^3.0.0"
     "@types/zen-observable" "^0.8.0"
@@ -63,7 +63,6 @@
     optimism "^0.13.0"
     prop-types "^15.7.2"
     symbol-observable "^2.0.0"
-    terser "^5.2.0"
     ts-invariant "^0.4.4"
     tslib "^1.10.0"
     zen-observable "^0.8.14"
@@ -1941,17 +1940,17 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@charlietango/use-client-hydrated@^1.8.2":
-  version "1.8.2"
-  resolved "https://registry.yarnpkg.com/@charlietango/use-client-hydrated/-/use-client-hydrated-1.8.2.tgz#7066f4c9966233dcb3dcc755351570e62b101a4f"
-  integrity sha512-Wlr6MvlCvmPVwAW8Hc/UZaAnNAKfRs2h3vkOFMFSqhaiQp+zix/ZQd+LhoY4iRGJNMhtNuOnht1ShOAz4odTIQ==
+"@charlietango/use-client-hydrated@^1.9.0":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@charlietango/use-client-hydrated/-/use-client-hydrated-1.9.0.tgz#e348536f1a3a8fbd66f77e6ac97018a5f5e456dd"
+  integrity sha512-QLM2B+B9jTl9UGZ03IMHC6G7JZRCD71G8iWG92i2WUTnYylsYjccfECIxAR+KcCVU6te8w0DxcHx/n6cMNDbpA==
 
-"@charlietango/use-script@^2.1.2":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@charlietango/use-script/-/use-script-2.1.2.tgz#f827ab7b7ffe964a81def91a686e287f0c8b2a51"
-  integrity sha512-WF88RLrxgdpwn+L8Jlz2/tKnafg6JyDnBu1fS8ngjyuxb+0qbiWpoZyRTxWEwWQQlfT6riWNHS8sJgB98M2FAg==
+"@charlietango/use-script@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@charlietango/use-script/-/use-script-2.2.0.tgz#6aaa06e5f245e295048dc79bbc43f5141c2c804a"
+  integrity sha512-TVmovh1l5Ye0HfXwvbcJdpxdR6TdjaeVfJCDDv4xD+/1u6+cuIDnEWCjT4e69Jim3nqNsGXbw4Ds8+y0nxBM6g==
   dependencies:
-    "@charlietango/use-client-hydrated" "^1.8.2"
+    "@charlietango/use-client-hydrated" "^1.9.0"
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
@@ -2154,10 +2153,10 @@
   resolved "https://registry.yarnpkg.com/@iconify/icons-ion/-/icons-ion-1.0.16.tgz#794b1017b06adb9160be227b191b2c799c3d9431"
   integrity sha512-gxeVnV1VhIveE7OBm5xZeXQjMg+YUCq2wBfid6Oe8VNlTdZP6JFOMzm3VONNg9YwKE/Kqvg1KcF5IT7IYGiokw==
 
-"@iconify/icons-simple-icons@^1.0.52":
-  version "1.0.52"
-  resolved "https://registry.yarnpkg.com/@iconify/icons-simple-icons/-/icons-simple-icons-1.0.52.tgz#5eb05f47b1e5ffee7d40391b9ae0a7e274e09efc"
-  integrity sha512-Q1IVi7M9jlxpnKQhHmSZmDfe9V/hRj3pwh2Jk5DrFW2ba2Laksy9H3MXKWFO5L97cJtob5EVtzLCLp05HFqW7A==
+"@iconify/icons-simple-icons@^1.0.53":
+  version "1.0.53"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-simple-icons/-/icons-simple-icons-1.0.53.tgz#690eb3a92a29652ea72b05074f6010328f9e8e41"
+  integrity sha512-mktiPo3HFM/TuLZkUzySkSVFCGg536VGKwxMFeIAXIGR71hgSi9s+lKpnvzM5xQbsx++aac8GoF6Y5e2Yxdnag==
 
 "@iconify/icons-simple-line-icons@^1.0.3":
   version "1.0.3"
@@ -2373,19 +2372,19 @@
   dependencies:
     "@babel/plugin-syntax-dynamic-import" "^7.7.4"
 
-"@loadable/component@^5.13.2":
-  version "5.13.2"
-  resolved "https://registry.yarnpkg.com/@loadable/component/-/component-5.13.2.tgz#219b679c9e76bb5dd247923a3195ad3ef92cf977"
-  integrity sha512-eCtJhCFfUg7dzEBc5O4ZNfG0wftCLVSzpfOw9qPYJ16T/bmvrGRDdY8q/ARM4o90MOFlJzIRepnuXnqxB5ZUyQ==
+"@loadable/component@^5.14.0":
+  version "5.14.0"
+  resolved "https://registry.yarnpkg.com/@loadable/component/-/component-5.14.0.tgz#da21d8c214c65a177f9569a6481a423b0d73c9ed"
+  integrity sha512-CcXwveDn3H8Rwiq0bHQ7zW349KA2fvcTawtlHAp/HH7ZGXvJbPHjkP4xjewqz3o79ZKSSFLFcjzlP2TjBvEaYA==
   dependencies:
     "@babel/runtime" "^7.7.7"
     hoist-non-react-statics "^3.3.1"
     react-is "^16.12.0"
 
-"@loadable/server@^5.13.2":
-  version "5.13.2"
-  resolved "https://registry.yarnpkg.com/@loadable/server/-/server-5.13.2.tgz#e8a4e9bb08a3112772d5d171c0fa905e0c13c8c9"
-  integrity sha512-2Nn4YdpAuXngP5H3OQ1TlmdILLx35jyCZ0iOVWAf0ihdkWBYXbAiwOTYt+r2vQiXIGeAaQc44GkKgod8Vp5S8g==
+"@loadable/server@^5.14.0":
+  version "5.14.0"
+  resolved "https://registry.yarnpkg.com/@loadable/server/-/server-5.14.0.tgz#8aa83166aaad7401a14d8a1b04a7e1cc169ca6c4"
+  integrity sha512-oiZiHzUdkOsDzZNXU6fsZ7U0W3+nWZRljVCFCeR8CZSXEKUfXAllUf8tx5G385q7vapAQpXM7U8EzgDns3Q4vQ==
   dependencies:
     lodash "^4.17.15"
 
@@ -13841,12 +13840,10 @@ react-iframe@^1.8.0:
   dependencies:
     object-assign "^4.1.1"
 
-react-intersection-observer@^8.26.2:
-  version "8.26.2"
-  resolved "https://registry.yarnpkg.com/react-intersection-observer/-/react-intersection-observer-8.26.2.tgz#0562ff0c06b2b10e809190c2fa9b6ded656e6e16"
-  integrity sha512-GmSjLNK+oV7kS+BHfrJSaA4wF61ELA33gizKHmN+tk59UT6/aW8kkqvlrFGPwxGoaIzLKS2evfG5fgkw5MIIsg==
-  dependencies:
-    tiny-invariant "^1.1.0"
+react-intersection-observer@^8.29.1:
+  version "8.29.1"
+  resolved "https://registry.yarnpkg.com/react-intersection-observer/-/react-intersection-observer-8.29.1.tgz#8c6f494ca81b39aee9f509f12d29443fc66a2256"
+  integrity sha512-JLxJ4V0L73ailfvbYQ2/lfAyirtud1WsRsYnzHyVLMfQff1AIG1lWdC5XaGSK4yb9jZHVbbNsrVIO3PJm03koQ==
 
 react-is@^16.12.0, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"
