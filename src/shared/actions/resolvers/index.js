@@ -54,6 +54,7 @@ const resolvers = {
     },
     Mutation: {
         paymentConfirmed: (_root, variables, { cache, getCacheKey, client }) => {
+            console.log('Setting payment confirmed');
             const { gigId, amountLeft, amountPaid } = variables;
             const id = getCacheKey({ __typename: 'Event', id: variables.eventId });
             const fragment = gql`
@@ -86,7 +87,11 @@ const resolvers = {
                 return chosenGig;
             });
             const data = { ...event, chosenGig, gigs, status: 'CONFIRMED' };
-            cache.writeData({ id, data });
+            cache.writeFragment({
+                fragment,
+                id,
+                data,
+            });
 
             return null;
         },

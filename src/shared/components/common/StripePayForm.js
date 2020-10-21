@@ -78,6 +78,7 @@ const StripeForm = ({ onPaymentConfirmed, goBack, paymentIntent }) => {
             options
         );
         if (result.error) {
+            console.log(result.error);
             throw new Error(result.error.message || 'Something went wrong');
         }
         onPaymentConfirmed();

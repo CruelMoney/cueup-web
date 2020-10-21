@@ -160,13 +160,17 @@ const PaymentWrapper = (props) => {
             amountPaid: offer.totalPayment,
             amountLeft: null,
         },
-        onError: captureException,
+        onError: (error) => {
+            console.log(error);
+            captureException(error);
+        },
         onCompleted: () => {
             history.push(match.url + '/thank-you');
         },
     });
 
     const handlePaymentConfirmed = useCallback(() => {
+        console.log('Payment confirmed');
         setPaymentConfirmed();
         onPaymentConfirmed && onPaymentConfirmed();
         try {
