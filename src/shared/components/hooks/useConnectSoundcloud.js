@@ -27,47 +27,26 @@ const useConnectSoundCloud = ({ soundCloudConnected, userId }) => {
                     userId,
                 },
             },
+            {
+                query: ME,
+            },
         ],
         awaitRefetchQueries: true,
-        update: (proxy, { data: { connectSoundCloud } }) => {
-            const { me } = proxy.readQuery({
-                query: ME,
-            });
-
-            proxy.writeQuery({
-                query: ME,
-                data: {
-                    me: {
-                        ...me,
-                        appMetadata: {
-                            ...me.appMetadata,
-                            soundCloudConnected: true,
-                        },
-                    },
-                },
-            });
-        },
     });
 
     const [disconnect, { loading: disconnectLoading }] = useMutation(DISCONNECT_SOUNDCLOUD, {
-        update: (proxy, { data: { disconnectSoundCloud } }) => {
-            const { me } = proxy.readQuery({
-                query: ME,
-            });
-
-            proxy.writeQuery({
-                query: ME,
-                data: {
-                    me: {
-                        ...me,
-                        appMetadata: {
-                            ...me.appMetadata,
-                            soundCloudConnected: false,
-                        },
-                    },
+        refetchQueries: [
+            {
+                query: USER_SOUNDS,
+                variables: {
+                    userId,
                 },
-            });
-        },
+            },
+            {
+                query: ME,
+            },
+        ],
+        awaitRefetchQueries: true,
     });
 
     const doConnect = useCallback(

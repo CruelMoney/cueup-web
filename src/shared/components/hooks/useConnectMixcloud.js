@@ -25,45 +25,21 @@ const useConnectMixcloud = ({ mixcloudConnected, userId }) => {
     const [connected, setConencted] = useState(mixcloudConnected);
 
     const [connect, { loading, ...rest }] = useMutation(CONNECT_MIXCLOUD, {
-        update: (proxy, { data: { connectMixcloud } }) => {
-            const { me } = proxy.readQuery({
+        refetchQueries: [
+            {
                 query: ME,
-            });
-
-            proxy.writeQuery({
-                query: ME,
-                data: {
-                    me: {
-                        ...me,
-                        appMetadata: {
-                            ...me.appMetadata,
-                            mixcloudConnected: true,
-                        },
-                    },
-                },
-            });
-        },
+            },
+        ],
+        awaitRefetchQueries: true,
     });
 
     const [disconnect, { loading: disconnectLoading }] = useMutation(DISCONNECT_MIXCLOUD, {
-        update: (proxy, { data: { disconnectMixcloud } }) => {
-            const { me } = proxy.readQuery({
+        refetchQueries: [
+            {
                 query: ME,
-            });
-
-            proxy.writeQuery({
-                query: ME,
-                data: {
-                    me: {
-                        ...me,
-                        appMetadata: {
-                            ...me.appMetadata,
-                            mixcloudConnected: false,
-                        },
-                    },
-                },
-            });
-        },
+            },
+        ],
+        awaitRefetchQueries: true,
     });
 
     const doConnect = useCallback(

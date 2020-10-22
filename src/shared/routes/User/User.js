@@ -23,7 +23,6 @@ import PayForm from 'components/common/PayForm.js';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
-import ReactComment from 'components/ReactComment';
 import { hideChatButton, showChatButton } from 'utils/supportChat';
 import Sidebar, { SidebarContent } from '../../components/Sidebar';
 import Footer from '../../components/common/Footer';
@@ -94,7 +93,7 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
         >
             <ProfileImg src={user.picture?.path} animate />
 
-            {loading || !user ? (
+            {!user ? (
                 <SidebarContent>
                     <LoadingPlaceholder2 />
                 </SidebarContent>
@@ -188,9 +187,6 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                         )}
                         {website && isPro && publicDisplay?.WEBSITE.public && (
                             <>
-                                <ReactComment
-                                    comment={`Hey ${userMetadata?.firstName}! Want nofollow removed from your website-link? Message me on chris@cueup.io`}
-                                />
                                 <IconRowLink
                                     target="_blank"
                                     rel="noopener noreferrer nofollow ugc"
