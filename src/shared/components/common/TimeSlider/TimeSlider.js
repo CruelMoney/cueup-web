@@ -87,7 +87,8 @@ const TimeSliderData = styled.div`
             padding: 0 9px;
             margin-top: 6px !important;
             p {
-                font-size: 16px;
+                font-size: 14px;
+                color: #4d6480;
             }
         `}
 `;

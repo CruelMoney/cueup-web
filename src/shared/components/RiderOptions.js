@@ -12,10 +12,10 @@ const CheckBoxRow = ({ label, onChange }) => {
 
 const rows = {
     speakers: {
-        label: 'The dj has to bring speakers',
+        label: 'The DJ has to bring speakers',
     },
     lights: {
-        label: 'The dj has to bring lights',
+        label: 'The DJ has to bring lights',
     },
 };
 

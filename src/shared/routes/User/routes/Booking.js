@@ -8,13 +8,21 @@ import { useCreateEvent } from 'actions/EventActions';
 import { useForm } from 'components/hooks/useForm';
 import usePushNotifications from 'components/hooks/usePushNotifications';
 import { CTAButton } from 'components/CTAButton';
-import { SettingsSection, Input, Label } from '../../../components/FormComponents';
+import { SettingsSection, Input, Label, InputRow } from '../../../components/FormComponents';
 import DatePickerPopup from '../../../components/DatePickerPopup';
-import { Row, Container, Col, GradientBg, PrimaryButton, Card } from '../../../components/Blocks';
+import {
+    Row,
+    Container,
+    Col,
+    GradientBg,
+    PrimaryButton,
+    Card,
+    RowWrap,
+} from '../../../components/Blocks';
 import Sidebar, { SidebarContent } from '../../../components/Sidebar';
 import ScrollToTop from '../../../components/common/ScrollToTop';
 import { LoadingPlaceholder2 } from '../../../components/common/LoadingPlaceholder';
-import { SmallHeader, TitleClean, Body, Title } from '../../../components/Text';
+import { SmallHeader, TitleClean, Body, Title, BodySmall } from '../../../components/Text';
 import RiderOptions from '../../../components/RiderOptions';
 import TimeSlider from '../../../components/common/TimeSlider';
 import Slider from '../../../components/common/Slider';
@@ -48,12 +56,10 @@ const Booking = ({ user, loading, translate }) => {
         }
 
         try {
-            console.log('Trying', user);
             const { timeZoneId } = await GeoCoder.getTimeZone({
                 lat: user.playingLocation.latitude,
                 lng: user.playingLocation.longitude,
             });
-            console.log({ timeZoneId });
 
             const result = await create({
                 ...form,
@@ -66,7 +72,6 @@ const Booking = ({ user, loading, translate }) => {
                     name: user.playingLocation.name,
                 },
             });
-            console.log({ result });
 
             const { data } = result;
             setEventCreated(data?.createEvent);
@@ -156,7 +161,9 @@ const EventForm = ({
                     description={'Tell us about your event to help the dj decide on a fair price.'}
                 >
                     <Input
+                        v2
                         half
+                        style={{ marginRight: 0 }}
                         type="text"
                         name="eventName"
                         label="Event Name"
@@ -168,6 +175,8 @@ const EventForm = ({
                     />
                     <DatePickerPopup
                         half
+                        v2
+                        style={{ marginRight: 0 }}
                         label={'Date'}
                         minDate={new Date()}
                         initialDate={form.date ? moment(form.date) : null}
@@ -179,15 +188,26 @@ const EventForm = ({
                         registerValidation={registerValidation('date')}
                         unregisterValidation={unregisterValidation('date')}
                     />
+
                     <Label
+                        v2
                         style={{
-                            width: '100%',
-                            marginRight: '36px',
+                            minWidth: '100%',
+                            paddingRight: '36px',
                             marginBottom: '30px',
                         }}
                     >
-                        <span style={{ marginBottom: '12px', display: 'block' }}>Duration</span>
+                        <span
+                            style={{
+                                marginBottom: '12px',
+                                display: 'block',
+                                marginLeft: 9,
+                            }}
+                        >
+                            Duration
+                        </span>
                         <TimeSlider
+                            v2
                             color={'#50e3c2'}
                             hoursLabel={translate('hours')}
                             startLabel={translate('start')}
@@ -201,15 +221,25 @@ const EventForm = ({
                     </Label>
 
                     <Label
+                        v2
                         style={{
-                            width: '100%',
-                            marginRight: '36px',
+                            minWidth: '100%',
+                            paddingRight: '36px',
                             marginBottom: '30px',
                         }}
                     >
-                        <span style={{ marginBottom: '12px', display: 'block' }}>Guests</span>
+                        <span
+                            style={{
+                                marginBottom: '12px',
+                                display: 'block',
+                                marginLeft: 9,
+                            }}
+                        >
+                            Guests
+                        </span>
 
                         <Slider
+                            v2
                             color={'#50e3c2'}
                             name="guestsCount"
                             range={{
@@ -228,9 +258,9 @@ const EventForm = ({
                                 decimals: 0,
                             })}
                         />
-                        <span
-                            style={{ marginTop: '15px', display: 'block' }}
-                        >{`${form.guestsCount} people`}</span>
+                        <BodySmall
+                            style={{ marginTop: '15px', display: 'block', marginLeft: 9 }}
+                        >{`${form.guestsCount} people`}</BodySmall>
                     </Label>
 
                     <div style={{ marginRight: '36px', marginBottom: '30px' }}>
@@ -243,6 +273,7 @@ const EventForm = ({
                     </div>
 
                     <Input
+                        v2
                         type="text-area"
                         label={'Description'}
                         name="description"
@@ -254,57 +285,6 @@ const EventForm = ({
                         validation={(v) => (v ? null : 'Please enter a description')}
                         registerValidation={registerValidation('description')}
                         unregisterValidation={unregisterValidation('description')}
-                    />
-                </SettingsSection>
-
-                <SettingsSection
-                    stickyTop={'24px'}
-                    title={'Contact Details'}
-                    description={
-                        'How should we get back to you with updates from the dj? Your information is only shared with the dj.'
-                    }
-                >
-                    <Input
-                        type="text"
-                        label="Contact Name"
-                        autoComplete="name"
-                        name="contactName"
-                        placeholder="First Last"
-                        validation={(v) => {
-                            if (!v) {
-                                return 'Please enter name';
-                            }
-                            const [firstName, ...lastName] = v.split(' ');
-                            if (!firstName || !lastName.some((s) => !!s.trim())) {
-                                return 'Please enter both first and last name';
-                            }
-                        }}
-                        required
-                        onSave={setValue('contactName')}
-                        registerValidation={registerValidation('contactName')}
-                        unregisterValidation={unregisterValidation('contactName')}
-                    />
-
-                    <Input
-                        placeholder="mail@email.com"
-                        type="email"
-                        autoComplete="email"
-                        name="contactEmail"
-                        label="Contact Email"
-                        validation={(v) =>
-                            emailValidator.validate(v) ? null : 'Not a valid email'
-                        }
-                        onSave={setValue('contactEmail')}
-                        registerValidation={registerValidation('contactEmail')}
-                        unregisterValidation={unregisterValidation('contactEmail')}
-                    />
-                    <Input
-                        label="Contact Phone"
-                        placeholder="+123456789"
-                        type="tel"
-                        autoComplete="tel"
-                        name="contactPhone"
-                        onSave={setValue('contactPhone')}
                     />
                 </SettingsSection>
             </Col>
