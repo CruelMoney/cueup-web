@@ -2,7 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledImg = styled.img`
+    display: none;
     color: transparent;
+    &[src] {
+        display: block;
+    }
 `;
 
 const GracefullImage = ({ ...props }) => {
