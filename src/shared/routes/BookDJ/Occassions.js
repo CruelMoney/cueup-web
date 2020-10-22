@@ -4,6 +4,9 @@ import { Container } from 'components/Blocks';
 import { Body, H2, H3 } from 'components/Text';
 import { GracefullPicture } from 'components/GracefullImage';
 
+import { useServerContext } from 'components/hooks/useServerContext';
+import useTranslate from 'components/hooks/useTranslate';
+import { appRoutes } from 'constants/locales/appRoutes';
 import { CustomSection, ImageWrapper, ResponsiveCell, ResponsiveRow } from './Components';
 import firstWeddingDance from './assets/first_wedding_dance_of_newlywed.webp';
 import birthdayParty from './assets/birthday_party.webp';
@@ -40,7 +43,7 @@ const occationData = [
     },
 ];
 
-const OccationItem = ({ src, jpg, alt, title, description, idx, ...props }) => {
+const OccationItem = ({ src, jpg, alt, url, title, description, idx, ...props }) => {
     return (
         <ResponsiveCell
             ariaLabel={description}
@@ -53,6 +56,7 @@ const OccationItem = ({ src, jpg, alt, title, description, idx, ...props }) => {
             <meta itemProp="name" content={title} />
             <meta itemProp="description" content={description} />
             <meta itemProp="image" content={src} />
+            {url && <meta itemProp="url" content={url} />}
             <ImageWrapper>
                 <GracefullPicture lazyload>
                     <source srcSet={src} type="image/webp" />
@@ -71,6 +75,9 @@ const OccationItem = ({ src, jpg, alt, title, description, idx, ...props }) => {
 };
 
 const Occasions = ({ onClick, v2 }) => {
+    const { translate } = useTranslate();
+    const { environment } = useServerContext();
+
     return (
         <CustomSection
             style={{
@@ -93,6 +100,7 @@ const Occasions = ({ onClick, v2 }) => {
                             onClick={onClick({
                                 eventTypes: [item.value],
                             })}
+                            url={environment.WEBSITE_URL + translate(appRoutes.search)}
                             v2={v2}
                             {...item}
                         />

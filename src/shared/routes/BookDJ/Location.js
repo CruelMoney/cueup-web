@@ -312,7 +312,7 @@ const RequestWrapper = styled.li`
     }
 `;
 
-const RequestItem = ({ label, Icon, idx, ...props }) => {
+const RequestItem = ({ label, url, Icon, idx, ...props }) => {
     return (
         <RequestWrapper
             ariaLabel={label}
@@ -323,7 +323,7 @@ const RequestItem = ({ label, Icon, idx, ...props }) => {
         >
             <meta itemProp="position" content={idx + 1} />
             <meta itemProp="name" content={label} />
-            {/* <meta itemprop="url" content={url}></meta> */}
+            {url && <meta itemProp="url" content={url} />}
             <Icon />
             <H3 small aria-hidden="true" style={{ marginTop: '0.75em' }}>
                 {label}
@@ -378,6 +378,9 @@ const requestdata = [
 ];
 
 const PopularRequests = ({ activeLocation, onClick }) => {
+    const { translate } = useTranslate();
+    const { environment } = useServerContext();
+
     return (
         <CustomSection>
             <Container>
@@ -385,7 +388,13 @@ const PopularRequests = ({ activeLocation, onClick }) => {
 
                 <ScrollableFullWidthGrid>
                     {requestdata.map((item, idx) => (
-                        <RequestItem key={idx} idx={idx} onClick={onClick(item.state)} {...item} />
+                        <RequestItem
+                            key={idx}
+                            idx={idx}
+                            onClick={onClick(item.state)}
+                            url={environment.WEBSITE_URL + translate(appRoutes.search)}
+                            {...item}
+                        />
                     ))}
                 </ScrollableFullWidthGrid>
             </Container>

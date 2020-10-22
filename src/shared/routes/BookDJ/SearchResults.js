@@ -13,6 +13,7 @@ import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import ButtonLink from 'components/common/ButtonLink';
 import { trackEmptySearch } from 'utils/analytics';
+import { useServerContext } from 'components/hooks/useServerContext';
 import Map from '../../components/common/Map';
 import Pagination from './Pagination';
 import { GreyBox } from './Components';
@@ -40,7 +41,7 @@ const ImagePreviews = ({ appMetadata, media, id, picture, playingLocations, load
                 {loading ? (
                     <Skeleton style={loadingGraceStyle} />
                 ) : (
-                    <GracefullImage src={picture.path} />
+                    <GracefullImage src={picture.path} itemProp="image" />
                 )}
 
                 {!loading && (
@@ -115,7 +116,7 @@ const ArtistName = ({ loading, artistName, userMetadata, appMetadata }) => {
 
     return (
         <h3>
-            {artistName || userMetadata?.firstName}
+            <span itemProp="name">{artistName || userMetadata?.firstName}</span>
             {appMetadata?.isPro && <ProFeature disabled>Pro</ProFeature>}
         </h3>
     );
@@ -190,17 +191,21 @@ const Price = ({ loading }) => {
 };
 
 const SearchEntry = (props) => {
+    const { environment } = useServerContext();
     const { translate } = useTranslate();
     const route = `${translate(appRoutes.user)}/${props.permalink}/overview`;
     return (
-        <>
+        <li itemScope=" " itemType="https://schema.org/ListItem">
+            <meta itemProp="position" content={props.idx + 1} />
+            <meta itemProp="url" content={environment.WEBSITE_URL + route} />
+
             <NavLink
                 style={{
                     pointerEvents: props.loading ? 'none' : 'auto',
                 }}
+                rel="noopener noreferrer"
                 to={route}
                 target="_blank"
-                rel="noopener noreferrer"
             >
                 <SearchEntryWrapper>
                     <ImagePreviews {...props} />
@@ -212,7 +217,7 @@ const SearchEntry = (props) => {
                 </SearchEntryWrapper>
             </NavLink>
             <Hr style={{ marginTop: 30, marginBottom: 30 }} />
-        </>
+        </li>
     );
 };
 
@@ -250,14 +255,17 @@ const SearchResults = ({ topDjs, form, pagination, loading, setPagination, searc
             <H2 small style={{ marginBottom: 24 }}>
                 DJs in <strong style={{ fontWeight: 700 }}>{locationName}</strong>
             </H2>
-            {topDjs.map((dj, idx) => (
-                <SearchEntry
-                    key={dj?.id || idx}
-                    {...dj}
-                    loading={loading}
-                    filterGenres={genres?.map((s) => s.toLowerCase())}
-                />
-            ))}
+            <SearchList>
+                {topDjs.map((dj, idx) => (
+                    <SearchEntry
+                        idx={idx}
+                        key={dj?.id || idx}
+                        {...dj}
+                        loading={loading}
+                        filterGenres={genres?.map((s) => s.toLowerCase())}
+                    />
+                ))}
+            </SearchList>
             {pagination && (
                 <Row style={{ marginBottom: 30 }}>
                     <Pagination
@@ -274,6 +282,13 @@ const SearchResults = ({ topDjs, form, pagination, loading, setPagination, searc
         </Col>
     );
 };
+
+const SearchList = styled.ul`
+    padding: 0;
+    list-style: none;
+    > li {
+    }
+`;
 
 const SearchEntryRightSide = styled(Col)`
     padding: 12px 15px;
