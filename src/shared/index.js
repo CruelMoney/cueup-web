@@ -75,6 +75,21 @@ const Setup = ({ location }) => {
                 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#122b48" />
                 <meta name="msapplication-TileColor" content="#122b48" />
                 <meta name="theme-color" content="#ffffff" />
+
+                <script type="application/ld+json">
+                    {`{
+                        "@context": "https://schema.org",
+                        "@type": "WebSite",
+                        "url": "${environment.WEBSITE_URL}",
+                        "potentialAction": {
+                            "@type": "SearchAction",
+                            "target": "${environment.WEBSITE_URL}${t(
+                        appRoutes.search
+                    )}?locationName={search_term_string}",
+                            "query-input": "required name=search_term_string"
+                        }
+                    }`}
+                </script>
             </Helmet>
 
             <Switch>
