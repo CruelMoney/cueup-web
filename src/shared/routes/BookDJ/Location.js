@@ -220,7 +220,7 @@ const Hero = ({ activeLocation, siteDescription, checkAvailability }) => {
 
                         <div>
                             <PageTitle small>
-                                <span>Book DJs in</span>
+                                <span>Book DJs in </span>
                                 {name}
                             </PageTitle>
                             <BodySmall style={{ marginBottom: '0.7em' }}>
