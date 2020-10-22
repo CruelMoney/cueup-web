@@ -162,7 +162,7 @@ const DJsMapped = ({ djs }) => {
                 key={item.id}
                 ariaLabel={item.artistName || item.userMetadata?.firstName}
                 itemScope=" "
-                itemType="https://schema.org/Person"
+                itemType="https://schema.org/ListItem"
             >
                 <meta itemProp="position" content={idx + 1} />
 

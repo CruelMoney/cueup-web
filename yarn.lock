@@ -13932,6 +13932,11 @@ react-router@5.2.0, react-router@^5.1.2:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
+react-schemaorg@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-schemaorg/-/react-schemaorg-1.2.0.tgz#82454f7bf4aa6d52eb0e9e300c9dc4d5d220ba23"
+  integrity sha512-vtutPvE32n9b2d6qH1Gmyss4nJxRWsJKJR8WdVxxLzn6ErAIOOEE00paqC4rwI8gwm9mtnRBA2JLUfqv3AjDXw==
+
 react-share@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/react-share/-/react-share-4.2.0.tgz#0b6458a15cf0d887513942f6787d62432e5d2d80"
@@ -14761,6 +14766,11 @@ scheduler@^0.19.1:
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
+
+schema-dts@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/schema-dts/-/schema-dts-0.7.1.tgz#9c7e978e958ce331e927b63030575c47b6a7d795"
+  integrity sha512-BCbdw1DtSJErERmKrTyu8K+nyuEwfKgRwSTctlklBqnAAkt9+w//Xg8vgRSzknGNBne+DUGLtL372KlLuI002w==
 
 schema-utils@^1.0.0:
   version "1.0.0"

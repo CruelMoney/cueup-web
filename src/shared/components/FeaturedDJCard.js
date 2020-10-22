@@ -11,16 +11,17 @@ import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
 import { ProFeature } from './FormComponents';
 
-const InnerContent = ({
-    userMetadata,
-    appMetadata,
-    artistName,
-    playingLocations,
-    picture,
-    genres,
-    isNew,
-    permalink,
-}) => {
+const InnerContent = (user) => {
+    const {
+        userMetadata,
+        appMetadata,
+        artistName,
+        playingLocations,
+        picture,
+        genres,
+        isNew,
+        permalink,
+    } = user;
     const { translate } = useTranslate();
 
     const route = `${translate(appRoutes.user)}/${permalink}/overview`;
