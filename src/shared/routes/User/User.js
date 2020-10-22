@@ -24,7 +24,7 @@ import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { hideChatButton, showChatButton } from 'utils/supportChat';
-import { DJSeoTags } from 'components/DJSeoTags';
+import { DJSeoTags } from 'components/SeoTags';
 import Sidebar, { SidebarContent } from '../../components/Sidebar';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col, Divider } from '../../components/Blocks';
