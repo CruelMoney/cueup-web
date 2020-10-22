@@ -82,15 +82,20 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
 
     const breadCrumbs = [
         {
-            url: '/',
-            label: 'DJs',
+            url: translate(appRoutes.home),
+            label: 'Home',
         },
+
         {
             url: translate(appRoutes.bookDj).replace(':location', activeLocation.countrySlug),
             label: activeLocation.country,
         },
     ];
     if (activeLocation.citySlug) {
+        breadCrumbs.push({
+            url: translate(appRoutes.search) + `?locationName="${activeLocation.name}"`,
+            label: activeLocation.name + ' DJs',
+        });
         breadCrumbs.push({
             url: translate(appRoutes.bookDj).replace(':location', activeLocation.citySlug),
             label: activeLocation.name,
