@@ -245,63 +245,24 @@ const Photos = ({ user, loading }) => {
                         name: '',
                     },
                 },
-                update: (proxy, { data: { addMedia } }) => {
-                    const data = proxy.readQuery({
+                refetchQueries: [
+                    {
                         query: USER_PHOTOS,
                         variables: {
-                            id: userId,
+                            id: user && user.id,
                             pagination: {
                                 limit: LIMIT,
                                 page: 1,
                                 orderBy: 'ORDER_KEY',
                             },
                         },
-                    });
-
-                    proxy.writeQuery({
-                        query: USER_PHOTOS,
-                        variables: {
-                            id: userId,
-                            pagination: {
-                                limit: LIMIT,
-                                page: 1,
-                                orderBy: 'ORDER_KEY',
-                            },
-                        },
-                        data: {
-                            user: {
-                                ...data.user,
-                                media: {
-                                    ...data.user.media,
-                                    edges: [addMedia, ...data.user.media.edges],
-                                },
-                            },
-                        },
-                    });
-                    const userData = proxy.readQuery({
+                    },
+                    {
                         query: USER,
-                        variables: {
-                            permalink: user.permalink,
-                        },
-                    });
-
-                    proxy.writeQuery({
-                        query: USER,
-                        variables: {
-                            permalink: user.permalink,
-                        },
-
-                        data: {
-                            user: {
-                                ...userData.user,
-                                media: {
-                                    ...userData.user.media,
-                                    edges: [addMedia, ...userData.user.media.edges].slice(0, 5),
-                                },
-                            },
-                        },
-                    });
-                },
+                        variables: { permalink: user.permalink },
+                    },
+                ],
+                awaitRefetchQueries: true,
             });
         } catch (error) {
             setUploadError(error);

@@ -8,24 +8,12 @@ export const useConnectInstagram = () => {
     const { environment } = useServerContext();
 
     const [mutate, { loading, ...rest }] = useMutation(CONNECT_INSTAGRAM, {
-        update: (proxy, { data: { connectInstagram } }) => {
-            const { me } = proxy.readQuery({
+        refetchQueries: [
+            {
                 query: ME,
-            });
-
-            proxy.writeQuery({
-                query: ME,
-                data: {
-                    me: {
-                        ...me,
-                        appMetadata: {
-                            ...me.appMetadata,
-                            instagramConnected: true,
-                        },
-                    },
-                },
-            });
-        },
+            },
+        ],
+        awaitRefetchQueries: true,
     });
 
     const [disconnect, { loading: disconnectLoading }] = useMutation(DISCONNECT_INSTAGRAM);
