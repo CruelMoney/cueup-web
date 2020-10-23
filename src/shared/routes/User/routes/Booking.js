@@ -16,6 +16,7 @@ import useUrlState from 'components/hooks/useUrlState';
 import { ME } from 'components/gql';
 
 import Step4 from 'components/common/RequestForm/Step4';
+import RadioSelect from 'components/RadioSelect';
 import { SettingsSection, Input, Label, InputRow } from '../../../components/FormComponents';
 import DatePickerPopup from '../../../components/DatePickerPopup';
 import {
@@ -24,9 +25,6 @@ import {
     Col,
     GradientBg,
     PrimaryButton,
-    Card,
-    RowWrap,
-    SecondaryButtonLink,
     TeritaryButton,
 } from '../../../components/Blocks';
 import Sidebar, { SidebarContent } from '../../../components/Sidebar';
@@ -344,6 +342,21 @@ const EventForm = ({
                         registerValidation={registerValidation('description')}
                         unregisterValidation={unregisterValidation('description')}
                     />
+
+                    <RadioSelect
+                        containerStyle={{ width: 'auto', marginRight: 44 }}
+                        multi
+                        setChosen={() => setValue({ allowOtherDjs: !form.allowOtherDjs })}
+                        options={[
+                            {
+                                checked: form.allowOtherDjs,
+                                title: 'Allow other DJs to see event',
+                                description:
+                                    "All DJs can make an offer if they're interested in your event.",
+                                value: 'allowOtherDjs',
+                            },
+                        ]}
+                    />
                 </SettingsSection>
             </Col>
         )}
@@ -489,5 +502,7 @@ const SuccessMessage = ({ translate, userId }) => {
         </Col>
     );
 };
+
+const AllowOtherDjsToggle = () => {};
 
 export default Booking;
