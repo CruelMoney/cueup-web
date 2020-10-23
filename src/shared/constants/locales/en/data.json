@@ -214,7 +214,7 @@
         "event-description-placeholder": "What is the budget? \nWhat is the age of the guests? \nWhat kind of venue is it? \nDo you have any special requirements? \n",
         "email-exists-message": "It looks like there's already an account using that email. Please login or use a different email to continue.\n",
 
-        "post-event-succes-message": "Thanks for using our service. We'll send you an email to confirm the event.",
+        "post-event-succes-message": "We'll send you an email to confirm the event.",
         "post-event-succes-message-2": "Would you like to receive notifications when you get a new offer?"
     }
 }

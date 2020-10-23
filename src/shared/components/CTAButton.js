@@ -74,6 +74,9 @@ const CTA = styled.button`
             opacity: 1;
         }
     }
+    &:disabled {
+        cursor: default;
+    }
 `;
 
 const useRelativeMousePosition = (ref) => {

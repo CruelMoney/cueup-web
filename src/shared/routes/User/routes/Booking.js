@@ -51,6 +51,7 @@ const Booking = ({ user, loading, translate }) => {
     const [create, { loading: createLoading, error }] = useCreateEvent();
 
     const [loginPopup, setloginPopup] = useState(false);
+    const [signupPopup, setSignupPopup] = useState(false);
 
     const [form, setForm] = useUrlState({
         guestsCount: 80,
@@ -65,7 +66,7 @@ const Booking = ({ user, loading, translate }) => {
     });
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);
 
-    const setValue = (key) => (val) => setForm((f) => ({ ...f, [key]: val }));
+    const setValue = (data) => setForm((f) => ({ ...f, ...data }));
 
     const requestBooking = async () => {
         const refs = runValidations(true);
@@ -74,12 +75,13 @@ const Booking = ({ user, loading, translate }) => {
             return;
         }
 
-        if (!userData?.me) {
-            setloginPopup(true);
+        if (!userData?.me && !signupPopup) {
+            setSignupPopup(true);
             return;
         }
 
         try {
+            setSignupPopup(false);
             const { timeZoneId } = await GeoCoder.getTimeZone({
                 lat: user.playingLocation.latitude,
                 lng: user.playingLocation.longitude,
@@ -112,7 +114,7 @@ const Booking = ({ user, loading, translate }) => {
 
             <GradientBg style={{ height: '80px', minHeight: '80px' }} />
 
-            <Popup width="380px" showing={loginPopup} onClickOutside={() => setloginPopup(false)}>
+            <Popup width="380px" showing={signupPopup} onClickOutside={() => setSignupPopup(false)}>
                 <Step4
                     hideHeadline
                     form={form}
@@ -121,7 +123,7 @@ const Booking = ({ user, loading, translate }) => {
                     registerValidation={registerValidation}
                     unregisterValidation={unregisterValidation}
                     next={requestBooking}
-                    back={() => setloginPopup(false)}
+                    back={() => setSignupPopup(false)}
                     loading={createLoading}
                     user={userData?.me}
                     style={{
@@ -129,6 +131,19 @@ const Booking = ({ user, loading, translate }) => {
                     }}
                     buttonLabel="Book now"
                 />
+            </Popup>
+
+            <Popup width="380px" showing={loginPopup} onClickOutside={() => setloginPopup(false)}>
+                <div>
+                    <TitleClean center>Login</TitleClean>
+                    <p style={{ marginBottom: '20px' }}>{translate('email-exists-message')}</p>
+                    <Login
+                        redirect={false}
+                        onLogin={() => {
+                            setloginPopup(false);
+                        }}
+                    />
+                </div>
             </Popup>
 
             <Container>
@@ -210,7 +225,7 @@ const EventForm = ({
                         name="eventName"
                         label="Event Name"
                         placeholder="Add a short, clear name"
-                        onSave={setValue('name')}
+                        onSave={(name) => setValue({ name })}
                         defaultValue={form.name}
                         validation={(v) => (v ? null : 'Please enter a name')}
                         registerValidation={registerValidation('name')}
@@ -226,7 +241,7 @@ const EventForm = ({
                         showMonthDropdown={false}
                         showYearDropdown={false}
                         maxDate={false}
-                        onSave={setValue('date')}
+                        onSave={(date) => setValue({ date })}
                         validation={(v) => (v ? null : 'Please select a date')}
                         registerValidation={registerValidation('date')}
                         unregisterValidation={unregisterValidation('date')}
@@ -256,9 +271,8 @@ const EventForm = ({
                             startLabel={translate('start')}
                             endLabel={translate('end')}
                             date={moment(form.date)}
-                            onChange={([start, end]) => {
-                                setValue('startMinute')(start);
-                                setValue('endMinute')(end);
+                            onChange={([startMinute, endMinute]) => {
+                                setValue({ startMinute, endMinute });
                             }}
                         />
                     </Label>
@@ -295,7 +309,7 @@ const EventForm = ({
                             connect="lower"
                             value={[form.guestsCount]}
                             onChange={(values) => {
-                                setValue('guestsCount')(values[0]);
+                                setValue({ guestsCount: values[0] });
                             }}
                             format={wNumb({
                                 decimals: 0,
@@ -313,8 +327,7 @@ const EventForm = ({
                                 lights: form.lights,
                             }}
                             onSave={({ speakers, lights }) => {
-                                setValue('speakers')(speakers);
-                                setValue('lights')(lights);
+                                setValue({ speakers, lights });
                             }}
                         />
                     </div>
@@ -329,7 +342,7 @@ const EventForm = ({
                             height: '200px',
                         }}
                         defaultValue={form.description}
-                        onSave={setValue('description')}
+                        onSave={(description) => setValue({ description })}
                         validation={(v) => (v ? null : 'Please enter a description')}
                         registerValidation={registerValidation('description')}
                         unregisterValidation={unregisterValidation('description')}
@@ -355,6 +368,7 @@ const BookingSidebar = ({
     eventCreated,
     error,
     createLoading,
+    showLogin,
     ...props
 }) => {
     return (
@@ -362,7 +376,17 @@ const BookingSidebar = ({
             <Sidebar
                 stickyTop={'0px'}
                 enableSharing={false}
-                childrenBelow={<ErrorMessageApollo error={error} style={{ marginTop: '30px' }} />}
+                childrenBelow={
+                    <ErrorMessageApollo
+                        error={error}
+                        style={{ marginTop: '30px' }}
+                        onFoundCode={(code) => {
+                            if (code === 'UNAUTHENTICATED') {
+                                showLogin();
+                            }
+                        }}
+                    />
+                }
             >
                 <SidebarContent>
                     {loading ? <LoadingPlaceholder2 /> : <Content values={values} {...props} />}
