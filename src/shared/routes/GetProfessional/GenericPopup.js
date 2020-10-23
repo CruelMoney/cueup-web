@@ -53,7 +53,7 @@ const Content = ({ children, showPayment }) => {
             <LeftSection>{children}</LeftSection>
             {showPayment && (
                 <RightSection>
-                    <Col style={{ height: '100%' }}>
+                    <Col style={{ height: '100%', paddingTop: 24 }}>
                         <Plans selectedTier={selectedTier} setTier={setTier} />
                         <div style={{ flex: 1 }} />
                         <PaymentForm selectedTier={selectedTier} />

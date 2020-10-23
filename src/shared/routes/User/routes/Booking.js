@@ -175,6 +175,7 @@ const EventForm = ({
                 }}
             >
                 <SettingsSection
+                    small
                     stickyTop={'24px'}
                     title={'Event Details'}
                     description={'Tell us about your event to help the dj decide on a fair price.'}
@@ -413,16 +414,8 @@ const Content = ({ user, values }) => {
             {lights && <SidebarRow>Including lights</SidebarRow>}
             <div>
                 <SimpleTableItem>
-                    <span>Dj price</span>
-                    <span>00.00</span>
-                </SimpleTableItem>
-                <SimpleTableItem>
-                    <span>Service fee</span>
-                    <span>00.00</span>
-                </SimpleTableItem>
-                <SimpleTableItem>
                     <span>Total</span>
-                    <span>dj will respond with price</span>
+                    <span>DJ will respond with price</span>
                 </SimpleTableItem>
             </div>
         </>

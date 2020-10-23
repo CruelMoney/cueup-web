@@ -83,6 +83,7 @@ export const DumbCheckbox = ({
     label,
     withBorder,
     style,
+    small,
     ...props
 }) => {
     return (
@@ -102,7 +103,11 @@ export const DumbCheckbox = ({
                         />
                     </Icon>
                 </StyledCheckbox>
-                {label && <span style={{ marginLeft: '15px' }}>{label}</span>}
+                {label && (
+                    <span style={{ marginLeft: '15px', fontSize: small ? '16px' : '1em' }}>
+                        {label}
+                    </span>
+                )}
             </Label>
         </CheckboxContainer>
     );

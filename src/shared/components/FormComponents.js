@@ -82,8 +82,7 @@ export const InputLabel = styled(Label)`
     ${({ v2 }) =>
         v2 &&
         css`
-            margin-left: 9px;
-            flex: 1;
+            padding-left: 9px;
             min-width: 0;
             margin-bottom: 20px;
         `}

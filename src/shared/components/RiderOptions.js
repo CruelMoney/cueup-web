@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Checkbox } from './FormComponents';
 import { Col } from './Blocks';
 
-const CheckBoxRow = ({ label, onChange }) => {
+const CheckBoxRow = ({ label, onChange, small }) => {
     return (
         <div style={{ height: '42px', display: 'flex', alignItems: 'center' }}>
-            <Checkbox onChange={(val) => onChange(val)} label={label} />
+            <Checkbox onChange={(val) => onChange(val)} label={label} small={small} />
         </div>
     );
 };
@@ -34,7 +34,7 @@ const RiderOptions = ({ onSave }) => {
     return (
         <Col style={{ width: '100%' }}>
             {Object.entries(rows).map(([key, { label }]) => {
-                return <CheckBoxRow key={key} label={label} onChange={onChange(key)} />;
+                return <CheckBoxRow small key={key} label={label} onChange={onChange(key)} />;
             })}
         </Col>
     );

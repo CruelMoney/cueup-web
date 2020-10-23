@@ -104,8 +104,8 @@ const TaxIdInput = ({
                         {...props}
                     />
                 </LabelHalf>
+                {data?.verification && <CurrentStatus {...data.verification} />}
             </CombineInputRow>
-            {data?.verification && <CurrentStatus {...data.verification} />}
             <BodySmall>Add your tax ID on the invoices sent to you.</BodySmall>
         </>
     );
@@ -114,6 +114,7 @@ const TaxIdInput = ({
 const CombineInputRow = styled(InputRow)`
     display: flex;
     width: 100%;
+    position: relative;
     ${LabelHalf} {
         margin-bottom: 6px;
     }
@@ -166,7 +167,7 @@ const CurrentStatus = (verification) => {
         <Tooltip content={StatusContent(verification)}>
             {({ ref, close, open }) => (
                 <div
-                    style={{ position: 'absolute', right: 9, bottom: 4 }}
+                    style={{ position: 'absolute', right: 45, bottom: 13 }}
                     ref={ref}
                     onMouseEnter={open}
                     onMouseLeave={close}
