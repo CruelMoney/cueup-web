@@ -47,7 +47,7 @@ describe('Event', () => {
             cy.get('h1').contains('Test event');
         });
 
-        it('Post from direct booking page', () => {
+        it.only('Post from direct booking page', () => {
             cy.request('POST', '/test/clearDB');
             cy.request('POST', '/test/seed/djs');
             cy.visit('/user/dj-lolbox-1/overview');
@@ -60,11 +60,17 @@ describe('Event', () => {
             cy.get('textarea[name=description]')
                 .type('Test event description', { force: true })
                 .wait(1000);
+
+            cy.get('[data-cy=book-button]').click();
+
+            cy.get('[data-cy=email-button]').click();
+
             cy.get('input[name=contactName]').type('Test organizer', { force: true });
             cy.get('input[name=contactPhone]').type('24658061', { force: true });
             cy.get('input[name=contactEmail]').type('organizer@email.com', { force: true });
-            cy.get('[data-cy=book-button]').click();
-            cy.get('h3').should('contain', 'Thanks');
+
+            cy.get('[ data-cy=submit-event]').click();
+            cy.get('h1').contains('Test event');
         });
     });
 

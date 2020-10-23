@@ -101,7 +101,11 @@ const Step4 = ({
                             Continue with Google
                         </SmartButton>
 
-                        <SmartButton level="secondary" onClick={() => setUseEmail(true)}>
+                        <SmartButton
+                            data-cy="email-button"
+                            level="secondary"
+                            onClick={() => setUseEmail(true)}
+                        >
                             <InlineIcon
                                 icon={mailIcon}
                                 style={{ fontSize: '20px' }}
