@@ -121,8 +121,9 @@ export const useCheckDjAvailability = () => {
     return [check, { loading, error: error }];
 };
 
-const parseEventForm = ({ budget, eventTypes, ...rest }) => ({
+const parseEventForm = ({ budget, eventTypes, guestsCount, ...rest }) => ({
     ...rest,
+    guestsCount: parseInt(guestsCount || 0),
     eventType: eventTypes ? eventTypes : null,
     maxPrice: budget?.value,
 });
