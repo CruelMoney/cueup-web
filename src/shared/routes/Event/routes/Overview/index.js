@@ -39,7 +39,7 @@ const EventGigs = React.forwardRef((props, ref) => {
     const [refetchTries, setRefetchTries] = useState(data?.event ? 5 : 0);
     const history = useHistory();
 
-    const loading = refetchTries < 20 || loadingEvent || loadingGigs;
+    const loading = refetchTries < 15 || loadingEvent || loadingGigs;
 
     let gigs = data.event ? data.event.gigs : [];
     gigs = gigs
@@ -59,16 +59,17 @@ const EventGigs = React.forwardRef((props, ref) => {
                     refetch();
                     setRefetchTries((c) => c + 1);
                 }, 1000);
-            } else {
-                setRefetchTries(15);
-                // keep polling every 10 second until we have 8 up to 20 times
-                if (gigs.length < 8 && refetchTries < 20) {
-                    timeoutRef = setTimeout(() => {
-                        refetch();
-                        setRefetchTries((c) => c + 1);
-                    }, 10000);
-                }
             }
+            // else {
+            //     setRefetchTries(15);
+            //     // keep polling every 10 second until we have 8 up to 20 times
+            //     if (gigs.length < 8 && refetchTries < 20) {
+            //         timeoutRef = setTimeout(() => {
+            //             refetch();
+            //             setRefetchTries((c) => c + 1);
+            //         }, 10000);
+            //     }
+            // }
             return () => {
                 clearTimeout(timeoutRef);
             };
@@ -220,7 +221,7 @@ const Overview = (props) => {
 
 const EmailNotVerifiedSection = ({ gigs, organizer }) => {
     const history = useHistory();
-    const foundDjs = gigs.length || 1;
+    const foundDjs = gigs.length;
 
     const navigateToRequirements = () => history.push(eventRoutes.requirements);
 
@@ -235,14 +236,20 @@ const EmailNotVerifiedSection = ({ gigs, organizer }) => {
         });
     };
 
+    let text = `You
+   need to verify your email <b>${organizer?.email}</b>, so you don't loose access to
+   this page.`;
+
+    if (foundDjs > 0) {
+        text = `So far we've found ${foundDjs} ${foundDjs > 1 ? 'DJs' : 'DJ'} for you, but first you
+       need to verify your email <b>${organizer?.email}</b>, so you don't loose access to
+       this page.`;
+    }
+
     return (
         <Col style={{ maxWidth: 500 }}>
             <Title>Verify your email</Title>
-            <Body>
-                So far we've found {foundDjs} {foundDjs > 1 ? 'DJs' : 'DJ'} for you, but first you
-                need to verify your email <b>{organizer?.email}</b>, so you don't loose access to
-                this page.
-            </Body>
+            <Body dangerouslySetInnerHTML={{ __html: text }} />
             <InputRow style={{ marginTop: '30px' }}>
                 <SecondaryButton disabled={loading || data} onClick={resendLink}>
                     Resend link
