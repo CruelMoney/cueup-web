@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import emailValidator from 'email-validator';
 import styled from 'styled-components';
 import moment from 'moment-timezone';
 import wNumb from 'wnumb';
 import * as Sentry from '@sentry/react';
 import { InlineIcon } from '@iconify/react';
 import arrowBack from '@iconify/icons-ion/arrow-back';
-import { useHistory, useLocation } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { useCreateEvent } from 'actions/EventActions';
@@ -16,6 +14,7 @@ import { CTAButton } from 'components/CTAButton';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import useUrlState from 'components/hooks/useUrlState';
 import { ME } from 'components/gql';
+
 import Step4 from 'components/common/RequestForm/Step4';
 import { SettingsSection, Input, Label, InputRow } from '../../../components/FormComponents';
 import DatePickerPopup from '../../../components/DatePickerPopup';
@@ -45,7 +44,6 @@ import { MobileBookingButton } from '../components/Common';
 
 const Booking = ({ user, loading, translate }) => {
     const [eventCreated, setEventCreated] = useState(false);
-    const { state: navState, search } = useLocation();
     const { data: userData } = useQuery(ME);
     const [create, { loading: createLoading, error }] = useCreateEvent();
 
@@ -61,8 +59,6 @@ const Booking = ({ user, loading, translate }) => {
         contactName: userData?.me?.userMetadata.fullName,
         contactEmail: userData?.me?.email,
         contactPhone: userData?.me?.userMetadata.phone,
-        ...search,
-        ...navState,
     });
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);
 

@@ -14,7 +14,6 @@ const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
     const { setAppState } = useAppState();
     const { translate } = useTranslate();
     const { search } = useLocation();
-    console.log({ search });
     const canBePaid = gig && gig.offer && gig.status === 'ACCEPTED' && event.status === 'ACCEPTED';
 
     const openChat = () => {
