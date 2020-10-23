@@ -60,7 +60,7 @@ describe('Payment', () => {
         );
         cy.get('[data-cy=close-popup-button]').click();
         cy.get('h3').should('contain', 'The DJ has been booked');
-        cy.get('[data-cy=progress-step-complete]').contains('Book a DJ').should('exist');
+        cy.get('[data-cy=progress-step-complete]').contains('Confirm booking').should('exist');
 
         cy.get('[data-cy=event-dj]').contains('Paid and confirmed');
     });
@@ -96,7 +96,9 @@ describe('Payment', () => {
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
             cy.get('[data-cy=event-dj]').should('exist');
-            cy.get('[data-cy=progress-step-incomplete]').contains('Book a DJ').should('exist');
+            cy.get('[data-cy=progress-step-incomplete]')
+                .contains('Confirm booking')
+                .should('exist');
             cy.get('[data-cy=offer-price]').should('contain', 'USD500.00');
             cy.get('[data-cy=book-dj-button]').click();
             cy.get('.pay-info').contains('Payment now');
@@ -137,7 +139,9 @@ describe('Payment', () => {
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
             cy.get('[data-cy=event-dj]').should('exist');
-            cy.get('[data-cy=progress-step-incomplete]').contains('Book a DJ').should('exist');
+            cy.get('[data-cy=progress-step-incomplete]')
+                .contains('Confirm booking')
+                .should('exist');
             cy.get('[data-cy=offer-price]').should('contain', 'USD500.00');
             cy.get('[data-cy=book-dj-button]').click();
             cy.get('[data-cy="payment-amount"]').contains('USD500.00');
@@ -178,7 +182,9 @@ describe('Payment', () => {
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
             cy.get('[data-cy=event-dj]').should('exist');
-            cy.get('[data-cy=progress-step-incomplete]').contains('Book a DJ').should('exist');
+            cy.get('[data-cy=progress-step-incomplete]')
+                .contains('Confirm booking')
+                .should('exist');
             cy.get('[data-cy=book-dj-button]').click();
             cy.get('[data-cy="payment-amount"]').contains('USD500.00');
 
@@ -221,7 +227,9 @@ describe('Payment', () => {
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
             cy.get('[data-cy=event-dj]').should('exist');
-            cy.get('[data-cy=progress-step-incomplete]').contains('Book a DJ').should('exist');
+            cy.get('[data-cy=progress-step-incomplete]')
+                .contains('Confirm booking')
+                .should('exist');
             cy.get('[data-cy=book-dj-button]').click();
             cy.get('[data-cy="payment-amount"]').contains('USD500.00');
 
@@ -265,7 +273,9 @@ describe('Payment', () => {
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
             cy.get('[data-cy=event-dj]').should('exist');
-            cy.get('[data-cy=progress-step-incomplete]').contains('Book a DJ').should('exist');
+            cy.get('[data-cy=progress-step-incomplete]')
+                .contains('Confirm booking')
+                .should('exist');
             cy.get('[data-cy=offer-price]').should('contain', 'IDR5,000,000');
             cy.get('[data-cy=book-dj-button]').click();
             cy.get('[data-cy="payment-amount"]').contains('IDR5,000,000');
@@ -305,7 +315,9 @@ describe('Payment', () => {
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
             cy.get('[data-cy=event-dj]').should('exist');
-            cy.get('[data-cy=progress-step-incomplete]').contains('Book a DJ').should('exist');
+            cy.get('[data-cy=progress-step-incomplete]')
+                .contains('Confirm booking')
+                .should('exist');
             cy.get('[data-cy=offer-price]').should('contain', 'USD500.00');
             cy.get('[data-cy=book-dj-button]').click();
             cy.get('[data-cy="payment-amount"]').contains('USD500.00');
@@ -345,7 +357,9 @@ describe('Payment', () => {
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
             cy.get('[data-cy=event-dj]').should('exist');
-            cy.get('[data-cy=progress-step-incomplete]').contains('Book a DJ').should('exist');
+            cy.get('[data-cy=progress-step-incomplete]')
+                .contains('Confirm booking')
+                .should('exist');
             cy.get('[data-cy=offer-price]').should('contain', 'USD500.00');
             cy.get('[data-cy=book-dj-button]').click();
             cy.get('[data-cy="payment-amount"]').contains('USD500.00');
@@ -388,7 +402,9 @@ describe('Payment', () => {
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
             cy.get('[data-cy=event-dj]').should('exist');
-            cy.get('[data-cy=progress-step-incomplete]').contains('Book a DJ').should('exist');
+            cy.get('[data-cy=progress-step-incomplete]')
+                .contains('Confirm booking')
+                .should('exist');
             cy.get('[data-cy=offer-price]').should('contain', 'DKK5,000.00');
             cy.get('[data-cy=dj-profile-button]').first().click();
             cy.get('.sidebar [data-cy=profile-cta]').should('contain', 'BOOK');
@@ -434,7 +450,9 @@ describe('Payment', () => {
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
             cy.get('[data-cy=event-dj]').should('exist');
-            cy.get('[data-cy=progress-step-incomplete]').contains('Book a DJ').should('exist');
+            cy.get('[data-cy=progress-step-incomplete]')
+                .contains('Confirm booking')
+                .should('exist');
             cy.get('[data-cy=offer-price]').should('contain', 'DKK5,000.00');
             cy.get('[data-cy=dj-profile-button]').first().click();
             cy.get('.sidebar [data-cy=profile-cta]').should('contain', 'BOOK');
