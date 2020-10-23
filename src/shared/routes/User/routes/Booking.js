@@ -4,10 +4,15 @@ import styled from 'styled-components';
 import moment from 'moment-timezone';
 import wNumb from 'wnumb';
 import * as Sentry from '@sentry/react';
+import { InlineIcon } from '@iconify/react';
+import arrowBack from '@iconify/icons-ion/arrow-back';
+import { useHistory } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import { useCreateEvent } from 'actions/EventActions';
 import { useForm } from 'components/hooks/useForm';
 import usePushNotifications from 'components/hooks/usePushNotifications';
 import { CTAButton } from 'components/CTAButton';
+import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import { SettingsSection, Input, Label, InputRow } from '../../../components/FormComponents';
 import DatePickerPopup from '../../../components/DatePickerPopup';
 import {
@@ -18,6 +23,8 @@ import {
     PrimaryButton,
     Card,
     RowWrap,
+    SecondaryButtonLink,
+    TeritaryButton,
 } from '../../../components/Blocks';
 import Sidebar, { SidebarContent } from '../../../components/Sidebar';
 import ScrollToTop from '../../../components/common/ScrollToTop';
@@ -33,6 +40,7 @@ import GeoCoder from '../../../utils/GeoCoder';
 import { MobileBookingButton } from '../components/Common';
 
 const Booking = ({ user, loading, translate }) => {
+    const history = useHistory();
     const [eventCreated, setEventCreated] = useState(false);
 
     const [form, setForm] = useState({
@@ -80,6 +88,8 @@ const Booking = ({ user, loading, translate }) => {
         }
     };
 
+    const profileUrl = `${translate(appRoutes.user)}/${user.permalink}/${userRoutes.overview}`;
+
     return (
         <div>
             <ScrollToTop top={0} />
@@ -100,6 +110,15 @@ const Booking = ({ user, loading, translate }) => {
             </Popup>
 
             <Container>
+                <NavLink to={profileUrl}>
+                    <TeritaryButton style={{ marginTop: 15, marginLeft: -15, marginBottom: -24 }}>
+                        <InlineIcon
+                            icon={arrowBack}
+                            style={{ marginRight: 12, marginBottom: -3, fontSize: '1.2em' }}
+                        />
+                        Back to profile
+                    </TeritaryButton>
+                </NavLink>
                 <EventForm
                     setValue={setValue}
                     registerValidation={registerValidation}

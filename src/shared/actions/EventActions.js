@@ -106,6 +106,7 @@ export const useCheckDjAvailability = () => {
                 setError(err);
                 return {
                     result: false,
+                    error: err,
                 };
             } finally {
                 setLoading(false);
