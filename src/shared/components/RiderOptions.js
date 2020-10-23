@@ -2,10 +2,15 @@ import React, { useState } from 'react';
 import { Checkbox } from './FormComponents';
 import { Col } from './Blocks';
 
-const CheckBoxRow = ({ label, onChange, small }) => {
+const CheckBoxRow = ({ label, onChange, small, defaultValue }) => {
     return (
         <div style={{ height: '42px', display: 'flex', alignItems: 'center' }}>
-            <Checkbox onChange={(val) => onChange(val)} label={label} small={small} />
+            <Checkbox
+                defaultValue={defaultValue}
+                onChange={(val) => onChange(val)}
+                label={label}
+                small={small}
+            />
         </div>
     );
 };
@@ -19,8 +24,8 @@ const rows = {
     },
 };
 
-const RiderOptions = ({ onSave }) => {
-    const [internal, setInternal] = useState({});
+const RiderOptions = ({ onSave, initialValues }) => {
+    const [internal, setInternal] = useState(initialValues || {});
 
     const onChange = (key) => (val) => {
         const newRows = {
@@ -34,7 +39,15 @@ const RiderOptions = ({ onSave }) => {
     return (
         <Col style={{ width: '100%' }}>
             {Object.entries(rows).map(([key, { label }]) => {
-                return <CheckBoxRow small key={key} label={label} onChange={onChange(key)} />;
+                return (
+                    <CheckBoxRow
+                        small
+                        defaultValue={internal[key]}
+                        key={key}
+                        label={label}
+                        onChange={onChange(key)}
+                    />
+                );
             })}
         </Col>
     );

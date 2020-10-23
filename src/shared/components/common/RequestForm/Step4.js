@@ -21,9 +21,7 @@ const LoginStyle = styled.div`
     margin: 30px -5px 10px -5px;
     button {
         max-width: 100%;
-        min-width: 100%;
-
-        flex: 1;
+        flex-basis: 100%;
         margin: 2.5px 5px;
         > span {
             width: 100%;

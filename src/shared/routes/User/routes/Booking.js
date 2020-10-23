@@ -6,13 +6,17 @@ import wNumb from 'wnumb';
 import * as Sentry from '@sentry/react';
 import { InlineIcon } from '@iconify/react';
 import arrowBack from '@iconify/icons-ion/arrow-back';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import { NavLink } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 import { useCreateEvent } from 'actions/EventActions';
 import { useForm } from 'components/hooks/useForm';
 import usePushNotifications from 'components/hooks/usePushNotifications';
 import { CTAButton } from 'components/CTAButton';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
+import useUrlState from 'components/hooks/useUrlState';
+import { ME } from 'components/gql';
+import Step4 from 'components/common/RequestForm/Step4';
 import { SettingsSection, Input, Label, InputRow } from '../../../components/FormComponents';
 import DatePickerPopup from '../../../components/DatePickerPopup';
 import {
@@ -42,24 +46,36 @@ import { MobileBookingButton } from '../components/Common';
 const Booking = ({ user, loading, translate }) => {
     const history = useHistory();
     const [eventCreated, setEventCreated] = useState(false);
+    const { state: navState } = useLocation();
+    const { data: userData } = useQuery(ME);
+    const [create, { loading: createLoading, error }] = useCreateEvent();
 
-    const [form, setForm] = useState({
+    const [loginPopup, setloginPopup] = useState(false);
+
+    const [form, setForm] = useUrlState({
         guestsCount: 80,
         startMinute: 21 * 60,
         endMinute: 27 * 60,
         speakers: false,
         lights: false,
+        contactName: userData?.me?.userMetadata.fullName,
+        contactEmail: userData?.me?.email,
+        contactPhone: userData?.me?.userMetadata.phone,
+        ...navState,
     });
-    const [loginPopup, setloginPopup] = useState(false);
-
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);
 
     const setValue = (key) => (val) => setForm((f) => ({ ...f, [key]: val }));
 
-    const requestBooking = (create) => async () => {
+    const requestBooking = async () => {
         const refs = runValidations(true);
 
         if (refs.length) {
+            return;
+        }
+
+        if (!userData?.me) {
+            setloginPopup(true);
             return;
         }
 
@@ -97,16 +113,22 @@ const Booking = ({ user, loading, translate }) => {
             <GradientBg style={{ height: '80px', minHeight: '80px' }} />
 
             <Popup width="380px" showing={loginPopup} onClickOutside={() => setloginPopup(false)}>
-                <div>
-                    <TitleClean center>Login</TitleClean>
-                    <p style={{ marginBottom: '20px' }}>{translate('email-exists-message')}</p>
-                    <Login
-                        redirect={false}
-                        onLogin={() => {
-                            setloginPopup(false);
-                        }}
-                    />
-                </div>
+                <Step4
+                    hideHeadline
+                    form={form}
+                    handleChange={setValue}
+                    runValidations={runValidations}
+                    registerValidation={registerValidation}
+                    unregisterValidation={unregisterValidation}
+                    next={requestBooking}
+                    back={() => setloginPopup(false)}
+                    loading={createLoading}
+                    user={userData?.me}
+                    style={{
+                        width: 'auto',
+                    }}
+                    buttonLabel="Book now"
+                />
             </Popup>
 
             <Container>
@@ -128,9 +150,10 @@ const Booking = ({ user, loading, translate }) => {
                     user={user}
                     loading={loading}
                     requestBooking={requestBooking}
-                    setloginPopup={setloginPopup}
                     loginPopup={loginPopup}
                     eventCreated={eventCreated}
+                    createLoading={createLoading}
+                    error={error}
                 />
             </Container>
         </div>
@@ -156,10 +179,9 @@ const EventForm = ({
     translate,
     user,
     loading,
-    requestBooking,
-    setloginPopup,
     loginPopup,
     eventCreated,
+    ...props
 }) => (
     <EventFormWrapper>
         {eventCreated ? (
@@ -189,6 +211,7 @@ const EventForm = ({
                         label="Event Name"
                         placeholder="Add a short, clear name"
                         onSave={setValue('name')}
+                        defaultValue={form.name}
                         validation={(v) => (v ? null : 'Please enter a name')}
                         registerValidation={registerValidation('name')}
                         unregisterValidation={unregisterValidation('name')}
@@ -270,7 +293,7 @@ const EventForm = ({
                             }}
                             step={1}
                             connect="lower"
-                            value={[80]}
+                            value={[form.guestsCount]}
                             onChange={(values) => {
                                 setValue('guestsCount')(values[0]);
                             }}
@@ -285,6 +308,10 @@ const EventForm = ({
 
                     <div style={{ marginRight: '36px', marginBottom: '30px' }}>
                         <RiderOptions
+                            initialValues={{
+                                speakers: form.speakers,
+                                lights: form.lights,
+                            }}
                             onSave={({ speakers, lights }) => {
                                 setValue('speakers')(speakers);
                                 setValue('lights')(lights);
@@ -301,6 +328,7 @@ const EventForm = ({
                         style={{
                             height: '200px',
                         }}
+                        defaultValue={form.description}
                         onSave={setValue('description')}
                         validation={(v) => (v ? null : 'Please enter a description')}
                         registerValidation={registerValidation('description')}
@@ -314,32 +342,27 @@ const EventForm = ({
             loading={loading}
             user={user}
             values={form}
-            requestBooking={requestBooking}
-            showLogin={() => setloginPopup(true)}
             eventCreated={eventCreated}
+            {...props}
         />
     </EventFormWrapper>
 );
 
-const BookingSidebar = ({ loading, values, requestBooking, showLogin, eventCreated, ...props }) => {
-    const [create, { loading: createLoading, error }] = useCreateEvent();
-
+const BookingSidebar = ({
+    loading,
+    values,
+    requestBooking,
+    eventCreated,
+    error,
+    createLoading,
+    ...props
+}) => {
     return (
         <>
             <Sidebar
                 stickyTop={'0px'}
                 enableSharing={false}
-                childrenBelow={
-                    <ErrorMessageApollo
-                        error={error}
-                        style={{ marginTop: '30px' }}
-                        onFoundCode={(code) => {
-                            if (code === 'UNAUTHENTICATED') {
-                                showLogin();
-                            }
-                        }}
-                    />
-                }
+                childrenBelow={<ErrorMessageApollo error={error} style={{ marginTop: '30px' }} />}
             >
                 <SidebarContent>
                     {loading ? <LoadingPlaceholder2 /> : <Content values={values} {...props} />}
@@ -349,7 +372,7 @@ const BookingSidebar = ({ loading, values, requestBooking, showLogin, eventCreat
                     data-cy="book-button"
                     disabled={createLoading || eventCreated}
                     loading={createLoading}
-                    onClick={requestBooking(create)}
+                    onClick={requestBooking}
                 >
                     {eventCreated ? 'BOOKING DONE' : 'BOOK NOW'}
                 </CTAButton>
@@ -360,7 +383,7 @@ const BookingSidebar = ({ loading, values, requestBooking, showLogin, eventCreat
                     type="submit"
                     disabled={createLoading || eventCreated}
                     loading={createLoading}
-                    onClick={requestBooking(create)}
+                    onClick={requestBooking}
                 >
                     {eventCreated ? 'BOOKING DONE' : 'BOOK NOW'}
                 </CTAButton>
