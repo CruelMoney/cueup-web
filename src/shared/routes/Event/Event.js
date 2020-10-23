@@ -83,15 +83,7 @@ const Index = ({ location }) => {
                 setActiveChat={setActiveChat}
             />
 
-            <Footer
-                noSkew
-                firstTo={translate(appRoutes.howItWorks)}
-                secondTo={translate(appRoutes.home)}
-                firstLabel={translate('how-it-works')}
-                secondLabel={translate('arrange-event')}
-                title={translate('Organizing a new event?')}
-                subTitle={translate('See how it works, or arrange an event.')}
-            />
+            <Footer noSkew noPreFooter />
         </div>
     );
 };

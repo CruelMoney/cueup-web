@@ -44,7 +44,6 @@ import GeoCoder from '../../../utils/GeoCoder';
 import { MobileBookingButton } from '../components/Common';
 
 const Booking = ({ user, loading, translate }) => {
-    const history = useHistory();
     const [eventCreated, setEventCreated] = useState(false);
     const { state: navState } = useLocation();
     const { data: userData } = useQuery(ME);
@@ -169,6 +168,7 @@ const Booking = ({ user, loading, translate }) => {
                     eventCreated={eventCreated}
                     createLoading={createLoading}
                     error={error}
+                    showLogin={() => setloginPopup(true)}
                 />
             </Container>
         </div>

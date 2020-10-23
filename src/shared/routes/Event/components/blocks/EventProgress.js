@@ -35,7 +35,7 @@ const EventProgress = ({ theEvent = {} }) => {
                 )}
                 <ProgressStep label={'Get offers from DJs'} completed={accepted} />
                 <ProgressStep
-                    label={'Book a DJ'}
+                    label={'Confirm booking'}
                     completed={theEvent?.status === eventStates.CONFIRMED}
                 />
                 <ProgressStep

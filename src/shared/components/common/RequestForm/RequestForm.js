@@ -59,11 +59,7 @@ const MainForm = ({ initialCity, countries, transparent, fromNewSearch }) => {
     const createEvent = async () => {
         const errors = runValidations();
         if (errors.length === 0) {
-            const { error, data } = await mutate();
-            if (data?.createEvent) {
-                const { id, hash } = data?.createEvent;
-                history.push(translate(appRoutes.event) + `/${id}/${hash}/overview`);
-            }
+            const { error } = await mutate();
             if (error) {
                 setError(error);
             }

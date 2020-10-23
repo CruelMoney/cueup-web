@@ -1,9 +1,12 @@
 import * as Sentry from '@sentry/react';
 import { useMutation } from '@apollo/client';
 import { useCallback, useState } from 'react';
+import { useHistory } from 'react-router';
 import { CHECK_DJ_AVAILABILITY, CREATE_EVENT } from 'components/common/RequestForm/gql';
 import { trackCheckAvailability, trackEventPosted } from 'utils/analytics';
 import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
+import useTranslate from 'components/hooks/useTranslate';
+import { appRoutes } from 'constants/locales/appRoutes';
 import GeoCoder from '../utils/GeoCoder';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -125,6 +128,8 @@ const parseEventForm = ({ budget, eventTypes, ...rest }) => ({
 });
 
 export const useCreateEvent = (theEvent) => {
+    const history = useHistory();
+    const { translate } = useTranslate();
     const [mutate, { loading, error, ...rest }] = useMutation(CREATE_EVENT);
 
     let innerError;
@@ -134,12 +139,19 @@ export const useCreateEvent = (theEvent) => {
             if (!isDevelopment) {
                 trackEventPosted();
             }
-            return await mutate({
+            const { data } = await mutate({
                 variables: parseEventForm({
                     ...theEvent,
                     ...variables,
                 }),
             });
+
+            if (data?.createEvent) {
+                const { id, hash } = data?.createEvent;
+                history.push(translate(appRoutes.event) + `/${id}/${hash}/overview`);
+            }
+
+            return data;
         } catch (error) {
             console.log({ error });
             innerError = error;

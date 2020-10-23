@@ -23,6 +23,7 @@ const Footer = ({
     secondTo,
     firstAction,
     fullWidth,
+    noPreFooter,
 }) => {
     const { translate, currentLanguage } = useTranslate();
 
@@ -55,30 +56,32 @@ const Footer = ({
                     />
                 ))}
             </Helmet>
-            <div style={{ backgroundColor: bgColor }} className={'noSkew'} id="preFooter">
-                <Container fullWidth={fullWidth}>
-                    <RowWrap between middle>
-                        <div
-                            key="preFooterText"
-                            className="action-title"
-                            style={{ marginRight: 30 }}
-                        >
-                            <span key="preFooterTitle" style={{ color: color }}>
-                                {title}
-                            </span>
-                            <span>{subTitle}</span>
-                        </div>
-                        <RowWrap key="preFooterButtons">
-                            <ButtonLink shadow to={firstTo} onClick={firstAction}>
-                                {firstLabel}
-                            </ButtonLink>
-                            <ButtonLink invert shadow to={secondTo}>
-                                {secondLabel}
-                            </ButtonLink>
+            {!noPreFooter && (
+                <div style={{ backgroundColor: bgColor }} className={'noSkew'} id="preFooter">
+                    <Container fullWidth={fullWidth}>
+                        <RowWrap between middle>
+                            <div
+                                key="preFooterText"
+                                className="action-title"
+                                style={{ marginRight: 30 }}
+                            >
+                                <span key="preFooterTitle" style={{ color: color }}>
+                                    {title}
+                                </span>
+                                <span>{subTitle}</span>
+                            </div>
+                            <RowWrap key="preFooterButtons">
+                                <ButtonLink shadow to={firstTo} onClick={firstAction}>
+                                    {firstLabel}
+                                </ButtonLink>
+                                <ButtonLink invert shadow to={secondTo}>
+                                    {secondLabel}
+                                </ButtonLink>
+                            </RowWrap>
                         </RowWrap>
-                    </RowWrap>
-                </Container>
-            </div>
+                    </Container>
+                </div>
+            )}
             <FooterWrapper style={{ backgroundColor: bgColor }}>
                 <Container fullWidth={fullWidth}>
                     <FooterColumns>
