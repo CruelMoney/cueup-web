@@ -27,16 +27,9 @@ import { FilterPills } from './Filters';
 import { RequestOffers } from './RequestOffers';
 
 const Search = (props) => {
+    const { search } = useLocation();
     const { translate, form } = props;
     const { location, locationName } = form;
-    const onClickElement = (e) => {
-        e.preventDefault();
-        window.scroll({
-            top: 0,
-            left: 0,
-            behavior: 'smooth',
-        });
-    };
 
     const siteTitle = locationName + ' · DJs · Cueup';
     const siteDescription =
@@ -77,13 +70,10 @@ const Search = (props) => {
 
             <Footer
                 color={'#31DAFF'}
-                firstTo={translate(appRoutes.bookDj)}
-                firstAction={onClickElement}
-                secondTo={translate(appRoutes.signUp)}
-                firstLabel={translate('arrange-event')}
-                secondLabel={translate('apply-to-become-dj')}
-                title={'Ready to start the Party?'}
-                subTitle={translate('arrange-event-or-become-dj')}
+                firstTo={'/book-dj' + search}
+                firstLabel={'Post event'}
+                title={'Tired of searching? Post your event.'}
+                subTitle={'Let us find the DJs and send you their best prices.'}
             />
         </>
     );

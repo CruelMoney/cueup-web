@@ -74,9 +74,11 @@ const Footer = ({
                                 <ButtonLink shadow to={firstTo} onClick={firstAction}>
                                     {firstLabel}
                                 </ButtonLink>
-                                <ButtonLink invert shadow to={secondTo}>
-                                    {secondLabel}
-                                </ButtonLink>
+                                {secondLabel && secondTo && (
+                                    <ButtonLink invert shadow to={secondTo}>
+                                        {secondLabel}
+                                    </ButtonLink>
+                                )}
                             </RowWrap>
                         </RowWrap>
                     </Container>
