@@ -526,7 +526,6 @@ const mergeObjects = (o1, o2) => {
 
 const DataWrapper = (props) => {
     const { match, location } = props;
-
     const routeDj = location.state?.dj || {};
 
     const { translate } = useNamespaceContent(content, 'user');

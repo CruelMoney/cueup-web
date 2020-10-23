@@ -45,7 +45,7 @@ import { MobileBookingButton } from '../components/Common';
 
 const Booking = ({ user, loading, translate }) => {
     const [eventCreated, setEventCreated] = useState(false);
-    const { state: navState } = useLocation();
+    const { state: navState, search } = useLocation();
     const { data: userData } = useQuery(ME);
     const [create, { loading: createLoading, error }] = useCreateEvent();
 
@@ -61,6 +61,7 @@ const Booking = ({ user, loading, translate }) => {
         contactName: userData?.me?.userMetadata.fullName,
         contactEmail: userData?.me?.email,
         contactPhone: userData?.me?.userMetadata.phone,
+        ...search,
         ...navState,
     });
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);

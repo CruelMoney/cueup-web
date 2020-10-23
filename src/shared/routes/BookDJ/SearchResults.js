@@ -204,7 +204,10 @@ const SearchEntry = (props) => {
                     pointerEvents: props.loading ? 'none' : 'auto',
                 }}
                 rel="noopener noreferrer"
-                to={route}
+                to={{
+                    pathname: route,
+                    search: props.search,
+                }}
                 target="_blank"
             >
                 <SearchEntryWrapper>
@@ -243,7 +246,7 @@ const EmptySearch = ({ locationName }) => {
 };
 
 const SearchResults = ({ topDjs, form, pagination, loading, setPagination, searchRef }) => {
-    const { pathname } = useLocation();
+    const { pathname, search } = useLocation();
     const locationName = form?.locationName?.split(', ')[0];
     if (!topDjs.length) {
         return <EmptySearch locationName={locationName} />;
@@ -261,6 +264,7 @@ const SearchResults = ({ topDjs, form, pagination, loading, setPagination, searc
                         idx={idx}
                         key={dj?.id || idx}
                         {...dj}
+                        search={search}
                         loading={loading}
                         filterGenres={genres?.map((s) => s.toLowerCase())}
                     />

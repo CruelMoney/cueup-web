@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useQuery } from '@apollo/client';
 import { NavLink, useRouteMatch, useHistory } from 'react-router-dom';
 import queryString from 'query-string';
+import { useLocation } from 'react-router';
 import { appRoutes, userRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import { useAppState } from 'components/hooks/useAppState';
@@ -12,7 +13,8 @@ import { LoadingIndicator } from '../../../components/Blocks';
 const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
     const { setAppState } = useAppState();
     const { translate } = useTranslate();
-
+    const { search } = useLocation();
+    console.log({ search });
     const canBePaid = gig && gig.offer && gig.status === 'ACCEPTED' && event.status === 'ACCEPTED';
 
     const openChat = () => {
@@ -57,7 +59,12 @@ const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
     }
 
     return (
-        <NavLink to={userRoutes.booking}>
+        <NavLink
+            to={{
+                pathname: `${translate(appRoutes.user)}/${user.permalink}/${userRoutes.booking}`,
+                search,
+            }}
+        >
             <CTAButton data-cy="booking-button">BOOK NOW</CTAButton>
         </NavLink>
     );
