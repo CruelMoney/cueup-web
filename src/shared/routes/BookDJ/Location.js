@@ -93,7 +93,12 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
     ];
     if (activeLocation.citySlug) {
         breadCrumbs.push({
-            url: translate(appRoutes.search) + `?locationName="${activeLocation.name}"`,
+            url:
+                translate(appRoutes.search) +
+                `?locationName="${activeLocation.name}"&location=${JSON.stringify({
+                    latitude: coordinates.lat,
+                    longitude: coordinates.lng,
+                })}`,
             label: activeLocation.name + ' DJs',
         });
         breadCrumbs.push({

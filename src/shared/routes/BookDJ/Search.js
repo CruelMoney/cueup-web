@@ -246,6 +246,7 @@ const DataWrapper = (props) => {
         contactPhone: userData?.me?.userMetadata.phone,
         ...navState,
     });
+
     const setValue = useCallback(
         (val) => {
             setForm((ff) => ({ ...ff, ...val }));
