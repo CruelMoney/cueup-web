@@ -191,6 +191,7 @@ export const BreadCrumbs = ({ items }) => {
                         itemScope=" "
                         itemType="https://schema.org/ListItem"
                     >
+                        <meta itemProp="position" content={idx + 1} />
                         {idx > 0 && (
                             <span className="breadcrumb-arrow" aria-hidden="true">
                                 {' '}
@@ -200,14 +201,13 @@ export const BreadCrumbs = ({ items }) => {
                         <a
                             target="_blank"
                             rel="noopener noreferrer"
-                            href={url}
+                            href={encodeURI(url)}
                             itemType="https://schema.org/Thing"
                             itemProp="item"
                             className={idx === items.length - 1 ? 'current' : ''}
                         >
                             <span itemProp="name">{label}</span>
                         </a>
-                        <meta itemProp="position" content={idx + 1} />
                     </li>
                 ))}
             </BreadCrumbsList>
