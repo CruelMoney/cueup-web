@@ -45,8 +45,11 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
             if (errors.length === 0) {
                 await LazyRequestForm.load();
 
-                const { result, date, timeZoneId, location } = await check(form);
+                const { result, date, timeZoneId, location, error } = await check(form);
 
+                if (error) {
+                    return;
+                }
                 if (result === true) {
                     history.push({
                         pathname: translate(appRoutes.search),

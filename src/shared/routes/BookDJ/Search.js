@@ -20,6 +20,7 @@ import { useCheckDjAvailability } from 'actions/EventActions';
 import { ScrollToTopOnMount } from 'components/common/ScrollToTop';
 import useUrlState from 'components/hooks/useUrlState';
 import { ME } from 'components/gql';
+import ErrorMessageApollo from 'components/common/ErrorMessageApollo';
 import { CustomCTAButton, GreyBox } from './Components';
 import { SEARCH_DEEP } from './gql';
 import SearchResults from './SearchResults';
@@ -110,6 +111,7 @@ const Filters = ({
     loading,
     registerValidation,
     unregisterValidation,
+    error,
 }) => {
     const { translate } = useTranslate();
 
@@ -135,6 +137,10 @@ const Filters = ({
                     validation={(v) => (v ? null : 'Please select a location')}
                     registerValidation={registerValidation('locationName')}
                     unregisterValidation={unregisterValidation('locationName')}
+                />
+                <ErrorMessageApollo
+                    error={error}
+                    style={{ fontSize: '14px', marginBottom: 15, marginTop: -15, paddingLeft: 9 }}
                 />
             </RowWrap>
             <RowWrap>
@@ -286,7 +292,7 @@ const DataWrapper = (props) => {
         },
     });
 
-    const [check, { loading: loading2 }] = useCheckDjAvailability();
+    const [check, { loading: loading2, error }] = useCheckDjAvailability();
 
     const checkAvailable = useCallback(
         async (doScroll) => {
@@ -294,10 +300,13 @@ const DataWrapper = (props) => {
                 if (doScroll) {
                     scrollToSearchResults();
                 }
-                const { location } = await check({
+                const { location, error } = await check({
                     locationName: form.locationName,
                     date: form.date,
                 });
+                if (error) {
+                    return;
+                }
                 setValue({ location });
             }
         },
@@ -351,6 +360,7 @@ const DataWrapper = (props) => {
             runValidations={runValidations}
             setPagination={setPagination}
             searchRef={searchRef}
+            error={error}
         />
     );
 };

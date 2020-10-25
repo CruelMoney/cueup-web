@@ -674,6 +674,7 @@ table {
 
 .errors p {
     color: #f44336 !important;
+    font-size: 1em;
     line-height: 22px;
     margin-bottom: 0;
 }

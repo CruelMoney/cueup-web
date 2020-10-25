@@ -48,8 +48,10 @@ const DjSearch = () => {
             const errors = runValidations();
             if (errors.length === 0) {
                 await LazyRequestForm.load();
-                const { result, date, timeZoneId, location } = await check(form);
-
+                const { result, date, timeZoneId, location, error } = await check(form);
+                if (error) {
+                    return;
+                }
                 if (result === true) {
                     history.push({
                         pathname: translate(appRoutes.search),
@@ -142,7 +144,10 @@ const DjSearch = () => {
                     </SmartButton>
                 </FindDjsButton>
             </StyledSearchWrapper>
-            <ErrorMessageApollo style={{ marginTop: '0.1em' }} error={error} />
+            <ErrorMessageApollo
+                style={{ marginTop: '0.5em', fontSize: '0.15em', paddingLeft: '1em' }}
+                error={error}
+            />
         </>
     );
 };
