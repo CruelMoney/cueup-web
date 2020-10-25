@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import emailValidator from 'email-validator';
 import { useRouteMatch } from 'react-router';
+import moment from 'moment';
 import useTranslate from 'components/hooks/useTranslate';
 import { REQUEST_EMAIL_VERIFICATION } from 'components/gql';
+import DatePickerPopup from 'components/DatePickerPopup';
+import TimeSlider from 'components/common/TimeSlider/TimeSlider';
 import { Col } from '../../../../components/Blocks';
-import { SettingsSection, Input } from '../../../../components/FormComponents';
+import { SettingsSection, Input, Label } from '../../../../components/FormComponents';
 
 import SavingIndicator from '../../../../components/SavingIndicator';
 import TextAreaPopup from '../../../../components/TextAreaPopup';
@@ -40,41 +43,39 @@ const Requirements = React.forwardRef(({ theEvent, history }, ref) => {
         organizer,
     } = theEvent;
 
-    const save = (key, optimistic) => async (val) => {
-        if (theEvent[key] !== val) {
-            await update({
-                variables: {
-                    id: theEvent.id,
-                    hash: theEvent.hash,
-                    [key]: val,
-                },
-            });
-        }
+    const save = async (data) => {
+        await update({
+            variables: {
+                id: theEvent.id,
+                hash: theEvent.hash,
+                ...data,
+            },
+        });
     };
 
     const isCancable = ![eventStates.FINISHED, eventStates.CANCELLED].includes(theEvent.status);
-
+    console.log({ theEvent });
     return (
         <Col ref={ref}>
             <SavingIndicator loading={loading} error={error} />
 
             <SettingsSection
                 title={'Contact information'}
-                description={
-                    'Enter information on the person communicating with the DJ. This information is only visible to the DJ after the DJ has been booked.'
-                }
+                description={'Enter information on the person communicating with the DJ.'}
             >
                 <Input
+                    v2
                     label="Contact name"
                     defaultValue={contactName}
                     placeholder="Keep it short"
                     type="text"
                     autoComplete="name"
                     name="name"
-                    onSave={save('contactName')}
+                    onSave={(contactName) => save({ contactName })}
                     validation={required('Name is needed')}
                 />
                 <Input
+                    v2
                     label="Contact email"
                     defaultValue={organizer?.email}
                     placeholder="mail@email.com"
@@ -86,10 +87,11 @@ const Requirements = React.forwardRef(({ theEvent, history }, ref) => {
                     type="email"
                     autoComplete="email"
                     name="email"
-                    onSave={(email) => save('contactEmail')(email.trim())}
+                    onSave={(email) => save({ contactEmail: email.trim() })}
                     validation={(v) => (emailValidator.validate(v) ? null : 'Not a valid email')}
                 />
                 <PhoneInput
+                    v2
                     label="Phone"
                     attention={!contactPhone}
                     defaultValue={contactPhone}
@@ -97,7 +99,7 @@ const Requirements = React.forwardRef(({ theEvent, history }, ref) => {
                     type="tel"
                     autoComplete="tel"
                     name="phone"
-                    onSave={(phone) => save('contactPhone')(phone.trim())}
+                    onSave={(phone) => save({ contactPhone: phone.trim() })}
                 />
             </SettingsSection>
 
@@ -108,59 +110,104 @@ const Requirements = React.forwardRef(({ theEvent, history }, ref) => {
                 }
             >
                 <Input
+                    half
+                    v2
                     label="Name"
                     defaultValue={name}
                     placeholder="Keep it short"
                     type="text"
-                    onSave={save('name')}
+                    onSave={(name) => save({ name })}
                     validation={required('The event needs a name')}
                 />
+                <DatePickerPopup
+                    half
+                    v2
+                    style={{ marginRight: 0 }}
+                    label={'Date'}
+                    minDate={new Date()}
+                    initialDate={theEvent.start ? moment(theEvent.start.localDate) : null}
+                    showMonthDropdown={false}
+                    showYearDropdown={false}
+                    maxDate={false}
+                    // onSave={save('date')}
+                    // onSave={(name) => save({ name })}
+
+                    validation={required('Please select a date')}
+                />
+                <Label
+                    v2
+                    style={{
+                        minWidth: '100%',
+                        paddingRight: '36px',
+                        marginBottom: '30px',
+                    }}
+                >
+                    <span
+                        style={{
+                            marginBottom: '12px',
+                            display: 'block',
+                            marginLeft: 9,
+                        }}
+                    >
+                        Duration
+                    </span>
+                    <TimeSlider
+                        v2
+                        color={'#50e3c2'}
+                        hoursLabel={translate('hours')}
+                        startLabel={translate('start')}
+                        endLabel={translate('end')}
+                        date={moment(theEvent.start?.localDate)}
+                        // onChange={([startMinute, endMinute]) => {
+                        //     save('endMinute')(endMinute);
+                        //     save('startMinute')(startMinute);
+                        // }}
+                    />
+                </Label>
                 <TextAreaPopup
+                    v2
                     label="Description"
                     initialValue={description}
                     placeholder="Description"
                     type="text"
-                    save={save('description')}
+                    save={(description) => save({ description })}
                     validation={required('The event needs a description')}
                 >
                     <Body>{translate('event-description-placeholder')}</Body>
                 </TextAreaPopup>
-                <GenreSelector half initialGenres={genres} save={save('genres')} />
+                <GenreSelector v2 half initialGenres={genres} save={(genres) => save({ genres })} />
 
                 <Input
+                    v2
                     half
                     type="button"
                     label="Speakers"
-                    onClick={() =>
-                        save('speakers', {
-                            rider: {
-                                ...rider,
-                                speakers: !rider.speakers,
-                            },
-                        })(!rider.speakers)
-                    }
-                    buttonText={rider.speakers ? 'Required' : 'Not required'}
+                    onClick={() => {
+                        save({
+                            speakers: !rider?.speakers,
+                        });
+                    }}
+                    buttonText={rider?.speakers ? 'Required' : 'Not required'}
                 />
                 <Input
+                    v2
                     half
                     type="button"
                     label="Lights"
                     onClick={() =>
-                        save('lights', {
-                            rider: {
-                                ...rider,
-                                lights: !rider.lights,
-                            },
-                        })(!rider.lights)
+                        save({
+                            lights: !rider?.lights,
+                        })
                     }
-                    buttonText={rider.lights ? 'Required' : 'Not required'}
+                    buttonText={rider?.lights ? 'Required' : 'Not required'}
                 />
                 <Input
+                    v2
                     label="Event address"
                     defaultValue={address}
                     placeholder="10 Downing Street"
                     type="text"
-                    onSave={save('address')}
+                    onSave={(address) => save({ address })}
                     attention={!address}
                 />
             </SettingsSection>
@@ -175,6 +222,7 @@ const Requirements = React.forwardRef(({ theEvent, history }, ref) => {
                 {isCancable && (
                     <Input
                         half
+                        v2
                         type="button"
                         label="Cancel event"
                         warning={true}
@@ -184,6 +232,7 @@ const Requirements = React.forwardRef(({ theEvent, history }, ref) => {
                 )}
                 <Input
                     half
+                    v2
                     type="button"
                     label="Export all data"
                     buttonText="export"

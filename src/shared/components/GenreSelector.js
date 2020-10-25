@@ -5,7 +5,7 @@ import { Row, TeritaryButton, PrimaryButton } from './Blocks';
 import Popup from './common/Popup';
 import { ToggleButtonHandler } from './common/ToggleButtonHandler';
 
-const GenreSelector = ({ initialGenres = [], save, half, isActive, onClose }) => {
+const GenreSelector = ({ initialGenres = [], save, half, isActive, onClose, v2 }) => {
     const [genres, setGenres] = useState(initialGenres);
     const [showing, setShowing] = useState(isActive);
 
@@ -17,6 +17,7 @@ const GenreSelector = ({ initialGenres = [], save, half, isActive, onClose }) =>
     return (
         <>
             <Input
+                v2={v2}
                 half={half}
                 type="button"
                 onClick={(s) => setShowing(true)}

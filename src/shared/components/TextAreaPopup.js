@@ -14,6 +14,7 @@ const TextAreaPopup = ({
     attention,
     isActive,
     onClose,
+    v2,
     ...props
 }) => {
     const [value, setValue] = useState(initialValue);
@@ -34,6 +35,7 @@ const TextAreaPopup = ({
                 onClick={(_) => setShowing(true)}
                 error={error}
                 attention={attention}
+                v2={v2}
             />
 
             <Popup showing={showing} onClickOutside={closeModal} width={'520px'}>

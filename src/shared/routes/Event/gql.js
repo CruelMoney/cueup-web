@@ -297,6 +297,9 @@ const UPDATE_EVENT = gql`
         $guestsCount: Int
         $locale: String
         $address: String
+        $date: DateTime
+        $startMinute: Int
+        $endMinute: Int
     ) {
         updateEvent(
             id: $id
@@ -311,6 +314,9 @@ const UPDATE_EVENT = gql`
             genres: $genres
             guestsCount: $guestsCount
             address: $address
+            date: $date
+            startMinute: $startMinute
+            endMinute: $endMinute
         ) {
             id
             name
