@@ -13973,6 +13973,11 @@ react-use-gesture@^7.0.16:
   resolved "https://registry.yarnpkg.com/react-use-gesture/-/react-use-gesture-7.0.16.tgz#501985261ef9c815a377b6ff9be6df5a85fbb54f"
   integrity sha512-gwgX+E+WQG0T1uFVl3z8j3ZwH3QQGIgVl7VtQEC2m0IscSs668sSps4Ss3CFp3Vns8xx0j9TVK4aBXH6+YrpEg==
 
+react-use-hotjar@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/react-use-hotjar/-/react-use-hotjar-1.0.8.tgz#00df9f6b1e6e4f0f75a44600a4dacefb65c5280e"
+  integrity sha512-paWu8a6n3gYzD6dMS26KtKxwmzegFJh3nrIhcICWfAtxrjlAYH8hTflr5JJN868ubwXnewiQ7lvJBb13EAooeQ==
+
 react-use-measure@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-use-measure/-/react-use-measure-2.0.1.tgz#4f23f94c832cd4512da55acb300d1915dcbf3ae8"

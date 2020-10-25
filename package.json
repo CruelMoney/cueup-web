@@ -118,6 +118,7 @@
     "react-tag-autocomplete": "^6.0.0-beta.6",
     "react-throttle-render": "^2.0.0",
     "react-use-gesture": "^7.0.16",
+    "react-use-hotjar": "^1.0.8",
     "sanitize": "^2.1.0",
     "schema-dts": "^0.7.1",
     "slugify": "^1.4.5",
