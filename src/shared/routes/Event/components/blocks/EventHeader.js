@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 import { eventRoutes } from 'constants/locales/appRoutes';
 import Navigation from '../../../../components/Navigation/SubNavigation';
 import { Container, FullWidthCol, Row, Col, GradientBg } from '../../../../components/Blocks';
@@ -44,16 +45,18 @@ const Content = ({ theEvent }) => {
             <Row middle>
                 <Col style={{ flex: 1, alignItems: 'flex-start' }}>
                     <HeaderTitle>{name}</HeaderTitle>
-                    <BodyBold white opacity={0.75} style={{ margin: 0 }}>
-                        {location?.name}
-                        {'  ·  '}
-                        {start?.formattedDate}
-                    </BodyBold>
-                    <BodyBold white opacity={0.75} style={{ margin: 0 }}>
-                        {start?.formattedTime}
-                        {' to '}
-                        {end?.formattedTime}
-                    </BodyBold>
+                    <NavLink to={eventRoutes.requirements}>
+                        <BodyBold white opacity={0.75} style={{ margin: 0 }}>
+                            {location?.name}
+                            {'  ·  '}
+                            {start?.formattedDate}
+                        </BodyBold>
+                        <BodyBold white opacity={0.75} style={{ margin: 0 }}>
+                            {start?.formattedTime}
+                            {' to '}
+                            {end?.formattedTime}
+                        </BodyBold>
+                    </NavLink>
                 </Col>
             </Row>
         </HeaderWrapper>

@@ -7,6 +7,7 @@ import useTranslate from 'components/hooks/useTranslate';
 import { REQUEST_EMAIL_VERIFICATION } from 'components/gql';
 import DatePickerPopup from 'components/DatePickerPopup';
 import TimeSlider from 'components/common/TimeSlider/TimeSlider';
+import { getTimezonedDate } from 'actions/EventActions';
 import { Col } from '../../../../components/Blocks';
 import { SettingsSection, Input, Label } from '../../../../components/FormComponents';
 
@@ -54,7 +55,26 @@ const Requirements = React.forwardRef(({ theEvent, history }, ref) => {
     };
 
     const isCancable = ![eventStates.FINISHED, eventStates.CANCELLED].includes(theEvent.status);
-    console.log({ theEvent });
+
+    const initialStartDate = moment.tz(theEvent.start?.localDate, theEvent.timeZone);
+    const initialStartMinute = initialStartDate.hour() * 60 + initialStartDate.minute();
+    const initialEndMinute =
+        moment(theEvent.end?.localDate).diff(initialStartDate, 'minutes') + initialStartMinute;
+
+    const updateDateTime = async ({
+        date = initialStartDate,
+        startMinute = initialStartMinute,
+        endMinute = initialEndMinute,
+    }) => {
+        const timezoneDate = await getTimezonedDate(date, theEvent.timeZone);
+
+        save({
+            date: timezoneDate,
+            startMinute,
+            endMinute,
+        });
+    };
+
     return (
         <Col ref={ref}>
             <SavingIndicator loading={loading} error={error} />
@@ -125,11 +145,13 @@ const Requirements = React.forwardRef(({ theEvent, history }, ref) => {
                     style={{ marginRight: 0 }}
                     label={'Date'}
                     minDate={new Date()}
-                    initialDate={theEvent.start ? moment(theEvent.start.localDate) : null}
+                    initialDate={initialStartDate}
                     showMonthDropdown={false}
                     showYearDropdown={false}
                     maxDate={false}
-                    // onSave={save('date')}
+                    onSave={(date) => {
+                        updateDateTime({ date });
+                    }}
                     // onSave={(name) => save({ name })}
 
                     validation={required('Please select a date')}
@@ -157,11 +179,13 @@ const Requirements = React.forwardRef(({ theEvent, history }, ref) => {
                         hoursLabel={translate('hours')}
                         startLabel={translate('start')}
                         endLabel={translate('end')}
-                        date={moment(theEvent.start?.localDate)}
-                        // onChange={([startMinute, endMinute]) => {
-                        //     save('endMinute')(endMinute);
-                        //     save('startMinute')(startMinute);
-                        // }}
+                        initialValues={[initialStartMinute, initialEndMinute]}
+                        onChange={([startMinute, endMinute]) => {
+                            updateDateTime({
+                                startMinute,
+                                endMinute,
+                            });
+                        }}
                     />
                 </Label>
                 <TextAreaPopup

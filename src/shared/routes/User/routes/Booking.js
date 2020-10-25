@@ -267,7 +267,6 @@ const EventForm = ({
                             hoursLabel={translate('hours')}
                             startLabel={translate('start')}
                             endLabel={translate('end')}
-                            date={moment(form.date)}
                             onChange={([startMinute, endMinute]) => {
                                 setValue({ startMinute, endMinute });
                             }}

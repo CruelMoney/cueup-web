@@ -34,6 +34,19 @@ export const getLocation = async (location) => {
     });
 };
 
+export const getTimezonedDate = async (date, timeZone) => {
+    const moment = await import('moment-timezone');
+    const momentDate = date ? moment.default(date) : moment.default().add(4, 'months');
+
+    const newMoment = moment.tz(
+        momentDate.format('YYYY-MM-DDTHH:mm:ss'),
+        'YYYY-MM-DDTHH:mm:ss',
+        timeZone
+    );
+
+    return newMoment.toDate();
+};
+
 export const useCheckDjAvailability = () => {
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
@@ -65,29 +78,20 @@ export const useCheckDjAvailability = () => {
                     timeZone: geoResult.timeZoneId,
                 };
 
-                const moment = await import('moment-timezone');
-                const momentDate = date ? moment.default(date) : moment.default().add(4, 'months');
+                const timezonedDate = await getTimezonedDate(date, geoData.timeZone);
 
-                const { timeZone, location } = geoData;
-
-                const newMoment = moment.tz(
-                    momentDate.format('YYYY-MM-DDTHH:mm:ss'),
-                    'YYYY-MM-DDTHH:mm:ss',
-                    timeZone
-                );
-
-                const variables = {
-                    date,
-                    location,
-                };
-
-                const { data = {} } = await mutate({ variables });
+                const { data = {} } = await mutate({
+                    variables: {
+                        date: timezonedDate,
+                        location: geoData.location,
+                    },
+                });
 
                 return {
                     result: data?.djsAvailable,
-                    date: newMoment.toDate(),
-                    timeZone,
-                    location,
+                    date: timezonedDate,
+                    timeZone: geoData.timeZone,
+                    location: geoData.location,
                 };
             } catch (err) {
                 console.log(err);

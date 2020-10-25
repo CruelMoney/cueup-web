@@ -30,7 +30,6 @@ const Step3 = ({
                     hoursLabel={translate('hours')}
                     startLabel={translate('start')}
                     endLabel={translate('end')}
-                    date={form.date}
                     initialValues={form.startMinute && [form.startMinute, form.endMinute]}
                     onChange={([startMinute, endMinute]) => {
                         handleChange({ startMinute });
