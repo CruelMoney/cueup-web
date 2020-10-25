@@ -14,13 +14,6 @@
   dependencies:
     analytics-utils "^0.2.2"
 
-"@analytics/google-analytics@^0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@analytics/google-analytics/-/google-analytics-0.5.2.tgz#e94501ae23284ebdccb3453cf9158984b7443388"
-  integrity sha512-6jviLzo6s7MLvsfPLCSppGgoHb9piShCk/n66s75yR8XN+Pz8ADk1Rh28jRErbLSJToJcCMOwDXikCF7U4exMQ==
-  dependencies:
-    universal-analytics "^0.4.20"
-
 "@analytics/storage-utils@^0.2.4":
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/@analytics/storage-utils/-/storage-utils-0.2.4.tgz#b373fc1c3910c201c3020f014c8bffd41cfc3f94"
@@ -16762,15 +16755,6 @@ unist-util-visit@^2.0.0:
     unist-util-is "^4.0.0"
     unist-util-visit-parents "^3.0.0"
 
-universal-analytics@^0.4.20:
-  version "0.4.20"
-  resolved "https://registry.yarnpkg.com/universal-analytics/-/universal-analytics-0.4.20.tgz#d6b64e5312bf74f7c368e3024a922135dbf24b03"
-  integrity sha512-gE91dtMvNkjO+kWsPstHRtSwHXz0l2axqptGYp5ceg4MsuurloM0PU3pdOfpb5zBXUvyjT4PwhWK2m39uczZuw==
-  dependencies:
-    debug "^3.0.0"
-    request "^2.88.0"
-    uuid "^3.0.0"
-
 universal-cookie-express@^4.0.3:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/universal-cookie-express/-/universal-cookie-express-4.0.3.tgz#07e871d5a6e2c157690aa5c77654d82d5a34f509"
@@ -16984,7 +16968,7 @@ utils-merge@1.0.1:
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
 
-uuid@^3.0.0, uuid@^3.3.2, uuid@^3.4.0:
+uuid@^3.3.2, uuid@^3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==

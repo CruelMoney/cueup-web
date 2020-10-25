@@ -1,8 +1,8 @@
 import Analytics from 'analytics';
-import googleAnalytics from '@analytics/google-analytics';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router';
 import facebookPixelPlugin from './facebookPixelPlugin';
+import googleAnalytics from './gtagPlugin';
 
 const analytics = Analytics({
     app: 'cueup-web',
@@ -16,11 +16,8 @@ const analytics = Analytics({
     ],
 });
 
-export const trackPageView = (url) => {
-    analytics.page({
-        url,
-        path: url,
-    });
+export const trackPageView = () => {
+    analytics.page();
 };
 
 export const trackCheckAvailability = (locationName) => {
@@ -58,7 +55,7 @@ export const useAnalytics = () => {
     const location = useLocation();
 
     useEffect(() => {
-        trackPageView(window.location.href);
+        trackPageView();
     }, [location.pathname]);
 };
 
@@ -67,4 +64,8 @@ export const trackEmptySearch = (label) => {
         category: 'Events',
         label,
     });
+};
+
+export const saveUserId = (userId) => {
+    analytics.identify(userId);
 };
