@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import useScript from '@charlietango/use-script';
-import { GoogleMap, Circle } from '@react-google-maps/api';
+import { GoogleMap, Circle, useLoadScript } from '@react-google-maps/api';
 
 /*
  * This is the modify version of:
@@ -171,11 +170,12 @@ const Wrapper = (props) => {
 };
 
 const MapLoader = ({ ...props }) => {
-    const [loaded] = useScript(
-        'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
-    );
+    const { isLoaded } = useLoadScript({
+        googleMapsApiKey: 'AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ',
+        libraries: ['geometry', 'places', 'visualization'],
+    });
 
-    if (!loaded) {
+    if (!isLoaded) {
         return (
             <Wrapper style={{ height: props.height || '500px' }}>
                 <div style={{ height: '100%' }} />
