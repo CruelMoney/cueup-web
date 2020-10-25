@@ -29,7 +29,7 @@ import { RequestOffers } from './RequestOffers';
 
 const Search = (props) => {
     const { search } = useLocation();
-    const { translate, form } = props;
+    const { form } = props;
     const { location, locationName } = form;
 
     const siteTitle = locationName + ' · DJs · Cueup';
@@ -352,8 +352,8 @@ const DataWrapper = (props) => {
             doSearch={() => checkAvailable(true)}
             loading={loading || loading2}
             pagination={{
-                ...pageInfo,
                 ...pagination,
+                ...pageInfo,
             }}
             registerValidation={registerValidation}
             unregisterValidation={unregisterValidation}

@@ -64,6 +64,7 @@ export const SEARCH_DEEP = gql`
                     }
                     pageInfo {
                         totalDocs
+                        hasNextPage
                     }
                 }
             }

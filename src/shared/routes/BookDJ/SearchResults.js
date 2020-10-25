@@ -4,7 +4,7 @@ import { InlineIcon } from '@iconify/react';
 import pinIcon from '@iconify/icons-ion/location-sharp';
 import { NavLink, useLocation } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
-import { Col, Hr, Pill, Row, RowWrap } from 'components/Blocks';
+import { Col, Hr, Pill, PrimaryButton, Row, RowWrap } from 'components/Blocks';
 import { Body, BodyBold, BodySmall, H2 } from 'components/Text';
 import GracefullImage from 'components/GracefullImage';
 import GracefullVideo from 'components/GracefullVideo';
@@ -224,33 +224,35 @@ const SearchEntry = (props) => {
     );
 };
 
-const EmptySearch = ({ locationName }) => {
+const EmptySearch = () => {
     const { search } = useLocation();
 
-    useEffect(() => {
-        try {
-            trackEmptySearch(locationName);
-        } catch (error) {}
-    }, [locationName]);
-
     return (
-        <GreyBox>
-            <h3>We didn't find any DJs for this search</h3>
-            <Body style={{ margin: '12px 0' }}>
-                Try another search <br />
-                Or post your event to receive quotes from DJs in {locationName}.
-            </Body>
-            <ButtonLink to={'/book-dj' + search}>Post event</ButtonLink>
-        </GreyBox>
+        <>
+            <NavLink to={'/book-dj' + search}>
+                <GreyBox style={{ textAlign: 'center' }}>
+                    <h3>Post event to see more DJs</h3>
+                    <div style={{ margin: '24px auto 0' }}>
+                        <PrimaryButton>Post event</PrimaryButton>
+                    </div>
+                </GreyBox>
+            </NavLink>
+            <Hr style={{ marginTop: 30, marginBottom: 30 }} />
+        </>
     );
 };
 
 const SearchResults = ({ topDjs, form, pagination, loading, setPagination, searchRef }) => {
     const { pathname, search } = useLocation();
     const locationName = form?.locationName?.split(', ')[0];
-    if (!topDjs.length) {
-        return <EmptySearch locationName={locationName} />;
-    }
+
+    useEffect(() => {
+        try {
+            if (!topDjs.length) {
+                trackEmptySearch(locationName);
+            }
+        } catch (error) {}
+    }, [locationName, topDjs.length]);
 
     const { genres } = form;
     return (
@@ -269,6 +271,7 @@ const SearchResults = ({ topDjs, form, pagination, loading, setPagination, searc
                         filterGenres={genres?.map((s) => s.toLowerCase())}
                     />
                 ))}
+                {!pagination?.hasNextPage && <EmptySearch />}
             </SearchList>
             {pagination && (
                 <Row style={{ marginBottom: 30 }}>
