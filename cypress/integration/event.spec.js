@@ -47,7 +47,7 @@ describe('Event', () => {
             cy.get('h1').contains('Test event');
         });
 
-        it.only('Post from direct booking page', () => {
+        it('Post from direct booking page', () => {
             cy.request('POST', '/test/clearDB');
             cy.request('POST', '/test/seed/djs');
             cy.visit('/user/dj-lolbox-1/overview');
