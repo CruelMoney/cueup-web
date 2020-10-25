@@ -411,7 +411,14 @@ const HiddenFileInput = styled.input.attrs({ type: 'file' })`
 const AlbumWrapper = styled.div`
     margin-right: 20px;
     margin-bottom: 24px;
+    width: 220px;
+    min-width: 220px;
+    height: 220px;
     position: relative;
+    background-color: #eff2f5;
+    border-radius: 3px;
+    overflow: hidden;
+    cursor: pointer;
 `;
 
 const AlbumText = styled(SecondaryButton)`
@@ -422,12 +429,11 @@ const AlbumText = styled(SecondaryButton)`
     pointer-events: none;
 `;
 const AlbumCover = styled(GracefullImage)`
-    border-radius: 3px;
-    width: 220px;
-    min-width: 220px;
-    height: 220px;
+    height: 100%;
+    width: 100%;
     object-fit: cover;
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.3);
+
     cursor: pointer;
 `;
 const CoverPicture = ({ url, onChange, imageFile }) => {
@@ -461,8 +467,8 @@ const CoverPicture = ({ url, onChange, imageFile }) => {
     }, [imageFile, onChange]);
 
     return (
-        <AlbumWrapper>
-            <AlbumCover src={src} onClick={(e) => input.current.click(e)} />
+        <AlbumWrapper onClick={(e) => input.current.click(e)}>
+            <AlbumCover src={src} />
             <HiddenFileInput ref={input} onChange={onFileChosen} accept="image/*" />
             <AlbumText>Change image</AlbumText>
         </AlbumWrapper>

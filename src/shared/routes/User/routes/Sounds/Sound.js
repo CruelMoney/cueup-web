@@ -303,10 +303,10 @@ const AlbumCoverMobile = styled(AlbumCover)`
     width: 50px;
     min-width: 50px;
     height: 50px;
-    display: none;
+    display: none !important;
     border-radius: 1px;
     @media only screen and (max-width: 768px) {
-        display: block;
+        display: block !important;
     }
 `;
 
