@@ -25,6 +25,7 @@ const CREATE_EVENT = gql`
         $djId: ID
         $maxPrice: Int
         $eventType: [String!]
+        $openForAllDjs: Boolean
     ) {
         createEvent(
             name: $name
@@ -44,6 +45,7 @@ const CREATE_EVENT = gql`
             djId: $djId
             maxPrice: $maxPrice
             eventType: $eventType
+            openForAllDjs: $openForAllDjs
         ) {
             id
             hash

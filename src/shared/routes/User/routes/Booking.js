@@ -57,6 +57,7 @@ const Booking = ({ user, loading, translate }) => {
         contactName: userData?.me?.userMetadata.fullName,
         contactEmail: userData?.me?.email,
         contactPhone: userData?.me?.userMetadata.phone,
+        openForAllDjs: true,
     });
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);
 
@@ -346,14 +347,14 @@ const EventForm = ({
                     <RadioSelect
                         containerStyle={{ width: 'auto', marginRight: 44 }}
                         multi
-                        setChosen={() => setValue({ allowOtherDjs: !form.allowOtherDjs })}
+                        setChosen={() => setValue({ openForAllDjs: !form.openForAllDjs })}
                         options={[
                             {
-                                checked: form.allowOtherDjs,
-                                title: 'Allow other DJs to see event',
+                                checked: form.openForAllDjs,
+                                title: 'Allow other DJs to make offers',
                                 description:
-                                    "All DJs can make an offer if they're interested in your event.",
-                                value: 'allowOtherDjs',
+                                    "Other DJs in the area can make an offer if they're interested in your event.",
+                                value: 'openForAllDjs',
                             },
                         ]}
                     />
@@ -502,7 +503,5 @@ const SuccessMessage = ({ translate, userId }) => {
         </Col>
     );
 };
-
-const AllowOtherDjsToggle = () => {};
 
 export default Booking;
