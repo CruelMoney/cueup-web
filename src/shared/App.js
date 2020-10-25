@@ -33,7 +33,7 @@ import './css/style.css';
 
 const App = () => {
     useEffect(() => {
-        // setTimeout(loadSupportChat, 4000);
+        setTimeout(loadSupportChat, 8000);
     }, []);
 
     return (
