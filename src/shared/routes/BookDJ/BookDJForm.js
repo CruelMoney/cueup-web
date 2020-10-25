@@ -79,7 +79,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
                 }
             }
         },
-        [check, form, history, routeLocation.pathname, runValidations]
+        [check, form, history, routeLocation.pathname, runValidations, translate]
     );
 
     return (
