@@ -41,12 +41,12 @@ const Step1 = ({
         const errors = runValidations();
 
         if (errors.length === 0) {
-            const { date, timeZoneId, location, error } = await check(form);
+            const { date, timeZone, location, error } = await check(form);
             if (!error) {
                 next({
                     ...form,
                     date,
-                    timeZoneId,
+                    timeZone,
                     location,
                 });
             }

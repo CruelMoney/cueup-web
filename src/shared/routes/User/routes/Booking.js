@@ -44,7 +44,7 @@ const Booking = ({ user, loading, translate }) => {
     const [eventCreated, setEventCreated] = useState(false);
     const { data: userData } = useQuery(ME);
     const [create, { loading: createLoading, error }] = useCreateEvent();
-
+    const [errorMessage, setError] = useState();
     const [loginPopup, setloginPopup] = useState(false);
     const [signupPopup, setSignupPopup] = useState(false);
 
@@ -65,7 +65,7 @@ const Booking = ({ user, loading, translate }) => {
 
     const requestBooking = async () => {
         const refs = runValidations(true);
-
+        console.log(refs);
         if (refs.length) {
             return;
         }
@@ -84,7 +84,7 @@ const Booking = ({ user, loading, translate }) => {
 
             const result = await create({
                 ...form,
-                timeZoneId,
+                timeZone: timeZoneId,
                 djId: user.id,
                 genres: user.genres,
                 location: {
@@ -97,6 +97,7 @@ const Booking = ({ user, loading, translate }) => {
             const { data } = result;
             setEventCreated(data?.createEvent);
         } catch (error) {
+            setError(error);
             Sentry.captureException(error);
         }
     };
@@ -163,7 +164,7 @@ const Booking = ({ user, loading, translate }) => {
                     loginPopup={loginPopup}
                     eventCreated={eventCreated}
                     createLoading={createLoading}
-                    error={error}
+                    error={error || errorMessage}
                     showLogin={() => setloginPopup(true)}
                 />
             </Container>

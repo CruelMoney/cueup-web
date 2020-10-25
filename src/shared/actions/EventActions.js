@@ -32,7 +32,7 @@ export const getLocation = (location) => {
         } else {
             GeoCoder.codeAddress(location, (geoResult) => {
                 if (geoResult.error) {
-                    reject('The location could not be found, try another city');
+                    reject('The location could not be found, try another city.');
                 } else {
                     GeoCoder.getTimeZone(geoResult.position)
                         .then((res) => {
@@ -76,18 +76,18 @@ export const useCheckDjAvailability = () => {
                         longitude: geoResult.position.lng,
                         name: locationName,
                     },
-                    timeZoneId: geoResult.timeZoneId,
+                    timeZone: geoResult.timeZoneId,
                 };
 
                 const moment = await import('moment-timezone');
                 const momentDate = date ? moment.default(date) : moment.default().add(4, 'months');
 
-                const { timeZoneId, location } = geoData;
+                const { timeZone, location } = geoData;
 
                 const newMoment = moment.tz(
                     momentDate.format('YYYY-MM-DDTHH:mm:ss'),
                     'YYYY-MM-DDTHH:mm:ss',
-                    timeZoneId
+                    timeZone
                 );
 
                 const variables = {
@@ -100,7 +100,7 @@ export const useCheckDjAvailability = () => {
                 return {
                     result: data?.djsAvailable,
                     date: newMoment.toDate(),
-                    timeZoneId,
+                    timeZone,
                     location,
                 };
             } catch (err) {
@@ -115,7 +115,7 @@ export const useCheckDjAvailability = () => {
                 setLoading(false);
             }
         },
-        [mutate]
+        [mutate, loadGoogleMaps]
     );
 
     return [check, { loading, error: error }];

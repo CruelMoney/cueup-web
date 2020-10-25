@@ -48,7 +48,7 @@ const DjSearch = () => {
             const errors = runValidations();
             if (errors.length === 0) {
                 await LazyRequestForm.load();
-                const { result, date, timeZoneId, location, error } = await check(form);
+                const { result, date, timeZone, location, error } = await check(form);
                 if (error) {
                     return;
                 }
@@ -58,7 +58,7 @@ const DjSearch = () => {
                         state: {
                             activeStep: 2,
                             date: form.date,
-                            timeZoneId,
+                            timeZone,
                             location,
                         },
                     });
@@ -69,7 +69,7 @@ const DjSearch = () => {
                         state: {
                             activeStep: 2,
                             date,
-                            timeZoneId,
+                            timeZone,
                             location,
                         },
                     });

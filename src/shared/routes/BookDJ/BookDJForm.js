@@ -45,7 +45,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
             if (errors.length === 0) {
                 await LazyRequestForm.load();
 
-                const { result, date, timeZoneId, location, error } = await check(form);
+                const { result, date, timeZone, location, error } = await check(form);
 
                 if (error) {
                     return;
@@ -60,7 +60,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
                                 speakers: form.speakers,
                             },
                             date: form.date,
-                            timeZoneId,
+                            timeZone,
                             location,
                         },
                     });
@@ -72,7 +72,7 @@ const BookDJForm = ({ checkAvailability, activeLocation }) => {
                         state: {
                             activeStep: 2,
                             date,
-                            timeZoneId,
+                            timeZone,
                             location,
                             speakers: !!form.speakers,
                             lights: !!form.lights,

@@ -26,29 +26,26 @@ export default {
         }
     },
 
-    getTimeZone: function ({ lng, lat }) {
-        return new Promise((resolve, reject) => {
-            fetch(
+    getTimeZone: async ({ lng, lat }) => {
+        try {
+            const data = await fetch(
                 `https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lng}&timestamp=${
                     Date.now() / 1000
                 }&key=${window.__ENVIRONMENT__.GOOGLE_API_KEY}`
-            )
-                .then((res) => {
-                    if (res.ok) {
-                        return res.json();
-                    }
-                    reject('Could not get timezone');
-                })
-                .then((data) => {
-                    if (data.status === 'OK') {
-                        resolve(data);
-                    } else {
-                        reject('Could not get timezone: ' + data.status);
-                    }
-                })
-                .catch(() => {
-                    reject('Could not get timezone');
-                });
-        });
+            );
+
+            if (data.ok) {
+                const result = await data.json();
+                if (result.status === 'OK') {
+                    return result;
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+        // fallback to user timezone
+        return {
+            timeZoneId: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        };
     },
 };
