@@ -5,7 +5,6 @@ import { useQuery } from '@apollo/client';
 import styled from 'styled-components';
 import { useServerContext } from 'components/hooks/useServerContext';
 import useTranslate from 'components/hooks/useTranslate';
-import { appRoutes } from 'constants/locales/appRoutes';
 import SmartNavigation from 'components/Navigation';
 import { Container, HideBelow, RowWrap, ShowBelow } from 'components/Blocks';
 import Footer from 'components/common/Footer';

@@ -20,7 +20,7 @@ export const useLazyLoadScript = (src) => {
 };
 
 const scripts = {};
-function loadScript(src) {
+export function loadScript(src) {
     return new Promise((resolve, reject) => {
         // check if script already exists
         const existingScript = document.querySelector(`script[src="${src}"]`);

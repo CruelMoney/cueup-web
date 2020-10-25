@@ -4,47 +4,33 @@ import { useCallback, useState } from 'react';
 import { useHistory } from 'react-router';
 import { CHECK_DJ_AVAILABILITY, CREATE_EVENT } from 'components/common/RequestForm/gql';
 import { trackCheckAvailability, trackEventPosted } from 'utils/analytics';
-import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
+import { useLazyLoadScript, loadScript } from 'components/hooks/useLazyLoadScript';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
 import GeoCoder from '../utils/GeoCoder';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
-export const getLocation = (location) => {
+export const getLocation = async (location) => {
+    await loadScript(
+        'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
+    );
+
     return new Promise((resolve, reject) => {
-        if (location.toUpperCase() === 'CURRENT LOCATION') {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        resolve({
-                            position: {
-                                lat: position.coords.latitude,
-                                lng: position.coords.longitude,
-                            },
-                        });
-                    },
-                    (err) => reject('Current location could not be found. Please enter the city.')
-                );
+        GeoCoder.codeAddress(location, (geoResult) => {
+            if (geoResult.error) {
+                reject('The location could not be found, try another city.');
             } else {
-                reject('Current location not supported in this browser. Please enter the city.');
+                GeoCoder.getTimeZone(geoResult.position)
+                    .then((res) => {
+                        resolve({ ...geoResult, ...res });
+                    })
+                    .catch((err) => {
+                        console.log({ err });
+                        reject(err);
+                    });
             }
-        } else {
-            GeoCoder.codeAddress(location, (geoResult) => {
-                if (geoResult.error) {
-                    reject('The location could not be found, try another city.');
-                } else {
-                    GeoCoder.getTimeZone(geoResult.position)
-                        .then((res) => {
-                            resolve({ ...geoResult, ...res });
-                        })
-                        .catch((err) => {
-                            console.log({ err });
-                            reject(err);
-                        });
-                }
-            });
-        }
+        });
     });
 };
 
@@ -140,10 +126,25 @@ export const useCreateEvent = (theEvent) => {
             if (!isDevelopment) {
                 trackEventPosted();
             }
+            let geoData = null;
+            if (!theEvent.location) {
+                const geoResult = await getLocation(theEvent.locationName);
+
+                geoData = {
+                    location: {
+                        latitude: geoResult.position.lat,
+                        longitude: geoResult.position.lng,
+                        name: theEvent.locationName,
+                    },
+                    timeZone: geoResult.timeZoneId,
+                };
+            }
+
             const { data } = await mutate({
                 variables: parseEventForm({
                     ...theEvent,
                     ...variables,
+                    ...geoData,
                 }),
             });
 

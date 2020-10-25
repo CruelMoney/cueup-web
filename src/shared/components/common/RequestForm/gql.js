@@ -15,7 +15,7 @@ const CREATE_EVENT = gql`
         $contactPhone: String
         $speakers: Boolean
         $lights: Boolean
-        $date: DateTime!
+        $date: DateTime
         $startMinute: Int!
         $endMinute: Int!
         $genres: [String!]
