@@ -192,6 +192,10 @@ const FeaturedDjs = ({ djs, activeLocation }) => {
 };
 
 const OtherDjs = ({ djs, activeLocation, onClick }) => {
+    if (djs.length % 4 !== 0) {
+        djs = djs.slice(0, 4);
+    }
+
     return (
         <CustomSection>
             <Container>

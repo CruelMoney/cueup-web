@@ -2,18 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components';
-import useScript from '@charlietango/use-script';
-import GeoCoder from 'utils/GeoCoder';
-import {
-    PrimaryButton,
-    Row,
-    Container,
-    Col,
-    RowMobileCol,
-    CardSimple,
-    CardInfo,
-    ShowBelow,
-} from 'components/Blocks';
+import { PrimaryButton, Row, Container, Col, CardSimple, ShowBelow } from 'components/Blocks';
 import { Body } from 'components/Text';
 
 import { appRoutes } from 'constants/locales/appRoutes';
@@ -210,10 +199,6 @@ const Location = (props) => {
         </div>
     );
 };
-
-const BottomCol = styled(Col)`
-    max-width: 480px;
-`;
 
 const HeroContent = styled.div`
     max-width: 480px;
