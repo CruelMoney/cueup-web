@@ -69,7 +69,7 @@ describe('Event', () => {
             cy.get('input[name=contactPhone]').type('24658061', { force: true });
             cy.get('input[name=contactEmail]').type('organizer@email.com', { force: true });
 
-            cy.get('[ data-cy=submit-event]').click();
+            cy.get('[data-cy=submit-event]').click();
             cy.get('h1').contains('Test event');
         });
     });

@@ -131,14 +131,19 @@ export const useCreateEvent = (theEvent) => {
                 trackEventPosted();
             }
             let geoData = null;
-            if (!theEvent.location) {
-                const geoResult = await getLocation(theEvent.locationName);
+            const variablesData = {
+                ...theEvent,
+                ...variables,
+            };
+
+            if (!variablesData.location) {
+                const geoResult = await getLocation(variablesData.locationName);
 
                 geoData = {
                     location: {
                         latitude: geoResult.position.lat,
                         longitude: geoResult.position.lng,
-                        name: theEvent.locationName,
+                        name: variablesData.locationName,
                     },
                     timeZone: geoResult.timeZoneId,
                 };
@@ -146,8 +151,7 @@ export const useCreateEvent = (theEvent) => {
 
             const { data } = await mutate({
                 variables: parseEventForm({
-                    ...theEvent,
-                    ...variables,
+                    ...variablesData,
                     ...geoData,
                 }),
             });
