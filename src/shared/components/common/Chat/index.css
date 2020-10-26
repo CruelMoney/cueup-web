@@ -1,7 +1,9 @@
 .messages {
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
     padding: 0 24px;
+    scrollbar-width: none;
 }
 .messages > div {
     width: 100%;

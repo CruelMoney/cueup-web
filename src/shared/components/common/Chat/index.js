@@ -6,7 +6,7 @@ import sendIcon from '@iconify/icons-ion/send';
 import TextareaAutosize from 'react-autosize-textarea';
 import usePushNotifications from 'components/hooks/usePushNotifications';
 import { BodySmall } from 'components/Text';
-import LoadingPlaceholder, { LoadingPlaceholder2 } from '../LoadingPlaceholder';
+import { LoadingPlaceholder2 } from '../LoadingPlaceholder';
 import { Avatar } from '../../Blocks';
 import useChat from './useChat';
 

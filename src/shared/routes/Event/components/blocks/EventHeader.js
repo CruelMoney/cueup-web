@@ -15,7 +15,6 @@ const getRoutes = (event, pathname) =>
 
 const StyledGradientBg = styled(GradientBg)`
     height: 300px;
-    top: -252px;
 `;
 
 const Header = ({ theEvent, loading, pathname }) => {

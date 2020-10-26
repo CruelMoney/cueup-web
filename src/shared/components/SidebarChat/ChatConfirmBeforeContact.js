@@ -27,10 +27,11 @@ export const ChatConfirmBeforeContact = ({ event, gigId }) => {
         >
             <ContentContainer data-cy="subscription-popup">
                 <Col style={{ maxWidth: 450, textAlign: 'center', alignItems: 'center' }}>
-                    <h1>Whoops! Looks like you tried to share contact information.</h1>
+                    <h2>Whoops! Looks like you tried to share contact information.</h2>
 
                     <Body style={{ marginBottom: 30 }}>
-                        You can only share contact information once you've confirmed the booking.
+                        For security you can only share contact information once you've confirmed
+                        the booking.
                     </Body>
                     <PrimaryButton onClick={onInitiateBooking}>Book now</PrimaryButton>
                     <TeritaryButton
@@ -39,7 +40,7 @@ export const ChatConfirmBeforeContact = ({ event, gigId }) => {
                         }}
                         style={{ marginTop: 12, maxWidth: '100%' }}
                     >
-                        Book later
+                        Not yet
                     </TeritaryButton>
                 </Col>
             </ContentContainer>

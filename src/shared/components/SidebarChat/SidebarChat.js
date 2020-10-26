@@ -225,28 +225,49 @@ const ChatWrapper = ({ chat, event, onClose }) => {
             onMouseLeave={() => (document.body.style.overflowY = '')}
         >
             <ChatHeader>
-                <NavLink
-                    to={{
-                        pathname,
-                        state: { gigId: chatId },
-                        search: `?gigId=${chatId}&eventId=${event.id}&hash=${event.hash}`,
-                    }}
-                >
-                    <TeritaryButton isWrapper title={`See ${receiver.name}'s profile`}>
-                        <Row middle>
-                            <Avatar
-                                small
-                                src={receiver.image}
-                                style={{ zIndex: 1, marginRight: '8px' }}
-                            />
-                            <NameBlock>
-                                {receiver.nickName || receiver.name}
-                                {receiver.nickName && <span>{receiver.name}</span>}
-                            </NameBlock>
-                        </Row>
-                    </TeritaryButton>
-                </NavLink>
-                <ClosePopupButton small onClick={onClose} />
+                <Col>
+                    <Row between>
+                        <NavLink
+                            to={{
+                                pathname,
+                                state: { gigId: chatId },
+                                search: `?gigId=${chatId}&eventId=${event.id}&hash=${event.hash}`,
+                            }}
+                        >
+                            <TeritaryButton isWrapper title={`See ${receiver.name}'s profile`}>
+                                <Row middle>
+                                    <Avatar
+                                        small
+                                        src={receiver.image}
+                                        style={{ zIndex: 1, marginRight: '8px' }}
+                                    />
+                                    <NameBlock>
+                                        {receiver.nickName || receiver.name}
+                                        {receiver.nickName && <span>{receiver.name}</span>}
+                                    </NameBlock>
+                                </Row>
+                            </TeritaryButton>
+                        </NavLink>
+
+                        <ClosePopupButton small onClick={onClose} />
+                    </Row>
+                    <a
+                        href={'https://cueup.zendesk.com/hc/en-us/articles/360017164300'}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <BodySmall
+                            style={{
+                                fontSize: 14,
+                                marginTop: 3,
+                                marginLeft: 6,
+                                textDecoration: 'underline',
+                            }}
+                        >
+                            You have money-back guarantee when confirming the booking through Cueup.
+                        </BodySmall>
+                    </a>
+                </Col>
             </ChatHeader>
             <div style={{ flex: 1 }} />
             <ChatMessagesWrapper>

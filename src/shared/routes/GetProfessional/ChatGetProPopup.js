@@ -35,7 +35,7 @@ export const ChatGoProPopup = () => {
                 </Col>
             ) : (
                 <Col style={{ maxWidth: 450, textAlign: 'center', alignItems: 'center' }}>
-                    <h1>Whoops! Looks like you tried to share contact information</h1>
+                    <h2>Whoops! Looks like you tried to share contact information</h2>
 
                     <Body style={{ marginBottom: 30 }}>
                         You can only share contact information once the gig is confirmed by the

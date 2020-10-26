@@ -14,7 +14,6 @@ const routes = [
 
 const StyledGradientBg = styled(GradientBg)`
     height: 300px;
-    top: -252px;
 `;
 
 const CustomCol = styled(FullWidthCol)`

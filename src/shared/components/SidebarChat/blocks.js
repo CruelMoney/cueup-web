@@ -52,8 +52,8 @@ export const ChatMessagesWrapper = styled.div`
 
     .messages {
         padding: 1em;
-        padding-top: 60px;
-        height: 409px;
+        padding-top: 120px;
+        height: 455px;
     }
     .messages-date {
         font-size: 1em;
@@ -99,7 +99,7 @@ export const ChatHeader = styled.div`
 export const ChatBox = styled.div`
     border-radius: 8px;
     background-color: #fff;
-    height: 455px;
+    height: 500px;
     width: 328px;
     overflow-y: hidden;
     max-height: calc(100vh - 60px - 24px);
