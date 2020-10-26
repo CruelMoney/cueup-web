@@ -565,11 +565,11 @@ export const GradientBg = styled.section`
 
     @media only screen and (max-width: 990px) {
         min-height: 0;
-        height: auto;
+
         position: relative;
         top: 0;
-        padding-top: 0;
-        height: 250px;
+        padding-top: 80px;
+        height: auto;
     }
     .iconRow {
         color: #fff;

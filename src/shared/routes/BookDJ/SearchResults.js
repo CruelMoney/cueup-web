@@ -313,7 +313,7 @@ const SearchEntryWrapper = styled(Row)`
             text-decoration: underline;
         }
     }
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 767px) {
         flex-direction: column;
         ${SearchEntryRightSide} {
             padding: 12px 0;
@@ -421,7 +421,7 @@ const ImageGrid = styled.ol`
         object-fit: cover;
     }
 
-    @media only screen and (max-width: 1200px) and (min-width: 769px) {
+    @media only screen and (max-width: 1191px) and (min-width: 1023px) {
         width: 180px;
         min-width: 180px;
         grid-template:
@@ -434,7 +434,7 @@ const ImageGrid = styled.ol`
             display: block;
         }
     }
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 767px) {
         width: 100%;
         min-width: 100%;
         height: 46vw;

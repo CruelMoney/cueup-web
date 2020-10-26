@@ -62,7 +62,7 @@ const Search = (props) => {
                 <SearchLayout>
                     <LeftSide {...props} />
                     <SearchResults {...props} />
-                    <ShowBelow width={768} style={{ width: '100%' }}>
+                    <ShowBelow width={1023} style={{ width: '100%' }}>
                         <RequestOffers {...props} />
                     </ShowBelow>
                 </SearchLayout>
@@ -87,7 +87,7 @@ const LeftSideWrapper = styled.div`
     position: sticky;
     margin-bottom: 15px;
     margin-right: 30px;
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 1023px) {
         position: relative;
         max-width: 100%;
         min-width: 100%;
@@ -98,7 +98,7 @@ const SearchLayout = styled.div`
     display: flex;
     position: relative;
     align-items: flex-start;
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 1023px) {
         flex-direction: column;
     }
 `;
@@ -216,7 +216,7 @@ const LeftSide = (props) => {
     return (
         <LeftSideWrapper>
             <Filters {...props} />
-            <HideBelow width={768}>
+            <HideBelow width={1023}>
                 <RequestOffers {...props} />
             </HideBelow>
         </LeftSideWrapper>
