@@ -116,11 +116,15 @@ const SoundBar = (props) => {
 };
 
 const SoundBarsRow = styled(Row)`
-    height: ${({ small }) => (small ? '50px' : '100px')};
+    height: ${({ small }) => (small ? '50px' : '80px')};
     align-items: center;
     cursor: pointer;
     touch-action: none;
     ${pulseLoad}
+    margin: 12px 0;
+    @media only screen and (max-width: 769px) {
+        height: 50px;
+    }
 `;
 
 export default SoundBars;

@@ -54,7 +54,13 @@ const StatusButton = styled.button`
 const HeaderDesktop = (props) => {
     const { user, loading, children, routes } = props;
     return (
-        <GradientBg isPro={user?.appMetadata.isPro} coverPhoto={user && user.coverPhoto}>
+        <GradientBg
+            isPro={user?.appMetadata.isPro}
+            coverPhoto={user && user.coverPhoto}
+            style={{
+                marginBottom: 42,
+            }}
+        >
             <Container>
                 {children}
                 <Row className="wrapper">
@@ -69,20 +75,8 @@ const HeaderDesktop = (props) => {
     );
 };
 
-const StatsWrapper = styled.div`
-    margin-top: 48px;
-
-    @media only screen and (max-width: 425px) {
-        margin-top: 24px;
-    }
-`;
-
 const HeaderWrapper = styled.div`
     padding-bottom: 48px;
-
-    @media only screen and (max-width: 425px) {
-        padding-bottom: 24px;
-    }
 `;
 
 const UserContent = ({ user, statusLabel, setShowing }) => {

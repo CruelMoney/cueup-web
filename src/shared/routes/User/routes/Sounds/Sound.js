@@ -295,7 +295,7 @@ const AlbumCover = styled(GracefullImage)`
     object-fit: cover;
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.3);
     @media only screen and (max-width: 768px) {
-        display: none;
+        display: none !important;
     }
 `;
 
