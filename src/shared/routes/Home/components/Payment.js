@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { NavLink } from 'react-router-dom';
 import { TextAccent } from 'routes/BecomeDj/components/blocks/TextAccent';
 
 import { SubTitle } from 'routes/BecomeDj/components/SubTitle';
-import { Container, Col } from 'components/Blocks';
+import { Container, Col, ReadMore } from 'components/Blocks';
 import { H2 } from 'components/Text';
 
 const Bg2 = styled.div`
@@ -22,7 +23,7 @@ const PaymentSection = () => {
     return (
         <Bg2>
             <Container>
-                <Col>
+                <Col style={{ textAlign: 'center' }}>
                     <TextAccent center>Payment</TextAccent>
                     <H2 white center>
                         Money back
@@ -30,9 +31,20 @@ const PaymentSection = () => {
                         guarantee
                     </H2>
                     <SubTitle white>
-                        If a DJ cancels on you, we have your back and will immediately refund all
-                        the money. We'll then make an extensive effort to find you a new DJ.
+                        If you are not satisfied with the performance, we'll refund you. If the DJ
+                        cancels on you, we'll refund you - and make an extensive effort to find you
+                        a new DJ.
                     </SubTitle>
+                    <a
+                        style={{ marginTop: 24 }}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        href="https://cueup.zendesk.com/hc/en-us/articles/360017164300"
+                    >
+                        <ReadMore center white size="18px" uppercase={false}>
+                            Read more
+                        </ReadMore>
+                    </a>
                 </Col>
             </Container>
         </Bg2>
