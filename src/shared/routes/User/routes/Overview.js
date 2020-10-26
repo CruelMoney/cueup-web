@@ -7,7 +7,7 @@ import addCircleIcon from '@iconify/icons-ion/add-circle';
 import { userRoutes } from 'constants/locales/appRoutes';
 import { Title, Citation, Cite, Body } from '../../../components/Text';
 import ReadMoreExpander from '../../../components/ReadMoreExpander';
-import { Col, Row, ReadMore, Show, InfoBox } from '../../../components/Blocks';
+import { Col, Row, ReadMore, Show, InfoBox, Hr } from '../../../components/Blocks';
 import Map from '../../../components/common/Map';
 import QuotationMarkIcon from '../../../components/graphics/Quotes';
 import { PolicyDisplayer } from '../components/CancelationPolicyPopup';
@@ -29,13 +29,13 @@ const HalfCol = styled(Col)`
 `;
 
 const HalfColLeft = styled(HalfCol)`
-    border-right: 1px solid #e9ecf0;
     @media only screen and (max-width: 990px) {
         border: none;
     }
 `;
 
 const HalfColRight = styled(HalfCol)`
+    border-left: 2px solid #e9ecf0;
     @media only screen and (max-width: 990px) {
         display: none;
     }
@@ -43,14 +43,17 @@ const HalfColRight = styled(HalfCol)`
 
 const Item = styled.div`
     position: relative;
-    border-bottom: 1px solid #e9ecf0;
+    border-bottom: 2px solid #e9ecf0;
     padding: 42px;
+    @media only screen and (max-width: 768px) {
+        border-bottom: none;
+    }
 `;
 
 const LeftItem = styled(Item)`
     position: relative;
     padding: 42px 42px 42px 0;
-    @media only screen and (max-width: 425px) {
+    @media only screen and (max-width: 768px) {
         padding: 42px 0px 42px 0px;
         border-bottom: none;
     }
@@ -62,7 +65,7 @@ const SoundLayout = styled(Item)`
     @media only screen and (max-width: 990px) {
         padding: 42px 0px 18px 0px;
     }
-    @media only screen and (max-width: 425px) {
+    @media only screen and (max-width: 768px) {
         padding: 42px 0px 0px 0px;
         margin-top: -42px;
         border-bottom: none;
@@ -78,7 +81,7 @@ const GenresLayout = styled(Item)`
     @media only screen and (max-width: 990px) {
         padding: 42px 0px 18px 0px;
     }
-    @media only screen and (max-width: 425px) {
+    @media only screen and (max-width: 768px) {
         padding: 42px 0px 18px 0px;
         margin-right: -15px;
     }
@@ -93,7 +96,7 @@ const Genre = styled(InfoBox)`
         margin-left: 0px;
         margin-right: 24px;
     }
-    @media only screen and (max-width: 425px) {
+    @media only screen and (max-width: 768px) {
         margin-right: 15px;
     }
 `;
@@ -280,7 +283,7 @@ const PhotoGridWrapper = styled.section`
         height: 100%;
         object-fit: cover;
     }
-    @media only screen and (max-width: 425px) {
+    @media only screen and (max-width: 768px) {
         margin-left: -15px;
         margin-right: -15px;
     }
@@ -462,11 +465,14 @@ const Overview = ({ user, loading, location, history }) => {
                     <Bio isOwn={isOwn} firstName={firstName} bio={bio} style={bioStyle} />
                     {showSelectedSound && (
                         <Show maxWidth="990px">
+                            <Hr style={{ marginBottom: 30 }} />
                             <HighlightedSound user={user} />
+                            <Hr style={{ marginTop: 30 }} />
                         </Show>
                     )}
                     <Show maxWidth="990px">
                         <Genres genres={genres} style={genresStyle} isOwn={isOwn} />
+                        <Hr />
                     </Show>
                     {showPhotosArea && <PhotosArea {...user} />}
                     {highlightedReview ? (
@@ -485,7 +491,9 @@ const Overview = ({ user, loading, location, history }) => {
                     {user.isDj && (
                         <Show maxWidth="990px">
                             <MobileExpandWidth>
+                                <Hr />
                                 <MapArea playingLocation={playingLocation} isOwn={isOwn} />
+                                <Hr />
                             </MobileExpandWidth>
                         </Show>
                     )}

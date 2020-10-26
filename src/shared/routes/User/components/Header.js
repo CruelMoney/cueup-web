@@ -101,14 +101,14 @@ const Header = (props) => {
 
     return (
         <>
-            <Media greaterThan="sm">
+            <Media greaterThanOrEqual="md">
                 <HeaderDesktop
                     {...props}
                     routes={getRoutesFromUser(user, pathname)}
                     statusLabel={statusContent?.title[approvedKey]}
                 />
             </Media>
-            <Media at="sm">
+            <Media at={'sm'}>
                 <HeaderMobile
                     {...props}
                     routes={getRoutesFromUser(user, pathname)}

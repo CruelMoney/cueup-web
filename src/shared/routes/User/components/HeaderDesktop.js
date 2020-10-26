@@ -15,30 +15,15 @@ const ReviewsCount = styled.p`
     margin-left: 9px;
     margin-bottom: 0;
     font-weight: 600;
-    @media only screen and (max-width: 425px) {
-        font-size: 12px;
-        margin-left: 3px;
-    }
 `;
 
 const RatingWrapper = styled.div`
     display: inline-block;
-
-    @media only screen and (max-width: 425px) {
-        .ratingStar {
-            padding-left: 2px;
-            padding-right: 2px;
-            svg {
-                width: 13px;
-                height: 13px;
-            }
-        }
-    }
 `;
 
 const HeaderSpacing = styled(Spacing)`
     margin-right: 60px;
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 990px) {
         margin-right: 30px;
     }
 `;

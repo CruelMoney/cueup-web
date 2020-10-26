@@ -230,7 +230,7 @@ const UserContainer = styled(Container)`
         margin-top: -220px;
         margin-bottom: 30px;
         margin-right: 60px;
-        @media only screen and (max-width: 768px) {
+        @media only screen and (max-width: 990px) {
             margin-right: 30px;
         }
     }
@@ -481,7 +481,7 @@ const ProfileImg = styled(GracefullImage)`
     width: 300px;
     height: 300px;
     object-fit: cover;
-    @media only screen and (max-width: 900px) {
+    @media only screen and (max-width: 990px) {
         width: 250px;
         height: 250px;
     }

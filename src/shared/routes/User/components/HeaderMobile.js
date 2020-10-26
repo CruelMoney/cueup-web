@@ -15,47 +15,10 @@ import {
     SecondaryButton,
     Hr,
 } from '../../../components/Blocks';
-import { Spacing } from '../../../components/Sidebar';
 import { HeaderTitle, BodyBold } from '../../../components/Text';
 
-import { Stats, CertifiedVerified } from './Common';
+import { CertifiedVerified } from './Common';
 import BookingButton from './BookingButton';
-
-const ReviewsCount = styled.p`
-    opacity: 0.6;
-    font-size: 15px;
-    color: #ffffff;
-    display: inline-block;
-    margin-left: 9px;
-    margin-bottom: 0;
-    font-weight: 600;
-    @media only screen and (max-width: 425px) {
-        font-size: 12px;
-        margin-left: 3px;
-    }
-`;
-
-const RatingWrapper = styled.div`
-    display: inline-block;
-
-    @media only screen and (max-width: 425px) {
-        .ratingStar {
-            padding-left: 2px;
-            padding-right: 2px;
-            svg {
-                width: 13px;
-                height: 13px;
-            }
-        }
-    }
-`;
-
-const HeaderSpacing = styled(Spacing)`
-    margin-right: 60px;
-    @media only screen and (max-width: 768px) {
-        margin-right: 30px;
-    }
-`;
 
 const StatusButton = styled.button`
     background: rgba(255, 255, 255, 0.4);
@@ -89,7 +52,6 @@ const HeaderMobile = (props) => {
                 <Container>
                     {children}
                     <Row className="wrapper">
-                        <HeaderSpacing />
                         <FullWidthCol>
                             {loading ? null : <UserContent {...props} />}
                             {/* <Navigation routes={routes} /> */}

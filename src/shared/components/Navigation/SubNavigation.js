@@ -17,7 +17,7 @@ const StyledNav = styled.nav`
 `;
 
 const Filler = styled.span`
-    @media only screen and (max-width: 900px) {
+    @media only screen and (max-width: 990px) {
         display: none;
     }
 `;
@@ -38,7 +38,7 @@ const StyledLink = styled(NavLink)`
         opacity: 1;
         color: #ffffff;
     }
-    @media only screen and (max-width: 900px) {
+    @media only screen and (max-width: 990px) {
         font-size: 15px;
     }
 
