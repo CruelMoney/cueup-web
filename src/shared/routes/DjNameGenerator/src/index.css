@@ -312,10 +312,6 @@ a {
     -ms-flex-align: end;
     font-size: 16px;
     height: 2.4em;
-    opacity: 0.2;
-}
-.created-by:hover {
-    opacity: 1;
 }
 
 svg.logo {
@@ -713,6 +709,14 @@ svg.logo {
         fill: rgb(49, 218, 255);
         height: 60px;
         width: 60px;
+    }
+
+    .show-options-button-first {
+        border-radius: 24px;
+        height: 48px;
+        margin-bottom: 6px;
+        margin-left: 6px;
+        width: 120px;
     }
 
     .show-options-button svg {

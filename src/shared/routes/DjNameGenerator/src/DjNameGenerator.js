@@ -191,14 +191,6 @@ function App({ match, history }) {
                             <ContinueButton show={hasGenerated && hasAnimated}>
                                 Become DJ
                             </ContinueButton>
-
-                            <ContinueButton
-                                show={!hasGenerated}
-                                className={'mobile-only'}
-                                onClick={() => setSidebar(true)}
-                            >
-                                Let's go
-                            </ContinueButton>
                         </div>
                     </div>
                 </div>
@@ -213,13 +205,17 @@ function App({ match, history }) {
                     <InstagramWidget />
                 </div>
 
-                <div
-                    className={
-                        'mobile-action-buttons mobile-only ' + (!hasGenerated ? ' hide' : '')
-                    }
-                >
-                    <ShowOptionsButton onClick={() => setSidebar(true)} />
-                    <RefreshButton onClick={() => innerGenerate()} />
+                <div className={'mobile-action-buttons mobile-only '}>
+                    {!hasGenerated && (
+                        <Button
+                            onClick={() => setSidebar(true)}
+                            className="show-options-button-first"
+                        >
+                            Start
+                        </Button>
+                    )}
+                    {hasGenerated && <ShowOptionsButton onClick={() => setSidebar(true)} />}
+                    {hasGenerated && <RefreshButton onClick={() => innerGenerate()} />}
                 </div>
             </animated.div>
 
