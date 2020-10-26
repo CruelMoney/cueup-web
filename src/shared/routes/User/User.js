@@ -46,16 +46,10 @@ import { Overview, Settings, Reviews, Gigs, Events, Booking, Photos, Sounds } fr
 import { USER, UPDATE_USER } from './gql';
 import BackToEvent from './components/BackToEvent';
 import Header from './components/Header';
-import {
-    Stats,
-    MobileBookingButton,
-    IconRow,
-    CertifiedVerified,
-    IconRowLink,
-} from './components/Common';
+import { Stats, IconRow, CertifiedVerified, IconRowLink } from './components/Common';
 import content from './content.json';
 
-const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
+const UserSidebar = ({ user, loading, bookingEnabled }) => {
     const { userMetadata = {}, appMetadata = {}, playingLocation, email, userSettings = {} } =
         user || {};
     const {
@@ -226,7 +220,7 @@ const UserSidebar = ({ user, loading, bookingEnabled, location }) => {
                     </Col>
                 </SidebarContent>
             )}
-            {bookingEnabled && <BookingButton user={user} location={location} />}
+            {bookingEnabled && <BookingButton user={user} />}
         </Sidebar>
     );
 };
@@ -270,11 +264,9 @@ const Content = React.memo(({ match, ...userProps }) => {
                 <Row style={{ alignItems: 'stretch' }}>
                     <Col>
                         <UserSidebar {...userProps} bookingEnabled={bookingEnabled} />
-                        {bookingEnabled && <MobileBookingButton {...userProps} />}
                     </Col>
                     <Col
                         style={{
-                            marginTop: '42px',
                             width: '100%',
                             marginBottom: '60px',
                             zIndex: 0,

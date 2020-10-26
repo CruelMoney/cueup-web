@@ -110,7 +110,7 @@ export const CTAButton = ({ children, loading, noIcon, ...props }) => {
             <GradientMouseAnimation>
                 <InnerGradient ref={ref} />
             </GradientMouseAnimation>
-            <span style={{ pointerEvents: 'none' }}>{children} </span>
+            <span style={{ pointerEvents: 'none', margin: noIcon ? 'auto' : 0 }}>{children} </span>
             {!noIcon && (
                 <CTAIcon>
                     {loading ? (

@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.2.5",
+    "@artsy/fresnel": "^1.2.2",
     "@charlietango/use-script": "^2.2.0",
     "@iconify/icons-entypo": "^1.0.5",
     "@iconify/icons-ion": "^1.0.16",

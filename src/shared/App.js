@@ -21,6 +21,7 @@ import LazyFaq from 'routes/Faq';
 import LazyBecomeDj from 'routes/BecomeDj';
 import LazyBlog from 'routes/Blog';
 import LazyHowItWorks from 'routes/HowItWorks';
+import { MediaContextProvider } from 'components/MediaContext';
 import { ProvideAppState, useAppState } from './components/hooks/useAppState';
 import Home from './routes/Home';
 import About from './routes/About';
@@ -37,12 +38,14 @@ const App = () => {
     }, []);
 
     return (
-        <ProvideAppState>
-            <ProvideMobileMenu>
-                <RouteWrapper />
-            </ProvideMobileMenu>
-            <div id="popup-container" />
-        </ProvideAppState>
+        <MediaContextProvider>
+            <ProvideAppState>
+                <ProvideMobileMenu>
+                    <RouteWrapper />
+                </ProvideMobileMenu>
+                <div id="popup-container" />
+            </ProvideAppState>
+        </MediaContextProvider>
     );
 };
 

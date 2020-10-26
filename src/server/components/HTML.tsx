@@ -1,5 +1,6 @@
 import React from 'react';
 import jsesc from 'jsesc';
+import { mediaStyle } from 'components/MediaContext';
 
 type Props = {
     children: any;
@@ -86,6 +87,7 @@ const HTML = ({
                 {helmet.link.toComponent()}
                 {helmet.script.toComponent()}
                 {styleTags.filter(Boolean).map((tag) => tag)}
+                <style type="text/css">{mediaStyle}</style>
                 <script
                     // eslint-disable-next-line react/no-danger
                     dangerouslySetInnerHTML={{

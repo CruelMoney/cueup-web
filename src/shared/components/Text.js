@@ -136,11 +136,7 @@ export const HeaderTitle = styled.h1`
     position: relative;
     @media only screen and (max-width: 425px) {
         font-size: 30px;
-        text-align: left;
         margin-bottom: 0;
-        > * {
-            display: none;
-        }
     }
     ${({ divider }) =>
         divider &&

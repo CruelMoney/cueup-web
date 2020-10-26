@@ -10,7 +10,16 @@ import { CTAButton } from 'components/CTAButton';
 import { GIG } from '../gql';
 import { LoadingIndicator } from '../../../components/Blocks';
 
-const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
+const InnerBookingButton = ({
+    user,
+    gig,
+    event,
+    hash,
+    offer,
+    showPaymentForm,
+    buttonStyle,
+    noIcon,
+}) => {
     const { setAppState } = useAppState();
     const { translate } = useTranslate();
     const { search } = useLocation();
@@ -23,7 +32,12 @@ const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
     if (canBePaid) {
         return (
             <>
-                <CTAButton data-cy="profile-cta" onClick={() => showPaymentForm(true)}>
+                <CTAButton
+                    noIcon={noIcon}
+                    style={buttonStyle}
+                    data-cy="profile-cta"
+                    onClick={() => showPaymentForm(true)}
+                >
                     BOOK {offer.offer.formatted}
                 </CTAButton>
             </>
@@ -37,7 +51,9 @@ const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
     if (canBeReviewd) {
         return (
             <NavLink to={`${translate(appRoutes.event)}/${event.id}/${hash}/${eventRoutes.review}`}>
-                <CTAButton data-cy="profile-cta">REVIEW</CTAButton>
+                <CTAButton noIcon={noIcon} style={buttonStyle} data-cy="profile-cta">
+                    REVIEW
+                </CTAButton>
             </NavLink>
         );
     }
@@ -50,7 +66,12 @@ const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
         const { organizer } = event;
         return (
             <>
-                <CTAButton data-cy="profile-cta" onClick={openChat}>
+                <CTAButton
+                    noIcon={noIcon}
+                    style={buttonStyle}
+                    data-cy="profile-cta"
+                    onClick={openChat}
+                >
                     SEND MESSAGE
                 </CTAButton>
             </>
@@ -64,13 +85,16 @@ const BookingButton = ({ user, gig, event, hash, offer, showPaymentForm }) => {
                 search,
             }}
         >
-            <CTAButton data-cy="booking-button">BOOK NOW</CTAButton>
+            <CTAButton noIcon={noIcon} style={buttonStyle} data-cy="booking-button">
+                BOOK NOW
+            </CTAButton>
         </NavLink>
     );
 };
 
-const Wrapper = (props) => {
-    const { location, user } = props;
+const BookingButton = (props) => {
+    const { user, buttonStyle } = props;
+    const location = useLocation();
     const match = useRouteMatch();
     const history = useHistory();
 
@@ -93,7 +117,7 @@ const Wrapper = (props) => {
 
     if (loading) {
         return (
-            <CTAButton disabled data-cy="profile-cta">
+            <CTAButton style={buttonStyle} disabled data-cy="profile-cta">
                 <LoadingIndicator />
             </CTAButton>
         );
@@ -104,7 +128,7 @@ const Wrapper = (props) => {
     const { offer } = gig || {};
 
     return (
-        <BookingButton
+        <InnerBookingButton
             {...props}
             gig={gig}
             event={event}
@@ -119,4 +143,4 @@ const Wrapper = (props) => {
     );
 };
 
-export default Wrapper;
+export default BookingButton;
