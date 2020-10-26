@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import moment from 'moment-timezone';
 import { useHistory, useLocation } from 'react-router';
 import Sidebar, { SidebarContent } from '../../../../components/Sidebar';
-import { Title, Body } from '../../../../components/Text';
+import { Title, Body, BodySmall } from '../../../../components/Text';
 import { Col, RowWrap } from '../../../../components/Blocks';
 import Chat, { MessageComposer } from '../../../../components/common/Chat';
 import ContactPills from '../blocks/ContactPills';
@@ -77,8 +77,8 @@ const ChatSidebar = (props) => {
 
     return (
         <Content
-            onMouseEnter={() => (document.body.style.overflowY = 'hidden')}
-            onMouseLeave={() => (document.body.style.overflowY = '')}
+        // onMouseEnter={() => (document.body.style.overflowY = 'hidden')}
+        // onMouseLeave={() => (document.body.style.overflowY = '')}
         >
             <InnerContent>
                 <Header>
@@ -95,6 +95,10 @@ const ChatSidebar = (props) => {
                                 )}
                             </PillsCol>
                         </RowWrap>
+                        <BodySmall>
+                            Complete the booking through Cueup to get a better rank and get more
+                            gigs.
+                        </BodySmall>
                     </SidebarContent>
                 </Header>
                 {gig && gig.isActionable && (
@@ -298,7 +302,7 @@ const MessagesWrapper = styled.div`
         display: flex;
     }
     .messages {
-        padding-top: 100px;
+        padding-top: 140px;
         display: flex;
         width: 100%;
         flex-direction: column;
