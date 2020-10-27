@@ -51,6 +51,7 @@ const Row = styled(RowWrap)`
 
 const Wrapper = styled.div`
     width: calc(50% - 1.5em);
+    overflow: hidden;
     @media screen and (max-width: 650px) {
         width: 100%;
     }
