@@ -18,6 +18,7 @@ import { ME } from 'components/gql';
 import Step4 from 'components/common/RequestForm/Step4';
 import RadioSelect from 'components/RadioSelect';
 import { hideChatButton, showChatButton } from 'utils/supportChat';
+import { useAppState } from 'components/hooks/useAppState';
 import { SettingsSection, Input, Label, InputRow } from '../../../components/FormComponents';
 import DatePickerPopup from '../../../components/DatePickerPopup';
 import {
@@ -42,6 +43,7 @@ import GeoCoder from '../../../utils/GeoCoder';
 import { MobileBookingButton } from '../components/Common';
 
 const Booking = ({ user, loading, translate }) => {
+    const { setAppState } = useAppState();
     const [eventCreated, setEventCreated] = useState(false);
     const { data: userData } = useQuery(ME);
     const [create, { loading: createLoading, error }] = useCreateEvent();
@@ -51,8 +53,12 @@ const Booking = ({ user, loading, translate }) => {
 
     useEffect(() => {
         hideChatButton();
-        return showChatButton;
-    }, []);
+        setAppState({ showBottomPlayer: false });
+        return () => {
+            showChatButton();
+            setAppState({ showBottomPlayer: true });
+        };
+    }, [setAppState]);
 
     const [form, setForm] = useUrlState({
         guestsCount: 80,
