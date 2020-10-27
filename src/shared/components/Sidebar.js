@@ -11,9 +11,6 @@ const Sticky = styled.div`
     @media only screen and (max-width: 990px) {
         padding: 42px 0px 18px 0px;
     }
-    @media only screen and (max-width: 768px) {
-        display: none;
-    }
 `;
 
 export const Spacing = styled.div`
@@ -23,9 +20,6 @@ export const Spacing = styled.div`
     @media only screen and (max-width: 990px) {
         min-width: ${({ large }) => (large ? 300 : 250)}px;
         width: ${({ large }) => (large ? 300 : 250)}px;
-    }
-    @media only screen and (max-width: 768px) {
-        display: none;
     }
 `;
 

@@ -42,7 +42,7 @@ const StickyBookingButtonWrapper = styled.div`
 `;
 
 export const MobileBookingButton = ({ children, ...props }) => (
-    <ShowBelow>
+    <ShowBelow width={664}>
         <StickyBookingButtonWrapper>
             <div>{children || <BookingButton {...props} />}</div>
         </StickyBookingButtonWrapper>

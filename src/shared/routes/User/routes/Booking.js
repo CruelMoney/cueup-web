@@ -19,6 +19,7 @@ import Step4 from 'components/common/RequestForm/Step4';
 import RadioSelect from 'components/RadioSelect';
 import { hideChatButton, showChatButton } from 'utils/supportChat';
 import { useAppState } from 'components/hooks/useAppState';
+import { Media } from 'components/MediaContext';
 import { SettingsSection, Input, Label, InputRow } from '../../../components/FormComponents';
 import DatePickerPopup from '../../../components/DatePickerPopup';
 import {
@@ -28,8 +29,8 @@ import {
     GradientBg,
     PrimaryButton,
     TeritaryButton,
+    Card,
 } from '../../../components/Blocks';
-import Sidebar, { SidebarContent } from '../../../components/Sidebar';
 import ScrollToTop from '../../../components/common/ScrollToTop';
 import { LoadingPlaceholder2 } from '../../../components/common/LoadingPlaceholder';
 import { SmallHeader, TitleClean, Body, Title, BodySmall } from '../../../components/Text';
@@ -373,6 +374,7 @@ const EventForm = ({
                 </SettingsSection>
             </Col>
         )}
+
         <BookingSidebar
             key={loginPopup}
             loading={loading}
@@ -396,34 +398,31 @@ const BookingSidebar = ({
 }) => {
     return (
         <>
-            <Sidebar
-                stickyTop={'0px'}
-                enableSharing={false}
-                childrenBelow={
-                    <ErrorMessageApollo
-                        error={error}
-                        style={{ marginTop: '30px' }}
-                        onFoundCode={(code) => {
-                            if (code === 'UNAUTHENTICATED') {
-                                showLogin();
-                            }
-                        }}
-                    />
-                }
-            >
-                <SidebarContent>
-                    {loading ? <LoadingPlaceholder2 /> : <Content values={values} {...props} />}
-                </SidebarContent>
+            <SideBar>
+                <Card>
+                    <div className="content">
+                        {loading ? <LoadingPlaceholder2 /> : <Content values={values} {...props} />}
+                    </div>
 
-                <CTAButton
-                    data-cy="book-button"
-                    disabled={createLoading || eventCreated}
-                    loading={createLoading}
-                    onClick={requestBooking}
-                >
-                    {eventCreated ? 'BOOKING DONE' : 'BOOK NOW'}
-                </CTAButton>
-            </Sidebar>
+                    <CTAButton
+                        data-cy="book-button"
+                        disabled={createLoading || eventCreated}
+                        loading={createLoading}
+                        onClick={requestBooking}
+                    >
+                        {eventCreated ? 'BOOKING DONE' : 'BOOK NOW'}
+                    </CTAButton>
+                </Card>
+                <ErrorMessageApollo
+                    error={error}
+                    style={{ marginTop: '30px' }}
+                    onFoundCode={(code) => {
+                        if (code === 'UNAUTHENTICATED') {
+                            showLogin();
+                        }
+                    }}
+                />
+            </SideBar>
 
             <MobileBookingButton>
                 <CTAButton
@@ -438,6 +437,25 @@ const BookingSidebar = ({
         </>
     );
 };
+
+const SideBar = styled.div`
+    position: sticky;
+    top: 0px;
+    margin-bottom: 42px;
+    align-self: flex-start;
+    z-index: 2;
+    margin-left: 42px;
+    ${Card} {
+        box-shadow: 0 0px 15px 0 rgba(0, 0, 0, 0.15);
+    }
+    .content {
+        padding: 1em;
+        width: 100%;
+    }
+    @media only screen and (max-width: 664px) {
+        display: none;
+    }
+`;
 
 const SidebarRow = styled(Row)`
     font-weight: 600;
@@ -485,7 +503,9 @@ const Content = ({ user, values }) => {
             <div>
                 <SimpleTableItem>
                     <span>Total</span>
-                    <span>DJ will respond with price</span>
+                    <span style={{ textAlign: 'right', marginLeft: 12 }}>
+                        DJ will respond with price
+                    </span>
                 </SimpleTableItem>
             </div>
         </>

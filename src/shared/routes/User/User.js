@@ -24,6 +24,7 @@ import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { DJSeoTags } from 'components/SeoTags';
+import { Media } from 'components/MediaContext';
 import Sidebar, { SidebarContent } from '../../components/Sidebar';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col, Divider } from '../../components/Blocks';
@@ -261,9 +262,11 @@ const Content = React.memo(({ match, ...userProps }) => {
 
             <UserContainer>
                 <Row style={{ alignItems: 'stretch' }}>
-                    <Col>
-                        <UserSidebar {...userProps} bookingEnabled={bookingEnabled} />
-                    </Col>
+                    <Media greaterThan={'sm'}>
+                        <Col>
+                            <UserSidebar {...userProps} bookingEnabled={bookingEnabled} />
+                        </Col>
+                    </Media>
                     <Col
                         style={{
                             width: '100%',
