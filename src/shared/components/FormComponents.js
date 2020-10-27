@@ -26,7 +26,7 @@ import ConditionalWrap from './ConditionalWrap';
 const Label = styled.label`
     font-size: 18px;
     color: #4d6480;
-    font-weight: 300;
+    font-weight: 400;
     display: inline-block;
     .error {
         margin-bottom: 0;

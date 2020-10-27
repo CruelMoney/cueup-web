@@ -3,6 +3,8 @@
     background: #f6f8f9;
     border: none;
     border-radius: 4px;
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
     -webkit-box-shadow: none;
     box-shadow: none;
     color: #122b48;
@@ -12,12 +14,10 @@
     display: -ms-flexbox;
 
     display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
     -ms-flex-direction: row;
     flex-direction: row;
     font-size: 18px;
-    font-weight: 300;
+    font-weight: 400;
     margin-top: 6px;
     outline: none;
     padding: 9px;
@@ -29,15 +29,15 @@
 }
 
 .react-tags__selected-tag {
-    -webkit-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
+    -webkit-box-align: center;
+    -webkit-box-flex: 1;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-flex: 1;
     -ms-flex: 1 1;
     flex: 1 1;
+    -ms-flex-align: center;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
 }
@@ -69,8 +69,8 @@
 }
 .react-tags__search {
     -webkit-box-flex: 1;
-    -ms-flex-positive: 1;
     flex-grow: 1;
+    -ms-flex-positive: 1;
     width: auto !important;
 }
 
@@ -104,7 +104,7 @@
 .react-tags__suggestions span {
     color: #122b48;
     font-size: 18px;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 42px;
     margin: 3px 0;
     margin-right: 3px;

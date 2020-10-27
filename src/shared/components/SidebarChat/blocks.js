@@ -72,7 +72,7 @@ export const NameBlock = styled.p`
     line-height: 1.2em;
     max-width: 220px;
     > span {
-        font-weight: 300;
+        font-weight: 400;
         display: block;
     }
 `;

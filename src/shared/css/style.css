@@ -561,14 +561,14 @@ input[type='file'] + label * {
 
 .event-name {
     font-size: 30px;
-    font-weight: 100;
+    font-weight: 400;
     line-height: 30px;
     margin-bottom: 5px;
 }
 .event-location {
     fill: #32325d;
     font-size: 15px;
-    font-weight: 100;
+    font-weight: 400;
 }
 
 .form-error {
