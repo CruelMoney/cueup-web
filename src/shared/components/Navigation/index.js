@@ -14,7 +14,6 @@ import Popup from '../common/Popup';
 import InstagramConnect from '../InstagramConnect';
 import { LoadingIndicator, Container } from '../Blocks';
 import DesktopMenu from './DesktopMenu';
-import MobileMenu from './MobileMenu';
 
 const Menu = ({ dark, relative, fullWidth }) => {
     const { t } = useTranslation();
@@ -54,7 +53,6 @@ const Menu = ({ dark, relative, fullWidth }) => {
                             </Navlink>
                         </div>
 
-                        {!loggedIn && <MobileMenu />}
                         <MainMenu className="main-menu">
                             <Media greaterThan="sm">
                                 {loggedIn && !isPro && isDJ && (
