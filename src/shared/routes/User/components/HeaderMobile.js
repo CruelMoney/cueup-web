@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 import { ProFeature } from 'components/FormComponents';
 import GracefullImage from 'components/GracefullImage';
 import Navigation from '../../../components/Navigation/SubNavigation';
@@ -52,28 +53,27 @@ const HeaderMobile = (props) => {
                 <Container>
                     {children}
                     <Row className="wrapper">
-                        <FullWidthCol>
-                            {loading ? null : <UserContent {...props} />}
-                            {/* <Navigation routes={routes} /> */}
-                        </FullWidthCol>
+                        <FullWidthCol>{loading ? null : <UserContent {...props} />}</FullWidthCol>
                     </Row>
                 </Container>
             </GradientBg>
             <Container style={{ marginBottom: 30 }}>
                 <Col center>
-                    <HeaderTitle dark style={{ textAlign: 'center' }}>
-                        {artistName || firstName}
-                        {isPro && (
-                            <ProFeature
-                                disabled
-                                style={{
-                                    top: -4,
-                                }}
-                            >
-                                Pro
-                            </ProFeature>
-                        )}
-                    </HeaderTitle>
+                    <NavLink to={'overview'} style={{ textAlign: 'center' }}>
+                        <HeaderTitle dark>
+                            {artistName || firstName}
+                            {isPro && (
+                                <ProFeature
+                                    disabled
+                                    style={{
+                                        top: -4,
+                                    }}
+                                >
+                                    Pro
+                                </ProFeature>
+                            )}
+                        </HeaderTitle>
+                    </NavLink>
 
                     {(identityVerified || certified) && (
                         <TwoCol style={{ marginTop: 15 }}>
@@ -124,8 +124,9 @@ const UserContent = ({ user, statusLabel, setShowing }) => {
                         <BodyBold white>{statusLabel} - read more</BodyBold>
                     </StatusButton>
                 )}
-
-                <ProfileImage src={user.picture.path} />
+                <NavLink to={'overview'} style={{ textAlign: 'center' }}>
+                    <ProfileImage src={user.picture.path} />
+                </NavLink>
             </Col>
         </HeaderWrapper>
     );
