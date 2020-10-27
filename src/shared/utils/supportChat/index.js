@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions, no-script-url, no-sequences */
 
 let loaded = false;
-
+let currentOffset = 0;
 export const loadSupportChat = () => {
     window.zEmbed ||
         (function (e, t) {
@@ -45,7 +45,10 @@ export const loadSupportChat = () => {
                 o.write('<body onload="document._l();">'),
                 o.close();
         })();
-
+    window.zE(() => {
+        window.$zopim.livechat.button.setOffsetVertical(currentOffset);
+        window.$zopim.livechat.button.setOffsetVerticalMobile(currentOffset);
+    });
     loaded = true;
 };
 
@@ -78,8 +81,22 @@ export const showChatButton = () => {
     }
     window.zE(() => {
         window.$zopim(() => {
+            window.$zopim.livechat.button.setOffsetVertical(150);
             window.$zopim.livechat.button.setPosition('bl');
+            window.$zopim.livechat.button.setOffsetVertical(150);
             window.$zopim.livechat.button.show();
+            window.$zopim.livechat.button.setOffsetVertical(150);
         });
+    });
+};
+
+export const offsetChatButton = (y) => {
+    currentOffset = y;
+    if (!loaded) {
+        loadSupportChat();
+    }
+    window.zE(() => {
+        window.$zopim.livechat.button.setOffsetVertical(currentOffset);
+        window.$zopim.livechat.button.setOffsetVerticalMobile(currentOffset);
     });
 };

@@ -23,7 +23,6 @@ import PayForm from 'components/common/PayForm.js';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
-import { hideChatButton, showChatButton } from 'utils/supportChat';
 import { DJSeoTags } from 'components/SeoTags';
 import Sidebar, { SidebarContent } from '../../components/Sidebar';
 import Footer from '../../components/common/Footer';
@@ -381,8 +380,6 @@ const User = ({ match, location, user, error, loading, translate }) => {
 
     useEffect(() => {
         setHasScrolled(true);
-        hideChatButton();
-        return showChatButton;
     }, []);
 
     const title = user ? user.artistName || user.userMetadata?.firstName : 'Unnamed';

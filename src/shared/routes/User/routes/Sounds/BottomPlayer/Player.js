@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useTransition, animated } from 'react-spring';
+import { offsetChatButton } from 'utils/supportChat';
 import useSoundPlayer, { useCurrentDeck, playerStates } from '../useSoundPlayer';
 import useScanning from '../useScanning';
 import SoundBars from '../SoundBars';
@@ -220,6 +221,14 @@ const AnimatingWrapper = animated(Wrapper);
 
 const AnimationWrapper = () => {
     const { track, next, previous } = useCurrentDeck();
+
+    useEffect(() => {
+        if (track) {
+            offsetChatButton(60);
+        } else {
+            offsetChatButton(0);
+        }
+    }, [track]);
 
     const transitions = useTransition(!!track, null, {
         from: {
