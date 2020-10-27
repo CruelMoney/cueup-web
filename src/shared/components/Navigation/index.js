@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
+import { Media } from 'components/MediaContext';
 import Navlink from '../common/Navlink';
 import Login from '../common/Login';
 import Logo from '../common/Logo';
@@ -53,21 +54,23 @@ const Menu = ({ dark, relative, fullWidth }) => {
                             </Navlink>
                         </div>
 
-                        <MobileMenu />
+                        {!loggedIn && <MobileMenu />}
                         <MainMenu className="main-menu">
-                            {loggedIn && !isPro && isDJ && (
-                                <li>
-                                    <Navlink
-                                        label={'Go Pro'}
-                                        to={
-                                            t(appRoutes.userSettings).replace(
-                                                ':permalink',
-                                                user.permalink
-                                            ) + '/get-pro'
-                                        }
-                                    />
-                                </li>
-                            )}
+                            <Media greaterThan="sm">
+                                {loggedIn && !isPro && isDJ && (
+                                    <li>
+                                        <Navlink
+                                            label={'Go Pro'}
+                                            to={
+                                                t(appRoutes.userSettings).replace(
+                                                    ':permalink',
+                                                    user.permalink
+                                                ) + '/get-pro'
+                                            }
+                                        />
+                                    </li>
+                                )}
+                            </Media>
 
                             {loggedIn ? null : (
                                 <li>
@@ -156,10 +159,6 @@ const MainMenu = styled.ul`
             color: #fff;
             text-decoration: underline;
         }
-    }
-
-    @media screen and (max-width: 767px) {
-        display: none;
     }
 `;
 

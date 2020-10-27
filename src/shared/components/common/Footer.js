@@ -9,6 +9,7 @@ import useAlternativePages from 'components/hooks/useAlternativePages';
 import { Container, Row, RowWrap } from 'components/Blocks';
 import { showSupportChat } from 'utils/supportChat';
 import { useServerContext } from 'components/hooks/useServerContext';
+import { Media } from 'components/MediaContext';
 import InstagramLogo from '../../assets/InstagramLogo';
 import ButtonLink from './ButtonLink';
 
@@ -279,6 +280,38 @@ const Footer = ({
                                 </li>
                             </ul>
                         </div>
+                        <div>
+                            <h2>App for DJs</h2>
+                            <ul>
+                                <li>
+                                    <a href="https://play.google.com/store/apps/details?id=io.cueup.gigs&utm_source=website&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+                                        <img
+                                            style={{
+                                                height: '60px',
+                                            }}
+                                            alt="Get it on Google Play"
+                                            loading="lazy"
+                                            src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
+                                        />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://apps.apple.com/us/app/cueup-gigs/id1458267647?mt=8">
+                                        <img
+                                            style={{
+                                                height: '40px',
+                                                marginRight: '18px',
+                                            }}
+                                            alt="Get it on App store"
+                                            src={
+                                                'https://is5-ssl.mzstatic.com/image/thumb/Purple123/v4/d1/7e/47/d17e4708-f5f4-f7da-95b7-c1ce274fb5e0/AppIcon-1x_U007emarketing-0-7-0-0-85-220.png/246x0w.png'
+                                            }
+                                        />
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <Media lessThan={'xl'} />
                     </FooterColumns>
                     <div className="copyright">© Cueup {new Date().getFullYear()}</div>
                 </Container>

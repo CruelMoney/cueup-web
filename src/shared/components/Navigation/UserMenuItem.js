@@ -67,8 +67,6 @@ const MenuUser = styled.a`
     line-height: 32px;
     display: flex;
     align-items: center;
-    min-width: 200px;
-
     :hover {
         text-decoration: underline;
     }
