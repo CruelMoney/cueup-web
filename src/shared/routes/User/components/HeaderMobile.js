@@ -48,7 +48,7 @@ const HeaderMobile = (props) => {
             <GradientBg
                 isPro={user?.appMetadata.isPro}
                 coverPhoto={user && user.coverPhoto}
-                style={{ marginBottom: 75, paddingTop: 100 }}
+                style={{ marginBottom: 100, paddingTop: 100 }}
             >
                 <Container>
                     {children}
@@ -136,14 +136,14 @@ const ProfileImage = ({ src, ...props }) => {
     return (
         <div
             style={{
-                height: '150px',
-                width: '150px',
-                minHeight: '150px',
-                minWidth: '150px',
+                height: '200px',
+                width: '200px',
+                minHeight: '200px',
+                minWidth: '200px',
                 borderRadius: '50%',
                 overflow: 'hidden',
                 border: '6px solid white',
-                marginBottom: '-75px',
+                marginBottom: '-100px',
                 backgroundColor: 'white',
             }}
         >

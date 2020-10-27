@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import moment from 'moment-timezone';
 import wNumb from 'wnumb';
@@ -17,6 +17,7 @@ import { ME } from 'components/gql';
 
 import Step4 from 'components/common/RequestForm/Step4';
 import RadioSelect from 'components/RadioSelect';
+import { hideChatButton, showChatButton } from 'utils/supportChat';
 import { SettingsSection, Input, Label, InputRow } from '../../../components/FormComponents';
 import DatePickerPopup from '../../../components/DatePickerPopup';
 import {
@@ -47,6 +48,11 @@ const Booking = ({ user, loading, translate }) => {
     const [errorMessage, setError] = useState();
     const [loginPopup, setloginPopup] = useState(false);
     const [signupPopup, setSignupPopup] = useState(false);
+
+    useEffect(() => {
+        hideChatButton();
+        return showChatButton;
+    }, []);
 
     const [form, setForm] = useUrlState({
         guestsCount: 80,
