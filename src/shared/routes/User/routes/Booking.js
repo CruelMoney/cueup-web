@@ -7,6 +7,7 @@ import { InlineIcon } from '@iconify/react';
 import arrowBack from '@iconify/icons-ion/arrow-back';
 import { NavLink } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
+import { Helmet } from 'react-helmet-async';
 import { useCreateEvent } from 'actions/EventActions';
 import { useForm } from 'components/hooks/useForm';
 import usePushNotifications from 'components/hooks/usePushNotifications';
@@ -19,7 +20,6 @@ import Step4 from 'components/common/RequestForm/Step4';
 import RadioSelect from 'components/RadioSelect';
 import { hideChatButton, showChatButton } from 'utils/supportChat';
 import { useAppState } from 'components/hooks/useAppState';
-import { Media } from 'components/MediaContext';
 import { SettingsSection, Input, Label, InputRow } from '../../../components/FormComponents';
 import DatePickerPopup from '../../../components/DatePickerPopup';
 import {
@@ -117,8 +117,21 @@ const Booking = ({ user, loading, translate }) => {
 
     const profileUrl = `${translate(appRoutes.user)}/${user.permalink}/${userRoutes.overview}`;
 
+    const metaTitle = `Booking of ${user.title} · Cueup`;
+    const metaDescription = `Complete your booking of ${user.title}.`;
+
     return (
         <div>
+            <Helmet>
+                <title>{metaTitle}</title>
+                <meta property="og:title" content={metaTitle} />
+                <meta name="twitter:title" content={metaTitle} />
+
+                <meta name="description" content={metaDescription} />
+                <meta name="twitter:description" content={metaDescription} />
+                <meta property="og:description" content={metaDescription} />
+                <meta name="robots" content="noindex" />
+            </Helmet>
             <ScrollToTop top={0} />
 
             <GradientBg style={{ height: '80px', minHeight: '80px' }} />

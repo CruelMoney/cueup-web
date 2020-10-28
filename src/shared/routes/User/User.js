@@ -388,7 +388,7 @@ const User = ({ match, location, user, error, loading, translate }) => {
     const title = user ? user.artistName || user.userMetadata?.firstName : 'Unnamed';
     const metaTitle = title + ' · Book now · Cueup';
     const thumb = user?.picture?.path || null;
-    const description = user ? user.userMetadata?.bio : metaTitle;
+    const description = user ? user.userMetadata?.bio : `${title} has not written a bio yet.`;
     if (user) {
         user.title = title;
     }

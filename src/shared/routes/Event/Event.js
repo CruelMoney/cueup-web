@@ -70,6 +70,7 @@ const Index = ({ location }) => {
                     <meta name="description" content={description} />
                     <meta name="twitter:description" content={description} />
                     <meta property="og:description" content={description} />
+                    <meta name="robots" content="noindex" />
                 </Helmet>
             )}
 

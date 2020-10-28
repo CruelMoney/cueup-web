@@ -124,8 +124,20 @@ const Wrapper = (props) => {
     const [showPopup, setShowPopup] = useState(initialPopup);
     const { isOwn } = user || {};
 
+    const metaTitle = `${user.title} · Sounds · Cueup`;
+    const metaDescription = `Free listening of ${user.title} on Cueup.`;
+
     return (
         <>
+            <Helmet>
+                <title>{metaTitle}</title>
+                <meta property="og:title" content={metaTitle} />
+                <meta name="twitter:title" content={metaTitle} />
+
+                <meta name="description" content={metaDescription} />
+                <meta name="twitter:description" content={metaDescription} />
+                <meta property="og:description" content={metaDescription} />
+            </Helmet>
             <Sounds {...props} setShowPopup={setShowPopup} />
             {isOwn && (
                 <Popup showing={showPopup} onClose={() => setShowPopup(false)} width={'750px'}>

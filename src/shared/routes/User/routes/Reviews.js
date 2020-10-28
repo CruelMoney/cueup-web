@@ -4,6 +4,7 @@ import { useMutation } from '@apollo/client';
 
 import { Route, useHistory } from 'react-router';
 import { Query } from '@apollo/client/react/components';
+import { Helmet } from 'react-helmet-async';
 import { Title, Body, BodySmall, BodyBold } from '../../../components/Text';
 import {
     Col,
@@ -47,32 +48,46 @@ const Reviews = ({ user, loading: loadingUser, updateUser }) => {
         return <LoadingPlaceholder2 />;
     }
 
-    return (
-        <Query query={REVIEWS} variables={{ id: user.id }}>
-            {({ loading, data }) => {
-                if (loading) {
-                    return <LoadingPlaceholder2 />;
-                }
+    const metaTitle = `${user.title} · Reviews · Cueup`;
+    const metaDescription = `Read reviews and testimonials of ${user.title}.`;
 
-                const {
-                    user: {
-                        isOwn,
-                        playedVenues,
-                        reviews: { edges },
-                    },
-                } = data;
-                return (
-                    <Content
-                        userId={user.id}
-                        playedVenues={playedVenues}
-                        reviews={edges}
-                        isOwn={isOwn}
-                        permalink={user.permalink}
-                        updateUser={updateUser}
-                    />
-                );
-            }}
-        </Query>
+    return (
+        <>
+            <Helmet>
+                <title>{metaTitle}</title>
+                <meta property="og:title" content={metaTitle} />
+                <meta name="twitter:title" content={metaTitle} />
+
+                <meta name="description" content={metaDescription} />
+                <meta name="twitter:description" content={metaDescription} />
+                <meta property="og:description" content={metaDescription} />
+            </Helmet>
+            <Query query={REVIEWS} variables={{ id: user.id }}>
+                {({ loading, data }) => {
+                    if (loading) {
+                        return <LoadingPlaceholder2 />;
+                    }
+
+                    const {
+                        user: {
+                            isOwn,
+                            playedVenues,
+                            reviews: { edges },
+                        },
+                    } = data;
+                    return (
+                        <Content
+                            userId={user.id}
+                            playedVenues={playedVenues}
+                            reviews={edges}
+                            isOwn={isOwn}
+                            permalink={user.permalink}
+                            updateUser={updateUser}
+                        />
+                    );
+                }}
+            </Query>
+        </>
     );
 };
 

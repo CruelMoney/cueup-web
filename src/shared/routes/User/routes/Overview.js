@@ -29,6 +29,7 @@ const HalfCol = styled(Col)`
 `;
 
 const HalfColLeft = styled(HalfCol)`
+    border-right: 2px solid #e9ecf0;
     @media only screen and (max-width: 990px) {
         border: none;
     }
@@ -36,6 +37,7 @@ const HalfColLeft = styled(HalfCol)`
 
 const HalfColRight = styled(HalfCol)`
     border-left: 2px solid #e9ecf0;
+    margin-left: -2px;
     @media only screen and (max-width: 990px) {
         display: none;
     }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Query } from '@apollo/client/react/components';
+import { Helmet } from 'react-helmet-async';
 import usePushNotifications from 'components/hooks/usePushNotifications';
 import useTranslate from 'components/hooks/useTranslate';
 import { useNotifications } from 'components/hooks/useNotifications';
@@ -87,61 +88,71 @@ const Gigs = (props) => {
         ));
     };
 
+    const metaTitle = `${user.title} · Gigs · Cueup`;
+
     return (
-        <Query
-            query={MY_GIGS}
-            variables={{ limit: 1000, locale: currentLanguage }}
-            onError={console.log}
-        >
-            {({ data = {}, loading }) => {
-                if (loading || loadingUser) {
-                    return <LoadingPlaceholder2 />;
-                }
+        <>
+            <Helmet>
+                <title>{metaTitle}</title>
+                <meta property="og:title" content={metaTitle} />
+                <meta name="twitter:title" content={metaTitle} />
+                <meta name="robots" content="noindex" />
+            </Helmet>
+            <Query
+                query={MY_GIGS}
+                variables={{ limit: 1000, locale: currentLanguage }}
+                onError={console.log}
+            >
+                {({ data = {}, loading }) => {
+                    if (loading || loadingUser) {
+                        return <LoadingPlaceholder2 />;
+                    }
 
-                const { myGigs = {} } = data;
-                const { edges: gigs = [] } = myGigs;
+                    const { myGigs = {} } = data;
+                    const { edges: gigs = [] } = myGigs;
 
-                return (
-                    <Row>
-                        <Col style={{ flex: 1 }}>{gigs && renderGigs(gigs)}</Col>
-                        <HideBelow width={768}>
-                            <Col style={{ marginLeft: '42px', width: '185px' }}>
-                                <Title style={{ marginBottom: '36px' }}>Filter</Title>
-                                <Checkbox
-                                    style={{ marginBottom: '12px' }}
-                                    label={'Confirmed'}
-                                    onChange={toggleFilter(gigStates.CONFIRMED)}
-                                />
-                                <Checkbox
-                                    style={{ marginBottom: '12px' }}
-                                    label={'Requested'}
-                                    onChange={toggleFilter(gigStates.REQUESTED)}
-                                />
-                                <Checkbox
-                                    style={{ marginBottom: '12px' }}
-                                    label={'Accepted'}
-                                    onChange={toggleFilter(gigStates.ACCEPTED)}
-                                />
-                                <Checkbox
-                                    style={{ marginBottom: '12px' }}
-                                    label={'Finished'}
-                                    onChange={toggleFilter(gigStates.FINISHED)}
-                                />
-                                <Checkbox
-                                    style={{ marginBottom: '12px' }}
-                                    label={'Lost'}
-                                    onChange={(val) => {
-                                        toggleFilter(gigStates.LOST)(val);
-                                        toggleFilter(gigStates.ORGANIZER_DECLINED)(val);
-                                    }}
-                                />
-                                <EnableNotifications userId={user.id} />
-                            </Col>
-                        </HideBelow>
-                    </Row>
-                );
-            }}
-        </Query>
+                    return (
+                        <Row>
+                            <Col style={{ flex: 1 }}>{gigs && renderGigs(gigs)}</Col>
+                            <HideBelow width={768}>
+                                <Col style={{ marginLeft: '42px', width: '185px' }}>
+                                    <Title style={{ marginBottom: '36px' }}>Filter</Title>
+                                    <Checkbox
+                                        style={{ marginBottom: '12px' }}
+                                        label={'Confirmed'}
+                                        onChange={toggleFilter(gigStates.CONFIRMED)}
+                                    />
+                                    <Checkbox
+                                        style={{ marginBottom: '12px' }}
+                                        label={'Requested'}
+                                        onChange={toggleFilter(gigStates.REQUESTED)}
+                                    />
+                                    <Checkbox
+                                        style={{ marginBottom: '12px' }}
+                                        label={'Accepted'}
+                                        onChange={toggleFilter(gigStates.ACCEPTED)}
+                                    />
+                                    <Checkbox
+                                        style={{ marginBottom: '12px' }}
+                                        label={'Finished'}
+                                        onChange={toggleFilter(gigStates.FINISHED)}
+                                    />
+                                    <Checkbox
+                                        style={{ marginBottom: '12px' }}
+                                        label={'Lost'}
+                                        onChange={(val) => {
+                                            toggleFilter(gigStates.LOST)(val);
+                                            toggleFilter(gigStates.ORGANIZER_DECLINED)(val);
+                                        }}
+                                    />
+                                    <EnableNotifications userId={user.id} />
+                                </Col>
+                            </HideBelow>
+                        </Row>
+                    );
+                }}
+            </Query>
+        </>
     );
 };
 

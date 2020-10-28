@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useServerContext } from 'components/hooks/useServerContext';
 import BasicSection from './BasicSection';
 import ProfileSection from './ProfileSection';
@@ -54,8 +55,16 @@ const Settings = ({ user, loading, updateUser, history, location }) => {
 
     const isPro = user?.appMetadata?.isPro;
 
+    const metaTitle = `${user.title} · Settings · Cueup`;
+
     return (
         <>
+            <Helmet>
+                <title>{metaTitle}</title>
+                <meta property="og:title" content={metaTitle} />
+                <meta name="twitter:title" content={metaTitle} />
+                <meta name="robots" content="noindex" />
+            </Helmet>
             {!isPro && isDj && <ProSection user={user} updateKey={updateKey} saveData={saveData} />}
             {isDj && (
                 <ProfileSection

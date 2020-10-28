@@ -6,6 +6,7 @@ import { Icon } from '@iconify/react';
 import removeCircle from '@iconify/icons-ion/remove-circle';
 
 import { useInView } from 'react-intersection-observer';
+import { Helmet } from 'react-helmet-async';
 import GracefullImage from '../../../components/GracefullImage';
 import { USER_PHOTOS, ADD_MEDIA, DELETE_MEDIA, UPDATE_PHOTOS_ORDER, USER } from '../gql';
 import EmptyPage from '../../../components/common/EmptyPage';
@@ -525,4 +526,25 @@ const Wrapper = styled.div`
     }
 `;
 
-export default Photos;
+const PhotosMeta = (props) => {
+    const { user } = props;
+    const metaTitle = `${user.title} · Photos · Cueup`;
+    const metaDescription = `See pictures and videos of ${user.title}.`;
+
+    return (
+        <>
+            <Helmet>
+                <title>{metaTitle}</title>
+                <meta property="og:title" content={metaTitle} />
+                <meta name="twitter:title" content={metaTitle} />
+
+                <meta name="description" content={metaDescription} />
+                <meta name="twitter:description" content={metaDescription} />
+                <meta property="og:description" content={metaDescription} />
+            </Helmet>
+            <Photos {...props} />
+        </>
+    );
+};
+
+export default PhotosMeta;
