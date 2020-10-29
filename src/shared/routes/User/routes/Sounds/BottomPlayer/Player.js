@@ -107,16 +107,23 @@ const TrackInfo = ({ track: { title, artistName, image } }) => {
         <Row middle style={{ flex: 1, paddingRight: '15px' }}>
             {image && <AlbumCover src={image.path} />}
             <Col>
-                <SmallBold demi style={{ fontSize: '15px', margin: 0 }}>
-                    {title}
-                </SmallBold>
-                <BodySmall style={{ margin: 0, fontSize: '12px', lineHeight: '15px' }}>
-                    {artistName}
-                </BodySmall>
+                <TrackInfoText demi>{title}</TrackInfoText>
             </Col>
         </Row>
     );
 };
+
+const TrackInfoText = styled(SmallBold)`
+    font-size: 15px;
+    margin: 0;
+    max-lines: 2;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-height: 3em;
+    word-wrap: anywhere;
+`;
 
 const AlbumCover = styled.img`
     margin-right: 9px;
