@@ -11,9 +11,9 @@ import styled from 'styled-components';
 import { useMutation } from '@apollo/client';
 import { captureException } from '@sentry/core';
 import { inputStyle, SmartButton, Hr } from 'components/Blocks';
-import { BodySmall } from 'components/Text';
 import { useServerContext } from 'components/hooks/useServerContext';
 import ErrorMessageApollo from 'components/common/ErrorMessageApollo';
+import { trackSubscribeToPro } from 'utils/analytics';
 import { START_SUBSCRIPTION, SUBSCRIPTION_CONFIRMED } from './gql';
 
 function PaymentForm({ selectedTier }) {
@@ -83,6 +83,13 @@ function PaymentForm({ selectedTier }) {
 
             setError(null);
             setLoading(true);
+
+            try {
+                trackSubscribeToPro({
+                    value: selectedTier.price.amount,
+                    currency: selectedTier.price.currency,
+                });
+            } catch (error) {}
 
             const card = elements.getElement(CardElement);
             const { error, paymentMethod } = await stripe.createPaymentMethod({

@@ -41,7 +41,7 @@ export const trackCheckAvailability = (locationName) => {
     if (shouldTrack) {
         analytics.track(TRACKING_EVENTS.Search, {
             category: 'Events',
-            label: locationName,
+            search_term: locationName,
         });
     }
 };
@@ -61,11 +61,12 @@ export const trackEventPosted = () => {
         });
     }
 };
-export const trackEventPaid = (value) => {
+export const trackEventPaid = ({ currency, value }) => {
     if (shouldTrack) {
         analytics.track(TRACKING_EVENTS.CompleteBooking, {
             category: 'Events',
             value,
+            currency,
         });
     }
 };
@@ -83,6 +84,32 @@ export const trackEmptySearch = (label) => {
         analytics.track(TRACKING_EVENTS.EmptySearch, {
             category: 'Events',
             label,
+        });
+    }
+};
+
+export const trackLogin = () => {
+    if (shouldTrack) {
+        analytics.track(TRACKING_EVENTS.Login, {
+            category: 'Users',
+        });
+    }
+};
+
+export const trackSendChatMessage = () => {
+    if (shouldTrack) {
+        analytics.track(TRACKING_EVENTS.SendChatMessage, {
+            category: 'Users',
+        });
+    }
+};
+
+export const trackSubscribeToPro = ({ value, currency }) => {
+    if (shouldTrack) {
+        analytics.track(TRACKING_EVENTS.SubscribeToPro, {
+            category: 'Users',
+            value,
+            currency,
         });
     }
 };

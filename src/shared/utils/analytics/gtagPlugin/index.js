@@ -74,7 +74,7 @@ export default function analyticsGtagPlugin(userConfig = {}) {
         },
         /* Track event */
         track: ({ payload }) => {
-            const { category, label, value } = payload.properties;
+            const { category, label, ...properties } = payload.properties;
 
             const gaEvent = EventsMapping[payload.event];
 
@@ -82,7 +82,7 @@ export default function analyticsGtagPlugin(userConfig = {}) {
                 gtag('event', gaEvent, {
                     event_category: category, // good ol' event category
                     event_label: label,
-                    value,
+                    ...properties,
                 });
             }
         },

@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { ME } from 'components/gql';
+import { trackLogin } from 'utils/analytics';
 import { authService } from 'utils/AuthService';
 
 const useOnLoggedIn = ({ onLoggedIn, redirect = true } = {}) => {
@@ -15,6 +16,9 @@ const useOnLoggedIn = ({ onLoggedIn, redirect = true } = {}) => {
                 if (onLoggedIn) {
                     await onLoggedIn(data);
                 }
+                try {
+                    trackLogin();
+                } catch (error) {}
 
                 if (data?.me && redirect) {
                     const onboarded = data?.me?.appMetadata?.onboarded;

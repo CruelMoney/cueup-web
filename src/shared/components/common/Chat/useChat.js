@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import debounce from 'lodash/debounce';
 import { useServerContext } from 'components/hooks/useServerContext';
+import { trackSendChatMessage } from 'utils/analytics';
 import ChatService from '../../../utils/ChatService';
 import { authService as auth } from '../../../utils/AuthService';
 
@@ -78,6 +79,7 @@ const useChat = ({
         if (!newMessage || !newMessage.trim()) {
             return;
         }
+
         const message = {
             content: newMessage,
             to: receiver.id,
@@ -87,6 +89,9 @@ const useChat = ({
             ...data,
         };
 
+        try {
+            trackSendChatMessage();
+        } catch (error) {}
         // First set the message optimisticly
         addNewMessage(message, true);
         setNewMessage('');
