@@ -257,7 +257,16 @@ const Footer = ({
                                         {translate('Support chat')}
                                     </a>
                                 </li>
-
+                                <li>
+                                    <a
+                                        className="link-look"
+                                        href="https://status.cueup.io/"
+                                        target="blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        System status
+                                    </a>
+                                </li>
                                 <li>
                                     <a className="link-look" onClick={showSupportChat}>
                                         {translate('Feedback')}
