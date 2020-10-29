@@ -2,5 +2,9 @@
   "projectId": "tba5d4",
   "baseUrl": "http://localhost:8500",
   "chromeWebSecurity": false,
-  "experimentalFetchPolyfill": true
+  "experimentalFetchPolyfill": true,
+  "retries": {
+    "runMode": 2,
+    "openMode": 0
+  }
 }
