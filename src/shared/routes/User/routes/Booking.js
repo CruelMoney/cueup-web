@@ -20,7 +20,8 @@ import Step4 from 'components/common/RequestForm/Step4';
 import RadioSelect from 'components/RadioSelect';
 import { hideChatButton, showChatButton } from 'utils/supportChat';
 import { useAppState } from 'components/hooks/useAppState';
-import GracefullImage from 'components/GracefullImage';
+import Logo from 'components/common/Logo';
+import { Media } from 'components/MediaContext';
 import { SettingsSection, Input, Label, InputRow } from '../../../components/FormComponents';
 import DatePickerPopup from '../../../components/DatePickerPopup';
 import {
@@ -211,6 +212,11 @@ const EventFormWrapper = styled(Row)`
             margin-top: 0px;
         }
     }
+
+    .logo {
+        fill: #4d6480;
+        margin-top: 4px;
+    }
 `;
 
 const EventForm = ({
@@ -375,7 +381,7 @@ const EventForm = ({
                     />
 
                     <RadioSelect
-                        containerStyle={{ width: 'auto', marginRight: 44 }}
+                        containerStyle={{ width: 'auto', marginRight: 44, marginBottom: 20 }}
                         multi
                         setChosen={() => setValue({ openForAllDjs: !form.openForAllDjs })}
                         options={[
@@ -388,7 +394,29 @@ const EventForm = ({
                             },
                         ]}
                     />
+                    <Media lessThan="md">
+                        <a
+                            className="logo-row"
+                            href={'https://cueup.io'}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <BodySmall>Powered by</BodySmall>
+                            <Logo height={24} width="auto" />
+                        </a>
+                    </Media>
                 </SettingsSection>
+                <Media greaterThanOrEqual="md">
+                    <a
+                        className="logo-row"
+                        href={'https://cueup.io'}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <BodySmall>Powered by</BodySmall>
+                        <Logo height={24} width="auto" />
+                    </a>
+                </Media>
             </Col>
         )}
 
@@ -413,10 +441,11 @@ const BookingSidebar = ({
     showLogin,
     ...props
 }) => {
+    const { user } = props;
     return (
         <>
             <SideBar>
-                <Card>
+                <Card style={{ minWidth: 300 }}>
                     <div className="content">
                         {loading ? <LoadingPlaceholder2 /> : <Content values={values} {...props} />}
                     </div>
@@ -426,8 +455,10 @@ const BookingSidebar = ({
                         disabled={createLoading || eventCreated}
                         loading={createLoading}
                         onClick={requestBooking}
+                        noIcon
+                        style={{ width: '100%', paddingLeft: 0 }}
                     >
-                        {eventCreated ? 'BOOKING DONE' : 'BOOK NOW'}
+                        {eventCreated ? 'BOOKING DONE' : 'BOOK'}
                     </CTAButton>
                 </Card>
                 <ErrorMessageApollo
@@ -447,6 +478,8 @@ const BookingSidebar = ({
                     disabled={createLoading || eventCreated}
                     loading={createLoading}
                     onClick={requestBooking}
+                    noIcon
+                    style={{ paddingLeft: 0 }}
                 >
                     {eventCreated ? 'BOOKING DONE' : 'BOOK NOW'}
                 </CTAButton>
