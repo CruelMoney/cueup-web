@@ -434,16 +434,7 @@ const User = ({ match, location, user, error, loading, translate }) => {
                 translate={translate}
             />
 
-            <Footer
-                noSkew
-                noPreFooter
-                firstTo={translate(appRoutes.home)}
-                secondTo={translate(appRoutes.howItWorks)}
-                firstLabel={translate('how-it-works')}
-                secondLabel={translate('arrange-event')}
-                title={translate('Wonder how it works?')}
-                subTitle={translate('See how it works, or arrange an event.')}
-            />
+            <Footer noSkew noPreFooter />
         </div>
     );
 };

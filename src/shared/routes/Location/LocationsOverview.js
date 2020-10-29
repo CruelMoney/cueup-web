@@ -87,7 +87,7 @@ const Location = () => {
                 noSkew
                 color={secondColor}
                 firstTo={translate(appRoutes.becomeDj)}
-                secondTo={translate(appRoutes.howItWorks)}
+                secondTo={translate(appRoutes.home)}
                 firstLabel={translate('become-dj')}
                 secondLabel={translate('how-it-works')}
                 title={translate('are-you-a-dj', { location: title })}
