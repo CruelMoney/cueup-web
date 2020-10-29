@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { useCallback, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const Sticky = styled.div`

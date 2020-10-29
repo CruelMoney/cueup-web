@@ -20,7 +20,6 @@ import { loadSupportChat } from 'utils/supportChat';
 import LazyFaq from 'routes/Faq';
 import LazyBecomeDj from 'routes/BecomeDj';
 import LazyBlog from 'routes/Blog';
-import LazyHowItWorks from 'routes/HowItWorks';
 import { MediaContextProvider } from 'components/MediaContext';
 import { ProvideAppState, useAppState } from './components/hooks/useAppState';
 import Home from './routes/Home';
@@ -69,6 +68,7 @@ const RouteWrapper = () => {
                     <Route path={t(appRoutes.signUp)} component={LazySignup} />
 
                     <Route path={t(appRoutes.user) + '/:permalink'} component={LazyUser} />
+                    <Route path={'/:permalink/book'} component={LazyUser} />
                     <Route path={t(appRoutes.completeSignup)} component={LazyCompleteSignup} />
                     <Route path={t(appRoutes.terms)} component={LazyTerms} />
                     <Route path={t(appRoutes.event) + '/:id/:hash'} component={LazyEvent} />

@@ -132,7 +132,7 @@ const UserContent = ({ user, statusLabel, setShowing }) => {
     );
 };
 
-const ProfileImage = ({ src, ...props }) => {
+const ProfileImage = ({ src, style, ...props }) => {
     return (
         <div
             style={{
@@ -145,6 +145,7 @@ const ProfileImage = ({ src, ...props }) => {
                 border: '6px solid white',
                 marginBottom: '-100px',
                 backgroundColor: 'white',
+                ...style,
             }}
         >
             <GracefullImage

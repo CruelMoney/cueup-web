@@ -20,6 +20,7 @@ import Step4 from 'components/common/RequestForm/Step4';
 import RadioSelect from 'components/RadioSelect';
 import { hideChatButton, showChatButton } from 'utils/supportChat';
 import { useAppState } from 'components/hooks/useAppState';
+import GracefullImage from 'components/GracefullImage';
 import { SettingsSection, Input, Label, InputRow } from '../../../components/FormComponents';
 import DatePickerPopup from '../../../components/DatePickerPopup';
 import {
@@ -117,7 +118,7 @@ const Booking = ({ user, loading, translate }) => {
 
     const profileUrl = `${translate(appRoutes.user)}/${user.permalink}/${userRoutes.overview}`;
 
-    const metaTitle = `Booking of ${user.title} · Cueup`;
+    const metaTitle = `Book ${user.title} · Cueup`;
     const metaDescription = `Complete your booking of ${user.title}.`;
 
     return (
@@ -134,7 +135,10 @@ const Booking = ({ user, loading, translate }) => {
             </Helmet>
             <ScrollToTop top={0} />
 
-            <GradientBg style={{ height: '80px', minHeight: '80px' }} />
+            <GradientBg
+                isPro={user?.appMetadata?.isPro}
+                style={{ height: '80px', minHeight: '80px' }}
+            />
 
             <Popup width="380px" showing={signupPopup} onClickOutside={() => setSignupPopup(false)}>
                 <Step4
@@ -175,7 +179,7 @@ const Booking = ({ user, loading, translate }) => {
                             icon={arrowBack}
                             style={{ marginRight: 12, marginBottom: -3, fontSize: '1.2em' }}
                         />
-                        Back to profile
+                        Back to DJ profile
                     </TeritaryButton>
                 </NavLink>
                 <EventForm
@@ -238,7 +242,7 @@ const EventForm = ({
                     small
                     stickyTop={'24px'}
                     title={'Event Details'}
-                    description={'Tell us about your event to help the dj decide on a fair price.'}
+                    description={`Tell ${user.title} about your event.`}
                 >
                     <Input
                         v2
@@ -460,6 +464,7 @@ const SideBar = styled.div`
     margin-left: 42px;
     ${Card} {
         box-shadow: 0 0px 15px 0 rgba(0, 0, 0, 0.15);
+        border-radius: 10px;
     }
     .content {
         padding: 1em;

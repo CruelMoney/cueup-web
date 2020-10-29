@@ -396,8 +396,6 @@ const User = ({ match, location, user, error, loading, translate }) => {
 
     return (
         <div>
-            <Menu />
-
             <DJSeoTags {...user} />
             {!hasScrolled && <ScrollToTop />}
             {user && (
@@ -433,8 +431,6 @@ const User = ({ match, location, user, error, loading, translate }) => {
                 location={location}
                 translate={translate}
             />
-
-            <Footer noSkew noPreFooter />
         </div>
     );
 };
@@ -451,21 +447,25 @@ const UserRoutes = ({ match, user, loading, updateUser, location }) => {
     return (
         <Switch>
             <Route
-                path={match.path + '/' + userRoutes.booking}
+                path={[match.path + '/' + userRoutes.booking, '/:permalink/book']}
                 render={(props) => (
                     <Booking {...props} user={user} loading={loading} translate={translate} />
                 )}
             />
             <Route
                 render={() => (
-                    <Content
-                        match={match}
-                        user={user}
-                        loading={loading}
-                        translate={translate}
-                        updateUser={updateUser}
-                        location={location}
-                    />
+                    <>
+                        <Menu />
+                        <Content
+                            match={match}
+                            user={user}
+                            loading={loading}
+                            translate={translate}
+                            updateUser={updateUser}
+                            location={location}
+                        />
+                        <Footer noSkew noPreFooter />
+                    </>
                 )}
             />
         </Switch>

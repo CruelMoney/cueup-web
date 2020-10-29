@@ -1,6 +1,6 @@
 import { captureException } from '@sentry/core';
 import { useHistory, useLocation } from 'react-router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import useDebounce from './useDebounce';
 
 const formToParams = (form) => {
@@ -46,15 +46,17 @@ const useUrlState = (initialState) => {
     const history = useHistory();
     const location = useLocation();
     // initialize state with url + initialstate
+    const mounted = useRef(false);
     const [state, setState] = useState({ ...initialState, ...paramsToForm(location.search) });
-
     // save state to url
     const debouncedState = useDebounce(state, 500);
+
     useEffect(() => {
-        if (debouncedState) {
+        if (debouncedState && mounted.current) {
             const searchParams = formToParams(debouncedState);
             history.replace(`?${searchParams.toString()}`);
         }
+        mounted.current = true;
     }, [debouncedState, history]);
 
     return [state, setState];
