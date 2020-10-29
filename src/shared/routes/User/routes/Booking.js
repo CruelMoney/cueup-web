@@ -32,6 +32,7 @@ import {
     PrimaryButton,
     TeritaryButton,
     Card,
+    Avatar,
 } from '../../../components/Blocks';
 import ScrollToTop from '../../../components/common/ScrollToTop';
 import { LoadingPlaceholder2 } from '../../../components/common/LoadingPlaceholder';
@@ -136,10 +137,10 @@ const Booking = ({ user, loading, translate }) => {
             </Helmet>
             <ScrollToTop top={0} />
 
-            <GradientBg
+            {/* <GradientBg
                 isPro={user?.appMetadata?.isPro}
                 style={{ height: '80px', minHeight: '80px' }}
-            />
+            /> */}
 
             <Popup width="380px" showing={signupPopup} onClickOutside={() => setSignupPopup(false)}>
                 <Step4
@@ -173,14 +174,28 @@ const Booking = ({ user, loading, translate }) => {
                 </div>
             </Popup>
 
-            <Container>
+            <Container
+                style={{
+                    paddingTop: 15,
+                }}
+            >
                 <NavLink to={profileUrl}>
-                    <TeritaryButton style={{ marginTop: 15, marginLeft: -15, marginBottom: -24 }}>
-                        <InlineIcon
-                            icon={arrowBack}
-                            style={{ marginRight: 12, marginBottom: -3, fontSize: '1.2em' }}
-                        />
-                        Back to DJ profile
+                    <TeritaryButton
+                        style={{
+                            marginLeft: -15,
+                            marginBottom: -24,
+                        }}
+                    >
+                        <Row middle>
+                            <InlineIcon
+                                icon={arrowBack}
+                                style={{ marginRight: 6, fontSize: '1.2em' }}
+                            />
+                            <div style={{ marginRight: 6, zIndex: 2, position: 'relative' }}>
+                                <Avatar src={user?.picture?.path} />
+                            </div>
+                            <BodySmall>{user.title}</BodySmall>
+                        </Row>
                     </TeritaryButton>
                 </NavLink>
                 <EventForm
@@ -212,10 +227,17 @@ const EventFormWrapper = styled(Row)`
             margin-top: 0px;
         }
     }
-
+    .logo-row {
+        display: flex;
+        p {
+            line-height: 1em;
+        }
+    }
     .logo {
         fill: #4d6480;
-        margin-top: 4px;
+        margin-left: 4px;
+        display: inline-block;
+        margin-top: -1px;
     }
 `;
 
@@ -249,6 +271,9 @@ const EventForm = ({
                     stickyTop={'24px'}
                     title={'Event Details'}
                     description={`Tell ${user.title} about your event.`}
+                    style={{
+                        minHeight: 'calc(100vh - 200px)',
+                    }}
                 >
                     <Input
                         v2
@@ -380,7 +405,7 @@ const EventForm = ({
                         unregisterValidation={unregisterValidation('description')}
                     />
 
-                    <RadioSelect
+                    {/* <RadioSelect
                         containerStyle={{ width: 'auto', marginRight: 44, marginBottom: 20 }}
                         multi
                         setChosen={() => setValue({ openForAllDjs: !form.openForAllDjs })}
@@ -393,7 +418,8 @@ const EventForm = ({
                                 value: 'openForAllDjs',
                             },
                         ]}
-                    />
+                    /> */}
+
                     <Media lessThan="md">
                         <a
                             className="logo-row"
@@ -402,7 +428,7 @@ const EventForm = ({
                             rel="noopener noreferrer"
                         >
                             <BodySmall>Powered by</BodySmall>
-                            <Logo height={24} width="auto" />
+                            <Logo height={16} width="auto" />
                         </a>
                     </Media>
                 </SettingsSection>
@@ -414,7 +440,7 @@ const EventForm = ({
                         rel="noopener noreferrer"
                     >
                         <BodySmall>Powered by</BodySmall>
-                        <Logo height={24} width="auto" />
+                        <Logo height={16} width="auto" />
                     </a>
                 </Media>
             </Col>
@@ -458,7 +484,7 @@ const BookingSidebar = ({
                         noIcon
                         style={{ width: '100%', paddingLeft: 0 }}
                     >
-                        {eventCreated ? 'BOOKING DONE' : 'BOOK'}
+                        {eventCreated ? 'BOOKING DONE' : `BOOK ${user.title}`.toUpperCase()}
                     </CTAButton>
                 </Card>
                 <ErrorMessageApollo
@@ -481,7 +507,7 @@ const BookingSidebar = ({
                     noIcon
                     style={{ paddingLeft: 0 }}
                 >
-                    {eventCreated ? 'BOOKING DONE' : 'BOOK NOW'}
+                    {eventCreated ? 'BOOKING DONE' : `BOOK ${user.title}`.toUpperCase()}
                 </CTAButton>
             </MobileBookingButton>
         </>
