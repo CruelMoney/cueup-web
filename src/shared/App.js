@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useQuery } from '@apollo/client';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 import LazySignup from 'routes/Signup';
 import LazyUser from 'routes/User';
@@ -16,12 +17,13 @@ import LazySideBarChat from 'components/SidebarChat';
 import LazyGetProfessional from 'routes/GetProfessional';
 import { RequestFormPopup } from 'components/common/RequestForm';
 import { loadSupportChat } from 'utils/supportChat';
-
 import LazyFaq from 'routes/Faq';
 import LazyBecomeDj from 'routes/BecomeDj';
 import LazyBlog from 'routes/Blog';
 import LazyHowItWorks from 'routes/HowItWorks';
 import { MediaContextProvider } from 'components/MediaContext';
+import { ME } from 'components/gql';
+import { identifyUser } from './utils/analytics';
 import { ProvideAppState, useAppState } from './components/hooks/useAppState';
 import Home from './routes/Home';
 import About from './routes/About';
@@ -29,7 +31,6 @@ import NotFound from './routes/NotFound';
 import Navigation from './components/Navigation';
 import { ProvideMobileMenu } from './components/Navigation/MobileMenu';
 import BottomPlayer from './routes/User/routes/Sounds/BottomPlayer';
-
 import './css/style.css';
 
 const App = () => {
@@ -53,11 +54,26 @@ const RouteWrapper = () => {
     const { t } = useTranslation();
     const { showBottomPlayer, showSideBarChat } = useAppState();
 
+    const { loading, data } = useQuery(ME);
+    const { me: user } = data || {};
+
+    useEffect(() => {
+        if (user) {
+            const isPro = user?.appMetadata?.isPro;
+            const isDJ = user?.appMetadata?.roles?.includes('DJ');
+            const isOrganizer = user?.appMetadata?.roles?.includes('ORGANIZER');
+
+            identifyUser({ userId: user.id, isPro, isDJ, isOrganizer });
+        }
+    });
+
     return (
         <>
             <Route
                 render={({ location }) => {
-                    return !location.pathname.includes('/book-dj') ? <Navigation /> : null;
+                    return !location.pathname.includes('/book-dj') ? (
+                        <Navigation user={user} loading={loading} />
+                    ) : null;
                 }}
             />
 

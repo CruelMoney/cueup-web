@@ -15,7 +15,7 @@ import InstagramConnect from '../InstagramConnect';
 import { LoadingIndicator, Container } from '../Blocks';
 import DesktopMenu from './DesktopMenu';
 
-const Menu = ({ dark, relative, fullWidth }) => {
+const Menu = ({ user, loading, dark, relative, fullWidth }) => {
     const { t } = useTranslation();
     const [loginExpanded, setLoginExpanded] = useState(false);
 
@@ -28,8 +28,6 @@ const Menu = ({ dark, relative, fullWidth }) => {
         }
     }, [setLoginExpanded]);
 
-    const { loading, data } = useQuery(ME);
-    const { me: user } = data || {};
     const loggedIn = !!user;
 
     const isPro = user?.appMetadata?.isPro;

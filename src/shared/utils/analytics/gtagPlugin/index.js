@@ -1,5 +1,6 @@
 const defaultConfig = {
     trackingId: null,
+    debug_mode: process.env.NODE_ENV === 'development',
     send_page_view: false, // disable because we manually send
 };
 
@@ -68,6 +69,7 @@ export default function analyticsGtagPlugin(userConfig = {}) {
         /* Identify user */
         identify: ({ payload }) => {
             gtag('set', { user_id: payload.userId });
+            gtag('set', 'user_properties', payload.traits);
         },
         loaded: () => {
             return true;
