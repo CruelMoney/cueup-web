@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { useQuery } from '@apollo/client';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 import { Media } from 'components/MediaContext';
+import { ME } from 'components/gql';
+import { identifyUser } from 'utils/analytics';
 import Navlink from '../common/Navlink';
 import Login from '../common/Login';
 import Logo from '../common/Logo';
 import EmailVerifier from '../EmailVerifier';
-import { ME } from '../gql';
 import Popup from '../common/Popup';
 import InstagramConnect from '../InstagramConnect';
 import { LoadingIndicator, Container } from '../Blocks';
 import DesktopMenu from './DesktopMenu';
 
-const Menu = ({ user, loading, dark, relative, fullWidth }) => {
+const Menu = ({ dark, relative, fullWidth }) => {
     const { t } = useTranslation();
     const [loginExpanded, setLoginExpanded] = useState(false);
 
@@ -28,10 +28,22 @@ const Menu = ({ user, loading, dark, relative, fullWidth }) => {
         }
     }, [setLoginExpanded]);
 
+    const { loading, data } = useQuery(ME);
+    const user = data?.me;
     const loggedIn = !!user;
-
     const isPro = user?.appMetadata?.isPro;
     const isDJ = user?.appMetadata?.roles?.includes('DJ');
+
+    useEffect(() => {
+        const user = data?.me;
+        if (user) {
+            const isPro = user?.appMetadata?.isPro;
+            const isDJ = user?.appMetadata?.roles?.includes('DJ');
+            const isOrganizer = user?.appMetadata?.roles?.includes('ORGANIZER');
+
+            identifyUser({ userId: user.id, isPro, isDJ, isOrganizer });
+        }
+    }, [data]);
 
     return (
         <div
@@ -158,6 +170,4 @@ const MainMenu = styled.ul`
     }
 `;
 
-const SmartNavigation = withRouter(Menu);
-
-export default SmartNavigation;
+export default Menu;

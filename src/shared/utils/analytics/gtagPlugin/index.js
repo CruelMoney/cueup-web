@@ -1,7 +1,22 @@
+import { TRACKING_EVENTS } from '../events';
+
 const defaultConfig = {
     trackingId: null,
-    debug_mode: process.env.NODE_ENV === 'development',
+    debug_mode: process.env.SETTING === 'development',
     send_page_view: false, // disable because we manually send
+};
+
+const EventsMapping = {
+    [TRACKING_EVENTS.CompleteBooking]: 'purchase',
+    [TRACKING_EVENTS.InitiateCompleteBooking]: 'begin_checkout',
+    [TRACKING_EVENTS.Login]: 'login',
+    [TRACKING_EVENTS.PageView]: 'page_view',
+    [TRACKING_EVENTS.PostEvent]: 'generate_lead',
+    [TRACKING_EVENTS.Search]: 'search',
+    [TRACKING_EVENTS.SendChatMessage]: 'send_message',
+    [TRACKING_EVENTS.Signup]: 'sign_up',
+    [TRACKING_EVENTS.SubscribeToPro]: 'subscribe',
+    [TRACKING_EVENTS.EmptySearch]: 'empty_search',
 };
 
 const install = (config) => {
@@ -50,7 +65,7 @@ export default function analyticsGtagPlugin(userConfig = {}) {
         },
         page: ({ payload }) => {
             const { title, path, url } = payload.properties;
-            gtag('event', 'page_view', {
+            gtag('event', EventsMapping[TRACKING_EVENTS.PageView], {
                 page_title: title,
                 page_location: url,
                 page_path: path,
@@ -60,11 +75,16 @@ export default function analyticsGtagPlugin(userConfig = {}) {
         /* Track event */
         track: ({ payload }) => {
             const { category, label, value } = payload.properties;
-            gtag('event', payload.event, {
-                event_category: category, // good ol' event category
-                event_label: label,
-                value,
-            });
+
+            const gaEvent = EventsMapping[payload.event];
+
+            if (gaEvent) {
+                gtag('event', gaEvent, {
+                    event_category: category, // good ol' event category
+                    event_label: label,
+                    value,
+                });
+            }
         },
         /* Identify user */
         identify: ({ payload }) => {

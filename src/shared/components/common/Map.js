@@ -169,10 +169,11 @@ const Wrapper = (props) => {
     return <div style={{ height: '100%' }}>{props.children}</div>;
 };
 
+const libraries = ['geometry', 'places', 'visualization'];
 const MapLoader = ({ ...props }) => {
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: 'AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ',
-        libraries: ['geometry', 'places', 'visualization'],
+        libraries,
     });
 
     if (!isLoaded) {

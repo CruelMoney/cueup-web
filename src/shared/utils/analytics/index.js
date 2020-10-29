@@ -1,10 +1,11 @@
 import Analytics from 'analytics';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router';
+import { TRACKING_EVENTS } from './events';
 import facebookPixelPlugin from './facebookPixelPlugin';
 import googleAnalytics from './gtagPlugin';
 
-const shouldTrack = process.env.NODE_ENV === 'production';
+const shouldTrack = true || process.env.SETTING === 'production';
 
 let analytics = null;
 
@@ -38,7 +39,7 @@ export const trackPageView = () => {
 
 export const trackCheckAvailability = (locationName) => {
     if (shouldTrack) {
-        analytics.track('Search', {
+        analytics.track(TRACKING_EVENTS.Search, {
             category: 'Events',
             label: locationName,
         });
@@ -47,7 +48,7 @@ export const trackCheckAvailability = (locationName) => {
 
 export const trackSignup = () => {
     if (shouldTrack) {
-        analytics.track('CompleteRegistration', {
+        analytics.track(TRACKING_EVENTS.Signup, {
             category: 'Users',
         });
     }
@@ -55,14 +56,14 @@ export const trackSignup = () => {
 
 export const trackEventPosted = () => {
     if (shouldTrack) {
-        analytics.track('Created', {
+        analytics.track(TRACKING_EVENTS.PostEvent, {
             category: 'Events',
         });
     }
 };
 export const trackEventPaid = (value) => {
     if (shouldTrack) {
-        analytics.track('Purchase', {
+        analytics.track(TRACKING_EVENTS.CompleteBooking, {
             category: 'Events',
             value,
         });
@@ -71,7 +72,7 @@ export const trackEventPaid = (value) => {
 
 export const trackCheckout = () => {
     if (shouldTrack) {
-        analytics.track('InitiateCheckout', {
+        analytics.track(TRACKING_EVENTS.InitiateCompleteBooking, {
             category: 'Events',
         });
     }
@@ -79,7 +80,7 @@ export const trackCheckout = () => {
 
 export const trackEmptySearch = (label) => {
     if (shouldTrack) {
-        analytics.track('emptySearch', {
+        analytics.track(TRACKING_EVENTS.EmptySearch, {
             category: 'Events',
             label,
         });
