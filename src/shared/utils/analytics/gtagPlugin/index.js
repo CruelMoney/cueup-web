@@ -2,7 +2,7 @@ import { TRACKING_EVENTS } from '../events';
 
 const defaultConfig = {
     trackingId: null,
-    debug_mode: process.env.SETTING === 'development',
+    debug_mode: false,
     send_page_view: false, // disable because we manually send
 };
 

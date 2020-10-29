@@ -20,7 +20,9 @@ const LazyApp = loadable(() => import('./App'));
 const Setup = ({ location }) => {
     const { environment } = useServerContext();
     const { t, i18n } = useTranslation();
-    useAnalytics();
+    useAnalytics({
+        disableTracking: environment.SETTING !== 'production',
+    });
 
     useEffect(() => {
         Sentry.init({

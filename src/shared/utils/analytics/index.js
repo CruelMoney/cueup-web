@@ -5,17 +5,46 @@ import { TRACKING_EVENTS } from './events';
 import facebookPixelPlugin from './facebookPixelPlugin';
 import googleAnalytics from './gtagPlugin';
 
-const shouldTrack = true || process.env.SETTING === 'production';
-
 let analytics = null;
 
-export const useAnalytics = () => {
+function doNotTrackPlugin(userConfig = {}) {
+    return {
+        NAMESPACE: 'do-not-track',
+        config: Object.assign({}, userConfig),
+        initializeStart: ({ abort, config }) => {
+            if (config.disableTracking) {
+                return abort('Cancel the initialize call because do-not-track enabled');
+            }
+        },
+        pageStart: ({ abort, config }) => {
+            if (config.disableTracking) {
+                return abort('Cancel the page call because do-not-track enabled');
+            }
+        },
+        identifyStart: ({ abort, config }) => {
+            if (config.disableTracking) {
+                return abort('Cancel the identify call because do-not-track enabled');
+            }
+        },
+        trackStart: ({ abort, config }) => {
+            if (config.disableTracking) {
+                return abort('Cancel the track call because do-not-track enabled');
+            }
+        },
+    };
+}
+
+export const useAnalytics = ({ disableTracking }) => {
     const location = useLocation();
 
-    if (shouldTrack && !analytics) {
+    if (!analytics) {
         analytics = Analytics({
             app: 'cueup-web',
+            debug: true,
             plugins: [
+                doNotTrackPlugin({
+                    disableTracking,
+                }),
                 googleAnalytics({
                     trackingId: 'G-1YFGDM8MKZ',
                 }),
@@ -32,90 +61,68 @@ export const useAnalytics = () => {
 };
 
 export const trackPageView = () => {
-    if (shouldTrack) {
-        analytics.page();
-    }
+    analytics.page();
 };
 
 export const trackCheckAvailability = (locationName) => {
-    if (shouldTrack) {
-        analytics.track(TRACKING_EVENTS.Search, {
-            category: 'Events',
-            search_term: locationName,
-        });
-    }
+    analytics.track(TRACKING_EVENTS.Search, {
+        category: 'Events',
+        search_term: locationName,
+    });
 };
 
 export const trackSignup = () => {
-    if (shouldTrack) {
-        analytics.track(TRACKING_EVENTS.Signup, {
-            category: 'Users',
-        });
-    }
+    analytics.track(TRACKING_EVENTS.Signup, {
+        category: 'Users',
+    });
 };
 
 export const trackEventPosted = () => {
-    if (shouldTrack) {
-        analytics.track(TRACKING_EVENTS.PostEvent, {
-            category: 'Events',
-        });
-    }
+    analytics.track(TRACKING_EVENTS.PostEvent, {
+        category: 'Events',
+    });
 };
 export const trackEventPaid = ({ currency, value }) => {
-    if (shouldTrack) {
-        analytics.track(TRACKING_EVENTS.CompleteBooking, {
-            category: 'Events',
-            value,
-            currency,
-        });
-    }
+    analytics.track(TRACKING_EVENTS.CompleteBooking, {
+        category: 'Events',
+        value,
+        currency,
+    });
 };
 
 export const trackCheckout = () => {
-    if (shouldTrack) {
-        analytics.track(TRACKING_EVENTS.InitiateCompleteBooking, {
-            category: 'Events',
-        });
-    }
+    analytics.track(TRACKING_EVENTS.InitiateCompleteBooking, {
+        category: 'Events',
+    });
 };
 
 export const trackEmptySearch = (label) => {
-    if (shouldTrack) {
-        analytics.track(TRACKING_EVENTS.EmptySearch, {
-            category: 'Events',
-            label,
-        });
-    }
+    analytics.track(TRACKING_EVENTS.EmptySearch, {
+        category: 'Events',
+        label,
+    });
 };
 
 export const trackLogin = () => {
-    if (shouldTrack) {
-        analytics.track(TRACKING_EVENTS.Login, {
-            category: 'Users',
-        });
-    }
+    analytics.track(TRACKING_EVENTS.Login, {
+        category: 'Users',
+    });
 };
 
 export const trackSendChatMessage = () => {
-    if (shouldTrack) {
-        analytics.track(TRACKING_EVENTS.SendChatMessage, {
-            category: 'Users',
-        });
-    }
+    analytics.track(TRACKING_EVENTS.SendChatMessage, {
+        category: 'Users',
+    });
 };
 
 export const trackSubscribeToPro = ({ value, currency }) => {
-    if (shouldTrack) {
-        analytics.track(TRACKING_EVENTS.SubscribeToPro, {
-            category: 'Users',
-            value,
-            currency,
-        });
-    }
+    analytics.track(TRACKING_EVENTS.SubscribeToPro, {
+        category: 'Users',
+        value,
+        currency,
+    });
 };
 
 export const identifyUser = ({ userId, isPro, isDJ, isOrganizer }) => {
-    if (shouldTrack) {
-        analytics.identify(userId, { isPro, isDJ, isOrganizer });
-    }
+    analytics.identify(userId, { isPro, isDJ, isOrganizer });
 };
