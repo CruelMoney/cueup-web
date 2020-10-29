@@ -10,6 +10,7 @@ import { useServerContext } from 'components/hooks/useServerContext';
 import { useNotifications } from 'components/hooks/useNotifications';
 import { useAppState } from 'components/hooks/useAppState';
 import Popup from 'components/common/Popup';
+import Menu from 'components/Navigation';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col } from '../../components/Blocks';
@@ -73,6 +74,8 @@ const Index = ({ location }) => {
                     <meta name="robots" content="noindex" />
                 </Helmet>
             )}
+
+            <Menu />
 
             <Content
                 location={location}

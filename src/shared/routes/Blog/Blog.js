@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 
 import { appRoutes } from 'constants/locales/appRoutes';
+import Menu from 'components/Navigation';
 import Footer from '../../components/common/Footer';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Blog from './components/Blog';
@@ -19,11 +20,11 @@ const Index = () => {
         <div className="blog">
             <Helmet>
                 <title>{title}</title>
-                <body className="white-theme" />
                 <meta property="og:title" content={title} />
                 <meta name="twitter:title" content={title} />
                 <meta property="og:site_name" content="Cueup Blog" />
             </Helmet>
+            <Menu dark relative />
             <Switch>
                 <Route exact path={translate(appRoutes.blog)} component={Blog} />
                 <Route path={`${translate(appRoutes.blog)}/:postTitle`} component={Post} />

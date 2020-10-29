@@ -25,6 +25,7 @@ import useTranslate from 'components/hooks/useTranslate';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { DJSeoTags } from 'components/SeoTags';
 import { Media } from 'components/MediaContext';
+import Menu from 'components/Navigation';
 import Sidebar, { SidebarContent } from '../../components/Sidebar';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col, Divider } from '../../components/Blocks';
@@ -395,6 +396,8 @@ const User = ({ match, location, user, error, loading, translate }) => {
 
     return (
         <div>
+            <Menu />
+
             <DJSeoTags {...user} />
             {!hasScrolled && <ScrollToTop />}
             {user && (

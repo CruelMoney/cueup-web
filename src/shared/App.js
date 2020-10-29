@@ -26,7 +26,6 @@ import { ProvideAppState, useAppState } from './components/hooks/useAppState';
 import Home from './routes/Home';
 import About from './routes/About';
 import NotFound from './routes/NotFound';
-import Navigation from './components/Navigation';
 import { ProvideMobileMenu } from './components/Navigation/MobileMenu';
 import BottomPlayer from './routes/User/routes/Sounds/BottomPlayer';
 
@@ -55,18 +54,6 @@ const RouteWrapper = () => {
 
     return (
         <>
-            <Route
-                render={({ location }) => {
-                    if (
-                        location.pathname.includes('/book-dj') ||
-                        location.pathname.includes('/s')
-                    ) {
-                        return null;
-                    }
-                    return <Navigation />;
-                }}
-            />
-
             <div id="content">
                 <Switch>
                     <Route
@@ -79,7 +66,6 @@ const RouteWrapper = () => {
                     <Route path={t(appRoutes.becomeDj)} component={LazyBecomeDj} />
                     <Route path={t(appRoutes.blog)} component={LazyBlog} />
 
-                    <Route path={t(appRoutes.howItWorks)} component={LazyHowItWorks} />
                     <Route path={t(appRoutes.signUp)} component={LazySignup} />
 
                     <Route path={t(appRoutes.user) + '/:permalink'} component={LazyUser} />

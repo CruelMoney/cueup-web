@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { LazyContactInformationPopup, LazyChatGetProPopup } from 'routes/GetProfessional';
+import Menu from 'components/Navigation';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col, TeritaryButton, SmartButton } from '../../components/Blocks';
@@ -90,6 +91,7 @@ const Index = ({ location, match, history }) => {
                     />
                 </Helmet>
             )}
+            <Menu />
             <ScrollToTop animate top={295} />
 
             {me && <BackToProfile permalink={me.permalink} />}

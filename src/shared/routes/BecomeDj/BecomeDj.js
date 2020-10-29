@@ -6,6 +6,7 @@ import Footer from 'components/common/Footer';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { appRoutes } from 'constants/locales/appRoutes';
 import { useServerContext } from 'components/hooks/useServerContext';
+import Menu from 'components/Navigation';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Signup from '../Signup';
 import Hero from './components/Hero';
@@ -54,6 +55,7 @@ const Index = () => {
                 />
             </Helmet>
             <ScrollToTop />
+            <Menu />
             <Bg>
                 <Hero
                     firstTo={translate(appRoutes.signUp)}

@@ -7,6 +7,7 @@ import { Body, TextAccent } from 'components/Text';
 import { Col, Container } from 'components/Blocks';
 
 import Occasions from 'routes/BookDJ/Occassions';
+import Menu from 'components/Navigation';
 import Footer from '../../../components/common/Footer';
 
 import content from '../content.json';
@@ -47,6 +48,7 @@ const Home = () => {
 
     return (
         <div>
+            <Menu />
             <Hero />
             <HowitworksSection />
             <Occasions

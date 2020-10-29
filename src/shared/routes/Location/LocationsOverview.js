@@ -5,6 +5,7 @@ import { useServerContext } from 'components/hooks/useServerContext';
 
 import { appRoutes } from 'constants/locales/appRoutes';
 import { Container, Col, CardSimple } from 'components/Blocks';
+import Menu from 'components/Navigation';
 import Footer from '../../components/common/Footer';
 
 import Map from '../../components/common/Map';
@@ -36,6 +37,7 @@ const Location = () => {
                 <meta name="twitter:title" content={title + ' | Cueup'} />
                 <meta name="twitter:description" content={description} />
             </Helmet>
+            <Menu />
             <div className="span-wrapper">
                 <header
                     style={{

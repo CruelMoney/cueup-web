@@ -7,6 +7,7 @@ import { ME } from 'components/gql';
 import { appRoutes } from 'constants/locales/appRoutes';
 import { useServerContext } from 'components/hooks/useServerContext';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
+import Menu from 'components/Navigation';
 import thumbEn from '../../assets/images/signup.png';
 import thumbDa from '../../assets/images/signup_da.png';
 import ScrollToTop from '../../components/common/ScrollToTop';
@@ -40,6 +41,7 @@ const Index = () => {
                     content="app-id=1458267647, app-argument=userProfile"
                 />
             </Helmet>
+            <Menu />
             <ScrollToTop />
             <Layout translate={translate} user={data?.me} loading={loading} />
         </div>

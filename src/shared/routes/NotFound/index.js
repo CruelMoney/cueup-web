@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { withTranslation } from 'react-i18next';
 import { appRoutes } from 'constants/locales/appRoutes';
+import Menu from 'components/Navigation';
 import EmptyPage from '../../components/common/EmptyPage';
 import Footer from '../../components/common/Footer';
 
@@ -15,7 +16,6 @@ class NotFound extends Component {
             <div className="not-found-screen">
                 <Helmet>
                     <title>{siteTitle + ' | Cueup'}</title>
-                    <body className="white-theme" />
                     <meta name="description" content={siteDescription} />
 
                     <meta property="og:title" content={siteTitle + ' | Cueup'} />
@@ -24,7 +24,7 @@ class NotFound extends Component {
                     <meta name="twitter:title" content={siteTitle + ' | Cueup'} />
                     <meta name="twitter:description" content={siteDescription} />
                 </Helmet>
-
+                <Menu dark relative />
                 <EmptyPage title={siteTitle} message={siteDescription} />
                 <Footer
                     color={'#31DAFF'}

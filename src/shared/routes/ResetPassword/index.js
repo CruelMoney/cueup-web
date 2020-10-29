@@ -6,6 +6,7 @@ import { Input } from 'components/FormComponents';
 import RegistrationElement from 'components/common/RegistrationElement';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
+import Menu from 'components/Navigation';
 import Footer from '../../components/common/Footer';
 
 import NumberedList from '../../components/common/NumberedList';
@@ -61,7 +62,6 @@ const ResetPassword = () => {
     return (
         <div className="reset-password-screen">
             <Helmet>
-                <body className="white-theme" />
                 <title>{siteTitle + ' | Cueup'}</title>
                 <meta name="description" content={siteDescription} />
 
@@ -71,6 +71,7 @@ const ResetPassword = () => {
                 <meta name="twitter:title" content={siteTitle + ' | Cueup'} />
                 <meta name="twitter:description" content={siteDescription} />
             </Helmet>
+            <Menu relative dark />
             <Container>
                 <div
                     className="signup fix-top-mobile"
