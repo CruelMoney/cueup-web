@@ -125,35 +125,36 @@ export const OrganizationSeo = () => {
     );
 };
 
-export const ReviewSeoTag: React.FC<RatingProps> = ({
-    id,
-    content,
-    citation,
-    author,
-    createdAt,
-    rating,
-    title,
-}) => {
-    return (
-        <Helmet
-            script={[
-                helmetJsonLdProp<Review>({
-                    '@context': 'https://schema.org',
-                    '@type': 'Review',
-                    '@id': id,
-                    'reviewRating': {
-                        '@type': 'Rating',
-                        'ratingValue': rating,
-                    },
-                    'name': title,
-                    'author': {
-                        '@type': 'Person',
-                        'name': author || citation,
-                    },
-                    'datePublished': createdAt,
-                    'reviewBody': content,
-                }),
-            ]}
-        />
-    );
-};
+// // not used for now. need to specify
+// export const ReviewSeoTag: React.FC<RatingProps> = ({
+//     id,
+//     content,
+//     citation,
+//     author,
+//     createdAt,
+//     rating,
+//     title,
+// }) => {
+//     return (
+//         <Helmet
+//             script={[
+//                 helmetJsonLdProp<Review>({
+//                     '@context': 'https://schema.org',
+//                     '@type': 'Review',
+//                     '@id': id,
+//                     'reviewRating': {
+//                         '@type': 'Rating',
+//                         'ratingValue': rating,
+//                     },
+//                     'name': title,
+//                     'author': {
+//                         '@type': 'Person',
+//                         'name': author || citation,
+//                     },
+//                     'datePublished': createdAt,
+//                     'reviewBody': content,
+//                 }),
+//             ]}
+//         />
+//     );
+// };

@@ -57,7 +57,6 @@ const Review = (props) => {
 
     return (
         <ReviewWrapper>
-            <ReviewSeoTag {...props} />
             <Title>{title}</Title>
             {isOwn && isTestimonial && (
                 <RemoveButton onClick={() => removeTestimonial({ variables: { id } })}>
