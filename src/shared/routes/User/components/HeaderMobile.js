@@ -3,22 +3,10 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { ProFeature } from 'components/FormComponents';
 import GracefullImage from 'components/GracefullImage';
-import Navigation from '../../../components/Navigation/SubNavigation';
-import Rating from '../../../components/common/Rating';
-import {
-    Container,
-    FullWidthCol,
-    Row,
-    Col,
-    Avatar,
-    GradientBg,
-    TeritaryButton,
-    SecondaryButton,
-    Hr,
-} from '../../../components/Blocks';
-import { HeaderTitle, BodyBold } from '../../../components/Text';
+import { Container, FullWidthCol, Row, Col, GradientBg, Hr } from '../../../components/Blocks';
+import { HeaderTitle, BodyBold, Title, TitleClean } from '../../../components/Text';
 
-import { CertifiedVerified } from './Common';
+import { UserInfo, UserRating } from './Common';
 import BookingButton from './BookingButton';
 
 const StatusButton = styled.button`
@@ -30,18 +18,10 @@ const StatusButton = styled.button`
 `;
 
 const HeaderMobile = (props) => {
-    const { user, loading, children, routes } = props;
+    const { user, loading, children } = props;
     const { artistName, userMetadata, appMetadata, reviews } = user;
     const { firstName } = userMetadata;
-    const {
-        certified,
-        rating,
-        identityVerified,
-        experience,
-        followers,
-
-        isPro,
-    } = appMetadata;
+    const { rating, isPro } = appMetadata;
 
     return (
         <>
@@ -75,14 +55,8 @@ const HeaderMobile = (props) => {
                         </HeaderTitle>
                     </NavLink>
 
-                    {(identityVerified || certified) && (
-                        <TwoCol style={{ marginTop: 15 }}>
-                            <CertifiedVerified
-                                certified={certified}
-                                identityVerified={identityVerified}
-                            />
-                        </TwoCol>
-                    )}
+                    <UserRating dark reviews={reviews} rating={rating} style={{ marginTop: 12 }} />
+
                     <BookingButton
                         user={user}
                         noIcon
@@ -104,18 +78,6 @@ const HeaderMobile = (props) => {
 const HeaderWrapper = styled.div``;
 
 const UserContent = ({ user, statusLabel, setShowing }) => {
-    const { artistName, userMetadata, appMetadata, reviews } = user;
-    const { firstName } = userMetadata;
-    const {
-        certified,
-        rating,
-        identityVerified,
-        experience,
-        followers,
-
-        isPro,
-    } = appMetadata;
-
     return (
         <HeaderWrapper>
             <Col style={{ flex: 1, alignItems: 'center' }}>

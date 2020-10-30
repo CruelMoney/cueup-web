@@ -6,17 +6,6 @@ import queryString from 'query-string';
 
 import moment from 'moment';
 
-import { Icon } from '@iconify/react';
-import pinIcon from '@iconify/icons-ion/location-sharp';
-import timeIcon from '@iconify/icons-ion/time';
-import websiteIcon from '@iconify/icons-ion/globe-outline';
-import mailIcon from '@iconify/icons-ion/ios-email';
-import phoneIcon from '@iconify/icons-ion/call';
-import instagramIcon from '@iconify/icons-ion/logo-instagram-outline';
-
-import soundcloudLogo from '@iconify/icons-simple-icons/soundcloud';
-import mixcloudIcon from '@iconify/icons-simple-icons/mixcloud';
-
 import { Helmet } from 'react-helmet-async';
 import PayForm from 'components/common/PayForm.js';
 
@@ -47,34 +36,17 @@ import { Overview, Settings, Reviews, Gigs, Events, Booking, Photos, Sounds } fr
 import { USER, UPDATE_USER } from './gql';
 import BackToEvent from './components/BackToEvent';
 import Header from './components/Header';
-import { Stats, IconRow, CertifiedVerified, IconRowLink } from './components/Common';
+import { Stats, IconRow, CertifiedVerified, IconRowLink, UserInfo } from './components/Common';
 import content from './content.json';
 
 const UserSidebar = ({ user, loading, bookingEnabled }) => {
-    const { userMetadata = {}, appMetadata = {}, playingLocation, email, userSettings = {} } =
-        user || {};
-    const {
-        experience,
-        createdAt,
-        certified,
-        identityVerified,
-        instagramUsername,
-        isPro,
-        soundCloudUsername,
-        soundCloudUrl,
-        mixcloudUsername,
-        mixcloudUrl,
-    } = appMetadata;
+    const { userMetadata = {}, appMetadata = {} } = user || {};
+    const { experience } = appMetadata;
     let { followers } = appMetadata;
 
     if (followers && followers.total < 500) {
         followers = false;
     }
-
-    const { publicDisplay } = userSettings;
-    const { website, phone } = userMetadata;
-
-    const memberSince = moment(createdAt).format('MMMM YYYY');
 
     return (
         <Sidebar
@@ -112,112 +84,7 @@ const UserSidebar = ({ user, loading, bookingEnabled }) => {
                             marginBottom: '-15px',
                         }}
                     >
-                        <IconRow className="iconRow">
-                            <Icon
-                                icon={timeIcon}
-                                color={'#98a4b3'}
-                                style={{ marginRight: '15px', fontSize: '24px' }}
-                            />
-                            Member since {memberSince}
-                        </IconRow>
-                        {playingLocation && (
-                            <IconRow>
-                                <Icon
-                                    icon={pinIcon}
-                                    color={'#98a4b3'}
-                                    style={{ marginRight: '15px', fontSize: '24px' }}
-                                />
-                                {playingLocation.name}
-                            </IconRow>
-                        )}
-                        <CertifiedVerified
-                            certified={certified}
-                            identityVerified={identityVerified}
-                        />
-                        {instagramUsername && isPro && publicDisplay?.INSTAGRAM.public && (
-                            <IconRowLink
-                                target="_blank"
-                                rel="noopener noreferrer ugc"
-                                href={'https://instagram.com/' + instagramUsername}
-                                title="Visit Instagram profile"
-                            >
-                                <Icon
-                                    icon={instagramIcon}
-                                    color={'#98a4b3'}
-                                    style={{ marginRight: '15px', fontSize: '24px' }}
-                                />
-                                {instagramUsername}
-                            </IconRowLink>
-                        )}
-
-                        {soundCloudUsername && isPro && publicDisplay?.SOUNDCLOUD.public && (
-                            <IconRowLink
-                                href={`${soundCloudUrl}?ref=cueup`}
-                                target="_blank"
-                                rel="noopener noreferrer ugc"
-                                title="Visit SoundCloud profile"
-                            >
-                                <Icon
-                                    icon={soundcloudLogo}
-                                    color={'#98a4b3'}
-                                    style={{ marginRight: '15px', fontSize: '24px' }}
-                                />
-                                {soundCloudUsername}
-                            </IconRowLink>
-                        )}
-
-                        {mixcloudUrl && isPro && publicDisplay?.MIXCLOUD.public && (
-                            <IconRowLink
-                                href={`${mixcloudUrl}?ref=cueup`}
-                                target="_blank"
-                                rel="noopener noreferrer ugc"
-                                title="Visit Mixcloud profile"
-                            >
-                                <Icon
-                                    icon={mixcloudIcon}
-                                    color={'#98a4b3'}
-                                    style={{ marginRight: '15px', fontSize: '24px' }}
-                                />
-                                {mixcloudUsername}
-                            </IconRowLink>
-                        )}
-                        {website && isPro && publicDisplay?.WEBSITE.public && (
-                            <>
-                                <IconRowLink
-                                    target="_blank"
-                                    rel="noopener noreferrer nofollow ugc"
-                                    href={website}
-                                    title="Visit website"
-                                >
-                                    <Icon
-                                        icon={websiteIcon}
-                                        color={'#98a4b3'}
-                                        style={{ marginRight: '15px', fontSize: '24px' }}
-                                    />
-                                    {new URL(website).hostname}
-                                </IconRowLink>
-                            </>
-                        )}
-                        {email && isPro && publicDisplay?.EMAIL.public && (
-                            <IconRowLink href={`mailto:${email}`} title="Send an email">
-                                <Icon
-                                    icon={mailIcon}
-                                    color={'#98a4b3'}
-                                    style={{ marginRight: '15px', fontSize: '24px' }}
-                                />
-                                {email}
-                            </IconRowLink>
-                        )}
-                        {phone && isPro && publicDisplay?.PHONE.public && (
-                            <IconRowLink href={`tel:${phone}`} title="Call">
-                                <Icon
-                                    icon={phoneIcon}
-                                    color={'#98a4b3'}
-                                    style={{ marginRight: '15px', fontSize: '24px' }}
-                                />
-                                {phone}
-                            </IconRowLink>
-                        )}
+                        <UserInfo user={user} />
                     </Col>
                 </SidebarContent>
             )}
@@ -264,9 +131,7 @@ const Content = React.memo(({ match, ...userProps }) => {
             <UserContainer>
                 <Row style={{ alignItems: 'stretch' }}>
                     <Media greaterThan={'sm'}>
-                        <Col>
-                            <UserSidebar {...userProps} bookingEnabled={bookingEnabled} />
-                        </Col>
+                        <UserSidebar {...userProps} bookingEnabled={bookingEnabled} />
                     </Media>
                     <Col
                         style={{

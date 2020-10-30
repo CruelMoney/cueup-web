@@ -1,25 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ProFeature } from 'components/FormComponents';
+import useTranslate from 'components/hooks/useTranslate';
 import Navigation from '../../../components/Navigation/SubNavigation';
-import Rating from '../../../components/common/Rating';
 import { Container, FullWidthCol, Row, Col, GradientBg } from '../../../components/Blocks';
 import { Spacing } from '../../../components/Sidebar';
 import { HeaderTitle, BodyBold } from '../../../components/Text';
-
-const ReviewsCount = styled.p`
-    opacity: 0.6;
-    font-size: 15px;
-    color: #ffffff;
-    display: inline-block;
-    margin-left: 9px;
-    margin-bottom: 0;
-    font-weight: 600;
-`;
-
-const RatingWrapper = styled.div`
-    display: inline-block;
-`;
+import { UserRating } from './Common';
 
 const HeaderSpacing = styled(Spacing)`
     margin-right: 60px;
@@ -69,6 +56,8 @@ const UserContent = ({ user, statusLabel, setShowing }) => {
     const { firstName } = userMetadata;
     const { rating, isPro } = appMetadata;
 
+    const { translate } = useTranslate();
+
     return (
         <HeaderWrapper>
             <Row middle>
@@ -91,14 +80,7 @@ const UserContent = ({ user, statusLabel, setShowing }) => {
                             </ProFeature>
                         )}
                     </HeaderTitle>
-                    {rating && (
-                        <div>
-                            <RatingWrapper>
-                                <Rating color={'#fff'} emptyColor={'#ffffff99'} rating={rating} />
-                            </RatingWrapper>
-                            <ReviewsCount>{reviews?.pageInfo.totalDocs} reviews</ReviewsCount>
-                        </div>
-                    )}
+                    {rating && <UserRating reviews={reviews} rating={rating} />}
                 </Col>
             </Row>
         </HeaderWrapper>

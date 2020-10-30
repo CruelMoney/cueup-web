@@ -11,7 +11,7 @@ const sizes = {
     },
 };
 
-const Star = ({ active, size, onHover, ...props }) => {
+const Star = ({ active, size, onHover, color = '#50E3C2', ...props }) => {
     return (
         <svg
             {...sizes[size]}
@@ -23,8 +23,8 @@ const Star = ({ active, size, onHover, ...props }) => {
         >
             <path
                 d="M9 14.65l-5.562 2.904 1.062-6.15L0 7.046l6.219-.897L9 .554l2.781 5.596L18 7.047l-4.5 4.356 1.062 6.15z"
-                fill="#50E3C2"
-                stroke="#50E3C2"
+                fill={color}
+                stroke={color}
                 fillRule="evenodd"
                 opacity={active ? 1 : 0.3}
             />
@@ -32,7 +32,7 @@ const Star = ({ active, size, onHover, ...props }) => {
     );
 };
 
-const Rating = ({ onChange, disabled, size = 'normal', style, ...props }) => {
+const Rating = ({ onChange, disabled, size = 'normal', color, style, ...props }) => {
     const [original, setOriginal] = useState(props.rating || 0);
     const [rating, setRating] = useState(props.rating || 0);
 
@@ -61,6 +61,7 @@ const Rating = ({ onChange, disabled, size = 'normal', style, ...props }) => {
             size={size}
             onClick={() => onClick(idx)}
             onHover={onHover(idx)}
+            color={color}
         />
     ));
 

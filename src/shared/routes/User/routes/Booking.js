@@ -591,6 +591,7 @@ const BookingSidebar = ({
                     loading={createLoading}
                     onClick={requestBooking}
                     noIcon
+                    style={{ margin: 0 }}
                 >
                     {eventCreated ? 'BOOKING DONE' : `BOOK ${user.title}`.toUpperCase()}
                 </CTAButton>

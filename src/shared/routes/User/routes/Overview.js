@@ -17,6 +17,7 @@ import GracefullImage from '../../../components/GracefullImage';
 import GracefullVideo from '../../../components/GracefullVideo';
 import DownloadAppPopup from '../components/DownloadAppPopup';
 import EditButton from '../components/EditButton';
+import { UserInfo } from '../components/Common';
 import Sound from './Sounds/Sound';
 
 const ColumnLayout = styled.section`
@@ -468,6 +469,12 @@ const Overview = ({ user, loading, location, history }) => {
             <DownloadAppPopup isActive={appPopup} close={onModalClose} />
             <Row>
                 <HalfColLeft>
+                    <Show maxWidth="990px">
+                        <Col>
+                            <UserInfo user={user} />
+                            <Hr style={{ marginTop: 15, marginBottom: 30 }} />
+                        </Col>
+                    </Show>
                     <Bio isOwn={isOwn} firstName={firstName} bio={bio} style={bioStyle} />
                     {showSelectedSound && (
                         <Show maxWidth="990px">
