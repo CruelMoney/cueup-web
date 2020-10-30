@@ -2,8 +2,6 @@ import { TRACKING_EVENTS } from '../events';
 
 const defaultConfig = {
     trackingId: null,
-    debug_mode: false,
-    send_page_view: false, // disable because we manually send
 };
 
 const EventsMapping = {
@@ -37,7 +35,7 @@ const install = (config) => {
     window.dataLayer = window.dataLayer || [];
 
     gtag('js', new Date());
-    gtag('config', config.trackingId, config);
+    gtag('config', config.trackingId);
 };
 
 const gtag = function () {
@@ -64,26 +62,14 @@ export default function analyticsGtagPlugin(userConfig = {}) {
             }
         },
         page: ({ payload }) => {
-            const { title, path, url } = payload.properties;
-            gtag('event', EventsMapping[TRACKING_EVENTS.PageView], {
-                page_title: title,
-                page_location: url,
-                page_path: path,
-                send_to: userConfig.trackingId,
-            });
+            // do nothing, will be tracked auto
         },
         /* Track event */
         track: ({ payload }) => {
-            const { category, label, ...properties } = payload.properties;
-
             const gaEvent = EventsMapping[payload.event];
 
             if (gaEvent) {
-                gtag('event', gaEvent, {
-                    event_category: category, // good ol' event category
-                    event_label: label,
-                    ...properties,
-                });
+                gtag('event', gaEvent, payload.properties);
             }
         },
         /* Identify user */

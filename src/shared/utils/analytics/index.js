@@ -66,58 +66,44 @@ export const trackPageView = () => {
 
 export const trackCheckAvailability = (locationName) => {
     analytics.track(TRACKING_EVENTS.Search, {
-        category: 'Events',
         search_term: locationName,
     });
 };
 
 export const trackSignup = () => {
-    analytics.track(TRACKING_EVENTS.Signup, {
-        category: 'Users',
-    });
+    analytics.track(TRACKING_EVENTS.Signup);
 };
 
 export const trackEventPosted = () => {
-    analytics.track(TRACKING_EVENTS.PostEvent, {
-        category: 'Events',
-    });
+    analytics.track(TRACKING_EVENTS.PostEvent);
 };
 export const trackEventPaid = ({ currency, value }) => {
     analytics.track(TRACKING_EVENTS.CompleteBooking, {
-        category: 'Events',
         value,
         currency,
     });
 };
 
 export const trackCheckout = () => {
-    analytics.track(TRACKING_EVENTS.InitiateCompleteBooking, {
-        category: 'Events',
-    });
+    analytics.track(TRACKING_EVENTS.InitiateCompleteBooking);
 };
 
-export const trackEmptySearch = (label) => {
+export const trackEmptySearch = (value) => {
     analytics.track(TRACKING_EVENTS.EmptySearch, {
-        category: 'Events',
-        label,
+        value,
     });
 };
 
 export const trackLogin = () => {
-    analytics.track(TRACKING_EVENTS.Login, {
-        category: 'Users',
-    });
+    analytics.track(TRACKING_EVENTS.Login);
 };
 
 export const trackSendChatMessage = () => {
-    analytics.track(TRACKING_EVENTS.SendChatMessage, {
-        category: 'Users',
-    });
+    analytics.track(TRACKING_EVENTS.SendChatMessage);
 };
 
 export const trackSubscribeToPro = ({ value, currency }) => {
     analytics.track(TRACKING_EVENTS.SubscribeToPro, {
-        category: 'Users',
         value,
         currency,
     });

@@ -307,8 +307,8 @@ const AddBookingLink = ({ user }) => {
         <GreyBox>
             <h2>Your booking link</h2>
             <Body>
-                Make it easier for people to book you on your link. Copy paste the link to your
-                website and social media.
+                Make it easier for people to book you on your website or social media. Copy paste
+                your booking link to places where people find you.
             </Body>
 
             <RowMobileCol style={{ marginTop: 12 }}>

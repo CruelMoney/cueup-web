@@ -156,12 +156,15 @@ const Bio = ({ bio, firstName, style, isOwn }) => {
     return (
         <LeftItem style={{ paddingTop: 0, ...style }}>
             <Title>About {firstName}</Title>
-            <ReadMoreExpander content={bio || 'Nothing here yet'} />
+            <ReadMoreExpander content={bio || '...'} />
             {isOwn && (
                 <EditButton title="Edit bio" to={'settings?modal=bio'} style={{ marginTop: 0 }}>
                     Edit
                 </EditButton>
             )}
+            <Show maxWidth="990px">
+                <Hr style={{ marginTop: 30 }} />
+            </Show>
         </LeftItem>
     );
 };
@@ -482,7 +485,6 @@ const Overview = ({ user, loading, location, history }) => {
                     <Bio isOwn={isOwn} firstName={firstName} bio={bio} style={bioStyle} />
                     {showSelectedSound && (
                         <Show maxWidth="990px">
-                            <Hr style={{ marginBottom: 30 }} />
                             <HighlightedSound user={user} />
                             <Hr style={{ marginTop: 30 }} />
                         </Show>
