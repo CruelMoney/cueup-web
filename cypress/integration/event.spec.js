@@ -70,6 +70,7 @@ describe('Event', () => {
             cy.get('input[name=contactEmail]').type('organizer@email.com', { force: true });
 
             cy.get('[data-cy=submit-event]').click();
+            cy.url().should('include', '/event');
             cy.get('h1').contains('Test event');
         });
     });
