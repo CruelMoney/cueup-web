@@ -252,7 +252,11 @@ const MapArea = ({ playingLocation, isOwn }) => {
         return null;
     }
     return (
-        <Square>
+        <Square
+            style={{
+                pointerEvents: 'none',
+            }}
+        >
             <Map
                 radius={playingLocation.radius}
                 name={'playingLocation'}

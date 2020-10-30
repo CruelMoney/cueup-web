@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { Icon } from '@iconify/react';
 import pinIcon from '@iconify/icons-ion/location-sharp';
-import timeIcon from '@iconify/icons-ion/time';
+import membersinceIcon from '@iconify/icons-ion/md-contact';
 import websiteIcon from '@iconify/icons-ion/globe-outline';
 import mailIcon from '@iconify/icons-ion/ios-email';
 import phoneIcon from '@iconify/icons-ion/call';
@@ -161,7 +161,7 @@ export const UserInfo = ({ user }) => {
         <>
             <IconRow className="iconRow">
                 <Icon
-                    icon={timeIcon}
+                    icon={membersinceIcon}
                     color={'#98a4b3'}
                     style={{ marginRight: '15px', fontSize: '24px' }}
                 />
