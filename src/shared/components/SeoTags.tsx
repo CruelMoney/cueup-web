@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { helmetJsonLdProp } from 'react-schemaorg';
-import { AggregateRating, EntertainmentBusiness, Organization, WebSite } from 'schema-dts';
+import { AggregateRating, EntertainmentBusiness, Organization, Review, WebSite } from 'schema-dts';
 import { appRoutes } from 'constants/locales/appRoutes';
 // @ts-ignore
 import logoUrl from '../assets/logo_black.png';
@@ -17,6 +17,16 @@ export interface DJSeoProps {
     userMetadata: any;
     appMetadata: any;
     reviews: any;
+}
+
+export interface RatingProps {
+    id: string;
+    content: string;
+    citation: string;
+    author: string;
+    createdAt: any;
+    rating: number;
+    title: string;
 }
 
 export const DJSeoTags: React.FC<DJSeoProps> = ({
@@ -109,6 +119,39 @@ export const OrganizationSeo = () => {
                         // @ts-ignore
                         'query-input': 'required name=search_term_string',
                     },
+                }),
+            ]}
+        />
+    );
+};
+
+export const ReviewSeoTag: React.FC<RatingProps> = ({
+    id,
+    content,
+    citation,
+    author,
+    createdAt,
+    rating,
+    title,
+}) => {
+    return (
+        <Helmet
+            script={[
+                helmetJsonLdProp<Review>({
+                    '@context': 'https://schema.org',
+                    '@type': 'Review',
+                    '@id': id,
+                    'reviewRating': {
+                        '@type': 'Rating',
+                        'ratingValue': rating,
+                    },
+                    'name': title,
+                    'author': {
+                        '@type': 'Person',
+                        'name': author || citation,
+                    },
+                    'datePublished': createdAt,
+                    'reviewBody': content,
                 }),
             ]}
         />

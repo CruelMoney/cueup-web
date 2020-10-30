@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import moment from 'moment-timezone';
 import ReactDOM from 'react-dom';
 import { Popper, usePopper } from 'react-popper';
+import { ReviewSeoTag } from 'components/SeoTags';
 import Rating from '../../../components/common/RatingNew';
 import { HIGHLIGHT_REVIEW } from '../gql';
 import QuotationMarkIcon from '../../../components/graphics/Quotes';
@@ -12,18 +13,20 @@ import { Col, Row, Avatar, ReadMoreText, TeritaryButton } from '../../../compone
 import ReadMoreExpander from '../../../components/ReadMoreExpander';
 import { Title } from '../../../components/Text';
 
-const Review = ({
-    id,
-    title,
-    rating,
-    content,
-    isTestimonial,
-    author,
-    citation,
-    createdAt,
-    removeTestimonial,
-    isOwn,
-}) => {
+const Review = (props) => {
+    const {
+        id,
+        title,
+        rating,
+        content,
+        isTestimonial,
+        author,
+        citation,
+        createdAt,
+        removeTestimonial,
+        isOwn,
+    } = props;
+
     const [virtualReferenceElement, setVirtualReferenceElement] = useState(null);
     const [selection, setSelection] = useState(null);
     const [mounted, setMounted] = useState(false);
@@ -54,6 +57,7 @@ const Review = ({
 
     return (
         <ReviewWrapper>
+            <ReviewSeoTag {...props} />
             <Title>{title}</Title>
             {isOwn && isTestimonial && (
                 <RemoveButton onClick={() => removeTestimonial({ variables: { id } })}>
