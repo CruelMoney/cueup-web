@@ -206,7 +206,7 @@ const Booking = ({ user, loading, translate }) => {
                     paddingTop: 15,
                 }}
             >
-                {user.isOwn && <AddBookingLink user={user} />}
+                {user.isOwn && !isDirect && <AddBookingLink user={user} />}
 
                 <NavLink to={profileUrl}>
                     <TeritaryButton
