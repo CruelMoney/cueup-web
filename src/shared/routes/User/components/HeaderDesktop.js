@@ -96,7 +96,7 @@ const UserContent = ({ user, statusLabel, setShowing }) => {
                             <RatingWrapper>
                                 <Rating color={'#fff'} emptyColor={'#ffffff99'} rating={rating} />
                             </RatingWrapper>
-                            <ReviewsCount>{reviews.pageInfo.totalDocs} reviews</ReviewsCount>
+                            <ReviewsCount>{reviews?.pageInfo.totalDocs} reviews</ReviewsCount>
                         </div>
                     )}
                 </Col>

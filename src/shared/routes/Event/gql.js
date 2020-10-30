@@ -91,9 +91,6 @@ const EVENT = gql`
                         phone
                         bio
                     }
-                    appMetadata {
-                        averageRating
-                    }
                 }
             }
         }
@@ -169,7 +166,6 @@ const EVENT_GIGS = gql`
                         bio
                     }
                     appMetadata {
-                        averageRating
                         isPro
                     }
                 }

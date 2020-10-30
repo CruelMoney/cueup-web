@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { helmetJsonLdProp } from 'react-schemaorg';
-import { EntertainmentBusiness, Organization, WebSite } from 'schema-dts';
+import { AggregateRating, EntertainmentBusiness, Organization, WebSite } from 'schema-dts';
 import { appRoutes } from 'constants/locales/appRoutes';
 // @ts-ignore
 import logoUrl from '../assets/logo_black.png';
@@ -15,6 +15,8 @@ export interface DJSeoProps {
     playingLocation: any;
     picture: any;
     userMetadata: any;
+    appMetadata: any;
+    reviews: any;
 }
 
 export const DJSeoTags: React.FC<DJSeoProps> = ({
@@ -24,6 +26,8 @@ export const DJSeoTags: React.FC<DJSeoProps> = ({
     playingLocation,
     picture,
     userMetadata,
+    appMetadata,
+    reviews,
 }) => {
     const { environment } = useServerContext();
     const { translate } = useTranslate();
@@ -31,6 +35,20 @@ export const DJSeoTags: React.FC<DJSeoProps> = ({
     const url = `${environment.WEBSITE_URL}${translate(appRoutes.user)}/${permalink}/overview`;
     const { name, latitude, longitude } = playingLocation || {};
     const { bio } = userMetadata || {};
+    const { rating } = appMetadata || {};
+    const reviewCount = reviews?.pageInfo?.totalDocs || 0;
+    const extraFields = {};
+
+    if (rating) {
+        // @ts-ignore
+        extraFields.aggregateRating = {
+            '@type': 'AggregateRating',
+            'ratingValue': rating,
+            'reviewCount': reviewCount,
+            'worstRating': 1,
+            'bestRating': 5,
+        };
+    }
 
     return (
         <Helmet
@@ -50,6 +68,7 @@ export const DJSeoTags: React.FC<DJSeoProps> = ({
                     'image': picture?.path,
                     'url': url,
                     'priceRange': '$$',
+                    ...extraFields,
                 }),
             ]}
         />

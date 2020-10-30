@@ -22,7 +22,6 @@ const ME = gql`
                 latitude
             }
             appMetadata {
-                averageRating
                 rating
                 experience
                 hasInstalledApp

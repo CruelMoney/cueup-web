@@ -62,7 +62,6 @@ const Review = ({
             )}
             <Row middle style={{ marginTop: '36px' }}>
                 <Col style={{ width: '100%' }}>
-                    {rating && <Rating rating={rating} disabled />}
                     {isTestimonial && (
                         <Row middle style={{ marginBottom: '9px', marginTop: '2px' }}>
                             <QuotationMarkIcon
@@ -71,6 +70,8 @@ const Review = ({
                                 style={{ marginRight: '12px' }}
                             />
                             <ReadMoreText>TESTIMONIAL</ReadMoreText>
+                            <div style={{ flex: 1 }} />
+                            {rating && <Rating rating={rating} disabled />}
                         </Row>
                     )}
                     <ReadMoreExpander

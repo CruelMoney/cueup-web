@@ -26,7 +26,7 @@ const Star = ({ active, size, onHover, ...props }) => {
                 fill="#50E3C2"
                 stroke="#50E3C2"
                 fillRule="evenodd"
-                opacity={active ? 1 : 0.5}
+                opacity={active ? 1 : 0.3}
             />
         </svg>
     );

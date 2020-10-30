@@ -5,6 +5,7 @@ import { Icon } from '@iconify/react';
 import addCircleIcon from '@iconify/icons-ion/add-circle';
 
 import { userRoutes } from 'constants/locales/appRoutes';
+import Rating from 'components/common/RatingNew';
 import { Title, Citation, Cite, Body } from '../../../components/Text';
 import ReadMoreExpander from '../../../components/ReadMoreExpander';
 import { Col, Row, ReadMore, Show, InfoBox, Hr } from '../../../components/Blocks';
@@ -214,7 +215,7 @@ const HighlightedSound = ({ user }) => {
 };
 
 const Review = ({ isOwn, reviewsCount, highlightedReview }) => {
-    const { content, author, citation } = highlightedReview;
+    const { content, author, citation, rating } = highlightedReview;
 
     if (!content) {
         return null;
@@ -226,10 +227,13 @@ const Review = ({ isOwn, reviewsCount, highlightedReview }) => {
 
             <Row middle style={{ marginTop: '36px' }}>
                 <Col style={{ width: '100%' }}>
-                    <div style={{ marginBottom: '9px' }}>
+                    <Row between middle style={{ marginBottom: '9px' }}>
                         <QuotationMarkIcon />
                         <Cite>{author ? author.userMetadata.firstName : citation}</Cite>
-                    </div>
+                        <div style={{ flex: 1 }} />
+
+                        {rating && <Rating rating={rating} disabled />}
+                    </Row>
                     <Citation>
                         {content.length > 130 ? content.slice(0, 127) + '...' : content}
                     </Citation>

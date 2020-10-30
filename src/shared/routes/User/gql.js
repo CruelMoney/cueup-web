@@ -95,6 +95,7 @@ const USER = gql`
                 title
                 citation
                 content
+                rating
                 author {
                     picture {
                         path
@@ -392,6 +393,7 @@ const HIGHLIGHT_REVIEW = gql`
                 title
                 citation
                 content
+                rating
                 author {
                     picture {
                         path
@@ -561,9 +563,6 @@ const GIG = gql`
                     firstName
                     phone
                     bio
-                }
-                appMetadata {
-                    averageRating
                 }
             }
             availablePayoutMethods {
