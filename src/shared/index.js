@@ -12,6 +12,7 @@ import { appRoutes } from 'constants/locales/appRoutes';
 import LazyDjNameGenerator from 'routes/DjNameGenerator';
 import { useAnalytics } from 'utils/analytics';
 import { OrganizationSeo } from 'components/SeoTags';
+import useAlternativePages from 'components/hooks/useAlternativePages';
 import defaultImage from './assets/images/default.png';
 import ErrorHandling from './components/common/ErrorPage';
 
@@ -20,6 +21,8 @@ const LazyApp = loadable(() => import('./App'));
 const Setup = ({ location }) => {
     const { environment } = useServerContext();
     const { t, i18n } = useTranslation();
+    const languagePages = useAlternativePages();
+
     useAnalytics({
         disableTracking: environment.SETTING !== 'production',
     });
@@ -39,6 +42,8 @@ const Setup = ({ location }) => {
 
     const pageURL = environment.WEBSITE_URL + location.pathname;
     const thumbURL = environment.WEBSITE_URL + thumb;
+
+    console.log({ languagePages });
 
     return (
         <ErrorHandling>
@@ -78,6 +83,16 @@ const Setup = ({ location }) => {
                 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#122b48" />
                 <meta name="msapplication-TileColor" content="#122b48" />
                 <meta name="theme-color" content="#ffffff" />
+
+                {languagePages.map(({ active, url, code }) => (
+                    <link
+                        key={code}
+                        href={url}
+                        hrefLang={code}
+                        rel={active ? 'canonical' : 'alternate'}
+                        itemProp="url"
+                    />
+                ))}
             </Helmet>
             <OrganizationSeo />
             <Switch>

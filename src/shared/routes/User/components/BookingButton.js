@@ -81,7 +81,7 @@ const InnerBookingButton = ({
     return (
         <NavLink
             to={{
-                pathname: `/${user.permalink}/book`,
+                pathname: translate(appRoutes.userBookNew).replace(':permalink', user.permalink),
                 search,
             }}
         >

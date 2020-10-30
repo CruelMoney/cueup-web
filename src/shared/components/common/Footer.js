@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink as Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import styled, { createGlobalStyle } from 'styled-components';
 
 import { appRoutes } from 'constants/locales/appRoutes.ts';
@@ -42,22 +41,6 @@ const Footer = ({
     return (
         <div id="preFooter-wrapper" style={{ order: '10' }}>
             <GlobalStyle />
-            <Helmet>
-                {/*  
-                    this is a bit out of place here,
-                    ideally would be higher in the app, 
-                    but the full route match is only available this deep
-                */}
-                {langaugePages.map(({ active, url, code }) => (
-                    <link
-                        key={code}
-                        href={url}
-                        hrefLang={code}
-                        rel={active ? 'canonical' : 'alternate'}
-                        itemProp="url"
-                    />
-                ))}
-            </Helmet>
             {!noPreFooter && (
                 <div style={{ backgroundColor: bgColor }} className={'noSkew'} id="preFooter">
                     <Container fullWidth={fullWidth}>

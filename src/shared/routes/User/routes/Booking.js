@@ -8,6 +8,7 @@ import arrowBack from '@iconify/icons-ion/arrow-back';
 import { NavLink } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { Helmet } from 'react-helmet-async';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useCreateEvent } from 'actions/EventActions';
 import { useForm } from 'components/hooks/useForm';
 import usePushNotifications from 'components/hooks/usePushNotifications';
@@ -33,6 +34,7 @@ import {
     TeritaryButton,
     Card,
     Avatar,
+    SecondaryButton,
 } from '../../../components/Blocks';
 import ScrollToTop from '../../../components/common/ScrollToTop';
 import { LoadingPlaceholder2 } from '../../../components/common/LoadingPlaceholder';
@@ -133,14 +135,8 @@ const Booking = ({ user, loading, translate }) => {
                 <meta name="description" content={metaDescription} />
                 <meta name="twitter:description" content={metaDescription} />
                 <meta property="og:description" content={metaDescription} />
-                <meta name="robots" content="noindex" />
             </Helmet>
             <ScrollToTop top={0} />
-
-            {/* <GradientBg
-                isPro={user?.appMetadata?.isPro}
-                style={{ height: '80px', minHeight: '80px' }}
-            /> */}
 
             <Popup width="380px" showing={signupPopup} onClickOutside={() => setSignupPopup(false)}>
                 <Step4
@@ -179,6 +175,8 @@ const Booking = ({ user, loading, translate }) => {
                     paddingTop: 15,
                 }}
             >
+                {user.isOwn && <AddBookingLink user={user} />}
+
                 <NavLink to={profileUrl}>
                     <TeritaryButton
                         style={{
@@ -241,6 +239,57 @@ const EventFormWrapper = styled(Row)`
     }
 `;
 
+const GreyBox = styled.section`
+    background-color: #f7f9fc;
+    border-radius: 12px;
+    width: 100%;
+    padding: 20px 30px;
+    margin-left: auto;
+
+    margin-bottom: 60px;
+    margin-top: 30px;
+    position: relative;
+    max-width: 550px;
+    left: 50%;
+    transform: translateX(-50%);
+    label {
+        margin-top: 15px;
+        margin-bottom: 0;
+        margin-top: 0;
+        margin-right: 0 !important;
+        min-width: 0 !important;
+    }
+    input {
+        background-color: white !important;
+        cursor: text;
+    }
+`;
+
+const AddBookingLink = ({ user }) => {
+    const [copied, setCopied] = useState(false);
+    const link = `https://cueup.io/${user.permalink}/book`;
+
+    return (
+        <GreyBox>
+            <h2>Your booking link</h2>
+            <Body>
+                Make it easier for people to book you on your link. Copy paste the link to your
+                website and social media.
+            </Body>
+
+            <Row style={{ marginTop: 12 }}>
+                <Input value={link} />
+
+                <CopyToClipboard text={link} onCopy={() => setCopied(true)}>
+                    <SecondaryButton disabled={copied}>
+                        {copied ? 'Copied' : 'Copy link'}
+                    </SecondaryButton>
+                </CopyToClipboard>
+            </Row>
+        </GreyBox>
+    );
+};
+
 const EventForm = ({
     setValue,
     registerValidation,
@@ -264,6 +313,7 @@ const EventForm = ({
                     marginBottom: '60px',
                     zIndex: 0,
                     position: 'relative',
+                    minHeight: 'calc(100vh - 135px)',
                 }}
             >
                 <SettingsSection
@@ -272,7 +322,7 @@ const EventForm = ({
                     title={'Event Details'}
                     description={`Tell ${user.title} about your event.`}
                     style={{
-                        minHeight: 'calc(100vh - 200px)',
+                        flex: 1,
                     }}
                 >
                     <Input
@@ -565,9 +615,9 @@ const Content = ({ user, values }) => {
 
     return (
         <>
-            <SmallHeader style={{ marginBottom: '15px' }}>{`Booking of ${
+            <h1 style={{ marginBottom: '15px', fontSize: 16 }}>{`Your booking: ${
                 artistName || firstName
-            }`}</SmallHeader>
+            }`}</h1>
             {name && <SidebarRow>{name}</SidebarRow>}
             <SidebarRow>{moment(date).format('dddd Do MMMM, YYYY')}</SidebarRow>
             <SidebarRow>
