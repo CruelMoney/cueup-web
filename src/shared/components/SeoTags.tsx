@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { helmetJsonLdProp } from 'react-schemaorg';
-import { AggregateRating, EntertainmentBusiness, Organization, Review, WebSite } from 'schema-dts';
+import { EntertainmentBusiness, Organization, WebSite } from 'schema-dts';
 import { appRoutes } from 'constants/locales/appRoutes';
 // @ts-ignore
 import logoUrl from '../assets/logo_black.png';
