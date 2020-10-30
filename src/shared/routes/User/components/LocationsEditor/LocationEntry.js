@@ -77,18 +77,18 @@ const LocationEntry = ({
     useEffect(() => {
         if (debouncedLocation) {
             //Getting the coordinates of the playing location
-            GeoCoder.codeAddress(debouncedLocation, (geoResult) => {
-                if (geoResult.error) {
-                    setError('City not found');
-                } else {
+            GeoCoder.codeAddress(debouncedLocation)
+                .then((geoResult) => {
                     updateLocation({
                         id,
-                        latitude: geoResult.position.lat,
-                        longitude: geoResult.position.lng,
+                        latitude: geoResult.lat,
+                        longitude: geoResult.lng,
                         radius: 25000,
                     });
-                }
-            });
+                })
+                .catch(() => {
+                    setError('City not found');
+                });
         }
     }, [debouncedLocation, id, updateLocation]);
 

@@ -446,12 +446,8 @@ const UserRoutes = ({ match, user, loading, updateUser, location }) => {
 
     return (
         <Switch>
-            <Redirect
-                path={[match.path + '/' + userRoutes.booking]}
-                to={`/${user.permalink}/book`}
-            />
             <Route
-                path={['/:permalink/book']}
+                path={[match.path + '/' + userRoutes.booking, '/:permalink/book']}
                 render={(props) => (
                     <Booking {...props} user={user} loading={loading} translate={translate} />
                 )}

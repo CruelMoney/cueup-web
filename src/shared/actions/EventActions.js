@@ -14,22 +14,16 @@ export const getLocation = async (location) => {
         'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
     );
 
-    return new Promise((resolve, reject) => {
-        GeoCoder.codeAddress(location, (geoResult) => {
-            if (geoResult.error) {
-                reject('The location could not be found, try another city.');
-            } else {
-                GeoCoder.getTimeZone(geoResult.position)
-                    .then((res) => {
-                        resolve({ ...geoResult, ...res });
-                    })
-                    .catch((err) => {
-                        console.log({ err });
-                        reject(err);
-                    });
-            }
-        });
-    });
+    try {
+        const position = await GeoCoder.codeAddress(location);
+        const { timeZoneId } = await GeoCoder.getTimeZone(position);
+        return {
+            position,
+            timeZoneId,
+        };
+    } catch (error) {
+        throw new Error('The location could not be found, try another city.');
+    }
 };
 
 export const getTimezonedDate = async (date, timeZone) => {

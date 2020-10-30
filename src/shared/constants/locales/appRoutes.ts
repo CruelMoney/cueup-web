@@ -9,7 +9,7 @@ export const routeKeys = Object.freeze({
     user: 'user',
     userOverview: 'userOverview',
     userBook: 'userBook',
-    userBookNew: 'userBookNew',
+    userBookDirect: 'userBookDirect',
     userReviews: 'userReviews',
     userSounds: 'userSounds',
     userPhotos: 'userPhotos',

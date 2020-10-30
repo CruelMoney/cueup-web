@@ -8,7 +8,7 @@ const formToParams = (form) => {
         const searchParams = new URLSearchParams(window.location.search);
         Object.keys(form).forEach((key) => {
             const value = form[key];
-            if (value) {
+            if (value !== undefined) {
                 searchParams.set(key, JSON.stringify(value));
             }
         });

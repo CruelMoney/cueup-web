@@ -134,19 +134,19 @@ const SignupForm = ({ translate, user }) => {
     const updateMap = debounce((location) => {
         if (loaded) {
             //Getting the coordinates of the playing location
-            GeoCoder.codeAddress(location, (geoResult) => {
-                if (geoResult.error) {
+            GeoCoder.codeAddress(location)
+                .then((geoResult) => {
+                    setValue({
+                        locationName: location,
+                        playingLocation: geoResult,
+                    });
+                })
+                .catch(() => {
                     setValue({
                         locationErr: translate('City not found'),
                         location: null,
                     });
-                } else {
-                    setValue({
-                        locationName: location,
-                        playingLocation: geoResult.position,
-                    });
-                }
-            });
+                });
         } else {
             setValue({
                 locationName: location,

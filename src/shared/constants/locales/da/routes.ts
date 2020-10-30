@@ -9,7 +9,7 @@ const routes: RouteKeys = {
     user: '/da/user',
     userOverview: '/da/user/:permalink/overview',
     userBook: '/da/user/:permalink/booking',
-    userBookNew: '/da/:permalink/book',
+    userBookDirect: '/da/:permalink/book',
     userReviews: '/da/user/:permalink/reviews',
     userSounds: '/da/user/:permalink/sounds',
     userPhotos: '/da/user/:permalink/photos',

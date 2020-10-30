@@ -3,27 +3,23 @@ import { CustomWindow } from 'global';
 declare let window: CustomWindow;
 
 export default {
-    codeAddress: function (address, callback) {
-        try {
-            const geocoder = new window.google.maps.Geocoder();
-            geocoder.geocode({ address: address }, (results, status) => {
-                if (status === window.google.maps.GeocoderStatus.OK) {
-                    const lat = results[0].geometry.location.lat();
-                    const lng = results[0].geometry.location.lng();
-                    return callback({ error: null, position: { lat: lat, lng: lng } });
-                }
-                return callback({
-                    error: 'Geocode was not successful for the following reason: ' + status,
-                    position: null,
+    codeAddress: async (address) => {
+        return new Promise((resolve, reject) => {
+            try {
+                const geocoder = new window.google.maps.Geocoder();
+                geocoder.geocode({ address: address }, (results, status) => {
+                    if (status === window.google.maps.GeocoderStatus.OK) {
+                        const lat = results[0].geometry.location.lat();
+                        const lng = results[0].geometry.location.lng();
+                        return resolve({ lat: lat, lng: lng });
+                    }
+                    return reject('Geocode was not successful for the following reason: ' + status);
                 });
-            });
-        } catch (error) {
-            console.log(error);
-            return callback({
-                error: 'Geocode was not successful',
-                position: null,
-            });
-        }
+            } catch (error) {
+                console.log(error);
+                return reject('Geocode was not successful');
+            }
+        });
     },
 
     getTimeZone: async ({ lng, lat }) => {
