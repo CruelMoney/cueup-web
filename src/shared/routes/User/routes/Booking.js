@@ -55,11 +55,11 @@ const Booking = ({ user, loading, translate }) => {
     const { setAppState } = useAppState();
     const [eventCreated, setEventCreated] = useState(false);
     const { data: userData } = useQuery(ME);
-    const [create, { loading: createLoading, error }] = useCreateEvent();
+    const [create, { error }] = useCreateEvent();
     const [errorMessage, setError] = useState();
     const [loginPopup, setloginPopup] = useState(false);
     const [signupPopup, setSignupPopup] = useState(false);
-
+    const [createLoading, setCreateLoading] = useState(false);
     const isDirect = path === translate(appRoutes.userBookDirect);
 
     useEffect(() => {
@@ -100,6 +100,8 @@ const Booking = ({ user, loading, translate }) => {
         }
 
         try {
+            setCreateLoading(true);
+
             setSignupPopup(false);
 
             const variables = {
@@ -142,6 +144,8 @@ const Booking = ({ user, loading, translate }) => {
         } catch (error) {
             setError(error);
             Sentry.captureException(error);
+        } finally {
+            setCreateLoading(false);
         }
     };
 
@@ -565,7 +569,6 @@ const BookingSidebar = ({
                         loading={createLoading}
                         onClick={requestBooking}
                         noIcon
-                        style={{ width: '100%', paddingLeft: 0 }}
                     >
                         {eventCreated ? 'BOOKING DONE' : `BOOK ${user.title}`.toUpperCase()}
                     </CTAButton>
@@ -588,7 +591,6 @@ const BookingSidebar = ({
                     loading={createLoading}
                     onClick={requestBooking}
                     noIcon
-                    style={{ paddingLeft: 0 }}
                 >
                     {eventCreated ? 'BOOKING DONE' : `BOOK ${user.title}`.toUpperCase()}
                 </CTAButton>

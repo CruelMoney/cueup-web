@@ -10,10 +10,6 @@ import { appRoutes } from 'constants/locales/appRoutes';
 import GeoCoder from '../utils/GeoCoder';
 
 export const getLocation = async (location) => {
-    await loadScript(
-        'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
-    );
-
     try {
         const position = await GeoCoder.codeAddress(location);
         const { timeZoneId } = await GeoCoder.getTimeZone(position);

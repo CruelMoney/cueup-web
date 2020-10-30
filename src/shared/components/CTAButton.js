@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Icon } from '@iconify/react';
 import arrowForward from '@iconify/icons-ion/arrow-forward';
 import React, { useCallback, useEffect } from 'react';
@@ -77,6 +77,12 @@ const CTA = styled.button`
     &:disabled {
         cursor: default;
     }
+    ${({ noIcon }) =>
+        noIcon &&
+        css`
+            padding-left: 0;
+            width: 100%;
+        `}
 `;
 
 const useRelativeMousePosition = (ref) => {
@@ -106,11 +112,15 @@ export const CTAButton = ({ children, loading, noIcon, ...props }) => {
     const ref = React.useRef(null);
     useRelativeMousePosition(ref);
     return (
-        <CTA {...props}>
+        <CTA {...props} noIcon={noIcon}>
             <GradientMouseAnimation>
                 <InnerGradient ref={ref} />
             </GradientMouseAnimation>
-            <span style={{ pointerEvents: 'none', margin: noIcon ? 'auto' : 0 }}>{children} </span>
+            {(!loading || !noIcon) && (
+                <span style={{ pointerEvents: 'none', margin: noIcon ? 'auto' : 0 }}>
+                    {children}{' '}
+                </span>
+            )}
             {!noIcon && (
                 <CTAIcon>
                     {loading ? (
@@ -120,6 +130,7 @@ export const CTAButton = ({ children, loading, noIcon, ...props }) => {
                     )}
                 </CTAIcon>
             )}
+            {noIcon && loading && <LoadingIndicator style={{ margin: 'auto' }} />}
         </CTA>
     );
 };

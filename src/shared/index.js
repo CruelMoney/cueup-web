@@ -43,8 +43,6 @@ const Setup = ({ location }) => {
     const pageURL = environment.WEBSITE_URL + location.pathname;
     const thumbURL = environment.WEBSITE_URL + thumb;
 
-    console.log({ languagePages });
-
     return (
         <ErrorHandling>
             <Helmet>

@@ -1,9 +1,13 @@
+import { loadScript } from 'components/hooks/useLazyLoadScript';
 import { CustomWindow } from 'global';
 
 declare let window: CustomWindow;
 
 export default {
     codeAddress: async (address) => {
+        await loadScript(
+            'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
+        );
         return new Promise((resolve, reject) => {
             try {
                 const geocoder = new window.google.maps.Geocoder();

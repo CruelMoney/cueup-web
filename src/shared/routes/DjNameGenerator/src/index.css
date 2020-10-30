@@ -253,12 +253,8 @@ a {
     min-width: 500px;
     -webkit-overflow-scrolling: touch;
     overflow-y: scroll;
-    scrollbar-width: none;
     width: 500px;
     z-index: 2;
-}
-.left-area::-webkit-scrollbar {
-    display: none;
 }
 
 .left-area button {
