@@ -28,6 +28,7 @@ const BasicSection = ({ user, updateKey, saveData, modal, onModalClose }) => {
     return (
         <SettingsSection
             id="basics"
+            stickyTop={'15px'}
             title={'Personal information'}
             description={
                 'Edit your basic information. We might require some of this information for verification purposes.'

@@ -14,6 +14,7 @@ const PreferencesSection = ({ user, saveData }) => {
             id="preferences"
             title={'Notifications'}
             description={'Change your preferences for notifications.'}
+            stickyTop={'15px'}
         >
             <NotificationPreferences
                 notifications={notifications}

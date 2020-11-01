@@ -36,6 +36,7 @@ import {
     Avatar,
     SecondaryButton,
     RowMobileCol,
+    Hr,
 } from '../../../components/Blocks';
 import ScrollToTop from '../../../components/common/ScrollToTop';
 import { LoadingPlaceholder2 } from '../../../components/common/LoadingPlaceholder';
@@ -244,6 +245,19 @@ const Booking = ({ user, loading, translate }) => {
                     showLogin={() => setloginPopup(true)}
                     isDirect={isDirect}
                 />
+
+                <PoweredBy>
+                    <Hr />
+                    <a
+                        className="logo-row"
+                        href={'https://cueup.io'}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <BodySmall>Powered by</BodySmall>
+                        <Logo height={16} width="auto" />
+                    </a>
+                </PoweredBy>
             </Container>
         </div>
     );
@@ -258,18 +272,6 @@ const EventFormWrapper = styled(Row)`
             margin-top: 0px;
         }
     }
-    .logo-row {
-        display: flex;
-        p {
-            line-height: 1em;
-        }
-    }
-    .logo {
-        fill: #4d6480;
-        margin-left: 4px;
-        display: inline-block;
-        margin-top: -1px;
-    }
 `;
 
 const GreyBox = styled.section`
@@ -279,12 +281,15 @@ const GreyBox = styled.section`
     padding: 20px 30px;
     margin-left: auto;
 
-    margin-bottom: 60px;
-    margin-top: 30px;
+    margin-bottom: 30px;
     position: relative;
-    max-width: 550px;
+
     left: 50%;
     transform: translateX(-50%);
+    p,
+    label {
+        max-width: 550px;
+    }
     label {
         margin-top: 15px;
         margin-bottom: 0;
@@ -304,23 +309,26 @@ const AddBookingLink = ({ user }) => {
     const link = `https://cueup.io/${user.permalink}/book`;
 
     return (
-        <GreyBox>
-            <h2>Your booking link</h2>
-            <Body>
-                Make it easier for people to book you on your website or social media. Copy paste
-                your booking link to places where people find you.
-            </Body>
+        <>
+            <GreyBox>
+                <h2>Your booking link</h2>
+                <Body>
+                    Make it easier for people to book you on your website or social media. Copy
+                    paste your booking link to places where people find you.
+                </Body>
 
-            <RowMobileCol style={{ marginTop: 12 }}>
-                <Input value={link} />
+                <RowMobileCol style={{ marginTop: 12 }}>
+                    <Input value={link} />
 
-                <CopyToClipboard text={link} onCopy={() => setCopied(true)}>
-                    <SecondaryButton disabled={copied} style={{ marginLeft: 0 }}>
-                        {copied ? 'Copied' : 'Copy link'}
-                    </SecondaryButton>
-                </CopyToClipboard>
-            </RowMobileCol>
-        </GreyBox>
+                    <CopyToClipboard text={link} onCopy={() => setCopied(true)}>
+                        <SecondaryButton disabled={copied} style={{ marginLeft: 0 }}>
+                            {copied ? 'Copied' : 'Copy link'}
+                        </SecondaryButton>
+                    </CopyToClipboard>
+                </RowMobileCol>
+            </GreyBox>
+            <Hr style={{ marginBottom: 30 }} />
+        </>
     );
 };
 
@@ -345,15 +353,15 @@ const EventForm = ({
                 style={{
                     marginTop: '42px',
                     width: '100%',
-                    marginBottom: '60px',
                     zIndex: 0,
                     position: 'relative',
-                    minHeight: 'calc(100vh - 135px)',
+                    minHeight: 'calc(100vh - 160px)',
                 }}
             >
                 <SettingsSection
                     small
-                    stickyTop={'24px'}
+                    noBorder
+                    stickyTop={'15px'}
                     title={'Event Details'}
                     description={`Tell ${user.title} about your event.`}
                     style={{
@@ -506,30 +514,7 @@ const EventForm = ({
                             ]}
                         />
                     )}
-
-                    <Media lessThan="md">
-                        <a
-                            className="logo-row"
-                            href={'https://cueup.io'}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <BodySmall>Powered by</BodySmall>
-                            <Logo height={16} width="auto" />
-                        </a>
-                    </Media>
                 </SettingsSection>
-                <Media greaterThanOrEqual="md">
-                    <a
-                        className="logo-row"
-                        href={'https://cueup.io'}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <BodySmall>Powered by</BodySmall>
-                        <Logo height={16} width="auto" />
-                    </a>
-                </Media>
             </Col>
         )}
 
@@ -640,6 +625,27 @@ const SimpleTableItem = styled(SidebarRow)`
 
     > *:first-child {
         color: #122b48;
+    }
+`;
+
+const PoweredBy = styled.div`
+    .logo-row {
+        display: flex;
+        height: 80px;
+        align-items: center;
+        p {
+            line-height: 1em;
+        }
+    }
+    .logo {
+        fill: #4d6480;
+        margin-left: 4px;
+        display: inline-block;
+        margin-top: -1px;
+    }
+    @media only screen and (max-width: 664px) {
+        margin-bottom: 80px;
+        margin-top: -60px;
     }
 `;
 

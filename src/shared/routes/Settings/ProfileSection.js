@@ -85,6 +85,7 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
             description={
                 'Edit your profile to make it look good and get more bookings. Make the organizers feel good about booking you!'
             }
+            stickyTop={'15px'}
         >
             <Input
                 half

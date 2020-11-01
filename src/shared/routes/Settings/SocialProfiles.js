@@ -16,6 +16,7 @@ const SocialProfiles = ({ user }) => {
 
     return (
         <SettingsSection
+            stickyTop={'15px'}
             id="system"
             title={'Connected profiles'}
             description={

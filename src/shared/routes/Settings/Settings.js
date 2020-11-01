@@ -4,20 +4,18 @@ import { Redirect } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { useHistory, useLocation } from 'react-router';
 import { useServerContext } from 'components/hooks/useServerContext';
-import { appRoutes } from 'constants/locales/appRoutes';
-import { ME } from 'components/gql';
-import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import SavingIndicator from 'components/SavingIndicator';
 import { Container, Hr } from 'components/Blocks';
 import Menu from 'components/Navigation';
 import Footer from 'components/common/Footer';
+import { LoadingPlaceholder2 } from 'components/common/LoadingPlaceholder';
 import BasicSection from './BasicSection';
 import ProfileSection from './ProfileSection';
 import PreferencesSection from './PreferencesSection';
 import SystemSection from './SystemSection';
 import ProSection from './ProSection';
 import SocialProfiles from './SocialProfiles';
-import { UPDATE_USER } from './gql';
+import { UPDATE_USER, ME_SETTINGS } from './gql';
 
 const hasChanges = (o1, o2) => {
     const keys = Object.keys(o1);
@@ -62,8 +60,8 @@ const Settings = ({ user, loading, updateUser }) => {
         });
     };
 
-    if (loading) {
-        return null;
+    if (loading || !user) {
+        return <LoadingPlaceholder2 />;
     }
     const { isDj } = user;
 
@@ -117,14 +115,12 @@ const Settings = ({ user, loading, updateUser }) => {
 };
 
 const DataWrapper = () => {
-    const { data, loading } = useQuery(ME);
+    const { data, loading } = useQuery(ME_SETTINGS);
     const [updateUser, { loading: isSaving, error: updateError }] = useMutation(UPDATE_USER);
 
     const me = data?.me;
 
-    const user = { ...me } || {};
-
-    if (me && !me.appMetadata.onboarded && user?.isOwn) {
+    if (me && !me.appMetadata.onboarded) {
         return <Redirect to={'/complete-signup'} />;
     }
 
@@ -139,9 +135,9 @@ const DataWrapper = () => {
                 <meta name="robots" content="noindex" />
             </Helmet>
             <Menu dark relative />
-            <Container>
+            <Container style={{ minHeight: '80vh' }}>
                 <Hr style={{ marginBottom: 30 }} />
-                <Settings user={user} loading={loading} updateUser={updateUser} />
+                <Settings user={me} loading={loading} updateUser={updateUser} />
                 <SavingIndicator loading={isSaving} error={updateError} />
             </Container>
             <Footer noPreFooter />

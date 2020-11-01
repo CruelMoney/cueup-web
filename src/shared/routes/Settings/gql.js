@@ -199,3 +199,74 @@ export const UPDATE_USER = gql`
         }
     }
 `;
+
+export const ME_SETTINGS = gql`
+    query MeSettings {
+        me {
+            id
+            isDj @client
+            isOwn @client
+            email
+            permalink
+            genres
+            artistName
+            picture {
+                path
+            }
+            coverPhoto {
+                path
+            }
+            playingLocation {
+                name
+                radius
+                longitude
+                latitude
+            }
+            appMetadata {
+                rating
+                experience
+                roles
+                certified
+                createdAt
+                identityVerified
+                hasInstalledApp
+                instagramConnected
+                soundCloudConnected
+                mixcloudConnected
+                earned {
+                    amount
+                    currency
+                    formatted
+                }
+                roles
+                profileStatus
+                approved
+                onboarded
+                isPro
+            }
+            userMetadata {
+                firstName
+                lastName
+                fullName
+                bio
+                birthday
+                phone
+            }
+            payoutMethods {
+                id
+                payoutType
+                paymentProvider
+            }
+            userSettings {
+                currency
+                notifications
+                publicDisplay
+                standby
+                cancelationPolicy {
+                    days
+                    percentage
+                }
+            }
+        }
+    }
+`;
