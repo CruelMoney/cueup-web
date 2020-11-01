@@ -8,7 +8,8 @@ import LazyUser from 'routes/User';
 import LazyCompleteSignup from 'routes/CompleteSignup';
 import LazyTerms from 'routes/Terms';
 import LazyEvent from 'routes/Event';
-import LazySettings from 'routes/Settings/Settings';
+import LazySettings from 'routes/Settings';
+import LazyGigs from 'routes/Gigs';
 import ResetPassword from 'routes/ResetPassword';
 import LazyLocation, { LazySearch } from 'routes/BookDJ';
 import { LazyLocationsOverview } from 'routes/Location';
@@ -70,7 +71,7 @@ const RouteWrapper = () => {
 
                     <Route path={t(appRoutes.userSettings)} component={LazySettings} />
                     <Route path={t(appRoutes.userEvents)} component={LazySettings} />
-                    <Route path={t(appRoutes.userGigs)} component={LazySettings} />
+                    <Route path={t(appRoutes.userGigs)} component={LazyGigs} />
 
                     <Route path={t(appRoutes.user) + '/:permalink'} component={LazyUser} />
                     <Route path={'/:permalink/book'} component={LazyUser} />

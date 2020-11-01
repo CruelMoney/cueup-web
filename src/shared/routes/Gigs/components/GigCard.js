@@ -10,8 +10,8 @@ import {
     Hr,
     RowWrap,
     PillLarge,
-} from '../../../../../components/Blocks';
-import { SmallHeader, BodySmall, BodyBold, SmallBold } from '../../../../../components/Text';
+} from '../../../components/Blocks';
+import { SmallHeader, BodySmall, BodyBold, SmallBold } from '../../../components/Text';
 
 const GigCard = ({ style, idx, gig, hasMessage, translate, ...props }) => {
     const { event, offer } = gig;

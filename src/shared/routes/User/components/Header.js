@@ -47,19 +47,11 @@ const getRoutesFromUser = (user, pathname) => {
         const isDj = roles.includes('DJ');
         const isOrganizer = roles.includes('ORGANIZER');
 
-        if (isOrganizer) {
-            if (user.isOwn) {
-                routes.push({ route: 'events', label: 'events', active: !isDj });
-            }
-        }
-
         if (isDj) {
             routes.push({ route: 'overview', label: 'overview', active: true });
             routes.push({ route: 'photos', label: 'photos' });
             routes.push({ route: 'sounds', label: 'sounds' });
-            if (user.isOwn) {
-                routes.push({ route: 'gigs', label: 'gigs' });
-            }
+
             if (user.reviews?.pageInfo.totalDocs > 0 || user.isOwn) {
                 routes.push({ route: 'reviews', label: 'reviews' });
             }

@@ -2,10 +2,10 @@ import React from 'react';
 import { Query } from '@apollo/client/react/components';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes, eventRoutes } from 'constants/locales/appRoutes';
-import Formatter from '../../../../../utils/Formatter';
-import NavLink from '../../../../../components/common/Navlink';
-import { LoadingPlaceholder2 } from '../../../../../components/common/LoadingPlaceholder';
-import { MY_EVENTS } from '../../../gql';
+import Formatter from '../../../utils/Formatter';
+import NavLink from '../../../components/common/Navlink';
+import { LoadingPlaceholder2 } from '../../../components/common/LoadingPlaceholder';
+import { MY_EVENTS } from '../../User/gql';
 
 const Events = () => {
     const { translate } = useTranslate();

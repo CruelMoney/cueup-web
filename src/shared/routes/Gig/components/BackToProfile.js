@@ -18,7 +18,7 @@ const BackToProfile = ({ permalink }) => {
         <div style={{ backgroundColor: '#f6f9fc' }}>
             <Container>
                 <Row middle style={{ height: '42px' }}>
-                    <Link to={`${translate(appRoutes.user)}/${permalink}/${userRoutes.gigs}`}>
+                    <Link to={`${translate(appRoutes.userGigs)}`}>
                         <ReadMore back>Back to gigs</ReadMore>
                     </Link>
                 </Row>
