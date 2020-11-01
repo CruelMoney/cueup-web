@@ -4,9 +4,9 @@ import { Mutation } from '@apollo/client/react/components';
 import { useHistory } from 'react-router';
 import { SettingsSection, Input } from 'components/FormComponents';
 import useTranslate from 'components/hooks/useTranslate';
-import PasswordChanger from 'routes/User/components/PasswordChanger';
 import TaxIdInput from 'components/TaxID';
-import { DELETE_USER, MANAGE_SUBSCRIPTION } from '../../gql';
+import { DELETE_USER, MANAGE_SUBSCRIPTION } from './gql';
+import PasswordChanger from './components/PasswordChanger';
 
 const SystemSection = ({ user, saveData }) => {
     const { translate } = useTranslate();

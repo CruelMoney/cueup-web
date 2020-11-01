@@ -6,7 +6,6 @@ import starIcon from '@iconify/icons-ion/star';
 import { PrimaryButton, Col, RowWrap } from 'components/Blocks';
 
 import { BodySmall } from 'components/Text';
-import { ProFeature } from 'components/FormComponents';
 
 const ProSection = () => {
     const match = useRouteMatch();

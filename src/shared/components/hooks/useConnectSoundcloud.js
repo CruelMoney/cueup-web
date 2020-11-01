@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 
 import { USER_SOUNDS } from 'routes/User/routes/Sounds/gql';
-import { SmartButton } from '../Blocks';
 import { ME } from '../gql';
 
 const CONNECT_SOUNDCLOUD = gql`

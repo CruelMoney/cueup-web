@@ -2,12 +2,13 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { appRoutes } from 'constants/locales/appRoutes.ts';
+import { appRoutes, userRoutes } from 'constants/locales/appRoutes.ts';
 import LazySignup from 'routes/Signup';
 import LazyUser from 'routes/User';
 import LazyCompleteSignup from 'routes/CompleteSignup';
 import LazyTerms from 'routes/Terms';
 import LazyEvent from 'routes/Event';
+import LazySettings from 'routes/Settings/Settings';
 import ResetPassword from 'routes/ResetPassword';
 import LazyLocation, { LazySearch } from 'routes/BookDJ';
 import { LazyLocationsOverview } from 'routes/Location';
@@ -68,6 +69,10 @@ const RouteWrapper = () => {
                     <Route path={t(appRoutes.signUp)} component={LazySignup} />
 
                     <Route path={t(appRoutes.user) + '/:permalink'} component={LazyUser} />
+                    <Route
+                        path={t(appRoutes.user) + userRoutes.settings}
+                        component={LazySettings}
+                    />
                     <Route path={'/:permalink/book'} component={LazyUser} />
                     <Route path={t(appRoutes.completeSignup)} component={LazyCompleteSignup} />
                     <Route path={t(appRoutes.terms)} component={LazyTerms} />

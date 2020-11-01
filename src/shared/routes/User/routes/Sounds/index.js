@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { Helmet } from 'react-helmet-async';
+import ConnectSoundCloud from 'routes/Settings/components/ConnectSoundCloud';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
 import Popup from '../../../../components/common/Popup';
 import { Col, SecondaryButton, Row, PrimaryButton } from '../../../../components/Blocks';
 import EmptyPage from '../../../../components/common/EmptyPage';
 import { Body } from '../../../../components/Text';
-import ConnectSounCloud from '../../components/ConnectSoundCloud';
 import { USER_SOUNDS } from './gql';
 import AddSound from './AddSound';
 import Sound from './Sound';
@@ -45,7 +45,7 @@ const Sounds = ({ user, location, match, setShowPopup }) => {
                             <Body style={{ marginBottom: 15 }}>
                                 Showcase your mixes or productions
                             </Body>
-                            <ConnectSounCloud
+                            <ConnectSoundCloud
                                 userId={user.id}
                                 soundCloudConnected={appMetadata.soundCloudConnected}
                             />
@@ -100,7 +100,7 @@ const Sounds = ({ user, location, match, setShowPopup }) => {
             {isOwn && (
                 <Row style={{ marginTop: '30px', width: '250px' }}>
                     {!appMetadata.soundCloudConnected && (
-                        <ConnectSounCloud
+                        <ConnectSoundCloud
                             userId={user.id}
                             soundCloudConnected={appMetadata.soundCloudConnected}
                         />

@@ -64,10 +64,6 @@ const getRoutesFromUser = (user, pathname) => {
                 routes.push({ route: 'reviews', label: 'reviews' });
             }
         }
-
-        if (user.isOwn) {
-            routes.push({ route: 'settings', label: 'settings' });
-        }
     }
 
     return routes.map((r) => ({ ...r, route: pathname + '/' + r.route }));

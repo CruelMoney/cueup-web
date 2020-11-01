@@ -19,7 +19,7 @@ import ReorderGrid from '../components/ReorderGrid';
 import SavingIndicator from '../../../components/SavingIndicator';
 import InstagramLogo from '../../../assets/InstagramLogo';
 import { BodySmall, Body } from '../../../components/Text';
-import ConnectInstagram from '../components/ConnectInstagram';
+import ConnectInstagram from '../../Settings/components/ConnectInstagram';
 
 const LIMIT = 6;
 

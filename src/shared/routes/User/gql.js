@@ -343,12 +343,6 @@ const DISCONNECT_INSTAGRAM = gql`
     }
 `;
 
-const DELETE_USER = gql`
-    mutation DeleteUser($id: ID!) {
-        deleteUser(id: $id)
-    }
-`;
-
 const MY_EVENTS = gql`
     query MyEvents {
         me {
@@ -402,86 +396,6 @@ const HIGHLIGHT_REVIEW = gql`
                         firstName
                     }
                 }
-            }
-        }
-    }
-`;
-
-const VERIFY_STATUS = gql`
-    query VerifyStatus {
-        me {
-            id
-            appMetadata {
-                identityVerified
-                identityStatus {
-                    details
-                    status
-                }
-            }
-            userMetadata {
-                firstName
-                lastName
-                birthday
-                address
-                countryCode
-                postalCode
-                city
-                phone
-            }
-        }
-    }
-`;
-
-const REQUEST_VERIFICATION = gql`
-    mutation RequestVerification(
-        $id: ID!
-        $firstName: String!
-        $lastName: String!
-        $birthday: DateTime!
-        $address: String!
-        $state: String
-        $city: String!
-        $countryCode: String!
-        $postalCode: String!
-        $documentFront: Upload!
-        $documentBack: Upload
-        $ssnLast4: String
-        $phone: String
-    ) {
-        updateUser(
-            id: $id
-            firstName: $firstName
-            lastName: $lastName
-            birthday: $birthday
-            phone: $phone
-            requestVerification: {
-                address: $address
-                city: $city
-                countryCode: $countryCode
-                state: $state
-                postalCode: $postalCode
-                documentFront: $documentFront
-                documentBack: $documentBack
-                ssnLast4: $ssnLast4
-            }
-        ) {
-            id
-            appMetadata {
-                identityVerified
-                identityStatus {
-                    details
-                    status
-                }
-            }
-            userMetadata {
-                firstName
-                lastName
-                birthday
-                address
-                countryCode
-                postalCode
-                city
-                phone
             }
         }
     }
@@ -595,17 +509,10 @@ const USER_EDITS = gql`
     }
 `;
 
-export const MANAGE_SUBSCRIPTION = gql`
-    query ManageSubscription($redirectUrl: String!) {
-        manageSubscription(redirectUrl: $redirectUrl)
-    }
-`;
-
 export {
     MY_EVENTS,
     USER,
     UPDATE_USER,
-    DELETE_USER,
     REVIEWS,
     WRITE_TESTIMONIAL,
     REMOVE_TESTIMONIAL,
@@ -617,8 +524,6 @@ export {
     UPDATE_PHOTOS_ORDER,
     CONNECT_INSTAGRAM,
     DISCONNECT_INSTAGRAM,
-    VERIFY_STATUS,
-    REQUEST_VERIFICATION,
     ADD_MEDIA,
     DELETE_MEDIA,
     LOG_ACTIVITY,

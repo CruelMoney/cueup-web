@@ -88,9 +88,9 @@ export const trackCheckout = () => {
     analytics.track(TRACKING_EVENTS.InitiateCompleteBooking);
 };
 
-export const trackEmptySearch = (value) => {
+export const trackEmptySearch = (locationName) => {
     analytics.track(TRACKING_EVENTS.EmptySearch, {
-        value,
+        search_term: locationName,
     });
 };
 

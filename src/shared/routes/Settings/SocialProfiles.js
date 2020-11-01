@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { SettingsSection, LabelHalf } from 'components/FormComponents';
 
-import { BodySmall } from 'components/Text';
-import ConnectSoundCloud from '../../components/ConnectSoundCloud';
-import ConnectMixcloudButton from '../../components/ConnectMixcloud';
-import ConnectInstagram from '../../components/ConnectInstagram';
+import ConnectSoundCloud from './components/ConnectSoundCloud';
+import ConnectMixcloudButton from './components/ConnectMixcloud';
+import ConnectInstagram from './components/ConnectInstagram';
 
 const SocialProfiles = ({ user }) => {
     const { appMetadata, isDj } = user;

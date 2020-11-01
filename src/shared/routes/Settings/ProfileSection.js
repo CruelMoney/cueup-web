@@ -19,9 +19,9 @@ import { validators } from 'components/hooks/useForm';
 import { CheckBoxRow, TableRow } from 'components/CheckboxTable';
 import { Hr, Col } from 'components/Blocks';
 import { BodySmall } from 'components/Text';
-import LocationPicker from '../../components/LocationPicker';
-import CancelationPolicyPopup from '../../components/CancelationPolicyPopup';
-import { USER_EDITS } from '../../gql';
+import { USER_EDITS } from 'routes/User/gql';
+import LocationPicker from './components/LocationPicker';
+import CancelationPolicyPopup from './components/CancelationPolicyPopup';
 
 const refFunScrollTo = (doScroll) => (ref) => {
     if (doScroll && ref) {

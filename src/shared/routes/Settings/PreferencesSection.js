@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { SettingsSection, Input } from 'components/FormComponents';
+import { SettingsSection } from 'components/FormComponents';
 
-import NotificationPreferences from '../../components/NotificationPreferences';
+import NotificationPreferences from './components/NotificationPreferences';
 
 const PreferencesSection = ({ user, saveData }) => {
     const { appMetadata, userSettings } = user;

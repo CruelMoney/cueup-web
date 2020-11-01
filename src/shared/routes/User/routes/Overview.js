@@ -11,7 +11,7 @@ import ReadMoreExpander from '../../../components/ReadMoreExpander';
 import { Col, Row, ReadMore, Show, InfoBox, Hr } from '../../../components/Blocks';
 import Map from '../../../components/common/Map';
 import QuotationMarkIcon from '../../../components/graphics/Quotes';
-import { PolicyDisplayer } from '../components/CancelationPolicyPopup';
+import { PolicyDisplayer } from '../../Settings/components/CancelationPolicyPopup';
 import { LoadingPlaceholder2 } from '../../../components/common/LoadingPlaceholder';
 import GracefullImage from '../../../components/GracefullImage';
 import GracefullVideo from '../../../components/GracefullVideo';
@@ -95,7 +95,7 @@ const Genre = styled(InfoBox)`
     margin-left: 24px;
     margin-bottom: 24px;
     margin-right: 0px;
-
+    word-break: break-all;
     @media only screen and (max-width: 990px) {
         margin-left: 0px;
         margin-right: 24px;

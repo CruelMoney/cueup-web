@@ -31,7 +31,7 @@ import SavingIndicator from '../../components/SavingIndicator';
 import useLogActivity, { ACTIVITY_TYPES } from '../../components/hooks/useLogActivity';
 import BookingButton from './components/BookingButton';
 import ProfileProgress from './components/ProfileProgress';
-import { Overview, Settings, Reviews, Gigs, Events, Booking, Photos, Sounds } from './routes';
+import { Overview, Reviews, Gigs, Events, Booking, Photos, Sounds } from './routes';
 
 import { USER, UPDATE_USER } from './gql';
 import BackToEvent from './components/BackToEvent';
@@ -164,17 +164,6 @@ const Content = React.memo(({ match, ...userProps }) => {
                                 path={[match.path + '/sounds', match.path + '/sounds/:id']}
                                 render={(props) => <Sounds {...props} {...userProps} />}
                             />
-                            {showPrivateRoutes ? (
-                                <Route
-                                    path={match.url + '/settings'}
-                                    render={(props) => <Settings {...props} {...userProps} />}
-                                />
-                            ) : !userProps.loading ? (
-                                <Route
-                                    path={match.url + '/settings'}
-                                    render={(props) => <LoginPopup {...props} {...userProps} />}
-                                />
-                            ) : null}
 
                             {showPrivateRoutes ? (
                                 <Route

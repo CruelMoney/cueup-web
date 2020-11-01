@@ -7,7 +7,7 @@ import DatePickerPopup from 'components/DatePickerPopup';
 import PhoneInput from 'components/common/PhoneInput';
 
 import Popup from 'components/common/Popup';
-import VerifyIdentity from '../../components/VerifyIdentity';
+import VerifyIdentity from './components/VerifyIdentity';
 
 const BasicSection = ({ user, updateKey, saveData, modal, onModalClose }) => {
     const verifyIdentity = modal === 'verifyIdentity';
