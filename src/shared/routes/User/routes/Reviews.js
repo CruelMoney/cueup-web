@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/client';
 import { Route, useHistory } from 'react-router';
 import { Query } from '@apollo/client/react/components';
 import { Helmet } from 'react-helmet-async';
+import { UPDATE_USER } from 'routes/Settings/gql';
 import { Title, Body, BodySmall, BodyBold } from '../../../components/Text';
 import {
     Col,
@@ -125,10 +126,11 @@ const Cta = ({ onClick }) => (
     </>
 );
 
-const Content = ({ playedVenues, reviews, isOwn, permalink, userId, updateUser }) => {
+const Content = ({ playedVenues, reviews, isOwn, permalink, userId }) => {
     const [isAddingVenue, setIsAddingVenue] = useState(false);
     const [newTestimonial, setNewTestimonial] = useState({});
     const history = useHistory();
+    const [updateUser, { loading: updating }] = useMutation(UPDATE_USER);
 
     const saveVenue = (venue) => {
         venue = venue.trim();
@@ -220,7 +222,13 @@ const Content = ({ playedVenues, reviews, isOwn, permalink, userId, updateUser }
                             ))}
                         </ul>
                         {isAddingVenue && (
-                            <Input autoFocus type="text" placeholder="venue" onSave={saveVenue} />
+                            <Input
+                                disabled={updating}
+                                autoFocus
+                                type="text"
+                                placeholder="venue"
+                                onSave={saveVenue}
+                            />
                         )}
 
                         {isOwn && (
