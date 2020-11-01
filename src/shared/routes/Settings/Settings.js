@@ -9,6 +9,7 @@ import { Container, Hr } from 'components/Blocks';
 import Menu from 'components/Navigation';
 import Footer from 'components/common/Footer';
 import { LoadingPlaceholder2 } from 'components/common/LoadingPlaceholder';
+import ScrollToTop from 'components/common/ScrollToTop';
 import BasicSection from './BasicSection';
 import ProfileSection from './ProfileSection';
 import PreferencesSection from './PreferencesSection';
@@ -134,6 +135,7 @@ const DataWrapper = () => {
                 <meta name="twitter:title" content={metaTitle} />
                 <meta name="robots" content="noindex" />
             </Helmet>
+            <ScrollToTop />
             <Menu dark relative />
             <Container style={{ minHeight: '80vh' }}>
                 <Hr style={{ marginBottom: 30 }} />

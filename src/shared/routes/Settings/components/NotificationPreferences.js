@@ -21,6 +21,14 @@ const TableRow = styled(Row)`
         text-align: center;
         justify-content: center;
     }
+    @media only screen and (max-width: 450px) {
+        > *:nth-child(2),
+        > *:nth-child(3),
+        > *:nth-child(4) {
+            min-width: 50px;
+            font-size: 14px;
+        }
+    }
 `;
 
 const DJ_NOTIFICATION_TYPES = Object.freeze([
