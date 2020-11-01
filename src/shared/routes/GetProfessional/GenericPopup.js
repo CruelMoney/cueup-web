@@ -72,14 +72,11 @@ const Success = ({ user }) => {
     const history = useHistory();
     const { translate } = useTranslate();
 
-    const baseRoute = `${translate(appRoutes.user)}/${user.permalink}`;
-
     const navigate = (to, reload) => {
-        const route = `${baseRoute}/${to}`;
         if (reload) {
-            window.location.href = route;
+            window.location.href = to;
         } else {
-            history.push(route);
+            history.push(to);
         }
     };
 
@@ -104,14 +101,18 @@ const Success = ({ user }) => {
             <Col>
                 <RowCustom between middle>
                     <Label>Add your website</Label>
-                    <SecondaryButton onClick={() => navigate(userRoutes.settings + '#website')}>
+                    <SecondaryButton
+                        onClick={() => navigate(translate(appRoutes.userSettings) + '#website')}
+                    >
                         Go
                     </SecondaryButton>
                 </RowCustom>
                 <RowCustom between middle>
                     <Label>Add more playing locations</Label>
                     <SecondaryButton
-                        onClick={() => navigate(userRoutes.settings + '?modal=location', true)}
+                        onClick={() =>
+                            navigate(translate(appRoutes.userSettings) + '?modal=location', true)
+                        }
                     >
                         Go
                     </SecondaryButton>
@@ -125,7 +126,13 @@ const Success = ({ user }) => {
                 <RowCustom between middle>
                     <Label>Upload mixtapes</Label>
                     <SecondaryButton
-                        onClick={() => navigate(userRoutes.sounds + '?modal=addSound')}
+                        onClick={() =>
+                            navigate(
+                                `${translate(appRoutes.user)}/${user.permalink}/${
+                                    userRoutes.sounds
+                                }?modal=addSound`
+                            )
+                        }
                     >
                         Go
                     </SecondaryButton>
