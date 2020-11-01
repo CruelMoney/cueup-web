@@ -1,7 +1,14 @@
 import React from 'react';
 import { Query } from '@apollo/client/react/components';
+import { useQuery } from '@apollo/client';
+import { Helmet } from 'react-helmet-async';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes, eventRoutes } from 'constants/locales/appRoutes';
+import { ME } from 'components/gql';
+import ScrollToTop from 'components/common/ScrollToTop';
+import Menu from 'components/Navigation';
+import { Container, Hr } from 'components/Blocks';
+import Footer from 'components/common/Footer';
 import Formatter from '../../../utils/Formatter';
 import NavLink from '../../../components/common/Navlink';
 import { LoadingPlaceholder2 } from '../../../components/common/LoadingPlaceholder';
@@ -68,4 +75,30 @@ const Events = () => {
     );
 };
 
-export default Events;
+const DataWrapper = () => {
+    const { data, loading } = useQuery(ME);
+
+    const me = data?.me;
+
+    const metaTitle = 'Events · Cueup';
+
+    return (
+        <>
+            <Helmet>
+                <title>{metaTitle}</title>
+                <meta property="og:title" content={metaTitle} />
+                <meta name="twitter:title" content={metaTitle} />
+                <meta name="robots" content="noindex" />
+            </Helmet>
+            <ScrollToTop />
+            <Menu dark relative />
+            <Container style={{ minHeight: '80vh' }}>
+                <Hr style={{ marginBottom: 30 }} />
+                <Events user={me} loading={loading} />
+            </Container>
+            <Footer noPreFooter />
+        </>
+    );
+};
+
+export default DataWrapper;
