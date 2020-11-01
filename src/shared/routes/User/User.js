@@ -17,13 +17,12 @@ import Sidebar, { SidebarContent } from '../../components/Sidebar';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col, Divider } from '../../components/Blocks';
 import ScrollToTop from '../../components/common/ScrollToTop';
-import Popup from '../../components/common/Popup';
-import Login from '../../components/common/Login';
+
 import { SimpleSharing } from '../../components/common/Sharing-v2';
 import { LoadingPlaceholder2 } from '../../components/common/LoadingPlaceholder';
 
 import GracefullImage from '../../components/GracefullImage';
-import { SmallHeader, TitleClean } from '../../components/Text';
+import { SmallHeader } from '../../components/Text';
 import { ME } from '../../components/gql';
 import useLogActivity, { ACTIVITY_TYPES } from '../../components/hooks/useLogActivity';
 import BookingButton from './components/BookingButton';
@@ -180,25 +179,6 @@ const Content = React.memo(({ match, ...userProps }) => {
         </div>
     );
 });
-
-const LoginPopup = ({ translate }) => {
-    const [shwowing, setShwowing] = useState(true);
-
-    return (
-        <Popup showing={shwowing} width={'568px'} onClickOutside={() => setShwowing(false)}>
-            <>
-                <TitleClean center>Login</TitleClean>
-                <p>{translate('Login to see your gigs')}</p>
-                <Login
-                    redirect={false}
-                    onLogin={async (_) => {
-                        window.location.reload();
-                    }}
-                />
-            </>
-        </Popup>
-    );
-};
 
 const User = ({ match, location, user, error, loading, translate }) => {
     const [hasScrolled, setHasScrolled] = useState(false);

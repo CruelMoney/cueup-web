@@ -118,11 +118,15 @@ const Settings = ({ user, loading, updateUser }) => {
 const DataWrapper = () => {
     const { data, loading } = useQuery(ME_SETTINGS);
     const [updateUser, { loading: isSaving, error: updateError }] = useMutation(UPDATE_USER);
-
+    const { pathname, search } = useLocation();
     const me = data?.me;
 
     if (me && !me.appMetadata.onboarded) {
         return <Redirect to={'/complete-signup'} />;
+    }
+
+    if (!loading && !me) {
+        return <Redirect to={`/login?redirect=${encodeURIComponent(pathname + search)}`} />;
     }
 
     const metaTitle = 'Settings · Cueup';

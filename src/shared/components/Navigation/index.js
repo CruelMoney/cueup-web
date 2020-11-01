@@ -15,7 +15,7 @@ import InstagramConnect from '../InstagramConnect';
 import { LoadingIndicator, Container } from '../Blocks';
 import DesktopMenu from './DesktopMenu';
 
-const Menu = ({ dark, relative, fullWidth }) => {
+const Menu = ({ dark, relative, fullWidth, hideLogin }) => {
     const { t } = useTranslation();
     const [loginExpanded, setLoginExpanded] = useState(false);
 
@@ -85,7 +85,7 @@ const Menu = ({ dark, relative, fullWidth }) => {
                                 </li>
                             )}
 
-                            {!loggedIn && !loading ? (
+                            {!hideLogin && !loggedIn && !loading ? (
                                 <li>
                                     <button
                                         className="link-look"

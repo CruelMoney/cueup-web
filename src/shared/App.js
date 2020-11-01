@@ -23,6 +23,7 @@ import { loadSupportChat } from 'utils/supportChat';
 import LazyFaq from 'routes/Faq';
 import LazyBecomeDj from 'routes/BecomeDj';
 import LazyBlog from 'routes/Blog';
+import Login from 'routes/Login';
 import { MediaContextProvider } from 'components/MediaContext';
 import { ProvideAppState, useAppState } from './components/hooks/useAppState';
 import Home from './routes/Home';
@@ -85,6 +86,7 @@ const RouteWrapper = () => {
                     <Route path={t(appRoutes.search)} component={LazySearch} />
                     <Route path={t(appRoutes.resetPassword)} component={ResetPassword} />
                     <Route path={'/book-dj'} exact component={RequestFormPopup} />
+                    <Route path={'/login'} component={Login} />
 
                     <Route component={NotFound} />
                 </Switch>

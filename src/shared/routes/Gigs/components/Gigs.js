@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Query } from '@apollo/client/react/components';
 import { Helmet } from 'react-helmet-async';
 import { useQuery } from '@apollo/client';
+import { Redirect } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import usePushNotifications from 'components/hooks/usePushNotifications';
 import useTranslate from 'components/hooks/useTranslate';
 import { useNotifications } from 'components/hooks/useNotifications';
@@ -9,6 +11,7 @@ import Footer from 'components/common/Footer';
 import Menu from 'components/Navigation';
 import ScrollToTop from 'components/common/ScrollToTop';
 import AddBookingLink from 'components/AddBookingLink';
+import { appRoutes } from 'constants/locales/appRoutes';
 import EmptyPage from '../../../components/common/EmptyPage';
 import { LoadingPlaceholder2 } from '../../../components/common/LoadingPlaceholder';
 import { ME, MY_GIGS } from '../../../components/gql';
@@ -177,10 +180,14 @@ const EnableNotifications = ({ userId }) => {
 
 const DataWrapper = () => {
     const { data, loading } = useQuery(ME);
-
+    const { pathname, search } = useLocation();
     const me = data?.me;
 
     const metaTitle = 'Gigs · Cueup';
+
+    if (!loading && !me) {
+        return <Redirect to={`/login?redirect=${encodeURIComponent(pathname + search)}`} />;
+    }
 
     return (
         <>
