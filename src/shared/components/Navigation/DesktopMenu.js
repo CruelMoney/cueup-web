@@ -109,7 +109,7 @@ const DropDownMenu = ({ user, ...props }) => {
 
                 {isDJ && (
                     <li>
-                        <NavLink to={t(appRoutes.userGigs)}>
+                        <NavLink to={t(appRoutes.userGigs)} data-cy="menu-gigs-link">
                             <MenuButton>
                                 <InlineIcon icon={musicalNotesOutline} />
                                 Gigs
@@ -119,7 +119,7 @@ const DropDownMenu = ({ user, ...props }) => {
                 )}
                 {isOrganizer && (
                     <li>
-                        <NavLink to={t(appRoutes.userEvents)}>
+                        <NavLink to={t(appRoutes.userEvents)} data-cy="menu-events-link">
                             <MenuButton>
                                 <InlineIcon icon={calendarOutline} />
                                 Events
@@ -128,7 +128,7 @@ const DropDownMenu = ({ user, ...props }) => {
                     </li>
                 )}
                 <li>
-                    <NavLink to={t(appRoutes.userSettings)}>
+                    <NavLink to={t(appRoutes.userSettings)} data-cy="menu-settings-link">
                         <MenuButton>
                             <InlineIcon icon={settingsOutline} />
                             Settings

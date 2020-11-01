@@ -5,7 +5,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { useHistory, useLocation } from 'react-router';
 import { useServerContext } from 'components/hooks/useServerContext';
 import SavingIndicator from 'components/SavingIndicator';
-import { Container, Hr } from 'components/Blocks';
+import { Col, Container, Hr } from 'components/Blocks';
 import Menu from 'components/Navigation';
 import Footer from 'components/common/Footer';
 import { LoadingPlaceholder2 } from 'components/common/LoadingPlaceholder';
@@ -69,7 +69,7 @@ const Settings = ({ user, loading, updateUser }) => {
     const isPro = user?.appMetadata?.isPro;
 
     return (
-        <>
+        <Col>
             {!isPro && isDj && <ProSection user={user} updateKey={updateKey} saveData={saveData} />}
             {isDj && (
                 <ProfileSection
@@ -111,7 +111,7 @@ const Settings = ({ user, loading, updateUser }) => {
                 modal={modal}
                 onModalClose={onModalClose}
             />
-        </>
+        </Col>
     );
 };
 

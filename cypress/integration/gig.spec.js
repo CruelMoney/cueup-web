@@ -40,8 +40,7 @@ describe('Gig', () => {
 
         cy.visit('/');
         cy.get('[data-cy=menu-user-link]').click();
-        cy.get('[data-cy=menu-profile-link]').click({ force: true });
-        cy.get('[data-cy=navbutton-gigs]').click();
+        cy.get('[data-cy=menu-gigs-link]').click({ force: true });
         cy.get('[data-cy=gig-read-more]').click();
         cy.get('[data-cy=navbutton-offer]').click();
         cy.get('[name=show-payout-popup]').click();
@@ -88,8 +87,7 @@ describe('Gig', () => {
 
         cy.visit('/');
         cy.get('[data-cy=menu-user-link]').click();
-        cy.get('[data-cy=menu-profile-link]').click({ force: true });
-        cy.get('[data-cy=navbutton-gigs]').click();
+        cy.get('[data-cy=menu-gigs-link]').click({ force: true });
         cy.get('[data-cy=gig-read-more]').click();
 
         cy.get('[data-cy=gig-status]').should('contain', 'Confirmed. Get ready to play');

@@ -34,10 +34,8 @@ describe('Subscription', () => {
         cy.getCookie('x-token').should('exist');
         cy.visit('/');
         cy.get('[data-cy=menu-user-link]').click();
-        cy.get('[data-cy=menu-profile-link]').click({ force: true });
-        cy.url().should('include', '/user');
+        cy.get('[data-cy=menu-settings-link]').click({ force: true });
 
-        cy.get('[data-cy=navbutton-settings]').click();
         cy.get('[data-cy=go-pro-button]').click();
         cy.get('[data-cy=plan-1-button]').click();
 
