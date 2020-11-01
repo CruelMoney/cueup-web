@@ -68,11 +68,11 @@ const RouteWrapper = () => {
 
                     <Route path={t(appRoutes.signUp)} component={LazySignup} />
 
+                    <Route path={t(appRoutes.userSettings)} component={LazySettings} />
+                    <Route path={t(appRoutes.userEvents)} component={LazySettings} />
+                    <Route path={t(appRoutes.userGigs)} component={LazySettings} />
+
                     <Route path={t(appRoutes.user) + '/:permalink'} component={LazyUser} />
-                    <Route
-                        path={t(appRoutes.user) + userRoutes.settings}
-                        component={LazySettings}
-                    />
                     <Route path={'/:permalink/book'} component={LazyUser} />
                     <Route path={t(appRoutes.completeSignup)} component={LazyCompleteSignup} />
                     <Route path={t(appRoutes.terms)} component={LazyTerms} />

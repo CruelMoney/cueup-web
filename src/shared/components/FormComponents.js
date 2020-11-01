@@ -95,8 +95,8 @@ export const LabelHalf = styled(InputLabel)`
 const SectionRow = styled(Row)`
     padding-bottom: 30px;
     margin-bottom: 42px;
-    border-bottom: 1px solid #e9ecf0;
     flex-wrap: wrap;
+    ${({ noBorder }) => (noBorder ? '' : 'border-bottom: 1px solid #e9ecf0;')}
 `;
 
 const LeftCol = styled(Col)`

@@ -109,7 +109,7 @@ const DropDownMenu = ({ user, ...props }) => {
 
                 {isDJ && (
                     <li>
-                        <NavLink to={t(appRoutes.userGigs).replace(':permalink', user.permalink)}>
+                        <NavLink to={t(appRoutes.userGigs)}>
                             <MenuButton>
                                 <InlineIcon icon={musicalNotesOutline} />
                                 Gigs
@@ -119,7 +119,7 @@ const DropDownMenu = ({ user, ...props }) => {
                 )}
                 {isOrganizer && (
                     <li>
-                        <NavLink to={t(appRoutes.userEvents).replace(':permalink', user.permalink)}>
+                        <NavLink to={t(appRoutes.userEvents)}>
                             <MenuButton>
                                 <InlineIcon icon={calendarOutline} />
                                 Events
@@ -128,7 +128,7 @@ const DropDownMenu = ({ user, ...props }) => {
                     </li>
                 )}
                 <li>
-                    <NavLink to={t(appRoutes.userSettings).replace(':permalink', user.permalink)}>
+                    <NavLink to={t(appRoutes.userSettings)}>
                         <MenuButton>
                             <InlineIcon icon={settingsOutline} />
                             Settings
@@ -137,12 +137,7 @@ const DropDownMenu = ({ user, ...props }) => {
                 </li>
                 {!isPro && isDJ && (
                     <li>
-                        <NavLink
-                            to={
-                                t(appRoutes.userSettings).replace(':permalink', user.permalink) +
-                                '/get-pro'
-                            }
-                        >
+                        <NavLink to={t(appRoutes.userSettings) + '/get-pro'}>
                             <MenuButton>
                                 <InlineIcon icon={starOutline} />
                                 Go Pro

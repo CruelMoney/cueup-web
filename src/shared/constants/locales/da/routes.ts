@@ -13,9 +13,9 @@ const routes: RouteKeys = {
     userReviews: '/da/user/:permalink/reviews',
     userSounds: '/da/user/:permalink/sounds',
     userPhotos: '/da/user/:permalink/photos',
-    userSettings: '/da/user/:permalink/settings',
-    userEvents: '/da/user/:permalink/events',
-    userGigs: '/da/user/:permalink/gigs',
+    userSettings: '/da/user/settings',
+    userEvents: '/da/user/events',
+    userGigs: '/da/user/gigs',
     bookDj: '/da/:location/lej-dj',
     bookDjOverview: '/da/lokationer',
     search: '/da/s',
@@ -37,6 +37,9 @@ const routes: RouteKeys = {
 
 export const oldRoutes = {
     bookDj: '/da/lej-dj/:country/:city?',
+    userSettings: '/da/user/:permalink/settings',
+    userEvents: '/da/user/:permalink/events',
+    userGigs: '/da/user/:permalink/gigs',
 };
 
 export default routes;

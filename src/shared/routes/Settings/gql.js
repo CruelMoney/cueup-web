@@ -91,3 +91,111 @@ export const REQUEST_VERIFICATION = gql`
         }
     }
 `;
+
+export const UPDATE_USER = gql`
+    mutation updateUser(
+        $id: ID!
+        $email: EmailAddress
+        $firstName: String
+        $lastName: String
+        $phone: String
+        $picture: Upload
+        $profilePicture: ID
+        $coverPhoto: Upload
+        $playingLocation: Area
+        $genres: [String!]
+        $bio: String
+        $redirectLink: String
+        $birthday: DateTime
+        $password: String
+        $artistName: String
+        $permalink: String
+        $standby: Boolean
+        $cancelationDays: Int
+        $refundPercentage: Int
+        $currency: Currency
+        $notificationSettings: JSON
+        $publicDisplaySettings: JSON
+        $playedVenues: [String!]
+        $taxType: String
+        $taxId: String
+        $website: URL
+    ) {
+        updateUser(
+            id: $id
+            email: $email
+            redirectLink: $redirectLink
+            firstName: $firstName
+            lastName: $lastName
+            picture: $picture
+            profilePicture: $profilePicture
+            coverPhoto: $coverPhoto
+            playingLocation: $playingLocation
+            genres: $genres
+            bio: $bio
+            phone: $phone
+            birthday: $birthday
+            password: $password
+            artistName: $artistName
+            permalink: $permalink
+            standby: $standby
+            cancelationDays: $cancelationDays
+            refundPercentage: $refundPercentage
+            currency: $currency
+            notificationSettings: $notificationSettings
+            publicDisplaySettings: $publicDisplaySettings
+            playedVenues: $playedVenues
+            taxType: $taxType
+            taxId: $taxId
+            website: $website
+        ) {
+            id
+            email
+            permalink
+            artistName
+            genres
+            playedVenues
+            picture {
+                path
+            }
+            coverPhoto {
+                path
+            }
+            playingLocation {
+                name
+                radius
+                longitude
+                latitude
+            }
+            userMetadata {
+                firstName
+                lastName
+                bio
+                birthday
+                phone
+                website
+            }
+            appMetadata {
+                profileStatus
+                approved
+                onboarded
+            }
+            userSettings {
+                currency
+                standby
+                notifications
+                publicDisplay
+                cancelationPolicy {
+                    days
+                    percentage
+                }
+            }
+            edits {
+                id
+                status
+                fieldName
+                message
+            }
+        }
+    }
+`;

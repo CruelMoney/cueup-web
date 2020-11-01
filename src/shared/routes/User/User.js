@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Switch, Route, Redirect, useHistory } from 'react-router';
 import styled from 'styled-components';
-import { Query, useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import queryString from 'query-string';
-
-import moment from 'moment';
 
 import { Helmet } from 'react-helmet-async';
 import PayForm from 'components/common/PayForm.js';
@@ -27,19 +25,18 @@ import { LoadingPlaceholder2 } from '../../components/common/LoadingPlaceholder'
 import GracefullImage from '../../components/GracefullImage';
 import { SmallHeader, TitleClean } from '../../components/Text';
 import { ME } from '../../components/gql';
-import SavingIndicator from '../../components/SavingIndicator';
 import useLogActivity, { ACTIVITY_TYPES } from '../../components/hooks/useLogActivity';
 import BookingButton from './components/BookingButton';
 import ProfileProgress from './components/ProfileProgress';
-import { Overview, Reviews, Gigs, Events, Booking, Photos, Sounds } from './routes';
+import { Overview, Reviews, Booking, Photos, Sounds } from './routes';
 
-import { USER, UPDATE_USER } from './gql';
+import { USER } from './gql';
 import BackToEvent from './components/BackToEvent';
 import Header from './components/Header';
-import { Stats, IconRow, CertifiedVerified, IconRowLink, UserInfo } from './components/Common';
+import { Stats, UserInfo } from './components/Common';
 import content from './content.json';
 
-const UserSidebar = ({ user, loading, bookingEnabled }) => {
+const UserSidebar = ({ user, bookingEnabled }) => {
     const { userMetadata = {}, appMetadata = {} } = user || {};
     const { experience } = appMetadata;
     let { followers } = appMetadata;
@@ -106,7 +103,6 @@ const UserContainer = styled(Container)`
 
 const Content = React.memo(({ match, ...userProps }) => {
     const { user, loading, location } = userProps;
-    const showPrivateRoutes = loading || user?.isOwn;
     const bookingEnabled = user?.isDj;
     const history = useHistory();
 
@@ -117,8 +113,6 @@ const Content = React.memo(({ match, ...userProps }) => {
     if (eventId && hash) {
         comingFromEvent = true;
     }
-
-    const overviewIsEvents = showPrivateRoutes && !user?.isDj;
 
     return (
         <div>
@@ -144,13 +138,7 @@ const Content = React.memo(({ match, ...userProps }) => {
                         <Switch location={location}>
                             <Route
                                 path={[match.url + '/overview', match.url + '/checkout']}
-                                render={(props) =>
-                                    overviewIsEvents ? (
-                                        <Events {...props} {...userProps} />
-                                    ) : (
-                                        <Overview {...props} {...userProps} />
-                                    )
-                                }
+                                render={(props) => <Overview {...props} {...userProps} />}
                             />
                             <Route
                                 path={match.url + '/reviews'}
@@ -164,25 +152,6 @@ const Content = React.memo(({ match, ...userProps }) => {
                                 path={[match.path + '/sounds', match.path + '/sounds/:id']}
                                 render={(props) => <Sounds {...props} {...userProps} />}
                             />
-
-                            {showPrivateRoutes ? (
-                                <Route
-                                    path={match.url + '/gigs'}
-                                    render={(props) => <Gigs {...props} {...userProps} />}
-                                />
-                            ) : !userProps.loading ? (
-                                <Route
-                                    path={match.url + '/gigs'}
-                                    render={(props) => <LoginPopup {...props} {...userProps} />}
-                                />
-                            ) : null}
-
-                            {showPrivateRoutes ? (
-                                <Route
-                                    path={match.url + '/events'}
-                                    render={(props) => <Events {...props} {...userProps} />}
-                                />
-                            ) : null}
 
                             <Redirect
                                 to={{
@@ -232,8 +201,6 @@ const LoginPopup = ({ translate }) => {
 };
 
 const User = ({ match, location, user, error, loading, translate }) => {
-    const [updateUser, { loading: isSaving, error: updateError }] = useMutation(UPDATE_USER);
-
     const [hasScrolled, setHasScrolled] = useState(false);
 
     useEffect(() => {
@@ -275,12 +242,10 @@ const User = ({ match, location, user, error, loading, translate }) => {
                     )}
                 </Helmet>
             )}
-            <SavingIndicator loading={isSaving} error={error || updateError} />
 
             <UserRoutes
                 loading={loading}
                 user={user}
-                updateUser={updateUser}
                 match={match}
                 location={location}
                 translate={translate}

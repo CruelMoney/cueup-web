@@ -69,12 +69,7 @@ const Menu = ({ dark, relative, fullWidth }) => {
                                     <li>
                                         <Navlink
                                             label={'Go Pro'}
-                                            to={
-                                                t(appRoutes.userSettings).replace(
-                                                    ':permalink',
-                                                    user.permalink
-                                                ) + '/get-pro'
-                                            }
+                                            to={t(appRoutes.userSettings) + '/get-pro'}
                                         />
                                     </li>
                                 )}

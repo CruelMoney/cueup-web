@@ -34,6 +34,7 @@ const SystemSection = ({ user, saveData }) => {
             id="system"
             title={'System'}
             description={'Deleting your user is irreversible.'}
+            noBorder
         >
             <Mutation
                 mutation={DELETE_USER}
