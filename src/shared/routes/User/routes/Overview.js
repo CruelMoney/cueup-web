@@ -230,7 +230,9 @@ const Review = ({ isOwn, reviewsCount, highlightedReview }) => {
                 <Col style={{ width: '100%' }}>
                     <Row between middle style={{ marginBottom: '9px' }}>
                         <QuotationMarkIcon />
-                        <Cite>{author ? author.userMetadata.firstName : citation}</Cite>
+                        <Cite>
+                            {author ? author.userMetadata.firstName : citation?.slice(0, 30)}
+                        </Cite>
                         <div style={{ flex: 1 }} />
 
                         {rating && <Rating rating={rating} disabled />}
