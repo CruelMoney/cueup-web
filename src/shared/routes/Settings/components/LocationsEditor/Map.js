@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
-import useScript from '@charlietango/use-script';
 import { GoogleMap, Circle } from '@react-google-maps/api';
 import { getCenter, getBounds } from 'geolib';
+import { useLazyLoadScript } from 'components/hooks/useLazyLoadScript';
 
 const EditorMap = ({ locations, editId, updateLocation }) => {
     const map = useRef();
@@ -36,6 +36,11 @@ const EditorMap = ({ locations, editId, updateLocation }) => {
         }
     }, [bounds, loaded]);
 
+    const initialCenter = {
+        lat: center?.latitude || 40.52,
+        lng: center?.longitude || 34.34,
+    };
+
     return (
         <GoogleMap
             mapContainerStyle={{
@@ -47,7 +52,7 @@ const EditorMap = ({ locations, editId, updateLocation }) => {
             onLoad={(m) => {
                 map.current = m;
                 setTimeout(() => {
-                    bounds && m.fitBounds(bounds);
+                    bounds && map.current.fitBounds(bounds);
                     setLoadedd(true);
                 }, 500);
             }}
@@ -56,12 +61,9 @@ const EditorMap = ({ locations, editId, updateLocation }) => {
                 backgroundColor: '#f6f8f9',
                 zoomControl: true,
                 styles,
-                zoom: 5,
+                zoom: center ? 5 : 3,
             }}
-            center={{
-                lat: center?.latitude,
-                lng: center?.longitude,
-            }}
+            center={initialCenter}
         >
             {locations.map((l) => (
                 <SmartCircle
@@ -79,8 +81,6 @@ const SmartCircle = ({ id, latitude, longitude, radius, editable, updateLocation
     const myCircle = useRef();
 
     const handleRadiusChange = useCallback(() => {
-        console.log('change radius');
-
         if (myCircle.current) {
             const circleRadius = myCircle.current.getRadius();
             updateLocation({ id, radius: circleRadius });
@@ -95,15 +95,12 @@ const SmartCircle = ({ id, latitude, longitude, radius, editable, updateLocation
     }, [radius]);
 
     const handleLocationChange = useCallback(() => {
-        console.log('change location');
-
         if (myCircle.current) {
             const data = {
                 latitude: myCircle.current.getCenter().lat(),
                 longitude: myCircle.current.getCenter().lng(),
             };
             if (latitude !== data.latitude || longitude !== data.longitude) {
-                console.log({ data });
                 updateLocation({
                     id,
                     ...data,
@@ -134,9 +131,13 @@ const SmartCircle = ({ id, latitude, longitude, radius, editable, updateLocation
 };
 
 const MapLoader = ({ ...props }) => {
-    const [loaded] = useScript(
+    const [loadScript, { loaded }] = useLazyLoadScript(
         'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
     );
+
+    useEffect(() => {
+        loadScript();
+    }, [loadScript]);
 
     if (!loaded) {
         return null;

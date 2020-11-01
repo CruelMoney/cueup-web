@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import addCircleIcon from '@iconify/icons-ion/add-circle';
 
-import { userRoutes } from 'constants/locales/appRoutes';
+import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import Rating from 'components/common/RatingNew';
+import useTranslate from 'components/hooks/useTranslate';
 import { Title, Citation, Cite, Body } from '../../../components/Text';
 import ReadMoreExpander from '../../../components/ReadMoreExpander';
 import { Col, Row, ReadMore, Show, InfoBox, Hr } from '../../../components/Blocks';
@@ -152,13 +153,13 @@ const EditButtonOverlay = ({ to, children }) => {
     );
 };
 
-const Bio = ({ bio, firstName, style, isOwn }) => {
+const Bio = ({ bio, firstName, style, isOwn, to }) => {
     return (
         <LeftItem style={{ paddingTop: 0, ...style }}>
             <Title>About {firstName}</Title>
             <ReadMoreExpander content={bio || '...'} />
             {isOwn && (
-                <EditButton title="Edit bio" to={'settings?modal=bio'} style={{ marginTop: 0 }}>
+                <EditButton title="Edit bio" to={to} style={{ marginTop: 0 }}>
                     Edit
                 </EditButton>
             )}
@@ -169,14 +170,10 @@ const Bio = ({ bio, firstName, style, isOwn }) => {
     );
 };
 
-const Genres = ({ genres = [], style, isOwn }) => (
+const Genres = ({ genres = [], style, isOwn, to }) => (
     <GenresLayout style={style}>
         {isOwn && (
-            <EditButton
-                to={'settings?modal=genres'}
-                title="Edit genres"
-                style={{ marginRight: 0, marginTop: 0 }}
-            />
+            <EditButton to={to} title="Edit genres" style={{ marginRight: 0, marginTop: 0 }} />
         )}
         {genres.map((g) => (
             <Genre key={g}>{g}</Genre>
@@ -250,14 +247,14 @@ const Review = ({ isOwn, reviewsCount, highlightedReview }) => {
         </LeftItem>
     );
 };
-const MapArea = ({ playingLocation, isOwn }) => {
+const MapArea = ({ playingLocation, isOwn, to }) => {
     if (!playingLocation) {
         return null;
     }
     return (
         <Square
             style={{
-                pointerEvents: 'none',
+                pointerEvents: isOwn ? 'auto' : 'none',
             }}
         >
             <Map
@@ -275,7 +272,7 @@ const MapArea = ({ playingLocation, isOwn }) => {
                     fullscreenControl: false,
                 }}
             />
-            {isOwn && <EditButtonOverlay to={'settings?modal=location'}>Edit</EditButtonOverlay>}
+            {isOwn && <EditButtonOverlay to={to}>Edit</EditButtonOverlay>}
         </Square>
     );
 };
@@ -440,6 +437,7 @@ const MobileExpandWidth = styled.div`
 `;
 
 const Overview = ({ user, loading, location, history }) => {
+    const { t } = useTranslate();
     if (loading) {
         return <LoadingPlaceholder2 />;
     }
@@ -471,6 +469,8 @@ const Overview = ({ user, loading, location, history }) => {
     const bioStyle = showPhotosArea ? { borderBottom: 'none' } : {};
     const genresStyle = { paddingTop: showSelectedSound ? '42px' : '0px' };
 
+    const settingsRoute = t(appRoutes.userSettings);
+
     return (
         <ColumnLayout>
             <DownloadAppPopup isActive={appPopup} close={onModalClose} />
@@ -482,7 +482,13 @@ const Overview = ({ user, loading, location, history }) => {
                             <Hr style={{ marginTop: 15, marginBottom: 30 }} />
                         </Col>
                     </Show>
-                    <Bio isOwn={isOwn} firstName={firstName} bio={bio} style={bioStyle} />
+                    <Bio
+                        isOwn={isOwn}
+                        firstName={firstName}
+                        bio={bio}
+                        style={bioStyle}
+                        to={settingsRoute + '?modal=bio'}
+                    />
                     {showSelectedSound && (
                         <Show maxWidth="990px">
                             <HighlightedSound user={user} />
@@ -490,7 +496,12 @@ const Overview = ({ user, loading, location, history }) => {
                         </Show>
                     )}
                     <Show maxWidth="990px">
-                        <Genres genres={genres} style={genresStyle} isOwn={isOwn} />
+                        <Genres
+                            genres={genres}
+                            style={genresStyle}
+                            isOwn={isOwn}
+                            to={settingsRoute + '?modal=genres'}
+                        />
                         <Hr />
                     </Show>
                     {showPhotosArea && <PhotosArea {...user} />}
@@ -511,7 +522,11 @@ const Overview = ({ user, loading, location, history }) => {
                         <Show maxWidth="990px">
                             <MobileExpandWidth>
                                 <Hr />
-                                <MapArea playingLocation={playingLocation} isOwn={isOwn} />
+                                <MapArea
+                                    playingLocation={playingLocation}
+                                    isOwn={isOwn}
+                                    to={settingsRoute + '?modal=location'}
+                                />
                                 <Hr />
                             </MobileExpandWidth>
                         </Show>
@@ -520,15 +535,26 @@ const Overview = ({ user, loading, location, history }) => {
                         <LeftItem>
                             <Title>Cancelation Policy</Title>
                             <PolicyDisplayer cancelationPolicy={cancelationPolicy} />
-                            {isOwn && <EditButton to={'settings?modal=cancelationPolicy'} />}
+                            {isOwn && (
+                                <EditButton to={settingsRoute + '?modal=cancelationPolicy'} />
+                            )}
                         </LeftItem>
                     )}
                 </HalfColLeft>
                 {user.isDj && (
                     <HalfColRight>
                         {showSelectedSound && <HighlightedSound user={user} />}
-                        <Genres genres={genres} style={genresStyle} isOwn={isOwn} />
-                        <MapArea playingLocation={playingLocation} isOwn={isOwn} />
+                        <Genres
+                            genres={genres}
+                            style={genresStyle}
+                            isOwn={isOwn}
+                            to={settingsRoute + '?modal=genres'}
+                        />
+                        <MapArea
+                            playingLocation={playingLocation}
+                            isOwn={isOwn}
+                            to={settingsRoute + '?modal=location'}
+                        />
                     </HalfColRight>
                 )}
             </Row>

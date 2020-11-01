@@ -5,11 +5,12 @@ declare let window: CustomWindow;
 
 export default {
     codeAddress: async (address) => {
-        await loadScript(
-            'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
-        );
-        return new Promise((resolve, reject) => {
-            try {
+        try {
+            await loadScript(
+                'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
+            );
+
+            return new Promise((resolve, reject) => {
                 const geocoder = new window.google.maps.Geocoder();
                 geocoder.geocode({ address: address }, (results, status) => {
                     if (status === window.google.maps.GeocoderStatus.OK) {
@@ -19,11 +20,11 @@ export default {
                     }
                     return reject('Geocode was not successful for the following reason: ' + status);
                 });
-            } catch (error) {
-                console.log(error);
-                return reject('Geocode was not successful');
-            }
-        });
+            });
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
     },
 
     getTimeZone: async ({ lng, lat }) => {

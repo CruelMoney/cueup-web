@@ -86,7 +86,8 @@ const LocationEntry = ({
                         radius: 25000,
                     });
                 })
-                .catch(() => {
+                .catch((error) => {
+                    console.log(error);
                     setError('City not found');
                 });
         }

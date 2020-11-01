@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import checkmarkCicleIcon from '@iconify/icons-ion/checkmark-circle';
 import addCircleIcon from '@iconify/icons-ion/add-circle';
 
-import { NavLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Body, SmallBold, SmallHeader } from '../../../components/Text';
 import { Col, Row } from '../../../components/Blocks';
 import { SimpleSharing } from '../../../components/common/Sharing-v2';
@@ -12,12 +12,17 @@ const checks = [
     {
         label: 'Add profile picture',
         check: (u) => !!u.picture && !u.picture.path.includes('default-profile-pic'),
-        linkTo: 'settings#profile',
+        linkTo: '/user/settings#profile',
+    },
+    {
+        label: 'Add location',
+        check: (u) => !!u.playingLocation,
+        linkTo: '/user/settings?modal=location',
     },
     {
         label: 'Add artist name',
         check: (u) => !!u.artistName,
-        linkTo: 'settings#profile',
+        linkTo: '/user/settings#profile',
     },
     {
         label: 'Add photos or connect Instagram',
@@ -30,7 +35,7 @@ const checks = [
         linkTo: 'sounds',
     },
     {
-        label: 'Highlight a testimonial',
+        label: 'Add a testimonial',
         check: (u) => !!u.highlightedReview,
         linkTo: 'reviews',
     },
@@ -42,12 +47,12 @@ const checks = [
     {
         label: 'Add payout methods',
         check: (u) => !!u.payoutMethods?.length,
-        linkTo: 'settings?modal=payoutMethods',
+        linkTo: '/user/settings?modal=payoutMethods',
     },
     {
         label: 'Write a bio',
         check: (u) => !!u.userMetadata.bio,
-        linkTo: 'settings?modal=bio',
+        linkTo: '/user/settings?modal=bio',
     },
 ];
 
@@ -74,9 +79,9 @@ const ProgressItem = ({ label, done, linkTo, onClick }) => {
         </Row>
     );
 
-    if (done) {
-        return Content;
-    }
+    // if (done) {
+    //     return Content;
+    // }
 
     const handleClick = () => {
         onClick && onClick();
