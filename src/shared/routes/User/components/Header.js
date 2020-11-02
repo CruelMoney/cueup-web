@@ -92,6 +92,7 @@ const Header = (props) => {
             <Media greaterThanOrEqual="md">
                 <HeaderDesktop
                     {...props}
+                    setShowing={setShowing}
                     routes={getRoutesFromUser(user, pathname)}
                     statusLabel={statusContent?.title[approvedKey]}
                 />
@@ -99,6 +100,7 @@ const Header = (props) => {
             <Media at={'sm'}>
                 <HeaderMobile
                     {...props}
+                    setShowing={setShowing}
                     routes={getRoutesFromUser(user, pathname)}
                     statusLabel={statusContent?.title[approvedKey]}
                 />

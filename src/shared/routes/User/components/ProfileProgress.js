@@ -12,17 +12,17 @@ const checks = [
     {
         label: 'Add profile picture',
         check: (u) => !!u.picture && !u.picture.path.includes('default-profile-pic'),
-        linkTo: '/user/settings#profile',
+        linkTo: '/u/settings#profile',
     },
     {
         label: 'Add location',
         check: (u) => !!u.playingLocation,
-        linkTo: '/user/settings?modal=location',
+        linkTo: '/u/settings?modal=location',
     },
     {
         label: 'Add artist name',
         check: (u) => !!u.artistName,
-        linkTo: '/user/settings#profile',
+        linkTo: '/u/settings#profile',
     },
     {
         label: 'Add photos or connect Instagram',
@@ -47,12 +47,12 @@ const checks = [
     {
         label: 'Add payout methods',
         check: (u) => !!u.payoutMethods?.length,
-        linkTo: '/user/settings?modal=payoutMethods',
+        linkTo: '/u/settings?modal=payoutMethods',
     },
     {
         label: 'Write a bio',
         check: (u) => !!u.userMetadata.bio,
-        linkTo: '/user/settings?modal=bio',
+        linkTo: '/u/settings?modal=bio',
     },
 ];
 
@@ -83,6 +83,7 @@ const ProgressItem = ({ label, done, linkTo, onClick }) => {
     //     return Content;
     // }
 
+    console.log({ linkTo });
     const handleClick = () => {
         onClick && onClick();
         linkTo && history.push(linkTo);

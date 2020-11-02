@@ -8,7 +8,7 @@ export const Title = styled.h1`
     position: relative;
     white-space: pre-line;
     font-size: ${({ size }) => (size ? size : '72px')};
-    line-height: ${({ line }) => (line ? line : '72px')};
+    line-height: 1.2em;
     text-align: ${({ left }) => (left ? 'left' : 'center')};
     @media only screen and (max-width: 685px) {
         font-size: ${({ size }) => (size ? size : '42px')};
