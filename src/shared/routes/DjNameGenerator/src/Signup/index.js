@@ -94,8 +94,7 @@ const Signup = ({ name, history }) => {
                                 </div>
 
                                 <div>
-                                    <SignupForm name={name} />
-                                    <Divider />
+                                    <Divider noText />
 
                                     <SmartButton
                                         level="secondary"
@@ -114,6 +113,9 @@ const Signup = ({ name, history }) => {
                                         <img src={googleLogo} alt="google logo" />
                                         Continue with Google
                                     </SmartButton>
+                                    <Divider />
+
+                                    <SignupForm name={name} />
                                 </div>
                             </animated.div>
                         )
@@ -174,6 +176,7 @@ const SignupForm = ({ name }) => {
     return (
         <form onSubmit={signup}>
             <Input
+                v2
                 blurOnEnter={false}
                 label="DJ name"
                 placeholder="DJ Name Generator"
@@ -182,6 +185,7 @@ const SignupForm = ({ name }) => {
                 onChange={(artistName) => updateForm({ artistName })}
             />
             <Input
+                v2
                 blurOnEnter={false}
                 label="Email"
                 placeholder="mail@email.com"
@@ -194,6 +198,7 @@ const SignupForm = ({ name }) => {
                 unregisterValidation={unregisterValidation('email')}
             />
             <Input
+                v2
                 blurOnEnter={false}
                 label="Password"
                 placeholder="min. 6 characters"
@@ -217,11 +222,11 @@ const SignupForm = ({ name }) => {
     );
 };
 
-const Divider = () => {
+const Divider = ({ noText }) => {
     return (
         <div className="divider">
             <Hr />
-            <p>OR</p>
+            {!noText && <p>OR</p>}
         </div>
     );
 };

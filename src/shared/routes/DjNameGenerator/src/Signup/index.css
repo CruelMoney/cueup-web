@@ -59,6 +59,7 @@
     -ms-flex-align: center;
     -ms-flex-pack: center;
     justify-content: center;
+    margin-bottom: -1em;
     margin-top: 1em;
 }
 .signup-header {

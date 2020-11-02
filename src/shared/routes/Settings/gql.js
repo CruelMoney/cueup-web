@@ -251,6 +251,7 @@ export const ME_SETTINGS = gql`
                 bio
                 birthday
                 phone
+                website
             }
             payoutMethods {
                 id
