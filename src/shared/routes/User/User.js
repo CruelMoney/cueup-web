@@ -317,12 +317,22 @@ const DataWrapper = (props) => {
     const { translate } = useNamespaceContent(content, 'user');
 
     const { data, loading: loadingMe } = useQuery(ME);
+    const me = data?.me;
+    const permalink = match.params.permalink;
+
     const { data: userData, loading: loadingUser, error } = useQuery(USER, {
+        skip: !permalink,
         variables: { permalink: match.params.permalink },
     });
 
+    // handling /user route
+    if (me && !permalink) {
+        return (
+            <Redirect to={translate(appRoutes.userOverview).replace(':permalink', me.permalink)} />
+        );
+    }
+
     const { user: profileUser } = userData || { user: routeDj };
-    const me = data?.me;
 
     if (!loadingUser && !profileUser) {
         return <Redirect to={translate(appRoutes.notFound)} />;

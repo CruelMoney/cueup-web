@@ -83,7 +83,6 @@ const ProgressItem = ({ label, done, linkTo, onClick }) => {
     //     return Content;
     // }
 
-    console.log({ linkTo });
     const handleClick = () => {
         onClick && onClick();
         linkTo && history.push(linkTo);
