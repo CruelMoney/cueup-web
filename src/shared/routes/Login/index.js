@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { NavLink, Redirect } from 'react-router-dom';
 import { useHistory, useLocation, useParams } from 'react-router';
@@ -9,18 +9,24 @@ import { HeaderTitle, PageTitle, Title, TitleClean } from 'components/Text';
 import Login from 'components/common/Login';
 import Menu from 'components/Navigation';
 import Footer from 'components/common/Footer';
+import { ME } from 'components/gql';
 
 const LoginPage = () => {
+    const { data, loading } = useQuery(ME);
     const history = useHistory();
     const { search } = useLocation();
     const queries = queryString.parse(search);
     const { redirect } = queries;
-
     const redirectTo = redirect || '/';
 
-    const redirectToLastLocation = () => {
+    const redirectToLastLocation = useCallback(() => {
         history.replace(redirectTo);
-    };
+    }, [history, redirectTo]);
+
+    // redirect if already logged in
+    if (!loading && data?.me) {
+        return <Redirect to={redirectTo} />;
+    }
 
     const metaTitle = 'Login · Cueup';
 

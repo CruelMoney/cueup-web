@@ -41,6 +41,21 @@ const addApollo = (_req, res, next) => {
                     'XenditPaymentIntent',
                 ],
             },
+            typePolicies: {
+                User: {
+                    fields: {
+                        appMetadata: {
+                            merge: true,
+                        },
+                        userMetadata: {
+                            merge: true,
+                        },
+                        userSettings: {
+                            merge: true,
+                        },
+                    },
+                },
+            },
         }),
         resolvers,
     });

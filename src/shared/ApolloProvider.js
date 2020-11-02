@@ -57,6 +57,21 @@ const APIProvider = ({ children }) => {
             PayoutMethod: ['Bank', 'Direct'],
             PaymentIntent: ['DirectPaymentIntent', 'StripePaymentIntent', 'XenditPaymentIntent'],
         },
+        typePolicies: {
+            User: {
+                fields: {
+                    appMetadata: {
+                        merge: true,
+                    },
+                    userMetadata: {
+                        merge: true,
+                    },
+                    userSettings: {
+                        merge: true,
+                    },
+                },
+            },
+        },
     }).restore(window.__APOLLO_STATE__);
 
     const uploadLink = createUploadLink({
