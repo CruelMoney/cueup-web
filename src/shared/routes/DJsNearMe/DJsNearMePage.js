@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet-async';
 import { useQuery } from '@apollo/client';
@@ -7,9 +7,9 @@ import { useHistory } from 'react-router';
 import Footer from 'components/common/Footer';
 import Menu from 'components/Navigation';
 import { Container, PrimaryButton, SecondaryButton, SecondaryButtonLink } from 'components/Blocks';
-import { Body } from 'components/Text';
+import { Body, H2 } from 'components/Text';
 import DjSearch from 'routes/Home/components/DJSearch';
-import { BreadCrumbs } from 'routes/BookDJ/Components';
+import { BreadCrumbs, GreyBox } from 'routes/BookDJ/Components';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
 import { SEARCH_DEEP } from 'routes/BookDJ/gql';
@@ -38,11 +38,11 @@ import PopularRequests from 'routes/BookDJ/PopularRequests';
 
 // popular requests
 
-const DJsNearMePage = ({ topDjs, loading }) => {
+const DJsNearMePage = ({ topDjs, loading, totalFound }) => {
     const { translate } = useTranslate();
     const history = useHistory();
 
-    const metaTitle = 'Best DJs Near Me (23+ found)';
+    const metaTitle = `Best DJs Near Me (${totalFound}+ found)`;
     const title = 'Find a DJ near you';
     const description =
         'Check prices from all DJs near you. Find and book a DJ that matches your requirements.';
@@ -89,7 +89,7 @@ const DJsNearMePage = ({ topDjs, loading }) => {
                 <h2>Best DJs near you</h2>
                 <BreadCrumbs items={breadCrumbs} />
 
-                <SearchList>
+                <SearchList style={{ marginTop: 30 }}>
                     {topDjs.map((dj, idx) => (
                         <DJSearchEntry idx={idx} key={dj?.id || idx} {...dj} loading={loading} />
                     ))}
@@ -106,7 +106,15 @@ const DJsNearMePage = ({ topDjs, loading }) => {
                         history.push({ pathname: translate(appRoutes.search), state })}
                 />
             </div>
-            <PopularRequests activeLocation={{ name: 'near me' }} onClick={() => {}} />
+            {/* <Container style={{ marginBottom: 60 }}>
+                <FaqSection />
+            </Container> */}
+            <PopularRequests
+                title="Popular requests for DJs near you"
+                activeLocation={{ name: 'near me' }}
+                onClick={(state) => () =>
+                    history.push({ pathname: translate(appRoutes.search), state })}
+            />
             <Footer
                 bgColor="#fff"
                 firstTo={'/book-dj'}
@@ -114,6 +122,52 @@ const DJsNearMePage = ({ topDjs, loading }) => {
                 title={'Tired of searching? Post your event.'}
                 subTitle={'Let us find the DJs and send you their best prices.'}
             />
+        </>
+    );
+};
+
+const FaqSection = () => {
+    return (
+        <>
+            <H2 small>FAQ</H2>
+            <GreyBox>
+                <h3>How do I find a cheap DJ?</h3>
+                <Body>
+                    To find a cheap or affordable DJ for your party or wedding, search for local DJs
+                    near you and ask for free cost estimates from several of them. While some DJ
+                    profiles may provide an automatically generated starting cost, it’s important to
+                    contact the DJ to get an idea of how much your particular request will cost.
+                    This also gives you the opportunity to ask them other important questions and
+                    make sure you are a good fit.
+                </Body>
+            </GreyBox>
+            <GreyBox>
+                <h3>How much is a DJ?</h3>
+                <Body>
+                    When you hire a local DJ, expect to pay roughly between $300 and $800. But be
+                    aware that the actual price will vary based on several factors, including the
+                    length of the DJ’s set and how much of a presence they need to be. Larger venues
+                    can drive up the cost, as this requires more equipment, soundchecking and setup.
+                    Adding extras like confetti, fog, light shows and black lights also adds to the
+                    cost. Get cost estimates from the best DJs near you to find out how much you
+                    should expect to spend for your event. Read our cost guide, “How much does a DJ
+                    cost?”
+                </Body>
+            </GreyBox>
+            <GreyBox>
+                <h3>How do you book a DJ for a party?</h3>
+                <Body>
+                    To book a party DJ, start by comparing local pros in your area. Check out their
+                    ratings and reviews to find out: Are they professional? Do they show up on time
+                    to set up for the party? Do they know how to feel the energy in the room and
+                    adjust the music accordingly? Are they friendly to guests and take song
+                    requests? Do they specialize in the genres you want (pop, Top 40, hip-hop,
+                    etc.)? Do they have experience playing at your type of event (weddings, birthday
+                    parties, etc.)? Whenever possible, watch videos of their performances. Your last
+                    step is to contact three to five different DJs near you to ask them questions
+                    and get price quotes.
+                </Body>
+            </GreyBox>
         </>
     );
 };
@@ -168,6 +222,8 @@ const DataWrapper = () => {
         countryCode: data?.topCities[0]?.iso2,
     };
 
+    const [totalFound, setTotalFound] = useState(23);
+
     const { data: searchData, loading } = useQuery(SEARCH_DEEP, {
         fetchPolicy: 'cache-first',
         skip: !filter.countryCode,
@@ -182,7 +238,13 @@ const DataWrapper = () => {
     });
     const topDjs = searchData?.searchDjs?.edges || [];
 
-    return <DJsNearMePage topDjs={topDjs} loading={loading} />;
+    useEffect(() => {
+        if (searchData?.searchDjs) {
+            setTotalFound(searchData?.searchDjs?.pageInfo?.totalDocs);
+        }
+    }, [searchData]);
+
+    return <DJsNearMePage topDjs={topDjs} loading={loading} totalFound={totalFound} />;
 };
 
 export default DataWrapper;

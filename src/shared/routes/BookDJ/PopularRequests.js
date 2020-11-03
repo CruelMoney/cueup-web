@@ -122,14 +122,14 @@ const requestdata = [
     },
 ];
 
-const PopularRequests = ({ activeLocation, onClick }) => {
+const PopularRequests = ({ activeLocation, onClick, title }) => {
     const { translate } = useTranslate();
     const { environment } = useServerContext();
 
     return (
         <CustomSection>
             <Container>
-                <H2 small>Popular requests for {activeLocation.name} DJs</H2>
+                <H2 small>{title || `Popular requests for ${activeLocation.name} DJs`}</H2>
 
                 <ScrollableFullWidthGrid>
                     {requestdata.map((item, idx) => (

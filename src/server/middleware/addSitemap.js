@@ -20,7 +20,15 @@ const getBlogUrls = () => {
 };
 
 const getPublicUrls = () => {
-    const urls = ['/', '/become-dj', '/signup', '/about', '/dj-name-generator'];
+    const urls = [
+        '/',
+        '/become-dj',
+        '/signup',
+        '/about',
+        '/dj-name-generator',
+        '/s/djs-near-me',
+        '/login',
+    ];
     return urls;
 };
 
