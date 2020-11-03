@@ -48,12 +48,15 @@ const addRedis = (app) => {
 
     // cache forever routes
     app.get(
-        ['/', '/blog', '/blog*', '/dj-name-generator', '/become-dj', '/signup'],
+        ['/', '/blog', '/blog*', '/dj-name-generator', '/become-dj', '/signup', '/login'],
         cache.route({ expire: -1 })
     );
 
     // cache 60 seconds routes
     app.get(['/*/book-dj'], cache.route({ expire: 60 }));
+
+    // cache 1 day routes
+    app.get(['/s/djs-near-me'], cache.route({ expire: 60 * 60 * 24 }));
 };
 
 const setGeoCacheName = (req, res, next) => {
