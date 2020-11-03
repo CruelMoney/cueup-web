@@ -11,7 +11,6 @@ import GracefullVideo from 'components/GracefullVideo';
 import { ProFeature } from 'components/FormComponents';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
-import ButtonLink from 'components/common/ButtonLink';
 import { trackEmptySearch } from 'utils/analytics';
 import { useServerContext } from 'components/hooks/useServerContext';
 import Map from '../../components/common/Map';
@@ -184,13 +183,11 @@ const Price = ({ loading }) => {
         );
     }
     return (
-        <BodyBold style={{ fontSize: 16, marginTop: 'auto', display: 'block' }}>
-            Request Price
-        </BodyBold>
+        <BodyBold style={{ fontSize: 16, marginTop: 'auto', display: 'block' }}>Book now</BodyBold>
     );
 };
 
-const SearchEntry = (props) => {
+export const DJSearchEntry = (props) => {
     const { environment } = useServerContext();
     const { translate } = useTranslate();
     const route = `${translate(appRoutes.user)}/${props.permalink}/overview`;
@@ -262,7 +259,7 @@ const SearchResults = ({ topDjs, form, pagination, loading, setPagination, searc
             </H2>
             <SearchList>
                 {topDjs.map((dj, idx) => (
-                    <SearchEntry
+                    <DJSearchEntry
                         idx={idx}
                         key={dj?.id || idx}
                         {...dj}

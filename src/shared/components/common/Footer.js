@@ -195,6 +195,11 @@ const Footer = ({
                                     </a>
                                 </li>
                                 <li>
+                                    <a className="link-look" onClick={showSupportChat}>
+                                        {translate('Feedback')}
+                                    </a>
+                                </li>
+                                <li>
                                     <a
                                         className="link-look"
                                         href={'mailto:chris@cueup.io?subject=Job inquiry'}
@@ -215,6 +220,7 @@ const Footer = ({
                                         {translate('Become DJ')}
                                     </Link>
                                 </li>
+
                                 <li>
                                     <Link to={translate(appRoutes.terms)}>
                                         {translate('privacy-and-terms')}
@@ -250,11 +256,7 @@ const Footer = ({
                                         System status
                                     </a>
                                 </li>
-                                <li>
-                                    <a className="link-look" onClick={showSupportChat}>
-                                        {translate('Feedback')}
-                                    </a>
-                                </li>
+
                                 <li>
                                     <Link to={translate(appRoutes.blog)}>Blog</Link>
                                 </li>
@@ -270,6 +272,11 @@ const Footer = ({
                                     >
                                         DJ name generator
                                     </a>
+                                </li>
+                                <li>
+                                    <Link to={translate(appRoutes.djsNearMe)}>
+                                        {translate('DJs near me')}
+                                    </Link>
                                 </li>
                             </ul>
                         </div>

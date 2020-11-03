@@ -33,6 +33,7 @@ const routes: RouteKeys = {
     termsPrivacy: '/da/betingelser/privatliv',
     termsCookie: '/da/betingelser/cookies',
     djNameGenerator: '/da/dj-name-generator',
+    djsNearMe: '/s/djs-i-naerheden',
 };
 
 export const oldRoutes = {

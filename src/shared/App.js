@@ -23,6 +23,7 @@ import { loadSupportChat } from 'utils/supportChat';
 import LazyFaq from 'routes/Faq';
 import LazyBecomeDj from 'routes/BecomeDj';
 import LazyBlog from 'routes/Blog';
+import LazyDjsNearMe from 'routes/DJsNearMe';
 import Login from 'routes/Login';
 import { MediaContextProvider } from 'components/MediaContext';
 import { ProvideAppState, useAppState } from './components/hooks/useAppState';
@@ -83,6 +84,7 @@ const RouteWrapper = () => {
                     <Route path={t(appRoutes.gig) + '/:id'} component={LazyGig} />
                     <Route path={t(appRoutes.bookDj)} component={LazyLocation} />
                     <Route path={t(appRoutes.bookDjOverview)} component={LazyLocationsOverview} />
+                    <Route path={t(appRoutes.djsNearMe)} component={LazyDjsNearMe} />
                     <Route path={t(appRoutes.search)} component={LazySearch} />
                     <Route path={t(appRoutes.resetPassword)} component={ResetPassword} />
                     <Route path={'/book-dj'} exact component={RequestFormPopup} />

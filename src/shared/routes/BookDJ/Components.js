@@ -159,6 +159,9 @@ export const BreadCrumbsList = styled.ol`
     a {
         padding: 0 6px;
     }
+    li:first-child a {
+        padding-left: 0;
+    }
     a:hover {
         text-decoration: underline;
     }
@@ -178,40 +181,38 @@ export const BreadCrumbsList = styled.ol`
 
 export const BreadCrumbs = ({ items }) => {
     return (
-        <Container>
-            <BreadCrumbsList
-                itemScope=" "
-                itemType="https://schema.org/BreadcrumbList"
-                aria-label="breadcrumb"
-            >
-                {items.map(({ url, label }, idx) => (
-                    <li
-                        key={url}
-                        itemProp="itemListElement"
-                        itemScope=" "
-                        itemType="https://schema.org/ListItem"
+        <BreadCrumbsList
+            itemScope=" "
+            itemType="https://schema.org/BreadcrumbList"
+            aria-label="breadcrumb"
+        >
+            {items.map(({ url, label }, idx) => (
+                <li
+                    key={url}
+                    itemProp="itemListElement"
+                    itemScope=" "
+                    itemType="https://schema.org/ListItem"
+                >
+                    <meta itemProp="position" content={idx + 1} />
+                    {idx > 0 && (
+                        <span className="breadcrumb-arrow" aria-hidden="true">
+                            {' '}
+                            ›{' '}
+                        </span>
+                    )}
+                    <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={encodeURI(url)}
+                        itemType="https://schema.org/Thing"
+                        itemProp="item"
+                        className={idx === items.length - 1 ? 'current' : ''}
                     >
-                        <meta itemProp="position" content={idx + 1} />
-                        {idx > 0 && (
-                            <span className="breadcrumb-arrow" aria-hidden="true">
-                                {' '}
-                                ›{' '}
-                            </span>
-                        )}
-                        <a
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href={encodeURI(url)}
-                            itemType="https://schema.org/Thing"
-                            itemProp="item"
-                            className={idx === items.length - 1 ? 'current' : ''}
-                        >
-                            <span itemProp="name">{label}</span>
-                        </a>
-                    </li>
-                ))}
-            </BreadCrumbsList>
-        </Container>
+                        <span itemProp="name">{label}</span>
+                    </a>
+                </li>
+            ))}
+        </BreadCrumbsList>
     );
 };
 

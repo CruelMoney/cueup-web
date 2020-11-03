@@ -116,9 +116,7 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
             />
             <Input
                 id="website"
-                proFeature
                 ref={refFunScrollTo(hash === 'website')}
-                isPro={isPro}
                 label="Website"
                 defaultValue={website}
                 placeholder={`www.${
@@ -129,8 +127,6 @@ const ProfileSection = ({ user, modal, onModalClose, updateKey, saveData }) => {
                 validation={(value) =>
                     validators.containsURL(true)(value) ? null : 'Not a valid URL'
                 }
-                disabled={!isPro}
-                style={{ opacity: isPro ? 1 : 0.5 }}
             />
 
             <LocationPicker
