@@ -225,8 +225,8 @@ const DataWrapper = () => {
     const filter = {
         countryCode: city?.iso2,
         location: {
-            latitude: city.lat,
-            longitude: city.lng,
+            latitude: parseFloat(city.lat),
+            longitude: parseFloat(city.lng),
         },
     };
 

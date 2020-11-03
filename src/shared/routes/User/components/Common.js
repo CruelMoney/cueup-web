@@ -125,6 +125,9 @@ const RatingWrapper = styled.div`
 `;
 
 export const UserRating = ({ reviews, dark, rating, style }) => {
+    if (!rating) {
+        return null;
+    }
     return (
         <Row center style={style}>
             <RatingWrapper>

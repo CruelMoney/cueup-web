@@ -25,6 +25,7 @@ import { useAppState } from 'components/hooks/useAppState';
 import Logo from 'components/common/Logo';
 import { Media } from 'components/MediaContext';
 import AddBookingLink from 'components/AddBookingLink';
+import useTranslate from 'components/hooks/useTranslate';
 import { SettingsSection, Input, Label } from '../../../components/FormComponents';
 import DatePickerPopup from '../../../components/DatePickerPopup';
 import {
@@ -51,7 +52,8 @@ import ErrorMessageApollo from '../../../components/common/ErrorMessageApollo';
 import GeoCoder from '../../../utils/GeoCoder';
 import { MobileBookingButton } from '../components/Common';
 
-const Booking = ({ user, loading, translate }) => {
+const Booking = ({ user, loading }) => {
+    const { translate, currentLanguage } = useTranslate();
     const location = useLocation();
     const { path } = useRouteMatch();
     const { setAppState } = useAppState();
