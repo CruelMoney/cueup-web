@@ -16,8 +16,9 @@ import { SEARCH_DEEP } from 'routes/BookDJ/gql';
 import { useServerContext } from 'components/hooks/useServerContext';
 import { DJSearchEntry } from 'routes/BookDJ/SearchResults';
 import Occasions from 'routes/BookDJ/Occassions';
-import { ScrollToTopOnMount } from 'components/common/ScrollToTop';
+import ScrollToTop from 'components/common/ScrollToTop';
 import PopularRequests from 'routes/BookDJ/PopularRequests';
+import { DJS_IN_LOCATION } from './gql';
 
 // title: Best DJs Near Me (23+ found)
 
@@ -63,6 +64,10 @@ const DJsNearMePage = ({ topDjs, loading, totalFound }) => {
         },
     ];
 
+    if (loading) {
+        topDjs = [null, null, null, null, null, null, null, null, null];
+    }
+
     return (
         <>
             <Helmet>
@@ -74,7 +79,7 @@ const DJsNearMePage = ({ topDjs, loading, totalFound }) => {
                 <meta name="twitter:description" content={description} />
                 <meta property="og:description" content={description} />
             </Helmet>
-            <ScrollToTopOnMount />
+            <ScrollToTop />
             <Menu />
             <HeroContainer>
                 <Container>
@@ -193,12 +198,10 @@ const HeroContainer = styled.section`
 const Title = styled.h1`
     line-height: 1.3em;
     text-align: center;
-    /* @media only screen and (max-width: 1024px) {
-        font-size: 0.35em;
-    }
+
     @media only screen and (max-width: 480px) {
-        font-size: 0.3em;
-    } */
+        font-size: 32px;
+    }
 `;
 
 const LandingBody = styled(Body)`
@@ -218,25 +221,43 @@ const SearchWrapper = styled.div`
 const DataWrapper = () => {
     const { data } = useServerContext();
 
+    const city = data?.topCities[0];
     const filter = {
-        countryCode: data?.topCities[0]?.iso2,
+        countryCode: city?.iso2,
+        location: {
+            latitude: city.lat,
+            longitude: city.lng,
+        },
     };
 
     const [totalFound, setTotalFound] = useState(23);
 
+    const { data: fallbackData } = useQuery(DJS_IN_LOCATION, {
+        fetchPolicy: 'cache-first',
+        variables: {
+            filter,
+            pagination: {
+                limit: 10,
+                page: 1,
+            },
+        },
+    });
     const { data: searchData, loading } = useQuery(SEARCH_DEEP, {
         fetchPolicy: 'cache-first',
         skip: !filter.countryCode,
         variables: {
             filter,
             pagination: {
-                orderBy: 'UPDATED_AT_DESCENDING',
                 limit: 10,
                 page: 1,
             },
         },
     });
     const topDjs = searchData?.searchDjs?.edges || [];
+    let fallbackDjs = fallbackData?.djsInLocation?.edges || [];
+    fallbackDjs = fallbackDjs
+        .filter((dj) => !topDjs.some((dj2) => dj2.id === dj.id))
+        .slice(0, 10 - topDjs.length);
 
     useEffect(() => {
         if (searchData?.searchDjs) {
@@ -244,7 +265,13 @@ const DataWrapper = () => {
         }
     }, [searchData]);
 
-    return <DJsNearMePage topDjs={topDjs} loading={loading} totalFound={totalFound} />;
+    return (
+        <DJsNearMePage
+            topDjs={[...topDjs, ...fallbackDjs]}
+            loading={loading}
+            totalFound={totalFound}
+        />
+    );
 };
 
 export default DataWrapper;

@@ -157,6 +157,8 @@ const fallbackCities = [
         country: 'Denmark',
         citySlug: 'copenhagen',
         iso2: 'DK',
+        lat: 55.6786,
+        lng: 12.5635,
     },
     {
         id: 2,
@@ -165,6 +167,8 @@ const fallbackCities = [
         country: 'Indonesia',
         citySlug: 'bali',
         iso2: 'ID',
+        lat: -8.41719,
+        lng: 115.1868,
     },
     {
         id: 3,
@@ -173,6 +177,8 @@ const fallbackCities = [
         country: 'United States',
         citySlug: 'los-angeles',
         iso2: 'US',
+        lat: 34.1139,
+        lng: -118.4068,
     },
     {
         id: 4,
@@ -181,6 +187,8 @@ const fallbackCities = [
         country: 'France',
         citySlug: 'paris',
         iso2: 'FR',
+        lat: 48.8667,
+        lng: 2.3333,
     },
 ];
 
