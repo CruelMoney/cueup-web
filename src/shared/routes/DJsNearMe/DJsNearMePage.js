@@ -20,25 +20,6 @@ import ScrollToTop from 'components/common/ScrollToTop';
 import PopularRequests from 'routes/BookDJ/PopularRequests';
 import { DJS_IN_LOCATION } from './gql';
 
-// title: Best DJs Near Me (23+ found)
-
-// h1: Find a DJ near you
-// description: Check prices from all DJs near you. Find and book a DJ that matches your requirements.
-
-// h2: Best DJs near you
-
-// breadcrumbs: DJs Near Me
-
-// dj list
-
-// see more -> search results
-
-// QA:
-
-// occasions
-
-// popular requests
-
 const DJsNearMePage = ({ topDjs, loading, totalFound }) => {
     const { translate } = useTranslate();
     const history = useHistory();
@@ -46,7 +27,7 @@ const DJsNearMePage = ({ topDjs, loading, totalFound }) => {
     const metaTitle = `Best DJs Near Me (${totalFound}+ found)`;
     const title = 'Find a DJ near you';
     const description =
-        'Check prices from all DJs near you. Find and book a DJ that matches your requirements.';
+        'Check prices from all DJs near you. See their photos and reviews, and listen to mixtapes. Contact the local DJs you like.';
 
     const breadCrumbs = [
         {
@@ -81,7 +62,7 @@ const DJsNearMePage = ({ topDjs, loading, totalFound }) => {
             </Helmet>
             <ScrollToTop />
             <Menu />
-            <HeroContainer>
+            <HeroContainer id="top">
                 <Container>
                     <Title>{title}</Title>
                     <LandingBody white>{description} </LandingBody>
@@ -111,9 +92,9 @@ const DJsNearMePage = ({ topDjs, loading, totalFound }) => {
                         history.push({ pathname: translate(appRoutes.search), state })}
                 />
             </div>
-            {/* <Container style={{ marginBottom: 60 }}>
+            <Container style={{ marginBottom: 60 }}>
                 <FaqSection />
-            </Container> */}
+            </Container>
             <PopularRequests
                 title="Popular requests for DJs near you"
                 activeLocation={{ name: 'near me' }}
@@ -132,51 +113,100 @@ const DJsNearMePage = ({ topDjs, loading, totalFound }) => {
 };
 
 const FaqSection = () => {
+    const { translate } = useTranslate();
     return (
-        <>
+        <FaqWrapper>
             <H2 small>FAQ</H2>
             <GreyBox>
-                <h3>How do I find a cheap DJ?</h3>
+                <h3>Do I need a DJ for my event?</h3>
                 <Body>
-                    To find a cheap or affordable DJ for your party or wedding, search for local DJs
-                    near you and ask for free cost estimates from several of them. While some DJ
-                    profiles may provide an automatically generated starting cost, it’s important to
-                    contact the DJ to get an idea of how much your particular request will cost.
-                    This also gives you the opportunity to ask them other important questions and
-                    make sure you are a good fit.
+                    If you plan to have music at your event, you should book a DJ to manage the
+                    music. It is a very time-consuming task to create a playlist, and it can be
+                    stressful to control during the event. You have many other things to look after,
+                    and hiring a DJ makes it so much easier. It is the DJ's job to set the mood and
+                    manage the music, so you don't have to stress about it. {'\n'}If you don't want
+                    to set a mood at your event, you probably don't need a DJ. But having
+                    well-selected well-selected music throughout the event will make it a much more
+                    enjoyable time for everyone. {'\n'}Many DJs have recorded performances and
+                    pictures, so you can look for{' '}
+                    <a href={translate(appRoutes.djsNearMe)}>DJs near you</a> that match your
+                    desired atmosphere.
                 </Body>
             </GreyBox>
             <GreyBox>
-                <h3>How much is a DJ?</h3>
+                <h3>How much does a DJ cost?</h3>
                 <Body>
-                    When you hire a local DJ, expect to pay roughly between $300 and $800. But be
-                    aware that the actual price will vary based on several factors, including the
-                    length of the DJ’s set and how much of a presence they need to be. Larger venues
-                    can drive up the cost, as this requires more equipment, soundchecking and setup.
-                    Adding extras like confetti, fog, light shows and black lights also adds to the
-                    cost. Get cost estimates from the best DJs near you to find out how much you
-                    should expect to spend for your event. Read our cost guide, “How much does a DJ
-                    cost?”
+                    A DJ costs anywhere between 100 USD up to 1.500 USD, but typically around 500
+                    USD for 4 hours. {'\n'}Some DJs can even be free or very affordable because they
+                    just started and want to get experience. Getting a cheap DJ is a good option if
+                    you don't have high expectations and will be better than managing the music
+                    yourself. {'\n'}If you have specific requirements and expect the DJ to be a
+                    significant part of the event, you should book a more experienced DJ. {'\n'}The
+                    DJs price depends on your event's size, how many hours the DJ should perform,
+                    and what equipment they need to bring. {'\n'}To find out what a DJ usually costs
+                    in your area, you can get estimates and compare prices of{' '}
+                    <a href={translate(appRoutes.djsNearMe)}>local DJs near you</a>.
                 </Body>
             </GreyBox>
             <GreyBox>
                 <h3>How do you book a DJ for a party?</h3>
                 <Body>
-                    To book a party DJ, start by comparing local pros in your area. Check out their
-                    ratings and reviews to find out: Are they professional? Do they show up on time
-                    to set up for the party? Do they know how to feel the energy in the room and
-                    adjust the music accordingly? Are they friendly to guests and take song
-                    requests? Do they specialize in the genres you want (pop, Top 40, hip-hop,
-                    etc.)? Do they have experience playing at your type of event (weddings, birthday
-                    parties, etc.)? Whenever possible, watch videos of their performances. Your last
-                    step is to contact three to five different DJs near you to ask them questions
-                    and get price quotes.
+                    Start by searching and comparing DJs in your area. You can also ask your social
+                    network if anyone knows a good DJ. {'\n'}When looking for a DJ, you should
+                    consider a few things:
+                    <ul>
+                        <li>Does the DJ usually play the genres of music you want?</li>
+                        <li>How does the DJ's setup look? Messy or neat?</li>
+                        <li>Does the DJ have experience with your type of event?</li>
+                        <li>
+                            Can the DJ provide additional services such as dinner music or MCing?
+                        </li>
+                        <li>
+                            Does the DJ expect you to provide equipment such as speakers, mixer, and
+                            decks, or will they supply the equipment?
+                        </li>
+                        <li>
+                            What time should the DJ show up to prepare? Preferably you don't want it
+                            to clash with the arrival of the guests.
+                        </li>
+                        <li>Do they accept song requests from your guests?</li>
+                    </ul>
+                    Once you know what you want, it's easier to find and contact the{' '}
+                    <a href={translate(appRoutes.djsNearMe)}>best DJs near you</a>.
                 </Body>
             </GreyBox>
-        </>
+        </FaqWrapper>
     );
 };
 
+const FaqWrapper = styled.div`
+    max-width: 600px;
+    margin: auto;
+    h2 {
+        text-align: center;
+    }
+    h3 {
+        margin-bottom: 0.5em;
+    }
+    p {
+        white-space: pre-wrap;
+        line-height: 1.7em;
+    }
+    a,
+    a:hover {
+        text-decoration: underline;
+    }
+    ul {
+        list-style: initial;
+        padding: 0.5em 1em;
+        margin: initial;
+        border: none;
+        li {
+            padding: initial;
+            margin: initial;
+        }
+    }
+`;
 const SearchList = styled.ul`
     padding: 0;
     list-style: none;
@@ -209,7 +239,7 @@ const LandingBody = styled(Body)`
     color: #fff;
     text-align: center;
     margin: auto;
-    max-width: 450px;
+    max-width: 520px;
 `;
 
 const SearchWrapper = styled.div`

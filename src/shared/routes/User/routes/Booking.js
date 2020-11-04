@@ -188,7 +188,7 @@ const Booking = ({ user, loading }) => {
                     style={{
                         width: 'auto',
                     }}
-                    buttonLabel="Book now"
+                    buttonLabel="Contact"
                 />
             </Popup>
 
@@ -469,6 +469,7 @@ const EventForm = ({
             user={user}
             values={form}
             eventCreated={eventCreated}
+            isDirect={isDirect}
             {...props}
         />
     </EventFormWrapper>
@@ -482,9 +483,14 @@ const BookingSidebar = ({
     error,
     createLoading,
     showLogin,
+    isDirect,
     ...props
 }) => {
     const { user } = props;
+
+    const ctaAction = isDirect ? 'BOOK' : 'CONTACT';
+    const ctaLabel = eventCreated ? 'DONE' : `${ctaAction} ${user.title}`.toUpperCase();
+
     return (
         <>
             <SideBar>
@@ -500,7 +506,7 @@ const BookingSidebar = ({
                         onClick={requestBooking}
                         noIcon
                     >
-                        {eventCreated ? 'BOOKING DONE' : `BOOK ${user.title}`.toUpperCase()}
+                        {ctaLabel}
                     </CTAButton>
                 </Card>
                 <ErrorMessageApollo
@@ -523,7 +529,7 @@ const BookingSidebar = ({
                     noIcon
                     style={{ margin: 0 }}
                 >
-                    {eventCreated ? 'BOOKING DONE' : `BOOK ${user.title}`.toUpperCase()}
+                    {ctaLabel}
                 </CTAButton>
             </MobileBookingButton>
         </>

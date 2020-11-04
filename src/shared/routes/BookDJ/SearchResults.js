@@ -183,7 +183,9 @@ const Price = ({ loading }) => {
         );
     }
     return (
-        <BodyBold style={{ fontSize: 16, marginTop: 'auto', display: 'block' }}>Book now</BodyBold>
+        <BodyBold style={{ fontSize: 16, marginTop: 'auto', display: 'block' }}>
+            Request price
+        </BodyBold>
     );
 };
 
