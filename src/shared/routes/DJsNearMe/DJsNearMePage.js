@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet-async';
 import { useQuery } from '@apollo/client';
@@ -269,20 +269,18 @@ const DataWrapper = () => {
     const { data } = useServerContext();
 
     const city = data?.topCities[0];
-    const filter = {
-        countryCode: city?.iso2,
-        location: {
-            latitude: parseFloat(city.lat),
-            longitude: parseFloat(city.lng),
-        },
-    };
 
     const [totalFound, setTotalFound] = useState(23);
 
     const { data: fallbackData } = useQuery(DJS_IN_LOCATION, {
         fetchPolicy: 'cache-first',
         variables: {
-            filter,
+            filter: {
+                location: {
+                    latitude: parseFloat(city.lat),
+                    longitude: parseFloat(city.lng),
+                },
+            },
             pagination: {
                 limit: 10,
                 page: 1,
@@ -291,34 +289,30 @@ const DataWrapper = () => {
     });
     const { data: searchData, loading } = useQuery(SEARCH_DEEP, {
         fetchPolicy: 'cache-first',
-        skip: !filter.countryCode,
+        skip: !city?.iso2,
         variables: {
-            filter,
+            filter: {
+                countryCode: city?.iso2,
+            },
             pagination: {
                 limit: 10,
                 page: 1,
             },
         },
     });
-    const topDjs = searchData?.searchDjs?.edges || [];
-    let fallbackDjs = fallbackData?.djsInLocation?.edges || [];
-    fallbackDjs = fallbackDjs
-        .filter((dj) => !topDjs.some((dj2) => dj2.id === dj.id))
-        .slice(0, 10 - topDjs.length);
+
+    const topDjs = useMemo(() => {
+        const topDjs = searchData?.searchDjs?.edges || [];
+        let fallbackDjs = fallbackData?.djsInLocation?.edges || [];
+        fallbackDjs = fallbackDjs.filter((dj) => !topDjs.some((dj2) => dj2.id === dj.id));
+        return [...topDjs, ...fallbackDjs].slice(0, 10);
+    }, [searchData, fallbackData]);
 
     useEffect(() => {
-        if (searchData?.searchDjs) {
-            setTotalFound(searchData?.searchDjs?.pageInfo?.totalDocs);
-        }
+        setTotalFound(searchData?.searchDjs?.pageInfo?.totalDocs);
     }, [searchData]);
 
-    return (
-        <DJsNearMePage
-            topDjs={[...topDjs, ...fallbackDjs]}
-            loading={loading}
-            totalFound={totalFound}
-        />
-    );
+    return <DJsNearMePage topDjs={topDjs} loading={loading} totalFound={totalFound} />;
 };
 
 export default DataWrapper;
