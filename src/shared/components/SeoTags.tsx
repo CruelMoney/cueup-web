@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { helmetJsonLdProp } from 'react-schemaorg';
-import { EntertainmentBusiness, Organization, WebSite } from 'schema-dts';
+import { EntertainmentBusiness, FAQPage, Organization, WebSite } from 'schema-dts';
 import { appRoutes } from 'constants/locales/appRoutes';
 // @ts-ignore
 import logoUrl from '../assets/logo_black.png';
@@ -119,6 +119,30 @@ export const OrganizationSeo = () => {
                         // @ts-ignore
                         'query-input': 'required name=search_term_string',
                     },
+                }),
+            ]}
+        />
+    );
+};
+
+export interface FAQProps {
+    faq: any;
+}
+export const FAQSeoTag = ({ faq }) => {
+    return (
+        <Helmet
+            script={[
+                helmetJsonLdProp<FAQPage>({
+                    '@context': 'https://schema.org',
+                    '@type': 'FAQPage',
+                    'mainEntity': faq.map(({ q, a }) => ({
+                        '@type': 'Question',
+                        'name': q,
+                        'acceptedAnswer': {
+                            '@type': 'Answer',
+                            'text': a,
+                        },
+                    })),
                 }),
             ]}
         />

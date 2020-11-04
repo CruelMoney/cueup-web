@@ -188,7 +188,7 @@ const Booking = ({ user, loading }) => {
                     style={{
                         width: 'auto',
                     }}
-                    buttonLabel="Contact"
+                    buttonLabel={isDirect ? 'Book' : 'Contact'}
                 />
             </Popup>
 
