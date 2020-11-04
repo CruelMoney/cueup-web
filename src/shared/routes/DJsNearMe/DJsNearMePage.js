@@ -21,7 +21,7 @@ import PopularRequests from 'routes/BookDJ/PopularRequests';
 import { FAQSeoTag } from 'components/SeoTags';
 import { DJS_IN_LOCATION } from './gql';
 
-const DJsNearMePage = ({ topDjs, loading, totalFound }) => {
+const DJsNearMePage = ({ topDjs, loading, totalFound, city }) => {
     const { translate } = useTranslate();
     const history = useHistory();
 
@@ -68,7 +68,7 @@ const DJsNearMePage = ({ topDjs, loading, totalFound }) => {
                     <Title>{title}</Title>
                     <LandingBody white>{description} </LandingBody>
                     <SearchWrapper>
-                        <DjSearch />
+                        <DjSearch initialLocation={city?.country} />
                     </SearchWrapper>
                 </Container>
             </HeroContainer>
@@ -312,7 +312,7 @@ const DataWrapper = () => {
         setTotalFound(searchData?.searchDjs?.pageInfo?.totalDocs);
     }, [searchData]);
 
-    return <DJsNearMePage topDjs={topDjs} loading={loading} totalFound={totalFound} />;
+    return <DJsNearMePage topDjs={topDjs} loading={loading} totalFound={totalFound} city={city} />;
 };
 
 export default DataWrapper;

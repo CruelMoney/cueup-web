@@ -17,7 +17,7 @@ import LazyRequestForm from 'components/common/RequestForm';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 
-const DjSearch = () => {
+const DjSearch = ({ initialLocation }) => {
     const { translate } = useTranslate();
     const routeLocation = useLocation();
     const history = useHistory();
@@ -29,7 +29,12 @@ const DjSearch = () => {
         'https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ&libraries=geometry,places,visualization,geocode'
     );
 
-    const { registerValidation, unregisterValidation, runValidations, form, setValue } = useForm();
+    const { registerValidation, unregisterValidation, runValidations, form, setValue } = useForm(
+        null,
+        {
+            locationName: initialLocation,
+        }
+    );
 
     const [check, { loading, error }] = useCheckDjAvailability();
 
