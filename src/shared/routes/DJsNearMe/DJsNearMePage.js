@@ -146,8 +146,7 @@ in your area, you can get estimates and compare prices of <a href=${
         },
         {
             q: 'How do you book a DJ for a party?',
-            a: `<p>
-            Start by searching and comparing DJs in your area. You can also ask your
+            a: `<p>Start by searching and comparing DJs in your area. You can also ask your
             social network if anyone knows a good DJ.
         </p>
         <p>When looking for a DJ, you should consider a few things:</p>
@@ -177,17 +176,14 @@ in your area, you can get estimates and compare prices of <a href=${
         },
     ];
 
-    console.log({ faq });
-
     return (
         <FaqWrapper>
+            <FAQSeoTag faq={faq} />
             <H2 small>FAQ</H2>
             {faq.map(({ q, a }, idx) => (
                 <GreyBox key={idx}>
                     <h3>{q}</h3>
-                    <Body>
-                        <div dangerouslySetInnerHTML={{ __html: a }} />
-                    </Body>
+                    <div dangerouslySetInnerHTML={{ __html: a }} />
                 </GreyBox>
             ))}
         </FaqWrapper>
@@ -197,16 +193,18 @@ in your area, you can get estimates and compare prices of <a href=${
 const FaqWrapper = styled.div`
     max-width: 600px;
     margin: auto;
+    p,
+    ul {
+        font-size: 18px;
+        line-height: 1.7em;
+        margin-bottom: 0.75em;
+        color: #4d6480;
+    }
     h2 {
         text-align: center;
     }
     h3 {
         margin-bottom: 0.5em;
-    }
-    p {
-        line-height: 1.7em;
-
-        margin-bottom: 0.75em;
     }
     p:last-child {
         margin-bottom: 0;

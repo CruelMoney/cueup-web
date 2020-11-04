@@ -116,8 +116,13 @@ textarea:focus {
 }
 
 ul {
+    font-size: 18px;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-font-smoothing: antialiased !important;
     list-style-type: none;
     padding: 0;
+    text-rendering: optimizelegibility !important;
 }
 
 li {
