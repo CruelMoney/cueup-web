@@ -35,7 +35,10 @@ const getPublicUrls = () => {
 const getUrls = async () => {
     const userUrls = await getUserUrls();
     const locationUrls = await getLocationUrls();
-    return [...getPublicUrls(), ...getBlogUrls(), ...locationUrls, ...userUrls];
+    return [...getPublicUrls(), ...getBlogUrls(), ...locationUrls, ...userUrls].map((url) => ({
+        url,
+        lastMod: new Date('2020-10-15'),
+    }));
 };
 
 const addSitemap = (app) => {
