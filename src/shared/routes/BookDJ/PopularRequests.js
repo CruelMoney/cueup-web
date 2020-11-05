@@ -16,34 +16,7 @@ import { ReactComponent as SpeakerIcon } from './assets/icons/speaker.svg';
 import { ReactComponent as VinylIcon } from './assets/icons/vinyl.svg';
 import { ReactComponent as Top40Icon } from './assets/icons/top40.svg';
 
-const ScrollableFullWidthGrid = styled.ol`
-    display: flex;
-    list-style: none;
-    overflow: auto;
-    margin-left: calc((100vw - 100%) / -2);
-    margin-right: calc((100vw - 100%) / -2);
-    padding-left: calc((100vw - 100%) / 2);
-    padding-right: calc((100vw - 100%) / 2);
-    scrollbar-width: none;
-    &::-webkit-scrollbar {
-        display: none;
-    }
-    padding-top: 15px;
-    padding-bottom: 15px;
-    margin-bottom: -15px;
-    -webkit-overflow-scrolling: touch;
-    justify-content: flex-start;
-    -webkit-box-pack: start;
-    &:after {
-        content: '';
-        padding: 16px 0;
-        padding-right: calc((100vw - 100%) / 2);
-    }
-`;
-
 const RequestWrapper = styled.li`
-    box-shadow: 0 3px 10px 0 rgba(18, 43, 72, 0.15);
-    min-width: 240px;
     padding: 1em;
     padding-bottom: 0.5em;
     border-radius: 20px;
@@ -52,8 +25,63 @@ const RequestWrapper = styled.li`
     flex-direction: column;
     justify-content: space-between;
     cursor: pointer;
+    position: relative;
     &:last-child {
         margin-right: 0;
+    }
+    :after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        box-shadow: 0 3px 10px 0 rgba(18, 43, 72, 0.15);
+        border-radius: 20px;
+    }
+`;
+
+const ScrollableFullWidthGrid = styled.ol`
+    display: flex;
+    list-style: none;
+    flex-wrap: wrap;
+    margin-left: calc((100vw - 100%) / -2);
+    margin-right: calc((100vw - 100%) / -2);
+    padding-left: calc((100vw - 100%) / 2);
+    padding-right: calc((100vw - 100%) / 2);
+
+    max-height: 152px;
+    overflow: hidden;
+
+    li {
+        margin-bottom: 15px;
+        z-index: 0;
+        min-width: 225px;
+    }
+
+    // touch devices
+    @media (hover: none) and (pointer: coarse) {
+        flex-wrap: nowrap;
+        overflow: auto;
+        scrollbar-width: none;
+        max-height: none;
+        li {
+            min-width: 240px;
+        }
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        padding-top: 15px;
+        padding-bottom: 15px;
+        margin-bottom: -15px;
+        -webkit-overflow-scrolling: touch;
+        justify-content: flex-start;
+        -webkit-box-pack: start;
+        &:after {
+            content: '';
+            padding: 16px 0;
+            padding-right: calc((100vw - 100%) / 2);
+        }
     }
 `;
 
