@@ -24,7 +24,7 @@ const ContactPills = ({ email, phone, showInfo }) => {
                         <NavLink to={match.url + '/contact-get-pro'}>{children}</NavLink>
                     )}
                 >
-                    <InfoPill>
+                    <InfoPill active={showInfo}>
                         <Icon icon={mailIcon} style={{ fontSize: '15px' }} color="#98A4B3" />{' '}
                         <span>{showInfo ? email : hiddenEmail}</span>
                     </InfoPill>
@@ -38,7 +38,7 @@ const ContactPills = ({ email, phone, showInfo }) => {
                         <NavLink to={match.url + '/contact-get-pro'}>{children}</NavLink>
                     )}
                 >
-                    <InfoPill>
+                    <InfoPill active={showInfo}>
                         <Icon icon={phoneIcon} style={{ fontSize: '15px' }} color="#98A4B3" />{' '}
                         <span>{showInfo ? phone : hiddenNumber}</span>
                     </InfoPill>

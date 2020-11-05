@@ -708,7 +708,6 @@ export const InfoBox = styled.div`
 `;
 
 export const InfoPill = styled.span`
-    font-weight: 700;
     background: #e9ecf0;
     border-radius: 16px;
     height: 24px;
@@ -725,6 +724,7 @@ export const InfoPill = styled.span`
     align-items: center;
     margin-right: 9px;
     margin-bottom: 9px;
+    font-weight: 500;
 
     span {
         display: inline-block;
@@ -737,6 +737,12 @@ export const InfoPill = styled.span`
         margin-right: 5px;
         position: relative;
     }
+    ${({ active }) =>
+        active &&
+        css`
+            background-color: #c6f6d5;
+            color: #48bb78;
+        `}
 `;
 
 export const CardSimple = styled.div`
