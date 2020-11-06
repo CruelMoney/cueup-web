@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import styled from 'styled-components';
+import { useHistory, useLocation, useRouteMatch } from 'react-router';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { LazyContactInformationPopup, LazyChatGetProPopup } from 'routes/GetProfessional';
@@ -29,13 +30,17 @@ import GigReview from './routes/GigReview';
 import MobileChat from './routes/MobileChat';
 import content from './content.json';
 
-const Index = ({ location, match, history }) => {
+const Index = () => {
+    const location = useLocation();
+    const history = useHistory();
+    const match = useRouteMatch();
+
     const { translate } = useNamespaceContent(content, 'gig');
 
     const {
         params: { id },
     } = match;
-    const { data = {}, error, loading: loadingGig, refetch: refetchGig } = useQuery(GIG, {
+    const { data = {}, error, loading: loadingGig } = useQuery(GIG, {
         skip: !id,
 
         variables: {
@@ -60,8 +65,6 @@ const Index = ({ location, match, history }) => {
         window.scrollTo({ top: 0 });
     }, []);
 
-    const redirectToHome = () => history.push('/');
-
     if (error && error.message.includes('Not your gig')) {
         return <Redirect to={translate(appRoutes.notFound)} />;
     }
@@ -72,6 +75,14 @@ const Index = ({ location, match, history }) => {
     const description = event ? event.description : null;
     if (gig) {
         gig.showInfo = status === gigStates.CONFIRMED || me?.appMetadata?.isPro;
+    }
+
+    if (!loading && !me) {
+        return (
+            <Redirect
+                to={`/login?redirect=${encodeURIComponent(location.pathname + location.search)}`}
+            />
+        );
     }
 
     return (
@@ -105,10 +116,6 @@ const Index = ({ location, match, history }) => {
                 history={history}
                 me={me}
             />
-
-            <Popup width="380px" showing={!me && !loading} onClickOutside={redirectToHome}>
-                <Login redirect={false} onLogin={refetchGig} />
-            </Popup>
 
             <Footer noSkew noPreFooter />
         </div>
