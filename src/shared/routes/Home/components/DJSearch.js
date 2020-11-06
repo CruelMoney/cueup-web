@@ -68,7 +68,7 @@ const DjSearch = ({ initialLocation }) => {
                         },
                     });
                 } else {
-                    const route = routeLocation.pathname + 'book-dj';
+                    const route = '/book-dj';
                     history.push({
                         pathname: route,
                         state: {
