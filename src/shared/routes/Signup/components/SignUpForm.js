@@ -359,7 +359,6 @@ const SignupForm = ({ translate, user }) => {
                         onSave={(bio) => setValue({ bio })}
                         validation={[
                             validators.required,
-                            validators.minLength(100),
                             validators.containsEmail(
                                 "Email addresses aren't allowed on profiles. Always communicate directly through Cueup"
                             ),
