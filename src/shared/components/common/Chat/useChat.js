@@ -15,8 +15,8 @@ const useChat = ({
     handleMessageError,
 }) => {
     const chat = useRef();
-    const startedTyping = useRef();
-    const stoppedTyping = useRef();
+    const startedTyping = useRef(() => {});
+    const stoppedTyping = useRef(() => {});
     const [messages, setMessages] = useState([]);
     const [sending, setSending] = useState(false);
     const [ready, setReady] = useState(false);

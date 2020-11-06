@@ -1,5 +1,4 @@
 const browserVersionIsValid = ({ isIE, isEdge, version }) => {
-    console.log({ isEdge, isIE, version });
     if (isIE) {
         return false;
     }
