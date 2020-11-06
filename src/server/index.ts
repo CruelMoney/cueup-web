@@ -16,6 +16,7 @@ import addLogging from 'middleware/addLogging';
 import addTestEndpoints from 'middleware/addTestEndpoints';
 import addSocialImages from 'middleware/addSocialImages';
 import { addRedirects } from 'middleware/addRedirects';
+import { addDisallowUnsupportedBrowsers } from 'middleware/addDisallowUnsupportedBrowsers';
 import paths from '../../config/paths';
 import errorHandler from './middleware/errorHandler';
 import serverRenderer from './middleware/serverRenderer';
@@ -33,6 +34,8 @@ if (!isProduction) {
 }
 
 app.use(useragent.express());
+
+addDisallowUnsupportedBrowsers(app);
 
 if (process.env.SETTING === 'test') {
     addTestEndpoints(app);
