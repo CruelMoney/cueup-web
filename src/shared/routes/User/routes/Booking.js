@@ -338,9 +338,6 @@ const EventForm = ({
                         showYearDropdown={false}
                         maxDate={false}
                         onSave={(date) => setValue({ date })}
-                        validation={(v) => (v ? null : 'Please select a date')}
-                        registerValidation={registerValidation('date')}
-                        unregisterValidation={unregisterValidation('date')}
                     />
 
                     <Label
