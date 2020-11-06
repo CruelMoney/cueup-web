@@ -25,7 +25,7 @@ const ContactPills = ({ email, phone, showInfo }) => {
                     )}
                 >
                     <InfoPill active={showInfo}>
-                        <Icon icon={mailIcon} style={{ fontSize: '15px' }} color="#98A4B3" />{' '}
+                        <Icon icon={mailIcon} style={{ fontSize: '15px' }} />{' '}
                         <span>{showInfo ? email : hiddenEmail}</span>
                     </InfoPill>
                 </ConditionalWrap>
@@ -39,7 +39,7 @@ const ContactPills = ({ email, phone, showInfo }) => {
                     )}
                 >
                     <InfoPill active={showInfo}>
-                        <Icon icon={phoneIcon} style={{ fontSize: '15px' }} color="#98A4B3" />{' '}
+                        <Icon icon={phoneIcon} style={{ fontSize: '15px' }} />{' '}
                         <span>{showInfo ? phone : hiddenNumber}</span>
                     </InfoPill>
                 </ConditionalWrap>
