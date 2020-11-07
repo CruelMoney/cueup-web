@@ -39,7 +39,7 @@ import GreyBox from 'components/GreyBox';
 import Pagination from 'components/Pagination';
 import { gigStates } from 'constants/constants';
 import AddBookingLink from 'components/AddBookingLink';
-import GigCard from '../components/GigCard';
+import Layout from '../components/Layout';
 import swirlyArrow from '../assets/swirly-scribbled-arrow.png';
 
 const DirectRequests = ({ user }) => {
@@ -63,75 +63,64 @@ const DirectRequests = ({ user }) => {
     const gigs = loading ? [null, null, null, null, null] : data?.myGigs?.edges || [];
 
     return (
-        <Row style={{ flex: 1, alignItems: 'stretch' }}>
-            <Col style={{ flexGrow: 1 }}>
-                <HeaderTitle dark>Direct requests</HeaderTitle>
-                <Hr style={{ marginBottom: 24 }} />
-                {gigs.map((gig, idx) => (
-                    <GigCard
-                        loading={loading}
-                        key={gig?.id || idx}
-                        idx={idx}
-                        onMouseEnter={() => LazyGig.preload()}
-                        hasMessage={gig?.hasMessage}
-                        gig={gig}
-                    />
-                ))}
+        <Layout
+            title={'Direct requests'}
+            gigs={gigs}
+            loading={loading}
+            pagination={{
+                ...pageInfo,
+                ...pagination,
+            }}
+            setPagination={setPagination}
+            emptyChildren={<EmptyChildren />}
+            rightSideChildren={<RightSide user={user} gigs={gigs} />}
+        />
+    );
+};
 
-                {!gigs.length && (
-                    <Col center middle style={{ flexGrow: 1, maxWidth: 450, alignSelf: 'center' }}>
-                        <Icon
-                            icon={questionIcon}
-                            style={{ fontSize: 30, marginBottom: 12, color: '#31DAFF' }}
-                        />
-                        <H3 small style={{ textAlign: 'center' }}>
-                            When customers pick you, {'\n'}those requests show up here.
-                        </H3>
-                        <Body style={{ textAlign: 'center' }}>
-                            If a customer finds you in the search results or via your{' '}
-                            <b>booking link</b>, they can request to book you directly.
-                        </Body>
-                    </Col>
-                )}
+const EmptyChildren = () => {
+    return (
+        <>
+            <Icon
+                icon={questionIcon}
+                style={{ fontSize: 30, marginBottom: 12, color: '#31DAFF' }}
+            />
+            <H3 small style={{ textAlign: 'center' }}>
+                When customers pick you, {'\n'}those requests show up here.
+            </H3>
+            <Body style={{ textAlign: 'center' }}>
+                If a customer finds you in the search results or via your <b>booking link</b>, they
+                can request to book you directly.
+            </Body>
+        </>
+    );
+};
 
-                <Row style={{ marginBottom: 30 }}>
-                    {!!pageInfo?.totalPages && (
-                        <Pagination
-                            activePage={pagination.page}
-                            ellipsisBuffer={2}
-                            onPageChange={(page) => {
-                                setPagination((pp) => ({ ...pagination, ...pp, page }));
-                            }}
-                            totalPages={pageInfo?.totalPages}
-                            hrefConstructor={(page) => `${pathname}?page=${page}`}
-                        />
-                    )}
-                </Row>
-            </Col>
-            <Col style={{ maxWidth: 350, marginLeft: 60, position: 'sticky', top: 15 }}>
-                <GreyBox>
-                    <H3 small>What are direct requests?</H3>
-                    <BodySmall>
-                        Commodo culpa consectetur est dolore incididunt aliqua. Amet pariatur
-                        eiusmod tempor laborum enim consectetur. Et aliquip nulla ut in irure
-                        adipisicing nulla deserunt qui labore id consectetur deserunt occaecat. Esse
-                        qui sint adipisicing qui.
-                    </BodySmall>
-                </GreyBox>
-                <GreyBox>
-                    <H3 small>How can I get more requests?</H3>
-                    <BodySmall>
-                        Commodo culpa consectetur est dolore incididunt aliqua. Amet pariatur
-                        eiusmod tempor laborum enim consectetur. Et aliquip nulla ut in irure
-                        adipisicing nulla deserunt qui labore id consectetur deserunt occaecat. Esse
-                        qui sint adipisicing qui.
-                    </BodySmall>
-                </GreyBox>
-                <AddBookingLink user={user} small>
-                    {!gigs.length && <ArrowIndicator />}
-                </AddBookingLink>
-            </Col>
-        </Row>
+const RightSide = ({ user, gigs }) => {
+    return (
+        <>
+            <GreyBox>
+                <H3 small>What are direct requests?</H3>
+                <BodySmall>
+                    Commodo culpa consectetur est dolore incididunt aliqua. Amet pariatur eiusmod
+                    tempor laborum enim consectetur. Et aliquip nulla ut in irure adipisicing nulla
+                    deserunt qui labore id consectetur deserunt occaecat. Esse qui sint adipisicing
+                    qui.
+                </BodySmall>
+            </GreyBox>
+            <GreyBox>
+                <H3 small>How can I get more requests?</H3>
+                <BodySmall>
+                    Commodo culpa consectetur est dolore incididunt aliqua. Amet pariatur eiusmod
+                    tempor laborum enim consectetur. Et aliquip nulla ut in irure adipisicing nulla
+                    deserunt qui labore id consectetur deserunt occaecat. Esse qui sint adipisicing
+                    qui.
+                </BodySmall>
+            </GreyBox>
+            <AddBookingLink user={user} small>
+                {!gigs.length && <ArrowIndicator />}
+            </AddBookingLink>
+        </>
     );
 };
 

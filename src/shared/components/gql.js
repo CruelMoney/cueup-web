@@ -153,6 +153,10 @@ const MY_GIGS = gql`
                         currency
                         formatted
                     }
+                    totalPayout(currency: $currency) {
+                        amount
+                        currency
+                    }
                 }
 
                 event {

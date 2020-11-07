@@ -11,6 +11,8 @@ import { ME } from '../../../components/gql';
 import { Col, Row, HideBelow, SecondaryButton, Hr, Container } from '../../../components/Blocks';
 
 import DirectRequests from '../routes/DirectRequests';
+import Archived from '../routes/Archived';
+import Completed from '../routes/Completed';
 import Sidebar from './Sidebar';
 
 const DataWrapper = () => {
@@ -34,15 +36,20 @@ const DataWrapper = () => {
             </Helmet>
             <ScrollToTop />
             <Menu dark relative fullWidth />
-            <Container style={{ minHeight: '80vh' }} fullWidth>
+            <Container
+                style={{ minHeight: '80vh', display: 'flex', flexDirection: 'column' }}
+                fullWidth
+            >
                 <Hr style={{ marginBottom: 30 }} />
-                <Row>
+                <Row style={{ flexGrow: 1 }}>
                     <Sidebar user={me} />
                     <Switch>
                         <Route
                             path={'/u/gigs/direct-requests'}
                             render={() => <DirectRequests user={me} />}
                         />
+                        <Route path={'/u/gigs/archived'} render={() => <Archived user={me} />} />
+                        <Route path={'/u/gigs/completed'} render={() => <Completed user={me} />} />
                     </Switch>
                 </Row>
             </Container>

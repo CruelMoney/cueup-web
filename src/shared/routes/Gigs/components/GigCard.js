@@ -43,7 +43,14 @@ const GigCard = ({ loading, style, idx, gig, hasMessage, ...props }) => {
                             <SmallHeader>{name || <Skeleton width={200} />}</SmallHeader>
 
                             <BodySmall>
-                                <span>{createdTimeAgo || <Skeleton width={50} />}</span> ·{' '}
+                                {!loading ? (
+                                    <>
+                                        <span>Added {createdTimeAgo}</span>
+                                    </>
+                                ) : (
+                                    <Skeleton width={50} />
+                                )}
+                                <span style={{ top: '2px', opacity: '0.5' }}>{'  •  '}</span>
                                 <span>
                                     {organizer?.userMetadata?.firstName ||
                                         (loading ? <Skeleton width={50} /> : null)}
