@@ -35,9 +35,10 @@ import { BodySmall, H2, H3, HeaderTitle, Title } from 'components/Text';
 import GreyBox from 'components/GreyBox';
 import Pagination from 'components/Pagination';
 import { gigStates } from 'constants/constants';
+import AddBookingLink from 'components/AddBookingLink';
 import GigCard from '../components/GigCard';
 
-const DirectRequests = () => {
+const DirectRequests = ({ user }) => {
     const { pathname } = useLocation();
     const [pagination, setPagination] = useState({
         page: 1,
@@ -105,6 +106,7 @@ const DirectRequests = () => {
                         qui sint adipisicing qui.
                     </BodySmall>
                 </GreyBox>
+                <AddBookingLink user={user} small />
             </Col>
         </Row>
     );

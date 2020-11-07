@@ -39,7 +39,10 @@ const DataWrapper = () => {
                 <Row>
                     <Sidebar user={me} />
                     <Switch>
-                        <Route path={'/u/gigs/direct-requests'} component={DirectRequests} />
+                        <Route
+                            path={'/u/gigs/direct-requests'}
+                            render={() => <DirectRequests user={me} />}
+                        />
                     </Switch>
                 </Row>
             </Container>
