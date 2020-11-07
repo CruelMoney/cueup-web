@@ -21,13 +21,12 @@ import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { useLocation } from 'react-router';
 import { MY_GIGS } from 'components/gql';
-import { gigStates } from 'constants/constants';
 import LazyGig from 'routes/Gig';
 import { Col, Hr, Row } from 'components/Blocks';
 import { BodySmall, H2, H3, HeaderTitle, Title } from 'components/Text';
 import GreyBox from 'components/GreyBox';
 import Pagination from 'components/Pagination';
-import GigCard from './GigCard';
+import GigCard from '../components/GigCard';
 
 const DirectRequests = () => {
     const { pathname } = useLocation();

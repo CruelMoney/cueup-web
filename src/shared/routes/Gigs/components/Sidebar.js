@@ -7,6 +7,7 @@ import upcomingIcon from '@iconify/icons-ion/ios-calendar';
 import completedIcon from '@iconify/icons-ion/md-checkmark';
 import inProgressIcon from '@iconify/icons-ion/ios-clock-outline';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 import GreyBox from 'components/GreyBox';
 import NavMenuButton from 'components/NavMenuButton';
 import { Col, Hr, SecondaryButton } from 'components/Blocks';
@@ -24,6 +25,13 @@ const NotificationBubble = styled.span`
     line-height: 1.5em;
     font-weight: 500;
     margin-left: 1em;
+`;
+
+const CustomGreyBox = styled(GreyBox)`
+    padding: 0;
+    .active ${NavMenuButton} {
+        font-weight: 600;
+    }
 `;
 
 const EnableNotifications = ({ userId }) => {
@@ -47,7 +55,7 @@ const EnableNotifications = ({ userId }) => {
 const Sidebar = ({ user }) => {
     return (
         <Col style={{ maxWidth: 300, width: 300, marginRight: 60, position: 'sticky', top: 15 }}>
-            <GreyBox style={{ padding: 0 }}>
+            <CustomGreyBox>
                 <nav>
                     <ul style={{ margin: '0.5em 0' }}>
                         <li style={{ padding: '0.5em' }}>
@@ -55,63 +63,75 @@ const Sidebar = ({ user }) => {
                         </li>
 
                         <li>
-                            <NavMenuButton>
-                                <InlineIcon icon={directRequestsIcon} />
-                                Direct requests
-                                <NotificationBubble>
-                                    <span>1</span>
-                                </NotificationBubble>
-                            </NavMenuButton>
+                            <NavLink to="/u/gigs/direct-requests">
+                                <NavMenuButton>
+                                    <InlineIcon icon={directRequestsIcon} />
+                                    Direct requests
+                                    <NotificationBubble>
+                                        <span>1</span>
+                                    </NotificationBubble>
+                                </NavMenuButton>
+                            </NavLink>
                         </li>
                         <li>
-                            <NavMenuButton>
-                                <InlineIcon icon={opportunitiesIcon} />
-                                Opportunities
-                                <NotificationBubble>
-                                    <span>6</span>
-                                </NotificationBubble>
-                            </NavMenuButton>
+                            <NavLink to="/u/gigs/opportunities">
+                                <NavMenuButton>
+                                    <InlineIcon icon={opportunitiesIcon} />
+                                    Opportunities
+                                    <NotificationBubble>
+                                        <span>6</span>
+                                    </NotificationBubble>
+                                </NavMenuButton>
+                            </NavLink>
                         </li>
                         <Hr style={{ margin: '0.5em 0' }} />
 
                         <li>
-                            <NavMenuButton>
-                                <InlineIcon icon={inProgressIcon} />
-                                Unconfirmed
-                                <NotificationBubble>
-                                    <span>1</span>
-                                </NotificationBubble>
-                            </NavMenuButton>
+                            <NavLink to="/u/gigs/unconfirmed">
+                                <NavMenuButton>
+                                    <InlineIcon icon={inProgressIcon} />
+                                    Unconfirmed
+                                    <NotificationBubble>
+                                        <span>1</span>
+                                    </NotificationBubble>
+                                </NavMenuButton>
+                            </NavLink>
                         </li>
 
                         <li>
-                            <NavMenuButton>
-                                <InlineIcon icon={upcomingIcon} />
-                                Upcoming
-                                <NotificationBubble>
-                                    <span>1</span>
-                                </NotificationBubble>
-                            </NavMenuButton>
+                            <NavLink to="/u/gigs/upcoming">
+                                <NavMenuButton>
+                                    <InlineIcon icon={upcomingIcon} />
+                                    Upcoming
+                                    <NotificationBubble>
+                                        <span>1</span>
+                                    </NotificationBubble>
+                                </NavMenuButton>
+                            </NavLink>
                         </li>
 
                         <Hr style={{ margin: '0.5em 0' }} />
 
                         <li>
-                            <NavMenuButton>
-                                <InlineIcon icon={completedIcon} />
-                                Completed
-                            </NavMenuButton>
+                            <NavLink to="/u/gigs/completed">
+                                <NavMenuButton>
+                                    <InlineIcon icon={completedIcon} />
+                                    Completed
+                                </NavMenuButton>
+                            </NavLink>
                         </li>
 
                         <li>
-                            <NavMenuButton>
-                                <InlineIcon icon={archivedIcon} />
-                                Archived
-                            </NavMenuButton>
+                            <NavLink to="/u/gigs/archived">
+                                <NavMenuButton>
+                                    <InlineIcon icon={archivedIcon} />
+                                    Archived
+                                </NavMenuButton>
+                            </NavLink>
                         </li>
                     </ul>
                 </nav>
-            </GreyBox>
+            </CustomGreyBox>
             {user && <EnableNotifications userId={user.id} />}
         </Col>
     );
