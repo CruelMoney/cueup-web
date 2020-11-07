@@ -1,7 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import calendarIcon from '@iconify/icons-ion/ios-calendar';
+import locationIcon from '@iconify/icons-ion/ios-location';
+import { InlineIcon } from '@iconify/react';
 import { appRoutes } from 'constants/locales/appRoutes';
+import useTranslate from 'components/hooks/useTranslate';
+
 import {
     Col,
     keyframeFadeIn,
@@ -10,15 +15,13 @@ import {
     Hr,
     RowWrap,
     PillLarge,
+    PrimaryButton,
 } from '../../../components/Blocks';
 import { SmallHeader, BodySmall, BodyBold, SmallBold } from '../../../components/Text';
 
-const GigCard = ({ style, idx, gig, hasMessage, translate, ...props }) => {
+const GigCard = ({ style, idx, gig, hasMessage, ...props }) => {
     const { event, offer } = gig;
-    let { start, name, description } = event;
-
-    const shouldTruncate = description.length > 100;
-    description = shouldTruncate ? description.substring(0, 100) + '...' : description;
+    const { start, name, location, description } = event;
 
     return (
         <Wrapper idx={idx} {...props}>
@@ -28,22 +31,34 @@ const GigCard = ({ style, idx, gig, hasMessage, translate, ...props }) => {
                         <SmallHeader>{name}</SmallHeader>
                         <Filler />
 
-                        <PillLarge>{start.formattedDate}</PillLarge>
+                        {location?.name && (
+                            <PillLarge>
+                                <InlineIcon
+                                    icon={locationIcon}
+                                    style={{ marginRight: 4, fontSize: '1.2em' }}
+                                />
+                                {location.name}
+                            </PillLarge>
+                        )}
+                        <PillLarge>
+                            <InlineIcon
+                                icon={calendarIcon}
+                                style={{ marginRight: 4, fontSize: '1.2em' }}
+                            />
+                            {start.formattedDate}
+                        </PillLarge>
                     </RowWrap>
                     <RowWrap>
-                        <BodySmall style={{ wordBreak: 'break-word', marginBottom: '24px' }}>
+                        <BodySmall
+                            numberOfLines={3}
+                            style={{ wordBreak: 'break-word', marginBottom: '24px' }}
+                        >
                             {description}
                         </BodySmall>
                     </RowWrap>
                     <Hr />
 
-                    <Offer
-                        {...offer}
-                        hasMessage={hasMessage}
-                        gig={gig}
-                        translate={translate}
-                        name={name}
-                    />
+                    <Offer {...offer} hasMessage={hasMessage} gig={gig} name={name} />
                 </Content>
             </Card>
 
@@ -52,7 +67,8 @@ const GigCard = ({ style, idx, gig, hasMessage, translate, ...props }) => {
     );
 };
 
-const Offer = ({ offer, gig, hasMessage, translate }) => {
+const Offer = ({ offer, gig, hasMessage }) => {
+    const { translate } = useTranslate();
     const { statusHumanized, id } = gig;
 
     return (
@@ -63,14 +79,17 @@ const Offer = ({ offer, gig, hasMessage, translate }) => {
                 <OfferText muted={true}>{statusHumanized}</OfferText>
             </OfferTextWrapper>
             <Filler />
+
             <Buttons>
                 <NavLink
                     to={{
                         pathname: `${translate(appRoutes.gig)}/${id}`,
                     }}
                 >
-                    <TeritaryButton data-cy="gig-read-more">Read more</TeritaryButton>
+                    <TeritaryButton data-cy="gig-read-more">Decline</TeritaryButton>
                 </NavLink>
+
+                <PrimaryButton data-cy="gig-read-more">View details</PrimaryButton>
                 {hasMessage && (
                     <span>
                         <div className="notification-bubble relative">!</div>
@@ -96,7 +115,7 @@ const Filler = styled.div`
     }
 `;
 
-const Buttons = styled(Col)`
+const Buttons = styled(Row)`
     margin-top: 18px;
     justify-content: center;
     align-items: center;
@@ -139,12 +158,13 @@ const Card = styled.div`
 `;
 
 const Shadow = styled.div`
-    box-shadow: 0 2px 30px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 30px 0 rgba(0, 0, 0, 0.1);
     position: absolute;
-    top: 15px;
-    left: 10px;
-    bottom: 10px;
-    right: 10px;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    border-radius: 4px;
 `;
 
 export default GigCard;

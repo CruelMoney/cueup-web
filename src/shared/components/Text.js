@@ -83,6 +83,17 @@ export const BodySmall = styled.p`
     font-size: 16px;
     color: #4d6480;
     line-height: 22.5px;
+    ${({ numberOfLines }) =>
+        numberOfLines &&
+        css`
+            max-lines: ${numberOfLines};
+            display: -webkit-box;
+            -webkit-line-clamp: ${numberOfLines};
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            max-height: ${numberOfLines}em;
+            word-wrap: anywhere;
+        `}
 `;
 
 export const InlineLink = styled.a`
@@ -130,7 +141,6 @@ export const HeaderTitle = styled.h1`
     font-size: 36px;
     color: ${({ dark }) => (dark ? 'inherit' : '#fff')};
     margin-bottom: 0.3em;
-    margin-top: 0.3em;
     line-height: 1.2em;
     display: inline-block;
     position: relative;
@@ -197,7 +207,7 @@ export const H2 = styled.h2`
     }
 `;
 
-export const H3 = styled.h2`
+export const H3 = styled.h3`
     ${BaseText}
     font-weight: bold;
     font-size: 38px;

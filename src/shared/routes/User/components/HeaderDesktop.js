@@ -21,6 +21,7 @@ const StatusButton = styled.button`
     backdrop-filter: saturate(180%) blur(20px);
     padding: 0.5em 1.2em;
     border-radius: 2em;
+    margin-bottom: 15px;
 `;
 
 const HeaderDesktop = (props) => {
@@ -55,8 +56,6 @@ const UserContent = ({ user, statusLabel, setShowing }) => {
     const { artistName, userMetadata, appMetadata, reviews } = user;
     const { firstName } = userMetadata;
     const { rating, isPro } = appMetadata;
-
-    const { translate } = useTranslate();
 
     return (
         <HeaderWrapper>

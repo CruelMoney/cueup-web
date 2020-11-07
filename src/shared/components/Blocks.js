@@ -669,15 +669,19 @@ export const Pill = styled.span`
 `;
 
 export const PillLarge = styled.span`
-    font-size: 12px;
+    font-size: 14px;
     background-color: #e9ecf0;
     color: #98a4b3;
-    padding: 0 15px;
-    height: 24px;
+    padding: 0px 9px;
+    height: 30px;
     border-radius: 33px;
     text-align: center;
-    line-height: 24px;
-    font-weight: 600;
+    line-height: 30px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 6px;
 `;
 
 export const InfoBox = styled.div`

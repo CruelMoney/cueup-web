@@ -152,6 +152,9 @@ const MY_GIGS = gql`
                     id
                     name
                     description
+                    location {
+                        name
+                    }
                     start {
                         localDate
                         formattedTime(locale: $locale)
