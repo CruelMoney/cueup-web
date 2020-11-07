@@ -14,7 +14,7 @@ import useTranslate from 'components/hooks/useTranslate';
 import { trackEmptySearch } from 'utils/analytics';
 import { useServerContext } from 'components/hooks/useServerContext';
 import Map from '../../components/common/Map';
-import Pagination from './Pagination';
+import Pagination from '../../components/Pagination';
 import { GreyBox } from './Components';
 
 const loadingGraceStyle = {
@@ -281,7 +281,6 @@ const SearchResults = ({ topDjs, form, pagination, loading, setPagination, searc
                             setPagination((pp) => ({ ...pagination, ...pp, page }));
                         }}
                         totalPages={pagination.totalPages}
-                        hrefConstructor={(page) => `${pathname}?page=${page}`}
                     />
                 </Row>
             )}

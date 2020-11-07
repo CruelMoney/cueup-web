@@ -20,46 +20,54 @@ import {
 import { SmallHeader, BodySmall, BodyBold, SmallBold } from '../../../components/Text';
 
 const GigCard = ({ style, idx, gig, hasMessage, ...props }) => {
+    const { translate } = useTranslate();
+
     const { event, offer } = gig;
     const { start, name, location, description } = event;
 
     return (
         <Wrapper idx={idx} {...props}>
             <Card style={style}>
-                <Content>
-                    <RowWrap style={{ marginBottom: '24px', width: '100%' }}>
-                        <SmallHeader>{name}</SmallHeader>
-                        <Filler />
+                <NavLink
+                    to={{
+                        pathname: `${translate(appRoutes.gig)}/${gig.id}`,
+                    }}
+                >
+                    <Content>
+                        <RowWrap style={{ marginBottom: '24px', width: '100%' }}>
+                            <SmallHeader>{name}</SmallHeader>
+                            <Filler />
 
-                        {location?.name && (
+                            {location?.name && (
+                                <PillLarge>
+                                    <InlineIcon
+                                        icon={locationIcon}
+                                        style={{ marginRight: 4, fontSize: '1.2em' }}
+                                    />
+                                    {location.name}
+                                </PillLarge>
+                            )}
                             <PillLarge>
                                 <InlineIcon
-                                    icon={locationIcon}
+                                    icon={calendarIcon}
                                     style={{ marginRight: 4, fontSize: '1.2em' }}
                                 />
-                                {location.name}
+                                {start.formattedDate}
                             </PillLarge>
-                        )}
-                        <PillLarge>
-                            <InlineIcon
-                                icon={calendarIcon}
-                                style={{ marginRight: 4, fontSize: '1.2em' }}
-                            />
-                            {start.formattedDate}
-                        </PillLarge>
-                    </RowWrap>
-                    <RowWrap>
-                        <BodySmall
-                            numberOfLines={3}
-                            style={{ wordBreak: 'break-word', marginBottom: '24px' }}
-                        >
-                            {description}
-                        </BodySmall>
-                    </RowWrap>
-                    <Hr />
+                        </RowWrap>
+                        <RowWrap>
+                            <BodySmall
+                                numberOfLines={3}
+                                style={{ wordBreak: 'break-word', marginBottom: '24px' }}
+                            >
+                                {description}
+                            </BodySmall>
+                        </RowWrap>
+                        <Hr />
 
-                    <Offer {...offer} hasMessage={hasMessage} gig={gig} name={name} />
-                </Content>
+                        <Offer {...offer} hasMessage={hasMessage} gig={gig} name={name} />
+                    </Content>
+                </NavLink>
             </Card>
 
             <Shadow />
@@ -155,6 +163,9 @@ const Card = styled.div`
     background: #fff;
     z-index: 1;
     flex: 1;
+    > a {
+        width: 100%;
+    }
 `;
 
 const Shadow = styled.div`

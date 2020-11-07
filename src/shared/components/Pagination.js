@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { Icon } from '@iconify/react';
 import backIcon from '@iconify/icons-ion/ios-arrow-back';
 import forwardIcon from '@iconify/icons-ion/ios-arrow-forward';
+import { useHistory, useLocation } from 'react-router';
 
 const PaginationItem = styled.a`
     display: inline-block;
@@ -14,6 +15,7 @@ const PaginationItem = styled.a`
         css`
             background-color: #e9ecf0;
             font-weight: 500;
+            opacity: 1 !important;
         `}
     &:hover {
         background-color: #e9ecf0;
@@ -22,6 +24,8 @@ const PaginationItem = styled.a`
         disabled &&
         css`
             cursor: default;
+            pointer-events: none;
+            opacity: 0.3;
         `}
     svg {
         height: 2.1em;
@@ -47,14 +51,22 @@ const Pagination = ({
     activePage,
     ellipsisBuffer,
     totalPages,
-    hrefConstructor,
     disabledPages = [],
 }) => {
+    const { search, pathname } = useLocation();
+
+    const hrefConstructor = (page) => {
+        const params = new URLSearchParams(search);
+        params.set('page', page);
+        return `${pathname}?${params.toString()}`;
+    };
+
+    const history = useHistory();
     const previousPage = activePage - 1;
-    const previousHref = previousPage > 0 && hrefConstructor && hrefConstructor(previousPage);
+    const previousHref = previousPage > 0 && hrefConstructor(previousPage);
 
     const nextPage = activePage + 1;
-    const nextHref = nextPage < totalPages && hrefConstructor && hrefConstructor(nextPage);
+    const nextHref = nextPage <= totalPages && hrefConstructor(nextPage);
 
     const pages = Array(totalPages)
         .fill(0)
@@ -62,6 +74,7 @@ const Pagination = ({
 
     const handleClick = (page) => (e) => {
         e.preventDefault();
+        history.push(hrefConstructor(page));
         if (onPageChange) {
             onPageChange(page);
         }
@@ -69,13 +82,16 @@ const Pagination = ({
 
     return (
         <PaginationWrapper>
-            {previousHref && (
-                <li>
-                    <PaginationItem onClick={handleClick(previousPage)} href={previousHref}>
-                        <Icon icon={backIcon} />
-                    </PaginationItem>
-                </li>
-            )}
+            <li>
+                <PaginationItem
+                    disabled={!previousHref}
+                    onClick={handleClick(previousPage)}
+                    href={previousHref}
+                >
+                    <Icon icon={backIcon} />
+                </PaginationItem>
+            </li>
+
             {(ellipsisBuffer
                 ? getEllipsisItems(
                       {
@@ -106,13 +122,16 @@ const Pagination = ({
                     </li>
                 )
             )}
-            {nextHref && (
-                <li>
-                    <PaginationItem href={nextHref} onClick={handleClick(nextPage)}>
-                        <Icon icon={forwardIcon} />
-                    </PaginationItem>
-                </li>
-            )}
+
+            <li>
+                <PaginationItem
+                    disabled={!nextHref}
+                    href={nextHref}
+                    onClick={handleClick(nextPage)}
+                >
+                    <Icon icon={forwardIcon} />
+                </PaginationItem>
+            </li>
         </PaginationWrapper>
     );
 };

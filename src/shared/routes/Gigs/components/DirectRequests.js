@@ -19,25 +19,30 @@
 */
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
+import { useLocation } from 'react-router';
 import { MY_GIGS } from 'components/gql';
 import { gigStates } from 'constants/constants';
 import LazyGig from 'routes/Gig';
 import { Col, Hr, Row } from 'components/Blocks';
 import { BodySmall, H2, H3, HeaderTitle, Title } from 'components/Text';
 import GreyBox from 'components/GreyBox';
+import Pagination from 'components/Pagination';
 import GigCard from './GigCard';
 
 const DirectRequests = () => {
+    const { pathname } = useLocation();
     const [pagination, setPagination] = useState({
         page: 1,
     });
 
     const { data, loading } = useQuery(MY_GIGS, {
         variables: {
-            pagination,
+            limit: 8,
+            page: pagination.page,
         },
     });
 
+    const pageInfo = data?.myGigs?.pageInfo;
     const gigs = data?.myGigs?.edges || [];
 
     return (
@@ -54,6 +59,17 @@ const DirectRequests = () => {
                         gig={gig}
                     />
                 ))}
+                <Row style={{ marginBottom: 30 }}>
+                    <Pagination
+                        activePage={pagination.page}
+                        ellipsisBuffer={2}
+                        onPageChange={(page) => {
+                            setPagination((pp) => ({ ...pagination, ...pp, page }));
+                        }}
+                        totalPages={pageInfo?.totalPages}
+                        hrefConstructor={(page) => `${pathname}?page=${page}`}
+                    />
+                </Row>
             </Col>
             <Col style={{ maxWidth: 350, marginLeft: 60, position: 'sticky', top: 15 }}>
                 <GreyBox>
