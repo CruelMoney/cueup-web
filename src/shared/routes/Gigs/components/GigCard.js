@@ -1,14 +1,14 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import calendarIcon from '@iconify/icons-ion/ios-calendar';
 import locationIcon from '@iconify/icons-ion/ios-location';
 import timeIcon from '@iconify/icons-ion/ios-time';
 import { InlineIcon } from '@iconify/react';
 import moment from 'moment-timezone';
+import Skeleton from 'react-loading-skeleton';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
-
 import {
     Col,
     keyframeFadeIn,
@@ -21,71 +21,85 @@ import {
 } from '../../../components/Blocks';
 import { SmallHeader, BodySmall, BodyBold, SmallBold } from '../../../components/Text';
 
-const GigCard = ({ style, idx, gig, hasMessage, ...props }) => {
-    const { translate, currentLanguage } = useTranslate();
+const GigCard = ({ loading, style, idx, gig, hasMessage, ...props }) => {
+    const { translate } = useTranslate();
 
-    const { event, offer } = gig;
-    const { start, name, location, description, duration, createdAt, organizer } = event;
+    const { event, offer } = gig || {};
+    const { start, name, location, description, duration, createdAt, organizer } = event || {};
 
-    const createdTimeAgo = moment(createdAt.UTC).fromNow();
+    const createdTimeAgo = loading ? null : moment(createdAt?.UTC).fromNow();
 
     return (
-        <Wrapper idx={idx} {...props}>
+        <Wrapper idx={idx} disabled={loading} {...props}>
             <Card
                 style={style}
                 to={{
-                    pathname: `${translate(appRoutes.gig)}/${gig.id}`,
+                    pathname: `${translate(appRoutes.gig)}/${gig?.id}`,
                 }}
             >
                 <Content>
                     <RowWrap style={{ marginBottom: '24px', width: '100%' }}>
                         <Col>
-                            <SmallHeader>{name}</SmallHeader>
+                            <SmallHeader>{name || <Skeleton width={200} />}</SmallHeader>
 
                             <BodySmall>
-                                <span>{createdTimeAgo}</span> ·{' '}
-                                <span>{organizer?.userMetadata?.firstName}</span>
+                                <span>{createdTimeAgo || <Skeleton width={50} />}</span> ·{' '}
+                                <span>
+                                    {organizer?.userMetadata?.firstName ||
+                                        (loading ? <Skeleton width={50} /> : null)}
+                                </span>
                             </BodySmall>
                         </Col>
                         <Filler />
 
-                        {location?.name && (
-                            <PillLarge>
-                                <InlineIcon
-                                    icon={locationIcon}
-                                    style={{ marginRight: 4, fontSize: '1.2em' }}
-                                />
-                                {location.name}
-                            </PillLarge>
-                        )}
-                        <PillLarge>
-                            <InlineIcon
-                                icon={calendarIcon}
-                                style={{ marginRight: 4, fontSize: '1.2em' }}
-                            />
-                            {start.formattedDate}
-                        </PillLarge>
-                        {duration && (
-                            <PillLarge>
-                                <InlineIcon
-                                    icon={timeIcon}
-                                    style={{ marginRight: 4, fontSize: '1.2em' }}
-                                />
-                                {start.formattedTime}, {duration.formatted}
-                            </PillLarge>
+                        {loading ? (
+                            <Skeleton width={150} />
+                        ) : (
+                            <>
+                                {location?.name && (
+                                    <PillLarge>
+                                        <InlineIcon
+                                            icon={locationIcon}
+                                            style={{ marginRight: 4, fontSize: '1.2em' }}
+                                        />
+                                        {location.name}
+                                    </PillLarge>
+                                )}
+                                <PillLarge>
+                                    <InlineIcon
+                                        icon={calendarIcon}
+                                        style={{ marginRight: 4, fontSize: '1.2em' }}
+                                    />
+                                    {start?.formattedDate}
+                                </PillLarge>
+                                {duration && (
+                                    <PillLarge>
+                                        <InlineIcon
+                                            icon={timeIcon}
+                                            style={{ marginRight: 4, fontSize: '1.2em' }}
+                                        />
+                                        {start?.formattedTime}, {duration?.formatted}
+                                    </PillLarge>
+                                )}
+                            </>
                         )}
                     </RowWrap>
-                    <RowWrap>
-                        <BodySmall
-                            numberOfLines={3}
-                            style={{ wordBreak: 'break-word', marginBottom: '24px' }}
-                        >
-                            {description}
-                        </BodySmall>
-                    </RowWrap>
+                    <BodySmall
+                        numberOfLines={3}
+                        style={{ wordBreak: 'break-word', marginBottom: '24px' }}
+                    >
+                        {description || (loading ? <Skeleton count={3} width={'100%'} /> : null)}
+                    </BodySmall>
+
                     <Hr />
 
-                    <Offer {...offer} hasMessage={hasMessage} gig={gig} name={name} />
+                    <Offer
+                        {...offer}
+                        loading={loading}
+                        hasMessage={hasMessage}
+                        gig={gig}
+                        name={name}
+                    />
                 </Content>
                 <Shadow />
             </Card>
@@ -93,36 +107,44 @@ const GigCard = ({ style, idx, gig, hasMessage, ...props }) => {
     );
 };
 
-const Offer = ({ offer, gig, hasMessage }) => {
+const Offer = ({ offer, gig, hasMessage, loading }) => {
     const { translate } = useTranslate();
-    const { statusHumanized, id } = gig;
+    const { statusHumanized, id } = gig || {};
 
     return (
         <OfferRow middle>
             <OfferTextWrapper>
                 {offer && <OfferText muted={false}>{offer.formatted}</OfferText>}
 
-                <OfferText muted={true}>{statusHumanized}</OfferText>
+                <OfferText muted={true}>
+                    {statusHumanized || (loading ? <Skeleton /> : null)}
+                </OfferText>
             </OfferTextWrapper>
             <Filler />
 
             <Buttons>
-                <NavLink
-                    to={{
-                        pathname: `${translate(appRoutes.gig)}/${id}`,
-                    }}
-                >
-                    <TeritaryButton data-cy="gig-read-more">Decline</TeritaryButton>
-                </NavLink>
+                {loading ? (
+                    <Skeleton height={40} width={200} />
+                ) : (
+                    <>
+                        <NavLink
+                            to={{
+                                pathname: `${translate(appRoutes.gig)}/${id}`,
+                            }}
+                        >
+                            <TeritaryButton data-cy="gig-read-more">Decline</TeritaryButton>
+                        </NavLink>
 
-                <PrimaryButton data-cy="gig-read-more">View details</PrimaryButton>
-                {hasMessage && (
-                    <span>
-                        <div className="notification-bubble relative">!</div>
-                        <SmallBold demi muted style={{ display: 'inline-block' }}>
-                            New message
-                        </SmallBold>
-                    </span>
+                        <PrimaryButton data-cy="gig-read-more">View details</PrimaryButton>
+                        {hasMessage && (
+                            <span>
+                                <div className="notification-bubble relative">!</div>
+                                <SmallBold demi muted style={{ display: 'inline-block' }}>
+                                    New message
+                                </SmallBold>
+                            </span>
+                        )}
+                    </>
                 )}
             </Buttons>
         </OfferRow>
@@ -170,6 +192,16 @@ const Wrapper = styled(Col)`
     opacity: 0;
     animation: ${keyframeFadeIn} 400ms ease forwards;
     animation-delay: ${({ idx }) => idx * 150}ms;
+    ${({ disabled }) =>
+        disabled &&
+        css`
+            pointer-events: none;
+            animation: none;
+            opacity: 1;
+            button {
+                pointer-events: none;
+            }
+        `}
 `;
 
 const Card = styled(NavLink)`

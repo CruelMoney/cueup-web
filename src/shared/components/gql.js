@@ -134,8 +134,14 @@ const VERIFY_EMAIL = gql`
 `;
 
 const MY_GIGS = gql`
-    query MyGigs($limit: Int, $page: Int, $currency: Currency, $locale: String) {
-        myGigs(pagination: { limit: $limit, page: $page }) {
+    query MyGigs(
+        $limit: Int
+        $page: Int
+        $currency: Currency
+        $locale: String
+        $filter: GigFilter
+    ) {
+        myGigs(pagination: { limit: $limit, page: $page }, filter: $filter) {
             __typename
             edges {
                 id

@@ -13,7 +13,15 @@
 
     Actions: 
 
-    Decline / Accept
+    Decline / View details
+
+
+
+
+    TODO: 
+    * filter out gigs to right ones
+
+
 
 
 */
@@ -26,6 +34,7 @@ import { Col, Hr, Row } from 'components/Blocks';
 import { BodySmall, H2, H3, HeaderTitle, Title } from 'components/Text';
 import GreyBox from 'components/GreyBox';
 import Pagination from 'components/Pagination';
+import { gigStates } from 'constants/constants';
 import GigCard from '../components/GigCard';
 
 const DirectRequests = () => {
@@ -38,11 +47,15 @@ const DirectRequests = () => {
         variables: {
             limit: 8,
             page: pagination.page,
+            filter: {
+                status: [gigStates.REQUESTED],
+                directBooking: true,
+            },
         },
     });
 
     const pageInfo = data?.myGigs?.pageInfo;
-    const gigs = data?.myGigs?.edges || [];
+    const gigs = loading ? [null, null, null, null, null] : data?.myGigs?.edges || [];
 
     return (
         <Row style={{ flex: 1 }}>
@@ -51,23 +64,26 @@ const DirectRequests = () => {
                 <Hr style={{ marginBottom: 24 }} />
                 {gigs.map((gig, idx) => (
                     <GigCard
-                        key={gig.id}
+                        loading={loading}
+                        key={gig?.id || idx}
                         idx={idx}
                         onMouseEnter={() => LazyGig.preload()}
-                        hasMessage={gig.hasMessage}
+                        hasMessage={gig?.hasMessage}
                         gig={gig}
                     />
                 ))}
                 <Row style={{ marginBottom: 30 }}>
-                    <Pagination
-                        activePage={pagination.page}
-                        ellipsisBuffer={2}
-                        onPageChange={(page) => {
-                            setPagination((pp) => ({ ...pagination, ...pp, page }));
-                        }}
-                        totalPages={pageInfo?.totalPages}
-                        hrefConstructor={(page) => `${pathname}?page=${page}`}
-                    />
+                    {!!pageInfo?.totalPages && (
+                        <Pagination
+                            activePage={pagination.page}
+                            ellipsisBuffer={2}
+                            onPageChange={(page) => {
+                                setPagination((pp) => ({ ...pagination, ...pp, page }));
+                            }}
+                            totalPages={pageInfo?.totalPages}
+                            hrefConstructor={(page) => `${pathname}?page=${page}`}
+                        />
+                    )}
                 </Row>
             </Col>
             <Col style={{ maxWidth: 350, marginLeft: 60, position: 'sticky', top: 15 }}>

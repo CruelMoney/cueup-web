@@ -91,7 +91,7 @@ export const BodySmall = styled.p`
             -webkit-line-clamp: ${numberOfLines};
             -webkit-box-orient: vertical;
             overflow: hidden;
-            max-height: ${numberOfLines}em;
+            max-height: ${numberOfLines * 22.5}px;
             word-wrap: anywhere;
         `}
 `;
