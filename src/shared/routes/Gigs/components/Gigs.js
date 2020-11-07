@@ -21,6 +21,7 @@ import Checkbox from '../../../components/Checkbox';
 import { gigStates } from '../../../constants/constants';
 import lazyGig from '../../Gig';
 import GigCard from './GigCard';
+import Sidebar from './Sidebar';
 
 const statusPriority = {
     [gigStates.REQUESTED]: 1,
@@ -198,11 +199,12 @@ const DataWrapper = () => {
                 <meta name="robots" content="noindex" />
             </Helmet>
             <ScrollToTop />
-            <Menu dark relative />
-            <Container style={{ minHeight: '80vh' }}>
+            <Menu dark relative fullWidth />
+            <Container style={{ minHeight: '80vh' }} fullWidth>
                 <Hr style={{ marginBottom: 30 }} />
-                <AddBookingLink user={me} />
-                <Gigs user={me} loading={loading} />
+                <Row>
+                    <Sidebar />
+                </Row>
             </Container>
             <Footer noPreFooter />
         </>

@@ -1,6 +1,13 @@
 import React from 'react';
 
-const Logo = ({ width = '97px', height = '45px' }) => {
+const Logo = ({ width = '97px', height = '45px', dark, style = {} }) => {
+    if (dark) {
+        style = {
+            color: '#32325d',
+            fill: '#32325d',
+            ...style,
+        };
+    }
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -8,6 +15,7 @@ const Logo = ({ width = '97px', height = '45px' }) => {
             width={width}
             height={height}
             viewBox="0 0 202.98 86.44"
+            style={style}
         >
             <title>Logo</title>
             <g id="Layer_2" data-name="Layer 2">

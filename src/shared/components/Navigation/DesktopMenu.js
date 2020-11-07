@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { Icon, InlineIcon } from '@iconify/react';
+import { InlineIcon } from '@iconify/react';
 import chatbubbleEllipsesOutline from '@iconify/icons-ion/chatbubble-ellipses-outline';
 import helpIcon from '@iconify/icons-ion/help-circle-outline';
 import logoutIcon from '@iconify/icons-simple-line-icons/logout';
@@ -13,8 +13,9 @@ import { useLocation } from 'react-router';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import NavLink from 'components/common/Navlink';
-import { TeritaryButton, Hr } from 'components/Blocks';
+import { Hr } from 'components/Blocks';
 import { showSupportChat } from 'utils/supportChat';
+import NavMenuButton from 'components/NavMenuButton';
 import UserRoute from '../../routes/User';
 import { useLogout } from '../hooks/useLogout';
 import UserMenuItem from './UserMenuItem';
@@ -51,30 +52,6 @@ const DesktopMenu = (props) => {
     );
 };
 
-const MenuButton = styled(TeritaryButton)`
-    text-align: left;
-    color: #32325d;
-    font-weight: 400;
-    font-size: 16px;
-    width: 100%;
-    max-width: 100%;
-    transition: none;
-    border-radius: 12px;
-    line-height: 24px;
-    display: flex;
-    align-items: center;
-
-    > svg {
-        margin-right: 0.5em;
-        margin-left: -0.5em;
-        background-color: rgba(0, 0, 0, 0.05);
-        padding: 0.15em;
-        height: 24px;
-        width: 24px;
-        border-radius: 6px;
-    }
-`;
-
 const DropDownMenu = ({ user, ...props }) => {
     const { t } = useTranslate();
     const logout = useLogout();
@@ -100,72 +77,72 @@ const DropDownMenu = ({ user, ...props }) => {
                 </li>
                 <li>
                     <NavLink to={t(appRoutes.userOverview).replace(':permalink', user.permalink)}>
-                        <MenuButton>
+                        <NavMenuButton>
                             <InlineIcon icon={personOutline} />
                             Profile
-                        </MenuButton>
+                        </NavMenuButton>
                     </NavLink>
                 </li>
 
                 {isDJ && (
                     <li>
                         <NavLink to={t(appRoutes.userGigs)} data-cy="menu-gigs-link">
-                            <MenuButton>
+                            <NavMenuButton>
                                 <InlineIcon icon={musicalNotesOutline} />
                                 Gigs
-                            </MenuButton>
+                            </NavMenuButton>
                         </NavLink>
                     </li>
                 )}
                 {isOrganizer && (
                     <li>
                         <NavLink to={t(appRoutes.userEvents)} data-cy="menu-events-link">
-                            <MenuButton>
+                            <NavMenuButton>
                                 <InlineIcon icon={calendarOutline} />
                                 Events
-                            </MenuButton>
+                            </NavMenuButton>
                         </NavLink>
                     </li>
                 )}
                 <li>
                     <NavLink to={t(appRoutes.userSettings)} data-cy="menu-settings-link">
-                        <MenuButton>
+                        <NavMenuButton>
                             <InlineIcon icon={settingsOutline} />
                             Settings
-                        </MenuButton>
+                        </NavMenuButton>
                     </NavLink>
                 </li>
                 {!isPro && isDJ && (
                     <li>
                         <NavLink to={t(appRoutes.userSettings) + '/get-pro'}>
-                            <MenuButton>
+                            <NavMenuButton>
                                 <InlineIcon icon={starOutline} />
                                 Go Pro
-                            </MenuButton>
+                            </NavMenuButton>
                         </NavLink>
                     </li>
                 )}
                 <Hr />
                 <li>
                     <a className="navLink" href={typeformUrl} target="_blank" rel="noreferrer">
-                        <MenuButton>
+                        <NavMenuButton>
                             <InlineIcon icon={chatbubbleEllipsesOutline} />
                             Give Feedback
-                        </MenuButton>
+                        </NavMenuButton>
                     </a>
                 </li>
                 <li>
-                    <MenuButton onClick={showSupportChat}>
+                    <NavMenuButton onClick={showSupportChat}>
                         <InlineIcon icon={helpIcon} />
                         Help!?
-                    </MenuButton>
+                    </NavMenuButton>
                 </li>
                 <li>
                     <NavLink to={t(appRoutes.home)} onClick={logout} activeClassName="">
-                        <MenuButton>
+                        <NavMenuButton>
                             <InlineIcon icon={logoutIcon} style={{ padding: '0.25em' }} />
                             {t('log-out')}
-                        </MenuButton>
+                        </NavMenuButton>
                     </NavLink>
                 </li>
             </MenuList>
@@ -204,7 +181,7 @@ const MenuList = styled.ul`
         margin: 0.5em 0;
     }
 
-    .active ${MenuButton} {
+    .active ${NavMenuButton} {
         font-weight: 600;
         background: #f6f8f9;
     }

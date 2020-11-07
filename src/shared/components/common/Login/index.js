@@ -3,7 +3,7 @@ import emailValidator from 'email-validator';
 
 import { Mutation } from '@apollo/client/react/components';
 import styled from 'styled-components';
-import { SmartButton, RowWrap, Hr, Col } from 'components/Blocks';
+import { SmartButton, RowWrap, Hr, Col, Row } from 'components/Blocks';
 import { BodySmall } from 'components/Text';
 import useOnLoggedIn from 'components/hooks/useOnLoggedIn';
 import { appRoutes } from 'constants/locales/appRoutes';
@@ -132,38 +132,74 @@ const Login = ({ redirect = true, error, onLogin }) => {
                                 mutate();
                             }}
                         >
-                            <div>
-                                <Input
-                                    v2
-                                    blurOnEnter={false}
-                                    label="Email"
-                                    placeholder="mail@email.com"
-                                    type="email"
-                                    autoComplete="email"
-                                    name="email"
-                                    onChange={(email) => onChangeEmail(email.trim())}
-                                    validation={(v) =>
-                                        emailValidator.validate(v) ? null : 'Not a valid email'
-                                    }
-                                />
-                            </div>
-                            <div>
-                                <Input
-                                    v2
-                                    blurOnEnter={false}
-                                    label="Password"
-                                    placeholder="min. 6 characters"
-                                    type="password"
-                                    autoComplete="password"
-                                    name="password"
-                                    onChange={(password) => onChangePassword(password)}
-                                    validation={(v) => {
-                                        if (!v) {
-                                            return 'Please enter password';
-                                        }
+                            <SmartButton
+                                fullWidth
+                                level="secondary"
+                                onClick={onPressSocial('facebook')}
+                                loading={socialLoading === 'facebook'}
+                            >
+                                <img src={fbLogo} alt="facebook logo" />
+                                Continue with Facebook
+                            </SmartButton>
+
+                            <SmartButton
+                                fullWidth
+                                level="secondary"
+                                onClick={onPressSocial('google')}
+                                loading={socialLoading === 'google'}
+                            >
+                                <img src={googleLogo} alt="google logo" />
+                                Continue with Google
+                            </SmartButton>
+                            <Row
+                                middle
+                                center
+                                style={{
+                                    width: '100%',
+                                    margin: '1em 0',
+                                }}
+                            >
+                                <Hr />
+                                <BodySmall
+                                    style={{
+                                        margin: 0,
+                                        padding: '0 1em',
+                                        zIndex: 1,
+                                        textTransform: 'lowercase',
                                     }}
-                                />
-                            </div>
+                                >
+                                    {translate('or')}
+                                </BodySmall>
+                                <Hr />
+                            </Row>
+                            <Input
+                                v2
+                                blurOnEnter={false}
+                                label="Email"
+                                placeholder="mail@email.com"
+                                type="email"
+                                autoComplete="email"
+                                name="email"
+                                onChange={(email) => onChangeEmail(email.trim())}
+                                validation={(v) =>
+                                    emailValidator.validate(v) ? null : 'Not a valid email'
+                                }
+                            />
+                            <Input
+                                v2
+                                blurOnEnter={false}
+                                label="Password"
+                                placeholder="min. 6 characters"
+                                type="password"
+                                autoComplete="password"
+                                name="password"
+                                onChange={(password) => onChangePassword(password)}
+                                validation={(v) => {
+                                    if (!v) {
+                                        return 'Please enter password';
+                                    }
+                                }}
+                            />
                             <RowWrap right fullWidth>
                                 <SmartButton
                                     glow
@@ -179,49 +215,6 @@ const Login = ({ redirect = true, error, onLogin }) => {
                                     }}
                                 >
                                     {translate('login')}
-                                </SmartButton>
-
-                                <Col
-                                    middle
-                                    center
-                                    style={{
-                                        width: '100%',
-                                        margin: '2em 0',
-                                    }}
-                                >
-                                    <Hr />
-                                    <BodySmall
-                                        style={{
-                                            margin: 0,
-                                            padding: '0 1em',
-                                            backgroundColor: '#fff',
-                                            position: 'absolute',
-                                            zIndex: 1,
-                                            textTransform: 'lowercase',
-                                        }}
-                                    >
-                                        {translate('or')}
-                                    </BodySmall>
-                                </Col>
-
-                                <SmartButton
-                                    fullWidth
-                                    level="secondary"
-                                    onClick={onPressSocial('facebook')}
-                                    loading={socialLoading === 'facebook'}
-                                >
-                                    <img src={fbLogo} alt="facebook logo" />
-                                    Continue with Facebook
-                                </SmartButton>
-
-                                <SmartButton
-                                    fullWidth
-                                    level="secondary"
-                                    onClick={onPressSocial('google')}
-                                    loading={socialLoading === 'google'}
-                                >
-                                    <img src={googleLogo} alt="google logo" />
-                                    Continue with Google
                                 </SmartButton>
 
                                 <Mutation mutation={REQUEST_PASSWORD_RESET}>

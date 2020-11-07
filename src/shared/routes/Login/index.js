@@ -9,6 +9,8 @@ import Login from 'components/common/Login';
 import Menu from 'components/Navigation';
 import Footer from 'components/common/Footer';
 import { ME } from 'components/gql';
+import GreyBox from 'components/GreyBox';
+import Logo from 'components/common/Logo';
 
 const LoginPage = () => {
     const { data, loading } = useQuery(ME);
@@ -41,21 +43,24 @@ const LoginPage = () => {
                     content="app-id=1458267647, app-argument=userProfile"
                 />
             </Helmet>
-            <Menu dark relative hideLogin />
 
             <Container>
-                <Hr style={{ marginBottom: 60 }} />
-                <Col middle style={{ minHeight: 'calc(100vh - 120px)' }}>
-                    <CardSimple shadow style={{ padding: '2em', maxWidth: 550 }}>
-                        <h1 style={{ textAlign: 'center', fontSize: 16 }}>Login</h1>
+                <Col middle center style={{ minHeight: 'calc(100vh - 120px)' }}>
+                    <NavLink to={'/'} style={{ marginTop: 30 }}>
+                        <Logo dark />
+                    </NavLink>
+                    <h1 style={{ textAlign: 'center', fontSize: 18, marginTop: 15 }}>
+                        Log in to Cueup
+                    </h1>
+
+                    <GreyBox style={{ padding: '2em', paddingBottom: 0, maxWidth: 550 }}>
                         <Login redirect={false} onLogin={redirectToLastLocation} />
-                    </CardSimple>
+                    </GreyBox>
                     <NavLink to="/signup">
-                        <TeritaryButton style={{ marginTop: 24 }}>Sign up as DJ</TeritaryButton>
+                        <TeritaryButton>Sign up as DJ</TeritaryButton>
                     </NavLink>
                 </Col>
             </Container>
-            <Footer noPreFooter />
         </>
     );
 };

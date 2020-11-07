@@ -832,7 +832,7 @@ p.error {
 }
 .notification-bubble.relative {
     display: inline-block;
-    font-weight: 700;
+    font-weight: 600;
     left: 0;
     margin-right: 9px;
     position: relative;

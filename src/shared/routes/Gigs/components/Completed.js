@@ -1,0 +1,7 @@
+/* 
+
+Completed gigs
+
+Shows an overview of earnings as well
+
+*/

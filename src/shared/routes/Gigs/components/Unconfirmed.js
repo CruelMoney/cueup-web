@@ -1,0 +1,10 @@
+/* 
+
+Unconfirmed gigs
+
+Work on closing the deal
+
+Chat with the organizer 
+
+
+*/

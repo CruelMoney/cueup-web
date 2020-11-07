@@ -228,7 +228,7 @@ const Content = ({
                     {loggedIn ? null : (
                         <li>
                             <button className="link-look" onClick={() => setLoginExpanded(true)}>
-                                {translate('login')}
+                                Log In
                             </button>
                         </li>
                     )}

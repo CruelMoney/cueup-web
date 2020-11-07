@@ -92,7 +92,7 @@ const Menu = ({ dark, relative, fullWidth, hideLogin }) => {
                                         data-cy="login-button"
                                         onClick={() => setLoginExpanded((s) => !s)}
                                     >
-                                        {t('login')}
+                                        Log In
                                     </button>
                                     <Popup
                                         width={'568px'}

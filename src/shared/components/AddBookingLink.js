@@ -1,23 +1,16 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import styled from 'styled-components';
 import { Input } from './FormComponents';
 import { SecondaryButton, RowMobileCol, Hr } from './Blocks';
 import { Body } from './Text';
+import GreyBox from './GreyBox';
 
-const GreyBox = styled.section`
-    background-color: #f7f9fc;
-    border-radius: 12px;
-    width: 100%;
-    padding: 20px 30px;
-    margin-left: auto;
-
-    margin-bottom: 30px;
-    position: relative;
-
+const CustomGreyBox = styled(GreyBox)`
     left: 50%;
     transform: translateX(-50%);
+    margin-left: auto;
     p,
     label {
         max-width: 550px;
@@ -30,10 +23,6 @@ const GreyBox = styled.section`
         min-width: 0 !important;
         width: 100%;
     }
-    input {
-        background-color: white !important;
-        cursor: text;
-    }
 `;
 
 const AddBookingLink = ({ user }) => {
@@ -45,7 +34,7 @@ const AddBookingLink = ({ user }) => {
 
     return (
         <>
-            <GreyBox>
+            <CustomGreyBox style={{}}>
                 <h2>Your booking link</h2>
                 <Body>
                     Make it easier for people to book you on your website or social media. Copy
@@ -61,7 +50,7 @@ const AddBookingLink = ({ user }) => {
                         </SecondaryButton>
                     </CopyToClipboard>
                 </RowMobileCol>
-            </GreyBox>
+            </CustomGreyBox>
             <Hr style={{ marginBottom: 30 }} />
         </>
     );
