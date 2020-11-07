@@ -88,7 +88,7 @@ const RouteWrapper = () => {
                     <Route path={t(appRoutes.search)} component={LazySearch} />
                     <Route path={t(appRoutes.resetPassword)} component={ResetPassword} />
                     <Route path={'/book-dj'} exact component={RequestFormPopup} />
-                    <Route path={'/login'} component={Login} />
+                    <Route path={t(appRoutes.login)} component={Login} />
 
                     <Route component={NotFound} />
                 </Switch>

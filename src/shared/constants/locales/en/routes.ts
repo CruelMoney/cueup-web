@@ -34,6 +34,7 @@ const routes: RouteKeys = {
     resetPassword: '/resetPassword',
     djNameGenerator: '/dj-name-generator',
     djsNearMe: '/s/djs-near-me',
+    login: '/login',
 };
 
 export const oldRoutes = {

@@ -34,6 +34,7 @@ const routes: RouteKeys = {
     termsCookie: '/da/betingelser/cookies',
     djNameGenerator: '/da/dj-name-generator',
     djsNearMe: '/s/djs-i-naerheden',
+    login: '/da/login',
 };
 
 export const oldRoutes = {

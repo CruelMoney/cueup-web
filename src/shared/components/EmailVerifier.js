@@ -19,7 +19,9 @@ const EmailVerifier = ({ onVerified }) => {
             return;
         }
         history.replace(location.pathname);
-        onVerified();
+        if (onVerified) {
+            onVerified();
+        }
     };
 
     const [mutate, { loading, data, error }] = useMutation(VERIFY_EMAIL, {

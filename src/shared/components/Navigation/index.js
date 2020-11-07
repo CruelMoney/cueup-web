@@ -2,31 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
+import { Redirect } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 import { Media } from 'components/MediaContext';
 import { ME } from 'components/gql';
 import { identifyUser } from 'utils/analytics';
 import Navlink from '../common/Navlink';
-import Login from '../common/Login';
 import Logo from '../common/Logo';
 import EmailVerifier from '../EmailVerifier';
-import Popup from '../common/Popup';
 import InstagramConnect from '../InstagramConnect';
 import { LoadingIndicator, Container } from '../Blocks';
 import DesktopMenu from './DesktopMenu';
 
 const Menu = ({ dark, relative, fullWidth, hideLogin }) => {
     const { t } = useTranslation();
-    const [loginExpanded, setLoginExpanded] = useState(false);
 
-    useEffect(() => {
-        const parsedUrl = new URL(window.location.href);
-        const showLogin = parsedUrl.searchParams.get('showLogin');
+    const { search } = useLocation();
 
-        if (showLogin) {
-            setLoginExpanded(true);
-        }
-    }, [setLoginExpanded]);
+    const showLogin = search.includes('showLogin');
 
     const { loading, data } = useQuery(ME);
     const user = data?.me;
@@ -45,13 +39,17 @@ const Menu = ({ dark, relative, fullWidth, hideLogin }) => {
         }
     }, [data]);
 
+    if (showLogin) {
+        return <Redirect to={t(appRoutes.login)} />;
+    }
+
     return (
         <div
             className={
                 'menu-wrapper' + (dark ? ' white-theme' : '') + (relative ? ' relative' : '')
             }
         >
-            <EmailVerifier onVerified={() => setLoginExpanded(true)} />
+            <EmailVerifier />
             <InstagramConnect />
 
             <Container fullWidth={fullWidth} className="container">
@@ -87,23 +85,7 @@ const Menu = ({ dark, relative, fullWidth, hideLogin }) => {
 
                             {!hideLogin && !loggedIn && !loading ? (
                                 <li>
-                                    <button
-                                        className="link-look"
-                                        data-cy="login-button"
-                                        onClick={() => setLoginExpanded((s) => !s)}
-                                    >
-                                        Log In
-                                    </button>
-                                    <Popup
-                                        width={'568px'}
-                                        showing={loginExpanded}
-                                        onClickOutside={() => setLoginExpanded(false)}
-                                    >
-                                        <Login
-                                            onLogin={() => setLoginExpanded(false)}
-                                            user={user}
-                                        />
-                                    </Popup>
+                                    <Navlink to={t(appRoutes.login)} label={'Log In'} />
                                 </li>
                             ) : null}
 

@@ -34,6 +34,7 @@ export const routeKeys = Object.freeze({
     resetPassword: 'resetPassword',
     djNameGenerator: 'djNameGenerator',
     djsNearMe: 'djsNearMe',
+    login: 'login',
 });
 
 export const userRoutes = {

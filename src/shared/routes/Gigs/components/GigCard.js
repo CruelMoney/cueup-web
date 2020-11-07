@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import calendarIcon from '@iconify/icons-ion/ios-calendar';
 import locationIcon from '@iconify/icons-ion/ios-location';
+import timeIcon from '@iconify/icons-ion/ios-time';
 import { InlineIcon } from '@iconify/react';
+import moment from 'moment-timezone';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 
@@ -20,57 +22,73 @@ import {
 import { SmallHeader, BodySmall, BodyBold, SmallBold } from '../../../components/Text';
 
 const GigCard = ({ style, idx, gig, hasMessage, ...props }) => {
-    const { translate } = useTranslate();
+    const { translate, currentLanguage } = useTranslate();
 
     const { event, offer } = gig;
-    const { start, name, location, description } = event;
+    const { start, name, location, description, duration, createdAt, organizer } = event;
+
+    const createdTimeAgo = moment(createdAt.UTC).fromNow();
 
     return (
         <Wrapper idx={idx} {...props}>
-            <Card style={style}>
-                <NavLink
-                    to={{
-                        pathname: `${translate(appRoutes.gig)}/${gig.id}`,
-                    }}
-                >
-                    <Content>
-                        <RowWrap style={{ marginBottom: '24px', width: '100%' }}>
+            <Card
+                style={style}
+                to={{
+                    pathname: `${translate(appRoutes.gig)}/${gig.id}`,
+                }}
+            >
+                <Content>
+                    <RowWrap style={{ marginBottom: '24px', width: '100%' }}>
+                        <Col>
                             <SmallHeader>{name}</SmallHeader>
-                            <Filler />
 
-                            {location?.name && (
-                                <PillLarge>
-                                    <InlineIcon
-                                        icon={locationIcon}
-                                        style={{ marginRight: 4, fontSize: '1.2em' }}
-                                    />
-                                    {location.name}
-                                </PillLarge>
-                            )}
+                            <BodySmall>
+                                <span>{createdTimeAgo}</span> ·{' '}
+                                <span>{organizer?.userMetadata?.firstName}</span>
+                            </BodySmall>
+                        </Col>
+                        <Filler />
+
+                        {location?.name && (
                             <PillLarge>
                                 <InlineIcon
-                                    icon={calendarIcon}
+                                    icon={locationIcon}
                                     style={{ marginRight: 4, fontSize: '1.2em' }}
                                 />
-                                {start.formattedDate}
+                                {location.name}
                             </PillLarge>
-                        </RowWrap>
-                        <RowWrap>
-                            <BodySmall
-                                numberOfLines={3}
-                                style={{ wordBreak: 'break-word', marginBottom: '24px' }}
-                            >
-                                {description}
-                            </BodySmall>
-                        </RowWrap>
-                        <Hr />
+                        )}
+                        <PillLarge>
+                            <InlineIcon
+                                icon={calendarIcon}
+                                style={{ marginRight: 4, fontSize: '1.2em' }}
+                            />
+                            {start.formattedDate}
+                        </PillLarge>
+                        {duration && (
+                            <PillLarge>
+                                <InlineIcon
+                                    icon={timeIcon}
+                                    style={{ marginRight: 4, fontSize: '1.2em' }}
+                                />
+                                {start.formattedTime}, {duration.formatted}
+                            </PillLarge>
+                        )}
+                    </RowWrap>
+                    <RowWrap>
+                        <BodySmall
+                            numberOfLines={3}
+                            style={{ wordBreak: 'break-word', marginBottom: '24px' }}
+                        >
+                            {description}
+                        </BodySmall>
+                    </RowWrap>
+                    <Hr />
 
-                        <Offer {...offer} hasMessage={hasMessage} gig={gig} name={name} />
-                    </Content>
-                </NavLink>
+                    <Offer {...offer} hasMessage={hasMessage} gig={gig} name={name} />
+                </Content>
+                <Shadow />
             </Card>
-
-            <Shadow />
         </Wrapper>
     );
 };
@@ -154,7 +172,7 @@ const Wrapper = styled(Col)`
     animation-delay: ${({ idx }) => idx * 150}ms;
 `;
 
-const Card = styled.div`
+const Card = styled(NavLink)`
     display: flex;
     overflow: hidden;
     flex-direction: row;
@@ -176,6 +194,7 @@ const Shadow = styled.div`
     bottom: 0px;
     right: 0px;
     border-radius: 4px;
+    pointer-events: none;
 `;
 
 export default GigCard;

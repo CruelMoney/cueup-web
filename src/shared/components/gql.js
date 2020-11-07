@@ -148,10 +148,14 @@ const MY_GIGS = gql`
                         formatted
                     }
                 }
+
                 event {
                     id
                     name
                     description
+                    createdAt {
+                        UTC
+                    }
                     location {
                         name
                     }
@@ -159,6 +163,15 @@ const MY_GIGS = gql`
                         localDate
                         formattedTime(locale: $locale)
                         formattedDate(locale: $locale)
+                    }
+                    duration {
+                        humanized
+                        formatted
+                    }
+                    organizer {
+                        userMetadata {
+                            firstName
+                        }
                     }
                 }
             }
