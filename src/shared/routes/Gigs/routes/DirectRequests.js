@@ -28,15 +28,19 @@
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { useLocation } from 'react-router';
+import Icon from '@iconify/react';
+import questionIcon from '@iconify/icons-simple-line-icons/question';
+import styled from 'styled-components';
 import { MY_GIGS } from 'components/gql';
 import LazyGig from 'routes/Gig';
 import { Col, Hr, Row } from 'components/Blocks';
-import { BodySmall, H2, H3, HeaderTitle, Title } from 'components/Text';
+import { Body, BodySmall, H2, H3, HeaderTitle, Title } from 'components/Text';
 import GreyBox from 'components/GreyBox';
 import Pagination from 'components/Pagination';
 import { gigStates } from 'constants/constants';
 import AddBookingLink from 'components/AddBookingLink';
 import GigCard from '../components/GigCard';
+import swirlyArrow from '../assets/swirly-scribbled-arrow.png';
 
 const DirectRequests = ({ user }) => {
     const { pathname } = useLocation();
@@ -59,7 +63,7 @@ const DirectRequests = ({ user }) => {
     const gigs = loading ? [null, null, null, null, null] : data?.myGigs?.edges || [];
 
     return (
-        <Row style={{ flex: 1 }}>
+        <Row style={{ flex: 1, alignItems: 'stretch' }}>
             <Col style={{ flexGrow: 1 }}>
                 <HeaderTitle dark>Direct requests</HeaderTitle>
                 <Hr style={{ marginBottom: 24 }} />
@@ -73,6 +77,23 @@ const DirectRequests = ({ user }) => {
                         gig={gig}
                     />
                 ))}
+
+                {!gigs.length && (
+                    <Col center middle style={{ flexGrow: 1, maxWidth: 450, alignSelf: 'center' }}>
+                        <Icon
+                            icon={questionIcon}
+                            style={{ fontSize: 30, marginBottom: 12, color: '#31DAFF' }}
+                        />
+                        <H3 small style={{ textAlign: 'center' }}>
+                            When customers pick you, {'\n'}those requests show up here.
+                        </H3>
+                        <Body style={{ textAlign: 'center' }}>
+                            If a customer finds you in the search results or via your{' '}
+                            <b>booking link</b>, they can request to book you directly.
+                        </Body>
+                    </Col>
+                )}
+
                 <Row style={{ marginBottom: 30 }}>
                     {!!pageInfo?.totalPages && (
                         <Pagination
@@ -106,10 +127,26 @@ const DirectRequests = ({ user }) => {
                         qui sint adipisicing qui.
                     </BodySmall>
                 </GreyBox>
-                <AddBookingLink user={user} small />
+                <AddBookingLink user={user} small>
+                    {!gigs.length && <ArrowIndicator />}
+                </AddBookingLink>
             </Col>
         </Row>
     );
 };
+
+const ArrowIndicator = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-100%, -50%) rotate(45deg);
+    background: url('${swirlyArrow}');
+    height: 60px;
+    width: 60px;
+    display: block;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+`;
 
 export default DirectRequests;

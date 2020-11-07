@@ -25,7 +25,7 @@ const CustomGreyBox = styled(GreyBox)`
     }
 `;
 
-const AddBookingLink = ({ user, small }) => {
+const AddBookingLink = ({ user, small, children }) => {
     const [copied, setCopied] = useState(false);
     if (!user) {
         return null;
@@ -55,6 +55,7 @@ const AddBookingLink = ({ user, small }) => {
                     </CopyToClipboard>
                 ) : null}
             </RowMobileCol>
+            {children}
         </CustomGreyBox>
     );
 };
