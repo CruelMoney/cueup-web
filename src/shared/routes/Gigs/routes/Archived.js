@@ -8,7 +8,7 @@ Passed oppertunities / declined can be undone.
 
 
 */
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import Icon from '@iconify/react';
 import questionIcon from '@iconify/icons-simple-line-icons/question';
@@ -26,7 +26,7 @@ const Archived = ({ user }) => {
     const { data, loading } = useQuery(MY_GIGS, {
         variables: {
             limit: 8,
-            page: pagination.page,
+            pagination,
             filter: {
                 status: [
                     gigStates.CANCELLED,
@@ -35,6 +35,7 @@ const Archived = ({ user }) => {
                     gigStates.LOST,
                     gigStates.ORGANIZER_DECLINED,
                 ],
+                afterDate: new Date(new Date(0).toDateString()),
             },
         },
     });

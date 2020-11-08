@@ -25,18 +25,15 @@
 
 
 */
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { useLocation } from 'react-router';
 import Icon from '@iconify/react';
 import questionIcon from '@iconify/icons-simple-line-icons/question';
 import styled from 'styled-components';
-import { MY_GIGS } from 'components/gql';
-import LazyGig from 'routes/Gig';
-import { Col, Hr, Row } from 'components/Blocks';
-import { Body, BodySmall, H2, H3, HeaderTitle, Title } from 'components/Text';
+import { ME, MY_GIGS } from 'components/gql';
+import { Body, BodySmall, H3 } from 'components/Text';
 import GreyBox from 'components/GreyBox';
-import Pagination from 'components/Pagination';
 import { gigStates } from 'constants/constants';
 import AddBookingLink from 'components/AddBookingLink';
 import Layout from '../components/Layout';
@@ -50,10 +47,11 @@ const DirectRequests = ({ user }) => {
     const { data, loading } = useQuery(MY_GIGS, {
         variables: {
             limit: 8,
-            page: pagination.page,
+            pagination,
             filter: {
                 status: [gigStates.REQUESTED],
                 directBooking: true,
+                afterDate: new Date(new Date().toDateString()),
             },
         },
     });

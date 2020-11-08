@@ -9,6 +9,7 @@ export const eventStates = {
 };
 
 export const gigStates = {
+    INITIAL: 'INITIAL',
     REQUESTED: 'REQUESTED',
     CANCELLED: 'CANCELLED',
     FINISHED: 'FINISHED',

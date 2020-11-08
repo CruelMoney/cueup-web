@@ -6,7 +6,7 @@ Shows an overview of earnings as well
 
 */
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import Icon from '@iconify/react';
 import questionIcon from '@iconify/icons-simple-line-icons/question';
@@ -22,14 +22,16 @@ import Layout from '../components/Layout';
 const Completed = ({ user }) => {
     const [pagination, setPagination] = useState({
         page: 1,
+        orderBy: 'START_TIME_DESCENDING',
     });
 
     const { data, loading } = useQuery(MY_GIGS, {
         variables: {
             limit: 8,
-            page: pagination.page,
+            pagination,
             filter: {
                 status: [gigStates.FINISHED],
+                afterDate: new Date(new Date(0).toDateString()),
             },
         },
     });

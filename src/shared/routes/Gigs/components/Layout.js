@@ -45,7 +45,7 @@ const Layout = ({
                 )}
 
                 <Row style={{ marginBottom: 30 }}>
-                    {!!pagination?.totalPages && (
+                    {!!gigs.length && (
                         <Pagination
                             activePage={pagination.page}
                             ellipsisBuffer={2}

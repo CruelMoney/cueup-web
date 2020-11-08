@@ -86,7 +86,7 @@ const Pagination = ({
                 <PaginationItem
                     disabled={!previousHref}
                     onClick={handleClick(previousPage)}
-                    href={previousHref}
+                    href={previousHref ? previousHref : undefined}
                 >
                     <Icon icon={backIcon} />
                 </PaginationItem>
@@ -126,7 +126,7 @@ const Pagination = ({
             <li>
                 <PaginationItem
                     disabled={!nextHref}
-                    href={nextHref}
+                    href={nextHref ? nextHref : undefined}
                     onClick={handleClick(nextPage)}
                 >
                     <Icon icon={forwardIcon} />

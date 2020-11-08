@@ -9,7 +9,7 @@ Chat with the organizer
 
 */
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import Icon from '@iconify/react';
 import questionIcon from '@iconify/icons-simple-line-icons/question';
@@ -27,9 +27,10 @@ const Unconfirmed = ({ user }) => {
     const { data, loading } = useQuery(MY_GIGS, {
         variables: {
             limit: 8,
-            page: pagination.page,
+            pagination,
             filter: {
                 status: [gigStates.ACCEPTED],
+                afterDate: new Date(new Date().toDateString()),
             },
         },
     });

@@ -25,7 +25,7 @@ const GigCard = ({ loading, style, idx, gig, hasMessage, ...props }) => {
     const { translate } = useTranslate();
 
     const { event, offer } = gig || {};
-    const { start, name, location, description, duration, createdAt, organizer } = event || {};
+    const { id, start, name, location, description, duration, createdAt, organizer } = event || {};
 
     const createdTimeAgo = loading ? null : moment(createdAt?.UTC).fromNow();
 

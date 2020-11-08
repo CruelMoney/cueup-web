@@ -135,13 +135,12 @@ const VERIFY_EMAIL = gql`
 
 const MY_GIGS = gql`
     query MyGigs(
-        $limit: Int
-        $page: Int
+        $pagination: Pagination
         $currency: Currency
         $locale: String
         $filter: GigFilter
     ) {
-        myGigs(pagination: { limit: $limit, page: $page }, filter: $filter) {
+        myGigs(pagination: $pagination, filter: $filter) {
             __typename
             edges {
                 id

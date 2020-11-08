@@ -18,7 +18,7 @@
  
 */
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import Icon from '@iconify/react';
 import questionIcon from '@iconify/icons-simple-line-icons/question';
@@ -36,15 +36,11 @@ const Opportunities = ({ user }) => {
     const { data, loading } = useQuery(MY_GIGS, {
         variables: {
             limit: 8,
-            page: pagination.page,
+            pagination,
             filter: {
-                status: [
-                    gigStates.CANCELLED,
-                    gigStates.DECLINED,
-                    gigStates.EVENT_CANCELLED,
-                    gigStates.LOST,
-                    gigStates.ORGANIZER_DECLINED,
-                ],
+                status: [gigStates.REQUESTED],
+                directBooking: false,
+                afterDate: new Date(new Date().toDateString()),
             },
         },
     });
