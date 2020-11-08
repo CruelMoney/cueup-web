@@ -25,32 +25,32 @@ import questionIcon from '@iconify/icons-simple-line-icons/question';
 import { MY_GIGS } from 'components/gql';
 import { BodySmall, H3 } from 'components/Text';
 import GreyBox from 'components/GreyBox';
-import { gigStates } from 'constants/constants';
 import Layout from '../components/Layout';
+import { MY_OPPORTUNITIES } from '../gql';
 
 const Opportunities = ({ user }) => {
     const [pagination, setPagination] = useState({
         page: 1,
+        limit: 8,
     });
 
-    const { data, loading } = useQuery(MY_GIGS, {
-        fetchPolicy: 'network-only',
+    const { data, loading } = useQuery(MY_OPPORTUNITIES, {
         variables: {
-            limit: 8,
             pagination,
-            filter: {
-                status: [gigStates.REQUESTED],
-                directBooking: false,
-                afterDate: new Date(new Date().toDateString()),
-            },
         },
     });
 
-    const pageInfo = data?.myGigs?.pageInfo;
-    const gigs = loading ? [null, null, null, null, null] : data?.myGigs?.edges || [];
+    const pageInfo = data?.opportunities?.pageInfo;
+    let gigs = data?.opportunities?.edges || [];
+    if (loading) {
+        gigs = [null, null, null, null, null];
+    } else {
+        gigs = gigs.map((event) => ({ id: event.id, event }));
+    }
 
     return (
         <Layout
+            opportunity
             title={'Opportunities'}
             gigs={gigs}
             loading={loading}
@@ -73,8 +73,7 @@ const EmptyChildren = () => {
                 style={{ fontSize: 30, marginBottom: 12, color: '#31DAFF' }}
             />
             <H3 small style={{ textAlign: 'center' }}>
-                Gigs you decline, canceled events, and{'\n'} gigs that are not relevant anymore show
-                up here.
+                No more opportunities today,{'\n'} come back later.
             </H3>
         </>
     );
@@ -84,12 +83,10 @@ const RightSide = () => {
     return (
         <>
             <GreyBox>
-                <H3 small>What are archived gigs?</H3>
+                <H3 small>What are opportunities?</H3>
                 <BodySmall>
-                    Commodo culpa consectetur est dolore incididunt aliqua. Amet pariatur eiusmod
-                    tempor laborum enim consectetur. Et aliquip nulla ut in irure adipisicing nulla
-                    deserunt qui labore id consectetur deserunt occaecat. Esse qui sint adipisicing
-                    qui.
+                    Opportunities are events in your area without a DJ. This is your chance to
+                    connect with the organizer and get a gig.
                 </BodySmall>
             </GreyBox>
         </>

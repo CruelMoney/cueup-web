@@ -19,6 +19,7 @@ const Layout = ({
     pagination,
     setPagination,
     rightSideChildren,
+    opportunity,
 }) => {
     const { pathname } = useLocation();
 
@@ -43,11 +44,16 @@ const Layout = ({
                         onMouseEnter={() => LazyGig.preload()}
                         hasMessage={gig?.hasMessage}
                         gig={gig}
+                        opportunity={opportunity}
                     />
                 ))}
 
                 {!gigs.length && (
-                    <Col center middle style={{ flexGrow: 1, maxWidth: 450, alignSelf: 'center' }}>
+                    <Col
+                        center
+                        middle
+                        style={{ flexGrow: 1, maxWidth: 450, alignSelf: 'center', marginTop: 100 }}
+                    >
                         {emptyChildren}
                     </Col>
                 )}

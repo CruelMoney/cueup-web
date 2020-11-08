@@ -67,9 +67,6 @@ const Sidebar = ({ user }) => {
                                 <NavMenuButton>
                                     <InlineIcon icon={directRequestsIcon} />
                                     Direct requests
-                                    <NotificationBubble>
-                                        <span>1</span>
-                                    </NotificationBubble>
                                 </NavMenuButton>
                             </NavLink>
                         </li>
@@ -78,9 +75,6 @@ const Sidebar = ({ user }) => {
                                 <NavMenuButton>
                                     <InlineIcon icon={opportunitiesIcon} />
                                     Opportunities
-                                    <NotificationBubble>
-                                        <span>6</span>
-                                    </NotificationBubble>
                                 </NavMenuButton>
                             </NavLink>
                         </li>
@@ -91,9 +85,6 @@ const Sidebar = ({ user }) => {
                                 <NavMenuButton>
                                     <InlineIcon icon={inProgressIcon} />
                                     Unconfirmed
-                                    <NotificationBubble>
-                                        <span>1</span>
-                                    </NotificationBubble>
                                 </NavMenuButton>
                             </NavLink>
                         </li>
@@ -103,9 +94,6 @@ const Sidebar = ({ user }) => {
                                 <NavMenuButton>
                                     <InlineIcon icon={upcomingIcon} />
                                     Upcoming
-                                    <NotificationBubble>
-                                        <span>1</span>
-                                    </NotificationBubble>
                                 </NavMenuButton>
                             </NavLink>
                         </li>

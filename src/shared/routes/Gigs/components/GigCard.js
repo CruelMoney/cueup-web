@@ -9,6 +9,7 @@ import moment from 'moment-timezone';
 import Skeleton from 'react-loading-skeleton';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
+import { gigStates } from 'constants/constants';
 import {
     Col,
     keyframeFadeIn,
@@ -18,10 +19,11 @@ import {
     RowWrap,
     PillLarge,
     PrimaryButton,
+    SecondaryButton,
 } from '../../../components/Blocks';
 import { SmallHeader, BodySmall, BodyBold, SmallBold } from '../../../components/Text';
 
-const GigCard = ({ loading, style, idx, gig, hasMessage, ...props }) => {
+const GigCard = ({ loading, style, idx, gig, hasMessage, opportunity, ...props }) => {
     const { translate } = useTranslate();
 
     const { event, offer } = gig || {};
@@ -40,9 +42,7 @@ const GigCard = ({ loading, style, idx, gig, hasMessage, ...props }) => {
                 <Content>
                     <RowWrap style={{ marginBottom: '24px', width: '100%' }}>
                         <Col>
-                            <SmallHeader>
-                                {name || <Skeleton width={200} />} ({id})
-                            </SmallHeader>
+                            <SmallHeader>{name || <Skeleton width={200} />}</SmallHeader>
 
                             <BodySmall>
                                 {!loading ? (
@@ -108,6 +108,7 @@ const GigCard = ({ loading, style, idx, gig, hasMessage, ...props }) => {
                         hasMessage={hasMessage}
                         gig={gig}
                         name={name}
+                        opportunity={opportunity}
                     />
                 </Content>
                 <Shadow />
@@ -116,9 +117,72 @@ const GigCard = ({ loading, style, idx, gig, hasMessage, ...props }) => {
     );
 };
 
-const Offer = ({ offer, gig, hasMessage, loading }) => {
+const DeclinedActions = ({ id }) => {
     const { translate } = useTranslate();
-    const { statusHumanized, id } = gig || {};
+    return (
+        <Buttons>
+            <NavLink
+                to={{
+                    pathname: `${translate(appRoutes.gig)}/${id}`,
+                }}
+            >
+                <TeritaryButton>Undo decline</TeritaryButton>
+            </NavLink>
+            <SecondaryButton>View details</SecondaryButton>
+        </Buttons>
+    );
+};
+
+const DefaultActions = ({ id }) => {
+    return (
+        <Buttons>
+            <SecondaryButton>View details</SecondaryButton>
+        </Buttons>
+    );
+};
+
+const RequestedActions = ({ id, opportunity }) => {
+    return (
+        <Buttons>
+            <TeritaryButton>{opportunity ? 'Pass' : 'Decline'}</TeritaryButton>
+            <PrimaryButton>View details</PrimaryButton>
+        </Buttons>
+    );
+};
+const AcceptedActions = ({ id }) => {
+    return (
+        <Buttons>
+            <TeritaryButton>Decline</TeritaryButton>
+            <PrimaryButton>View details</PrimaryButton>
+        </Buttons>
+    );
+};
+
+const ConfirmedActions = ({ id }) => {
+    return (
+        <Buttons>
+            <TeritaryButton>Cancel gig</TeritaryButton>
+            <PrimaryButton>View details</PrimaryButton>
+        </Buttons>
+    );
+};
+
+const actions = {
+    [gigStates.DECLINED]: DeclinedActions,
+    [gigStates.EVENT_CANCELLED]: DefaultActions,
+    [gigStates.ACCEPTED]: AcceptedActions,
+    [gigStates.CANCELLED]: DefaultActions,
+    [gigStates.CONFIRMED]: ConfirmedActions,
+    [gigStates.FINISHED]: DefaultActions,
+    [gigStates.LOST]: DefaultActions,
+    [gigStates.ORGANIZER_DECLINED]: DefaultActions,
+    [gigStates.REQUESTED]: RequestedActions,
+};
+
+const Offer = ({ offer, gig, hasMessage, loading, opportunity }) => {
+    const { statusHumanized, status, id } = gig || {};
+
+    const Actions = actions[status] || DefaultActions;
 
     return (
         <OfferRow middle>
@@ -131,31 +195,21 @@ const Offer = ({ offer, gig, hasMessage, loading }) => {
             </OfferTextWrapper>
             <Filler />
 
-            <Buttons>
-                {loading ? (
+            {loading ? (
+                <Buttons>
                     <Skeleton height={40} width={200} />
-                ) : (
-                    <>
-                        <NavLink
-                            to={{
-                                pathname: `${translate(appRoutes.gig)}/${id}`,
-                            }}
-                        >
-                            <TeritaryButton data-cy="gig-read-more">Decline</TeritaryButton>
-                        </NavLink>
-
-                        <PrimaryButton data-cy="gig-read-more">View details</PrimaryButton>
-                        {hasMessage && (
-                            <span>
-                                <div className="notification-bubble relative">!</div>
-                                <SmallBold demi muted style={{ display: 'inline-block' }}>
-                                    New message
-                                </SmallBold>
-                            </span>
-                        )}
-                    </>
-                )}
-            </Buttons>
+                </Buttons>
+            ) : (
+                <Actions id={id} opportunity={opportunity} />
+            )}
+            {hasMessage && (
+                <span>
+                    <div className="notification-bubble relative">!</div>
+                    <SmallBold demi muted style={{ display: 'inline-block' }}>
+                        New message
+                    </SmallBold>
+                </span>
+            )}
         </OfferRow>
     );
 };

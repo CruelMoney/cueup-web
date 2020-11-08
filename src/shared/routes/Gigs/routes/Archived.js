@@ -22,12 +22,11 @@ const Archived = ({ user }) => {
     const [pagination, setPagination] = useState({
         page: 1,
         orderBy: 'UPDATED_AT_DESCENDING',
+        limit: 8,
     });
 
     const { data, loading } = useQuery(MY_GIGS, {
-        fetchPolicy: 'network-only',
         variables: {
-            limit: 8,
             pagination,
             filter: {
                 status: [
@@ -44,6 +43,8 @@ const Archived = ({ user }) => {
 
     const pageInfo = data?.myGigs?.pageInfo;
     const gigs = loading ? [null, null, null, null, null] : data?.myGigs?.edges || [];
+
+    console.log({ pageInfo, pagination });
 
     return (
         <Layout

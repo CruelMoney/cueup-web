@@ -22,12 +22,12 @@ import Layout from '../components/Layout';
 const Completed = ({ user }) => {
     const [pagination, setPagination] = useState({
         page: 1,
+        limit: 8,
         orderBy: 'START_TIME_DESCENDING',
     });
 
     const { data, loading } = useQuery(MY_GIGS, {
         variables: {
-            limit: 8,
             pagination,
             filter: {
                 status: [gigStates.FINISHED],
@@ -38,8 +38,6 @@ const Completed = ({ user }) => {
 
     const pageInfo = data?.myGigs?.pageInfo;
     const gigs = loading ? [null, null, null, null, null] : data?.myGigs?.edges || [];
-
-    console.log({ gigs });
 
     return (
         <Layout

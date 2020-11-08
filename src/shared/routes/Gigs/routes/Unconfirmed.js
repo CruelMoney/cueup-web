@@ -22,12 +22,11 @@ import Layout from '../components/Layout';
 const Unconfirmed = ({ user }) => {
     const [pagination, setPagination] = useState({
         page: 1,
+        limit: 8,
     });
 
     const { data, loading } = useQuery(MY_GIGS, {
-        fetchPolicy: 'network-only',
         variables: {
-            limit: 8,
             pagination,
             filter: {
                 status: [gigStates.ACCEPTED],

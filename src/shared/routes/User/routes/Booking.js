@@ -443,23 +443,6 @@ const EventForm = ({
                         registerValidation={registerValidation('description')}
                         unregisterValidation={unregisterValidation('description')}
                     />
-
-                    {!user.isOwn && !isDirect && (
-                        <RadioSelect
-                            containerStyle={{ width: 'auto', marginRight: 44, marginBottom: 20 }}
-                            multi
-                            setChosen={() => setValue({ openForAllDjs: !form.openForAllDjs })}
-                            options={[
-                                {
-                                    checked: form.openForAllDjs,
-                                    title: 'Allow other DJs to make offers',
-                                    description:
-                                        "Other DJs in the area can make an offer if they're interested in your event.",
-                                    value: 'openForAllDjs',
-                                },
-                            ]}
-                        />
-                    )}
                 </SettingsSection>
             </Col>
         )}
