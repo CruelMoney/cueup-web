@@ -109,7 +109,7 @@ const Earnings = ({ gigs }) => {
                 <Body>{gigs.length}</Body>
             </div>
             <div>
-                <H3 small>Profit</H3>
+                <H3 small>Profits</H3>
                 <Body>{formattedProfit}</Body>
             </div>
             <div>

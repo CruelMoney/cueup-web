@@ -13,6 +13,9 @@ import { Col, Row, HideBelow, SecondaryButton, Hr, Container } from '../../../co
 import DirectRequests from '../routes/DirectRequests';
 import Archived from '../routes/Archived';
 import Completed from '../routes/Completed';
+import Unconfirmed from '../routes/Unconfirmed';
+import Opportunities from '../routes/Opportunities';
+import Upcoming from '../routes/Upcoming';
 import Sidebar from './Sidebar';
 
 const DataWrapper = () => {
@@ -50,6 +53,16 @@ const DataWrapper = () => {
                         />
                         <Route path={'/u/gigs/archived'} render={() => <Archived user={me} />} />
                         <Route path={'/u/gigs/completed'} render={() => <Completed user={me} />} />
+                        <Route
+                            path={'/u/gigs/unconfirmed'}
+                            render={() => <Unconfirmed user={me} />}
+                        />
+                        <Route
+                            path={'/u/gigs/opportunities'}
+                            render={() => <Opportunities user={me} />}
+                        />
+                        <Route path={'/u/gigs/upcoming'} render={() => <Upcoming user={me} />} />
+                        <Redirect to={'/u/gigs/direct-requests'} />
                     </Switch>
                 </Row>
             </Container>

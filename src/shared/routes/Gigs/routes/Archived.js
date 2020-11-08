@@ -13,7 +13,7 @@ import { useQuery } from '@apollo/client';
 import Icon from '@iconify/react';
 import questionIcon from '@iconify/icons-simple-line-icons/question';
 import { MY_GIGS } from 'components/gql';
-import { Body, BodySmall, H2, H3, HeaderTitle, Title } from 'components/Text';
+import { BodySmall, H3 } from 'components/Text';
 import GreyBox from 'components/GreyBox';
 import { gigStates } from 'constants/constants';
 import Layout from '../components/Layout';

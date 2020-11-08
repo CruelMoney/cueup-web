@@ -1,14 +1,13 @@
 /* 
 
-Unconfirmed gigs
+Lost, declined, finished, Canceled 
 
-Work on closing the deal
+Passed oppertunities / declined can be undone. 
 
-Chat with the organizer 
+
 
 
 */
-
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import Icon from '@iconify/react';
@@ -19,7 +18,7 @@ import GreyBox from 'components/GreyBox';
 import { gigStates } from 'constants/constants';
 import Layout from '../components/Layout';
 
-const Unconfirmed = ({ user }) => {
+const Upcoming = ({ user }) => {
     const [pagination, setPagination] = useState({
         page: 1,
     });
@@ -29,7 +28,7 @@ const Unconfirmed = ({ user }) => {
             limit: 8,
             page: pagination.page,
             filter: {
-                status: [gigStates.ACCEPTED],
+                status: [gigStates.CONFIRMED],
             },
         },
     });
@@ -39,7 +38,7 @@ const Unconfirmed = ({ user }) => {
 
     return (
         <Layout
-            title={'Unconfirmed gigs'}
+            title={'Upcoming gigs'}
             gigs={gigs}
             loading={loading}
             pagination={{
@@ -72,7 +71,7 @@ const RightSide = () => {
     return (
         <>
             <GreyBox>
-                <H3 small>What are archived gigs?</H3>
+                <H3 small>What are upcoming gigs?</H3>
                 <BodySmall>
                     Commodo culpa consectetur est dolore incididunt aliqua. Amet pariatur eiusmod
                     tempor laborum enim consectetur. Et aliquip nulla ut in irure adipisicing nulla
@@ -84,4 +83,4 @@ const RightSide = () => {
     );
 };
 
-export default Unconfirmed;
+export default Upcoming;

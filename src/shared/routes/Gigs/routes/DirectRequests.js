@@ -43,7 +43,6 @@ import Layout from '../components/Layout';
 import swirlyArrow from '../assets/swirly-scribbled-arrow.png';
 
 const DirectRequests = ({ user }) => {
-    const { pathname } = useLocation();
     const [pagination, setPagination] = useState({
         page: 1,
     });
