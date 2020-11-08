@@ -41,3 +41,14 @@ export const MY_OPPORTUNITIES = gql`
         }
     }
 `;
+
+export const UNDO_DECLINE = gql`
+    mutation undoDeclineGig($id: ID!) {
+        undoDeclineGig(gigId: $id) {
+            id
+            statusHumanized
+            status
+            isActionable
+        }
+    }
+`;

@@ -26,6 +26,7 @@ const Archived = ({ user }) => {
     });
 
     const { data, loading } = useQuery(MY_GIGS, {
+        fetchPolicy: 'cache-first',
         variables: {
             pagination,
             filter: {
@@ -36,15 +37,13 @@ const Archived = ({ user }) => {
                     gigStates.LOST,
                     gigStates.ORGANIZER_DECLINED,
                 ],
-                afterDate: new Date(new Date(0).toDateString()),
+                afterDate: new Date(new Date().toDateString()),
             },
         },
     });
 
     const pageInfo = data?.myGigs?.pageInfo;
     const gigs = loading ? [null, null, null, null, null] : data?.myGigs?.edges || [];
-
-    console.log({ pageInfo, pagination });
 
     return (
         <Layout

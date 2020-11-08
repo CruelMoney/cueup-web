@@ -7,6 +7,7 @@ import timeIcon from '@iconify/icons-ion/ios-time';
 import { InlineIcon } from '@iconify/react';
 import moment from 'moment-timezone';
 import Skeleton from 'react-loading-skeleton';
+import { useMutation } from '@apollo/client';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import { gigStates } from 'constants/constants';
@@ -20,8 +21,10 @@ import {
     PillLarge,
     PrimaryButton,
     SecondaryButton,
+    SmartButton,
 } from '../../../components/Blocks';
 import { SmallHeader, BodySmall, BodyBold, SmallBold } from '../../../components/Text';
+import { UNDO_DECLINE } from '../gql';
 
 const GigCard = ({ loading, style, idx, gig, hasMessage, opportunity, ...props }) => {
     const { translate } = useTranslate();
@@ -118,16 +121,17 @@ const GigCard = ({ loading, style, idx, gig, hasMessage, opportunity, ...props }
 };
 
 const DeclinedActions = ({ id }) => {
-    const { translate } = useTranslate();
+    const [mutate, { loading }] = useMutation(UNDO_DECLINE, {
+        variables: {
+            id,
+        },
+    });
+
     return (
         <Buttons>
-            <NavLink
-                to={{
-                    pathname: `${translate(appRoutes.gig)}/${id}`,
-                }}
-            >
-                <TeritaryButton>Undo decline</TeritaryButton>
-            </NavLink>
+            <SmartButton loading={loading} level="tertiary" onClick={mutate}>
+                Undo decline
+            </SmartButton>
             <SecondaryButton>View details</SecondaryButton>
         </Buttons>
     );
@@ -141,10 +145,19 @@ const DefaultActions = ({ id }) => {
     );
 };
 
-const RequestedActions = ({ id, opportunity }) => {
+const RequestedActions = ({ id }) => {
     return (
         <Buttons>
-            <TeritaryButton>{opportunity ? 'Pass' : 'Decline'}</TeritaryButton>
+            <TeritaryButton>Decline</TeritaryButton>
+            <PrimaryButton>View details</PrimaryButton>
+        </Buttons>
+    );
+};
+
+const OppertunityActions = ({ id }) => {
+    return (
+        <Buttons>
+            <TeritaryButton>Pass</TeritaryButton>
             <PrimaryButton>View details</PrimaryButton>
         </Buttons>
     );
@@ -182,7 +195,10 @@ const actions = {
 const Offer = ({ offer, gig, hasMessage, loading, opportunity }) => {
     const { statusHumanized, status, id } = gig || {};
 
-    const Actions = actions[status] || DefaultActions;
+    let Actions = actions[status] || DefaultActions;
+    if (opportunity) {
+        Actions = OppertunityActions;
+    }
 
     return (
         <OfferRow middle>
