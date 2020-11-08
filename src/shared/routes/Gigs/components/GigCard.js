@@ -40,7 +40,9 @@ const GigCard = ({ loading, style, idx, gig, hasMessage, ...props }) => {
                 <Content>
                     <RowWrap style={{ marginBottom: '24px', width: '100%' }}>
                         <Col>
-                            <SmallHeader>{name || <Skeleton width={200} />}</SmallHeader>
+                            <SmallHeader>
+                                {name || <Skeleton width={200} />} ({id})
+                            </SmallHeader>
 
                             <BodySmall>
                                 {!loading ? (

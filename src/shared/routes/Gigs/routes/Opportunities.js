@@ -34,6 +34,7 @@ const Opportunities = ({ user }) => {
     });
 
     const { data, loading } = useQuery(MY_GIGS, {
+        fetchPolicy: 'network-only',
         variables: {
             limit: 8,
             pagination,

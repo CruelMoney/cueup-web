@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router';
 
+import { Helmet } from 'react-helmet-async';
 import LazyGig from 'routes/Gig';
 import { Col, Hr, Row } from 'components/Blocks';
 import { HeaderTitle } from 'components/Text';
@@ -21,8 +22,15 @@ const Layout = ({
 }) => {
     const { pathname } = useLocation();
 
+    const metaTitle = `${title} · Cueup`;
     return (
         <Row style={{ flex: 1 }}>
+            <Helmet>
+                <title>{metaTitle}</title>
+                <meta property="og:title" content={metaTitle} />
+                <meta name="twitter:title" content={metaTitle} />
+                <meta name="robots" content="noindex" />
+            </Helmet>
             <Col style={{ flexGrow: 1 }}>
                 <HeaderTitle dark>{title}</HeaderTitle>
                 <Hr style={{ marginBottom: 24 }} />

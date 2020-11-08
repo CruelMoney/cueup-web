@@ -21,9 +21,11 @@ import Layout from '../components/Layout';
 const Archived = ({ user }) => {
     const [pagination, setPagination] = useState({
         page: 1,
+        orderBy: 'UPDATED_AT_DESCENDING',
     });
 
     const { data, loading } = useQuery(MY_GIGS, {
+        fetchPolicy: 'network-only',
         variables: {
             limit: 8,
             pagination,
