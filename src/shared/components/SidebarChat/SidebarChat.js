@@ -26,20 +26,35 @@ import {
 } from './blocks';
 import ChatConfirmBeforeContact from './ChatConfirmBeforeContact';
 
-const gigToChatConfig = ({ isFromEvent, organizer, dj, eventId, notifications }) => (gig) => {
+const gigToChatConfig = ({
+    isFromEvent,
+    organizer,
+    dj,
+    eventId,
+    eventHash,
+    notifications,
+    systemMessages,
+}) => (gig) => {
     const theDj = {
         id: dj?.id,
         nickName: dj?.artistName,
         name: dj?.userMetadata.firstName,
         image: dj?.picture.path,
-        permalink: dj?.permalink,
     };
     const theOrganizer = {
-        id: organizer.id,
-        nickName: organizer.artistName,
-        name: organizer.userMetadata.firstName,
-        image: organizer.picture.path,
+        id: organizer?.id,
+        nickName: organizer?.artistName,
+        name: organizer?.userMetadata.firstName,
+        image: organizer?.picture.path,
     };
+
+    let url;
+
+    if (isFromEvent) {
+        url = `/user/${dj?.permalink}?gigId=${gig.id}&eventId=${eventId}&hash=${eventHash}`;
+    } else {
+        url = '/gig/' + gig.id;
+    }
 
     return {
         ...gig,
@@ -50,6 +65,9 @@ const gigToChatConfig = ({ isFromEvent, organizer, dj, eventId, notifications })
         hasMessage:
             notifications[gig.id] && notifications[gig.id].read < notifications[gig.id].total,
         eventId,
+        url,
+        isFromEvent,
+        systemMessages,
     };
 };
 
@@ -82,17 +100,31 @@ const SidebarChat = () => {
 
 const SidebarChatDj = ({ activeChat, activeGig, notifications, setActiveChat }) => {
     const { data } = useQuery(ME);
+    const history = useHistory();
+
+    const navigateToOffer = useCallback(() => {
+        setActiveChat(null);
+        history.push(`/gig/${activeGig.id}/offer`);
+    }, [activeGig, setActiveChat, history]);
+    const showDecline = useCallback(() => history.push(`/gig/${activeGig.id}/decline`), [
+        activeGig,
+        history,
+    ]);
 
     if (!data?.me) {
         return null;
     }
+
+    const systemMessage = getSystemMessage({ gig: activeGig, navigateToOffer, showDecline });
 
     const chats = [
         gigToChatConfig({
             notifications,
             organizer: activeGig?.event?.organizer,
             eventId: activeGig?.event?.id,
+            eventHash: activeGig?.event?.hash,
             dj: data?.me,
+            systemMessages: [systemMessage],
         })(activeGig),
     ];
 
@@ -130,6 +162,7 @@ const SidebarChatOrganizer = ({ notifications, activeChat, activeEvent, setActiv
                 dj: g.dj,
                 isFromEvent: true,
                 eventId: activeEvent?.id,
+                eventHash: activeEvent?.hash,
             })(g)
         );
 
@@ -257,8 +290,7 @@ const ChatBubble = ({ receiver, onClick, active, hasMessage }) => {
 };
 
 const ChatWrapper = ({ chat, event, onClose }) => {
-    const { receiver, chatId } = chat;
-    const { translate } = useTranslate();
+    const { receiver, chatId, url, isFromEvent } = chat;
     const history = useHistory();
     const location = useLocation();
 
@@ -268,35 +300,38 @@ const ChatWrapper = ({ chat, event, onClose }) => {
         };
     }, []);
 
-    const pathname = `${translate(appRoutes.user)}/${receiver.permalink}/${userRoutes.overview}`;
-
     const handleMessageError = useCallback(
         (error) => {
             if (error.status === 403) {
                 // forbidden / trying to send contact info
                 const currentPath = location.pathname === '/' ? '' : location.pathname;
-                history.push(currentPath + '/chat-confirm-first');
+
+                const newPath = isFromEvent ? '/chat-confirm-first' : '/chat-get-pro';
+                history.push(currentPath.replaceAll(newPath, '') + newPath);
             }
         },
-        [history, location]
+        [history, location, isFromEvent]
     );
 
+    console.log({ chat });
     return (
         <ChatBox
             onMouseEnter={() => (document.body.style.overflowY = 'hidden')}
             onMouseLeave={() => (document.body.style.overflowY = '')}
         >
             <ChatHeader>
-                <Col>
+                <Col style={{ width: '100%' }}>
                     <Row between>
                         <NavLink
                             to={{
-                                pathname,
+                                pathname: url,
                                 state: { gigId: chatId },
-                                search: `?gigId=${chatId}&eventId=${event.id}&hash=${event.hash}`,
                             }}
                         >
-                            <TeritaryButton isWrapper title={`See ${receiver.name}'s profile`}>
+                            <TeritaryButton
+                                isWrapper
+                                title={isFromEvent ? `See ${receiver.name}'s profile` : 'Go to gig'}
+                            >
                                 <Row middle>
                                     <Avatar
                                         small
@@ -313,22 +348,43 @@ const ChatWrapper = ({ chat, event, onClose }) => {
 
                         <ClosePopupButton small onClick={onClose} />
                     </Row>
-                    <a
-                        href={'https://cueup.zendesk.com/hc/en-us/articles/360017164300'}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <BodySmall
-                            style={{
-                                fontSize: 14,
-                                marginTop: 3,
-                                marginLeft: 6,
-                                textDecoration: 'underline',
-                            }}
+                    {isFromEvent ? (
+                        <a
+                            href={'https://cueup.zendesk.com/hc/en-us/articles/360017164300'}
+                            target="_blank"
+                            rel="noopener noreferrer"
                         >
-                            You have money-back guarantee when confirming the booking through Cueup.
-                        </BodySmall>
-                    </a>
+                            <BodySmall
+                                style={{
+                                    fontSize: 14,
+                                    marginTop: 3,
+                                    marginLeft: 6,
+                                    textDecoration: 'underline',
+                                }}
+                            >
+                                You have money-back guarantee when confirming the booking through
+                                Cueup.
+                            </BodySmall>
+                        </a>
+                    ) : (
+                        <a
+                            href={'https://cueup.zendesk.com/hc/en-us/articles/360017431939'}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <BodySmall
+                                style={{
+                                    fontSize: 14,
+                                    marginTop: 3,
+                                    marginLeft: 6,
+                                    textDecoration: 'underline',
+                                }}
+                            >
+                                Complete the booking through Cueup to get a better rank and get more
+                                gigs.
+                            </BodySmall>
+                        </a>
+                    )}
                 </Col>
             </ChatHeader>
             <div style={{ flex: 1 }} />
@@ -359,6 +415,110 @@ const EmptyChat = ({ receiver }) => {
             <BodySmall>Contact information will be visible after booking confirmation.</BodySmall>
         </Col>
     );
+};
+
+const getSystemMessage = ({ gig, showDecline, navigateToOffer }) => {
+    if (!gig) {
+        return null;
+    }
+    const { status, referred } = gig;
+
+    if (referred && status === gigStates.REQUESTED) {
+        return {
+            systemMessage: true,
+            createdAt: new Date(),
+            content:
+                'The organizer is waiting on your offer. \nThis is a direct booking from your profile.',
+            actions: [
+                {
+                    label: 'Decline gig',
+                    action: showDecline,
+                },
+                {
+                    label: 'Make offer',
+                    action: navigateToOffer,
+                },
+            ],
+        };
+    }
+
+    const messages = {
+        [gigStates.REQUESTED]: {
+            systemMessage: true,
+            createdAt: new Date(),
+            content:
+                'The organizer is waiting on your offer. \nMake an offer quickly before someone else does. You can always update the offer later until the organizer has confirmed.',
+            actions: [
+                {
+                    label: 'Decline gig',
+                    action: showDecline,
+                },
+                {
+                    label: 'Make offer',
+                    action: navigateToOffer,
+                },
+            ],
+        },
+        [gigStates.ACCEPTED]: {
+            systemMessage: true,
+            createdAt: new Date(),
+            content:
+                'Waiting on confirmation from the organizer. \nYou can still update the offer if necessary.',
+            actions: [
+                {
+                    label: 'Update offer',
+                    action: navigateToOffer,
+                },
+            ],
+        },
+        [gigStates.CONFIRMED]: {
+            systemMessage: true,
+            createdAt: new Date(),
+            content:
+                'Whoop! The gig has been confirmed. \nMake sure that everything is agreed upon with the organizer, and get ready to play.',
+            actions: [
+                {
+                    label: 'See details',
+                    action: navigateToOffer,
+                },
+            ],
+        },
+        [gigStates.EVENT_CANCELLED]: {
+            systemMessage: true,
+            createdAt: new Date(),
+            content: 'The event has been cancelled.',
+        },
+        [gigStates.FINISHED]: {
+            systemMessage: true,
+            createdAt: new Date(),
+            content:
+                'The gig is finished, we hope you had a good time. \nAsk the organizer to leave a review.',
+        },
+        [gigStates.LOST]: {
+            systemMessage: true,
+            createdAt: new Date(),
+            content:
+                'Another DJ will play this gig. \nTo increase your chances of getting gigs, make sure that your profile is complete with pictures, a good bio, mixtapes etc.',
+        },
+        [gigStates.DECLINED]: {
+            systemMessage: true,
+            createdAt: new Date(),
+            content: 'You have declined this gig',
+        },
+        [gigStates.CANCELLED]: {
+            systemMessage: true,
+            createdAt: new Date(),
+            content: 'You have cancelled this gig',
+        },
+        [gigStates.ORGANIZER_DECLINED]: {
+            systemMessage: true,
+            createdAt: new Date(),
+            content:
+                'Another DJ will play this gig. \nTo increase your chances of getting gigs, make sure that your profile is complete with pictures, a good bio, mixtapes etc.',
+        },
+    };
+
+    return messages[status];
 };
 
 export default SidebarChat;

@@ -127,11 +127,13 @@ const GigContainer = styled(Container)`
 `;
 
 const Content = React.memo((props) => {
-    const { theEvent, loading, gig, history, me } = props;
+    const history = useHistory();
+    const { url } = useRouteMatch();
+    const { theEvent, loading, gig, me } = props;
     const { setAppState, activeGig } = useAppState();
 
-    const [popup, setPopup] = useState(false);
-    const showDecline = useCallback(() => setPopup(true), []);
+    const showDecline = useCallback(() => history.replace(url + '/decline'), [url, history]);
+    const hideDecline = useCallback(() => history.replace(url), [url, history]);
 
     useEffect(() => {
         if (activeGig?.id !== gig?.id) {
@@ -166,16 +168,10 @@ const Content = React.memo((props) => {
                     </Col>
                 </RowWrap>
             </GigContainer>
-            {popup && (
-                <CancelationDeclinePopup
-                    gig={gig}
-                    hide={() => setPopup(false)}
-                    onCancelled={() => {
-                        setPopup(false);
-                        history.push('information');
-                    }}
-                />
-            )}
+
+            <Route path="*/decline">
+                <CancelationDeclinePopup gig={gig} hide={hideDecline} onCancelled={hideDecline} />
+            </Route>
 
             <Route component={LazyContactInformationPopup} path={'*/contact-get-pro'} />
             <Route component={LazyChatGetProPopup} path={'*/chat-get-pro'} />
