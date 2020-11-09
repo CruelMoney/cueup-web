@@ -9,7 +9,7 @@ import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import { useAppState } from 'components/hooks/useAppState';
 import { BodySmall } from 'components/Text';
-import { LazyContactInformationPopup } from 'routes/GetProfessional';
+import { ME } from 'components/gql';
 import {
     ShadowWrapper,
     ExtraChatsLayover,
@@ -26,32 +26,92 @@ import {
 } from './blocks';
 import ChatConfirmBeforeContact from './ChatConfirmBeforeContact';
 
-const gigToChatConfig = ({ organizer, eventId, notifications }) => (gig) => ({
-    ...gig,
-    showPersonalInformation: gig.status === gigStates.CONFIRMED || gig.dj?.appMetadata?.isPro,
-    chatId: gig.id,
-    receiver: {
-        id: gig.dj?.id,
-        nickName: gig.dj?.artistName,
-        name: gig.dj?.userMetadata.firstName,
-        image: gig.dj?.picture.path,
-        permalink: gig.dj?.permalink,
-    },
-    sender: {
+const gigToChatConfig = ({ isFromEvent, organizer, dj, eventId, notifications }) => (gig) => {
+    const theDj = {
+        id: dj?.id,
+        nickName: dj?.artistName,
+        name: dj?.userMetadata.firstName,
+        image: dj?.picture.path,
+        permalink: dj?.permalink,
+    };
+    const theOrganizer = {
         id: organizer.id,
         nickName: organizer.artistName,
         name: organizer.userMetadata.firstName,
         image: organizer.picture.path,
-    },
-    hasMessage: notifications[gig.id] && notifications[gig.id].read < notifications[gig.id].total,
-    eventId,
-});
+    };
+
+    return {
+        ...gig,
+        showPersonalInformation: gig.status === gigStates.CONFIRMED || gig.dj?.appMetadata?.isPro,
+        chatId: gig.id,
+        receiver: isFromEvent ? theDj : theOrganizer,
+        sender: isFromEvent ? theOrganizer : theDj,
+        hasMessage:
+            notifications[gig.id] && notifications[gig.id].read < notifications[gig.id].total,
+        eventId,
+    };
+};
 
 const SidebarChat = () => {
-    const { notifications, activeChat, activeEvent, setAppState } = useAppState();
-    const initialized = useRef(false);
+    const { notifications, activeChat, activeEvent, activeGig, setAppState } = useAppState();
 
     const setActiveChat = useCallback((chat) => setAppState({ activeChat: chat }), [setAppState]);
+
+    if (activeEvent) {
+        return (
+            <SidebarChatOrganizer
+                notifications={notifications}
+                activeChat={activeChat}
+                activeEvent={activeEvent}
+                setAppState={setAppState}
+                setActiveChat={setActiveChat}
+            />
+        );
+    }
+
+    return (
+        <SidebarChatDj
+            notifications={notifications}
+            activeChat={activeChat}
+            activeGig={activeGig}
+            setActiveChat={setActiveChat}
+        />
+    );
+};
+
+const SidebarChatDj = ({ activeChat, activeGig, notifications, setActiveChat }) => {
+    const { data } = useQuery(ME);
+
+    if (!data?.me) {
+        return null;
+    }
+
+    const chats = [
+        gigToChatConfig({
+            notifications,
+            organizer: activeGig?.event?.organizer,
+            eventId: activeGig?.event?.id,
+            dj: data?.me,
+        })(activeGig),
+    ];
+
+    if (!chats?.length) {
+        return null;
+    }
+
+    return (
+        <InnerContent
+            chats={chats}
+            setActiveChat={setActiveChat}
+            activeChat={activeChat}
+            event={activeGig?.event}
+        />
+    );
+};
+
+const SidebarChatOrganizer = ({ notifications, activeChat, activeEvent, setActiveChat }) => {
+    const initialized = useRef(false);
 
     const { data } = useQuery(EVENT_GIGS, {
         skip: !activeEvent?.id,
@@ -63,12 +123,14 @@ const SidebarChat = () => {
 
     const chats = data?.event?.gigs
         .filter((g) => !!g.lastChatMessage || notifications[g.id] || activeChat === g.id)
-        .map(
+        .map((g) =>
             gigToChatConfig({
                 notifications,
                 organizer: activeEvent.organizer,
+                dj: g.dj,
+                isFromEvent: true,
                 eventId: activeEvent?.id,
-            })
+            })(g)
         );
 
     // open the latest chat

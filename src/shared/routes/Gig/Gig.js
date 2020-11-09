@@ -9,6 +9,7 @@ import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { LazyContactInformationPopup, LazyChatGetProPopup } from 'routes/GetProfessional';
 import Menu from 'components/Navigation';
 import GreyBox from 'components/GreyBox';
+import { useAppState } from 'components/hooks/useAppState';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col, Hr, RowWrap } from '../../components/Blocks';
@@ -127,9 +128,16 @@ const GigContainer = styled(Container)`
 
 const Content = React.memo((props) => {
     const { theEvent, loading, gig, history, me } = props;
+    const { setAppState, activeGig } = useAppState();
 
     const [popup, setPopup] = useState(false);
     const showDecline = useCallback(() => setPopup(true), []);
+
+    useEffect(() => {
+        if (activeGig?.id !== gig?.id) {
+            setAppState({ showSideBarChat: true, activeEvent: null, activeGig: gig });
+        }
+    }, [setAppState, gig, activeGig]);
 
     return (
         <div>

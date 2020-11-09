@@ -48,6 +48,7 @@ const GIG = gql`
             }
             event {
                 id
+                hash
                 name
                 guestsCount
                 contactEmail

@@ -28,7 +28,7 @@ const HeaderMobile = (props) => {
             <GradientBg
                 isPro={user?.appMetadata.isPro}
                 coverPhoto={user && user.coverPhoto}
-                style={{ marginBottom: 100, paddingTop: 100 }}
+                style={{ marginBottom: 30, paddingTop: 100 }}
             >
                 <Container>
                     {children}
@@ -105,7 +105,7 @@ const ProfileImage = ({ src, style, ...props }) => {
                 borderRadius: '50%',
                 overflow: 'hidden',
                 border: '6px solid white',
-                marginBottom: '-100px',
+                marginBottom: '-30px',
                 backgroundColor: 'white',
                 ...style,
             }}
@@ -123,9 +123,5 @@ const ProfileImage = ({ src, style, ...props }) => {
         </div>
     );
 };
-
-const TwoCol = styled.div`
-    column-count: 2;
-`;
 
 export default HeaderMobile;

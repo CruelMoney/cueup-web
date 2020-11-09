@@ -8,6 +8,7 @@ const defaultState = {
     activeChat: null,
     showSideBarChat: false,
     activeEvent: null,
+    activeGig: null,
 };
 export const AppContext = createContext(defaultState);
 
