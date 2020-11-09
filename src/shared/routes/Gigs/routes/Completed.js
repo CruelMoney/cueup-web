@@ -51,6 +51,7 @@ const Completed = ({ user }) => {
             setPagination={setPagination}
             emptyChildren={<EmptyChildren />}
             rightSideChildren={<RightSide />}
+            user={user}
         >
             <Earnings gigs={gigs} />
         </Layout>

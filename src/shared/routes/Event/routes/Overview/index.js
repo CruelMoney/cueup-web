@@ -76,6 +76,10 @@ const EventGigs = React.forwardRef((props, ref) => {
         }
     }, [refetchTries, refetch, gigs, status]);
 
+    if (theEvent && !organizer?.appMetadata?.emailVerified) {
+        return <EmailNotVerifiedSection gigs={gigs} organizer={organizer} />;
+    }
+
     if (gigs.length === 0 && loading) {
         return (
             <>
@@ -84,10 +88,6 @@ const EventGigs = React.forwardRef((props, ref) => {
                 <LoadingPlaceholder2 style={{ marginTop: 24 }} />
             </>
         );
-    }
-
-    if (theEvent && !organizer?.appMetadata?.emailVerified) {
-        return <EmailNotVerifiedSection gigs={gigs} organizer={organizer} />;
     }
 
     if (!gigs.length) {

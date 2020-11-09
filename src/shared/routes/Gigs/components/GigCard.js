@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import calendarIcon from '@iconify/icons-ion/ios-calendar';
@@ -11,6 +11,7 @@ import { useMutation } from '@apollo/client';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import { gigStates } from 'constants/constants';
+import CancelationDeclinePopup from 'routes/Gig/components/CancelationDeclinePopup';
 import {
     Col,
     keyframeFadeIn,
@@ -28,12 +29,14 @@ import { UNDO_DECLINE } from '../gql';
 
 const GigCard = ({ loading, style, idx, gig, hasMessage, opportunity, ...props }) => {
     const { translate } = useTranslate();
+    const [showDecline, setShowDecline] = useState(false);
 
     const { event, offer } = gig || {};
     const { id, start, name, location, description, duration, createdAt, organizer } = event || {};
 
     const createdTimeAgo = loading ? null : moment(createdAt?.UTC).fromNow();
 
+    console.log({ showDecline });
     return (
         <Wrapper idx={idx} disabled={loading} {...props}>
             <Card
@@ -112,10 +115,21 @@ const GigCard = ({ loading, style, idx, gig, hasMessage, opportunity, ...props }
                         gig={gig}
                         name={name}
                         opportunity={opportunity}
+                        showDecline={(e) => {
+                            e.preventDefault();
+                            setShowDecline(true);
+                        }}
                     />
                 </Content>
                 <Shadow />
             </Card>
+            {showDecline && (
+                <CancelationDeclinePopup
+                    gig={gig}
+                    hide={() => setShowDecline(false)}
+                    onCancelled={console.log}
+                />
+            )}
         </Wrapper>
     );
 };
@@ -145,36 +159,36 @@ const DefaultActions = ({ id }) => {
     );
 };
 
-const RequestedActions = ({ id }) => {
+const RequestedActions = ({ id, showDecline }) => {
     return (
         <Buttons>
-            <TeritaryButton>Decline</TeritaryButton>
+            <TeritaryButton onClick={showDecline}>Decline</TeritaryButton>
             <PrimaryButton>View details</PrimaryButton>
         </Buttons>
     );
 };
 
-const OppertunityActions = ({ id }) => {
+const OppertunityActions = ({ id, showDecline }) => {
     return (
         <Buttons>
-            <TeritaryButton>Pass</TeritaryButton>
+            <TeritaryButton onClick={showDecline}>Pass</TeritaryButton>
             <PrimaryButton>View details</PrimaryButton>
         </Buttons>
     );
 };
-const AcceptedActions = ({ id }) => {
+const AcceptedActions = ({ id, showDecline }) => {
     return (
         <Buttons>
-            <TeritaryButton>Decline</TeritaryButton>
+            <TeritaryButton onClick={showDecline}>Decline</TeritaryButton>
             <PrimaryButton>View details</PrimaryButton>
         </Buttons>
     );
 };
 
-const ConfirmedActions = ({ id }) => {
+const ConfirmedActions = ({ id, showDecline }) => {
     return (
         <Buttons>
-            <TeritaryButton>Cancel gig</TeritaryButton>
+            <TeritaryButton onClick={showDecline}>Cancel gig</TeritaryButton>
             <PrimaryButton>View details</PrimaryButton>
         </Buttons>
     );
@@ -192,7 +206,7 @@ const actions = {
     [gigStates.REQUESTED]: RequestedActions,
 };
 
-const Offer = ({ offer, gig, hasMessage, loading, opportunity }) => {
+const Offer = ({ offer, gig, hasMessage, loading, opportunity, showDecline }) => {
     const { statusHumanized, status, id } = gig || {};
 
     let Actions = actions[status] || DefaultActions;
@@ -216,7 +230,7 @@ const Offer = ({ offer, gig, hasMessage, loading, opportunity }) => {
                     <Skeleton height={40} width={200} />
                 </Buttons>
             ) : (
-                <Actions id={id} opportunity={opportunity} />
+                <Actions id={id} opportunity={opportunity} showDecline={showDecline} />
             )}
             {hasMessage && (
                 <span>

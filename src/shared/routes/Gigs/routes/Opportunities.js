@@ -22,7 +22,6 @@ import React, { useMemo, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import Icon from '@iconify/react';
 import questionIcon from '@iconify/icons-simple-line-icons/question';
-import { MY_GIGS } from 'components/gql';
 import { BodySmall, H3 } from 'components/Text';
 import GreyBox from 'components/GreyBox';
 import Layout from '../components/Layout';

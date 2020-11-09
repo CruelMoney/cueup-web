@@ -26,7 +26,7 @@ const Archived = ({ user }) => {
     });
 
     const { data, loading } = useQuery(MY_GIGS, {
-        fetchPolicy: 'cache-first',
+        fetchPolicy: 'cache-and-network',
         variables: {
             pagination,
             filter: {
@@ -49,6 +49,7 @@ const Archived = ({ user }) => {
         <Layout
             title={'Archived gigs'}
             gigs={gigs}
+            user={user}
             loading={loading}
             pagination={{
                 ...pageInfo,

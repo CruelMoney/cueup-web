@@ -46,12 +46,12 @@ const DirectRequests = ({ user }) => {
     });
 
     const { data, loading } = useQuery(MY_GIGS, {
-        fetchPolicy: 'cache-first',
+        fetchPolicy: 'cache-and-network',
         variables: {
             pagination,
             filter: {
                 status: [gigStates.REQUESTED],
-                directBooking: true,
+                // directBooking: true,
                 afterDate: new Date(new Date().toDateString()),
             },
         },

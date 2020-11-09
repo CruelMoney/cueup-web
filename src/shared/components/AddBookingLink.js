@@ -8,9 +8,6 @@ import { Body, BodySmall, H3 } from './Text';
 import GreyBox from './GreyBox';
 
 const CustomGreyBox = styled(GreyBox)`
-    left: 50%;
-    transform: translateX(-50%);
-    margin-left: auto;
     p,
     label {
         max-width: 550px;
@@ -37,7 +34,7 @@ const AddBookingLink = ({ user, small, children }) => {
     const header = 'Your booking link';
 
     return (
-        <CustomGreyBox style={{}}>
+        <CustomGreyBox>
             {small ? <H3 small>{header}</H3> : <h2>{header}</h2>}
             <BodyEl>
                 Make it easier for people to book you on your website or social media. Copy paste

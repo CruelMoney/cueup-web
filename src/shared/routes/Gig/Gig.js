@@ -10,16 +10,12 @@ import { LazyContactInformationPopup, LazyChatGetProPopup } from 'routes/GetProf
 import Menu from 'components/Navigation';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
-import { Container, Row, Col, TeritaryButton, SmartButton } from '../../components/Blocks';
+import { Container, Row, Col } from '../../components/Blocks';
 import { gigStates } from '../../constants/constants';
-import { Title, Body } from '../../components/Text';
-import CheckboxTable from '../../components/CheckboxTable';
-import Popup from '../../components/common/Popup';
 import { ME } from '../../components/gql';
 import useLogActivity, { ACTIVITY_TYPES } from '../../components/hooks/useLogActivity';
 import useWindowSize from '../../components/hooks/useWindowSize';
-import Login from '../../components/common/Login';
-import { GIG, DECLINE_GIG, CANCEL_GIG } from './gql.js';
+import { GIG } from './gql.js';
 import GigHeader from './components/blocks/GigHeader';
 import Information from './routes/Information';
 import Offer from './routes/Offer';
@@ -29,6 +25,7 @@ import BackToProfile from './components/BackToProfile';
 import GigReview from './routes/GigReview';
 import MobileChat from './routes/MobileChat';
 import content from './content.json';
+import CancelationDeclinePopup from './components/CancelationDeclinePopup';
 
 const Index = () => {
     const location = useLocation();
@@ -166,7 +163,7 @@ const Content = React.memo((props) => {
                     )}
                 </ContainerRow>
             </GigContainer>
-            <Popup width={530} showing={popup} onClickOutside={() => setPopup(false)}>
+            {popup && (
                 <CancelationDeclinePopup
                     gig={gig}
                     hide={() => setPopup(false)}
@@ -175,7 +172,7 @@ const Content = React.memo((props) => {
                         history.push('information');
                     }}
                 />
-            </Popup>
+            )}
         </div>
     );
 });
@@ -230,97 +227,6 @@ const GigRoutes = forwardRef((props, ref) => {
         </Switch>
     );
 });
-
-const CancelationDeclinePopup = ({ gig, hide, onCancelled }) => {
-    const [reason, setReason] = useState(null);
-    const isCancel = gig.status === gigStates.CONFIRMED;
-    const mutation = isCancel ? CANCEL_GIG : DECLINE_GIG;
-    const [mutate, { loading: cancelling }] = useMutation(mutation, {
-        variables: {
-            reason,
-            id: gig.id,
-        },
-        onCompleted: () => {
-            onCancelled();
-        },
-    });
-
-    const doMutate = () => {
-        if (!reason) {
-            window.alert('Please select a reason');
-            return;
-        }
-        mutate();
-    };
-
-    const cancelText =
-        'Are you sure you want to cancel the gig? All money will be refunded to the organizer. \nPlease let us know the reason for cancelling and if we can do anything better.';
-    const declineText =
-        'Are you sure you want to decline the gig? You will not be able to get the gig back. \nPlease let us know the reason for declining so we can get you better gigs in the future.';
-
-    const declineOptions = {
-        0: {
-            label: "I can't play that day",
-        },
-        1: {
-            label: 'The gig is out of my area',
-        },
-        2: {
-            label: "I don't have the required equipment",
-        },
-        3: {
-            label: 'The gig is not my style',
-        },
-        4: {
-            label: 'I feel overqualified',
-        },
-        5: {
-            label: 'I feel underqualified',
-        },
-        6: {
-            label: 'The budget is too small',
-        },
-    };
-
-    const cancelOptions = {
-        0: {
-            label: "I can't play that day",
-        },
-        1: {
-            label: 'The organizer changed the requirements',
-        },
-        2: {
-            label: "I don't feel comfortable playing this gig",
-        },
-    };
-
-    return (
-        <div>
-            <Title>{isCancel ? 'Cancel' : 'Decline'} gig</Title>
-            <Body>{isCancel ? cancelText : declineText}</Body>
-
-            <CheckboxTable
-                style={{ marginTop: '42px', marginBottom: '42px' }}
-                options={isCancel ? cancelOptions : declineOptions}
-                onSave={setReason}
-            />
-
-            <Row style={{ marginTop: '42px' }} right>
-                <TeritaryButton type="button" onClick={hide}>
-                    Keep gig
-                </TeritaryButton>
-                <SmartButton
-                    warning
-                    loading={cancelling}
-                    level="secondary"
-                    onClick={() => doMutate()}
-                >
-                    {isCancel ? 'Cancel gig' : 'Decline gig'}
-                </SmartButton>
-            </Row>
-        </div>
-    );
-};
 
 const ContainerRow = styled(Row)`
     align-items: stretch;

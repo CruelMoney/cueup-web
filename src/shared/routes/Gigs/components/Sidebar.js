@@ -54,7 +54,7 @@ const EnableNotifications = ({ userId }) => {
 
 const Sidebar = ({ user }) => {
     return (
-        <Col style={{ maxWidth: 300, width: 300, marginRight: 60, position: 'sticky', top: 15 }}>
+        <Col style={{ maxWidth: 300, width: 300, marginRight: 30, position: 'sticky', top: 15 }}>
             <CustomGreyBox>
                 <nav>
                     <ul style={{ margin: '0.5em 0' }}>
