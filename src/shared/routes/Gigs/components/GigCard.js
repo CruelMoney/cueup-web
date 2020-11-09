@@ -30,7 +30,7 @@ import { SmallHeader, BodySmall, BodyBold, SmallBold, Body } from '../../../comp
 import { UNDO_PASS, UNDO_DECLINE, PASS_OPPORTUNITY } from '../gql';
 
 const GigCard = ({ loading, style, idx, gig, hasMessage, opportunity, ...props }) => {
-    const { event, offer, discount } = gig || {};
+    const { event, offer, referred } = gig || {};
     const { id, start, name, location, description, duration, createdAt, organizer } = event || {};
 
     const { translate } = useTranslate();
@@ -69,7 +69,7 @@ const GigCard = ({ loading, style, idx, gig, hasMessage, opportunity, ...props }
                         <Col>
                             <Row middle style={{ marginBottom: 6 }}>
                                 <SmallHeader>{name || <Skeleton width={200} />}</SmallHeader>
-                                {discount && (
+                                {referred && (
                                     <Tooltip text="This request is from your booking link, so you don't pay commission, and contact information is visible.">
                                         {({ ref, close, open }) => (
                                             <InfoPill
