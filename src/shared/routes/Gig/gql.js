@@ -8,6 +8,7 @@ const GIG = gql`
             statusHumanized
             expires
             isActionable
+
             offer {
                 offer {
                     amount
@@ -53,6 +54,11 @@ const GIG = gql`
                 contactName
                 contactPhone
                 address
+                eventType
+                budget {
+                    amount
+                    formatted(locale: $locale)
+                }
                 start {
                     localDate
                     formattedDate
@@ -73,6 +79,8 @@ const GIG = gql`
                 rider {
                     speakers
                     lights
+                    microphone
+                    smokeMachine
                     formatted
                 }
                 organizer {

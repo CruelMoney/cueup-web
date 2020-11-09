@@ -265,37 +265,37 @@ const BudgetSelector = ({ initialvalues, onSave, loading }) => {
                 </RowWrap>
 
                 <BudgetButton
-                    value={200}
+                    value={20000}
                     setBudget={setBudget}
                     budget={budget}
                     label={'Up to 200 USD'}
                 />
                 <BudgetButton
-                    value={500}
+                    value={50000}
                     setBudget={setBudget}
                     budget={budget}
                     label={'Up to 500 USD'}
                 />
                 <BudgetButton
-                    value={800}
+                    value={80000}
                     setBudget={setBudget}
                     budget={budget}
                     label={'Up to 800 USD'}
                 />
                 <BudgetButton
-                    value={1000}
+                    value={100000}
                     setBudget={setBudget}
                     budget={budget}
                     label={'Up to 1.000 USD'}
                 />
                 <BudgetButton
-                    value={1500}
+                    value={150000}
                     setBudget={setBudget}
                     budget={budget}
                     label={'Up to 1.500 USD'}
                 />
                 <BudgetButton
-                    value={2000}
+                    value={200000}
                     setBudget={setBudget}
                     budget={budget}
                     label={'More than 1.500 USD'}

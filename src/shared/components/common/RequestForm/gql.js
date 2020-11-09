@@ -13,8 +13,7 @@ const CREATE_EVENT = gql`
         $contactEmail: String!
         $contactName: String!
         $contactPhone: String
-        $speakers: Boolean
-        $lights: Boolean
+        $rider: RiderInput
         $date: DateTime
         $startMinute: Int!
         $endMinute: Int!
@@ -33,8 +32,7 @@ const CREATE_EVENT = gql`
             contactEmail: $contactEmail
             contactName: $contactName
             contactPhone: $contactPhone
-            speakers: $speakers
-            lights: $lights
+            rider: $rider
             startMinute: $startMinute
             endMinute: $endMinute
             date: $date

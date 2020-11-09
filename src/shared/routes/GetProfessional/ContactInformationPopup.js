@@ -12,9 +12,9 @@ export const BenefitsPopup = () => {
             <h1>Go Pro and contact organizers any time</h1>
 
             <Col>
-                <CustomCheckBox checked label="No service fee on gigs." />
                 <CustomCheckBox checked label="Direct contact to organizers." />
-                <CustomCheckBox checked label="Priority on new events." />
+                <CustomCheckBox checked label="Top position in search results." />
+                <CustomCheckBox checked label="No service fee on gigs." />
                 <CustomCheckBox checked label="Unlimited playing locations & travel." />
                 <CustomCheckBox checked label="Add website & social media links to profile." />
                 <CustomCheckBox

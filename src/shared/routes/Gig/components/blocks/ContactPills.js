@@ -2,6 +2,7 @@ import React from 'react';
 import { Icon } from '@iconify/react';
 import mailIcon from '@iconify/icons-ion/mail';
 import phoneIcon from '@iconify/icons-ion/call';
+import chatIcon from '@iconify/icons-ion/chatbubble';
 
 import { useRouteMatch } from 'react-router';
 import { NavLink } from 'react-router-dom';
@@ -44,6 +45,9 @@ const ContactPills = ({ email, phone, showInfo }) => {
                     </InfoPill>
                 </ConditionalWrap>
             )}
+            <InfoPill active={showInfo}>
+                <Icon icon={chatIcon} style={{ fontSize: '15px' }} /> <span>Send message</span>
+            </InfoPill>
         </>
     );
 };

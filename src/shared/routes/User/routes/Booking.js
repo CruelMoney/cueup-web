@@ -8,7 +8,6 @@ import arrowBack from '@iconify/icons-ion/arrow-back';
 import { NavLink } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { Helmet } from 'react-helmet-async';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useLocation, useRouteMatch } from 'react-router';
 import { useCreateEvent } from 'actions/EventActions';
 import { useForm } from 'components/hooks/useForm';
@@ -19,11 +18,9 @@ import useUrlState from 'components/hooks/useUrlState';
 import { ME } from 'components/gql';
 
 import Step4 from 'components/common/RequestForm/Step4';
-import RadioSelect from 'components/RadioSelect';
 import { hideChatButton, showChatButton } from 'utils/supportChat';
 import { useAppState } from 'components/hooks/useAppState';
 import Logo from 'components/common/Logo';
-import { Media } from 'components/MediaContext';
 import AddBookingLink from 'components/AddBookingLink';
 import useTranslate from 'components/hooks/useTranslate';
 import { SettingsSection, Input, Label } from '../../../components/FormComponents';
@@ -79,13 +76,13 @@ const Booking = ({ user, loading }) => {
         guestsCount: 80,
         startMinute: 21 * 60,
         endMinute: 27 * 60,
-        speakers: false,
-        lights: false,
         contactName: userData?.me?.userMetadata.fullName,
         contactEmail: userData?.me?.email,
         contactPhone: userData?.me?.userMetadata.phone,
         isFromPrivateLink: isDirect,
     });
+
+    console.log({ form });
 
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);
 
@@ -419,11 +416,17 @@ const EventForm = ({
                     <div style={{ marginRight: '36px', marginBottom: '30px' }}>
                         <RiderOptions
                             initialValues={{
-                                speakers: form.speakers,
-                                lights: form.lights,
+                                speakers: form.equipment?.speakers,
+                                lights: form.equipment?.lights,
                             }}
                             onSave={({ speakers, lights }) => {
-                                setValue({ speakers, lights });
+                                setValue({
+                                    equipment: {
+                                        ...form.equipment,
+                                        speakers,
+                                        lights,
+                                    },
+                                });
                             }}
                         />
                     </div>
@@ -588,7 +591,7 @@ const Content = ({ user, values }) => {
     const { artistName, userMetadata } = user;
     const { firstName } = userMetadata;
 
-    const { guestsCount, date, speakers, lights, startMinute, endMinute, name } = values;
+    const { guestsCount, date, equipment, startMinute, endMinute, name } = values;
 
     return (
         <>
@@ -602,8 +605,8 @@ const Content = ({ user, values }) => {
                 {moment(date).startOf('day').add(endMinute, 'minutes').format('HH:mm')}
             </SidebarRow>
             <SidebarRow>{guestsCount} guests</SidebarRow>
-            {speakers && <SidebarRow>Including speakers</SidebarRow>}
-            {lights && <SidebarRow>Including lights</SidebarRow>}
+            {equipment?.speakers && <SidebarRow>Including speakers</SidebarRow>}
+            {equipment?.lights && <SidebarRow>Including lights</SidebarRow>}
             <div>
                 <SimpleTableItem>
                     <span>Total</span>

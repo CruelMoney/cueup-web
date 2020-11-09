@@ -19,11 +19,8 @@ import { GIG } from './gql.js';
 import GigHeader from './components/blocks/GigHeader';
 import Information from './routes/Information';
 import Offer from './routes/Offer';
-import ChatSidebar from './components/ChatSidebar';
-
 import BackToProfile from './components/BackToProfile';
 import GigReview from './routes/GigReview';
-import MobileChat from './routes/MobileChat';
 import content from './content.json';
 import CancelationDeclinePopup from './components/CancelationDeclinePopup';
 
@@ -129,8 +126,6 @@ const Content = React.memo((props) => {
     const showDecline = useCallback(() => setPopup(true), []);
     const navigateToOffer = useCallback(() => history.push('offer'), [history]);
 
-    const { width } = useWindowSize();
-
     return (
         <div>
             <GigHeader theEvent={theEvent} loading={loading} statusHumanized={statusHumanized} />
@@ -148,19 +143,6 @@ const Content = React.memo((props) => {
                         navigateToOffer={navigateToOffer}
                         me={me}
                     />
-                    {width > 420 && (
-                        <Col>
-                            <ChatSidebar
-                                theEvent={theEvent}
-                                gig={gig}
-                                loading={loading}
-                                organizer={organizer}
-                                showDecline={showDecline}
-                                navigateToOffer={navigateToOffer}
-                                me={me}
-                            />
-                        </Col>
-                    )}
                 </ContainerRow>
             </GigContainer>
             {popup && (
@@ -219,10 +201,6 @@ const GigRoutes = forwardRef((props, ref) => {
             <Route
                 path={match.path + '/review'}
                 render={(navProps) => <GigReview {...navProps} {...props} />}
-            />
-            <Route
-                path={match.path + '/chat'}
-                render={(navProps) => <MobileChat {...navProps} {...props} />}
             />
         </Switch>
     );

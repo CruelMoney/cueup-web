@@ -82,10 +82,11 @@ const Content = React.forwardRef(({ gig, showDecline, navigateToOffer }, ref) =>
         end,
         start,
         guestsCount,
-
+        budget,
         contactPhone,
         contactEmail,
         address,
+        eventType,
     } = event;
 
     let { contactName } = event;
@@ -101,8 +102,8 @@ const Content = React.forwardRef(({ gig, showDecline, navigateToOffer }, ref) =>
     return (
         <Col ref={ref}>
             <Body style={{ marginBottom: '30px' }}>
-                See what {contactName} has requested and adjust your offer accordingly. Don’t
-                hesitate to ask the organizer for more details.
+                See what {contactName} has requested make your offer. You can message the organizer
+                for more details.
             </Body>
             {address && showInfo && (
                 <CustomLabel>
@@ -111,7 +112,7 @@ const Content = React.forwardRef(({ gig, showDecline, navigateToOffer }, ref) =>
                 </CustomLabel>
             )}
             <CustomLabel>
-                <TitleClean>Get in touch with {contactName}</TitleClean>
+                <TitleClean>Connect with {contactName}</TitleClean>
 
                 {!showInfo && (
                     <BodySmall>
@@ -131,6 +132,24 @@ const Content = React.forwardRef(({ gig, showDecline, navigateToOffer }, ref) =>
             <CustomLabel>
                 <TitleClean>Description</TitleClean>
                 <BodySmall>{description}</BodySmall>
+                <RowWrap style={{ marginRight: '-24px' }}>
+                    {eventType?.map((s) => (
+                        <InfoBox key={s}>{s}</InfoBox>
+                    ))}
+                    <InfoBox minHeight>
+                        <span>People</span>
+                        {guestsCount}
+                    </InfoBox>
+
+                    {rider.speakers && <InfoBox minHeight>Speakers</InfoBox>}
+                    {rider.lights && <InfoBox minHeight>Lights</InfoBox>}
+                    {rider.microphone && <InfoBox minHeight>Microphone</InfoBox>}
+                    {rider.smokeMachine && <InfoBox minHeight>Smoke Machine</InfoBox>}
+                </RowWrap>
+            </CustomLabel>
+            <CustomLabel>
+                <TitleClean>Budget</TitleClean>
+                <BodySmall>{budget ? `Up to ${budget?.formatted}` : 'Not specified'}</BodySmall>
             </CustomLabel>
             <CustomLabel>
                 <TitleClean>Music</TitleClean>
@@ -141,7 +160,7 @@ const Content = React.forwardRef(({ gig, showDecline, navigateToOffer }, ref) =>
                 </RowWrap>
             </CustomLabel>
             <CustomLabel>
-                <TitleClean>Requirements</TitleClean>
+                <TitleClean>Date and time</TitleClean>
 
                 <BodySmall>{rider.formatted}</BodySmall>
                 <RowWrap style={{ marginRight: '-24px' }}>
@@ -161,14 +180,6 @@ const Content = React.forwardRef(({ gig, showDecline, navigateToOffer }, ref) =>
                         <span>Hours</span>
                         {hours}
                     </InfoBox>
-
-                    <InfoBox minHeight>
-                        <span>People</span>
-                        {guestsCount}
-                    </InfoBox>
-
-                    {rider.speakers && <InfoBox minHeight>Speakers</InfoBox>}
-                    {rider.lights && <InfoBox minHeight>Lights</InfoBox>}
                 </RowWrap>
             </CustomLabel>
             {enableButtons && (
