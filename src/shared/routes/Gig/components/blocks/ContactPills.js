@@ -12,7 +12,7 @@ import { InfoPill } from '../../../../components/Blocks';
 const hiddenEmail = '12345678@1234'.replace(/\w/g, '•') + '.com';
 const hiddenNumber = '45 12 34 56 78'.replace(/\w/g, '•');
 
-const ContactPills = ({ email, phone, showInfo }) => {
+const ContactPills = ({ email, phone, showInfo, openChat }) => {
     const match = useRouteMatch();
 
     return (
@@ -45,7 +45,7 @@ const ContactPills = ({ email, phone, showInfo }) => {
                     </InfoPill>
                 </ConditionalWrap>
             )}
-            <InfoPill active>
+            <InfoPill active onClick={openChat} style={{ cursor: 'pointer' }}>
                 <Icon icon={chatIcon} style={{ fontSize: '15px' }} /> <span>Send message</span>
             </InfoPill>
         </>

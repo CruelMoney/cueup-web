@@ -139,11 +139,25 @@ const Content = React.memo((props) => {
 
     const makeOfferPath = pathname.includes('offer');
 
+    const loadChat = useCallback(() => {
+        setAppState({
+            showSideBarChat: true,
+            activeEvent: null,
+            activeGig: gig,
+        });
+    }, [setAppState, gig]);
+
     useEffect(() => {
         if (activeGig?.id !== gig?.id) {
-            setAppState({ showSideBarChat: true, activeEvent: null, activeGig: gig });
+            loadChat();
         }
-    }, [setAppState, gig, activeGig]);
+    }, [loadChat, activeGig, gig]);
+
+    const openChat = useCallback(() => {
+        setAppState({
+            activeChat: gig.id,
+        });
+    }, [setAppState, gig]);
 
     const scrollToMakeOffer = useCallback(() => {
         let top = 0;
@@ -172,7 +186,7 @@ const Content = React.memo((props) => {
                 <Hr style={{ marginBottom: 30 }} />
                 <RowWrap style={{ margin: '0 -30px' }}>
                     <Col style={{ padding: '0 30px', flex: 1, minWidth: 'min(80%, 400px)' }}>
-                        <Information gig={gig} loading={loading} />
+                        <Information gig={gig} loading={loading} openChat={openChat} />
                     </Col>
                     <Col
                         ref={makeOfferRef}

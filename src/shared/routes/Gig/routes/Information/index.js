@@ -11,8 +11,8 @@ import { Body, BodyBold, BodySmall, HeaderTitle, TitleClean } from '../../../../
 import { Label, ProFeature } from '../../../../components/FormComponents';
 import ContactPills from '../../components/blocks/ContactPills';
 
-const Information = React.forwardRef(({ gig, loading }, ref) => {
-    const { event, statusHumanized, referred } = gig || {};
+const Information = React.forwardRef(({ gig, loading, openChat }, ref) => {
+    const { event, statusHumanized } = gig || {};
     const { name, location, start } = event || {};
 
     const coordinates = {
@@ -60,12 +60,12 @@ const Information = React.forwardRef(({ gig, loading }, ref) => {
                     </div>
                 )}
             </Col>
-            {loading ? <Skeleton count={3} /> : <MainInformation gig={gig} />}
+            {loading ? <Skeleton count={3} /> : <MainInformation gig={gig} openChat={openChat} />}
         </Col>
     );
 });
 
-const MainInformation = ({ gig }) => {
+const MainInformation = ({ gig, openChat }) => {
     const match = useRouteMatch();
 
     const { event, showInfo } = gig || {};
@@ -111,7 +111,12 @@ const MainInformation = ({ gig }) => {
                     </BodySmall>
                 )}
                 <RowWrap>
-                    <ContactPills email={contactEmail} phone={contactPhone} showInfo={showInfo} />
+                    <ContactPills
+                        email={contactEmail}
+                        phone={contactPhone}
+                        showInfo={showInfo}
+                        openChat={openChat}
+                    />
                 </RowWrap>
             </CustomLabel>
             <CustomLabel>
