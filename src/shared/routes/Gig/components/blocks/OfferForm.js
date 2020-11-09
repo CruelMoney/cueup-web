@@ -301,7 +301,13 @@ const OfferForm = ({
             </GreyBox>
 
             {payoutInfoValid && ![gigStates.CONFIRMED, gigStates.FINISHED].includes(gig.status) ? (
-                <OfferTable translate={translate} loading={loading} isPro={isPro} {...offer} />
+                <OfferTable
+                    translate={translate}
+                    loading={loading}
+                    isPro={isPro}
+                    discount={gig.discount}
+                    {...offer}
+                />
             ) : null}
 
             {[gigStates.CONFIRMED, gigStates.FINISHED].includes(gig.status) ? (
@@ -330,12 +336,12 @@ const RemainingPayment = ({ translate, payoutType, amountLeft, amountPaid, offer
     );
 };
 
-const OfferTable = ({ loading, translate, serviceFee, djFee, totalPayout, isPro }) => {
+const OfferTable = ({ loading, translate, serviceFee, djFee, totalPayout, isPro, discount }) => {
     return (
         <GreyBox>
             <TitleClean style={{ marginBottom: '0.5em' }}>Your Payout</TitleClean>
 
-            {!isPro && (
+            {!discount && (
                 <TableRow
                     label={translate('Service fee')}
                     info={
@@ -351,7 +357,7 @@ const OfferTable = ({ loading, translate, serviceFee, djFee, totalPayout, isPro 
             <Hr />
             <TableRow
                 label={translate('Payment processing')}
-                info={'A fee on 3% that goes directly to the payment provider.'}
+                info={'A fee on 3% for the payment provider if the customer pays with card.'}
             >
                 {loading ? 'loading...' : djFee.formatted ? djFee.formatted : '...'}
             </TableRow>

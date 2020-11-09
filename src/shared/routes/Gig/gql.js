@@ -9,6 +9,7 @@ const GIG = gql`
             expires
             isActionable
             referred
+            discount
             offer {
                 offer {
                     amount
