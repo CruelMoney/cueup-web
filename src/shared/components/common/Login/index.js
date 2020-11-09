@@ -108,6 +108,46 @@ const Login = ({ redirect = true, error, onLogin }) => {
     return (
         <LoginStyle className="login">
             <ErrorMessageApollo email={state.email} error={state.error} />
+            <SmartButton
+                fullWidth
+                level="secondary"
+                onClick={onPressSocial('facebook')}
+                loading={socialLoading === 'facebook'}
+            >
+                <img src={fbLogo} alt="facebook logo" />
+                Continue with Facebook
+            </SmartButton>
+
+            <SmartButton
+                fullWidth
+                level="secondary"
+                onClick={onPressSocial('google')}
+                loading={socialLoading === 'google'}
+            >
+                <img src={googleLogo} alt="google logo" />
+                Continue with Google
+            </SmartButton>
+            <Row
+                middle
+                center
+                style={{
+                    width: '100%',
+                    margin: '1em 0',
+                }}
+            >
+                <Hr />
+                <BodySmall
+                    style={{
+                        margin: 0,
+                        padding: '0 1em',
+                        zIndex: 1,
+                        textTransform: 'lowercase',
+                    }}
+                >
+                    {translate('or')}
+                </BodySmall>
+                <Hr />
+            </Row>
             <Mutation
                 mutation={LOGIN}
                 variables={state}
@@ -132,46 +172,6 @@ const Login = ({ redirect = true, error, onLogin }) => {
                                 mutate();
                             }}
                         >
-                            <SmartButton
-                                fullWidth
-                                level="secondary"
-                                onClick={onPressSocial('facebook')}
-                                loading={socialLoading === 'facebook'}
-                            >
-                                <img src={fbLogo} alt="facebook logo" />
-                                Continue with Facebook
-                            </SmartButton>
-
-                            <SmartButton
-                                fullWidth
-                                level="secondary"
-                                onClick={onPressSocial('google')}
-                                loading={socialLoading === 'google'}
-                            >
-                                <img src={googleLogo} alt="google logo" />
-                                Continue with Google
-                            </SmartButton>
-                            <Row
-                                middle
-                                center
-                                style={{
-                                    width: '100%',
-                                    margin: '1em 0',
-                                }}
-                            >
-                                <Hr />
-                                <BodySmall
-                                    style={{
-                                        margin: 0,
-                                        padding: '0 1em',
-                                        zIndex: 1,
-                                        textTransform: 'lowercase',
-                                    }}
-                                >
-                                    {translate('or')}
-                                </BodySmall>
-                                <Hr />
-                            </Row>
                             <Input
                                 v2
                                 blurOnEnter={false}

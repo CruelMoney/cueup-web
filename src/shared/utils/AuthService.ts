@@ -14,10 +14,14 @@ class AuthService extends EventEmitter {
     }
 
     logout() {
+        this.removeToken();
+        window.location.href = window.__ENVIRONMENT__.GQL_DOMAIN + '/logout';
+    }
+
+    removeToken() {
         // Clear access token and ID token from local storage
         localStorage.removeItem('token');
         document.cookie = 'x-token=; path=/; expires = Thu, 01 Jan 1970 00:00:00 GMT';
-        window.location.href = window.__ENVIRONMENT__.GQL_DOMAIN + '/logout';
     }
 
     loggedIn() {

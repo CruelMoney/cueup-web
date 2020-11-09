@@ -26,6 +26,8 @@ const APIProvider = ({ children }) => {
                 // handle errors differently based on its error code
                 switch (err.extensions.code) {
                     case 'UNAUTHENTICATED':
+                        console.log('unauthenticated - removing token');
+                        authService.removeToken();
                         break;
 
                     // handle other errors
