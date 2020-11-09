@@ -478,7 +478,7 @@ const BookingSidebar = ({
     return (
         <>
             <SideBar>
-                <Card style={{ minWidth: 300 }}>
+                <Card style={{ minWidth: 300, maxWidth: 300 }}>
                     <div className="content">
                         {loading ? <LoadingPlaceholder2 /> : <Content values={values} {...props} />}
                     </div>
