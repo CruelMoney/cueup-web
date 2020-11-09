@@ -29,7 +29,6 @@ const Content = ({ gig, theEvent, me, showDecline }) => {
                     onSubmitted={() => setPayoutPopup(false)}
                 />
             </Popup>
-            <Title>{gigStateTitles[gig.status] ?? gigStateTitles.default}</Title>
 
             <OfferForm
                 showPopup={() => setPayoutPopup(true)}
@@ -43,12 +42,6 @@ const Content = ({ gig, theEvent, me, showDecline }) => {
             />
         </Col>
     );
-};
-
-const gigStateTitles = {
-    [gigStates.CONFIRMED]: 'Your Offer',
-    [gigStates.FINISHED]: 'Your Offer',
-    default: 'Make Offer',
 };
 
 const Offer = ({ loading, ...props }) =>

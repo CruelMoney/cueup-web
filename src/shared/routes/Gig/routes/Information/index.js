@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import moment from 'moment-timezone';
 import { NavLink, useRouteMatch } from 'react-router-dom';
+import Skeleton from 'react-loading-skeleton';
 import { gigStates } from 'constants/constants';
 import {
     Col,
@@ -12,70 +13,18 @@ import {
     PrimaryButton,
 } from '../../../../components/Blocks';
 
-import { Body, BodySmall, TitleClean } from '../../../../components/Text';
+import { Body, BodyBold, BodySmall, HeaderTitle, TitleClean } from '../../../../components/Text';
 import { Label, ProFeature } from '../../../../components/FormComponents';
 import ContactPills from '../../components/blocks/ContactPills';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
 
-const MobileActionsButtons = styled.div`
-    display: none;
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    background: #fff;
-    border-top: 1px solid rgb(233, 236, 240, 0.5);
-    padding-bottom: env(safe-area-inset-bottom);
-    > div {
-        display: flex;
-        padding: 15px;
-    }
-    button {
-        flex: 1;
-    }
-    @supports (backdrop-filter: none) {
-        background: rgba(255, 255, 255, 0.4);
-        backdrop-filter: saturate(180%) blur(20px);
-    }
-    @media only screen and (max-width: 425px) {
-        display: block;
-    }
-`;
-
-const MobileActionButtons = ({ showDecline, navigateToOffer }) => {
-    const [show, setShow] = useState(false);
-    const portal = useRef();
-
-    useEffect(() => {
-        portal.current = document.querySelector('#portal');
-        setShow(true);
-    }, []);
-
-    if (!show || !portal.current) {
-        return null;
-    }
-
-    return createPortal(
-        <MobileActionsButtons>
-            <RowWrap>
-                <SecondaryButton onClick={showDecline}>Decline</SecondaryButton>
-                <PrimaryButton onClick={navigateToOffer}>Make offer</PrimaryButton>
-            </RowWrap>
-        </MobileActionsButtons>,
-        portal.current
-    );
-};
-
 const Content = React.forwardRef(({ gig, showDecline, navigateToOffer }, ref) => {
     const match = useRouteMatch();
 
-    const { event, showInfo } = gig || {};
-
-    if (!gig || !event) {
-        return null;
-    }
-
+    const { event, showInfo, statusHumanized } = gig || {};
     const {
+        name,
+        location,
         description,
         rider,
         genres,
@@ -87,24 +36,28 @@ const Content = React.forwardRef(({ gig, showDecline, navigateToOffer }, ref) =>
         contactEmail,
         address,
         eventType,
-    } = event;
+        contactName,
+    } = event || {};
 
-    let { contactName } = event;
-
-    const startMoment = moment(start.localDate);
-    const endMoment = moment(end.localDate);
+    const startMoment = moment(start?.localDate);
+    const endMoment = moment(end?.localDate);
     const hours = endMoment.diff(startMoment, 'hours');
-    contactName = contactName.split(' ')[0];
-    const date = startMoment.format('YYYY-MM-DD');
-
-    const enableButtons = [gigStates.REQUESTED, gigStates.ACCEPTED].includes(gig.status);
+    const date = startMoment.toDate().toLocaleDateString();
 
     return (
         <Col ref={ref}>
-            <Body style={{ marginBottom: '30px' }}>
-                See what {contactName} has requested make your offer. You can message the organizer
-                for more details.
-            </Body>
+            <Col style={{ flex: 1, alignItems: 'flex-start', marginBottom: 30 }}>
+                <HeaderTitle dark>{name || <Skeleton width={100} />}</HeaderTitle>
+                <BodyBold opacity={0.75} style={{ margin: 0 }}>
+                    {location?.name || <Skeleton width={100} />}
+                    {'  ·  '}
+                    {start?.formattedDate || <Skeleton width={150} />}
+                </BodyBold>
+                <BodyBold data-cy="gig-status" opacity={0.75} style={{ margin: 0 }}>
+                    {statusHumanized || <Skeleton width={200} />}
+                </BodyBold>
+            </Col>
+
             {address && showInfo && (
                 <CustomLabel>
                     <TitleClean>Address</TitleClean>
@@ -144,22 +97,22 @@ const Content = React.forwardRef(({ gig, showDecline, navigateToOffer }, ref) =>
                         {guestsCount}
                     </InfoBox>
 
-                    {rider.speakers && (
+                    {rider?.speakers && (
                         <InfoBox minHeight>
                             <span>Requested</span>Speakers
                         </InfoBox>
                     )}
-                    {rider.lights && (
+                    {rider?.lights && (
                         <InfoBox minHeight>
                             <span>Requested</span>Lights
                         </InfoBox>
                     )}
-                    {rider.microphone && (
+                    {rider?.microphone && (
                         <InfoBox minHeight>
                             <span>Requested</span>Microphone
                         </InfoBox>
                     )}
-                    {rider.smokeMachine && (
+                    {rider?.smokeMachine && (
                         <InfoBox minHeight>
                             <span>Requested</span>Smoke Machine
                         </InfoBox>
@@ -181,7 +134,7 @@ const Content = React.forwardRef(({ gig, showDecline, navigateToOffer }, ref) =>
             <CustomLabel>
                 <TitleClean>Date and time</TitleClean>
 
-                <BodySmall>{rider.formatted}</BodySmall>
+                <BodySmall>{rider?.formatted}</BodySmall>
                 <RowWrap style={{ marginRight: '-24px' }}>
                     <InfoBox minHeight>
                         <span>Date</span>
@@ -201,9 +154,6 @@ const Content = React.forwardRef(({ gig, showDecline, navigateToOffer }, ref) =>
                     </InfoBox>
                 </RowWrap>
             </CustomLabel>
-            {enableButtons && (
-                <MobileActionButtons showDecline={showDecline} navigateToOffer={navigateToOffer} />
-            )}
         </Col>
     );
 });

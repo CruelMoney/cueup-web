@@ -7,13 +7,6 @@ import { Container, Row, ReadMore } from '../../../components/Blocks';
 const BackToProfile = ({ permalink }) => {
     const { translate } = useTranslate();
 
-    useEffect(() => {
-        document.body.classList.add('pre-header-content');
-        return () => {
-            document.body.classList.remove('pre-header-content');
-        };
-    }, []);
-
     return (
         <div style={{ backgroundColor: '#f6f9fc' }}>
             <Container>

@@ -8,19 +8,17 @@ import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { LazyContactInformationPopup, LazyChatGetProPopup } from 'routes/GetProfessional';
 import Menu from 'components/Navigation';
+import GreyBox from 'components/GreyBox';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
-import { Container, Row, Col } from '../../components/Blocks';
+import { Container, Row, Col, Hr, RowWrap } from '../../components/Blocks';
 import { gigStates } from '../../constants/constants';
 import { ME } from '../../components/gql';
 import useLogActivity, { ACTIVITY_TYPES } from '../../components/hooks/useLogActivity';
-import useWindowSize from '../../components/hooks/useWindowSize';
 import { GIG } from './gql.js';
-import GigHeader from './components/blocks/GigHeader';
 import Information from './routes/Information';
 import Offer from './routes/Offer';
 import BackToProfile from './components/BackToProfile';
-import GigReview from './routes/GigReview';
 import content from './content.json';
 import CancelationDeclinePopup from './components/CancelationDeclinePopup';
 
@@ -96,10 +94,11 @@ const Index = () => {
                     />
                 </Helmet>
             )}
-            <Menu />
+            {me && <BackToProfile permalink={me.permalink} />}
+            <Menu dark relative />
+
             <ScrollToTop animate top={295} />
 
-            {me && <BackToProfile permalink={me.permalink} />}
             <Content
                 location={location}
                 match={match}
@@ -116,10 +115,18 @@ const Index = () => {
     );
 };
 
+const GigContainer = styled(Container)`
+    @media only screen and (max-width: 698px) {
+        overflow: hidden;
+        ${GreyBox} {
+            padding: 12px;
+        }
+    }
+`;
+
 const Content = React.memo((props) => {
     const { theEvent, loading, gig, history, me } = props;
     const { organizer } = theEvent || {};
-    const { statusHumanized } = gig || {};
 
     const [popup, setPopup] = useState(false);
 
@@ -128,22 +135,44 @@ const Content = React.memo((props) => {
 
     return (
         <div>
-            <GigHeader theEvent={theEvent} loading={loading} statusHumanized={statusHumanized} />
-
             <GigContainer>
-                <ContainerRow>
-                    <MainContent
-                        {...props}
-                        setPopup={setPopup}
-                        theEvent={theEvent}
-                        gig={gig}
-                        loading={loading}
-                        organizer={organizer}
-                        showDecline={showDecline}
-                        navigateToOffer={navigateToOffer}
-                        me={me}
-                    />
-                </ContainerRow>
+                <Hr style={{ marginBottom: 30 }} />
+                <RowWrap style={{ margin: '0 -30px' }}>
+                    <Col style={{ padding: '0 30px', flex: 1, minWidth: 'min(80%, 400px)' }}>
+                        <Information
+                            {...props}
+                            setPopup={setPopup}
+                            theEvent={theEvent}
+                            gig={gig}
+                            loading={loading}
+                            organizer={organizer}
+                            showDecline={showDecline}
+                            navigateToOffer={navigateToOffer}
+                            me={me}
+                        />
+                    </Col>
+                    <Col
+                        style={{
+                            padding: '0 30px',
+                            position: 'sticky',
+                            top: 15,
+                            flex: 1,
+                            minWidth: 'min(80%, 400px)',
+                        }}
+                    >
+                        <Offer
+                            {...props}
+                            setPopup={setPopup}
+                            theEvent={theEvent}
+                            gig={gig}
+                            loading={loading}
+                            organizer={organizer}
+                            showDecline={showDecline}
+                            navigateToOffer={navigateToOffer}
+                            me={me}
+                        />
+                    </Col>
+                </RowWrap>
             </GigContainer>
             {popup && (
                 <CancelationDeclinePopup
@@ -155,79 +184,12 @@ const Content = React.memo((props) => {
                     }}
                 />
             )}
+
+            <Route component={LazyContactInformationPopup} path={'*/contact-get-pro'} />
+            <Route component={LazyChatGetProPopup} path={'*/chat-get-pro'} />
         </div>
     );
 });
 
-const MainContent = (props) => {
-    const { location, setPopup } = props;
-    const [height, setHeight] = useState('auto');
-    const [ssr, setSsr] = useState(true);
-
-    useEffect(() => {
-        setSsr(false);
-    }, []);
-
-    return (
-        <BorderCol style={{ height: height || 'auto' }}>
-            <Switch>
-                <Redirect exact from={'/gig/:id'} to={'/gig/:id/information'} />
-            </Switch>
-            <GigRoutes
-                {...props}
-                ssr={ssr}
-                registerHeight={setHeight}
-                showDecline={() => setPopup(true)}
-            />
-
-            <Route component={LazyContactInformationPopup} path={'*/contact-get-pro'} />
-            <Route component={LazyChatGetProPopup} path={'*/chat-get-pro'} />
-        </BorderCol>
-    );
-};
-
-const GigRoutes = forwardRef((props, ref) => {
-    const { match } = props;
-    return (
-        <Switch>
-            <Route
-                path={match.path + '/information'}
-                render={(navProps) => <Information {...navProps} {...props} />}
-            />
-            <Route
-                path={match.path + '/offer'}
-                render={(navProps) => <Offer {...navProps} {...props} />}
-            />
-            <Route
-                path={match.path + '/review'}
-                render={(navProps) => <GigReview {...navProps} {...props} />}
-            />
-        </Switch>
-    );
-});
-
-const ContainerRow = styled(Row)`
-    align-items: stretch;
-    padding-top: 30px;
-    padding-bottom: 60px;
-`;
-
-const BorderCol = styled(Col)`
-    padding-right: 42px;
-    width: 100%;
-    z-index: 0;
-    @media only screen and (max-width: 768px) {
-        border-right: none;
-        padding-right: 0;
-    }
-`;
-
-const GigContainer = styled(Container)`
-    .sidebar {
-        margin-top: -250px;
-        margin-left: 60px;
-        padding: 0;
-    }
-`;
 // eslint-disable-next-line import/no-unused-modules
 export default Index;
