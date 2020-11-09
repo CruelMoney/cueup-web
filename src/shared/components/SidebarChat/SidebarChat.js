@@ -39,13 +39,17 @@ const gigToChatConfig = ({
         id: dj?.id,
         nickName: dj?.artistName,
         name: dj?.userMetadata.firstName,
-        image: dj?.picture.path,
+        image:
+            dj?.picture.path ||
+            'https://cueup-staging.s3-ap-southeast-1.amazonaws.com/empty_profile_picture.png',
     };
     const theOrganizer = {
         id: organizer?.id,
         nickName: organizer?.artistName,
         name: organizer?.userMetadata.firstName,
-        image: organizer?.picture.path,
+        image:
+            organizer?.picture.path ||
+            'https://cueup-staging.s3-ap-southeast-1.amazonaws.com/empty_profile_picture.png',
     };
 
     let url;

@@ -128,18 +128,43 @@ const GigContainer = styled(Container)`
 
 const Content = React.memo((props) => {
     const history = useHistory();
+    const { pathname } = useLocation();
     const { url } = useRouteMatch();
     const { theEvent, loading, gig, me } = props;
     const { setAppState, activeGig } = useAppState();
+    const makeOfferRef = useRef();
 
     const showDecline = useCallback(() => history.replace(url + '/decline'), [url, history]);
     const hideDecline = useCallback(() => history.replace(url), [url, history]);
+
+    const makeOfferPath = pathname.includes('offer');
 
     useEffect(() => {
         if (activeGig?.id !== gig?.id) {
             setAppState({ showSideBarChat: true, activeEvent: null, activeGig: gig });
         }
     }, [setAppState, gig, activeGig]);
+
+    const scrollToMakeOffer = useCallback(() => {
+        let top = 0;
+        if (makeOfferRef.current) {
+            const bodyRectTop = document.body.getBoundingClientRect().top;
+            const searchTop = makeOfferRef.current.getBoundingClientRect().top;
+            top = searchTop - bodyRectTop - 20;
+            window.scrollTo({
+                top,
+                left: 0,
+                behavior: 'smooth',
+            });
+        }
+    }, []);
+
+    // hide chat on offer path
+    useEffect(() => {
+        if (makeOfferPath && !loading) {
+            scrollToMakeOffer();
+        }
+    }, [scrollToMakeOffer, makeOfferPath, loading]);
 
     return (
         <div>
@@ -150,6 +175,7 @@ const Content = React.memo((props) => {
                         <Information gig={gig} loading={loading} />
                     </Col>
                     <Col
+                        ref={makeOfferRef}
                         style={{
                             padding: '0 30px',
                             position: 'sticky',
