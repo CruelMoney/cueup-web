@@ -146,6 +146,7 @@ const MY_GIGS = gql`
                 id
                 statusHumanized
                 status
+                discount
                 offer {
                     offer(currency: $currency) {
                         amount

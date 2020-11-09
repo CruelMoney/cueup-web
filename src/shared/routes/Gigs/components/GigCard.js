@@ -12,6 +12,7 @@ import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import { gigStates } from 'constants/constants';
 import CancelationDeclinePopup from 'routes/Gig/components/CancelationDeclinePopup';
+import Tooltip from 'components/Tooltip';
 import {
     Col,
     keyframeFadeIn,
@@ -23,12 +24,13 @@ import {
     PrimaryButton,
     SecondaryButton,
     SmartButton,
+    InfoPill,
 } from '../../../components/Blocks';
 import { SmallHeader, BodySmall, BodyBold, SmallBold, Body } from '../../../components/Text';
 import { UNDO_PASS, UNDO_DECLINE, PASS_OPPORTUNITY } from '../gql';
 
 const GigCard = ({ loading, style, idx, gig, hasMessage, opportunity, ...props }) => {
-    const { event, offer } = gig || {};
+    const { event, offer, discount } = gig || {};
     const { id, start, name, location, description, duration, createdAt, organizer } = event || {};
 
     const { translate } = useTranslate();
@@ -65,8 +67,28 @@ const GigCard = ({ loading, style, idx, gig, hasMessage, opportunity, ...props }
                 <Content>
                     <RowWrap style={{ marginBottom: '24px', width: '100%' }}>
                         <Col>
-                            <SmallHeader>{name || <Skeleton width={200} />}</SmallHeader>
-
+                            <Row middle style={{ marginBottom: 6 }}>
+                                <SmallHeader>{name || <Skeleton width={200} />}</SmallHeader>
+                                {discount && (
+                                    <Tooltip text="This request is from your booking link, so you don't pay commission, and contact information is visible.">
+                                        {({ ref, close, open }) => (
+                                            <InfoPill
+                                                active
+                                                ref={ref}
+                                                onMouseEnter={open}
+                                                onMouseLeave={close}
+                                                style={{
+                                                    marginBottom: 0,
+                                                    minWidth: 0,
+                                                    marginLeft: 4,
+                                                }}
+                                            >
+                                                Booking link
+                                            </InfoPill>
+                                        )}
+                                    </Tooltip>
+                                )}
+                            </Row>
                             <BodySmall>
                                 {!loading ? (
                                     <>

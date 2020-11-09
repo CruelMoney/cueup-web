@@ -51,7 +51,7 @@ const DirectRequests = ({ user }) => {
             pagination,
             filter: {
                 status: [gigStates.REQUESTED],
-                // directBooking: true,
+                directBooking: true,
                 afterDate: new Date(new Date().toDateString()),
             },
         },

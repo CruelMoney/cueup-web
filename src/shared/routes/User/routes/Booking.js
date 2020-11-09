@@ -84,7 +84,7 @@ const Booking = ({ user, loading }) => {
         contactName: userData?.me?.userMetadata.fullName,
         contactEmail: userData?.me?.email,
         contactPhone: userData?.me?.userMetadata.phone,
-        openForAllDjs: !isDirect,
+        isFromPrivateLink: isDirect,
     });
 
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);
