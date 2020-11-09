@@ -73,41 +73,43 @@ const Footer = ({
                 <Container fullWidth={fullWidth}>
                     <FooterColumns>
                         <div>
-                            <ul className="locales">
-                                <li>
-                                    <div
-                                        className="dropdown-selector-wrapper"
-                                        style={{
-                                            color: color,
-                                            fill: color,
-                                        }}
-                                    >
-                                        <svg
-                                            width="13"
-                                            height="13"
-                                            version="1.1"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            xmlnsXlink="http://www.w3.org/1999/xlink"
+                            {!!langaugePages?.length && (
+                                <ul className="locales">
+                                    <li>
+                                        <div
+                                            className="dropdown-selector-wrapper"
+                                            style={{
+                                                color: color,
+                                                fill: color,
+                                            }}
                                         >
-                                            <path d="M8.079,9.837L6.116,12.3A0.654,0.654,0,0,1,5,11.841V9.852C2.488,9.351,1,7.6,1,5.5,1,3.015,3.087,1,6.5,1S12,3.015,12,5.5A4.5,4.5,0,0,1,8.079,9.837Z" />
-                                        </svg>
-                                        <select
-                                            id="language-selector"
-                                            className="dropdown-selector"
-                                            name="language-selector"
-                                            aria-label="Choose language"
-                                            onChange={(e) => setActiveLanguage(e.target.value)}
-                                            defaultValue={currentLanguage}
-                                        >
-                                            {langaugePages.map(({ code, label }) => (
-                                                <option key={code} value={code}>
-                                                    {label}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                </li>
-                            </ul>
+                                            <svg
+                                                width="13"
+                                                height="13"
+                                                version="1.1"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                xmlnsXlink="http://www.w3.org/1999/xlink"
+                                            >
+                                                <path d="M8.079,9.837L6.116,12.3A0.654,0.654,0,0,1,5,11.841V9.852C2.488,9.351,1,7.6,1,5.5,1,3.015,3.087,1,6.5,1S12,3.015,12,5.5A4.5,4.5,0,0,1,8.079,9.837Z" />
+                                            </svg>
+                                            <select
+                                                id="language-selector"
+                                                className="dropdown-selector"
+                                                name="language-selector"
+                                                aria-label="Choose language"
+                                                onChange={(e) => setActiveLanguage(e.target.value)}
+                                                defaultValue={currentLanguage}
+                                            >
+                                                {langaugePages.map(({ code, label }) => (
+                                                    <option key={code} value={code}>
+                                                        {label}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </li>
+                                </ul>
+                            )}
                             <div className="social">
                                 <ul>
                                     <li>
