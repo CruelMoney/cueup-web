@@ -8,6 +8,7 @@ import { InlineIcon } from '@iconify/react';
 import moment from 'moment-timezone';
 import Skeleton from 'react-loading-skeleton';
 import { useMutation } from '@apollo/client';
+import { useLocation } from 'react-router';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import { gigStates } from 'constants/constants';
@@ -32,7 +33,7 @@ import { UNDO_PASS, UNDO_DECLINE, PASS_OPPORTUNITY } from '../gql';
 const GigCard = ({ loading, style, idx, gig, hasMessage, opportunity, ...props }) => {
     const { event, offer, referred } = gig || {};
     const { id, start, name, location, description, duration, createdAt, organizer } = event || {};
-
+    const { pathname } = useLocation();
     const { translate } = useTranslate();
     const [showDecline, setShowDecline] = useState(false);
     const [hasPassed, setHasPassed] = useState(false);
@@ -62,6 +63,9 @@ const GigCard = ({ loading, style, idx, gig, hasMessage, opportunity, ...props }
                 style={style}
                 to={{
                     pathname: `${translate(appRoutes.gig)}/${gig?.id}`,
+                    state: {
+                        comingFrom: pathname,
+                    },
                 }}
             >
                 <Content>
