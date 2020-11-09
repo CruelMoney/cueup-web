@@ -134,17 +134,36 @@ const Content = React.forwardRef(({ gig, showDecline, navigateToOffer }, ref) =>
                 <BodySmall>{description}</BodySmall>
                 <RowWrap style={{ marginRight: '-24px' }}>
                     {eventType?.map((s) => (
-                        <InfoBox key={s}>{s}</InfoBox>
+                        <InfoBox key={s}>
+                            <span>Type</span>
+                            {s}
+                        </InfoBox>
                     ))}
                     <InfoBox minHeight>
                         <span>People</span>
                         {guestsCount}
                     </InfoBox>
 
-                    {rider.speakers && <InfoBox minHeight>Speakers</InfoBox>}
-                    {rider.lights && <InfoBox minHeight>Lights</InfoBox>}
-                    {rider.microphone && <InfoBox minHeight>Microphone</InfoBox>}
-                    {rider.smokeMachine && <InfoBox minHeight>Smoke Machine</InfoBox>}
+                    {rider.speakers && (
+                        <InfoBox minHeight>
+                            <span>Requested</span>Speakers
+                        </InfoBox>
+                    )}
+                    {rider.lights && (
+                        <InfoBox minHeight>
+                            <span>Requested</span>Lights
+                        </InfoBox>
+                    )}
+                    {rider.microphone && (
+                        <InfoBox minHeight>
+                            <span>Requested</span>Microphone
+                        </InfoBox>
+                    )}
+                    {rider.smokeMachine && (
+                        <InfoBox minHeight>
+                            <span>Requested</span>Smoke Machine
+                        </InfoBox>
+                    )}
                 </RowWrap>
             </CustomLabel>
             <CustomLabel>

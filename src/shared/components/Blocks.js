@@ -698,7 +698,7 @@ export const InfoBox = styled.div`
     text-transform: capitalize;
     display: inline-block;
     text-transform: capitalize;
-    word-break: break-all;
+    word-break: break-word;
     margin-right: 24px;
     margin-bottom: 24px;
     @media only screen and (max-width: 425px) {
