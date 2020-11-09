@@ -1,30 +1,72 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import moment from 'moment-timezone';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
-import { gigStates } from 'constants/constants';
-import {
-    Col,
-    InfoBox,
-    RowWrap,
-    SecondaryButton,
-    PrimaryButton,
-} from '../../../../components/Blocks';
+import { Col, InfoBox, RowWrap } from '../../../../components/Blocks';
+import Map from '../../../../components/common/Map';
 
 import { Body, BodyBold, BodySmall, HeaderTitle, TitleClean } from '../../../../components/Text';
 import { Label, ProFeature } from '../../../../components/FormComponents';
 import ContactPills from '../../components/blocks/ContactPills';
-import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
 
-const Content = React.forwardRef(({ gig, showDecline, navigateToOffer }, ref) => {
+const Information = React.forwardRef(({ gig }, ref) => {
+    const { event, statusHumanized } = gig || {};
+    const { name, location, start } = event || {};
+
+    const coordinates = {
+        lat: location?.latitude,
+        lng: location?.longitude,
+    };
+
+    return (
+        <Col ref={ref}>
+            <Col style={{ flex: 1, alignItems: 'flex-start', marginBottom: 30 }}>
+                <HeaderTitle dark>{name || <Skeleton width={100} />}</HeaderTitle>
+                <BodyBold data-cy="gig-status" style={{ margin: 0, color: '#00d1ff' }}>
+                    {statusHumanized || <Skeleton width={200} />}
+                </BodyBold>
+                <BodyBold opacity={0.75} style={{ margin: 0 }}>
+                    {location?.name || <Skeleton width={100} />}
+                    {'  ·  '}
+                    {start?.formattedDate || <Skeleton width={150} />}
+                </BodyBold>
+
+                {location && (
+                    <div
+                        style={{
+                            height: '150px',
+                            width: '100%',
+                            borderRadius: 12,
+                            overflow: 'hidden',
+                            marginTop: 12,
+                            pointerEvents: 'none',
+                        }}
+                    >
+                        <div style={{ top: -24, position: 'relative' }}>
+                            <Map
+                                defaultCenter={coordinates}
+                                height={150 + 24 * 2}
+                                hideRoads
+                                zoomScaler={150}
+                                radius={5000}
+                                value={coordinates}
+                                editable={false}
+                            />
+                        </div>
+                    </div>
+                )}
+            </Col>
+            {gig ? <MainInformation gig={gig} /> : <Skeleton count={3} />}
+        </Col>
+    );
+});
+
+const MainInformation = ({ gig }) => {
     const match = useRouteMatch();
 
-    const { event, showInfo, statusHumanized } = gig || {};
+    const { event, showInfo } = gig || {};
     const {
-        name,
-        location,
         description,
         rider,
         genres,
@@ -45,19 +87,7 @@ const Content = React.forwardRef(({ gig, showDecline, navigateToOffer }, ref) =>
     const date = startMoment.toDate().toLocaleDateString();
 
     return (
-        <Col ref={ref}>
-            <Col style={{ flex: 1, alignItems: 'flex-start', marginBottom: 30 }}>
-                <HeaderTitle dark>{name || <Skeleton width={100} />}</HeaderTitle>
-                <BodyBold opacity={0.75} style={{ margin: 0 }}>
-                    {location?.name || <Skeleton width={100} />}
-                    {'  ·  '}
-                    {start?.formattedDate || <Skeleton width={150} />}
-                </BodyBold>
-                <BodyBold data-cy="gig-status" opacity={0.75} style={{ margin: 0 }}>
-                    {statusHumanized || <Skeleton width={200} />}
-                </BodyBold>
-            </Col>
-
+        <>
             {address && showInfo && (
                 <CustomLabel>
                     <TitleClean>Address</TitleClean>
@@ -85,7 +115,7 @@ const Content = React.forwardRef(({ gig, showDecline, navigateToOffer }, ref) =>
             <CustomLabel>
                 <TitleClean>Description</TitleClean>
                 <BodySmall>{description}</BodySmall>
-                <RowWrap style={{ marginRight: '-24px' }}>
+                <RowWrap style={{ marginRight: '-24px', marginBottom: -15 }}>
                     {eventType?.map((s) => (
                         <InfoBox key={s}>
                             <span>Type</span>
@@ -126,7 +156,7 @@ const Content = React.forwardRef(({ gig, showDecline, navigateToOffer }, ref) =>
             <CustomLabel>
                 <TitleClean>Music</TitleClean>
                 <RowWrap style={{ marginRight: '-24px' }}>
-                    {genres.map((g) => (
+                    {genres?.map((g) => (
                         <InfoBox key={g}>{g}</InfoBox>
                     ))}
                 </RowWrap>
@@ -142,11 +172,11 @@ const Content = React.forwardRef(({ gig, showDecline, navigateToOffer }, ref) =>
                     </InfoBox>
                     <InfoBox minHeight>
                         <span>Start</span>
-                        {start.formattedTime}
+                        {start?.formattedTime}
                     </InfoBox>
                     <InfoBox minHeight>
                         <span>End</span>
-                        {end.formattedTime}
+                        {end?.formattedTime}
                     </InfoBox>
                     <InfoBox minHeight>
                         <span>Hours</span>
@@ -154,9 +184,9 @@ const Content = React.forwardRef(({ gig, showDecline, navigateToOffer }, ref) =>
                     </InfoBox>
                 </RowWrap>
             </CustomLabel>
-        </Col>
+        </>
     );
-});
+};
 
 const CustomLabel = styled(Label)`
     margin-bottom: 30px;
@@ -167,8 +197,5 @@ const CustomLabel = styled(Label)`
         margin-top: 15px;
     }
 `;
-
-const Information = ({ loading, ...props }) =>
-    loading ? <LoadingPlaceholder2 /> : <Content {...props} />;
 
 export default Information;

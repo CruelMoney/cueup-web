@@ -45,7 +45,7 @@ const ContactPills = ({ email, phone, showInfo }) => {
                     </InfoPill>
                 </ConditionalWrap>
             )}
-            <InfoPill active={showInfo}>
+            <InfoPill active>
                 <Icon icon={chatIcon} style={{ fontSize: '15px' }} /> <span>Send message</span>
             </InfoPill>
         </>

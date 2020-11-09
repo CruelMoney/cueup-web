@@ -116,6 +116,7 @@ const Index = () => {
 };
 
 const GigContainer = styled(Container)`
+    min-height: 70vh;
     @media only screen and (max-width: 698px) {
         overflow: hidden;
         ${GreyBox} {

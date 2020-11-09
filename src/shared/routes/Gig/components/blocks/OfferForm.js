@@ -39,12 +39,6 @@ const OfferForm = ({
     user,
     isPro,
 }) => {
-    const location = useLocation();
-
-    useEffect(() => {
-        console.log(location);
-    }, [location]);
-
     const { translate } = useTranslate();
     const initOffer = gig.offer || {
         offer: { amount: 0, formatted: 0 },
@@ -195,6 +189,7 @@ const OfferForm = ({
                     <InputRow small style={{ marginTop: '20px' }}>
                         <Input
                             half
+                            v2
                             label="Total Price"
                             name="amount"
                             placeholder="00,00"
@@ -205,6 +200,7 @@ const OfferForm = ({
                         />
                         <CurrencySelector
                             half
+                            v2
                             label="Currency"
                             initialValue={currency || ''}
                             onSave={setCurrencyAndFetch}
@@ -317,7 +313,7 @@ const OfferForm = ({
 const RemainingPayment = ({ translate, payoutType, amountLeft, amountPaid, offer }) => {
     const isDirect = payoutType === PAYOUT_TYPES.DIRECT;
     return (
-        <Col style={{ marginBottom: '30px', marginTop: '30px' }}>
+        <GreyBox>
             <TableRow label="Your offer">{offer.formatted}</TableRow>
             <Hr />
             <TableRow label={translate('Already paid')} bold={!isDirect}>
@@ -329,7 +325,7 @@ const RemainingPayment = ({ translate, payoutType, amountLeft, amountPaid, offer
                     {amountLeft.formatted}
                 </TableRow>
             )}
-        </Col>
+        </GreyBox>
     );
 };
 

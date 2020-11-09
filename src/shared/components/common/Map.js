@@ -175,7 +175,6 @@ const MapLoader = ({ ...props }) => {
         googleMapsApiKey: 'AIzaSyAQNiY4yM2E0h4SfSTw3khcr9KYS0BgVgQ',
         libraries,
     });
-
     if (!isLoaded) {
         return (
             <Wrapper style={{ height: props.height || '500px' }}>
