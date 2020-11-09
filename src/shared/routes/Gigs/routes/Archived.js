@@ -26,7 +26,6 @@ const Archived = ({ user }) => {
     });
 
     const { data, loading } = useQuery(MY_GIGS, {
-        fetchPolicy: 'cache-and-network',
         variables: {
             pagination,
             filter: {

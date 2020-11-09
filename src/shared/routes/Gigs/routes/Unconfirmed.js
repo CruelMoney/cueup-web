@@ -26,7 +26,6 @@ const Unconfirmed = ({ user }) => {
     });
 
     const { data, loading } = useQuery(MY_GIGS, {
-        fetchPolicy: 'cache-first',
         variables: {
             pagination,
             filter: {

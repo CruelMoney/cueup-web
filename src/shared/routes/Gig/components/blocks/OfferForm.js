@@ -326,17 +326,23 @@ const OfferTable = ({ loading, translate, serviceFee, djFee, totalPayout, isPro 
         <Col style={{ marginBottom: '30px', marginTop: '30px' }}>
             <TitleClean>Your Payout</TitleClean>
             <div style={style1}>
-                <TableRow
-                    label={translate('Service fee')}
-                    info={
-                        'This fee is used to run the platform. Cueup Pro members do not pay this fee.'
-                    }
-                >
-                    {loading ? 'loading...' : serviceFee.formatted ? serviceFee.formatted : '...'}
-                    <ProFeature style={{ fontSize: '15px' }} disabled={isPro}>
-                        Free for Pro members
-                    </ProFeature>
-                </TableRow>
+                {!isPro && (
+                    <TableRow
+                        label={translate('Service fee')}
+                        info={
+                            'This fee is used to run the platform. Cueup Pro members do not pay this fee.'
+                        }
+                    >
+                        {loading
+                            ? 'loading...'
+                            : serviceFee.formatted
+                            ? serviceFee.formatted
+                            : '...'}
+                        <ProFeature style={{ fontSize: '18px' }} disabled={isPro}>
+                            Free for Pro members
+                        </ProFeature>
+                    </TableRow>
+                )}
                 <Hr />
                 <TableRow
                     label={translate('Payment processing')}
