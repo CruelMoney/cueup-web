@@ -19,6 +19,7 @@ export const gigStates = {
     DECLINED: 'DECLINED',
     LOST: 'LOST',
     ORGANIZER_DECLINED: 'ORGANIZER_DECLINED',
+    PASS: 'PASS',
 };
 
 export const Currencies = ['DKK', 'EUR', 'GBP', 'NOK', 'SEK', 'USD', 'IDR'];

@@ -52,3 +52,15 @@ export const UNDO_DECLINE = gql`
         }
     }
 `;
+
+export const PASS_OPPORTUNITY = gql`
+    mutation passOpportunity($id: ID!) {
+        passOpportunity(eventId: $id)
+    }
+`;
+
+export const UNDO_PASS = gql`
+    mutation undoPassOpportunity($id: ID!) {
+        undoPassOpportunity(eventId: $id)
+    }
+`;

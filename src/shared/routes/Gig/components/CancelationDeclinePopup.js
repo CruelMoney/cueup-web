@@ -11,15 +11,21 @@ import { DECLINE_GIG, CANCEL_GIG } from '../gql.js';
 
 const CancelationDeclinePopup = ({ gig, hide, onCancelled }) => {
     const [reason, setReason] = useState(null);
-    const isCancel = gig.status === gigStates.CONFIRMED;
+
+    const { status } = gig || {};
+
+    const isCancel = status === gigStates.CONFIRMED;
     const mutation = isCancel ? CANCEL_GIG : DECLINE_GIG;
+
     const [mutate, { loading: cancelling }] = useMutation(mutation, {
         variables: {
             reason,
-            id: gig.id,
+            id: gig?.id,
         },
         onCompleted: () => {
-            onCancelled();
+            if (onCancelled) {
+                onCancelled();
+            }
         },
     });
 

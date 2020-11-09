@@ -24,19 +24,36 @@ import {
     SecondaryButton,
     SmartButton,
 } from '../../../components/Blocks';
-import { SmallHeader, BodySmall, BodyBold, SmallBold } from '../../../components/Text';
-import { UNDO_DECLINE } from '../gql';
+import { SmallHeader, BodySmall, BodyBold, SmallBold, Body } from '../../../components/Text';
+import { UNDO_PASS, UNDO_DECLINE, PASS_OPPORTUNITY } from '../gql';
 
 const GigCard = ({ loading, style, idx, gig, hasMessage, opportunity, ...props }) => {
-    const { translate } = useTranslate();
-    const [showDecline, setShowDecline] = useState(false);
-
     const { event, offer } = gig || {};
     const { id, start, name, location, description, duration, createdAt, organizer } = event || {};
 
+    const { translate } = useTranslate();
+    const [showDecline, setShowDecline] = useState(false);
+    const [hasPassed, setHasPassed] = useState(false);
+
+    const [passOpportunity, { loading: passing }] = useMutation(PASS_OPPORTUNITY, {
+        variables: {
+            id,
+        },
+        onCompleted: () => setHasPassed(true),
+    });
+    const [undoPassOpportunity, { loading: undoing }] = useMutation(UNDO_PASS, {
+        variables: {
+            id,
+        },
+        onCompleted: () => setHasPassed(false),
+    });
+
+    if (hasPassed) {
+        return <UndoPassCard undo={undoPassOpportunity} undoing={undoing} />;
+    }
+
     const createdTimeAgo = loading ? null : moment(createdAt?.UTC).fromNow();
 
-    console.log({ showDecline });
     return (
         <Wrapper idx={idx} disabled={loading} {...props}>
             <Card
@@ -119,6 +136,8 @@ const GigCard = ({ loading, style, idx, gig, hasMessage, opportunity, ...props }
                             e.preventDefault();
                             setShowDecline(true);
                         }}
+                        passOpportunity={passOpportunity}
+                        passing={passing}
                     />
                 </Content>
                 <Shadow />
@@ -130,6 +149,20 @@ const GigCard = ({ loading, style, idx, gig, hasMessage, opportunity, ...props }
                     onCancelled={console.log}
                 />
             )}
+        </Wrapper>
+    );
+};
+
+const UndoPassCard = ({ undo, undoing }) => {
+    return (
+        <Wrapper>
+            <Row between>
+                <Body>You've passed on the opportunity.</Body>
+                <SmartButton level="tertiary" onClick={undo} loading={undoing}>
+                    Undo
+                </SmartButton>
+            </Row>
+            <Hr style={{ marginTop: 15 }} />
         </Wrapper>
     );
 };
@@ -168,10 +201,12 @@ const RequestedActions = ({ id, showDecline }) => {
     );
 };
 
-const OppertunityActions = ({ id, showDecline }) => {
+const OppertunityActions = ({ passing, passOpportunity }) => {
     return (
         <Buttons>
-            <TeritaryButton onClick={showDecline}>Pass</TeritaryButton>
+            <SmartButton loading={passing} level="tertiary" onClick={passOpportunity}>
+                Pass
+            </SmartButton>
             <PrimaryButton>View details</PrimaryButton>
         </Buttons>
     );
@@ -206,7 +241,16 @@ const actions = {
     [gigStates.REQUESTED]: RequestedActions,
 };
 
-const Offer = ({ offer, gig, hasMessage, loading, opportunity, showDecline }) => {
+const Offer = ({
+    offer,
+    gig,
+    hasMessage,
+    loading,
+    opportunity,
+    showDecline,
+    passOpportunity,
+    passing,
+}) => {
     const { statusHumanized, status, id } = gig || {};
 
     let Actions = actions[status] || DefaultActions;
@@ -230,7 +274,13 @@ const Offer = ({ offer, gig, hasMessage, loading, opportunity, showDecline }) =>
                     <Skeleton height={40} width={200} />
                 </Buttons>
             ) : (
-                <Actions id={id} opportunity={opportunity} showDecline={showDecline} />
+                <Actions
+                    id={id}
+                    opportunity={opportunity}
+                    showDecline={showDecline}
+                    passOpportunity={passOpportunity}
+                    passing={passing}
+                />
             )}
             {hasMessage && (
                 <span>
