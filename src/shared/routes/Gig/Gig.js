@@ -61,12 +61,12 @@ const Index = () => {
         return <Redirect to={translate(appRoutes.notFound)} />;
     }
 
-    const { event, status } = gig || {};
+    const { event, status, referred } = gig || {};
 
     const title = event ? event.name : 'Cueup | Event';
     const description = event ? event.description : null;
     if (gig) {
-        gig.showInfo = status === gigStates.CONFIRMED || me?.appMetadata?.isPro;
+        gig.showInfo = status === gigStates.CONFIRMED || me?.appMetadata?.isPro || referred;
     }
 
     if (!loading && !me) {

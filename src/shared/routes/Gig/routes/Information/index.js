@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import moment from 'moment-timezone';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
-import { Col, InfoBox, RowWrap } from '../../../../components/Blocks';
+import Tooltip from 'components/Tooltip';
+import { Col, InfoBox, InfoPill, Row, RowWrap } from '../../../../components/Blocks';
 import Map from '../../../../components/common/Map';
 
 import { Body, BodyBold, BodySmall, HeaderTitle, TitleClean } from '../../../../components/Text';
@@ -11,7 +12,7 @@ import { Label, ProFeature } from '../../../../components/FormComponents';
 import ContactPills from '../../components/blocks/ContactPills';
 
 const Information = React.forwardRef(({ gig, loading }, ref) => {
-    const { event, statusHumanized } = gig || {};
+    const { event, statusHumanized, referred } = gig || {};
     const { name, location, start } = event || {};
 
     const coordinates = {
@@ -22,7 +23,9 @@ const Information = React.forwardRef(({ gig, loading }, ref) => {
     return (
         <Col ref={ref}>
             <Col style={{ flex: 1, alignItems: 'flex-start', marginBottom: 30 }}>
-                <HeaderTitle dark>{name || <Skeleton width={100} />}</HeaderTitle>
+                <Row>
+                    <HeaderTitle dark>{name || <Skeleton width={100} />}</HeaderTitle>
+                </Row>
                 <BodyBold data-cy="gig-status" style={{ margin: 0, color: '#00d1ff' }}>
                     {statusHumanized || <Skeleton width={200} />}
                 </BodyBold>
@@ -96,7 +99,6 @@ const MainInformation = ({ gig }) => {
             )}
             <CustomLabel>
                 <TitleClean>Connect with {contactName}</TitleClean>
-
                 {!showInfo && (
                     <BodySmall>
                         Information will be available when the gig is confirmed - you can use the

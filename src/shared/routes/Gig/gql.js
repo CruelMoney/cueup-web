@@ -8,7 +8,7 @@ const GIG = gql`
             statusHumanized
             expires
             isActionable
-
+            referred
             offer {
                 offer {
                     amount
