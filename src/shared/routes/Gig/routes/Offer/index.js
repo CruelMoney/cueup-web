@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { gigStates } from 'constants/constants';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
 import { Col } from '../../../../components/Blocks';
-import { Title } from '../../../../components/Text';
 import OfferForm from '../../components/blocks/OfferForm';
 import Popup from '../../../../components/common/Popup';
 import PayoutForm from '../../../../components/common/PayoutForm';

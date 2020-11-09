@@ -83,7 +83,7 @@ const GigCard = ({ loading, style, idx, gig, hasMessage, opportunity, ...props }
                                                     marginLeft: 4,
                                                 }}
                                             >
-                                                Booking link
+                                                Using booking link
                                             </InfoPill>
                                         )}
                                     </Tooltip>

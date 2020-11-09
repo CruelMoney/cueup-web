@@ -127,12 +127,9 @@ const GigContainer = styled(Container)`
 
 const Content = React.memo((props) => {
     const { theEvent, loading, gig, history, me } = props;
-    const { organizer } = theEvent || {};
 
     const [popup, setPopup] = useState(false);
-
     const showDecline = useCallback(() => setPopup(true), []);
-    const navigateToOffer = useCallback(() => history.push('offer'), [history]);
 
     return (
         <div>
@@ -140,17 +137,7 @@ const Content = React.memo((props) => {
                 <Hr style={{ marginBottom: 30 }} />
                 <RowWrap style={{ margin: '0 -30px' }}>
                     <Col style={{ padding: '0 30px', flex: 1, minWidth: 'min(80%, 400px)' }}>
-                        <Information
-                            {...props}
-                            setPopup={setPopup}
-                            theEvent={theEvent}
-                            gig={gig}
-                            loading={loading}
-                            organizer={organizer}
-                            showDecline={showDecline}
-                            navigateToOffer={navigateToOffer}
-                            me={me}
-                        />
+                        <Information gig={gig} loading={loading} />
                     </Col>
                     <Col
                         style={{
@@ -162,14 +149,10 @@ const Content = React.memo((props) => {
                         }}
                     >
                         <Offer
-                            {...props}
-                            setPopup={setPopup}
                             theEvent={theEvent}
                             gig={gig}
                             loading={loading}
-                            organizer={organizer}
                             showDecline={showDecline}
-                            navigateToOffer={navigateToOffer}
                             me={me}
                         />
                     </Col>

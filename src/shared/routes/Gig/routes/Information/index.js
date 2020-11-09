@@ -10,7 +10,7 @@ import { Body, BodyBold, BodySmall, HeaderTitle, TitleClean } from '../../../../
 import { Label, ProFeature } from '../../../../components/FormComponents';
 import ContactPills from '../../components/blocks/ContactPills';
 
-const Information = React.forwardRef(({ gig }, ref) => {
+const Information = React.forwardRef(({ gig, loading }, ref) => {
     const { event, statusHumanized } = gig || {};
     const { name, location, start } = event || {};
 
@@ -57,7 +57,7 @@ const Information = React.forwardRef(({ gig }, ref) => {
                     </div>
                 )}
             </Col>
-            {gig ? <MainInformation gig={gig} /> : <Skeleton count={3} />}
+            {loading ? <Skeleton count={3} /> : <MainInformation gig={gig} />}
         </Col>
     );
 });

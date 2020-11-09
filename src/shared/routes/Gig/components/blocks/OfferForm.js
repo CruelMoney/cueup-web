@@ -19,6 +19,7 @@ import {
     Row,
     Col,
     Hr,
+    TeritaryButton,
 } from '../../../../components/Blocks';
 import { Input, InputRow, ProFeature } from '../../../../components/FormComponents';
 import CurrencySelector from '../../../../components/CurrencySelector';
@@ -258,18 +259,18 @@ const OfferForm = ({
                     </div>
                 )}
 
-                <RowWrap style={{ marginTop: '24px' }}>
+                <RowWrap right style={{ marginTop: '24px' }}>
                     <div name={'gig-cancel-' + gig.id}>
                         {[gigStates.REQUESTED, gigStates.ACCEPTED].includes(gig.status) && (
-                            <SecondaryButton onClick={showDecline}>
+                            <TeritaryButton onClick={showDecline}>
                                 {translate('Decline gig')}
-                            </SecondaryButton>
+                            </TeritaryButton>
                         )}
 
                         {gig.status === gigStates.CONFIRMED && (
-                            <SecondaryButton onClick={showDecline} warning={true}>
+                            <TeritaryButton onClick={showDecline} warning={true}>
                                 {translate('Cancel gig')}
-                            </SecondaryButton>
+                            </TeritaryButton>
                         )}
                     </div>
 
