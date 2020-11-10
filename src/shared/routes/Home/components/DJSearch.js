@@ -234,9 +234,9 @@ const StyledSearchWrapper = styled.div`
 `;
 
 const FallbackSuperllipsis = (props) => {
-    if (typeof window === 'undefined' || !window?.ResizeObserver) {
-        return <div {...props} style={{ borderRadius: '10px', ...props.style }} />;
-    }
+    // if (typeof window === 'undefined' || !window?.ResizeObserver) {
+    //     return <div {...props} style={{ borderRadius: '10px', ...props.style }} />;
+    // }
     return <SuperEllipse {...props} />;
 };
 

@@ -54,7 +54,7 @@ const gigToChatConfig = ({
     let url;
 
     if (isFromEvent) {
-        url = `/user/${dj?.permalink}?gigId=${gig.id}&eventId=${eventId}&hash=${eventHash}`;
+        url = `/user/${dj?.permalink}/overview?gigId=${gig.id}&eventId=${eventId}&hash=${eventHash}`;
     } else {
         url = `/gig/${gig.id}/offer'`;
     }
@@ -75,7 +75,7 @@ const gigToChatConfig = ({
 };
 
 const SidebarChat = () => {
-    const { notifications, activeChat, activeEvent, setAppState } = useAppState();
+    const { notifications, activeChat, activeEvent, activeGig, setAppState } = useAppState();
 
     const setActiveChat = useCallback((chat) => setAppState({ activeChat: chat }), [setAppState]);
 
@@ -95,12 +95,13 @@ const SidebarChat = () => {
         <SidebarChatDj
             notifications={notifications}
             activeChat={activeChat}
+            activeGig={activeGig}
             setActiveChat={setActiveChat}
         />
     );
 };
 
-const SidebarChatDj = ({ activeChat, notifications, setActiveChat }) => {
+const SidebarChatDj = ({ activeChat, notifications, activeGig, setActiveChat }) => {
     const { data } = useQuery(ME);
 
     const { gigs } = useMyActiveGigs();
@@ -109,18 +110,21 @@ const SidebarChatDj = ({ activeChat, notifications, setActiveChat }) => {
         return null;
     }
 
-    const chats = gigs
-        .filter((g) => g.chatInitiated)
-        .map((gig) =>
-            gigToChatConfig({
-                notifications,
-                organizer: gig?.event?.organizer,
-                eventId: gig?.event?.id,
-                eventHash: gig?.event?.hash,
-                dj: data?.me,
-                chatName: gig?.event?.name,
-            })(gig)
-        );
+    const renderGigs = gigs.filter((g) => g.chatInitiated);
+
+    if (activeGig && !renderGigs.some((g) => g.id === activeGig?.id)) {
+        renderGigs.push(activeGig);
+    }
+    const chats = renderGigs.map((gig) =>
+        gigToChatConfig({
+            notifications,
+            organizer: gig?.event?.organizer,
+            eventId: gig?.event?.id,
+            eventHash: gig?.event?.hash,
+            dj: data?.me,
+            chatName: gig?.event?.name,
+        })(gig)
+    );
 
     if (!chats?.length) {
         return null;
@@ -333,12 +337,7 @@ const ChatWrapper = ({ chat, onClose }) => {
             <ChatHeader>
                 <Col style={{ width: '100%' }}>
                     <Row between>
-                        <NavLink
-                            to={{
-                                pathname: url,
-                                state: { gigId: chatId },
-                            }}
-                        >
+                        <NavLink to={url}>
                             <TeritaryButton
                                 isWrapper
                                 title={isFromEvent ? `See ${receiver.name}'s profile` : 'Go to gig'}

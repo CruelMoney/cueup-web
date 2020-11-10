@@ -62,13 +62,6 @@ const DropDownMenu = ({ user, ...props }) => {
     const isOrganizer = user.appMetadata.roles.includes('ORGANIZER');
     const isDJ = user.appMetadata.roles.includes('DJ');
 
-    const {
-        [gigStates.REQUESTED]: requestedCount,
-        opportunities: opportunitiesCount,
-    } = useMyActiveGigs();
-
-    const totalNew = requestedCount + opportunitiesCount;
-
     const typeformUrl = isDJ
         ? 'https://cueup.typeform.com/to/u8Oec7'
         : 'https://cueup.typeform.com/to/ioEkiJ';
@@ -93,21 +86,7 @@ const DropDownMenu = ({ user, ...props }) => {
                     </NavLink>
                 </li>
 
-                {isDJ && (
-                    <li>
-                        <NavLink to={t(appRoutes.userGigs)} data-cy="menu-gigs-link">
-                            <NavMenuButton>
-                                <InlineIcon icon={musicalNotesOutline} />
-                                Gigs{' '}
-                                {!!totalNew && (
-                                    <NotificationBubble>
-                                        <span>{totalNew}</span>
-                                    </NotificationBubble>
-                                )}
-                            </NavMenuButton>
-                        </NavLink>
-                    </li>
-                )}
+                {isDJ && <GigsMenuItem t={t} />}
                 {isOrganizer && (
                     <li>
                         <NavLink to={t(appRoutes.userEvents)} data-cy="menu-events-link">
@@ -161,6 +140,31 @@ const DropDownMenu = ({ user, ...props }) => {
                 </li>
             </MenuList>
         </>
+    );
+};
+
+const GigsMenuItem = ({ t }) => {
+    const {
+        [gigStates.REQUESTED]: requestedCount,
+        opportunities: opportunitiesCount,
+    } = useMyActiveGigs();
+
+    const totalNew = requestedCount + opportunitiesCount;
+
+    return (
+        <li>
+            <NavLink to={t(appRoutes.userGigs)} data-cy="menu-gigs-link">
+                <NavMenuButton>
+                    <InlineIcon icon={musicalNotesOutline} />
+                    Gigs{' '}
+                    {!!totalNew && (
+                        <NotificationBubble>
+                            <span>{totalNew}</span>
+                        </NotificationBubble>
+                    )}
+                </NavMenuButton>
+            </NavLink>
+        </li>
     );
 };
 

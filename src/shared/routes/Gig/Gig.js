@@ -140,6 +140,7 @@ const Content = React.memo((props) => {
             showSideBarChat: true,
             activeEvent: null,
             activeChat: gig.id,
+            activeGig: gig,
         });
     }, [setAppState, gig]);
 
