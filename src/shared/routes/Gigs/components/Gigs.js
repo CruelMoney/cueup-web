@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useQuery } from '@apollo/client';
 import { Redirect, Route, Switch } from 'react-router-dom';
@@ -7,8 +7,9 @@ import Footer from 'components/common/Footer';
 import Menu from 'components/Navigation';
 import ScrollToTop from 'components/common/ScrollToTop';
 
+import { useAppState } from 'components/hooks/useAppState';
 import { ME } from '../../../components/gql';
-import { Col, Row, HideBelow, SecondaryButton, Hr, Container } from '../../../components/Blocks';
+import { Row, Hr, Container } from '../../../components/Blocks';
 
 import DirectRequests from '../routes/DirectRequests';
 import Archived from '../routes/Archived';
@@ -21,9 +22,19 @@ import Sidebar from './Sidebar';
 const DataWrapper = () => {
     const { data, loading } = useQuery(ME);
     const { pathname, search } = useLocation();
+    const { setAppState } = useAppState();
     const me = data?.me;
 
     const metaTitle = 'Gigs · Cueup';
+
+    useEffect(() => {
+        if (!loading && me) {
+            setAppState({
+                showSideBarChat: true,
+                activeEvent: null,
+            });
+        }
+    }, [me, loading, setAppState]);
 
     if (!loading && !me) {
         return <Redirect to={`/login?redirect=${encodeURIComponent(pathname + search)}`} />;

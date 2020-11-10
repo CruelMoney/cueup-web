@@ -265,7 +265,6 @@ const ExtraChats = ({ chats, active, setActiveChat }) => {
 };
 
 const ChatBubble = ({ receiver, onClick, active, chatName, hasMessage }) => {
-    console.log({ chatName });
     return (
         <ChatItem onClick={onClick} className={active ? 'active' : ''}>
             <ChatAvatarWrapper>
