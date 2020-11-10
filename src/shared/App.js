@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { SkeletonTheme } from 'react-loading-skeleton';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes.ts';
 import LazySignup from 'routes/Signup';
 import LazyUser from 'routes/User';
@@ -42,12 +43,14 @@ const App = () => {
 
     return (
         <MediaContextProvider>
-            <ProvideAppState>
-                <ProvideMobileMenu>
-                    <RouteWrapper />
-                </ProvideMobileMenu>
-                <div id="popup-container" />
-            </ProvideAppState>
+            <SkeletonTheme color="#eff2f5" highlightColor="#f7f7f8">
+                <ProvideAppState>
+                    <ProvideMobileMenu>
+                        <RouteWrapper />
+                    </ProvideMobileMenu>
+                    <div id="popup-container" />
+                </ProvideAppState>
+            </SkeletonTheme>
         </MediaContextProvider>
     );
 };

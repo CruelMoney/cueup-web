@@ -39,7 +39,6 @@ const useChat = ({
 
     // initialize
     useEffect(() => {
-        console.log({ id, senderId });
         if (id && senderId) {
             chat.current = new ChatService(id, auth.getToken(), senderId, environment.CHAT_DOMAIN);
             chat.current.init({ showPersonalInformation }).then((messages) => {

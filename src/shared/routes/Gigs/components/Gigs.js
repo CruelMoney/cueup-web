@@ -60,7 +60,7 @@ const DataWrapper = () => {
                     <Switch>
                         <Route
                             path={'/u/gigs/direct-requests'}
-                            component={() => <DirectRequests user={me} />}
+                            render={() => <DirectRequests user={me} />}
                         />
                         <Route path={'/u/gigs/archived'} render={() => <Archived user={me} />} />
                         <Route path={'/u/gigs/completed'} render={() => <Completed user={me} />} />

@@ -5,8 +5,6 @@ import { Avatar, ClosePopupButton, Row, TeritaryButton, Col } from 'components/B
 import { EVENT_GIGS } from 'routes/Event/gql';
 import { gigStates } from 'constants/constants';
 import Chat from 'components/common/Chat';
-import useTranslate from 'components/hooks/useTranslate';
-import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import { useAppState } from 'components/hooks/useAppState';
 import { BodySmall } from 'components/Text';
 import { ME } from 'components/gql';
