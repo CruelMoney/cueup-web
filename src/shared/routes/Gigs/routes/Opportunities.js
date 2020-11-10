@@ -27,7 +27,7 @@ import GreyBox from 'components/GreyBox';
 import Layout from '../components/Layout';
 import { MY_OPPORTUNITIES } from '../gql';
 
-const Opportunities = ({ user }) => {
+const Opportunities = () => {
     const [pagination, setPagination] = useState({
         page: 1,
         limit: 8,

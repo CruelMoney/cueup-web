@@ -4,9 +4,6 @@ import { gigStates } from 'constants/constants';
 
 export const useMyActiveGigs = () => {
     const { data, refetch } = useQuery(MY_ACTIVE_GIGS, {
-        variables: {
-            afterDate: new Date(new Date().toDateString()),
-        },
         ssr: false,
     });
 

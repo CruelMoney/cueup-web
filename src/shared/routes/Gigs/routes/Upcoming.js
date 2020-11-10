@@ -29,7 +29,6 @@ const Upcoming = ({ user }) => {
             pagination,
             filter: {
                 status: [gigStates.CONFIRMED],
-                afterDate: new Date(new Date().toDateString()),
             },
         },
     });

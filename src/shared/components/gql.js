@@ -199,10 +199,10 @@ const MY_GIGS = gql`
 `;
 
 export const MY_ACTIVE_GIGS = gql`
-    query MyActiveGigs($afterDate: DateTime) {
+    query MyActiveGigs {
         myGigs(
             pagination: { page: 1, limit: 999 }
-            filter: { afterDate: $afterDate, status: [REQUESTED, ACCEPTED, CONFIRMED] }
+            filter: { status: [REQUESTED, ACCEPTED, CONFIRMED] }
         ) {
             __typename
             edges {
@@ -214,6 +214,12 @@ export const MY_ACTIVE_GIGS = gql`
                     id
                     name
                     hash
+                    start {
+                        UTC
+                    }
+                    chosenGig {
+                        id
+                    }
                     organizer {
                         id
                         userMetadata {

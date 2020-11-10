@@ -77,7 +77,7 @@ const Sidebar = ({ user }) => {
                                 <NavMenuButton>
                                     <InlineIcon icon={directRequestsIcon} />
                                     Direct requests
-                                    {requestedCount && (
+                                    {!!requestedCount && (
                                         <NotificationBubble>
                                             <span>{requestedCount}</span>
                                         </NotificationBubble>
@@ -90,7 +90,7 @@ const Sidebar = ({ user }) => {
                                 <NavMenuButton>
                                     <InlineIcon icon={opportunitiesIcon} />
                                     Opportunities
-                                    {opportunitiesCount && (
+                                    {!!opportunitiesCount && (
                                         <NotificationBubble>
                                             <span>{opportunitiesCount}</span>
                                         </NotificationBubble>

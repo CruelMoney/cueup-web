@@ -14,6 +14,7 @@ import useTranslate from 'components/hooks/useTranslate';
 import { gigStates } from 'constants/constants';
 import CancelationDeclinePopup from 'routes/Gig/components/CancelationDeclinePopup';
 import Tooltip from 'components/Tooltip';
+import { MY_ACTIVE_GIGS } from 'components/gql';
 import {
     Col,
     keyframeFadeIn,
@@ -42,12 +43,14 @@ const GigCard = ({ loading, style, idx, gig, hasMessage, opportunity, ...props }
         variables: {
             id,
         },
+        refetchQueries: [{ query: MY_ACTIVE_GIGS }],
         onCompleted: () => setHasPassed(true),
     });
     const [undoPassOpportunity, { loading: undoing }] = useMutation(UNDO_PASS, {
         variables: {
             id,
         },
+        refetchQueries: [{ query: MY_ACTIVE_GIGS }],
         onCompleted: () => setHasPassed(false),
     });
 

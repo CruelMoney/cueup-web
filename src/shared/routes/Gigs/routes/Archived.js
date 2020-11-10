@@ -36,7 +36,6 @@ const Archived = ({ user }) => {
                     gigStates.LOST,
                     gigStates.ORGANIZER_DECLINED,
                 ],
-                afterDate: new Date(new Date().toDateString()),
             },
         },
     });

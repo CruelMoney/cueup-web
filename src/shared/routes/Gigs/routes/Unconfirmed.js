@@ -30,7 +30,6 @@ const Unconfirmed = ({ user }) => {
             pagination,
             filter: {
                 status: [gigStates.ACCEPTED],
-                afterDate: new Date(new Date().toDateString()),
             },
         },
     });
