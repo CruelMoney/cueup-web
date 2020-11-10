@@ -15,6 +15,7 @@ import { gigStates } from 'constants/constants';
 import CancelationDeclinePopup from 'routes/Gig/components/CancelationDeclinePopup';
 import Tooltip from 'components/Tooltip';
 import { MY_ACTIVE_GIGS } from 'components/gql';
+import { useAppState } from 'components/hooks/useAppState';
 import {
     Col,
     keyframeFadeIn,
@@ -27,17 +28,19 @@ import {
     SecondaryButton,
     SmartButton,
     InfoPill,
+    NotificationBubble,
 } from '../../../components/Blocks';
 import { SmallHeader, BodySmall, BodyBold, SmallBold, Body } from '../../../components/Text';
 import { UNDO_PASS, UNDO_DECLINE, PASS_OPPORTUNITY } from '../gql';
 
-const GigCard = ({ loading, style, idx, gig, hasMessage, opportunity, ...props }) => {
+const GigCard = ({ loading, style, idx, gig, opportunity, ...props }) => {
     const { event, offer, referred } = gig || {};
     const { id, start, name, location, description, duration, createdAt, organizer } = event || {};
     const { pathname } = useLocation();
     const { translate } = useTranslate();
     const [showDecline, setShowDecline] = useState(false);
     const [hasPassed, setHasPassed] = useState(false);
+    const { notifications } = useAppState();
 
     const [passOpportunity, { loading: passing }] = useMutation(PASS_OPPORTUNITY, {
         variables: {
@@ -59,6 +62,12 @@ const GigCard = ({ loading, style, idx, gig, hasMessage, opportunity, ...props }
     }
 
     const createdTimeAgo = loading ? null : moment(createdAt?.UTC).fromNow();
+
+    const hasMessage =
+        gig &&
+        notifications &&
+        notifications[gig.id] &&
+        notifications[gig.id].read < notifications[gig.id].total;
 
     return (
         <Wrapper idx={idx} disabled={loading} {...props}>
@@ -298,27 +307,34 @@ const Offer = ({
             </OfferTextWrapper>
             <Filler />
 
-            {loading ? (
-                <Buttons>
-                    <Skeleton height={40} width={200} />
-                </Buttons>
-            ) : (
-                <Actions
-                    id={id}
-                    opportunity={opportunity}
-                    showDecline={showDecline}
-                    passOpportunity={passOpportunity}
-                    passing={passing}
-                />
-            )}
-            {hasMessage && (
-                <span>
-                    <div className="notification-bubble relative">!</div>
-                    <SmallBold demi muted style={{ display: 'inline-block' }}>
-                        New message
-                    </SmallBold>
-                </span>
-            )}
+            <Row style={{ position: 'relative' }}>
+                {loading ? (
+                    <Buttons>
+                        <Skeleton height={40} width={200} />
+                    </Buttons>
+                ) : (
+                    <Actions
+                        id={id}
+                        opportunity={opportunity}
+                        showDecline={showDecline}
+                        passOpportunity={passOpportunity}
+                        passing={passing}
+                    />
+                )}
+                {hasMessage && (
+                    <NotificationBubble
+                        style={{
+                            position: 'absolute',
+                            right: -10,
+                            top: 10,
+                            lineHeight: '1.2em',
+                            border: '2px solid white',
+                        }}
+                    >
+                        <span>!</span>
+                    </NotificationBubble>
+                )}
+            </Row>
         </OfferRow>
     );
 };
