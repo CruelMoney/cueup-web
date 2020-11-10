@@ -13,9 +13,11 @@ import { useLocation } from 'react-router';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import NavLink from 'components/common/Navlink';
-import { Hr } from 'components/Blocks';
+import { Hr, NotificationBubble } from 'components/Blocks';
 import { showSupportChat } from 'utils/supportChat';
 import NavMenuButton from 'components/NavMenuButton';
+import { useMyActiveGigs } from 'components/hooks/useMyActiveGigs';
+import { gigStates } from 'constants/constants';
 import UserRoute from '../../routes/User';
 import { useLogout } from '../hooks/useLogout';
 import UserMenuItem from './UserMenuItem';
@@ -60,6 +62,13 @@ const DropDownMenu = ({ user, ...props }) => {
     const isOrganizer = user.appMetadata.roles.includes('ORGANIZER');
     const isDJ = user.appMetadata.roles.includes('DJ');
 
+    const {
+        [gigStates.REQUESTED]: requestedCount,
+        opportunities: opportunitiesCount,
+    } = useMyActiveGigs();
+
+    const totalNew = requestedCount + opportunitiesCount;
+
     const typeformUrl = isDJ
         ? 'https://cueup.typeform.com/to/u8Oec7'
         : 'https://cueup.typeform.com/to/ioEkiJ';
@@ -89,7 +98,12 @@ const DropDownMenu = ({ user, ...props }) => {
                         <NavLink to={t(appRoutes.userGigs)} data-cy="menu-gigs-link">
                             <NavMenuButton>
                                 <InlineIcon icon={musicalNotesOutline} />
-                                Gigs
+                                Gigs{' '}
+                                {!!totalNew && (
+                                    <NotificationBubble>
+                                        <span>{totalNew}</span>
+                                    </NotificationBubble>
+                                )}
                             </NavMenuButton>
                         </NavLink>
                     </li>

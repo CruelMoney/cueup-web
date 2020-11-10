@@ -10,24 +10,11 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import GreyBox from 'components/GreyBox';
 import NavMenuButton from 'components/NavMenuButton';
-import { Col, Hr, SecondaryButton } from 'components/Blocks';
+import { Col, Hr, NotificationBubble, SecondaryButton } from 'components/Blocks';
 import usePushNotifications from 'components/hooks/usePushNotifications';
 import { BodySmall, Title } from 'components/Text';
 import { useMyActiveGigs } from 'components/hooks/useMyActiveGigs';
 import { gigStates } from 'constants/constants';
-
-const NotificationBubble = styled.span`
-    background: rgb(244, 67, 54);
-    border-radius: 50%;
-    color: #fff;
-    height: 1.5em;
-    width: 1.5em;
-    font-size: 0.8em;
-    text-align: center;
-    line-height: 1.5em;
-    font-weight: 500;
-    margin-left: 1em;
-`;
 
 const CustomGreyBox = styled(GreyBox)`
     padding: 0;
@@ -57,10 +44,7 @@ const EnableNotifications = ({ userId }) => {
 const Sidebar = ({ user }) => {
     const {
         [gigStates.REQUESTED]: requestedCount,
-        [gigStates.CONFIRMED]: upcomingCount,
-        [gigStates.ACCEPTED]: acceptedCount,
         opportunities: opportunitiesCount,
-        refetch,
     } = useMyActiveGigs();
 
     return (

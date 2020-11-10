@@ -838,3 +838,16 @@ export const ClosePopupButton = (props) => {
         </ClosePopupButtonWrapper>
     );
 };
+
+export const NotificationBubble = styled.span`
+    background: rgb(244, 67, 54);
+    border-radius: 50%;
+    color: #fff;
+    height: 1.5em;
+    width: 1.5em;
+    font-size: 0.8em;
+    text-align: center;
+    line-height: 1.5em;
+    font-weight: 500;
+    margin-left: 1em;
+`;

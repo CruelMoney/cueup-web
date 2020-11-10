@@ -3,7 +3,7 @@ import { MY_ACTIVE_GIGS } from 'components/gql';
 import { gigStates } from 'constants/constants';
 
 export const useMyActiveGigs = () => {
-    const { data, refetch } = useQuery(MY_ACTIVE_GIGS, {
+    const { data } = useQuery(MY_ACTIVE_GIGS, {
         ssr: false,
     });
 
@@ -12,7 +12,6 @@ export const useMyActiveGigs = () => {
         [gigStates.REQUESTED]: 0,
         [gigStates.CONFIRMED]: 0,
         opportunities: data?.opportunities?.pageInfo.totalDocs || 0,
-        refetch,
         gigs: [],
     };
 

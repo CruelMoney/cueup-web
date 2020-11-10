@@ -321,7 +321,9 @@ const ChatWrapper = ({ chat, onClose }) => {
     }, [chat, onClose, history]);
     const showDecline = useCallback(() => history.push(`/gig/${chat.id}/decline`), [chat, history]);
 
-    const systemMessage = getSystemMessage({ gig: chat, navigateToOffer, showDecline });
+    const systemMessages = isFromEvent
+        ? []
+        : [getSystemMessage({ gig: chat, navigateToOffer, showDecline })];
 
     return (
         <ChatBox
@@ -410,7 +412,7 @@ const ChatWrapper = ({ chat, onClose }) => {
                     handleMessageError={handleMessageError}
                     key={chat.id}
                     {...chat}
-                    systemMessages={systemMessage ? [systemMessage] : []}
+                    systemMessages={systemMessages}
                     placeholder={<EmptyChat receiver={receiver} />}
                 />
             </ChatMessagesWrapper>

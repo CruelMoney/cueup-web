@@ -8,6 +8,7 @@ import Menu from 'components/Navigation';
 import ScrollToTop from 'components/common/ScrollToTop';
 
 import { useAppState } from 'components/hooks/useAppState';
+import { useNotifications } from 'components/hooks/useNotifications';
 import { ME } from '../../../components/gql';
 import { Row, Hr, Container } from '../../../components/Blocks';
 
@@ -35,6 +36,10 @@ const DataWrapper = () => {
             });
         }
     }, [me, loading, setAppState]);
+
+    useNotifications({
+        userId: me?.id,
+    });
 
     if (!loading && !me) {
         return <Redirect to={`/login?redirect=${encodeURIComponent(pathname + search)}`} />;
