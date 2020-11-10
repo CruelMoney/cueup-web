@@ -57,6 +57,19 @@ const GigCard = ({ loading, style, idx, gig, opportunity, ...props }) => {
         onCompleted: () => setHasPassed(false),
     });
 
+    const [undoDecline, { loading: undoingDecline, data: undoData }] = useMutation(UNDO_DECLINE, {
+        variables: {
+            id: gig?.id,
+        },
+        refetchQueries: [{ query: MY_ACTIVE_GIGS }],
+    });
+
+    const hasUndoneDecline = !!undoData?.undoDeclineGig?.id;
+
+    if (hasUndoneDecline) {
+        return null;
+    }
+
     if (hasPassed) {
         return <UndoPassCard undo={undoPassOpportunity} undoing={undoing} />;
     }
@@ -176,6 +189,8 @@ const GigCard = ({ loading, style, idx, gig, opportunity, ...props }) => {
                         }}
                         passOpportunity={passOpportunity}
                         passing={passing}
+                        undoingDecline={undoingDecline}
+                        undoDecline={undoDecline}
                     />
                 </Content>
                 <Shadow />
@@ -184,7 +199,7 @@ const GigCard = ({ loading, style, idx, gig, opportunity, ...props }) => {
                 <CancelationDeclinePopup
                     gig={gig}
                     hide={() => setShowDecline(false)}
-                    onCancelled={console.log}
+                    onCancelled={() => setShowDecline(false)}
                 />
             )}
         </Wrapper>
@@ -205,16 +220,10 @@ const UndoPassCard = ({ undo, undoing }) => {
     );
 };
 
-const DeclinedActions = ({ id }) => {
-    const [mutate, { loading }] = useMutation(UNDO_DECLINE, {
-        variables: {
-            id,
-        },
-    });
-
+const DeclinedActions = ({ undoDecline, undoingDecline }) => {
     return (
         <Buttons>
-            <SmartButton loading={loading} level="tertiary" onClick={mutate}>
+            <SmartButton loading={undoingDecline} level="tertiary" onClick={undoDecline}>
                 Undo decline
             </SmartButton>
             <SecondaryButton>View details</SecondaryButton>
@@ -288,6 +297,8 @@ const Offer = ({
     showDecline,
     passOpportunity,
     passing,
+    undoDecline,
+    undoingDecline,
 }) => {
     const { statusHumanized, status, id } = gig || {};
 
@@ -319,6 +330,8 @@ const Offer = ({
                         showDecline={showDecline}
                         passOpportunity={passOpportunity}
                         passing={passing}
+                        undoDecline={undoDecline}
+                        undoingDecline={undoingDecline}
                     />
                 )}
                 {hasMessage && (
