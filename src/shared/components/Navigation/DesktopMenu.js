@@ -158,7 +158,7 @@ const GigsMenuItem = ({ t }) => {
                     <InlineIcon icon={musicalNotesOutline} />
                     Gigs{' '}
                     {!!totalNew && (
-                        <NotificationBubble>
+                        <NotificationBubble blue>
                             <span>{totalNew}</span>
                         </NotificationBubble>
                     )}
