@@ -1,7 +1,6 @@
-import React, { useRef, useEffect, useContext, memo, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import { NavLink, withRouter } from 'react-router-dom';
-import { MobileMenuContext } from './MobileMenu';
 
 const StyledNav = styled.nav`
     height: 48px;
@@ -12,7 +11,9 @@ const StyledNav = styled.nav`
     justify-content: space-between;
 
     @media only screen and (max-width: 425px) {
-        display: ${({ showMobile }) => (showMobile ? 'flex' : 'none')};
+        width: 100vw;
+        margin-left: -15px;
+        padding: 0 15px;
     }
 `;
 
@@ -31,8 +32,8 @@ const StyledLink = styled(NavLink)`
     text-align: left;
     text-transform: uppercase;
     font-weight: 700;
-    opacity: ${({ indicateActive }) => {
-        return indicateActive ? 1 : 0.6;
+    opacity: ${({ active }) => {
+        return active ? 1 : 0.6;
     }};
     &:hover {
         opacity: 1;
@@ -83,13 +84,6 @@ const Navigation = (props) => {
         setActiveIndicatorFromElement(activeRef.current);
     }, []);
 
-    useEffect(() => {
-        registerRoutes(routes);
-        return () => {
-            unregisterRoutes(routes);
-        };
-    }, [routes, registerRoutes, unregisterRoutes]);
-
     useEffect(resetIndicator, [routes, resetIndicator]);
 
     // change active indicator if navigated
@@ -102,7 +96,7 @@ const Navigation = (props) => {
     return (
         <StyledNav ref={navRef} onMouseLeave={resetIndicator} showMobile={showMobile}>
             <ActiveIndicator ref={indicator} />
-            {routes.map(({ route, label, mobileOnly }) => {
+            {routes.map(({ route, label }) => {
                 const active = pathname.includes(route);
                 return (
                     <StyledLink
@@ -119,9 +113,8 @@ const Navigation = (props) => {
                             }
                         }}
                         onMouseEnter={({ target }) => setActiveIndicatorFromElement(target)}
-                        indicateActive={active}
+                        active={active ? 'true' : undefined}
                         data-cy={'navbutton-' + label}
-                        mobileOnly={mobileOnly}
                     >
                         {label}
                     </StyledLink>
@@ -134,16 +127,4 @@ const Navigation = (props) => {
     );
 };
 
-const Wrapper = (props) => {
-    const { registerRoutes, unregisterRoutes } = useContext(MobileMenuContext);
-
-    return (
-        <Navigation
-            {...props}
-            registerRoutes={registerRoutes}
-            unregisterRoutes={unregisterRoutes}
-        />
-    );
-};
-
-export default withRouter(Wrapper);
+export default withRouter(Navigation);
