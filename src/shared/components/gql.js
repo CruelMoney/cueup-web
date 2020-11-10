@@ -198,6 +198,46 @@ const MY_GIGS = gql`
     }
 `;
 
+export const MY_ACTIVE_GIGS = gql`
+    query MyActiveGigs($afterDate: DateTime) {
+        myGigs(
+            pagination: { page: 1, limit: 999 }
+            filter: { afterDate: $afterDate, status: [REQUESTED, ACCEPTED, CONFIRMED] }
+        ) {
+            __typename
+            edges {
+                id
+                status
+                hasUnreadMessage
+                chatInitiated
+                event {
+                    id
+                    name
+                    hash
+                    organizer {
+                        id
+                        userMetadata {
+                            firstName
+                        }
+                        picture {
+                            path
+                        }
+                    }
+                }
+            }
+            pageInfo {
+                totalDocs
+            }
+        }
+        opportunities(pagination: { page: 1, limit: 999 }) {
+            __typename
+            pageInfo {
+                totalDocs
+            }
+        }
+    }
+`;
+
 const PAY_EVENT = gql`
     mutation PayEvent($gigId: ID!, $paymentData: JSON!, $paymentProvider: PaymentProvider!) {
         payEvent(gigId: $gigId, paymentData: $paymentData, paymentProvider: $paymentProvider) {

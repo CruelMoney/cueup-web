@@ -10,6 +10,7 @@ import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import { useAppState } from 'components/hooks/useAppState';
 import { BodySmall } from 'components/Text';
 import { ME } from 'components/gql';
+import { useMyActiveGigs } from 'components/hooks/useMyActiveGigs';
 import {
     ShadowWrapper,
     ExtraChatsLayover,
@@ -33,7 +34,7 @@ const gigToChatConfig = ({
     eventId,
     eventHash,
     notifications,
-    systemMessages,
+    chatName,
 }) => (gig) => {
     const theDj = {
         id: dj?.id,
@@ -57,7 +58,7 @@ const gigToChatConfig = ({
     if (isFromEvent) {
         url = `/user/${dj?.permalink}?gigId=${gig.id}&eventId=${eventId}&hash=${eventHash}`;
     } else {
-        url = '/gig/' + gig.id;
+        url = `/gig/${gig.id}/offer'`;
     }
 
     return {
@@ -71,12 +72,12 @@ const gigToChatConfig = ({
         eventId,
         url,
         isFromEvent,
-        systemMessages,
+        chatName,
     };
 };
 
 const SidebarChat = () => {
-    const { notifications, activeChat, activeEvent, activeGig, setAppState } = useAppState();
+    const { notifications, activeChat, activeEvent, setAppState } = useAppState();
 
     const setActiveChat = useCallback((chat) => setAppState({ activeChat: chat }), [setAppState]);
 
@@ -96,54 +97,38 @@ const SidebarChat = () => {
         <SidebarChatDj
             notifications={notifications}
             activeChat={activeChat}
-            activeGig={activeGig}
             setActiveChat={setActiveChat}
         />
     );
 };
 
-const SidebarChatDj = ({ activeChat, activeGig, notifications, setActiveChat }) => {
+const SidebarChatDj = ({ activeChat, notifications, setActiveChat }) => {
     const { data } = useQuery(ME);
-    const history = useHistory();
 
-    const navigateToOffer = useCallback(() => {
-        setActiveChat(null);
-        history.push(`/gig/${activeGig.id}/offer`);
-    }, [activeGig, setActiveChat, history]);
-    const showDecline = useCallback(() => history.push(`/gig/${activeGig.id}/decline`), [
-        activeGig,
-        history,
-    ]);
+    const { gigs } = useMyActiveGigs();
 
     if (!data?.me) {
         return null;
     }
 
-    const systemMessage = getSystemMessage({ gig: activeGig, navigateToOffer, showDecline });
-
-    const chats = [
-        gigToChatConfig({
-            notifications,
-            organizer: activeGig?.event?.organizer,
-            eventId: activeGig?.event?.id,
-            eventHash: activeGig?.event?.hash,
-            dj: data?.me,
-            systemMessages: [systemMessage],
-        })(activeGig),
-    ];
+    const chats = gigs
+        .filter((g) => g.chatInitiated)
+        .map((gig) =>
+            gigToChatConfig({
+                notifications,
+                organizer: gig?.event?.organizer,
+                eventId: gig?.event?.id,
+                eventHash: gig?.event?.hash,
+                dj: data?.me,
+                chatName: gig?.event?.name,
+            })(gig)
+        );
 
     if (!chats?.length) {
         return null;
     }
 
-    return (
-        <InnerContent
-            chats={chats}
-            setActiveChat={setActiveChat}
-            activeChat={activeChat}
-            event={activeGig?.event}
-        />
-    );
+    return <InnerContent chats={chats} setActiveChat={setActiveChat} activeChat={activeChat} />;
 };
 
 const SidebarChatOrganizer = ({ notifications, activeChat, activeEvent, setActiveChat }) => {
@@ -216,7 +201,7 @@ const InnerContent = ({ chats = [], event, activeChat, setActiveChat }) => {
 
     return (
         <FixedWrapper>
-            {chat && <ChatWrapper chat={chat} event={event} onClose={() => setActiveChat(null)} />}
+            {chat && <ChatWrapper chat={chat} onClose={() => setActiveChat(null)} />}
             <ChatList>
                 {activeChats.map((c) => (
                     <ChatBubble
@@ -235,6 +220,12 @@ const InnerContent = ({ chats = [], event, activeChat, setActiveChat }) => {
                     />
                 )}
             </ChatList>
+            {!!event && (
+                <Route
+                    path="*/chat-confirm-first"
+                    render={() => <ChatConfirmBeforeContact event={event} gigId={activeChat.id} />}
+                />
+            )}
         </FixedWrapper>
     );
 };
@@ -262,7 +253,9 @@ const ExtraChats = ({ chats, active, setActiveChat }) => {
                         }}
                         onClick={() => setActiveChat(c.id)}
                     >
-                        <NameBlock>{c.receiver.nickeName || c.receiver.name}</NameBlock>
+                        <NameBlock>
+                            {c.chatName} - {c.receiver.nickeName || c.receiver.name}
+                        </NameBlock>
                         {c.hasMessage && <NewMessagesIndicator style={{ left: -2, top: 6 }} />}
                     </TeritaryButton>
                 ))}
@@ -271,7 +264,8 @@ const ExtraChats = ({ chats, active, setActiveChat }) => {
     );
 };
 
-const ChatBubble = ({ receiver, onClick, active, hasMessage }) => {
+const ChatBubble = ({ receiver, onClick, active, chatName, hasMessage }) => {
+    console.log({ chatName });
     return (
         <ChatItem onClick={onClick} className={active ? 'active' : ''}>
             <ChatAvatarWrapper>
@@ -283,18 +277,25 @@ const ChatBubble = ({ receiver, onClick, active, hasMessage }) => {
 
             {!active && (
                 <NameBox>
-                    <NameBlock>
-                        {receiver.nickName || receiver.name}
-                        {receiver.nickName && <span>{receiver.name}</span>}
-                    </NameBlock>
+                    {chatName ? (
+                        <NameBlock>
+                            {chatName}
+                            {<span>{receiver.nickName || receiver.name}</span>}
+                        </NameBlock>
+                    ) : (
+                        <NameBlock>
+                            {receiver.nickName || receiver.name}
+                            {receiver.nickName && <span>{receiver.name}</span>}
+                        </NameBlock>
+                    )}
                 </NameBox>
             )}
         </ChatItem>
     );
 };
 
-const ChatWrapper = ({ chat, event, onClose }) => {
-    const { receiver, chatId, url, isFromEvent } = chat;
+const ChatWrapper = ({ chat, onClose }) => {
+    const { receiver, chatId, url, isFromEvent, chatName } = chat;
     const history = useHistory();
     const location = useLocation();
 
@@ -317,7 +318,14 @@ const ChatWrapper = ({ chat, event, onClose }) => {
         [history, location, isFromEvent]
     );
 
-    console.log({ chat });
+    const navigateToOffer = useCallback(() => {
+        history.push(`/gig/${chat.id}/offer`);
+        onClose();
+    }, [chat, onClose, history]);
+    const showDecline = useCallback(() => history.push(`/gig/${chat.id}/decline`), [chat, history]);
+
+    const systemMessage = getSystemMessage({ gig: chat, navigateToOffer, showDecline });
+
     return (
         <ChatBox
             onMouseEnter={() => (document.body.style.overflowY = 'hidden')}
@@ -342,10 +350,17 @@ const ChatWrapper = ({ chat, event, onClose }) => {
                                         src={receiver.image}
                                         style={{ zIndex: 1, marginRight: '8px' }}
                                     />
-                                    <NameBlock>
-                                        {receiver.nickName || receiver.name}
-                                        {receiver.nickName && <span>{receiver.name}</span>}
-                                    </NameBlock>
+                                    {chatName ? (
+                                        <NameBlock>
+                                            {chatName}
+                                            {<span>{receiver.nickName || receiver.name}</span>}
+                                        </NameBlock>
+                                    ) : (
+                                        <NameBlock>
+                                            {receiver.nickName || receiver.name}
+                                            {receiver.nickName && <span>{receiver.name}</span>}
+                                        </NameBlock>
+                                    )}
                                 </Row>
                             </TeritaryButton>
                         </NavLink>
@@ -398,14 +413,10 @@ const ChatWrapper = ({ chat, event, onClose }) => {
                     handleMessageError={handleMessageError}
                     key={chat.id}
                     {...chat}
+                    systemMessages={systemMessage ? [systemMessage] : []}
                     placeholder={<EmptyChat receiver={receiver} />}
                 />
             </ChatMessagesWrapper>
-
-            <Route
-                path="*/chat-confirm-first"
-                render={() => <ChatConfirmBeforeContact event={event} gigId={chatId} />}
-            />
         </ChatBox>
     );
 };

@@ -22,7 +22,7 @@ import Layout from '../components/Layout';
 const Completed = ({ user }) => {
     const [pagination, setPagination] = useState({
         page: 1,
-        limit: 8,
+        limit: 20,
         orderBy: 'START_TIME_DESCENDING',
     });
 
@@ -53,7 +53,7 @@ const Completed = ({ user }) => {
             rightSideChildren={<RightSide />}
             user={user}
         >
-            <Earnings gigs={gigs} />
+            <Earnings gigs={gigs.filter(Boolean)} />
         </Layout>
     );
 };
@@ -88,13 +88,9 @@ const RightSide = () => {
     );
 };
 
-const Earnings = ({ gigs }) => {
-    if (!gigs?.[0]) {
-        return null;
-    }
-
+const Earnings = ({ gigs = [] }) => {
     const profit = gigs.reduce((total, gig) => total + (gig?.offer?.totalPayout?.amount || 0), 0);
-    const currency = gigs[0]?.offer?.totalPayout?.currency;
+    const currency = gigs[0]?.offer?.totalPayout?.currency || 'USD';
 
     const formattedProfit = new Intl.NumberFormat(undefined, {
         style: 'currency',
@@ -140,6 +136,7 @@ const EarningsWrapper = styled(Row)`
         font-weight: 700;
         line-height: 1em;
         letter-spacing: -3px;
+        color: #00d1ff;
     }
 `;
 

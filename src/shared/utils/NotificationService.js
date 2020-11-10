@@ -1,7 +1,4 @@
 import io from 'socket.io-client';
-import { useEffect, useState, useCallback } from 'react';
-import { useServerContext } from 'components/hooks/useServerContext';
-import { useAppState } from 'components/hooks/useAppState';
 
 export default class NotificationService {
     constructor() {

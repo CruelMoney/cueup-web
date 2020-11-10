@@ -7,7 +7,6 @@ import { useHistory, useLocation, useRouteMatch } from 'react-router';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { LazyContactInformationPopup, LazyChatGetProPopup } from 'routes/GetProfessional';
-import Menu from 'components/Navigation';
 import GreyBox from 'components/GreyBox';
 import { useAppState } from 'components/hooks/useAppState';
 import ScrollToTop from '../../components/common/ScrollToTop';
@@ -96,7 +95,6 @@ const Index = () => {
                 </Helmet>
             )}
             {me && <BackToProfile permalink={me.permalink} />}
-            <Menu dark relative />
 
             <ScrollToTop animate top={295} />
 
@@ -110,14 +108,12 @@ const Index = () => {
                 history={history}
                 me={me}
             />
-
-            <Footer noSkew noPreFooter />
         </div>
     );
 };
 
 const GigContainer = styled(Container)`
-    min-height: 70vh;
+    padding-top: 30px;
     @media only screen and (max-width: 698px) {
         overflow: hidden;
         ${GreyBox} {
@@ -131,7 +127,7 @@ const Content = React.memo((props) => {
     const { pathname } = useLocation();
     const { url } = useRouteMatch();
     const { theEvent, loading, gig, me } = props;
-    const { setAppState, activeGig } = useAppState();
+    const { setAppState } = useAppState();
     const makeOfferRef = useRef();
 
     const showDecline = useCallback(() => history.replace(url + '/decline'), [url, history]);
@@ -139,22 +135,10 @@ const Content = React.memo((props) => {
 
     const makeOfferPath = pathname.includes('offer');
 
-    const loadChat = useCallback(() => {
+    const openChat = useCallback(() => {
         setAppState({
             showSideBarChat: true,
             activeEvent: null,
-            activeGig: gig,
-        });
-    }, [setAppState, gig]);
-
-    useEffect(() => {
-        if (activeGig?.id !== gig?.id) {
-            loadChat();
-        }
-    }, [loadChat, activeGig, gig]);
-
-    const openChat = useCallback(() => {
-        setAppState({
             activeChat: gig.id,
         });
     }, [setAppState, gig]);
@@ -183,7 +167,6 @@ const Content = React.memo((props) => {
     return (
         <div>
             <GigContainer>
-                <Hr style={{ marginBottom: 30 }} />
                 <RowWrap style={{ margin: '0 -30px' }}>
                     <Col style={{ padding: '0 30px', flex: 1, minWidth: 'min(80%, 400px)' }}>
                         <Information gig={gig} loading={loading} openChat={openChat} />

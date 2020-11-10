@@ -13,6 +13,8 @@ import NavMenuButton from 'components/NavMenuButton';
 import { Col, Hr, SecondaryButton } from 'components/Blocks';
 import usePushNotifications from 'components/hooks/usePushNotifications';
 import { BodySmall, Title } from 'components/Text';
+import { useMyActiveGigs } from 'components/hooks/useMyActiveGigs';
+import { gigStates } from 'constants/constants';
 
 const NotificationBubble = styled.span`
     background: rgb(244, 67, 54);
@@ -53,6 +55,14 @@ const EnableNotifications = ({ userId }) => {
 };
 
 const Sidebar = ({ user }) => {
+    const {
+        [gigStates.REQUESTED]: requestedCount,
+        [gigStates.CONFIRMED]: upcomingCount,
+        [gigStates.ACCEPTED]: acceptedCount,
+        opportunities: opportunitiesCount,
+        refetch,
+    } = useMyActiveGigs();
+
     return (
         <Col style={{ maxWidth: 300, width: 300, marginRight: 30, position: 'sticky', top: 15 }}>
             <CustomGreyBox>
@@ -67,6 +77,11 @@ const Sidebar = ({ user }) => {
                                 <NavMenuButton>
                                     <InlineIcon icon={directRequestsIcon} />
                                     Direct requests
+                                    {requestedCount && (
+                                        <NotificationBubble>
+                                            <span>{requestedCount}</span>
+                                        </NotificationBubble>
+                                    )}
                                 </NavMenuButton>
                             </NavLink>
                         </li>
@@ -75,6 +90,11 @@ const Sidebar = ({ user }) => {
                                 <NavMenuButton>
                                     <InlineIcon icon={opportunitiesIcon} />
                                     Opportunities
+                                    {opportunitiesCount && (
+                                        <NotificationBubble>
+                                            <span>{opportunitiesCount}</span>
+                                        </NotificationBubble>
+                                    )}
                                 </NavMenuButton>
                             </NavLink>
                         </li>
