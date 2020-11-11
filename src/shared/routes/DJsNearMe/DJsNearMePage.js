@@ -145,7 +145,7 @@ const FaqSection = () => {
         {
             q: 'Do I need a DJ for my event?',
             a: `<p>If you plan to have music at your event, you should book a DJ to manage the music. It is a very time-consuming task to create a playlist, and it can be stressful to control during the event. You have many other things to look after, and hiring a DJ makes it so much easier. It is the DJ's job to set the mood and manage the music, so you don't have to stress about it.</p>
-<p>If you don't want to set a mood at your event, you probably don't need a DJ. But having well-selected well-selected music throughout the event will make it a much more enjoyable time for everyone.</p>
+<p>If you don't want to set a mood at your event, you probably don't need a DJ. But having well-selected music throughout the event will make it a much more enjoyable time for everyone.</p>
 <p>Many DJs have recorded performances and pictures, so you can look for <a href=${
                 environment.WEBSITE_URL
             }${translate(
