@@ -61,14 +61,13 @@ const Index = () => {
 
     let gig = null;
     let event = null;
-    if (opportunity) {
-        event = data?.opportunity?.event;
-        gig = data?.opportunity?.gig;
-    } else {
-        gig = data?.gig;
-        event = gig?.event;
-    }
+    gig = data?.gig;
+    event = gig?.event;
     gig = { ...gig };
+
+    if (!opportunity && !loadingGig && !gig.id) {
+        return <Redirect to={translate(appRoutes.notFound)} />;
+    }
 
     const { status, referred } = gig || {};
 

@@ -54,6 +54,16 @@ const addApollo = (_req, res, next) => {
                         },
                     },
                 },
+                Event: {
+                    fields: {
+                        start: {
+                            merge: true,
+                        },
+                        end: {
+                            merge: true,
+                        },
+                    },
+                },
             },
         }),
         resolvers,

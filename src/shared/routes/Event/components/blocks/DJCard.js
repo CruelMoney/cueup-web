@@ -218,19 +218,19 @@ const Offer = ({
         <OfferRow middle>
             <OfferTextWrapper>
                 {!confirmed && (
-                    <OfferText data-cy="offer-price" muted={!offer}>
+                    <OfferText data-cy="offer-price" greyed={!offer}>
                         {offer ? offer.formatted : 'No offer yet'}
                     </OfferText>
                 )}
-                {tempPaidIndicator && <OfferText muted={true}>Paid and confirmed</OfferText>}
+                {tempPaidIndicator && <OfferText greyed={true}>Paid and confirmed</OfferText>}
                 {confirmed && !tempPaidIndicator && (
                     <>
-                        <OfferText data-cy="offer-price" muted={!offer}>
+                        <OfferText data-cy="offer-price" greyed={!offer}>
                             {amountPaid?.formatted}
                         </OfferText>
-                        <OfferText muted={true}>Paid and confirmed</OfferText>
+                        <OfferText greyed={true}>Paid and confirmed</OfferText>
                         {amountLeft?.amount ? (
-                            <OfferText muted>{amountLeft.formatted} remaining</OfferText>
+                            <OfferText greyed>{amountLeft.formatted} remaining</OfferText>
                         ) : null}
                     </>
                 )}

@@ -37,9 +37,7 @@ class UserMenuItem extends Component {
                         <NotificationBubble
                             border
                             style={{ position: 'absolute', top: -5, right: -5, zIndex: 2 }}
-                        >
-                            {notifications}
-                        </NotificationBubble>
+                        />
                     ) : null}
                     <Avatar src={picture} />
                 </div>

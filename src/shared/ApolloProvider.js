@@ -73,6 +73,16 @@ const APIProvider = ({ children }) => {
                     },
                 },
             },
+            Event: {
+                fields: {
+                    start: {
+                        merge: true,
+                    },
+                    end: {
+                        merge: true,
+                    },
+                },
+            },
         },
     }).restore(window.__APOLLO_STATE__);
 

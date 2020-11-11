@@ -314,9 +314,9 @@ const Offer = ({
     return (
         <OfferRow middle>
             <OfferTextWrapper>
-                {offer && <OfferText muted={false}>{offer.formatted}</OfferText>}
+                {offer && <OfferText greyed={false}>{offer.formatted}</OfferText>}
 
-                <OfferText muted={true}>
+                <OfferText greyed={true}>
                     {statusHumanized || (loading ? <Skeleton /> : null)}
                 </OfferText>
             </OfferTextWrapper>
@@ -376,7 +376,7 @@ const Buttons = styled(Row)`
 const OfferText = styled(BodyBold)`
     font-size: 18px;
     margin: 0;
-    color: ${({ muted }) => (muted ? '#98A4B3' : '#122b48')};
+    color: ${({ greyed }) => (greyed ? '#98A4B3' : '#122b48')};
 `;
 
 const OfferRow = styled(Row)`
