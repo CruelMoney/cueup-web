@@ -32,10 +32,12 @@ export const LogActivityInView = ({ type, subjectId, children }) => {
 };
 
 export const ACTIVITY_TYPES = Object.freeze({
-    SOUND_PLAY: 'SOUND_PLAY', // not implemented in frontend
-    PROFILE_VIEW: 'PROFILE_VIEW', // not implemented frontend
-    GIG_VIEWED_BY_ORGANIZER: 'GIG_VIEWED_BY_ORGANIZER', // not implemented frontend
-    GIG_VIEWED_BY_DJ: 'GIG_VIEWED_BY_DJ', // not implemented frontend
+    SOUND_PLAY: 'SOUND_PLAY',
+    PROFILE_VIEW: 'PROFILE_VIEW',
+    GIG_VIEWED_BY_ORGANIZER: 'GIG_VIEWED_BY_ORGANIZER',
+    GIG_VIEWED_BY_DJ: 'GIG_VIEWED_BY_DJ',
+    GIG_CALL: 'GIG_CALL', // when a dj or organizer press the call button
+    GIG_EMAIL: 'GIG_EMAIL', // when a dj or organizer press the email button
 });
 
 export default useLogActivity;

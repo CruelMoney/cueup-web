@@ -153,7 +153,6 @@ const Content = React.memo((props) => {
         type: ACTIVITY_TYPES.GIG_VIEWED_BY_DJ,
         subjectId: gig && gig.id,
         skipInView: true,
-        manual: opportunity, // don't log for opportunities
     });
 
     const makeOfferPath = pathname.includes('offer');

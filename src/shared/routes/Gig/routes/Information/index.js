@@ -3,11 +3,10 @@ import styled from 'styled-components';
 import moment from 'moment-timezone';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
-import { Avatar, Col, InfoBox, Row, RowWrap } from '../../../../components/Blocks';
+import { Col, InfoBox, Row, RowWrap } from '../../../../components/Blocks';
 import Map from '../../../../components/common/Map';
 
 import { BodyBold, BodySmall, HeaderTitle, TitleClean } from '../../../../components/Text';
-import { Label } from '../../../../components/FormComponents';
 import ContactPills from '../../components/blocks/ContactPills';
 
 const Information = React.forwardRef(({ gig, opportunity, theEvent, loading, openChat }, ref) => {
@@ -150,6 +149,7 @@ const MainInformation = ({ gig, theEvent, openChat }) => {
                     phone={contactPhone}
                     showInfo={showInfo}
                     openChat={openChat}
+                    gigId={gig?.id}
                 />
             </CustomSection>
 

@@ -6,21 +6,47 @@ import chatIcon from '@iconify/icons-ion/chatbubble';
 
 import { useRouteMatch } from 'react-router';
 import { NavLink } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { LOG_ACTIVITY } from 'routes/User/gql';
+import { ACTIVITY_TYPES } from 'components/hooks/useLogActivity';
 import ConditionalWrap from '../../../../components/ConditionalWrap';
-import { InfoPill, RowWrap, SecondaryButton, SmartButton } from '../../../../components/Blocks';
+import { RowWrap, SecondaryButton, SmartButton } from '../../../../components/Blocks';
 
-const hiddenEmail = '12345678@1234'.replace(/\w/g, '•') + '.com';
-const hiddenNumber = '45 12 34 56 78'.replace(/\w/g, '•');
-
-const ContactPills = ({ email, phone, showInfo, openChat }) => {
+const ContactPills = ({ gigId, email, phone, showInfo, openChat }) => {
     const match = useRouteMatch();
+
+    const [log] = useMutation(LOG_ACTIVITY, {
+        onError: console.log,
+    });
+
+    const handleShow = ({ value, type, message }) => {
+        log({
+            variables: {
+                type,
+                subjectId: gigId,
+            },
+        });
+        window.prompt(message, value);
+    };
 
     return (
         <RowWrap>
             {email && (
                 <ConditionalWrap
                     condition={showInfo}
-                    wrap={(children) => <a href={'mailto:' + email}>{children}</a>}
+                    wrap={(children) => (
+                        <div
+                            onClick={() =>
+                                handleShow({
+                                    message: '',
+                                    value: email,
+                                    type: ACTIVITY_TYPES.GIG_EMAIL,
+                                })
+                            }
+                        >
+                            {children}
+                        </div>
+                    )}
                     elseWrap={(children) => (
                         <NavLink to={match.url + '/contact-get-pro'}>{children}</NavLink>
                     )}
@@ -34,7 +60,19 @@ const ContactPills = ({ email, phone, showInfo, openChat }) => {
             {phone && (
                 <ConditionalWrap
                     condition={showInfo}
-                    wrap={(children) => <a href={'tel:' + phone}>{children}</a>}
+                    wrap={(children) => (
+                        <div
+                            onClick={() =>
+                                handleShow({
+                                    message: '',
+                                    value: phone,
+                                    type: ACTIVITY_TYPES.GIG_CALL,
+                                })
+                            }
+                        >
+                            {children}
+                        </div>
+                    )}
                     elseWrap={(children) => (
                         <NavLink to={match.url + '/contact-get-pro'}>{children}</NavLink>
                     )}
