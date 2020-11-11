@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache, ApolloLink, createHttpLink } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import fetch from 'node-fetch';
-import resolvers from '../../shared/actions/resolvers';
+import resolvers, { typePolicies } from '../../shared/actions/resolvers';
 
 const addApollo = (_req, res, next) => {
     const headers = {
@@ -40,33 +40,9 @@ const addApollo = (_req, res, next) => {
                     'XenditPaymentIntent',
                 ],
             },
-            typePolicies: {
-                User: {
-                    fields: {
-                        appMetadata: {
-                            merge: true,
-                        },
-                        userMetadata: {
-                            merge: true,
-                        },
-                        userSettings: {
-                            merge: true,
-                        },
-                    },
-                },
-                Event: {
-                    fields: {
-                        start: {
-                            merge: true,
-                        },
-                        end: {
-                            merge: true,
-                        },
-                    },
-                },
-            },
         }),
         resolvers,
+        typePolicies,
     });
 
     res.locals.apolloClient = apolloClient;

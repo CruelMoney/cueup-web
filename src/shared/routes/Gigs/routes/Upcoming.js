@@ -18,7 +18,7 @@ import GreyBox from 'components/GreyBox';
 import { gigStates } from 'constants/constants';
 import Layout from '../components/Layout';
 
-const Upcoming = ({ user }) => {
+const Upcoming = () => {
     const [pagination, setPagination] = useState({
         page: 1,
         limit: 8,

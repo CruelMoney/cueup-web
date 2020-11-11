@@ -24,6 +24,7 @@ import CancelationDeclinePopup from './components/CancelationDeclinePopup';
 
 const Index = () => {
     const location = useLocation();
+
     const history = useHistory();
     const match = useRouteMatch();
 
@@ -48,7 +49,10 @@ const Index = () => {
         },
         onCompleted: ({ opportunity }) => {
             if (opportunity?.gig) {
-                history.replace(`${translate(appRoutes.gig)}/${opportunity.gig.id}`);
+                history.replace(
+                    `${translate(appRoutes.gig)}/${opportunity.gig.id}`,
+                    location.state
+                );
             }
         },
     });
@@ -135,14 +139,15 @@ const GigContainer = styled(Container)`
 
 const Content = React.memo((props) => {
     const history = useHistory();
-    const { pathname } = useLocation();
+    const { pathname, state } = useLocation();
     const { url } = useRouteMatch();
     const { theEvent, loading, gig, me, opportunity } = props;
     const { setAppState } = useAppState();
     const makeOfferRef = useRef();
+    const initiated = useRef(false);
 
-    const showDecline = useCallback(() => history.replace(url + '/decline'), [url, history]);
-    const hideDecline = useCallback(() => history.replace(url), [url, history]);
+    const showDecline = useCallback(() => history.replace(url + '/decline'), [url, history], state);
+    const hideDecline = useCallback(() => history.replace(url), [url, history], state);
 
     useLogActivity({
         type: ACTIVITY_TYPES.GIG_VIEWED_BY_DJ,
@@ -161,6 +166,14 @@ const Content = React.memo((props) => {
             activeGig: gig,
         });
     }, [setAppState, gig]);
+
+    // open chat if has messages
+    useEffect(() => {
+        if (gig?.chatInitiated && !initiated.current) {
+            openChat();
+            initiated.current = true;
+        }
+    }, [gig, openChat]);
 
     const scrollToMakeOffer = useCallback(() => {
         let top = 0;

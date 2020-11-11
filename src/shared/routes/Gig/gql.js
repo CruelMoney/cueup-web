@@ -6,11 +6,11 @@ const GIG = gql`
             id
             status
             statusHumanized
-            expires
             isActionable
             referred
             opportunity
             discount
+            chatInitiated
             offer {
                 offer {
                     amount

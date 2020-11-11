@@ -131,4 +131,43 @@ export const typeDefs = gql`
     }
 `;
 
+export const typePolicies = {
+    User: {
+        fields: {
+            appMetadata: {
+                merge: true,
+            },
+            userMetadata: {
+                merge: true,
+            },
+            userSettings: {
+                merge: true,
+            },
+        },
+    },
+    Event: {
+        fields: {
+            start: {
+                merge: true,
+            },
+            end: {
+                merge: true,
+            },
+            duration: {
+                merge: true,
+            },
+            location: {
+                merge: true,
+            },
+        },
+    },
+    Gig: {
+        fields: {
+            offer: {
+                merge: true,
+            },
+        },
+    },
+};
+
 export default resolvers;

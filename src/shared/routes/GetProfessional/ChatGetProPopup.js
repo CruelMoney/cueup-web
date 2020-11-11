@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { Col, PrimaryButton, TeritaryButton } from 'components/Blocks';
 import { Body } from 'components/Text';
-import { ProFeature } from 'components/FormComponents';
 import { Testimonial, CustomCheckBox } from './BenefitsPopup';
 import GenericPopup from './GenericPopup';
 

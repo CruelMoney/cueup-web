@@ -425,7 +425,7 @@ const EmptyChat = ({ receiver }) => {
             <BodySmall style={{ marginBottom: '0.5em' }}>
                 Ask {receiver.name} about anything.
             </BodySmall>
-            <BodySmall>Contact information will be visible after booking confirmation.</BodySmall>
+            <BodySmall>Contact details will be visible after booking confirmation.</BodySmall>
         </Col>
     );
 };

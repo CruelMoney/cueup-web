@@ -7,7 +7,7 @@ import { setContext } from '@apollo/client/link/context';
 import { createUploadLink } from 'apollo-upload-client';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { useServerContext } from 'components/hooks/useServerContext';
-import resolvers from './actions/resolvers';
+import resolvers, { typePolicies } from './actions/resolvers';
 import { authService } from './utils/AuthService';
 import customFetch from './utils/uploadProgress';
 
@@ -59,31 +59,7 @@ const APIProvider = ({ children }) => {
             PayoutMethod: ['Bank', 'Direct'],
             PaymentIntent: ['DirectPaymentIntent', 'StripePaymentIntent', 'XenditPaymentIntent'],
         },
-        typePolicies: {
-            User: {
-                fields: {
-                    appMetadata: {
-                        merge: true,
-                    },
-                    userMetadata: {
-                        merge: true,
-                    },
-                    userSettings: {
-                        merge: true,
-                    },
-                },
-            },
-            Event: {
-                fields: {
-                    start: {
-                        merge: true,
-                    },
-                    end: {
-                        merge: true,
-                    },
-                },
-            },
-        },
+        typePolicies,
     }).restore(window.__APOLLO_STATE__);
 
     const uploadLink = createUploadLink({
