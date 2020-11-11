@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import moment from 'moment-timezone';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
-import { Col, InfoBox, Row, RowWrap } from '../../../../components/Blocks';
+import { Avatar, Col, InfoBox, Row, RowWrap } from '../../../../components/Blocks';
 import Map from '../../../../components/common/Map';
 
 import { BodyBold, BodySmall, HeaderTitle, TitleClean } from '../../../../components/Text';
@@ -13,14 +13,17 @@ import ContactPills from '../../components/blocks/ContactPills';
 const Information = React.forwardRef(({ gig, opportunity, theEvent, loading, openChat }, ref) => {
     let { statusHumanized } = gig || {};
     if (opportunity) {
-        statusHumanized = 'Still looking for a DJ, make your offer';
+        statusHumanized = 'Still looking for a DJ, send your offer';
     }
-    const { name, location, start } = theEvent || {};
+    const { name, location, start, organizer, createdAt } = theEvent || {};
 
     const coordinates = {
         lat: location?.latitude,
         lng: location?.longitude,
     };
+
+    let createdTimeAgo = loading ? null : moment(createdAt?.UTC).fromNow();
+    createdTimeAgo = 'Added ' + createdTimeAgo;
 
     return (
         <Col ref={ref}>
@@ -28,15 +31,28 @@ const Information = React.forwardRef(({ gig, opportunity, theEvent, loading, ope
                 <Row>
                     <HeaderTitle dark>{name || <Skeleton width={100} />}</HeaderTitle>
                 </Row>
-                <BodyBold data-cy="gig-status" style={{ margin: 0, color: '#00d1ff' }}>
-                    {loading || !statusHumanized ? <Skeleton width={200} /> : statusHumanized}
-                </BodyBold>
-                <BodyBold opacity={0.75} style={{ margin: 0 }}>
-                    {location?.name || <Skeleton width={100} />}
-                    {'  ·  '}
-                    {start?.formattedDate || <Skeleton width={150} />}
-                </BodyBold>
+                <TopInfoRow middle>
+                    <Col>
+                        <BodyBold opacity={0.75} style={{ margin: 0 }}>
+                            {organizer?.userMetadata.firstName || <Skeleton width={100} />}
+                            {'  ·  '}
+                            {loading ? <Skeleton width={100} /> : createdTimeAgo}
+                        </BodyBold>
 
+                        <BodyBold opacity={0.75} style={{ margin: 0 }}>
+                            {location?.name || <Skeleton width={100} />}
+                            {'  ·  '}
+                            {start?.formattedDate || <Skeleton width={150} />}
+                        </BodyBold>
+                        <BodyBold data-cy="gig-status" style={{ margin: 0, color: '#00d1ff' }}>
+                            {loading || !statusHumanized ? (
+                                <Skeleton width={200} />
+                            ) : (
+                                statusHumanized
+                            )}
+                        </BodyBold>
+                    </Col>
+                </TopInfoRow>
                 {location && (
                     <div
                         style={{
@@ -71,6 +87,19 @@ const Information = React.forwardRef(({ gig, opportunity, theEvent, loading, ope
     );
 });
 
+const TopInfoRow = styled(Row)`
+    ${BodyBold} {
+        line-height: 1.5em;
+        letter-spacing: 0;
+    }
+    @media only screen and (max-width: 450px) {
+        margin-top: 9px;
+        ${BodyBold} {
+            font-size: 14px;
+        }
+    }
+`;
+
 const MainInformation = ({ gig, theEvent, openChat }) => {
     const match = useRouteMatch();
 
@@ -98,13 +127,13 @@ const MainInformation = ({ gig, theEvent, openChat }) => {
     return (
         <>
             {address && showInfo && (
-                <CustomLabel>
+                <CustomSection>
                     <TitleClean>Address</TitleClean>
                     <BodySmall>{address}</BodySmall>
-                </CustomLabel>
+                </CustomSection>
             )}
-            <CustomLabel>
-                <TitleClean>Connect with {contactName}</TitleClean>
+            <CustomSection>
+                <TitleClean>Contact {contactName}</TitleClean>
                 {!showInfo && (
                     <BodySmall>
                         Details will be available when the gig is confirmed - you can use the chat
@@ -113,19 +142,18 @@ const MainInformation = ({ gig, theEvent, openChat }) => {
                         <NavLink to={match.url + '/contact-get-pro'}>
                             <b style={{ color: '#4d6480' }}>Pro members</b>
                         </NavLink>{' '}
-                        can see the contact information any time.
+                        can see the contact details any time.
                     </BodySmall>
                 )}
-                <RowWrap>
-                    <ContactPills
-                        email={contactEmail}
-                        phone={contactPhone}
-                        showInfo={showInfo}
-                        openChat={openChat}
-                    />
-                </RowWrap>
-            </CustomLabel>
-            <CustomLabel>
+                <ContactPills
+                    email={contactEmail}
+                    phone={contactPhone}
+                    showInfo={showInfo}
+                    openChat={openChat}
+                />
+            </CustomSection>
+
+            <CustomSection>
                 <TitleClean>Description</TitleClean>
                 <BodySmall>{description}</BodySmall>
                 <RowWrap style={{ marginRight: '-24px', marginBottom: -15 }}>
@@ -161,20 +189,20 @@ const MainInformation = ({ gig, theEvent, openChat }) => {
                         </InfoBox>
                     )}
                 </RowWrap>
-            </CustomLabel>
-            <CustomLabel>
+            </CustomSection>
+            <CustomSection>
                 <TitleClean>Budget</TitleClean>
                 <BodySmall>{budget ? `Up to ${budget?.formatted}` : 'Not specified'}</BodySmall>
-            </CustomLabel>
-            <CustomLabel>
+            </CustomSection>
+            <CustomSection>
                 <TitleClean>Music</TitleClean>
                 <RowWrap style={{ marginRight: '-24px' }}>
                     {genres?.map((g) => (
                         <InfoBox key={g}>{g}</InfoBox>
                     ))}
                 </RowWrap>
-            </CustomLabel>
-            <CustomLabel>
+            </CustomSection>
+            <CustomSection>
                 <TitleClean>Date and time</TitleClean>
 
                 <BodySmall>{rider?.formatted}</BodySmall>
@@ -196,12 +224,12 @@ const MainInformation = ({ gig, theEvent, openChat }) => {
                         {hours}
                     </InfoBox>
                 </RowWrap>
-            </CustomLabel>
+            </CustomSection>
         </>
     );
 };
 
-const CustomLabel = styled(Label)`
+const CustomSection = styled.div`
     margin-bottom: 30px;
     h3 {
         margin-bottom: 0.5em;

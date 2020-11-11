@@ -123,18 +123,16 @@ const GigCard = ({ loading, style, idx, gig, opportunity, ...props }) => {
                                 )}
                             </Row>
                             <BodySmall>
-                                {!loading ? (
-                                    <>
-                                        <span>Added {createdTimeAgo}</span>
-                                    </>
-                                ) : (
-                                    <Skeleton width={50} />
-                                )}
-                                <span style={{ top: '2px', opacity: '0.5' }}>{'  •  '}</span>
                                 <span>
                                     {organizer?.userMetadata?.firstName ||
                                         (loading ? <Skeleton width={50} /> : null)}
                                 </span>
+                                <span style={{ top: '2px', opacity: '0.5' }}>{'  •  '}</span>
+                                {!loading ? (
+                                    <span>Added {createdTimeAgo}</span>
+                                ) : (
+                                    <Skeleton width={50} />
+                                )}
                             </BodySmall>
                         </Col>
                         <Filler />

@@ -58,6 +58,9 @@ const GIG = gql`
                 contactPhone
                 address
                 eventType
+                createdAt {
+                    UTC
+                }
                 budget {
                     amount
                     formatted(locale: $locale)

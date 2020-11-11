@@ -7,7 +7,7 @@ import chatIcon from '@iconify/icons-ion/chatbubble';
 import { useRouteMatch } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import ConditionalWrap from '../../../../components/ConditionalWrap';
-import { InfoPill } from '../../../../components/Blocks';
+import { InfoPill, RowWrap, SecondaryButton, SmartButton } from '../../../../components/Blocks';
 
 const hiddenEmail = '12345678@1234'.replace(/\w/g, '•') + '.com';
 const hiddenNumber = '45 12 34 56 78'.replace(/\w/g, '•');
@@ -16,7 +16,7 @@ const ContactPills = ({ email, phone, showInfo, openChat }) => {
     const match = useRouteMatch();
 
     return (
-        <>
+        <RowWrap>
             {email && (
                 <ConditionalWrap
                     condition={showInfo}
@@ -25,10 +25,10 @@ const ContactPills = ({ email, phone, showInfo, openChat }) => {
                         <NavLink to={match.url + '/contact-get-pro'}>{children}</NavLink>
                     )}
                 >
-                    <InfoPill active={showInfo}>
-                        <Icon icon={mailIcon} style={{ fontSize: '15px' }} />{' '}
-                        <span>{showInfo ? email : hiddenEmail}</span>
-                    </InfoPill>
+                    <SecondaryButton>
+                        <Icon icon={mailIcon} style={{ marginBottom: -2, marginRight: 12 }} />
+                        <span>Show email</span>
+                    </SecondaryButton>
                 </ConditionalWrap>
             )}
             {phone && (
@@ -39,16 +39,17 @@ const ContactPills = ({ email, phone, showInfo, openChat }) => {
                         <NavLink to={match.url + '/contact-get-pro'}>{children}</NavLink>
                     )}
                 >
-                    <InfoPill active={showInfo}>
-                        <Icon icon={phoneIcon} style={{ fontSize: '15px' }} />{' '}
-                        <span>{showInfo ? phone : hiddenNumber}</span>
-                    </InfoPill>
+                    <SecondaryButton>
+                        <Icon icon={phoneIcon} style={{ marginBottom: -2, marginRight: 12 }} />
+                        <span>Show number</span>
+                    </SecondaryButton>
                 </ConditionalWrap>
             )}
-            <InfoPill active onClick={openChat} style={{ cursor: 'pointer' }}>
-                <Icon icon={chatIcon} style={{ fontSize: '15px' }} /> <span>Send message</span>
-            </InfoPill>
-        </>
+            <SmartButton level={'primary'} onClick={openChat}>
+                <Icon icon={chatIcon} style={{ marginBottom: -2, marginRight: 12 }} />
+                <span>Send message</span>
+            </SmartButton>
+        </RowWrap>
     );
 };
 
