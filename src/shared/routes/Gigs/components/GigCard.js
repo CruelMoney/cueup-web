@@ -336,12 +336,11 @@ const Offer = ({
                 )}
                 {hasMessage && (
                     <NotificationBubble
+                        border
                         style={{
                             position: 'absolute',
                             right: -10,
                             top: 10,
-                            lineHeight: '1.2em',
-                            border: '2px solid white',
                         }}
                     >
                         <span>!</span>

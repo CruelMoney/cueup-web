@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Avatar } from 'components/Blocks';
+import { Avatar, NotificationBubble } from 'components/Blocks';
 
 const styles = {
     image: {
@@ -34,7 +34,12 @@ class UserMenuItem extends Component {
             <MenuUser style={styles.flex} data-cy="menu-user-link" onClick={this.props.onClick}>
                 <div style={styles.image}>
                     {notifications > 0 ? (
-                        <div className={'notification-bubble'}>{notifications}</div>
+                        <NotificationBubble
+                            border
+                            style={{ position: 'absolute', top: -5, right: -5, zIndex: 2 }}
+                        >
+                            {notifications}
+                        </NotificationBubble>
                     ) : null}
                     <Avatar src={picture} />
                 </div>

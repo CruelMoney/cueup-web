@@ -23,9 +23,23 @@ import { useLogout } from '../hooks/useLogout';
 import UserMenuItem from './UserMenuItem';
 
 const DesktopMenu = (props) => {
+    const { user } = props;
     const [showing, setShowing] = useState();
     const node = useRef();
     const location = useLocation();
+
+    const isPro = user.appMetadata.isPro;
+    const isOrganizer = user.appMetadata.roles.includes('ORGANIZER');
+    const isDJ = user.appMetadata.roles.includes('DJ');
+
+    const {
+        [gigStates.REQUESTED]: requestedCount,
+        opportunities: opportunitiesCount,
+    } = useMyActiveGigs({
+        skip: !isDJ,
+    });
+
+    const totalNew = requestedCount + opportunitiesCount;
 
     useEffect(() => {
         const handleClick = (e) => {
@@ -48,19 +62,29 @@ const DesktopMenu = (props) => {
 
     return (
         <Wrapper ref={node} className={showing ? 'white-bg' : ''}>
-            <UserMenuItem {...props} />
-            {showing && <DropDownMenu {...props} />}
+            <UserMenuItem
+                {...props}
+                notifications={totalNew}
+                isPro={isPro}
+                isDJ={isDJ}
+                isOrganizer={isOrganizer}
+            />
+            {showing && (
+                <DropDownMenu
+                    {...props}
+                    totalNew={totalNew}
+                    isPro={isPro}
+                    isDJ={isDJ}
+                    isOrganizer={isOrganizer}
+                />
+            )}
         </Wrapper>
     );
 };
 
-const DropDownMenu = ({ user, ...props }) => {
+const DropDownMenu = ({ user, isDJ, isOrganizer, isPro, totalNew, ...props }) => {
     const { t } = useTranslate();
     const logout = useLogout();
-
-    const isPro = user.appMetadata.isPro;
-    const isOrganizer = user.appMetadata.roles.includes('ORGANIZER');
-    const isDJ = user.appMetadata.roles.includes('DJ');
 
     const typeformUrl = isDJ
         ? 'https://cueup.typeform.com/to/u8Oec7'
@@ -86,7 +110,7 @@ const DropDownMenu = ({ user, ...props }) => {
                     </NavLink>
                 </li>
 
-                {isDJ && <GigsMenuItem t={t} />}
+                {isDJ && <GigsMenuItem totalNew={totalNew} t={t} />}
                 {isOrganizer && (
                     <li>
                         <NavLink to={t(appRoutes.userEvents)} data-cy="menu-events-link">
@@ -143,14 +167,7 @@ const DropDownMenu = ({ user, ...props }) => {
     );
 };
 
-const GigsMenuItem = ({ t }) => {
-    const {
-        [gigStates.REQUESTED]: requestedCount,
-        opportunities: opportunitiesCount,
-    } = useMyActiveGigs();
-
-    const totalNew = requestedCount + opportunitiesCount;
-
+const GigsMenuItem = ({ t, totalNew }) => {
     return (
         <li>
             <NavLink to={t(appRoutes.userGigs)} data-cy="menu-gigs-link">
@@ -158,7 +175,7 @@ const GigsMenuItem = ({ t }) => {
                     <InlineIcon icon={musicalNotesOutline} />
                     Gigs{' '}
                     {!!totalNew && (
-                        <NotificationBubble blue>
+                        <NotificationBubble>
                             <span>{totalNew}</span>
                         </NotificationBubble>
                     )}

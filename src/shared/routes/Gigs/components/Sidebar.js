@@ -62,7 +62,7 @@ const Sidebar = ({ user }) => {
                                     <InlineIcon icon={directRequestsIcon} />
                                     Direct requests
                                     {!!requestedCount && (
-                                        <NotificationBubble blue>
+                                        <NotificationBubble>
                                             <span>{requestedCount}</span>
                                         </NotificationBubble>
                                     )}
@@ -75,7 +75,7 @@ const Sidebar = ({ user }) => {
                                     <InlineIcon icon={opportunitiesIcon} />
                                     Opportunities
                                     {!!opportunitiesCount && (
-                                        <NotificationBubble blue>
+                                        <NotificationBubble>
                                             <span>{opportunitiesCount}</span>
                                         </NotificationBubble>
                                     )}

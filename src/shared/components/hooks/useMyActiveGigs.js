@@ -2,9 +2,11 @@ import { useQuery } from '@apollo/client';
 import { MY_ACTIVE_GIGS } from 'components/gql';
 import { gigStates } from 'constants/constants';
 
-export const useMyActiveGigs = () => {
+export const useMyActiveGigs = (options) => {
+    const { skip } = options || {};
     const { data } = useQuery(MY_ACTIVE_GIGS, {
         ssr: false,
+        skip,
     });
 
     const initialData = {

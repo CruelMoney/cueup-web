@@ -856,4 +856,10 @@ export const NotificationBubble = styled.span`
             background: #00d1ff;
             font-weight: 700;
         `}
+    ${({ border }) =>
+        border &&
+        css`
+            line-height: 1.2em;
+            border: 2px solid white;
+        `}
 `;
