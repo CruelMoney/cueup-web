@@ -15,7 +15,7 @@ import { Container, Row, Col, Hr, RowWrap } from '../../components/Blocks';
 import { gigStates } from '../../constants/constants';
 import { ME } from '../../components/gql';
 import useLogActivity, { ACTIVITY_TYPES } from '../../components/hooks/useLogActivity';
-import { GIG } from './gql.js';
+import { GIG, OPPORTUNITY } from './gql.js';
 import Information from './routes/Information';
 import Offer from './routes/Offer';
 import BackToProfile from './components/BackToProfile';
@@ -32,9 +32,13 @@ const Index = () => {
     const {
         params: { id },
     } = match;
-    const { data = {}, error, loading: loadingGig } = useQuery(GIG, {
-        skip: !id,
 
+    const opportunity = location.pathname.includes(translate(appRoutes.opportunity));
+
+    const gqlQuery = opportunity ? OPPORTUNITY : GIG;
+
+    const { data = {}, error, loading: loadingGig } = useQuery(gqlQuery, {
+        skip: !id,
         variables: {
             id,
         },
@@ -51,6 +55,7 @@ const Index = () => {
         type: ACTIVITY_TYPES.GIG_VIEWED_BY_DJ,
         subjectId: gig && gig.id,
         skipInView: true,
+        manual: opportunity, // don't log for opportunities
     });
 
     useEffect(() => {
@@ -61,9 +66,13 @@ const Index = () => {
         return <Redirect to={translate(appRoutes.notFound)} />;
     }
 
-    const { event, status, referred } = gig || {};
+    const { status, referred } = gig || {};
 
-    const title = event ? event.name : 'Cueup | Event';
+    const event = opportunity ? data?.opportunity : gig?.event;
+
+    console.log({ event, data, opportunity });
+
+    const title = event ? event.name : 'Gig · Cueup';
     const description = event ? event.description : null;
     if (gig) {
         gig.showInfo = status === gigStates.CONFIRMED || me?.appMetadata?.isPro || referred;
@@ -107,6 +116,7 @@ const Index = () => {
                 translate={translate}
                 history={history}
                 me={me}
+                opportunity={opportunity}
             />
         </div>
     );
@@ -126,7 +136,7 @@ const Content = React.memo((props) => {
     const history = useHistory();
     const { pathname } = useLocation();
     const { url } = useRouteMatch();
-    const { theEvent, loading, gig, me } = props;
+    const { theEvent, loading, gig, me, opportunity } = props;
     const { setAppState } = useAppState();
     const makeOfferRef = useRef();
 
@@ -170,7 +180,13 @@ const Content = React.memo((props) => {
             <GigContainer>
                 <RowWrap style={{ margin: '0 -30px' }}>
                     <Col style={{ padding: '0 30px', flex: 1, minWidth: 'min(80%, 400px)' }}>
-                        <Information gig={gig} loading={loading} openChat={openChat} />
+                        <Information
+                            gig={gig}
+                            theEvent={theEvent}
+                            opportunity={opportunity}
+                            loading={loading}
+                            openChat={openChat}
+                        />
                     </Col>
                     <Col
                         ref={makeOfferRef}
@@ -185,6 +201,7 @@ const Content = React.memo((props) => {
                         <Offer
                             theEvent={theEvent}
                             gig={gig}
+                            opportunity={opportunity}
                             loading={loading}
                             showDecline={showDecline}
                             me={me}

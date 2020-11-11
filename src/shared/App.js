@@ -81,7 +81,10 @@ const RouteWrapper = () => {
                     <Route path={t(appRoutes.completeSignup)} component={LazyCompleteSignup} />
                     <Route path={t(appRoutes.terms)} component={LazyTerms} />
                     <Route path={t(appRoutes.event) + '/:id/:hash'} component={LazyEvent} />
-                    <Route path={t(appRoutes.gig) + '/:id'} component={LazyGig} />
+                    <Route
+                        path={[t(appRoutes.gig) + '/:id', t(appRoutes.opportunity) + '/:id']}
+                        component={LazyGig}
+                    />
                     <Route path={t(appRoutes.bookDj)} component={LazyLocation} />
                     <Route path={t(appRoutes.bookDjOverview)} component={LazyLocationsOverview} />
                     <Route path={t(appRoutes.djsNearMe)} component={LazyDjsNearMe} />

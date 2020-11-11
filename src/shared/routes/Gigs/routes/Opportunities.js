@@ -24,6 +24,7 @@ import Icon from '@iconify/react';
 import questionIcon from '@iconify/icons-simple-line-icons/question';
 import { BodySmall, H3 } from 'components/Text';
 import GreyBox from 'components/GreyBox';
+import { gigStates } from 'constants/constants';
 import Layout from '../components/Layout';
 import { MY_OPPORTUNITIES } from '../gql';
 
@@ -44,7 +45,7 @@ const Opportunities = () => {
     if (loading) {
         gigs = [null, null, null, null, null];
     } else {
-        gigs = gigs.map((event) => ({ id: event.id, event }));
+        gigs = gigs.map((event) => ({ id: event.id, status: gigStates.REQUESTED, event }));
     }
 
     return (

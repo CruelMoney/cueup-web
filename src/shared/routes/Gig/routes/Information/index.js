@@ -1,19 +1,21 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import moment from 'moment-timezone';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
-import Tooltip from 'components/Tooltip';
-import { Col, InfoBox, InfoPill, Row, RowWrap } from '../../../../components/Blocks';
+import { Col, InfoBox, Row, RowWrap } from '../../../../components/Blocks';
 import Map from '../../../../components/common/Map';
 
-import { Body, BodyBold, BodySmall, HeaderTitle, TitleClean } from '../../../../components/Text';
-import { Label, ProFeature } from '../../../../components/FormComponents';
+import { BodyBold, BodySmall, HeaderTitle, TitleClean } from '../../../../components/Text';
+import { Label } from '../../../../components/FormComponents';
 import ContactPills from '../../components/blocks/ContactPills';
 
-const Information = React.forwardRef(({ gig, loading, openChat }, ref) => {
-    const { event, statusHumanized } = gig || {};
-    const { name, location, start } = event || {};
+const Information = React.forwardRef(({ gig, opportunity, theEvent, loading, openChat }, ref) => {
+    let { statusHumanized } = gig || {};
+    if (opportunity) {
+        statusHumanized = 'Still looking for a DJ, make your offer';
+    }
+    const { name, location, start } = theEvent || {};
 
     const coordinates = {
         lat: location?.latitude,
@@ -27,7 +29,7 @@ const Information = React.forwardRef(({ gig, loading, openChat }, ref) => {
                     <HeaderTitle dark>{name || <Skeleton width={100} />}</HeaderTitle>
                 </Row>
                 <BodyBold data-cy="gig-status" style={{ margin: 0, color: '#00d1ff' }}>
-                    {statusHumanized || <Skeleton width={200} />}
+                    {loading || !statusHumanized ? <Skeleton width={200} /> : statusHumanized}
                 </BodyBold>
                 <BodyBold opacity={0.75} style={{ margin: 0 }}>
                     {location?.name || <Skeleton width={100} />}
@@ -60,15 +62,19 @@ const Information = React.forwardRef(({ gig, loading, openChat }, ref) => {
                     </div>
                 )}
             </Col>
-            {loading ? <Skeleton count={3} /> : <MainInformation gig={gig} openChat={openChat} />}
+            {loading ? (
+                <Skeleton count={3} />
+            ) : (
+                <MainInformation gig={gig} theEvent={theEvent} openChat={openChat} />
+            )}
         </Col>
     );
 });
 
-const MainInformation = ({ gig, openChat }) => {
+const MainInformation = ({ gig, theEvent, openChat }) => {
     const match = useRouteMatch();
 
-    const { event, showInfo } = gig || {};
+    const { showInfo } = gig || {};
     const {
         description,
         rider,
@@ -82,7 +88,7 @@ const MainInformation = ({ gig, openChat }) => {
         address,
         eventType,
         contactName,
-    } = event || {};
+    } = theEvent || {};
 
     const startMoment = moment(start?.localDate);
     const endMoment = moment(end?.localDate);

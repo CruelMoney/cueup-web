@@ -82,12 +82,16 @@ const GigCard = ({ loading, style, idx, gig, opportunity, ...props }) => {
         notifications[gig.id] &&
         notifications[gig.id].read < notifications[gig.id].total;
 
+    const linkTo = opportunity
+        ? `${translate(appRoutes.opportunity)}/${id}`
+        : `${translate(appRoutes.gig)}/${gig?.id}`;
+
     return (
         <Wrapper idx={idx} disabled={loading} {...props}>
             <Card
                 style={style}
                 to={{
-                    pathname: `${translate(appRoutes.gig)}/${gig?.id}`,
+                    pathname: linkTo,
                     state: {
                         comingFrom: pathname,
                     },

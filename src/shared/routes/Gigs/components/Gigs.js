@@ -28,6 +28,10 @@ const DataWrapper = () => {
 
     const metaTitle = 'Gigs · Cueup';
 
+    useNotifications({
+        userId: me?.id,
+    });
+
     useEffect(() => {
         if (!loading && me) {
             setAppState({
@@ -36,10 +40,6 @@ const DataWrapper = () => {
             });
         }
     }, [me, loading, setAppState]);
-
-    useNotifications({
-        userId: me?.id,
-    });
 
     if (!loading && !me) {
         return <Redirect to={`/login?redirect=${encodeURIComponent(pathname + search)}`} />;

@@ -31,6 +31,7 @@ const routes: RouteKeys = {
     termsCookie: '/terms/cookies',
     termsPrivacy: '/terms/privacy',
     gig: '/gig',
+    opportunity: '/opportunity',
     resetPassword: '/resetPassword',
     djNameGenerator: '/dj-name-generator',
     djsNearMe: '/s/djs-near-me',

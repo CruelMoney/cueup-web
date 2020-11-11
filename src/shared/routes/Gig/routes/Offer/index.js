@@ -5,9 +5,9 @@ import OfferForm from '../../components/blocks/OfferForm';
 import Popup from '../../../../components/common/Popup';
 import PayoutForm from '../../../../components/common/PayoutForm';
 
-const Content = ({ gig, theEvent, me, showDecline }) => {
+const Content = ({ gig, opportunity, theEvent, me, showDecline }) => {
     const [payoutPopup, setPayoutPopup] = useState(false);
-    if (!me || !gig) {
+    if (!me) {
         return null;
     }
     const { userSettings, payoutMethods, appMetadata } = me;
@@ -27,17 +27,18 @@ const Content = ({ gig, theEvent, me, showDecline }) => {
                     onSubmitted={() => setPayoutPopup(false)}
                 />
             </Popup>
-
-            <OfferForm
-                showPopup={() => setPayoutPopup(true)}
-                profileCurrency={userSettings.currency}
-                gig={gig}
-                event={theEvent}
-                payoutInfoValid={payoutMethods?.length}
-                showDecline={showDecline}
-                user={me}
-                isPro={isPro}
-            />
+            {!!gig?.id && (
+                <OfferForm
+                    showPopup={() => setPayoutPopup(true)}
+                    profileCurrency={userSettings.currency}
+                    gig={gig}
+                    event={theEvent}
+                    payoutInfoValid={payoutMethods?.length}
+                    showDecline={showDecline}
+                    user={me}
+                    isPro={isPro}
+                />
+            )}
         </Col>
     );
 };
