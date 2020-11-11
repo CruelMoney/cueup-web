@@ -210,6 +210,7 @@ export const MY_ACTIVE_GIGS = gql`
                 status
                 hasUnreadMessage
                 chatInitiated
+                opportunity
                 event {
                     id
                     name

@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import debounce from 'lodash/debounce';
 import { useMutation } from '@apollo/client';
 import { InlineIcon } from '@iconify/react';
 import infoIcon from '@iconify/icons-ion/information-circle';
-import { useLocation } from 'react-router';
 import RadioSelect from 'components/RadioSelect';
 import useTranslate from 'components/hooks/useTranslate';
 import Tooltip from 'components/Tooltip';
@@ -12,12 +11,10 @@ import { GET_OFFER, MAKE_OFFER, GIG } from '../../gql';
 import ErrorMessageApollo from '../../../../components/common/ErrorMessageApollo';
 import { gigStates, PAYOUT_TYPES } from '../../../../constants/constants';
 import {
-    SecondaryButton,
     SmartButton,
     PrimaryButton,
     RowWrap,
     Row,
-    Col,
     Hr,
     TeritaryButton,
 } from '../../../../components/Blocks';
@@ -41,17 +38,17 @@ const OfferForm = ({
     isPro,
 }) => {
     const { translate } = useTranslate();
-    const initOffer = gig.offer || {
+    const initOffer = gig?.offer || {
         offer: { amount: 0, formatted: 0 },
         serviceFee: { amount: 0, formatted: 0 },
         djFee: { amount: 0, formatted: 0 },
         totalPayment: { amount: 0, formatted: 0 },
         totalPayout: { amount: 0, formatted: 0 },
     };
-    const initCurrency = gig.offer ? gig.offer.offer.currency : profileCurrency.toUpperCase();
+    const initCurrency = gig?.offer?.offer?.currency || profileCurrency.toUpperCase();
 
-    let initPayoutMethods = gig.availablePayoutMethods.map((pm) => pm.payoutType);
-    if (!initPayoutMethods.length) {
+    let initPayoutMethods = gig?.availablePayoutMethods?.map((pm) => pm.payoutType);
+    if (!initPayoutMethods?.length) {
         // grab from dj
         initPayoutMethods = user.payoutMethods.map((pm) => pm.payoutType);
     }
@@ -72,7 +69,7 @@ const OfferForm = ({
             {
                 query: GIG,
                 variables: {
-                    id: gig.id,
+                    id: gig?.id,
                 },
             },
         ],

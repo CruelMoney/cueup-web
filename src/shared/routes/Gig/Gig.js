@@ -27,6 +27,10 @@ const Index = () => {
     const history = useHistory();
     const match = useRouteMatch();
 
+    useEffect(() => {
+        window.scrollTo({ top: 0 });
+    }, []);
+
     const { translate } = useNamespaceContent(content, 'gig');
 
     const {
@@ -42,35 +46,33 @@ const Index = () => {
         variables: {
             id,
         },
+        onCompleted: ({ opportunity }) => {
+            if (opportunity?.gig) {
+                history.replace(`${translate(appRoutes.gig)}/${opportunity.gig.id}`);
+            }
+        },
     });
     const { loading: loadingMe, data: meData } = useQuery(ME);
     const { me } = meData || {};
-
-    let { gig } = data;
-    gig = { ...gig };
-
-    const loading = loadingGig || loadingMe;
-
-    useLogActivity({
-        type: ACTIVITY_TYPES.GIG_VIEWED_BY_DJ,
-        subjectId: gig && gig.id,
-        skipInView: true,
-        manual: opportunity, // don't log for opportunities
-    });
-
-    useEffect(() => {
-        window.scrollTo({ top: 0 });
-    }, []);
 
     if (error && error.message.includes('Not your gig')) {
         return <Redirect to={translate(appRoutes.notFound)} />;
     }
 
+    let gig = null;
+    let event = null;
+    if (opportunity) {
+        event = data?.opportunity?.event;
+        gig = data?.opportunity?.gig;
+    } else {
+        gig = data?.gig;
+        event = gig?.event;
+    }
+    gig = { ...gig };
+
     const { status, referred } = gig || {};
 
-    const event = opportunity ? data?.opportunity : gig?.event;
-
-    console.log({ event, data, opportunity });
+    const loading = loadingGig || loadingMe;
 
     const title = event ? event.name : 'Gig · Cueup';
     const description = event ? event.description : null;
@@ -142,6 +144,13 @@ const Content = React.memo((props) => {
 
     const showDecline = useCallback(() => history.replace(url + '/decline'), [url, history]);
     const hideDecline = useCallback(() => history.replace(url), [url, history]);
+
+    useLogActivity({
+        type: ACTIVITY_TYPES.GIG_VIEWED_BY_DJ,
+        subjectId: gig && gig.id,
+        skipInView: true,
+        manual: opportunity, // don't log for opportunities
+    });
 
     const makeOfferPath = pathname.includes('offer');
 

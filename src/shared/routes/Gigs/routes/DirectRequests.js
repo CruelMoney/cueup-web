@@ -50,6 +50,7 @@ const DirectRequests = ({ user }) => {
             pagination,
             filter: {
                 status: [gigStates.REQUESTED],
+                opportunity: false,
             },
         },
     });

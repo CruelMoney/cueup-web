@@ -5,28 +5,33 @@ export const MY_OPPORTUNITIES = gql`
         opportunities(pagination: $pagination) {
             __typename
             edges {
-                id
-                name
-                description
-                createdAt {
-                    UTC
-                }
-                location {
+                event {
+                    id
                     name
-                }
-                start {
-                    localDate
-                    formattedTime(locale: $locale)
-                    formattedDate(locale: $locale)
-                }
-                duration {
-                    humanized
-                    formatted
-                }
-                organizer {
-                    userMetadata {
-                        firstName
+                    description
+                    createdAt {
+                        UTC
                     }
+                    location {
+                        name
+                    }
+                    start {
+                        localDate
+                        formattedTime(locale: $locale)
+                        formattedDate(locale: $locale)
+                    }
+                    duration {
+                        humanized
+                        formatted
+                    }
+                    organizer {
+                        userMetadata {
+                            firstName
+                        }
+                    }
+                }
+                gig {
+                    id
                 }
             }
             pageInfo {

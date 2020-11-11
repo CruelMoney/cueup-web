@@ -45,12 +45,16 @@ const Opportunities = () => {
     if (loading) {
         gigs = [null, null, null, null, null];
     } else {
-        gigs = gigs.map((event) => ({ id: event.id, status: gigStates.REQUESTED, event }));
+        gigs = gigs.map(({ event, gig }) => ({
+            status: gigStates.REQUESTED,
+            event,
+            ...gig,
+            opportunity: true,
+        }));
     }
 
     return (
         <Layout
-            opportunity
             title={'Opportunities'}
             gigs={gigs}
             loading={loading}

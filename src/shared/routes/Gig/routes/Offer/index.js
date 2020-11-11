@@ -27,18 +27,16 @@ const Content = ({ gig, opportunity, theEvent, me, showDecline }) => {
                     onSubmitted={() => setPayoutPopup(false)}
                 />
             </Popup>
-            {!!gig?.id && (
-                <OfferForm
-                    showPopup={() => setPayoutPopup(true)}
-                    profileCurrency={userSettings.currency}
-                    gig={gig}
-                    event={theEvent}
-                    payoutInfoValid={payoutMethods?.length}
-                    showDecline={showDecline}
-                    user={me}
-                    isPro={isPro}
-                />
-            )}
+            <OfferForm
+                showPopup={() => setPayoutPopup(true)}
+                profileCurrency={userSettings.currency}
+                gig={gig}
+                event={theEvent}
+                payoutInfoValid={payoutMethods?.length}
+                showDecline={showDecline}
+                user={me}
+                isPro={isPro}
+            />
         </Col>
     );
 };

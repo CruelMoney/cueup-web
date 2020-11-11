@@ -9,8 +9,6 @@ import { HeaderTitle } from 'components/Text';
 
 import Pagination from 'components/Pagination';
 
-import Sidebar from 'components/Sidebar';
-import { Media } from 'components/MediaContext';
 import GigCard from '../components/GigCard';
 
 const Layout = ({
@@ -22,8 +20,6 @@ const Layout = ({
     pagination,
     setPagination,
     rightSideChildren,
-    opportunity,
-    user,
 }) => {
     const { pathname } = useLocation();
 
@@ -50,7 +46,7 @@ const Layout = ({
                             onMouseEnter={() => LazyGig.preload()}
                             hasMessage={gig?.hasMessage}
                             gig={gig}
-                            opportunity={opportunity}
+                            opportunity={gig?.opportunity}
                         />
                     ))}
 

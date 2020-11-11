@@ -9,6 +9,7 @@ const GIG = gql`
             expires
             isActionable
             referred
+            opportunity
             discount
             offer {
                 offer {
@@ -126,54 +127,59 @@ const GIG = gql`
 export const OPPORTUNITY = gql`
     query GetOpportunity($id: ID!, $locale: String) {
         opportunity(eventId: $id) {
-            id
-            hash
-            name
-            guestsCount
-            contactEmail
-            contactName
-            contactPhone
-            address
-            eventType
-            budget {
-                amount
-                formatted(locale: $locale)
-            }
-            start {
-                localDate
-                formattedDate
-                formattedTime
-            }
-            end {
-                localDate
-                formattedDate
-                formattedTime
-            }
-            genres
-            description
-            location {
-                latitude
-                longitude
-                name
-            }
-            rider {
-                speakers
-                lights
-                microphone
-                smokeMachine
-                formatted
-            }
-            organizer {
+            event {
                 id
-                picture {
-                    path
+                hash
+                name
+                guestsCount
+                contactEmail
+                contactName
+                contactPhone
+                address
+                eventType
+                budget {
+                    amount
+                    formatted(locale: $locale)
                 }
-                userMetadata {
-                    firstName
+                start {
+                    localDate
+                    formattedDate
+                    formattedTime
+                }
+                end {
+                    localDate
+                    formattedDate
+                    formattedTime
+                }
+                genres
+                description
+                location {
+                    latitude
+                    longitude
+                    name
+                }
+                rider {
+                    speakers
+                    lights
+                    microphone
+                    smokeMachine
+                    formatted
+                }
+                organizer {
+                    id
+                    picture {
+                        path
+                    }
+                    userMetadata {
+                        firstName
+                    }
+                }
+                duration {
+                    formatted
                 }
             }
-            duration {
-                formatted
+            gig {
+                id
             }
         }
     }

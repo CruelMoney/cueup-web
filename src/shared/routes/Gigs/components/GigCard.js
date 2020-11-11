@@ -30,7 +30,7 @@ import {
     InfoPill,
     NotificationBubble,
 } from '../../../components/Blocks';
-import { SmallHeader, BodySmall, BodyBold, SmallBold, Body } from '../../../components/Text';
+import { SmallHeader, BodySmall, BodyBold, Body } from '../../../components/Text';
 import { UNDO_PASS, UNDO_DECLINE, PASS_OPPORTUNITY } from '../gql';
 
 const GigCard = ({ loading, style, idx, gig, opportunity, ...props }) => {
@@ -82,9 +82,9 @@ const GigCard = ({ loading, style, idx, gig, opportunity, ...props }) => {
         notifications[gig.id] &&
         notifications[gig.id].read < notifications[gig.id].total;
 
-    const linkTo = opportunity
-        ? `${translate(appRoutes.opportunity)}/${id}`
-        : `${translate(appRoutes.gig)}/${gig?.id}`;
+    const linkTo = gig?.id
+        ? `${translate(appRoutes.gig)}/${gig?.id}`
+        : `${translate(appRoutes.opportunity)}/${id}`;
 
     return (
         <Wrapper idx={idx} disabled={loading} {...props}>

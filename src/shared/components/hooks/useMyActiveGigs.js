@@ -24,7 +24,9 @@ export const useMyActiveGigs = (options) => {
     return data.myGigs.edges.reduce(
         (totals, gig) => ({
             ...totals,
-            [gig.status]: totals[gig.status] + 1,
+            [gig.status]:
+                totals[gig.status] +
+                (gig.opportunity && gig.status === gigStates.REQUESTED ? 0 : 1),
             gigs: [...totals.gigs, gig],
         }),
         initialData
