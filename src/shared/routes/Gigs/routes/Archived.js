@@ -70,8 +70,8 @@ const EmptyChildren = () => {
                 style={{ fontSize: 30, marginBottom: 12, color: '#31DAFF' }}
             />
             <H3 small style={{ textAlign: 'center' }}>
-                Gigs you decline, canceled events, and{'\n'} gigs that are not relevant anymore show
-                up here.
+                Gigs you decline, cancelled events, and{'\n'} gigs that are not relevant anymore
+                show up here.
             </H3>
         </>
     );
@@ -83,10 +83,9 @@ const RightSide = () => {
             <GreyBox>
                 <H3 small>What are archived gigs?</H3>
                 <BodySmall>
-                    Commodo culpa consectetur est dolore incididunt aliqua. Amet pariatur eiusmod
-                    tempor laborum enim consectetur. Et aliquip nulla ut in irure adipisicing nulla
-                    deserunt qui labore id consectetur deserunt occaecat. Esse qui sint adipisicing
-                    qui.
+                    Gigs you have declined, cancelled or lost to another DJ show up here.
+                    <br />
+                    You can restore gigs you've declined, and they will move back to requests.
                 </BodySmall>
             </GreyBox>
         </>

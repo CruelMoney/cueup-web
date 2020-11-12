@@ -13,7 +13,7 @@ import { useQuery } from '@apollo/client';
 import Icon from '@iconify/react';
 import questionIcon from '@iconify/icons-simple-line-icons/question';
 import { MY_GIGS } from 'components/gql';
-import { BodySmall, H3 } from 'components/Text';
+import { Body, BodySmall, H3 } from 'components/Text';
 import GreyBox from 'components/GreyBox';
 import { gigStates } from 'constants/constants';
 import Layout from '../components/Layout';
@@ -62,6 +62,10 @@ const EmptyChildren = () => {
             <H3 small style={{ textAlign: 'center' }}>
                 If the organizer accepts your offer, {'\n'} the gig shows up here.
             </H3>
+            <Body style={{ textAlign: 'center' }}>
+                When the gig is upcoming, you can then call or send your contact info to the
+                organizer.
+            </Body>
         </>
     );
 };
@@ -73,8 +77,8 @@ const RightSide = () => {
                 <H3 small>What are upcoming gigs?</H3>
                 <BodySmall>
                     If the organizer accepts your offer, the gig is confirmed and you should prepare
-                    to play. You can see all contact details for upcoming gigs, and exchange phone
-                    numbers in the chat etc.
+                    to play. You can see all contact info for upcoming gigs, and exchange contact
+                    details in the chat.
                 </BodySmall>
             </GreyBox>
         </>

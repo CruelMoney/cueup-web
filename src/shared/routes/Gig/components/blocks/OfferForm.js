@@ -314,12 +314,26 @@ const RemainingPayment = ({ translate, payoutType, amountLeft, amountPaid, offer
             <TitleClean>Your offer</TitleClean>
             <TableRow label="Your offer">{offer.formatted}</TableRow>
             <Hr />
-            <TableRow label={translate('Already paid')} bold={!isDirect}>
+            <TableRow
+                label={translate('Already paid')}
+                bold={!isDirect}
+                info={
+                    !isDirect
+                        ? 'We will transfer the payment to your bank account after the event.'
+                        : 'The organizer has paid the service fee, and the remaining will be paid directly to you.'
+                }
+            >
                 {amountPaid.formatted}
             </TableRow>
             <Hr />
             {!!isDirect && (
-                <TableRow label={translate('Remaining payment to you')} bold>
+                <TableRow
+                    label={translate('Pay directly to you')}
+                    bold
+                    info={
+                        'The organizer will pay this to you according to your direct payout method.'
+                    }
+                >
                     {amountLeft.formatted}
                 </TableRow>
             )}

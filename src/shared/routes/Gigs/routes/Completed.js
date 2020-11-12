@@ -76,12 +76,12 @@ const RightSide = () => {
     return (
         <>
             <GreyBox>
-                <H3 small>How to ask for reviews?</H3>
+                <H3 small>Remember to ask for reviews</H3>
                 <BodySmall>
-                    Commodo culpa consectetur est dolore incididunt aliqua. Amet pariatur eiusmod
-                    tempor laborum enim consectetur. Et aliquip nulla ut in irure adipisicing nulla
-                    deserunt qui labore id consectetur deserunt occaecat. Esse qui sint adipisicing
-                    qui.
+                    Each review improves your rank on Cueup and makes it more likely to get booked
+                    again.
+                    <br />
+                    Ask the organizer to review you on Cueup after the event.
                 </BodySmall>
             </GreyBox>
         </>

@@ -1,30 +1,13 @@
-/* these are the oppertunities in playinglocations.map(l => l). Add more locations?
-
- pass or accept an oppertunity by making an offer
-
- you can only contact if youre a pro 
- you can still make offer if you're not pro (they will be able to do it with auto pricing later anyway)
-
- if the organizer chats first it goes to direct requests
-
- when dj starts chatting or sending offer it goes to unconfirmed
-
-
- The UI only shows:
- The gigs + pass / accept (make offer)
- 
- if not pro:
- A "Go pro" to connect with opportunities.
- 
-*/
-
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { NetworkStatus, useQuery } from '@apollo/client';
 import Icon from '@iconify/react';
 import questionIcon from '@iconify/icons-simple-line-icons/question';
-import { BodySmall, H3 } from 'components/Text';
+import { NavLink } from 'react-router-dom';
+import { Body, BodySmall, H3 } from 'components/Text';
 import GreyBox from 'components/GreyBox';
 import { gigStates } from 'constants/constants';
+import { SecondaryButton, TeritaryButton } from 'components/Blocks';
+import { ProFeature } from 'components/FormComponents';
 import Layout from '../components/Layout';
 import { MY_OPPORTUNITIES } from '../gql';
 
@@ -35,7 +18,6 @@ const Opportunities = () => {
     });
 
     const { data, loading: isLoading, networkStatus } = useQuery(MY_OPPORTUNITIES, {
-        fetchPolicy: 'cache-and-network',
         variables: {
             pagination,
         },
@@ -44,17 +26,22 @@ const Opportunities = () => {
     const loading = (isLoading && !data) || networkStatus === NetworkStatus.refetch;
 
     const pageInfo = data?.opportunities?.pageInfo;
-    let gigs = data?.opportunities?.edges || [];
-    if (loading) {
-        gigs = [null, null, null, null, null];
-    } else {
-        gigs = gigs.map(({ event, gig }) => ({
-            status: gigStates.REQUESTED,
-            event,
-            ...gig,
-            opportunity: true,
-        }));
-    }
+
+    const gigs = useMemo(() => {
+        let gg = data?.opportunities?.edges || [];
+        if (loading) {
+            gg = [null, null, null, null, null];
+        } else {
+            gg = gg.map(({ event, gig }) => ({
+                status: gigStates.REQUESTED,
+                event,
+                ...gig,
+                opportunity: true,
+            }));
+        }
+
+        return gg;
+    }, [data, loading]);
 
     return (
         <Layout
@@ -82,6 +69,9 @@ const EmptyChildren = () => {
             <H3 small style={{ textAlign: 'center' }}>
                 No more opportunities today,{'\n'} come back later.
             </H3>
+            <Body style={{ textAlign: 'center' }}>
+                Opportunities show up when an organizer in your area has not booked a DJ yet.
+            </Body>
         </>
     );
 };
@@ -95,6 +85,19 @@ const RightSide = () => {
                     Opportunities are events in your area without a DJ. This is your chance to
                     connect with the organizer and get a gig.
                 </BodySmall>
+            </GreyBox>
+            <GreyBox>
+                <H3 small>How do I get more opportunities?</H3>
+                <BodySmall style={{ marginBottom: 12 }}>
+                    You can add more playing locations. If you add multiple cities, you'll see
+                    opportunities in all those cities.
+                </BodySmall>
+                <NavLink to="/u/settings?modal=location">
+                    <SecondaryButton style={{ maxWidth: '100%' }}>
+                        Add more locations
+                        <ProFeature>Pro</ProFeature>
+                    </SecondaryButton>
+                </NavLink>
             </GreyBox>
         </>
     );

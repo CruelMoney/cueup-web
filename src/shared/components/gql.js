@@ -236,7 +236,7 @@ export const MY_ACTIVE_GIGS = gql`
                 totalDocs
             }
         }
-        opportunities(pagination: { page: 1, limit: 999 }) {
+        opportunities(pagination: { page: 1, limit: 1 }) {
             __typename
             pageInfo {
                 totalDocs

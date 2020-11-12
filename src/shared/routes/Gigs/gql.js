@@ -32,6 +32,7 @@ export const MY_OPPORTUNITIES = gql`
                 }
                 gig {
                     id
+                    status
                 }
             }
             pageInfo {
@@ -60,12 +61,22 @@ export const UNDO_DECLINE = gql`
 
 export const PASS_OPPORTUNITY = gql`
     mutation passOpportunity($id: ID!) {
-        passOpportunity(eventId: $id)
+        passOpportunity(eventId: $id) {
+            id
+            statusHumanized
+            status
+            isActionable
+        }
     }
 `;
 
 export const UNDO_PASS = gql`
     mutation undoPassOpportunity($id: ID!) {
-        undoPassOpportunity(eventId: $id)
+        undoPassOpportunity(eventId: $id) {
+            id
+            statusHumanized
+            status
+            isActionable
+        }
     }
 `;

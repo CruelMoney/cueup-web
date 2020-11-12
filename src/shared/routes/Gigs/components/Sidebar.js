@@ -1,11 +1,11 @@
 import React from 'react';
 import { InlineIcon } from '@iconify/react';
-import opportunitiesIcon from '@iconify/icons-ion/ios-flash';
+import opportunitiesIcon from '@iconify/icons-ion/ios-search-strong';
 import directRequestsIcon from '@iconify/icons-ion/ios-person';
 import archivedIcon from '@iconify/icons-ion/ios-trash';
 import upcomingIcon from '@iconify/icons-ion/ios-calendar';
-import completedIcon from '@iconify/icons-ion/md-checkmark';
-import inProgressIcon from '@iconify/icons-ion/ios-clock-outline';
+import completedIcon from '@iconify/icons-ion/ios-checkmark-circle-outline';
+import inProgressIcon from '@iconify/icons-ion/ios-chatbubbles';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import GreyBox from 'components/GreyBox';

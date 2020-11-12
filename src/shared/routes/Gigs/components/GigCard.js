@@ -34,7 +34,7 @@ import { UNDO_PASS, UNDO_DECLINE, PASS_OPPORTUNITY } from '../gql';
 import { UsingBookingLinkPill } from './Shared';
 
 const GigCard = ({ loading, style, idx, gig, opportunity, ...props }) => {
-    const { event, offer, referred } = gig || {};
+    const { event, offer, referred, status } = gig || {};
     const { id, start, name, location, description, duration, createdAt, organizer } = event || {};
     const { pathname } = useLocation();
     const { translate } = useTranslate();
@@ -70,7 +70,7 @@ const GigCard = ({ loading, style, idx, gig, opportunity, ...props }) => {
         return null;
     }
 
-    if (hasPassed) {
+    if (hasPassed || status === gigStates.PASS) {
         return <UndoPassCard undo={undoPassOpportunity} undoing={undoing} />;
     }
 

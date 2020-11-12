@@ -30,7 +30,7 @@ import { NetworkStatus, useQuery } from '@apollo/client';
 import { useLocation } from 'react-router';
 import Icon from '@iconify/react';
 import questionIcon from '@iconify/icons-simple-line-icons/question';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { ME, MY_GIGS } from 'components/gql';
 import { Body, BodySmall, H3 } from 'components/Text';
 import GreyBox from 'components/GreyBox';
@@ -46,6 +46,7 @@ const DirectRequests = ({ user }) => {
     });
 
     const { data, loading: isLoading, networkStatus } = useQuery(MY_GIGS, {
+        fetchPolicy: 'cache-and-network',
         variables: {
             pagination,
             filter: {
@@ -84,7 +85,7 @@ const EmptyChildren = () => {
                 style={{ fontSize: 30, marginBottom: 12, color: '#31DAFF' }}
             />
             <H3 small style={{ textAlign: 'center' }}>
-                When customers pick you, {'\n'}those requests show up here.
+                When organizers pick you, {'\n'}those requests show up here.
             </H3>
             <Body style={{ textAlign: 'center' }}>
                 If a customer finds you in the search results or via your <b>booking link</b>, they
@@ -100,19 +101,25 @@ const RightSide = ({ user, gigs }) => {
             <GreyBox>
                 <H3 small>What are direct requests?</H3>
                 <BodySmall>
-                    Commodo culpa consectetur est dolore incididunt aliqua. Amet pariatur eiusmod
-                    tempor laborum enim consectetur. Et aliquip nulla ut in irure adipisicing nulla
-                    deserunt qui labore id consectetur deserunt occaecat. Esse qui sint adipisicing
-                    qui.
+                    Gigs where you've been picked to send an offer. Direct requests are your best
+                    chance at getting booked.
                 </BodySmall>
             </GreyBox>
             <GreyBox>
                 <H3 small>How can I get more requests?</H3>
                 <BodySmall>
-                    Commodo culpa consectetur est dolore incididunt aliqua. Amet pariatur eiusmod
-                    tempor laborum enim consectetur. Et aliquip nulla ut in irure adipisicing nulla
-                    deserunt qui labore id consectetur deserunt occaecat. Esse qui sint adipisicing
-                    qui.
+                    Improve your Cueup profile. Make sure you have a profesional looking profile
+                    picture and add testimonials.
+                    <br />
+                    <br />
+                    <a
+                        style={{ textDecoration: 'underline' }}
+                        target="_blank"
+                        href="https://cueup.zendesk.com/hc/en-us/articles/360017431939"
+                        rel="noopener noreferrer"
+                    >
+                        Read more about rank
+                    </a>
                 </BodySmall>
             </GreyBox>
             <AddBookingLink user={user} small>
@@ -122,11 +129,15 @@ const RightSide = ({ user, gigs }) => {
     );
 };
 
+const shakeAnimation = keyframes`
+  0% { transform: translate(-100%, 0%) rotate(45deg) }
+  100% { transform:  translate(-100%, 0%) rotate(35deg) }
+`;
+
 const ArrowIndicator = styled.div`
     position: absolute;
-    top: 50%;
+    bottom: -9%;
     left: 0;
-    transform: translate(-100%, -50%) rotate(45deg);
     background: url('${swirlyArrow}');
     height: 60px;
     width: 60px;
@@ -134,6 +145,11 @@ const ArrowIndicator = styled.div`
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    transform-origin: center right;
+    animation-name: ${shakeAnimation};
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: steps(2, start);
 `;
 
 export default DirectRequests;

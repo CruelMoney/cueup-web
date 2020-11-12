@@ -73,12 +73,18 @@ const RightSide = () => {
     return (
         <>
             <GreyBox>
-                <H3 small>What are archived gigs?</H3>
+                <H3 small>What are unconfirmed gigs?</H3>
                 <BodySmall>
-                    Commodo culpa consectetur est dolore incididunt aliqua. Amet pariatur eiusmod
-                    tempor laborum enim consectetur. Et aliquip nulla ut in irure adipisicing nulla
-                    deserunt qui labore id consectetur deserunt occaecat. Esse qui sint adipisicing
-                    qui.
+                    Gigs where you've already made an offer, and it's waiting to be accepted by the
+                    organizer.
+                </BodySmall>
+            </GreyBox>
+            <GreyBox>
+                <H3 small>Remember to chat the organizers</H3>
+                <BodySmall>
+                    Chatting with the organizer increases your chances of getting booked. <br />{' '}
+                    Tell them how interested you are in the job and ask them what they need for the
+                    event.
                 </BodySmall>
             </GreyBox>
         </>
