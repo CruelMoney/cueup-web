@@ -40,7 +40,7 @@ const PayoutComponent = (props) => {
 
     return (
         <div>
-            <Title>{translate('Payout methods')}</Title>
+            <Title>{translate('Add payout methods')}</Title>
             <Body style={{ marginBottom: 24 }}>{translate('payout.description-1')}</Body>
             <RadioSelect
                 multi

@@ -38,6 +38,7 @@ const GoProForOpportunity = ({ me }) => {
                         <br />✔{'   '}No commission fees
                         <br />✔{'   '}Unlimited playing locations
                         <br />✔{'   '}Add website link to profile
+                        <br />✔{'   '}Add Social media links to profile
                         <br />✔{'   '}Unlimited sound uploads
                         <br />✔{'   '}Pro Badge
                         <br />✔{'   '}And much more...

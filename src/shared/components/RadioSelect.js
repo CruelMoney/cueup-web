@@ -87,18 +87,18 @@ const MethodWrapper = styled(Row)`
     padding: 1em;
     border-radius: 6px;
     cursor: pointer;
-    &:hover {
-        background-color: #e9ecf0;
-        ${StyledCheckbox} {
-            background: #f6f8f9;
-        }
-    }
+    z-index: 1;
+    position: relative;
+
     &:nth-child(2) {
         margin-top: 15px;
     }
-    ${StyledCheckbox} {
+    .styled-checkbox {
         margin-right: 14px;
         background: #e9ecf0;
+    }
+    &:hover {
+        background-color: #e9ecf0;
     }
 `;
 

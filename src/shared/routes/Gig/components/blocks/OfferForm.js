@@ -166,9 +166,7 @@ const OfferForm = ({
     const { payoutType } = offer;
 
     const canUpdatePrice =
-        payoutInfoValid &&
-        gig.isActionable &&
-        [gigStates.REQUESTED, gigStates.ACCEPTED].includes(gig.status);
+        gig.isActionable && [gigStates.REQUESTED, gigStates.ACCEPTED].includes(gig.status);
 
     return (
         <div data-cy="make-offer-section">
@@ -178,11 +176,7 @@ const OfferForm = ({
                         {gigStateTitles[gig.status] ?? gigStateTitles.default}
                     </TitleClean>
 
-                    <Body>
-                        {!payoutInfoValid
-                            ? translate('gig:offer.update-payout')
-                            : gigStateDescription[gig.status] ?? gigStateDescription.default}
-                    </Body>
+                    <Body>{gigStateDescription[gig.status] ?? gigStateDescription.default}</Body>
 
                     {!!canUpdatePrice && (
                         <InputRow small style={{ marginTop: '20px' }}>
@@ -290,19 +284,13 @@ const OfferForm = ({
                                     : translate('Update offer')}
                             </SmartButton>
                         ) : null}
-
-                        {!payoutInfoValid ? (
-                            <PrimaryButton onClick={showPopup} name="show-payout-popup">
-                                {translate('Update payout info')}
-                            </PrimaryButton>
-                        ) : null}
                     </RowWrap>
 
                     <ErrorMessageApollo error={error} />
                 </GreyBox>
             )}
 
-            {payoutInfoValid && ![gigStates.CONFIRMED, gigStates.FINISHED].includes(gig.status) ? (
+            {![gigStates.CONFIRMED, gigStates.FINISHED].includes(gig.status) ? (
                 <OfferTable
                     translate={translate}
                     loading={loading}

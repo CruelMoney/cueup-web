@@ -23,7 +23,9 @@ const Icon = styled.svg`
     stroke-width: 1px;
 `;
 
-export const StyledCheckbox = styled.div`
+export const StyledCheckbox = styled.div.attrs({
+    className: 'styled-checkbox',
+})`
     display: inline-block;
     width: 24px;
     height: 24px;

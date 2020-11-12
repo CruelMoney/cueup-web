@@ -113,8 +113,9 @@ function PaymentForm({ selectedTier }) {
         } catch (error) {
             console.log(error);
             setError(error);
-            setLoading(false);
             captureException(error);
+        } finally {
+            setLoading(false);
         }
     };
 

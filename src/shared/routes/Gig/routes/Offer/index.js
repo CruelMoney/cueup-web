@@ -55,7 +55,7 @@ const Content = (props) => {
 
     if (opportunityLocked) {
         // first show OnlyForPros
-        if (!me.isPro) {
+        if (!me?.appMetadata?.isPro) {
             return <GoProForOpportunity {...props} />;
         }
         // then show complete profile

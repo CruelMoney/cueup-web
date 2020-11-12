@@ -144,7 +144,7 @@ const Content = React.memo((props) => {
     const { url } = useRouteMatch();
     const { theEvent, loading, gig, me, opportunity } = props;
     const opportunityLocked =
-        gig.opportunity && (!me?.appMetadata?.isPro || !me?.appMetadata.profileComplete);
+        gig.status === gigStates.REQUESTED && gig.opportunity && !me?.appMetadata?.isPro;
 
     const { setAppState } = useAppState();
     const makeOfferRef = useRef();
