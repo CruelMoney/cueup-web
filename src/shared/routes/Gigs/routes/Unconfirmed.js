@@ -63,8 +63,7 @@ const EmptyChildren = () => {
                 style={{ fontSize: 30, marginBottom: 12, color: '#31DAFF' }}
             />
             <H3 small style={{ textAlign: 'center' }}>
-                Gigs you decline, canceled events, and{'\n'} gigs that are not relevant anymore show
-                up here.
+                Gigs you've accepted and sent an offer to{'\n'} show up on this page.
             </H3>
         </>
     );

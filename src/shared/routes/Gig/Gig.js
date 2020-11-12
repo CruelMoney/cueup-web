@@ -173,7 +173,7 @@ const Content = React.memo((props) => {
 
     // open chat if has messages
     useEffect(() => {
-        if (gig?.chatInitiated && !initiated.current) {
+        if (gig?.chatInitiated && !initiated.current && gig.isActionable) {
             openChat();
             initiated.current = true;
         }

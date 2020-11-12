@@ -60,8 +60,7 @@ const EmptyChildren = () => {
                 style={{ fontSize: 30, marginBottom: 12, color: '#31DAFF' }}
             />
             <H3 small style={{ textAlign: 'center' }}>
-                Gigs you decline, canceled events, and{'\n'} gigs that are not relevant anymore show
-                up here.
+                If the organizer accepts your offer, {'\n'} the gig shows up here.
             </H3>
         </>
     );
@@ -73,10 +72,9 @@ const RightSide = () => {
             <GreyBox>
                 <H3 small>What are upcoming gigs?</H3>
                 <BodySmall>
-                    Commodo culpa consectetur est dolore incididunt aliqua. Amet pariatur eiusmod
-                    tempor laborum enim consectetur. Et aliquip nulla ut in irure adipisicing nulla
-                    deserunt qui labore id consectetur deserunt occaecat. Esse qui sint adipisicing
-                    qui.
+                    If the organizer accepts your offer, the gig is confirmed and you should prepare
+                    to play. You can see all contact details for upcoming gigs, and exchange phone
+                    numbers in the chat etc.
                 </BodySmall>
             </GreyBox>
         </>

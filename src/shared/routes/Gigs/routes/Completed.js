@@ -66,7 +66,7 @@ const EmptyChildren = () => {
                 style={{ fontSize: 30, marginBottom: 12, color: '#31DAFF' }}
             />
             <H3 small style={{ textAlign: 'center' }}>
-                Gigs you have played and completed show up here.
+                Gigs you have completed and played show up here.
             </H3>
         </>
     );
