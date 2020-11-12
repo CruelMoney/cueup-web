@@ -3,7 +3,7 @@ import Tooltip from 'components/Tooltip';
 import { InfoPill } from 'components/Blocks';
 
 export const UsingBookingLinkPill = () => (
-    <Tooltip text="This request is from your booking link, so you don't pay commission, and contact information is visible.">
+    <Tooltip text="This request is from your booking link. You don't pay commission, and contact information is visible.">
         {({ ref, close, open }) => (
             <InfoPill
                 active

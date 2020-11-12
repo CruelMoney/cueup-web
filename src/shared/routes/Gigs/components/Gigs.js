@@ -10,7 +10,7 @@ import ScrollToTop from 'components/common/ScrollToTop';
 import { useAppState } from 'components/hooks/useAppState';
 import { useNotifications } from 'components/hooks/useNotifications';
 import { ME } from '../../../components/gql';
-import { Row, Hr, Container } from '../../../components/Blocks';
+import { Row, Hr, Container, RowMobileCol } from '../../../components/Blocks';
 
 import DirectRequests from '../routes/DirectRequests';
 import Archived from '../routes/Archived';
@@ -60,7 +60,7 @@ const DataWrapper = () => {
                 fullWidth
             >
                 <Hr style={{ marginBottom: 30 }} />
-                <Row style={{ flexGrow: 1 }}>
+                <RowMobileCol style={{ flexGrow: 1 }}>
                     <Sidebar user={me} />
                     <Switch>
                         <Route
@@ -80,7 +80,7 @@ const DataWrapper = () => {
                         <Route path={'/u/gigs/upcoming'} render={() => <Upcoming user={me} />} />
                         <Redirect to={'/u/gigs/direct-requests'} />
                     </Switch>
-                </Row>
+                </RowMobileCol>
             </Container>
             <Footer noPreFooter />
         </>

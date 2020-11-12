@@ -48,7 +48,7 @@ const Sidebar = ({ user }) => {
     } = useMyActiveGigs();
 
     return (
-        <Col style={{ maxWidth: 300, width: 300, marginRight: 30, position: 'sticky', top: 15 }}>
+        <CustomCol>
             <CustomGreyBox>
                 <nav>
                     <ul style={{ margin: '0.5em 0' }}>
@@ -125,8 +125,28 @@ const Sidebar = ({ user }) => {
                 </nav>
             </CustomGreyBox>
             {user && <EnableNotifications userId={user.id} />}
-        </Col>
+        </CustomCol>
     );
 };
+
+const CustomCol = styled(Col)`
+    max-width: 300px;
+    width: 300px;
+    margin-right: 30px;
+    position: sticky;
+    top: 15px;
+    @media only screen and (max-width: 1200px) {
+        max-width: auto;
+        width: auto;
+    }
+    @media only screen and (max-width: 716px) {
+        position: relative;
+        max-width: 100%;
+        width: 100%;
+        margin-top: -15px;
+        margin-bottom: 15px;
+        margin-right: 0px;
+    }
+`;
 
 export default Sidebar;

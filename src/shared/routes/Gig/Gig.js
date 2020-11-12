@@ -9,6 +9,7 @@ import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { LazyContactInformationPopup, LazyChatGetProPopup } from 'routes/GetProfessional';
 import GreyBox from 'components/GreyBox';
 import { useAppState } from 'components/hooks/useAppState';
+import { Media } from 'components/MediaContext';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col, Hr, RowWrap } from '../../components/Blocks';
@@ -16,7 +17,7 @@ import { gigStates } from '../../constants/constants';
 import { ME } from '../../components/gql';
 import useLogActivity, { ACTIVITY_TYPES } from '../../components/hooks/useLogActivity';
 import { GIG, OPPORTUNITY } from './gql.js';
-import Information from './routes/Information';
+import Information, { GigHeader } from './routes/Information';
 import Offer from './routes/Offer';
 import BackToProfile from './components/BackToProfile';
 import content from './content.json';
@@ -204,6 +205,26 @@ const Content = React.memo((props) => {
             <GigContainer>
                 <RowWrap style={{ margin: '0 -30px' }}>
                     <Col style={{ padding: '0 30px', flex: 1, minWidth: 'min(80%, 400px)' }}>
+                        <GigHeader
+                            gig={gig}
+                            theEvent={theEvent}
+                            opportunity={opportunity}
+                            loading={loading}
+                            openChat={openChat}
+                            opportunityLocked={opportunityLocked}
+                        />
+
+                        <Media lessThan="md">
+                            <Offer
+                                theEvent={theEvent}
+                                gig={gig}
+                                opportunity={opportunity}
+                                loading={loading}
+                                showDecline={showDecline}
+                                me={me}
+                                opportunityLocked={opportunityLocked}
+                            />
+                        </Media>
                         <Information
                             gig={gig}
                             theEvent={theEvent}
@@ -213,6 +234,7 @@ const Content = React.memo((props) => {
                             opportunityLocked={opportunityLocked}
                         />
                     </Col>
+
                     <Col
                         ref={makeOfferRef}
                         style={{
@@ -223,15 +245,17 @@ const Content = React.memo((props) => {
                             minWidth: 'min(80%, 400px)',
                         }}
                     >
-                        <Offer
-                            theEvent={theEvent}
-                            gig={gig}
-                            opportunity={opportunity}
-                            loading={loading}
-                            showDecline={showDecline}
-                            me={me}
-                            opportunityLocked={opportunityLocked}
-                        />
+                        <Media greaterThanOrEqual="md">
+                            <Offer
+                                theEvent={theEvent}
+                                gig={gig}
+                                opportunity={opportunity}
+                                loading={loading}
+                                showDecline={showDecline}
+                                me={me}
+                                opportunityLocked={opportunityLocked}
+                            />
+                        </Media>
                     </Col>
                 </RowWrap>
             </GigContainer>

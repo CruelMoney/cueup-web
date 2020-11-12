@@ -27,6 +27,7 @@ import {
     SecondaryButton,
     SmartButton,
     NotificationBubble,
+    RowMobileCol,
 } from '../../../components/Blocks';
 import { SmallHeader, BodySmall, BodyBold, Body } from '../../../components/Text';
 import { UNDO_PASS, UNDO_DECLINE, PASS_OPPORTUNITY } from '../gql';
@@ -97,59 +98,59 @@ const GigCard = ({ loading, style, idx, gig, opportunity, ...props }) => {
                 }}
             >
                 <Content>
-                    <RowWrap style={{ marginBottom: '24px', width: '100%' }}>
-                        <Col>
-                            <Row middle style={{ marginBottom: 6 }}>
-                                <SmallHeader>{name || <Skeleton width={200} />}</SmallHeader>
-                                {referred && <UsingBookingLinkPill />}
-                            </Row>
-                            <BodySmall>
-                                <span>
-                                    {organizer?.userMetadata?.firstName ||
-                                        (loading ? <Skeleton width={50} /> : null)}
-                                </span>
-                                <span style={{ top: '2px', opacity: '0.5' }}>{'  •  '}</span>
-                                {!loading ? (
-                                    <span>Added {createdTimeAgo}</span>
-                                ) : (
-                                    <Skeleton width={50} />
-                                )}
-                            </BodySmall>
-                        </Col>
-                        <Filler />
+                    <Col>
+                        <Row middle style={{ marginBottom: 6 }}>
+                            <SmallHeader>{name || <Skeleton width={200} />}</SmallHeader>
+                            <Filler />
+                            {referred && <UsingBookingLinkPill />}
+                        </Row>
+                        <BodySmall>
+                            <span>
+                                {organizer?.userMetadata?.firstName ||
+                                    (loading ? <Skeleton width={50} /> : null)}
+                            </span>
+                            <span style={{ top: '2px', opacity: '0.5' }}>{'  •  '}</span>
+                            {!loading ? (
+                                <span>Added {createdTimeAgo}</span>
+                            ) : (
+                                <Skeleton width={50} />
+                            )}
+                        </BodySmall>
+                        <PillRow>
+                            {loading ? (
+                                <Skeleton width={150} />
+                            ) : (
+                                <>
+                                    {location?.name && (
+                                        <PillLarge>
+                                            <InlineIcon
+                                                icon={locationIcon}
+                                                style={{ marginRight: 4, fontSize: '1.2em' }}
+                                            />
+                                            {location.name}
+                                        </PillLarge>
+                                    )}
+                                    <PillLarge>
+                                        <InlineIcon
+                                            icon={calendarIcon}
+                                            style={{ marginRight: 4, fontSize: '1.2em' }}
+                                        />
+                                        {start?.formattedDate}
+                                    </PillLarge>
+                                    {duration && (
+                                        <PillLarge>
+                                            <InlineIcon
+                                                icon={timeIcon}
+                                                style={{ marginRight: 4, fontSize: '1.2em' }}
+                                            />
+                                            {start?.formattedTime}, {duration?.formatted}
+                                        </PillLarge>
+                                    )}
+                                </>
+                            )}
+                        </PillRow>
+                    </Col>
 
-                        {loading ? (
-                            <Skeleton width={150} />
-                        ) : (
-                            <>
-                                {location?.name && (
-                                    <PillLarge>
-                                        <InlineIcon
-                                            icon={locationIcon}
-                                            style={{ marginRight: 4, fontSize: '1.2em' }}
-                                        />
-                                        {location.name}
-                                    </PillLarge>
-                                )}
-                                <PillLarge>
-                                    <InlineIcon
-                                        icon={calendarIcon}
-                                        style={{ marginRight: 4, fontSize: '1.2em' }}
-                                    />
-                                    {start?.formattedDate}
-                                </PillLarge>
-                                {duration && (
-                                    <PillLarge>
-                                        <InlineIcon
-                                            icon={timeIcon}
-                                            style={{ marginRight: 4, fontSize: '1.2em' }}
-                                        />
-                                        {start?.formattedTime}, {duration?.formatted}
-                                    </PillLarge>
-                                )}
-                            </>
-                        )}
-                    </RowWrap>
                     <BodySmall
                         numberOfLines={3}
                         style={{ wordBreak: 'break-word', marginBottom: '24px' }}
@@ -205,7 +206,7 @@ const UndoPassCard = ({ undo, undoing }) => {
 
 const DeclinedActions = ({ undoDecline, undoingDecline }) => {
     return (
-        <Buttons>
+        <Buttons reverse>
             <SmartButton loading={undoingDecline} level="tertiary" onClick={undoDecline}>
                 Undo decline
             </SmartButton>
@@ -216,7 +217,7 @@ const DeclinedActions = ({ undoDecline, undoingDecline }) => {
 
 const DefaultActions = ({ id }) => {
     return (
-        <Buttons>
+        <Buttons reverse>
             <SecondaryButton>View details</SecondaryButton>
         </Buttons>
     );
@@ -224,7 +225,7 @@ const DefaultActions = ({ id }) => {
 
 const RequestedActions = ({ id, showDecline }) => {
     return (
-        <Buttons>
+        <Buttons reverse>
             <TeritaryButton onClick={showDecline}>Decline</TeritaryButton>
             <PrimaryButton>View details</PrimaryButton>
         </Buttons>
@@ -233,7 +234,7 @@ const RequestedActions = ({ id, showDecline }) => {
 
 const OppertunityActions = ({ passing, passOpportunity }) => {
     return (
-        <Buttons>
+        <Buttons reverse>
             <SmartButton loading={passing} level="tertiary" onClick={passOpportunity}>
                 Pass
             </SmartButton>
@@ -243,7 +244,7 @@ const OppertunityActions = ({ passing, passOpportunity }) => {
 };
 const AcceptedActions = ({ id, showDecline }) => {
     return (
-        <Buttons>
+        <Buttons reverse>
             <TeritaryButton onClick={showDecline}>Decline</TeritaryButton>
             <PrimaryButton>View details</PrimaryButton>
         </Buttons>
@@ -252,7 +253,7 @@ const AcceptedActions = ({ id, showDecline }) => {
 
 const ConfirmedActions = ({ id, showDecline }) => {
     return (
-        <Buttons>
+        <Buttons reverse>
             <TeritaryButton onClick={showDecline}>Cancel gig</TeritaryButton>
             <PrimaryButton>View details</PrimaryButton>
         </Buttons>
@@ -301,7 +302,7 @@ const Offer = ({
             </OfferTextWrapper>
             <Filler />
 
-            <Row style={{ position: 'relative' }}>
+            <Row style={{ position: 'relative', flexGrow: 1 }}>
                 {loading ? (
                     <Buttons>
                         <Skeleton height={40} width={200} />
@@ -346,9 +347,10 @@ const Filler = styled.div`
     }
 `;
 
-const Buttons = styled(Row)`
+const Buttons = styled(RowMobileCol)`
+    width: 100%;
     margin-top: 18px;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
 `;
 
@@ -366,6 +368,16 @@ const OfferRow = styled(Row)`
 const Content = styled(Col)`
     padding: 24px;
     flex: 2;
+`;
+
+const PillRow = styled(RowWrap)`
+    margin-bottom: 24px;
+    width: 100%;
+    margin-left: -6px;
+    margin-top: 12px;
+    > span {
+        margin-bottom: 3px;
+    }
 `;
 
 const Wrapper = styled(Col)`

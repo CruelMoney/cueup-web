@@ -17,6 +17,7 @@ import {
     Row,
     Hr,
     TeritaryButton,
+    RowMobileCol,
 } from '../../../../components/Blocks';
 import { Input, InputRow, ProFeature } from '../../../../components/FormComponents';
 import CurrencySelector from '../../../../components/CurrencySelector';
@@ -254,20 +255,18 @@ const OfferForm = ({
                         </div>
                     )}
 
-                    <RowWrap right style={{ marginTop: '24px' }}>
-                        <div name={'gig-cancel-' + gig.id}>
-                            {[gigStates.REQUESTED, gigStates.ACCEPTED].includes(gig.status) && (
-                                <TeritaryButton onClick={showDecline}>
-                                    {translate('Decline gig')}
-                                </TeritaryButton>
-                            )}
+                    <RowMobileCol reverse right style={{ marginTop: '24px' }}>
+                        {[gigStates.REQUESTED, gigStates.ACCEPTED].includes(gig.status) && (
+                            <TeritaryButton onClick={showDecline}>
+                                {translate('Decline gig')}
+                            </TeritaryButton>
+                        )}
 
-                            {gig.status === gigStates.CONFIRMED && (
-                                <TeritaryButton onClick={showDecline} warning={true}>
-                                    {translate('Cancel gig')}
-                                </TeritaryButton>
-                            )}
-                        </div>
+                        {gig.status === gigStates.CONFIRMED && (
+                            <TeritaryButton onClick={showDecline} warning={true}>
+                                {translate('Cancel gig')}
+                            </TeritaryButton>
+                        )}
 
                         {canUpdatePrice ? (
                             <SmartButton
@@ -284,7 +283,7 @@ const OfferForm = ({
                                     : translate('Update offer')}
                             </SmartButton>
                         ) : null}
-                    </RowWrap>
+                    </RowMobileCol>
 
                     <ErrorMessageApollo error={error} />
                 </GreyBox>
