@@ -26,7 +26,7 @@
 
 */
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { useQuery } from '@apollo/client';
+import { NetworkStatus, useQuery } from '@apollo/client';
 import { useLocation } from 'react-router';
 import Icon from '@iconify/react';
 import questionIcon from '@iconify/icons-simple-line-icons/question';
@@ -45,7 +45,7 @@ const DirectRequests = ({ user }) => {
         limit: 8,
     });
 
-    const { data, loading } = useQuery(MY_GIGS, {
+    const { data, loading: isLoading, networkStatus } = useQuery(MY_GIGS, {
         variables: {
             pagination,
             filter: {
@@ -54,6 +54,8 @@ const DirectRequests = ({ user }) => {
             },
         },
     });
+
+    const loading = (isLoading && !data) || networkStatus === NetworkStatus.refetch;
 
     const pageInfo = data?.myGigs?.pageInfo;
     const gigs = loading ? [null, null, null, null, null] : data?.myGigs?.edges || [];

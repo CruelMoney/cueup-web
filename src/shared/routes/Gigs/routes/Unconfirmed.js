@@ -10,7 +10,7 @@ Chat with the organizer
 */
 
 import React, { useMemo, useState } from 'react';
-import { useQuery } from '@apollo/client';
+import { NetworkStatus, useQuery } from '@apollo/client';
 import Icon from '@iconify/react';
 import questionIcon from '@iconify/icons-simple-line-icons/question';
 import { MY_GIGS } from 'components/gql';
@@ -25,7 +25,7 @@ const Unconfirmed = ({ user }) => {
         limit: 8,
     });
 
-    const { data, loading } = useQuery(MY_GIGS, {
+    const { data, loading: isLoading, networkStatus } = useQuery(MY_GIGS, {
         variables: {
             pagination,
             filter: {
@@ -33,6 +33,8 @@ const Unconfirmed = ({ user }) => {
             },
         },
     });
+
+    const loading = (isLoading && !data) || networkStatus === NetworkStatus.refetch;
 
     const pageInfo = data?.myGigs?.pageInfo;
     const gigs = loading ? [null, null, null, null, null] : data?.myGigs?.edges || [];

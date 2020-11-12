@@ -5,6 +5,7 @@ import checkmarkCicleIcon from '@iconify/icons-ion/checkmark-circle';
 import addCircleIcon from '@iconify/icons-ion/add-circle';
 
 import { useHistory } from 'react-router-dom';
+import { Label } from 'components/FormComponents';
 import { Body, SmallBold, SmallHeader } from '../../../components/Text';
 import { Col, Row } from '../../../components/Blocks';
 import { SimpleSharing } from '../../../components/common/Sharing-v2';
@@ -115,7 +116,11 @@ const ProfileProgress = ({ user, onClick, hideSharing = false, onlyShowRequired 
                 alignItems: 'flex-start',
             }}
         >
-            {!onlyShowRequired && <Body>Complete your profile</Body>}
+            {!onlyShowRequired && (
+                <Label v2 style={{ marginBottom: 3 }}>
+                    <span>COMPLETE YOUR PROFILE</span>
+                </Label>
+            )}
             <ProgressBar progress={progress} />
 
             {items.map((c) => (

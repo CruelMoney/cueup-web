@@ -19,7 +19,7 @@
 */
 
 import React, { useMemo, useState } from 'react';
-import { useQuery } from '@apollo/client';
+import { NetworkStatus, useQuery } from '@apollo/client';
 import Icon from '@iconify/react';
 import questionIcon from '@iconify/icons-simple-line-icons/question';
 import { BodySmall, H3 } from 'components/Text';
@@ -34,11 +34,14 @@ const Opportunities = () => {
         limit: 8,
     });
 
-    const { data, loading } = useQuery(MY_OPPORTUNITIES, {
+    const { data, loading: isLoading, networkStatus } = useQuery(MY_OPPORTUNITIES, {
+        fetchPolicy: 'cache-and-network',
         variables: {
             pagination,
         },
     });
+
+    const loading = (isLoading && !data) || networkStatus === NetworkStatus.refetch;
 
     const pageInfo = data?.opportunities?.pageInfo;
     let gigs = data?.opportunities?.edges || [];

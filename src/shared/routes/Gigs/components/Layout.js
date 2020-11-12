@@ -59,6 +59,7 @@ const Layout = ({
                                 maxWidth: 450,
                                 alignSelf: 'center',
                                 marginTop: 100,
+                                marginBottom: 100,
                             }}
                         >
                             {emptyChildren}
