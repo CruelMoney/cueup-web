@@ -143,6 +143,9 @@ const Content = React.memo((props) => {
     const { pathname, state } = useLocation();
     const { url } = useRouteMatch();
     const { theEvent, loading, gig, me, opportunity } = props;
+    const opportunityLocked =
+        gig.opportunity && (!me?.appMetadata?.isPro || !me?.appMetadata.profileComplete);
+
     const { setAppState } = useAppState();
     const makeOfferRef = useRef();
     const initiated = useRef(false);
@@ -207,6 +210,7 @@ const Content = React.memo((props) => {
                             opportunity={opportunity}
                             loading={loading}
                             openChat={openChat}
+                            opportunityLocked={opportunityLocked}
                         />
                     </Col>
                     <Col
@@ -226,6 +230,7 @@ const Content = React.memo((props) => {
                             loading={loading}
                             showDecline={showDecline}
                             me={me}
+                            opportunityLocked={opportunityLocked}
                         />
                     </Col>
                 </RowWrap>

@@ -27,6 +27,7 @@ export const BenefitsPopup = () => {
             <CustomCheckBox checked label="Unlimited sound uploads." />
             <CustomCheckBox checked label={'Pro DJ badge.'} />
             <CustomCheckBox checked label="And much more..." />
+            <Testimonial />
         </GenericPopup>
     );
 };

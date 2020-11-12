@@ -40,9 +40,9 @@ const addApollo = (_req, res, next) => {
                     'XenditPaymentIntent',
                 ],
             },
+            typePolicies,
         }),
         resolvers,
-        typePolicies,
     });
 
     res.locals.apolloClient = apolloClient;

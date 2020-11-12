@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { gigStates } from 'constants/constants';
 import DeclinedInformation from 'routes/Gig/components/blocks/DeclinedInformation';
+import IncompleteProfileInformation from 'routes/Gig/components/blocks/IncompleteProfileInformation';
+import GoProForOpportunity from 'routes/Gig/components/blocks/GoProForOpportunity';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
 import { Col } from '../../../../components/Blocks';
 import OfferForm from '../../components/blocks/OfferForm';
@@ -46,21 +48,32 @@ const rightSideComponents = {
 };
 
 const Content = (props) => {
-    const { me, gig } = props;
+    const { me, gig, opportunityLocked } = props;
     if (!me) {
         return null;
     }
 
+    if (opportunityLocked) {
+        // first show OnlyForPros
+        if (!me.isPro) {
+            return <GoProForOpportunity {...props} />;
+        }
+        // then show complete profile
+        return <IncompleteProfileInformation {...props} />;
+    }
+
     const Component = rightSideComponents[gig.status] || DefaultRightSide;
 
-    return (
-        <Col>
-            <Component {...props} />
-        </Col>
-    );
+    return <Component {...props} />;
 };
 
 const Offer = ({ loading, ...props }) =>
-    loading ? <LoadingPlaceholder2 /> : <Content {...props} />;
+    loading ? (
+        <LoadingPlaceholder2 />
+    ) : (
+        <Col>
+            <Content {...props} />
+        </Col>
+    );
 
 export default Offer;

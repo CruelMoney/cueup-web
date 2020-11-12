@@ -67,7 +67,7 @@ const ProSection = () => {
                             textAlign: 'center',
                             color: '#fff',
                             opacity: 0.6,
-                            maxWidth: 200,
+                            maxWidth: 230,
                         }}
                     >
                         Automatic refund if you don't receive any gig requests.
@@ -100,7 +100,6 @@ const CardLink = styled(NavLink)`
         }
     }
     @media screen and (max-width: 480px) {
-        text-align: center;
         ${BodySmall} {
             column-count: 1 !important;
         }

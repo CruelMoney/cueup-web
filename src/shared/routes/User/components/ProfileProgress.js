@@ -8,51 +8,55 @@ import { useHistory } from 'react-router-dom';
 import { Body, SmallBold, SmallHeader } from '../../../components/Text';
 import { Col, Row } from '../../../components/Blocks';
 import { SimpleSharing } from '../../../components/common/Sharing-v2';
+
 const checks = [
     {
         label: 'Add profile picture',
         check: (u) => !!u.picture && !u.picture.path.includes('default-profile-pic'),
-        linkTo: '/u/settings#profile',
+        linkTo: (u) => '/u/settings#profile',
+        required: true,
     },
     {
         label: 'Add location',
         check: (u) => !!u.playingLocation,
-        linkTo: '/u/settings?modal=location',
+        linkTo: (u) => '/u/settings?modal=location',
+        required: true,
     },
     {
         label: 'Add artist name',
         check: (u) => !!u.artistName,
-        linkTo: '/u/settings#profile',
+        linkTo: (u) => '/u/settings#profile',
     },
     {
         label: 'Add photos or connect Instagram',
         check: (u) => u.media?.edges.length > 0,
-        linkTo: 'photos',
+        linkTo: (u) => `/user/${u.permalink}/photos`,
     },
     {
         label: 'Add a track or connect SoundCloud',
         check: (u) => u.sounds?.edges.length > 0,
-        linkTo: 'sounds',
+        linkTo: (u) => `/user/${u.permalink}/sounds`,
     },
     {
         label: 'Add a testimonial',
         check: (u) => !!u.highlightedReview,
-        linkTo: 'reviews',
+        linkTo: (u) => `/user/${u.permalink}/reviews/add-new`,
     },
     {
         label: 'Download the app',
         check: (u) => !!u.appMetadata.hasInstalledApp,
-        linkTo: 'overview?modal=app',
+        linkTo: (u) => `/user/${u.permalink}/overview?modal=app`,
     },
     {
         label: 'Add payout methods',
         check: (u) => !!u.payoutMethods?.length,
-        linkTo: '/u/settings?modal=payoutMethods',
+        linkTo: (u) => '/u/settings?modal=payoutMethods',
     },
     {
         label: 'Write a bio',
         check: (u) => !!u.userMetadata.bio,
-        linkTo: '/u/settings?modal=bio',
+        linkTo: (u) => '/u/settings?modal=bio',
+        required: true,
     },
 ];
 
@@ -91,9 +95,10 @@ const ProgressItem = ({ label, done, linkTo, onClick }) => {
     return <button onClick={handleClick}>{Content}</button>;
 };
 
-const ProfileProgress = ({ user, onClick, hideSharing = false }) => {
+const ProfileProgress = ({ user, onClick, hideSharing = false, onlyShowRequired }) => {
     const items = checks
-        .map((c) => ({ ...c, done: c.check(user) }))
+        .map((c) => ({ ...c, done: c.check(user), linkTo: c.linkTo(user) }))
+        .filter((c) => !onlyShowRequired || c.required)
         .sort((a, b) => b.done - a.done);
 
     const progress = items.filter((c) => c.done).length / items.length;
@@ -108,10 +113,9 @@ const ProfileProgress = ({ user, onClick, hideSharing = false }) => {
         <Col
             style={{
                 alignItems: 'flex-start',
-                marginBottom: '30px',
             }}
         >
-            <Body>Complete your profile</Body>
+            {!onlyShowRequired && <Body>Complete your profile</Body>}
             <ProgressBar progress={progress} />
 
             {items.map((c) => (

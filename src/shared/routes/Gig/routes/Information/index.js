@@ -10,87 +10,94 @@ import Map from '../../../../components/common/Map';
 import { BodyBold, BodySmall, HeaderTitle, TitleClean } from '../../../../components/Text';
 import ContactPills from '../../components/blocks/ContactPills';
 
-const Information = React.forwardRef(({ gig, opportunity, theEvent, loading, openChat }, ref) => {
-    let { statusHumanized, referred } = gig || {};
-    if (opportunity) {
-        statusHumanized = 'Still looking for a DJ, send your offer';
-    }
-    const { name, location, start, organizer, createdAt } = theEvent || {};
+const Information = React.forwardRef(
+    ({ gig, opportunity, opportunityLocked, theEvent, loading, openChat }, ref) => {
+        let { statusHumanized } = gig || {};
+        if (opportunity) {
+            statusHumanized = 'Still looking for a DJ, send your offer';
+        }
+        const { name, location, start, organizer, createdAt } = theEvent || {};
 
-    const coordinates = {
-        lat: location?.latitude,
-        lng: location?.longitude,
-    };
+        const coordinates = {
+            lat: location?.latitude,
+            lng: location?.longitude,
+        };
 
-    let createdTimeAgo = loading ? null : moment(createdAt?.UTC).fromNow();
-    createdTimeAgo = 'Added ' + createdTimeAgo;
+        let createdTimeAgo = loading ? null : moment(createdAt?.UTC).fromNow();
+        createdTimeAgo = 'Added ' + createdTimeAgo;
 
-    return (
-        <Col ref={ref}>
-            <Col style={{ flex: 1, alignItems: 'flex-start', marginBottom: 30 }}>
-                <Row>
-                    <HeaderTitle dark>{name || <Skeleton width={100} />}</HeaderTitle>
-                </Row>
-                <TopInfoRow middle>
-                    <Col>
-                        <RowWrap>{referred && <UsingBookingLinkPill />}</RowWrap>
-                        <BodyBold opacity={0.75} style={{ margin: 0, marginTop: 12 }}>
-                            {loading ? (
-                                <Skeleton width={100} />
-                            ) : organizer?.userMetadata.firstName ? (
-                                organizer?.userMetadata.firstName + '  ·  '
-                            ) : null}
+        return (
+            <Col ref={ref}>
+                <Col style={{ flex: 1, alignItems: 'flex-start', marginBottom: 30 }}>
+                    <Row>
+                        <HeaderTitle dark>{name || <Skeleton width={100} />}</HeaderTitle>
+                    </Row>
+                    <TopInfoRow middle>
+                        <Col>
+                            <RowWrap>{gig?.referred && <UsingBookingLinkPill />}</RowWrap>
+                            <BodyBold opacity={0.75} style={{ margin: 0, marginTop: 12 }}>
+                                {loading ? (
+                                    <Skeleton width={100} />
+                                ) : organizer?.userMetadata.firstName ? (
+                                    organizer?.userMetadata.firstName + '  ·  '
+                                ) : null}
 
-                            {loading ? <Skeleton width={100} /> : createdTimeAgo}
-                        </BodyBold>
+                                {loading ? <Skeleton width={100} /> : createdTimeAgo}
+                            </BodyBold>
 
-                        <BodyBold opacity={0.75} style={{ margin: 0 }}>
-                            {location?.name || <Skeleton width={100} />}
-                            {'  ·  '}
-                            {start?.formattedDate || <Skeleton width={150} />}
-                        </BodyBold>
-                        <BodyBold data-cy="gig-status" style={{ margin: 0, color: '#00d1ff' }}>
-                            {loading || !statusHumanized ? (
-                                <Skeleton width={200} />
-                            ) : (
-                                statusHumanized
-                            )}
-                        </BodyBold>
-                    </Col>
-                </TopInfoRow>
-                {location && (
-                    <div
-                        style={{
-                            height: '150px',
-                            width: '100%',
-                            borderRadius: 12,
-                            overflow: 'hidden',
-                            marginTop: 12,
-                            pointerEvents: 'none',
-                        }}
-                    >
-                        <div style={{ top: -24, position: 'relative' }}>
-                            <Map
-                                defaultCenter={coordinates}
-                                height={150 + 24 * 2}
-                                hideRoads
-                                zoomScaler={150}
-                                radius={5000}
-                                value={coordinates}
-                                editable={false}
-                            />
+                            <BodyBold opacity={0.75} style={{ margin: 0 }}>
+                                {location?.name || <Skeleton width={100} />}
+                                {'  ·  '}
+                                {start?.formattedDate || <Skeleton width={150} />}
+                            </BodyBold>
+                            <BodyBold data-cy="gig-status" style={{ margin: 0, color: '#00d1ff' }}>
+                                {loading || !statusHumanized ? (
+                                    <Skeleton width={200} />
+                                ) : (
+                                    statusHumanized
+                                )}
+                            </BodyBold>
+                        </Col>
+                    </TopInfoRow>
+                    {location && (
+                        <div
+                            style={{
+                                height: '150px',
+                                width: '100%',
+                                borderRadius: 12,
+                                overflow: 'hidden',
+                                marginTop: 12,
+                                pointerEvents: 'none',
+                            }}
+                        >
+                            <div style={{ top: -24, position: 'relative' }}>
+                                <Map
+                                    defaultCenter={coordinates}
+                                    height={150 + 24 * 2}
+                                    hideRoads
+                                    zoomScaler={150}
+                                    radius={5000}
+                                    value={coordinates}
+                                    editable={false}
+                                />
+                            </div>
                         </div>
-                    </div>
+                    )}
+                </Col>
+                {loading ? (
+                    <Skeleton count={3} />
+                ) : (
+                    <MainInformation
+                        gig={gig}
+                        theEvent={theEvent}
+                        openChat={openChat}
+                        opportunityLocked={opportunityLocked}
+                    />
                 )}
             </Col>
-            {loading ? (
-                <Skeleton count={3} />
-            ) : (
-                <MainInformation gig={gig} theEvent={theEvent} openChat={openChat} />
-            )}
-        </Col>
-    );
-});
+        );
+    }
+);
 
 const TopInfoRow = styled(Row)`
     ${BodyBold} {
@@ -105,10 +112,10 @@ const TopInfoRow = styled(Row)`
     }
 `;
 
-const MainInformation = ({ gig, theEvent, openChat }) => {
+const MainInformation = ({ gig, theEvent, openChat, opportunityLocked }) => {
     const match = useRouteMatch();
 
-    const { showInfo, isActionable, referred } = gig || {};
+    const { showInfo, isActionable } = gig || {};
     const {
         description,
         rider,
@@ -137,7 +144,7 @@ const MainInformation = ({ gig, theEvent, openChat }) => {
                     <BodySmall>{address}</BodySmall>
                 </CustomSection>
             )}
-            {isActionable && (
+            {isActionable && !opportunityLocked && (
                 <CustomSection>
                     <TitleClean>Contact {contactName}</TitleClean>
 
