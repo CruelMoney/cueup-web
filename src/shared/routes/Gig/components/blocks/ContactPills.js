@@ -28,14 +28,13 @@ const ContactPills = ({ gigId, email, phone, showInfo, openChat }) => {
         });
         window.prompt(message, value);
     };
-
     return (
         <RowMobileCol>
             {email && (
                 <ConditionalWrap
                     condition={showInfo}
                     wrap={(children) => (
-                        <div
+                        <button
                             onClick={() =>
                                 handleShow({
                                     message: '',
@@ -45,7 +44,7 @@ const ContactPills = ({ gigId, email, phone, showInfo, openChat }) => {
                             }
                         >
                             {children}
-                        </div>
+                        </button>
                     )}
                     elseWrap={(children) => (
                         <NavLink to={match.url + '/contact-get-pro'}>{children}</NavLink>
@@ -61,7 +60,7 @@ const ContactPills = ({ gigId, email, phone, showInfo, openChat }) => {
                 <ConditionalWrap
                     condition={showInfo}
                     wrap={(children) => (
-                        <div
+                        <button
                             onClick={() =>
                                 handleShow({
                                     message: '',
@@ -71,7 +70,7 @@ const ContactPills = ({ gigId, email, phone, showInfo, openChat }) => {
                             }
                         >
                             {children}
-                        </div>
+                        </button>
                     )}
                     elseWrap={(children) => (
                         <NavLink to={match.url + '/contact-get-pro'}>{children}</NavLink>

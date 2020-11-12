@@ -102,7 +102,7 @@ const TopInfoRow = styled(Row)`
 const MainInformation = ({ gig, theEvent, openChat }) => {
     const match = useRouteMatch();
 
-    const { showInfo } = gig || {};
+    const { showInfo, isActionable } = gig || {};
     const {
         description,
         rider,
@@ -131,26 +131,28 @@ const MainInformation = ({ gig, theEvent, openChat }) => {
                     <BodySmall>{address}</BodySmall>
                 </CustomSection>
             )}
-            <CustomSection>
-                <TitleClean>Contact {contactName}</TitleClean>
-                {!showInfo && (
-                    <BodySmall>
-                        Details will be available when the gig is confirmed.
-                        <br />
-                        <NavLink to={match.url + '/contact-get-pro'}>
-                            <b style={{ color: '#4d6480' }}>Pro members</b>
-                        </NavLink>{' '}
-                        can see the contact details any time.
-                    </BodySmall>
-                )}
-                <ContactPills
-                    email={contactEmail}
-                    phone={contactPhone}
-                    showInfo={showInfo}
-                    openChat={openChat}
-                    gigId={gig?.id}
-                />
-            </CustomSection>
+            {isActionable && (
+                <CustomSection>
+                    <TitleClean>Contact {contactName}</TitleClean>
+                    {!showInfo && (
+                        <BodySmall>
+                            Details will be available when the gig is confirmed.
+                            <br />
+                            <NavLink to={match.url + '/contact-get-pro'}>
+                                <b style={{ color: '#4d6480' }}>Pro members</b>
+                            </NavLink>{' '}
+                            can see the contact details any time.
+                        </BodySmall>
+                    )}
+                    <ContactPills
+                        email={contactEmail}
+                        phone={contactPhone}
+                        showInfo={showInfo}
+                        openChat={openChat}
+                        gigId={gig?.id}
+                    />
+                </CustomSection>
+            )}
 
             <CustomSection>
                 <TitleClean>Description</TitleClean>

@@ -58,10 +58,12 @@ const gigToChatConfig = ({
     } else {
         url = `/gig/${gig.id}/offer'`;
     }
-
     return {
         ...gig,
-        showPersonalInformation: gig.status === gigStates.CONFIRMED || gig.dj?.appMetadata?.isPro,
+        showPersonalInformation:
+            gig.showInfo || gig.status === gigStates.CONFIRMED || dj?.appMetadata?.isPro,
+        declineOnContactInfo:
+            !gig.showInfo && gig.status !== gigStates.CONFIRMED && !dj?.appMetadata?.isPro,
         chatId: gig.id,
         receiver: isFromEvent ? theDj : theOrganizer,
         sender: isFromEvent ? theOrganizer : theDj,
@@ -407,7 +409,6 @@ const ChatWrapper = ({ chat, onClose }) => {
             <div style={{ flex: 1 }} />
             <ChatMessagesWrapper>
                 <Chat
-                    declineOnContactInfo
                     handleMessageError={handleMessageError}
                     key={chat.id}
                     {...chat}
