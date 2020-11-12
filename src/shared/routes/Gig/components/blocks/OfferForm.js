@@ -23,9 +23,9 @@ import CurrencySelector from '../../../../components/CurrencySelector';
 import { Body, BodyBold, TitleClean } from '../../../../components/Text';
 
 const gigStateTitles = {
-    [gigStates.CONFIRMED]: 'Your Offer',
-    [gigStates.FINISHED]: 'Your Offer',
-    default: 'Make Offer',
+    [gigStates.CONFIRMED]: 'Your offer',
+    [gigStates.FINISHED]: 'Your offer',
+    default: 'Make your offer',
 };
 
 const OfferForm = ({
@@ -172,129 +172,135 @@ const OfferForm = ({
 
     return (
         <div data-cy="make-offer-section">
-            <GreyBox style={{ marginBottom: 15 }}>
-                <TitleClean style={{ marginBottom: '0.5em' }}>
-                    {gigStateTitles[gig.status] ?? gigStateTitles.default}
-                </TitleClean>
+            {[gigStates.REQUESTED, gigStates.ACCEPTED].includes(gig.status) && (
+                <GreyBox style={{ marginBottom: 15 }}>
+                    <TitleClean style={{ marginBottom: '0.5em' }}>
+                        {gigStateTitles[gig.status] ?? gigStateTitles.default}
+                    </TitleClean>
 
-                <Body>
-                    {!payoutInfoValid
-                        ? translate('gig:offer.update-payout')
-                        : gigStateDescription[gig.status] ?? gigStateDescription.default}
-                </Body>
+                    <Body>
+                        {!payoutInfoValid
+                            ? translate('gig:offer.update-payout')
+                            : gigStateDescription[gig.status] ?? gigStateDescription.default}
+                    </Body>
 
-                {!!canUpdatePrice && (
-                    <InputRow small style={{ marginTop: '20px' }}>
-                        <Input
-                            half
-                            v2
-                            label="Total Price"
-                            name="amount"
-                            placeholder="00,00"
-                            //onUpdatePipeFunc={(oldVal,val)=>moneyPipe(oldVal,val,"DKK")}
-                            type="text"
-                            onChange={(val) => getFees({ amount: parseInt(val, 10) * 100 })}
-                            defaultValue={initOffer.offer.amount && initOffer.offer.amount / 100}
-                        />
-                        <CurrencySelector
-                            half
-                            v2
-                            label="Currency"
-                            initialValue={currency || ''}
-                            onSave={setCurrencyAndFetch}
-                        />
-                    </InputRow>
-                )}
+                    {!!canUpdatePrice && (
+                        <InputRow small style={{ marginTop: '20px' }}>
+                            <Input
+                                half
+                                v2
+                                label="Total Price"
+                                name="amount"
+                                placeholder="00,00"
+                                //onUpdatePipeFunc={(oldVal,val)=>moneyPipe(oldVal,val,"DKK")}
+                                type="text"
+                                onChange={(val) => getFees({ amount: parseInt(val, 10) * 100 })}
+                                defaultValue={
+                                    initOffer.offer.amount && initOffer.offer.amount / 100
+                                }
+                            />
+                            <CurrencySelector
+                                half
+                                v2
+                                label="Currency"
+                                initialValue={currency || ''}
+                                onSave={setCurrencyAndFetch}
+                            />
+                        </InputRow>
+                    )}
 
-                {[gigStates.CONFIRMED, gigStates.FINISHED].includes(gig.status) && (
-                    <RadioSelect
-                        white
-                        containerStyle={{ marginTop: '30px' }}
-                        disabled
-                        options={[
-                            {
-                                checked: true,
-                                title:
-                                    payoutType === PAYOUT_TYPES.BANK
-                                        ? 'Using Cueup'
-                                        : 'Directly to you',
-                                description:
-                                    payoutType === PAYOUT_TYPES.BANK
-                                        ? "Organizer has paid using Cueup and we'll transfer to you after the event."
-                                        : 'Organizer will pay directly to you.',
-                            },
-                        ]}
-                    />
-                )}
-                {!!canUpdatePrice && (
-                    <div data-cy="payout-options">
-                        <TitleClean style={{ marginBottom: '0.5em' }}>Organizer Payment</TitleClean>
-                        <Body style={{ marginBottom: 12 }}>
-                            Choose multiple to allow the organizer to pick one.
-                        </Body>
+                    {[gigStates.CONFIRMED, gigStates.FINISHED].includes(gig.status) && (
                         <RadioSelect
                             white
-                            containerStyle={{ marginBottom: '30px' }}
-                            multi
-                            setChosen={updatePaymentMethods}
+                            containerStyle={{ marginTop: '30px' }}
+                            disabled
                             options={[
                                 {
-                                    checked: payoutMethods.BANK,
-                                    title: 'Using Cueup - Secure & Guaranteed',
-                                    description: 'Organizer can pay through Cueup with card.',
-                                    value: PAYOUT_TYPES.BANK,
-                                },
-                                {
-                                    checked: payoutMethods.DIRECT,
-                                    title: 'Directly to you',
-                                    description: 'Organizer can pay directly to you. ',
-                                    value: PAYOUT_TYPES.DIRECT,
+                                    checked: true,
+                                    title:
+                                        payoutType === PAYOUT_TYPES.BANK
+                                            ? 'Using Cueup'
+                                            : 'Directly to you',
+                                    description:
+                                        payoutType === PAYOUT_TYPES.BANK
+                                            ? "Organizer has paid using Cueup and we'll transfer to you after the event."
+                                            : 'Organizer will pay directly to you.',
                                 },
                             ]}
                         />
-                    </div>
-                )}
+                    )}
+                    {!!canUpdatePrice && (
+                        <div data-cy="payout-options">
+                            <TitleClean style={{ marginBottom: '0.5em' }}>
+                                Organizer Payment
+                            </TitleClean>
+                            <Body style={{ marginBottom: 12 }}>
+                                Choose multiple to allow the organizer to pick one.
+                            </Body>
+                            <RadioSelect
+                                white
+                                containerStyle={{ marginBottom: '30px' }}
+                                multi
+                                setChosen={updatePaymentMethods}
+                                options={[
+                                    {
+                                        checked: payoutMethods.BANK,
+                                        title: 'Using Cueup - Secure & Guaranteed',
+                                        description: 'Organizer can pay with card through Cueup.',
+                                        value: PAYOUT_TYPES.BANK,
+                                    },
+                                    {
+                                        checked: payoutMethods.DIRECT,
+                                        title: 'Directly to you',
+                                        description: 'Organizer can pay directly to you.',
+                                        value: PAYOUT_TYPES.DIRECT,
+                                    },
+                                ]}
+                            />
+                        </div>
+                    )}
 
-                <RowWrap right style={{ marginTop: '24px' }}>
-                    <div name={'gig-cancel-' + gig.id}>
-                        {[gigStates.REQUESTED, gigStates.ACCEPTED].includes(gig.status) && (
-                            <TeritaryButton onClick={showDecline}>
-                                {translate('Decline gig')}
-                            </TeritaryButton>
-                        )}
+                    <RowWrap right style={{ marginTop: '24px' }}>
+                        <div name={'gig-cancel-' + gig.id}>
+                            {[gigStates.REQUESTED, gigStates.ACCEPTED].includes(gig.status) && (
+                                <TeritaryButton onClick={showDecline}>
+                                    {translate('Decline gig')}
+                                </TeritaryButton>
+                            )}
 
-                        {gig.status === gigStates.CONFIRMED && (
-                            <TeritaryButton onClick={showDecline} warning={true}>
-                                {translate('Cancel gig')}
-                            </TeritaryButton>
-                        )}
-                    </div>
+                            {gig.status === gigStates.CONFIRMED && (
+                                <TeritaryButton onClick={showDecline} warning={true}>
+                                    {translate('Cancel gig')}
+                                </TeritaryButton>
+                            )}
+                        </div>
 
-                    {canUpdatePrice ? (
-                        <SmartButton
-                            disabled={!canSubmit}
-                            loading={submitLoading}
-                            success={submitted}
-                            onClick={updateOffer}
-                            data-cy="submit-offer-button"
-                        >
-                            {submitted
-                                ? 'Updated'
-                                : gig.status === gigStates.REQUESTED
-                                ? translate('Send offer')
-                                : translate('Update offer')}
-                        </SmartButton>
-                    ) : null}
+                        {canUpdatePrice ? (
+                            <SmartButton
+                                disabled={!canSubmit}
+                                loading={submitLoading}
+                                success={submitted}
+                                onClick={updateOffer}
+                                data-cy="submit-offer-button"
+                            >
+                                {submitted
+                                    ? 'Updated'
+                                    : gig.status === gigStates.REQUESTED
+                                    ? translate('Send offer')
+                                    : translate('Update offer')}
+                            </SmartButton>
+                        ) : null}
 
-                    {!payoutInfoValid ? (
-                        <PrimaryButton onClick={showPopup} name="show-payout-popup">
-                            {translate('Update payout info')}
-                        </PrimaryButton>
-                    ) : null}
-                </RowWrap>
+                        {!payoutInfoValid ? (
+                            <PrimaryButton onClick={showPopup} name="show-payout-popup">
+                                {translate('Update payout info')}
+                            </PrimaryButton>
+                        ) : null}
+                    </RowWrap>
 
-                <ErrorMessageApollo error={error} />
-            </GreyBox>
+                    <ErrorMessageApollo error={error} />
+                </GreyBox>
+            )}
 
             {payoutInfoValid && ![gigStates.CONFIRMED, gigStates.FINISHED].includes(gig.status) ? (
                 <OfferTable
@@ -302,6 +308,7 @@ const OfferForm = ({
                     loading={loading}
                     isPro={isPro}
                     discount={gig.discount}
+                    status={gig.status}
                     {...offer}
                 />
             ) : null}
@@ -317,6 +324,7 @@ const RemainingPayment = ({ translate, payoutType, amountLeft, amountPaid, offer
     const isDirect = payoutType === PAYOUT_TYPES.DIRECT;
     return (
         <GreyBox>
+            <TitleClean>Your offer</TitleClean>
             <TableRow label="Your offer">{offer.formatted}</TableRow>
             <Hr />
             <TableRow label={translate('Already paid')} bold={!isDirect}>
@@ -332,10 +340,29 @@ const RemainingPayment = ({ translate, payoutType, amountLeft, amountPaid, offer
     );
 };
 
-const OfferTable = ({ loading, translate, serviceFee, djFee, totalPayout, isPro, discount }) => {
+const OfferTable = ({
+    status,
+    loading,
+    translate,
+    serviceFee,
+    djFee,
+    totalPayout,
+    isPro,
+    discount,
+}) => {
+    const titles = {
+        [gigStates.CANCELLED]: 'Your offer',
+        [gigStates.DECLINED]: 'Your offer',
+        [gigStates.LOST]: 'Your offer',
+        [gigStates.ORGANIZER_DECLINED]: 'Your offer',
+        [gigStates.EVENT_CANCELLED]: 'Your offer',
+    };
+
+    const label = titles[status] || 'Your Payout';
+
     return (
         <GreyBox>
-            <TitleClean style={{ marginBottom: '0.5em' }}>Your Payout</TitleClean>
+            <TitleClean style={{ marginBottom: '0.5em' }}>{label}</TitleClean>
 
             {!discount && (
                 <TableRow

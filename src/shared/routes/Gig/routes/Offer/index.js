@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
+import { gigStates } from 'constants/constants';
+import DeclinedInformation from 'routes/Gig/components/blocks/DeclinedInformation';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
 import { Col } from '../../../../components/Blocks';
 import OfferForm from '../../components/blocks/OfferForm';
 import Popup from '../../../../components/common/Popup';
 import PayoutForm from '../../../../components/common/PayoutForm';
 
-const Content = ({ gig, opportunity, theEvent, me, showDecline }) => {
+const DefaultRightSide = ({ gig, opportunity, theEvent, me, showDecline }) => {
     const [payoutPopup, setPayoutPopup] = useState(false);
-    if (!me) {
-        return null;
-    }
+
     const { userSettings, payoutMethods, appMetadata } = me;
 
     const isPro = appMetadata?.isPro;
 
     return (
-        <Col>
+        <>
             <Popup
                 width={'500px'}
                 showing={payoutPopup}
@@ -37,6 +37,25 @@ const Content = ({ gig, opportunity, theEvent, me, showDecline }) => {
                 user={me}
                 isPro={isPro}
             />
+        </>
+    );
+};
+
+const rightSideComponents = {
+    [gigStates.DECLINED]: DeclinedInformation,
+};
+
+const Content = (props) => {
+    const { me, gig } = props;
+    if (!me) {
+        return null;
+    }
+
+    const Component = rightSideComponents[gig.status] || DefaultRightSide;
+
+    return (
+        <Col>
+            <Component {...props} />
         </Col>
     );
 };

@@ -35,8 +35,12 @@ const Information = React.forwardRef(({ gig, opportunity, theEvent, loading, ope
                     <Col>
                         <RowWrap>{referred && <UsingBookingLinkPill />}</RowWrap>
                         <BodyBold opacity={0.75} style={{ margin: 0, marginTop: 12 }}>
-                            {organizer?.userMetadata.firstName || <Skeleton width={100} />}
-                            {'  ·  '}
+                            {loading ? (
+                                <Skeleton width={100} />
+                            ) : organizer?.userMetadata.firstName ? (
+                                organizer?.userMetadata.firstName + '  ·  '
+                            ) : null}
+
                             {loading ? <Skeleton width={100} /> : createdTimeAgo}
                         </BodyBold>
 
