@@ -571,6 +571,7 @@ const PoweredBy = styled.div`
         display: flex;
         height: 80px;
         align-items: center;
+        position: relative;
         p {
             line-height: 1em;
         }
