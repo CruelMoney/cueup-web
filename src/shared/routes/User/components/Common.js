@@ -66,7 +66,7 @@ export const CertifiedVerified = ({ certified, identityVerified }) => (
         {certified && (
             <Tooltip
                 text={
-                    'This dj has been certified by Cueup. The Cueup team has personally met and seen this dj play.'
+                    'Cueup has certified this DJ. The Cueup team has personally met and seen this DJ play.'
                 }
             >
                 {({ ref, close, open }) => (

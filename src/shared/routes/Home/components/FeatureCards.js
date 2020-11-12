@@ -18,9 +18,9 @@ const FeatureCards = () => {
                     </H3>
                     <Body>
                         You can complete the booking using your preferred payment method, like cash
-                        or card, and when we act as the facilitator you can be sure that your money
-                        is kept safe until the event is finished. Probably the easiest way to book a
-                        DJ anywhere.
+                        or card, and when we act as the facilitator, you can be sure that your money
+                        is safe until the event is finished. Probably the easiest way to book a DJ
+                        anywhere.
                     </Body>
                 </Card>
                 <Card shadow>
@@ -29,10 +29,9 @@ const FeatureCards = () => {
                         Music on your terms
                     </H3>
                     <Body>
-                        Every DJ has been screeened by us or even reviewed at previous events. You
+                        Every DJ has been screened by us or even reviewed at previous events. You
                         can also listen to mixes, see photos and videos from their other
-                        perfomances. At the end of the day, you will always find a DJ that suits
-                        your event.
+                        performances. With Cueup, you will always find a DJ that suits your event.
                     </Body>
                 </Card>
             </RowMobileCol>
