@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import moment from 'moment-timezone';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
+import { UsingBookingLinkPill } from 'routes/Gigs/components/Shared';
 import { Col, InfoBox, Row, RowWrap } from '../../../../components/Blocks';
 import Map from '../../../../components/common/Map';
 
@@ -10,7 +11,7 @@ import { BodyBold, BodySmall, HeaderTitle, TitleClean } from '../../../../compon
 import ContactPills from '../../components/blocks/ContactPills';
 
 const Information = React.forwardRef(({ gig, opportunity, theEvent, loading, openChat }, ref) => {
-    let { statusHumanized } = gig || {};
+    let { statusHumanized, referred } = gig || {};
     if (opportunity) {
         statusHumanized = 'Still looking for a DJ, send your offer';
     }
@@ -32,7 +33,8 @@ const Information = React.forwardRef(({ gig, opportunity, theEvent, loading, ope
                 </Row>
                 <TopInfoRow middle>
                     <Col>
-                        <BodyBold opacity={0.75} style={{ margin: 0 }}>
+                        <RowWrap>{referred && <UsingBookingLinkPill />}</RowWrap>
+                        <BodyBold opacity={0.75} style={{ margin: 0, marginTop: 12 }}>
                             {organizer?.userMetadata.firstName || <Skeleton width={100} />}
                             {'  ·  '}
                             {loading ? <Skeleton width={100} /> : createdTimeAgo}
@@ -102,7 +104,7 @@ const TopInfoRow = styled(Row)`
 const MainInformation = ({ gig, theEvent, openChat }) => {
     const match = useRouteMatch();
 
-    const { showInfo, isActionable } = gig || {};
+    const { showInfo, isActionable, referred } = gig || {};
     const {
         description,
         rider,
@@ -134,6 +136,7 @@ const MainInformation = ({ gig, theEvent, openChat }) => {
             {isActionable && (
                 <CustomSection>
                     <TitleClean>Contact {contactName}</TitleClean>
+
                     {!showInfo && (
                         <BodySmall>
                             Details will be available when the gig is confirmed.

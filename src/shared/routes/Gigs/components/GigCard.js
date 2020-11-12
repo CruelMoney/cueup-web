@@ -13,7 +13,6 @@ import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import { gigStates } from 'constants/constants';
 import CancelationDeclinePopup from 'routes/Gig/components/CancelationDeclinePopup';
-import Tooltip from 'components/Tooltip';
 import { MY_ACTIVE_GIGS } from 'components/gql';
 import { useAppState } from 'components/hooks/useAppState';
 import {
@@ -27,11 +26,11 @@ import {
     PrimaryButton,
     SecondaryButton,
     SmartButton,
-    InfoPill,
     NotificationBubble,
 } from '../../../components/Blocks';
 import { SmallHeader, BodySmall, BodyBold, Body } from '../../../components/Text';
 import { UNDO_PASS, UNDO_DECLINE, PASS_OPPORTUNITY } from '../gql';
+import { UsingBookingLinkPill } from './Shared';
 
 const GigCard = ({ loading, style, idx, gig, opportunity, ...props }) => {
     const { event, offer, referred } = gig || {};
@@ -102,25 +101,7 @@ const GigCard = ({ loading, style, idx, gig, opportunity, ...props }) => {
                         <Col>
                             <Row middle style={{ marginBottom: 6 }}>
                                 <SmallHeader>{name || <Skeleton width={200} />}</SmallHeader>
-                                {referred && (
-                                    <Tooltip text="This request is from your booking link, so you don't pay commission, and contact information is visible.">
-                                        {({ ref, close, open }) => (
-                                            <InfoPill
-                                                active
-                                                ref={ref}
-                                                onMouseEnter={open}
-                                                onMouseLeave={close}
-                                                style={{
-                                                    marginBottom: 0,
-                                                    minWidth: 0,
-                                                    marginLeft: 4,
-                                                }}
-                                            >
-                                                Using booking link
-                                            </InfoPill>
-                                        )}
-                                    </Tooltip>
-                                )}
+                                {referred && <UsingBookingLinkPill />}
                             </Row>
                             <BodySmall>
                                 <span>
