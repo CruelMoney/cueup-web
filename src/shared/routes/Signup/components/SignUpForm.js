@@ -239,7 +239,7 @@ const SignupForm = ({ translate, user }) => {
 
                 <RegistrationElement
                     name="phone"
-                    label={translate('Phone') + '*'}
+                    label={translate('Phone')}
                     active={true}
                     text={translate('signup:phone')}
                 >
@@ -251,9 +251,6 @@ const SignupForm = ({ translate, user }) => {
                         autoComplete="tel"
                         defaultValue={state.phone}
                         onSave={(phone) => setValue({ phone })}
-                        validation={[validators.required].filter(Boolean)}
-                        registerValidation={registerValidation('phone')}
-                        unregisterValidation={unregisterValidation('phone')}
                     />
                 </RegistrationElement>
 
@@ -312,7 +309,7 @@ const SignupForm = ({ translate, user }) => {
 
                 <RegistrationElement
                     name="picture"
-                    label={translate('Picture') + '*'}
+                    label={translate('Picture')}
                     active={true}
                     text={translate('signup:picture')}
                 >
@@ -336,7 +333,6 @@ const SignupForm = ({ translate, user }) => {
                             onSave={(profilePicture) =>
                                 setValue({ profilePicture: beginUpload(profilePicture) })
                             }
-                            validation={[!user?.picture && validators.required].filter(Boolean)}
                             registerValidation={registerValidation('profilePicture')}
                             unregisterValidation={unregisterValidation('profilePicture')}
                         />

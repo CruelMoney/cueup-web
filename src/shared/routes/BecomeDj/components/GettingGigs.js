@@ -196,7 +196,8 @@ const GigCard = styled.div`
 const GigRequestsWrapper = styled.div`
     position: relative;
     @media only screen and (max-width: 685px) {
-        font-size: 0.75em;
+        transform: scale(0.6);
+        height: 270px;
     }
 `;
 

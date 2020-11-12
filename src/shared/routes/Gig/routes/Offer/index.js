@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { gigStates } from 'constants/constants';
 import DeclinedInformation from 'routes/Gig/components/blocks/DeclinedInformation';
-import IncompleteProfileInformation from 'routes/Gig/components/blocks/IncompleteProfileInformation';
 import GoProForOpportunity from 'routes/Gig/components/blocks/GoProForOpportunity';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
 import { Col } from '../../../../components/Blocks';
@@ -58,8 +57,8 @@ const Content = (props) => {
         if (!me?.appMetadata?.isPro) {
             return <GoProForOpportunity {...props} />;
         }
-        // then show complete profile
-        return <IncompleteProfileInformation {...props} />;
+        // // then show complete profile
+        // return <IncompleteProfileInformation {...props} />;
     }
 
     const Component = rightSideComponents[gig.status] || DefaultRightSide;
