@@ -10,7 +10,7 @@ import { useMutation } from '@apollo/client';
 import { LOG_ACTIVITY } from 'routes/User/gql';
 import { ACTIVITY_TYPES } from 'components/hooks/useLogActivity';
 import ConditionalWrap from '../../../../components/ConditionalWrap';
-import { RowWrap, SecondaryButton, SmartButton } from '../../../../components/Blocks';
+import { RowMobileCol, RowWrap, SecondaryButton, SmartButton } from '../../../../components/Blocks';
 
 const ContactPills = ({ gigId, email, phone, showInfo, openChat }) => {
     const match = useRouteMatch();
@@ -30,7 +30,7 @@ const ContactPills = ({ gigId, email, phone, showInfo, openChat }) => {
     };
 
     return (
-        <RowWrap>
+        <RowMobileCol>
             {email && (
                 <ConditionalWrap
                     condition={showInfo}
@@ -87,7 +87,7 @@ const ContactPills = ({ gigId, email, phone, showInfo, openChat }) => {
                 <Icon icon={chatIcon} style={{ marginBottom: -2, marginRight: 12 }} />
                 <span>Send message</span>
             </SmartButton>
-        </RowWrap>
+        </RowMobileCol>
     );
 };
 

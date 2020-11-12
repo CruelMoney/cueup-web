@@ -11,27 +11,22 @@ import GenericPopup from './GenericPopup';
 export const BenefitsPopup = () => {
     return (
         <GenericPopup>
-            <h1>
-                Play more gigs
-                <br />
-                with Cueup Pro
-            </h1>
-
-            <Col>
-                <CustomCheckBox checked label="Direct contact to organizers." />
-                <CustomCheckBox checked label="Top position in search results." />
-                <CustomCheckBox checked label="No service fee on gigs." />
-                <CustomCheckBox checked label="Unlimited playing locations & travel." />
-                <CustomCheckBox checked label="Add website & social media links to profile." />
-                <CustomCheckBox
-                    checked
-                    label="Automatic refund each month if you don't receive any gig requests."
-                />
-                <CustomCheckBox checked label="Unlimited sound uploads." />
-                <CustomCheckBox checked label={'Pro DJ badge.'} />
-                <CustomCheckBox checked label="And much more..." />
-                <Testimonial />
-            </Col>
+            <h2 style={{ marginBottom: 24 }}>Play more gigs with Cueup Pro</h2>
+            <CustomCheckBox
+                checked
+                label="Get contact details before booking has been confirmed."
+            />
+            <CustomCheckBox checked label="Top position in search results." />
+            <CustomCheckBox checked label="No commission fee on gigs." />
+            <CustomCheckBox checked label="Unlimited playing locations & travel." />
+            <CustomCheckBox checked label="Add website & social media links to profile." />
+            <CustomCheckBox
+                checked
+                label="Automatic refund each month if you don't receive any gig requests."
+            />
+            <CustomCheckBox checked label="Unlimited sound uploads." />
+            <CustomCheckBox checked label={'Pro DJ badge.'} />
+            <CustomCheckBox checked label="And much more..." />
         </GenericPopup>
     );
 };
@@ -41,8 +36,8 @@ export const Testimonial = () => {
         <TestimonialWrapper>
             <Avatar size="large" src={'https://i.vimeocdn.com/portrait/13325432_640x640'} />
             <BodySmall style={{ marginLeft: 12 }}>
-                "I like to dj and travel and thanks to Cueup I’ve had a steady stream of gigs. Best
-                investment I’ve made was becoming Pro."
+                "I like to dj and travel. As a pro member I’ve had a steady stream of gigs most
+                places I go. Best investment I’ve made in a while!"
                 <Quotee>- Oscar Bandersen, DJ & Producer</Quotee>
             </BodySmall>
         </TestimonialWrapper>

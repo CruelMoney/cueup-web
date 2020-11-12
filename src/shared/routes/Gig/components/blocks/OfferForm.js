@@ -241,8 +241,7 @@ const OfferForm = ({
                                 {
                                     checked: payoutMethods.BANK,
                                     title: 'Using Cueup - Secure & Guaranteed',
-                                    description:
-                                        'Organizer can pay through Cueup to your bank account.',
+                                    description: 'Organizer can pay through Cueup with card.',
                                     value: PAYOUT_TYPES.BANK,
                                 },
                                 {

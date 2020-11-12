@@ -84,6 +84,7 @@ export const DumbCheckbox = ({
     withBorder,
     style,
     small,
+    children,
     ...props
 }) => {
     return (
@@ -108,6 +109,7 @@ export const DumbCheckbox = ({
                         {label}
                     </span>
                 )}
+                {children}
             </Label>
         </CheckboxContainer>
     );

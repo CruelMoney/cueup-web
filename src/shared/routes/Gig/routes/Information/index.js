@@ -135,8 +135,7 @@ const MainInformation = ({ gig, theEvent, openChat }) => {
                 <TitleClean>Contact {contactName}</TitleClean>
                 {!showInfo && (
                     <BodySmall>
-                        Details will be available when the gig is confirmed - you can use the chat
-                        until then.
+                        Details will be available when the gig is confirmed.
                         <br />
                         <NavLink to={match.url + '/contact-get-pro'}>
                             <b style={{ color: '#4d6480' }}>Pro members</b>

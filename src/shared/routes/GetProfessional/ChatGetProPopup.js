@@ -13,14 +13,13 @@ export const ChatGoProPopup = () => {
         <GenericPopup showPayment={showGoPro}>
             {showGoPro ? (
                 <Col>
-                    <h1>
-                        Play more gigs
-                        <br />
-                        with Cueup Pro
-                    </h1>
-                    <CustomCheckBox checked label="Direct contact to organizers." />
+                    <h2 style={{ marginBottom: 24 }}>Play more gigs with Cueup Pro</h2>
+                    <CustomCheckBox
+                        checked
+                        label="Get contact details before booking has been confirmed."
+                    />
                     <CustomCheckBox checked label="Top position in search results." />
-                    <CustomCheckBox checked label="No service fee on gigs." />
+                    <CustomCheckBox checked label="No commission fee on gigs." />
                     <CustomCheckBox checked label="Unlimited playing locations & travel." />
                     <CustomCheckBox checked label="Add website & social media links to profile." />
                     <CustomCheckBox

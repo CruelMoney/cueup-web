@@ -45,9 +45,9 @@ const ProSection = () => {
                             whiteSpace: 'nowrap',
                         }}
                     >
-                        ✔ Direct contact to organizers
+                        ✔ Contact details available any time
                         <br />✔ Top position in search results
-                        <br />✔ No service fees
+                        <br />✔ No commission fees
                         <br />✔ Unlimited playing locations
                         <br />✔ Add website link to profile
                         <br />✔ Unlimited sound uploads
