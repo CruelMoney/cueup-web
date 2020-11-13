@@ -129,14 +129,18 @@ const EarningsWrapper = styled(Row)`
     }
     p,
     h3 {
+        font-size: 1em !important;
         text-align: center;
     }
     p {
-        font-size: 42px;
+        font-size: 2em !important;
         font-weight: 700;
         line-height: 1em;
-        letter-spacing: -3px;
+        letter-spacing: -0.07em;
         color: #00d1ff;
+    }
+    @media only screen and (max-width: 400px) {
+        font-size: 0.8em;
     }
 `;
 

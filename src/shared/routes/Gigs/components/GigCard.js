@@ -99,11 +99,12 @@ const GigCard = ({ loading, style, idx, gig, opportunity, ...props }) => {
             >
                 <Content>
                     <Col>
-                        <Row middle style={{ marginBottom: 6 }}>
-                            <SmallHeader>{name || <Skeleton width={200} />}</SmallHeader>
-                            <Filler />
+                        <RowWrap middle between>
+                            <SmallHeader style={{ marginRight: 4, marginBottom: 6 }}>
+                                {name || <Skeleton width={200} />}
+                            </SmallHeader>
                             {referred && <UsingBookingLinkPill />}
-                        </Row>
+                        </RowWrap>
                         <BodySmall>
                             <span>
                                 {organizer?.userMetadata?.firstName ||
@@ -177,7 +178,6 @@ const GigCard = ({ loading, style, idx, gig, opportunity, ...props }) => {
                         undoDecline={undoDecline}
                     />
                 </Content>
-                <Shadow />
             </Card>
             {showDecline && (
                 <CancelationDeclinePopup
@@ -292,7 +292,7 @@ const Offer = ({
     }
 
     return (
-        <OfferRow middle>
+        <RowMobileCol middle>
             <OfferTextWrapper>
                 {offer && <OfferText greyed={false}>{offer.formatted}</OfferText>}
 
@@ -300,38 +300,35 @@ const Offer = ({
                     {statusHumanized || (loading ? <Skeleton /> : null)}
                 </OfferText>
             </OfferTextWrapper>
-            <Filler />
 
-            <Row style={{ position: 'relative', flexGrow: 1 }}>
-                {loading ? (
-                    <Buttons>
-                        <Skeleton height={40} width={200} />
-                    </Buttons>
-                ) : (
-                    <Actions
-                        id={id}
-                        opportunity={opportunity}
-                        showDecline={showDecline}
-                        passOpportunity={passOpportunity}
-                        passing={passing}
-                        undoDecline={undoDecline}
-                        undoingDecline={undoingDecline}
-                    />
-                )}
-                {hasMessage && (
-                    <NotificationBubble
-                        border
-                        style={{
-                            position: 'absolute',
-                            right: -10,
-                            top: 10,
-                        }}
-                    >
-                        <span>!</span>
-                    </NotificationBubble>
-                )}
-            </Row>
-        </OfferRow>
+            {loading ? (
+                <Buttons>
+                    <Skeleton height={40} width={200} />
+                </Buttons>
+            ) : (
+                <Actions
+                    id={id}
+                    opportunity={opportunity}
+                    showDecline={showDecline}
+                    passOpportunity={passOpportunity}
+                    passing={passing}
+                    undoDecline={undoDecline}
+                    undoingDecline={undoingDecline}
+                />
+            )}
+            {hasMessage && (
+                <NotificationBubble
+                    border
+                    style={{
+                        position: 'absolute',
+                        right: -10,
+                        top: 10,
+                    }}
+                >
+                    <span>!</span>
+                </NotificationBubble>
+            )}
+        </RowMobileCol>
     );
 };
 
@@ -339,30 +336,20 @@ const OfferTextWrapper = styled(Col)`
     margin-top: 18px;
 `;
 
-const Filler = styled.div`
-    flex: 1;
-    width: 100%;
-    @media only screen and (max-width: 710px) {
-        display: none;
-    }
-`;
-
 const Buttons = styled(RowMobileCol)`
-    width: 100%;
     margin-top: 18px;
-    justify-content: right;
+    flex-grow: 1;
+    justify-content: flex-end;
     align-items: center;
+    @media only screen and (max-width: 425px) {
+        width: 100%;
+    }
 `;
 
 const OfferText = styled(BodyBold)`
     font-size: 18px;
     margin: 0;
     color: ${({ greyed }) => (greyed ? '#98A4B3' : '#122b48')};
-`;
-
-const OfferRow = styled(Row)`
-    justify-content: center;
-    flex-wrap: wrap;
 `;
 
 const Content = styled(Col)`
@@ -400,6 +387,7 @@ const Wrapper = styled(Col)`
 `;
 
 const Card = styled(NavLink)`
+    box-shadow: 0 2px 30px 0 rgba(0, 0, 0, 0.1);
     display: flex;
     overflow: hidden;
     flex-direction: row;
@@ -411,17 +399,6 @@ const Card = styled(NavLink)`
     > a {
         width: 100%;
     }
-`;
-
-const Shadow = styled.div`
-    box-shadow: 0 2px 30px 0 rgba(0, 0, 0, 0.1);
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    bottom: 0px;
-    right: 0px;
-    border-radius: 4px;
-    pointer-events: none;
 `;
 
 export default GigCard;

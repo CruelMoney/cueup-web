@@ -13,7 +13,6 @@ export const UsingBookingLinkPill = () => (
                 style={{
                     marginBottom: 0,
                     minWidth: 0,
-                    marginLeft: 4,
                 }}
             >
                 Using booking link
