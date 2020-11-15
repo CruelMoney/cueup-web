@@ -215,7 +215,7 @@ const SignupForm = ({ name }) => {
                 unregisterValidation={unregisterValidation('password')}
             />
             <div style={{ flex: 1 }} />
-            <SmartButton loading={loading} type="submit">
+            <SmartButton loading={loading} onClick={signup} type="submit">
                 Continue
             </SmartButton>
         </form>
