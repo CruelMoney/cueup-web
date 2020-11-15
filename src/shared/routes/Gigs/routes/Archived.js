@@ -83,7 +83,7 @@ const RightSide = () => {
             <GreyBox>
                 <H3 small>What are archived gigs?</H3>
                 <BodySmall>
-                    Gigs you have declined, cancelled or lost to another DJ show up here.
+                    Gigs you have declined, canceled, or lost to another DJ show up here.
                     <br />
                     You can restore gigs you've declined, and they will move back to requests.
                 </BodySmall>

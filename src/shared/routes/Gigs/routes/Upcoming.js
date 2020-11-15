@@ -76,9 +76,9 @@ const RightSide = () => {
             <GreyBox>
                 <H3 small>What are upcoming gigs?</H3>
                 <BodySmall>
-                    If the organizer accepts your offer, the gig is confirmed and you should prepare
-                    to play. You can see all contact info for upcoming gigs, and exchange contact
-                    details in the chat.
+                    If the organizer accepts your offer, the gig is confirmed, and you should
+                    prepare to play. You can see all contact info for upcoming gigs and exchange
+                    contact details in the chat.
                 </BodySmall>
             </GreyBox>
         </>

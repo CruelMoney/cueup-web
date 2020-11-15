@@ -37,7 +37,7 @@ const AddBookingLink = ({ user, small, children }) => {
         <CustomGreyBox>
             {small ? <H3 small>{header}</H3> : <h2>{header}</h2>}
             <BodyEl>
-                Make it easier for people to book you on your website or social media. Copy paste
+                Make it easier for people to book you on your website or social media. Copy-paste
                 your booking link to places where people find you.
             </BodyEl>
 

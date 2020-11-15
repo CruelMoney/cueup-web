@@ -82,8 +82,8 @@ const RightSide = () => {
             <GreyBox>
                 <H3 small>What are opportunities?</H3>
                 <BodySmall>
-                    Opportunities are events in your area without a DJ. This is your chance to
-                    connect with the organizer and get a gig.
+                    Opportunities are events in your area without a DJ. An opportunity is your
+                    chance to connect with the organizer and get a gig.
                 </BodySmall>
             </GreyBox>
             <GreyBox>

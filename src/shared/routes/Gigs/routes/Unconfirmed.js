@@ -75,8 +75,8 @@ const RightSide = () => {
             <GreyBox>
                 <H3 small>What are unconfirmed gigs?</H3>
                 <BodySmall>
-                    Gigs where you've already made an offer, and it's waiting to be accepted by the
-                    organizer.
+                    Unconfirmed gigs are jobs where you've already made an offer, and it's waiting
+                    to be accepted by the organizer.
                 </BodySmall>
             </GreyBox>
             <GreyBox>

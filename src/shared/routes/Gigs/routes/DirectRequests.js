@@ -101,15 +101,15 @@ const RightSide = ({ user, gigs }) => {
             <GreyBox>
                 <H3 small>What are direct requests?</H3>
                 <BodySmall>
-                    Gigs where you've been picked to send an offer. Direct requests are your best
-                    chance at getting booked.
+                    Direct requests are gigs where you've been picked to send an offer. Direct
+                    requests are your best chance of getting booked.
                 </BodySmall>
             </GreyBox>
             <GreyBox>
                 <H3 small>How can I get more requests?</H3>
                 <BodySmall>
-                    Improve your Cueup profile. Make sure you have a profesional looking profile
-                    picture and add testimonials.
+                    Improve your Cueup profile. Make sure you have a professional-looking picture
+                    and add testimonials.
                     <br />
                     <br />
                     <a
