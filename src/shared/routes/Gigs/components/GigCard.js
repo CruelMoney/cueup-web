@@ -90,6 +90,7 @@ const GigCard = ({ loading, style, idx, gig, opportunity, ...props }) => {
         <Wrapper idx={idx} disabled={loading} {...props}>
             <Card
                 style={style}
+                data-cy="gig-link"
                 to={{
                     pathname: linkTo,
                     state: {

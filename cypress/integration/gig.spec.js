@@ -41,10 +41,13 @@ describe('Gig', () => {
         cy.visit('/');
         cy.get('[data-cy=menu-user-link]').click();
         cy.get('[data-cy=menu-gigs-link]').click({ force: true });
-        cy.get('[data-cy=gig-read-more]').click();
-        cy.get('[data-cy=navbutton-offer]').click();
-        cy.get('[name=show-payout-popup]').click();
-        cy.get('[name=DIRECT]').click();
+        cy.wait(1000);
+
+        cy.get('[data-cy=gig-link]').first().click();
+
+        cy.get('[data-cy=payout-options] *[name=DIRECT]').click();
+
+        cy.get('[role=dialog] [name=DIRECT]').click();
         cy.get('[name=direct-description]').type('Hey ho lets go');
 
         cy.get('.payout-form button[type="submit"]').click();
@@ -88,10 +91,14 @@ describe('Gig', () => {
         cy.visit('/');
         cy.get('[data-cy=menu-user-link]').click();
         cy.get('[data-cy=menu-gigs-link]').click({ force: true });
-        cy.get('[data-cy=gig-read-more]').click();
+
+        cy.get('nav button').contains('Upcoming').click();
+
+        cy.wait(1000);
+        cy.get('[data-cy=gig-link]').first().click();
 
         cy.get('[data-cy=gig-status]').should('contain', 'Confirmed. Get ready to play');
 
-        cy.get('a[href="mailto:contactEmail@email.com"]').should('exist');
+        cy.get('button [data-is-visible=true]').contains('Show email');
     });
 });

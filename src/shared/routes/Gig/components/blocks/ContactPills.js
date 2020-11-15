@@ -50,7 +50,7 @@ const ContactPills = ({ gigId, email, phone, showInfo, openChat }) => {
                         <NavLink to={match.url + '/contact-get-pro'}>{children}</NavLink>
                     )}
                 >
-                    <SecondaryButton>
+                    <SecondaryButton data-is-visible={showInfo}>
                         <Icon icon={mailIcon} style={{ marginBottom: -2, marginRight: 12 }} />
                         <span>Show email</span>
                     </SecondaryButton>
@@ -76,7 +76,7 @@ const ContactPills = ({ gigId, email, phone, showInfo, openChat }) => {
                         <NavLink to={match.url + '/contact-get-pro'}>{children}</NavLink>
                     )}
                 >
-                    <SecondaryButton>
+                    <SecondaryButton data-is-visible={showInfo}>
                         <Icon icon={phoneIcon} style={{ marginBottom: -2, marginRight: 12 }} />
                         <span>Show number</span>
                     </SecondaryButton>

@@ -85,7 +85,11 @@ const Menu = ({ dark, relative, fullWidth, hideLogin }) => {
 
                             {!hideLogin && !loggedIn && !loading ? (
                                 <li>
-                                    <Navlink to={t(appRoutes.login)} label={'Log In'} />
+                                    <Navlink
+                                        data-cy="login-button"
+                                        to={t(appRoutes.login)}
+                                        label={'Log In'}
+                                    />
                                 </li>
                             ) : null}
 
