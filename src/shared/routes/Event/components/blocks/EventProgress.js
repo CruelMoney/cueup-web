@@ -36,7 +36,7 @@ const EventProgress = ({ theEvent = {} }) => {
         <Sticky>
             <Wrapper>
                 <GreyBox>
-                    <H3 small dark style={{ marginBottom: 12 }}>
+                    <H3 small dark style={{ marginBottom: 12, marginLeft: 15 }}>
                         What's next?
                     </H3>
 
@@ -51,13 +51,16 @@ const EventProgress = ({ theEvent = {} }) => {
                         to={eventRoutes.overview}
                         label={++idx + '. Get offers from DJs'}
                         description={
-                            "You can message the DJs to let them know you're interested and tell them more about the event."
+                            "Message the DJs to let them know you're interested and tell them more about your event."
                         }
                         completed={accepted}
                     />
                     <ProgressStep
                         active={accepted && theEvent?.status !== eventStates.CONFIRMED}
                         label={++idx + '. Confirm booking'}
+                        description={
+                            'Pick and book a DJ to complete the booking. Remember you are covered by our money-back guarantee when paying on Cueup.'
+                        }
                         completed={theEvent?.status === eventStates.CONFIRMED}
                     />
                     <ProgressStep

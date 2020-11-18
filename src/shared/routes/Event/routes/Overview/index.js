@@ -96,7 +96,7 @@ const EventGigs = React.forwardRef((props, ref) => {
                 title="Still contacting DJs"
                 message={
                     <>
-                        We are still finding DJs for you. You can come back later.
+                        We are still finding DJs for you. {'\n'}Come back later.
                         <NotificationButton organizer={organizer} />
                     </>
                 }
