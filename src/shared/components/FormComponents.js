@@ -195,11 +195,12 @@ const SettingsSection = ({
     children,
     stickyTop = '90px',
     disable,
+    sticky = true,
     ...props
 }) => {
     return (
         <SectionRow {...props}>
-            <LeftCol stickyTop={stickyTop}>
+            <LeftCol stickyTop={stickyTop} style={{ position: sticky ? 'sticky' : 'initial' }}>
                 <Title>{title}</Title>
                 <Body style={{ marginBottom: '24px', whiteSpace: 'pre-wrap' }}>{description}</Body>
             </LeftCol>

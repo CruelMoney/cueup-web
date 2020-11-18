@@ -3,62 +3,35 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { eventRoutes } from 'constants/locales/appRoutes';
 import Navigation from '../../../../components/Navigation/SubNavigation';
-import { Container, FullWidthCol, Row, Col, GradientBg } from '../../../../components/Blocks';
+import { Container, FullWidthCol, Row, Col, GradientBg, Hr } from '../../../../components/Blocks';
 import { HeaderTitle, BodyBold } from '../../../../components/Text';
 
-const getRoutes = (event, pathname) =>
-    [
-        { route: eventRoutes.overview, label: 'overview', active: true },
-        { route: eventRoutes.requirements, label: 'requirements', active: true },
-        { route: eventRoutes.review, label: 'review', active: true },
-    ].map((r) => ({ ...r, route: pathname + '/' + r.route }));
-
-const StyledGradientBg = styled(GradientBg)`
-    height: 300px;
-`;
-
 const Header = ({ theEvent, loading, pathname }) => {
-    return (
-        <StyledGradientBg>
-            <Container>
-                <Row className="wrapper">
-                    <FullWidthCol>
-                        {loading ? null : <Content theEvent={theEvent} />}
-                        <Navigation routes={getRoutes(theEvent, pathname)} mobileLabel="Event" />
-                    </FullWidthCol>
-                </Row>
-            </Container>
-        </StyledGradientBg>
-    );
+    return <FullWidthCol>{loading ? null : <Content theEvent={theEvent} />}</FullWidthCol>;
 };
-
-const HeaderWrapper = styled.div`
-    padding-bottom: 24px;
-`;
 
 const Content = ({ theEvent }) => {
     const { name, start, end, location } = theEvent;
 
     return (
-        <HeaderWrapper>
-            <Row middle>
-                <Col style={{ flex: 1, alignItems: 'flex-start' }}>
-                    <HeaderTitle>{name}</HeaderTitle>
-                    <NavLink to={eventRoutes.requirements}>
-                        <BodyBold white opacity={0.75} style={{ margin: 0 }}>
-                            {location?.name}
-                            {'  ·  '}
-                            {start?.formattedDate}
-                        </BodyBold>
-                        <BodyBold white opacity={0.75} style={{ margin: 0 }}>
-                            {start?.formattedTime}
-                            {' to '}
-                            {end?.formattedTime}
-                        </BodyBold>
-                    </NavLink>
-                </Col>
-            </Row>
-        </HeaderWrapper>
+        <Row middle>
+            <Col style={{ flex: 1, alignItems: 'flex-start' }}>
+                <HeaderTitle dark>{name}</HeaderTitle>
+                <NavLink to={eventRoutes.requirements}>
+                    <BodyBold style={{ margin: 0 }}>
+                        {location?.name}
+                        {'  ·  '}
+                        {start?.formattedDate}
+                    </BodyBold>
+                    <BodyBold style={{ margin: 0 }}>
+                        {start?.formattedTime}
+                        {' to '}
+                        {end?.formattedTime}
+                    </BodyBold>
+                </NavLink>
+                <Hr style={{ margin: '15px 0' }} />
+            </Col>
+        </Row>
     );
 };
 

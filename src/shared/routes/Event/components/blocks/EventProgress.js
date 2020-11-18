@@ -1,11 +1,15 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 import { NavLink } from 'react-router-dom';
+import { InlineIcon } from '@iconify/react';
+import checkmark from '@iconify/icons-ion/checkmark-circle';
+import arrow from '@iconify/icons-ion/arrow-forward';
 import { eventRoutes } from 'constants/locales/appRoutes';
 import { eventStates } from 'constants/constants';
-import { SecondaryButton } from 'components/Blocks';
-import checkmark from '../../../../assets/checkmark.svg';
+import { BodySmall, H3 } from 'components/Text';
+import GreyBox from 'components/GreyBox';
+import { Col } from 'components/Blocks';
 import { EVENT_GIGS } from '../../gql';
 import ConditionalWrap from '../../../../components/ConditionalWrap';
 
@@ -26,23 +30,43 @@ const EventProgress = ({ theEvent = {} }) => {
 
     const accepted = data?.event?.gigs.some((g) => g.offer);
 
+    let idx = 0;
+
     return (
         <Sticky>
             <Wrapper>
-                <ProgressStep label={'Create event'} completed />
-                {!emailVerified && (
-                    <ProgressStep small to={eventRoutes.requirements} label={'Verify email'} />
-                )}
-                <ProgressStep label={'Get offers from DJs'} completed={accepted} />
-                <ProgressStep
-                    label={'Confirm booking'}
-                    completed={theEvent?.status === eventStates.CONFIRMED}
-                />
-                <ProgressStep
-                    label={'Review the DJ'}
-                    completed={theEvent && theEvent.review}
-                    to={eventRoutes.review}
-                />
+                <GreyBox>
+                    <H3 small dark style={{ marginBottom: 12 }}>
+                        What's next?
+                    </H3>
+
+                    {!emailVerified && (
+                        <ProgressStep
+                            to={eventRoutes.requirements}
+                            label={++idx + '. Verify your email'}
+                        />
+                    )}
+                    <ProgressStep
+                        active={!accepted && emailVerified}
+                        to={eventRoutes.overview}
+                        label={++idx + '. Get offers from DJs'}
+                        description={
+                            "You can message the DJs to let them know you're interested and tell them more about the event."
+                        }
+                        completed={accepted}
+                    />
+                    <ProgressStep
+                        active={accepted && theEvent?.status !== eventStates.CONFIRMED}
+                        label={++idx + '. Confirm booking'}
+                        completed={theEvent?.status === eventStates.CONFIRMED}
+                    />
+                    <ProgressStep
+                        active={theEvent?.status === eventStates.CONFIRMED}
+                        label={++idx + '. Review the DJ'}
+                        completed={theEvent && theEvent.review}
+                        to={eventRoutes.review}
+                    />
+                </GreyBox>
             </Wrapper>
         </Sticky>
     );
@@ -50,8 +74,8 @@ const EventProgress = ({ theEvent = {} }) => {
 
 const Sticky = styled.div`
     position: sticky;
-    top: 80px;
-    margin-left: 42px;
+    top: 15px;
+    margin-left: 30px;
 `;
 const Wrapper = styled.div`
     display: flex;
@@ -68,7 +92,6 @@ const Wrapper = styled.div`
         position: relative;
         top: initial;
         margin: 0;
-        top: -20px;
         justify-content: space-between;
     }
 
@@ -77,7 +100,7 @@ const Wrapper = styled.div`
     }
 `;
 
-const ProgressStep = ({ label, small, completed, to }) => {
+const ProgressStep = ({ label, small, active, completed, to, description }) => {
     return (
         <ConditionalWrap
             condition={true}
@@ -85,61 +108,50 @@ const ProgressStep = ({ label, small, completed, to }) => {
                 to ? <NavLink to={to}>{children}</NavLink> : <div>{children}</div>
             }
         >
-            <Step
-                small={small}
-                completed={completed}
-                data-cy={completed ? 'progress-step-complete' : 'progress-step-incomplete'}
-            >
-                {completed && <img src={checkmark} alt="Checkmark" />}
-                {label}
-            </Step>
+            <Col style={{ marginBottom: '1.5em', width: 250 }}>
+                <Step
+                    small={small}
+                    active={active}
+                    completed={completed}
+                    data-cy={completed ? 'progress-step-complete' : 'progress-step-incomplete'}
+                >
+                    <span>{label}</span>
+                    {completed && <InlineIcon icon={checkmark} width={18} height={18} />}
+                    {active && (
+                        <InlineIcon className={'active-icon'} icon={arrow} width={18} height={18} />
+                    )}
+                </Step>
+                {!!(description && active) && (
+                    <BodySmall style={{ marginLeft: '1.1em', marginTop: 4 }}>
+                        {description}
+                    </BodySmall>
+                )}
+            </Col>
         </ConditionalWrap>
     );
 };
 
 const Step = styled.div`
-    background: ${({ completed }) => (completed ? '#98A4B3' : '#F3F6F7')};
     border-radius: 1.75em;
-    height: 3.3em;
-    width: 16.6em;
-    line-height: 3.3em;
-    font-weight: 700;
-    font-size: 18px;
-    color: ${({ completed }) => (completed ? '#fff' : '#4d6480')};
-    text-align: center;
+    font-weight: 500;
+    width: 250px;
     position: relative;
     margin: 0 auto;
 
-    ${({ small }) =>
-        small &&
-        css`
-            font-size: 14px;
-            line-height: 3em;
-            border: 2px solid #98a4b3;
-        `}
-    > img {
-        position: absolute;
-        left: 1.33em;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 1em;
+    span {
+        opacity: ${({ active }) => (active ? 1 : 0.3)};
     }
-    :after {
-        content: '';
-        display: block;
-        position: relative;
-        height: 2em;
-        width: 6px;
-        border-radius: 3px;
-        background-color: #f6f8f9;
-        top: 3px;
-        margin-bottom: 3px;
-        margin: auto;
+    > svg {
+        float: right;
+    }
+    .active-icon {
+        position: absolute;
+        left: -1.4em;
+        float: none;
+        top: 0.1em;
+        color: #00d1ff;
     }
 
-    @media only screen and (max-width: 1024px) {
-        font-size: 15px;
-    }
     @media only screen and (max-width: 768px) {
         font-size: 12px;
         width: 13em;

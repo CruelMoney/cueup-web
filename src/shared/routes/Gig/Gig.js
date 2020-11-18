@@ -11,7 +11,6 @@ import GreyBox from 'components/GreyBox';
 import { useAppState } from 'components/hooks/useAppState';
 import { Media } from 'components/MediaContext';
 import ScrollToTop from '../../components/common/ScrollToTop';
-import Footer from '../../components/common/Footer';
 import { Container, Row, Col, Hr, RowWrap } from '../../components/Blocks';
 import { gigStates } from '../../constants/constants';
 import { ME } from '../../components/gql';

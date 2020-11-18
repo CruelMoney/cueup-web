@@ -80,6 +80,7 @@ const Requirements = React.forwardRef(({ theEvent, history }, ref) => {
             <SavingIndicator loading={loading} error={error} />
 
             <SettingsSection
+                sticky={false}
                 title={'Contact information'}
                 description={'Enter information on the person communicating with the DJ.'}
             >
@@ -124,6 +125,7 @@ const Requirements = React.forwardRef(({ theEvent, history }, ref) => {
             </SettingsSection>
 
             <SettingsSection
+                sticky={false}
                 title={'Requirements'}
                 description={
                     'Add requirements to help us find the most qualified DJs for your event. '
@@ -237,6 +239,7 @@ const Requirements = React.forwardRef(({ theEvent, history }, ref) => {
             </SettingsSection>
 
             <SettingsSection
+                sticky={false}
                 id="system"
                 title={'System'}
                 description={

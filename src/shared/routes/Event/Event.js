@@ -13,7 +13,7 @@ import Popup from 'components/common/Popup';
 import Menu from 'components/Navigation';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Footer from '../../components/common/Footer';
-import { Container, Row, Col } from '../../components/Blocks';
+import { Container, Row, Col, Hr, RowMobileCol } from '../../components/Blocks';
 import EventProgress from './components/blocks/EventProgress';
 import { EVENT } from './gql.js';
 import EventHeader from './components/blocks/EventHeader.js';
@@ -22,6 +22,7 @@ import Requirements from './routes/Requirements';
 import Review from './routes/Review';
 import content from './content.json';
 import CancelationPopup from './components/blocks/CancelationPopup';
+import Sidebar from './components/blocks/Sidebar';
 
 const Index = ({ location }) => {
     const match = useRouteMatch();
@@ -74,20 +75,23 @@ const Index = ({ location }) => {
                     <meta name="robots" content="noindex" />
                 </Helmet>
             )}
-
-            <Menu />
-
-            <Content
-                location={location}
-                match={match}
-                theEvent={theEvent}
-                loading={loading}
-                translate={translate}
-                notifications={notifications}
-                setActiveChat={setActiveChat}
-            />
-
-            <Footer noSkew noPreFooter />
+            <Menu dark relative fullWidth />
+            <Container fullWidth>
+                <Hr />
+                <RowMobileCol style={{ marginTop: 24, flexGrow: 1, flexWrap: 'nowrap' }}>
+                    <Sidebar />
+                    <Content
+                        location={location}
+                        match={match}
+                        theEvent={theEvent}
+                        loading={loading}
+                        translate={translate}
+                        notifications={notifications}
+                        setActiveChat={setActiveChat}
+                    />
+                    <EventProgress theEvent={theEvent} />
+                </RowMobileCol>
+            </Container>
         </div>
     );
 };
@@ -99,25 +103,10 @@ const Content = React.memo((props) => {
     const history = useHistory();
 
     return (
-        <div>
-            <ScrollToTop animate top={280} />
+        <Col style={{ flexGrow: 1 }}>
             <EventHeader theEvent={theEvent} loading={loading} pathname={match.url} />
-            <Container>
-                <ContainerRow>
-                    <BorderCol>
-                        <GigRoutes
-                            {...props}
-                            ssr={isSSR}
-                            style={props}
-                            match={match}
-                            eventProps={eventProps}
-                        />
-                    </BorderCol>
-                    <Col>
-                        <EventProgress theEvent={theEvent} />
-                    </Col>
-                </ContainerRow>
-            </Container>
+
+            <GigRoutes {...props} ssr={isSSR} style={props} match={match} eventProps={eventProps} />
             <Route path={'*/cancel'}>
                 <Popup
                     width={530}
@@ -133,7 +122,7 @@ const Content = React.memo((props) => {
                     />
                 </Popup>
             </Route>
-        </div>
+        </Col>
     );
 });
 
