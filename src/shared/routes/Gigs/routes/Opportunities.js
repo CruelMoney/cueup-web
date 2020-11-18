@@ -95,7 +95,7 @@ const RightSide = () => {
                 <NavLink to="/u/settings?modal=location">
                     <SecondaryButton style={{ maxWidth: '100%' }}>
                         Add more locations
-                        <ProFeature>Pro</ProFeature>
+                        <ProFeature disabled>Pro</ProFeature>
                     </SecondaryButton>
                 </NavLink>
             </GreyBox>

@@ -76,24 +76,6 @@ const DJsNearMePage = ({ topDjs, loading, totalFound, city }) => {
                     <SearchWrapper>
                         <DjSearch initialLocation={city?.country} />
                     </SearchWrapper>
-                    <Row center middle style={{ marginTop: 24, marginBottom: -40 }}>
-                        <a
-                            href="https://www.producthunt.com/posts/djs-near-me?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-djs-near-me"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <img
-                                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=273673&theme=dark"
-                                alt="DJs Near Me - Get prices from the best DJs near you. | Product Hunt"
-                                style={{
-                                    width: 250,
-                                    height: 54,
-                                }}
-                                width="250"
-                                height="54"
-                            />
-                        </a>
-                    </Row>
                 </Container>
             </HeroContainer>
             <Container style={{ maxWidth: 1000 }}>

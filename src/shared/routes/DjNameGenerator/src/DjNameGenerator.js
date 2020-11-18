@@ -202,24 +202,8 @@ function App({ match, history }) {
                             <Logo />
                         </div>
                     </a>
-                    <a
-                        href="https://www.producthunt.com/posts/djs-near-me?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-djs-near-me"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <img
-                            src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=273673&theme=dark"
-                            alt="DJs Near Me - Get prices from the best DJs near you. | Product Hunt"
-                            style={{
-                                width: 200,
-                                height: 54,
-                                marginBottom: -15,
-                            }}
-                            width="200"
-                            height="54"
-                        />
-                    </a>
-                    {/* <InstagramWidget /> */}
+
+                    <InstagramWidget />
                 </div>
 
                 <div className={'mobile-action-buttons mobile-only '}>
