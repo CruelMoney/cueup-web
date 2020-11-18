@@ -8,12 +8,12 @@ import { REQUEST_EMAIL_VERIFICATION } from 'components/gql';
 import DatePickerPopup from 'components/DatePickerPopup';
 import TimeSlider from 'components/common/TimeSlider/TimeSlider';
 import { getTimezonedDate } from 'actions/EventActions';
-import { Col } from '../../../../components/Blocks';
+import { Col, Hr } from '../../../../components/Blocks';
 import { SettingsSection, Input, Label } from '../../../../components/FormComponents';
 
 import SavingIndicator from '../../../../components/SavingIndicator';
 import TextAreaPopup from '../../../../components/TextAreaPopup';
-import { Body } from '../../../../components/Text';
+import { Body, PageTitle } from '../../../../components/Text';
 import GenreSelector from '../../../../components/GenreSelector';
 import PhoneInput from '../../../../components/common/PhoneInput';
 import { UPDATE_EVENT } from '../../gql';
@@ -77,6 +77,8 @@ const Requirements = React.forwardRef(({ theEvent, history }, ref) => {
 
     return (
         <Col ref={ref}>
+            <PageTitle>Event details</PageTitle>
+            <Hr style={{ marginBottom: 30 }} />
             <SavingIndicator loading={loading} error={error} />
 
             <SettingsSection

@@ -7,8 +7,8 @@ import { eventRoutes } from 'constants/locales/appRoutes';
 import { REQUEST_EMAIL_VERIFICATION } from 'components/gql';
 import usePushNotifications from 'components/hooks/usePushNotifications';
 import PayForm from 'components/common/PayForm';
-import { Title, Body, HeaderTitle, BodyBold } from '../../../../components/Text';
-import { Col, SecondaryButton, PrimaryButton } from '../../../../components/Blocks';
+import { Title, Body, HeaderTitle, BodyBold, PageTitle } from '../../../../components/Text';
+import { Col, SecondaryButton, PrimaryButton, Hr } from '../../../../components/Blocks';
 import DjCard from '../../components/blocks/DJCard';
 import { EVENT_GIGS } from '../../gql';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
@@ -277,4 +277,13 @@ const NotificationButton = ({ organizer }) => {
     );
 };
 
-export default Overview;
+const EventOverview = (props) => {
+    return (
+        <>
+            <PageTitle>DJ offers</PageTitle>
+            <Overview {...props} />
+        </>
+    );
+};
+
+export default EventOverview;

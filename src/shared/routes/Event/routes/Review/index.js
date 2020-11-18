@@ -3,8 +3,8 @@ import { useQuery, useMutation } from '@apollo/client';
 import styled from 'styled-components';
 import { EVENT_REVIEW, WRITE_REVIEW } from '../../gql';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
-import { Col, SmartButton } from '../../../../components/Blocks';
-import { Title, Body } from '../../../../components/Text';
+import { Col, Hr, SmartButton } from '../../../../components/Blocks';
+import { Title, Body, PageTitle } from '../../../../components/Text';
 import { TextArea } from '../../../../components/FormComponents';
 import Rating from '../../../../components/common/RatingNew';
 import ErrorMessageApollo from '../../../../components/common/ErrorMessageApollo';
@@ -87,7 +87,8 @@ const ReviewCol = styled(Col)`
 
 const Review = (props) => (
     <Col>
-        <Title>Review</Title>
+        <PageTitle>Review</PageTitle>
+        <Hr style={{ marginBottom: 30 }} />
         <Content {...props} />
     </Col>
 );

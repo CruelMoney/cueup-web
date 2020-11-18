@@ -2,7 +2,6 @@ import React, { useEffect, forwardRef, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import styled from 'styled-components';
 import { useRouteMatch, useHistory } from 'react-router';
 import { appRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
@@ -11,12 +10,9 @@ import { useNotifications } from 'components/hooks/useNotifications';
 import { useAppState } from 'components/hooks/useAppState';
 import Popup from 'components/common/Popup';
 import Menu from 'components/Navigation';
-import ScrollToTop from '../../components/common/ScrollToTop';
-import Footer from '../../components/common/Footer';
 import { Container, Row, Col, Hr, RowMobileCol } from '../../components/Blocks';
 import EventProgress from './components/blocks/EventProgress';
 import { EVENT } from './gql.js';
-import EventHeader from './components/blocks/EventHeader.js';
 import Overview from './routes/Overview';
 import Requirements from './routes/Requirements';
 import Review from './routes/Review';
@@ -79,7 +75,7 @@ const Index = ({ location }) => {
             <Container fullWidth>
                 <Hr />
                 <RowMobileCol style={{ marginTop: 24, flexGrow: 1, flexWrap: 'nowrap' }}>
-                    <Sidebar />
+                    <Sidebar theEvent={theEvent} />
                     <Content
                         location={location}
                         match={match}
@@ -104,8 +100,6 @@ const Content = React.memo((props) => {
 
     return (
         <Col style={{ flexGrow: 1 }}>
-            <EventHeader theEvent={theEvent} loading={loading} pathname={match.url} />
-
             <GigRoutes {...props} ssr={isSSR} style={props} match={match} eventProps={eventProps} />
             <Route path={'*/cancel'}>
                 <Popup
@@ -148,26 +142,6 @@ const GigRoutes = forwardRef((props, ref) => {
         </Switch>
     );
 });
-
-const ContainerRow = styled(Row)`
-    align-items: stretch;
-    padding-top: 30px;
-    padding-bottom: 60px;
-    @media only screen and (max-width: 768px) {
-        flex-direction: column-reverse;
-    }
-`;
-
-const BorderCol = styled(Col)`
-    border-right: 1px solid #e9ecf0;
-    padding-right: 42px;
-    width: 100%;
-    z-index: 0;
-    @media only screen and (max-width: 768px) {
-        border-right: none;
-        padding-right: 0;
-    }
-`;
 
 // eslint-disable-next-line import/no-unused-modules
 export default Index;

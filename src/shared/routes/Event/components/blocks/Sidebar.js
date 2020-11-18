@@ -1,20 +1,15 @@
 import React from 'react';
 import { InlineIcon } from '@iconify/react';
-import opportunitiesIcon from '@iconify/icons-ion/ios-search-strong';
-import directRequestsIcon from '@iconify/icons-ion/ios-person';
-import archivedIcon from '@iconify/icons-ion/ios-trash';
-import upcomingIcon from '@iconify/icons-ion/ios-calendar';
-import completedIcon from '@iconify/icons-ion/ios-checkmark-circle-outline';
-import inProgressIcon from '@iconify/icons-ion/ios-chatbubbles';
+import detailsIcon from '@iconify/icons-ion/ios-calendar';
+import djOffersIcon from '@iconify/icons-ion/ios-person';
+
+import reviewIcon from '@iconify/icons-ion/ios-star';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import GreyBox from 'components/GreyBox';
 import NavMenuButton from 'components/NavMenuButton';
 import { Col, Hr, NotificationBubble, SecondaryButton } from 'components/Blocks';
-import usePushNotifications from 'components/hooks/usePushNotifications';
-import { BodySmall, Title } from 'components/Text';
-import { useMyActiveGigs } from 'components/hooks/useMyActiveGigs';
-import { gigStates } from 'constants/constants';
+import { BodySmall, H3, Title } from 'components/Text';
 
 const CustomGreyBox = styled(GreyBox)`
     padding: 0;
@@ -23,16 +18,33 @@ const CustomGreyBox = styled(GreyBox)`
     }
 `;
 
-const Sidebar = ({ user }) => {
+const Sidebar = ({ theEvent }) => {
+    const { name, start, end, location } = theEvent || {};
+
     return (
         <CustomCol>
             <CustomGreyBox>
+                <Col style={{ padding: '1em 1em 0' }}>
+                    <H3 small dark>
+                        {name}
+                    </H3>
+                    <BodySmall style={{ margin: 0 }}>{location?.name}</BodySmall>
+                    <BodySmall style={{ margin: 0 }}>{start?.formattedDate}</BodySmall>
+                    <BodySmall style={{ margin: 0 }}>
+                        {start?.formattedTime}
+                        {' to '}
+                        {end?.formattedTime}
+                    </BodySmall>
+                </Col>
+
+                <Hr style={{ margin: '15px 0' }} />
+
                 <nav>
                     <ul style={{ margin: '0.5em 0' }}>
                         <li>
                             <NavLink to="overview">
                                 <NavMenuButton>
-                                    <InlineIcon icon={directRequestsIcon} />
+                                    <InlineIcon icon={djOffersIcon} />
                                     DJ offers
                                     {/* {!!requestedCount && (
                                         <NotificationBubble>
@@ -45,8 +57,8 @@ const Sidebar = ({ user }) => {
                         <li>
                             <NavLink to="requirements">
                                 <NavMenuButton>
-                                    <InlineIcon icon={opportunitiesIcon} />
-                                    Event requirements
+                                    <InlineIcon icon={detailsIcon} />
+                                    Event details
                                 </NavMenuButton>
                             </NavLink>
                         </li>
@@ -54,7 +66,7 @@ const Sidebar = ({ user }) => {
                         <li>
                             <NavLink to="review">
                                 <NavMenuButton>
-                                    <InlineIcon icon={inProgressIcon} />
+                                    <InlineIcon icon={reviewIcon} />
                                     Review DJ
                                 </NavMenuButton>
                             </NavLink>
@@ -70,6 +82,7 @@ const CustomCol = styled(Col)`
     margin-right: 30px;
     position: sticky;
     top: 15px;
+    min-width: 300px;
     @media only screen and (max-width: 1200px) {
         max-width: auto;
         width: auto;
