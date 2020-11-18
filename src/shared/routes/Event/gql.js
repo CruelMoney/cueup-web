@@ -98,7 +98,7 @@ const EVENT = gql`
 `;
 
 const EVENT_GIGS = gql`
-    query EventGigs($id: ID!, $hash: String!, $currency: Currency, $locale: String) {
+    query EventGigs($id: ID!, $hash: String!, $currency: Currency, $locale: String, $page: Int) {
         event(id: $id, hash: $hash) {
             id
             gigs {
@@ -174,6 +174,38 @@ const EVENT_GIGS = gql`
                     paymentProvider
                     ... on Direct {
                         description
+                    }
+                }
+            }
+            potentialDjs(pagination: { page: $page, limit: 10 }) {
+                pageInfo {
+                    hasPrevPage
+                    hasNextPage
+                    page
+                    totalPages
+                    prevPage
+                    nextPage
+                    totalDocs
+                }
+                edges {
+                    id
+                    permalink
+                    artistName
+                    displayName @client
+                    picture {
+                        path
+                    }
+                    email
+                    playingLocation {
+                        name
+                    }
+                    userMetadata {
+                        firstName
+                        phone
+                        bio
+                    }
+                    appMetadata {
+                        isPro
                     }
                 }
             }
@@ -382,6 +414,15 @@ const EVENT_REFUND = gql`
                     }
                 }
             }
+        }
+    }
+`;
+
+export const SEND_EVENT_TO_DJ = gql`
+    mutation sendEventToDj($eventId: ID!, $djId: ID!) {
+        sendEventToDj(djId: $djId, eventId: $eventId) {
+            id
+            status
         }
     }
 `;

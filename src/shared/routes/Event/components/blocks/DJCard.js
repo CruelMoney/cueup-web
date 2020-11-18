@@ -10,6 +10,7 @@ import { useMutation } from '@apollo/client';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes, userRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import { ProFeature } from 'components/FormComponents';
+import ErrorMessageApollo from 'components/common/ErrorMessageApollo';
 import {
     Col,
     keyframeFadeIn,
@@ -25,12 +26,75 @@ import {
 import GracefullImage from '../../../../components/GracefullImage';
 import { SmallHeader, BodySmall, BodyBold, Body } from '../../../../components/Text';
 import ConditionalWrap from '../../../../components/ConditionalWrap';
-import { DECLINE_DJ, EVENT_GIGS } from '../../gql';
+import { DECLINE_DJ, EVENT_GIGS, SEND_EVENT_TO_DJ } from '../../gql';
 import { ACTIVITY_TYPES, LogActivityInView } from '../../../../components/hooks/useLogActivity';
 import lazyUser from '../../../User';
 
 const hiddenEmail = '12345678@1234'.replace(/\w/g, '•') + '.com';
 const hiddenNumber = '45 12 34 56 78'.replace(/\w/g, '•');
+
+export const PotentialDjCard = ({ dj, idx, eventId }) => {
+    const { translate } = useTranslate();
+
+    const { id, userMetadata = {}, appMetadata = {}, artistName, email } = dj;
+    const { firstName } = userMetadata;
+    const { isPro } = appMetadata;
+
+    const name = artistName || firstName;
+
+    const [sendEvent, { loading, error }] = useMutation(SEND_EVENT_TO_DJ, {
+        variables: { eventId, djId: id },
+    });
+
+    return (
+        <NavLink
+            pointerEvents="auto"
+            target="_blank"
+            rel="noopener noreferrer"
+            to={{
+                pathname: `${translate(appRoutes.user)}/${dj.permalink}/${userRoutes.overview}`,
+                // state: { gigId: gig.id, dj },
+                // search: `?gigId=${gig.id}&eventId=${theEvent.id}&hash=${theEvent.hash}`,
+            }}
+        >
+            <Wrapper idx={idx} data-cy="event-dj" onMouseEnter={() => lazyUser.preload()}>
+                <Card>
+                    <ImageWrapper>
+                        <StyledImage src={dj.picture.path} />
+                    </ImageWrapper>
+                    <Content>
+                        <RowWrap>
+                            <ColLeft>
+                                <SmallHeader>
+                                    {name}{' '}
+                                    {isPro && (
+                                        <ProFeature disabled small>
+                                            Pro
+                                        </ProFeature>
+                                    )}
+                                </SmallHeader>
+
+                                <SecondaryButton data-cy="dj-profile-button" small>
+                                    See profile
+                                </SecondaryButton>
+                            </ColLeft>
+                        </RowWrap>
+                        <div style={{ flex: 1 }} />
+                        <Hr style={{ marginBottom: 20 }} />
+                        <RowWrap right>
+                            <SmartButton onClick={sendEvent} loading={loading}>
+                                Send event details
+                            </SmartButton>
+                        </RowWrap>
+                        <ErrorMessageApollo error={error} />
+                    </Content>
+                </Card>
+
+                <Shadow />
+            </Wrapper>
+        </NavLink>
+    );
+};
 
 const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateBooking }) => {
     const { translate } = useTranslate();
@@ -42,13 +106,9 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
     const { userMetadata = {}, appMetadata = {}, artistName, email } = dj;
     const { firstName, phone } = userMetadata;
     const { isPro } = appMetadata;
-    let { bio } = userMetadata;
-    bio = bio ? bio : '';
-    const shouldTruncate = bio?.length > 100;
-    const truncatedBio = shouldTruncate ? bio.substring(0, 100) + '...' : bio;
+
     const name = artistName || firstName;
     const showInfo = status === 'CONFIRMED' || isPro;
-    const finished = theEvent.status === 'FINISHED';
 
     return (
         <LogActivityInView type={ACTIVITY_TYPES.GIG_VIEWED_BY_ORGANIZER} subjectId={gig.id}>
@@ -76,42 +136,11 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
                                             </ProFeature>
                                         )}
                                     </SmallHeader>
-                                    <BodySmall
-                                        style={{ wordBreak: 'break-word', marginBottom: '9px' }}
-                                    >
-                                        {truncatedBio}
-                                    </BodySmall>
-                                    <RowWrap>
-                                        {!finished && (
-                                            <SecondaryButton
-                                                small
-                                                data-cy="message-dj-button"
-                                                style={{
-                                                    position: 'relative',
-                                                    overflow: 'visible',
-                                                    pointerEvents: 'all',
-                                                }}
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    onOpenChat();
-                                                }}
-                                            >
-                                                Message
-                                                {hasMessage && (
-                                                    <div className="notification-bubble">!</div>
-                                                )}
-                                            </SecondaryButton>
-                                        )}
 
-                                        {finished ? (
-                                            <SecondaryButton data-cy="dj-profile-button" small>
-                                                See profile
-                                            </SecondaryButton>
-                                        ) : (
-                                            <TeritaryButton data-cy="dj-profile-button" small>
-                                                See profile
-                                            </TeritaryButton>
-                                        )}
+                                    <RowWrap>
+                                        <SecondaryButton data-cy="dj-profile-button" small>
+                                            See profile
+                                        </SecondaryButton>
                                     </RowWrap>
                                 </ColLeft>
                                 <RightCol>
@@ -166,6 +195,8 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
 
                             <Offer
                                 {...offer}
+                                hasMessage={hasMessage}
+                                onOpenChat={onOpenChat}
                                 theEvent={theEvent}
                                 gig={gig}
                                 translate={translate}
@@ -191,6 +222,8 @@ const Offer = ({
     gig,
     theEvent,
     initiateBooking,
+    hasMessage,
+    onOpenChat,
 }) => {
     const [decline, { loading }] = useMutation(DECLINE_DJ, {
         variables: {
@@ -213,6 +246,8 @@ const Offer = ({
     const { status, tempPaidIndicator } = gig;
 
     const confirmed = ['CONFIRMED'].includes(status);
+
+    const accepted = ['ACCEPTED'].includes(status);
 
     return (
         <OfferRow middle>
@@ -250,7 +285,7 @@ const Offer = ({
                         Remove DJ
                     </SmartButton>
                 )}
-                {['ACCEPTED'].includes(status) && (
+                {accepted && (
                     <PrimaryButton
                         style={{
                             pointerEvents: 'all',
@@ -268,6 +303,25 @@ const Offer = ({
                     <NavLink to={eventRoutes.review}>
                         <PrimaryButton>Review {name}</PrimaryButton>
                     </NavLink>
+                )}
+
+                {!['FINISHED'].includes(status) && (
+                    <SmartButton
+                        level={accepted ? 'secondary' : 'primary'}
+                        data-cy="message-dj-button"
+                        style={{
+                            position: 'relative',
+                            overflow: 'visible',
+                            pointerEvents: 'all',
+                        }}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onOpenChat();
+                        }}
+                    >
+                        Message
+                        {hasMessage && <div className="notification-bubble">!</div>}
+                    </SmartButton>
                 )}
             </ButtonsRow>
         </OfferRow>
@@ -326,11 +380,14 @@ const RightCol = styled(Row)`
 `;
 
 const ImageWrapper = styled.div`
-    min-width: 214px;
-    min-height: 200px;
     position: relative;
-    width: 100%;
-    flex: 1;
+    min-width: 220px;
+    :before {
+        content: '';
+        display: block;
+        padding-right: 100%;
+        position: relative;
+    }
 `;
 const StyledImage = styled(GracefullImage)`
     object-fit: cover;
@@ -347,7 +404,6 @@ const Content = styled(Col)`
 const Wrapper = styled(Col)`
     position: relative;
     margin-top: 30px;
-    min-height: 244px;
     width: 100%;
     opacity: 0;
     animation: ${keyframeFadeIn} 400ms ease forwards;

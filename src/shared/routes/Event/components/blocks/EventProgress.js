@@ -35,8 +35,8 @@ const EventProgress = ({ theEvent = {} }) => {
     return (
         <Sticky>
             <Wrapper>
-                <GreyBox>
-                    <H3 small dark style={{ marginBottom: 12, marginLeft: 15 }}>
+                <GreyBox style={{ marginBottom: 15 }}>
+                    <H3 small dark style={{ marginBottom: 12 }}>
                         What's next?
                     </H3>
 
@@ -49,7 +49,7 @@ const EventProgress = ({ theEvent = {} }) => {
                     <ProgressStep
                         active={!accepted && emailVerified}
                         to={eventRoutes.overview}
-                        label={++idx + '. Get offers from DJs'}
+                        label={++idx + '. Wait for offers from DJs'}
                         description={
                             "Message the DJs to let them know you're interested and tell them more about your event."
                         }
@@ -69,6 +69,10 @@ const EventProgress = ({ theEvent = {} }) => {
                         completed={theEvent && theEvent.review}
                         to={eventRoutes.review}
                     />
+                </GreyBox>
+                <GreyBox>
+                    <H3 small>How do I contact the DJs?</H3>
+                    <BodySmall>Before the event is...</BodySmall>
                 </GreyBox>
             </Wrapper>
         </Sticky>

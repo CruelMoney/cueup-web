@@ -22,6 +22,7 @@ const ME = gql`
                 latitude
             }
             appMetadata {
+                emailVerified
                 rating
                 experience
                 hasInstalledApp

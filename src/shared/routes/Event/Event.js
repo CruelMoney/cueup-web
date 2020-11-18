@@ -74,7 +74,9 @@ const Index = ({ location }) => {
             <Menu dark relative fullWidth />
             <Container fullWidth>
                 <Hr />
-                <RowMobileCol style={{ marginTop: 24, flexGrow: 1, flexWrap: 'nowrap' }}>
+                <RowMobileCol
+                    style={{ marginTop: 24, flexGrow: 1, flexWrap: 'nowrap', paddingBottom: 60 }}
+                >
                     <Sidebar theEvent={theEvent} />
                     <Content
                         location={location}

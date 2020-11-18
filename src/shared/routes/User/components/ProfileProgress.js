@@ -12,8 +12,17 @@ import { SimpleSharing } from '../../../components/common/Sharing-v2';
 
 const checks = [
     {
+        label: 'Verify your email',
+        check: (u) => !!u?.appMetadata?.emailVerified,
+        linkTo: (u) => '/u/settings#profile',
+        required: true,
+    },
+    {
         label: 'Add profile picture',
-        check: (u) => !!u.picture && !u.picture.path.includes('default-profile-pic'),
+        check: (u) =>
+            !!u.picture &&
+            !u.picture.path.includes('default-profile-pic') &&
+            !u.picture.path.includes('gravatar'),
         linkTo: (u) => '/u/settings#profile',
         required: true,
     },

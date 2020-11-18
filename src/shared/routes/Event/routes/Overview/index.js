@@ -1,15 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { useHistory, Route } from 'react-router';
+import { useHistory, Route, useRouteMatch } from 'react-router';
+import Skeleton from 'react-loading-skeleton';
 import useTranslate from 'components/hooks/useTranslate';
 import { InputRow } from 'components/FormComponents';
 import { eventRoutes } from 'constants/locales/appRoutes';
 import { REQUEST_EMAIL_VERIFICATION } from 'components/gql';
 import usePushNotifications from 'components/hooks/usePushNotifications';
 import PayForm from 'components/common/PayForm';
-import { Title, Body, HeaderTitle, BodyBold, PageTitle } from '../../../../components/Text';
+import {
+    Title,
+    Body,
+    HeaderTitle,
+    BodyBold,
+    PageTitle,
+    H2,
+    H3,
+    TitleClean,
+} from '../../../../components/Text';
 import { Col, SecondaryButton, PrimaryButton, Hr } from '../../../../components/Blocks';
-import DjCard from '../../components/blocks/DJCard';
+import DjCard, { PotentialDjCard } from '../../components/blocks/DJCard';
 import { EVENT_GIGS } from '../../gql';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
 import EmptyPage from '../../../../components/common/EmptyPage';
@@ -20,41 +30,42 @@ const EventGigs = React.forwardRef((props, ref) => {
         theEvent = {},
         loading: loadingEvent,
         translate,
-        currency,
         match,
+
         notifications,
         setActiveChat,
+
+        data,
+        loadingGigs,
+        refetch,
     } = props;
     const { status, organizer } = theEvent;
-    const { data = {}, loading: loadingGigs, refetch } = useQuery(EVENT_GIGS, {
-        skip: !theEvent.id,
-        fetchPolicy: 'cache-and-network',
-        variables: {
-            id: theEvent.id,
-            hash: theEvent.hash,
-            currency,
-        },
-    });
 
     const [refetchTries, setRefetchTries] = useState(data?.event ? 5 : 0);
     const history = useHistory();
 
     const loading = refetchTries < 15 || loadingEvent || loadingGigs;
 
-    let gigs = data.event ? data.event.gigs : [];
-    gigs = gigs
-        .filter((g) => g.status !== 'LOST')
-        .map((g) => ({
-            ...g,
-            hasMessage: notifications[g.id] && notifications[g.id].read < notifications[g.id].total,
-        }));
+    const { potentialDjs } = data?.event || {};
+
+    const gigs = useMemo(() => {
+        let res = data.event ? data.event.gigs : [];
+        res = res
+            .filter((g) => g.status !== 'LOST')
+            .map((g) => ({
+                ...g,
+                hasMessage:
+                    notifications[g.id] && notifications[g.id].read < notifications[g.id].total,
+            }));
+        return res;
+    }, [data, notifications]);
 
     // event polling for djs
     useEffect(() => {
         let timeoutRef = null;
 
         if (status !== eventStates.CONFIRMED) {
-            if (refetchTries < 15 && !gigs?.length) {
+            if (refetchTries < 15 && !gigs?.length && !potentialDjs?.length) {
                 timeoutRef = setTimeout(() => {
                     refetch();
                     setRefetchTries((c) => c + 1);
@@ -74,7 +85,7 @@ const EventGigs = React.forwardRef((props, ref) => {
                 clearTimeout(timeoutRef);
             };
         }
-    }, [refetchTries, refetch, gigs, status]);
+    }, [refetchTries, refetch, gigs, status, potentialDjs]);
 
     if (theEvent && !organizer?.appMetadata?.emailVerified) {
         return <EmailNotVerifiedSection gigs={gigs} organizer={organizer} />;
@@ -85,7 +96,12 @@ const EventGigs = React.forwardRef((props, ref) => {
             <>
                 <Title>{refetchTries > 5 ? 'Still looking for DJs' : 'Looking for DJs'}</Title>
                 <Body>{'Wait a moment...'}</Body>
-                <LoadingPlaceholder2 style={{ marginTop: 24 }} />
+                <Skeleton
+                    height={100}
+                    style={{
+                        marginTop: 24,
+                    }}
+                />
             </>
         );
     }
@@ -140,18 +156,6 @@ const EventGigs = React.forwardRef((props, ref) => {
                         />
                     ))}
             </div>
-            <Route
-                path={match.path + '/' + eventRoutes.checkout}
-                render={(props) => (
-                    <PayForm
-                        onClose={() => history.push(match.url + '/' + eventRoutes.overview)}
-                        eventId={theEvent.id}
-                        eventHash={theEvent.hash}
-                        currency={currency}
-                        {...props}
-                    />
-                )}
-            />
         </Col>
     );
 });
@@ -278,11 +282,68 @@ const NotificationButton = ({ organizer }) => {
 };
 
 const EventOverview = (props) => {
+    const { theEvent, currency } = props;
+    const match = useRouteMatch();
+    const history = useHistory();
+
+    const { data = {}, loading: loadingGigs, refetch } = useQuery(EVENT_GIGS, {
+        skip: !theEvent.id,
+        fetchPolicy: 'cache-and-network',
+        variables: {
+            id: theEvent.id,
+            hash: theEvent.hash,
+            currency,
+        },
+    });
+
     return (
         <>
             <PageTitle>DJ offers</PageTitle>
-            <Overview {...props} />
+            <Overview {...props} data={data} loadingGigs={loadingGigs} refetch={refetch} />
+            <OtherGreatDJs
+                theEvent={theEvent}
+                data={data}
+                loadingGigs={loadingGigs}
+                refetch={refetch}
+            />
+            <Route
+                path={match.path + '/' + eventRoutes.checkout}
+                render={(props) => (
+                    <PayForm
+                        onClose={() => history.push(match.url + '/' + eventRoutes.overview)}
+                        eventId={theEvent.id}
+                        eventHash={theEvent.hash}
+                        currency={currency}
+                        {...props}
+                    />
+                )}
+            />
         </>
+    );
+};
+
+const OtherGreatDJs = ({ theEvent, data }) => {
+    let title = 'Other great DJs';
+    const { location } = theEvent;
+    const { potentialDjs } = data?.event || {};
+
+    if (location?.name) {
+        title = `${title} in ${location.name?.split(',')[0]}`;
+    }
+
+    if (!potentialDjs?.edges?.length) {
+        return null;
+    }
+
+    return (
+        <Col style={{ marginTop: 60 }}>
+            <TitleClean small style={{ marginBottom: 0 }}>
+                {title}
+            </TitleClean>
+            {potentialDjs?.edges.map((dj, idx) => (
+                <PotentialDjCard key={dj.id} idx={idx} dj={dj} eventId={theEvent.id} />
+            ))}
+        </Col>
     );
 };
 
