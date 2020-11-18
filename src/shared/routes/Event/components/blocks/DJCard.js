@@ -11,6 +11,7 @@ import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes, userRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import { ProFeature } from 'components/FormComponents';
 import ErrorMessageApollo from 'components/common/ErrorMessageApollo';
+import Tooltip from 'components/Tooltip';
 import {
     Col,
     keyframeFadeIn,
@@ -24,7 +25,7 @@ import {
     InfoPill,
 } from '../../../../components/Blocks';
 import GracefullImage from '../../../../components/GracefullImage';
-import { SmallHeader, BodySmall, BodyBold, Body } from '../../../../components/Text';
+import { SmallHeader, BodySmall, BodyBold, Body, H3 } from '../../../../components/Text';
 import ConditionalWrap from '../../../../components/ConditionalWrap';
 import { DECLINE_DJ, EVENT_GIGS, SEND_EVENT_TO_DJ } from '../../gql';
 import { ACTIVITY_TYPES, LogActivityInView } from '../../../../components/hooks/useLogActivity';
@@ -33,7 +34,7 @@ import lazyUser from '../../../User';
 const hiddenEmail = '12345678@1234'.replace(/\w/g, '•') + '.com';
 const hiddenNumber = '45 12 34 56 78'.replace(/\w/g, '•');
 
-export const PotentialDjCard = ({ dj, idx, eventId }) => {
+export const PotentialDjCard = ({ dj, idx, theEvent, page }) => {
     const { translate } = useTranslate();
 
     const { id, userMetadata = {}, appMetadata = {}, artistName, email } = dj;
@@ -43,7 +44,18 @@ export const PotentialDjCard = ({ dj, idx, eventId }) => {
     const name = artistName || firstName;
 
     const [sendEvent, { loading, error }] = useMutation(SEND_EVENT_TO_DJ, {
-        variables: { eventId, djId: id },
+        variables: { eventId: theEvent.id, djId: id },
+        awaitRefetchQueries: true,
+        refetchQueries: [
+            {
+                query: EVENT_GIGS,
+                variables: {
+                    page,
+                    id: theEvent?.id,
+                    hash: theEvent?.hash,
+                },
+            },
+        ],
     });
 
     return (
@@ -63,22 +75,20 @@ export const PotentialDjCard = ({ dj, idx, eventId }) => {
                         <StyledImage src={dj.picture.path} />
                     </ImageWrapper>
                     <Content>
-                        <RowWrap>
-                            <ColLeft>
-                                <SmallHeader>
-                                    {name}{' '}
-                                    {isPro && (
-                                        <ProFeature disabled small>
-                                            Pro
-                                        </ProFeature>
-                                    )}
-                                </SmallHeader>
+                        <ColLeft>
+                            <SmallHeader style={{ marginBottom: 12 }}>
+                                {name}{' '}
+                                {isPro && (
+                                    <ProFeature disabled small>
+                                        Pro
+                                    </ProFeature>
+                                )}
+                            </SmallHeader>
 
-                                <SecondaryButton data-cy="dj-profile-button" small>
-                                    See profile
-                                </SecondaryButton>
-                            </ColLeft>
-                        </RowWrap>
+                            <SecondaryButton data-cy="dj-profile-button" small>
+                                See profile
+                            </SecondaryButton>
+                        </ColLeft>
                         <div style={{ flex: 1 }} />
                         <Hr style={{ marginBottom: 20 }} />
                         <RowWrap right>
@@ -113,6 +123,8 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
     return (
         <LogActivityInView type={ACTIVITY_TYPES.GIG_VIEWED_BY_ORGANIZER} subjectId={gig.id}>
             <NavLink
+                target="_blank"
+                rel="noopener noreferrer"
                 pointerEvents="auto"
                 to={{
                     pathname: `${translate(appRoutes.user)}/${dj.permalink}/${userRoutes.overview}`,
@@ -126,24 +138,16 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
                             <StyledImage src={dj.picture.path} />
                         </ImageWrapper>
                         <Content>
-                            <RowWrap>
-                                <ColLeft>
-                                    <SmallHeader>
-                                        {name}{' '}
-                                        {isPro && (
-                                            <ProFeature disabled small>
-                                                Pro
-                                            </ProFeature>
-                                        )}
-                                    </SmallHeader>
-
-                                    <RowWrap>
-                                        <SecondaryButton data-cy="dj-profile-button" small>
-                                            See profile
-                                        </SecondaryButton>
-                                    </RowWrap>
-                                </ColLeft>
-                                <RightCol>
+                            <ColLeft>
+                                <H3 small>
+                                    {name}{' '}
+                                    {isPro && (
+                                        <ProFeature disabled small>
+                                            Pro
+                                        </ProFeature>
+                                    )}
+                                </H3>
+                                <Row>
                                     {email && (
                                         <ConditionalWrap
                                             condition={showInfo}
@@ -155,6 +159,23 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
                                                 >
                                                     {children}
                                                 </a>
+                                            )}
+                                            elseWrap={(children) => (
+                                                <Tooltip
+                                                    content={
+                                                        'Email will be visible after the booking is confirmed.'
+                                                    }
+                                                >
+                                                    {({ ref, close, open }) => (
+                                                        <span
+                                                            ref={ref}
+                                                            onMouseEnter={open}
+                                                            onMouseLeave={close}
+                                                        >
+                                                            {children}
+                                                        </span>
+                                                    )}
+                                                </Tooltip>
                                             )}
                                         >
                                             <InfoPill active={showInfo}>
@@ -178,6 +199,23 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
                                                     {children}
                                                 </a>
                                             )}
+                                            elseWrap={(children) => (
+                                                <Tooltip
+                                                    content={
+                                                        'Phone number will be visible after the booking is confirmed.'
+                                                    }
+                                                >
+                                                    {({ ref, close, open }) => (
+                                                        <span
+                                                            ref={ref}
+                                                            onMouseEnter={open}
+                                                            onMouseLeave={close}
+                                                        >
+                                                            {children}
+                                                        </span>
+                                                    )}
+                                                </Tooltip>
+                                            )}
                                         >
                                             <InfoPill active={showInfo}>
                                                 <Icon
@@ -188,8 +226,13 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
                                             </InfoPill>
                                         </ConditionalWrap>
                                     )}
-                                </RightCol>
-                            </RowWrap>
+                                </Row>
+
+                                <TeritaryButton data-cy="dj-profile-button" small>
+                                    See profile
+                                </TeritaryButton>
+                            </ColLeft>
+
                             <div style={{ flex: 1 }} />
                             <Hr />
 

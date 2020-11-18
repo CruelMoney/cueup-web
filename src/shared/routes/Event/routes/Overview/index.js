@@ -8,6 +8,7 @@ import { eventRoutes } from 'constants/locales/appRoutes';
 import { REQUEST_EMAIL_VERIFICATION } from 'components/gql';
 import usePushNotifications from 'components/hooks/usePushNotifications';
 import PayForm from 'components/common/PayForm';
+import Pagination from 'components/Pagination';
 import {
     Title,
     Body,
@@ -18,7 +19,7 @@ import {
     H3,
     TitleClean,
 } from '../../../../components/Text';
-import { Col, SecondaryButton, PrimaryButton, Hr } from '../../../../components/Blocks';
+import { Col, SecondaryButton, PrimaryButton, Hr, Row } from '../../../../components/Blocks';
 import DjCard, { PotentialDjCard } from '../../components/blocks/DJCard';
 import { EVENT_GIGS } from '../../gql';
 import { LoadingPlaceholder2 } from '../../../../components/common/LoadingPlaceholder';
@@ -94,7 +95,9 @@ const EventGigs = React.forwardRef((props, ref) => {
     if (gigs.length === 0 && loading) {
         return (
             <>
-                <Title>{refetchTries > 5 ? 'Still looking for DJs' : 'Looking for DJs'}</Title>
+                <TitleClean>
+                    {refetchTries > 5 ? 'Still looking for DJs' : 'Looking for DJs'}
+                </TitleClean>
                 <Body>{'Wait a moment...'}</Body>
                 <Skeleton
                     height={100}
@@ -132,8 +135,7 @@ const EventGigs = React.forwardRef((props, ref) => {
 
     return (
         <Col ref={ref}>
-            <Title>{getTitle(status)}</Title>
-            <Body>{getText(status)}</Body>
+            <TitleClean style={{ marginBottom: 0 }}>{getTitle(status)}</TitleClean>
             <NotificationButton organizer={organizer} />
 
             <div data-cy="event-djs">
@@ -159,17 +161,6 @@ const EventGigs = React.forwardRef((props, ref) => {
         </Col>
     );
 });
-
-const getText = (status) => {
-    switch (status) {
-        case 'ACCEPTED':
-            return 'Choose and book one of the DJs below. Remember quality follows price. If you have any questions, you can message the DJs. Once you have confirmed a DJ, you’ll be able to see additional information such as phone number.';
-        case 'CONFIRMED':
-            return 'Contact the DJ to make sure that all details are agreed upon.';
-        default:
-            return 'The DJs have not made any offers yet. In the meantime you can check out their profiles or message them. We’ll notify you by email when someone makes an offer or messages you. Once you have confirmed a DJ, you’ll be able to see additional information such as phone number.';
-    }
-};
 
 const getTitle = (status) => {
     switch (status) {
@@ -285,6 +276,9 @@ const EventOverview = (props) => {
     const { theEvent, currency } = props;
     const match = useRouteMatch();
     const history = useHistory();
+    const [pagination, setPagination] = useState({
+        page: 1,
+    });
 
     const { data = {}, loading: loadingGigs, refetch } = useQuery(EVENT_GIGS, {
         skip: !theEvent.id,
@@ -293,6 +287,7 @@ const EventOverview = (props) => {
             id: theEvent.id,
             hash: theEvent.hash,
             currency,
+            page: pagination.page,
         },
     });
 
@@ -305,6 +300,8 @@ const EventOverview = (props) => {
                 data={data}
                 loadingGigs={loadingGigs}
                 refetch={refetch}
+                pagination={pagination}
+                setPagination={setPagination}
             />
             <Route
                 path={match.path + '/' + eventRoutes.checkout}
@@ -322,16 +319,17 @@ const EventOverview = (props) => {
     );
 };
 
-const OtherGreatDJs = ({ theEvent, data }) => {
+const OtherGreatDJs = ({ theEvent, data, pagination, setPagination }) => {
     let title = 'Other great DJs';
     const { location } = theEvent;
     const { potentialDjs } = data?.event || {};
+    const { pageInfo, edges } = potentialDjs || {};
 
     if (location?.name) {
         title = `${title} in ${location.name?.split(',')[0]}`;
     }
 
-    if (!potentialDjs?.edges?.length) {
+    if (!edges?.length) {
         return null;
     }
 
@@ -340,9 +338,28 @@ const OtherGreatDJs = ({ theEvent, data }) => {
             <TitleClean small style={{ marginBottom: 0 }}>
                 {title}
             </TitleClean>
-            {potentialDjs?.edges.map((dj, idx) => (
-                <PotentialDjCard key={dj.id} idx={idx} dj={dj} eventId={theEvent.id} />
+            <Body>Send your event details to get in contact.</Body>
+            {edges.map((dj, idx) => (
+                <PotentialDjCard
+                    key={dj.id}
+                    idx={idx}
+                    dj={dj}
+                    theEvent={theEvent}
+                    page={pagination.page}
+                />
             ))}
+            {pageInfo && (
+                <Row style={{ marginTop: 30 }}>
+                    <Pagination
+                        activePage={pagination.page}
+                        ellipsisBuffer={2}
+                        onPageChange={(page) => {
+                            setPagination((pp) => ({ ...pagination, ...pp, page }));
+                        }}
+                        totalPages={pageInfo.totalPages}
+                    />
+                </Row>
+            )}
         </Col>
     );
 };
