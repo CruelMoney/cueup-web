@@ -72,6 +72,7 @@ const checks = [
 
 const ProgressItemText = styled(SmallHeader)`
     font-size: 15px;
+    text-align: left;
     color: ${({ done }) => (done ? '#98A4B3' : '#4D6480')};
     text-decoration: ${({ done }) => (done ? 'line-through' : 'none')};
     line-height: 15px;
@@ -92,10 +93,6 @@ const ProgressItem = ({ label, done, linkTo, onClick }) => {
             <ProgressItemText done={done}>{label}</ProgressItemText>
         </Row>
     );
-
-    // if (done) {
-    //     return Content;
-    // }
 
     const handleClick = () => {
         onClick && onClick();

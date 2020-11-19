@@ -80,7 +80,7 @@ const SoundLayout = styled(Item)`
     padding: 0 0px 42px 42px;
 
     @media only screen and (max-width: 990px) {
-        padding: 42px 0px 18px 0px;
+        padding: 0px 0px 18px 0px;
     }
     @media only screen and (max-width: 768px) {
         padding: 42px 0px 0px 0px;
@@ -165,10 +165,55 @@ const EditButtonOverlay = ({ to, children }) => {
     );
 };
 
-const Bio = ({ bio, firstName, style, isOwn, to, permalink }) => {
+const ContactOptions = ({ permalink }) => {
     const { search } = useLocation();
     const { translate } = useTranslate();
 
+    return (
+        <RowMobileCol>
+            <NavLink
+                to={{
+                    pathname: translate(appRoutes.userBook).replace(':permalink', permalink),
+                    search,
+                    state: {
+                        buttonLabel: 'Message',
+                    },
+                }}
+                style={{ flex: 1 }}
+            >
+                <SecondaryButton
+                    style={{ width: '100%', maxWidth: '999px', minHeight: 40, marginBottom: 6 }}
+                >
+                    <InlineIcon
+                        icon={chatIcon}
+                        style={{ position: 'absolute', left: '1em', top: '0.75em' }}
+                    />
+                    Message
+                </SecondaryButton>
+            </NavLink>
+            <NavLink
+                style={{ flex: 1 }}
+                to={{
+                    pathname: translate(appRoutes.userBook).replace(':permalink', permalink),
+                    search,
+                    state: {
+                        buttonLabel: 'Request call',
+                    },
+                }}
+            >
+                <SecondaryButton style={{ width: '100%', maxWidth: '999px', minHeight: 40 }}>
+                    <InlineIcon
+                        icon={phoneIcon}
+                        style={{ position: 'absolute', left: '1em', top: '0.75em' }}
+                    />
+                    Request a call
+                </SecondaryButton>
+            </NavLink>
+        </RowMobileCol>
+    );
+};
+
+const Bio = ({ bio, firstName, style, isOwn, to }) => {
     return (
         <LeftItem style={{ paddingTop: 0, ...style }}>
             <Title>About {firstName}</Title>
@@ -178,45 +223,6 @@ const Bio = ({ bio, firstName, style, isOwn, to, permalink }) => {
                     Edit
                 </EditButton>
             )}
-
-            <RowMobileCol>
-                <NavLink
-                    to={{
-                        pathname: translate(appRoutes.userBook).replace(':permalink', permalink),
-                        search,
-                        state: {
-                            buttonLabel: 'Message',
-                        },
-                    }}
-                    style={{ flex: 1 }}
-                >
-                    <SecondaryButton style={{ width: '100%', minHeight: 40 }}>
-                        <InlineIcon
-                            icon={chatIcon}
-                            style={{ position: 'absolute', left: '1em', top: '0.75em' }}
-                        />
-                        Message
-                    </SecondaryButton>
-                </NavLink>
-                <NavLink
-                    style={{ flex: 1 }}
-                    to={{
-                        pathname: translate(appRoutes.userBook).replace(':permalink', permalink),
-                        search,
-                        state: {
-                            buttonLabel: 'Request call',
-                        },
-                    }}
-                >
-                    <SecondaryButton style={{ width: '100%', minHeight: 40 }}>
-                        <InlineIcon
-                            icon={phoneIcon}
-                            style={{ position: 'absolute', left: '1em', top: '0.75em' }}
-                        />
-                        Request a call
-                    </SecondaryButton>
-                </NavLink>
-            </RowMobileCol>
 
             <Show maxWidth="990px">
                 <Hr style={{ marginTop: 30 }} />
@@ -525,7 +531,7 @@ const Overview = ({ user, loading, location, history }) => {
     const showSelectedSound = sounds?.pageInfo.totalDocs > 0 || isOwn;
 
     const bioStyle = showPhotosArea ? { borderBottom: 'none' } : {};
-    const genresStyle = { paddingTop: showSelectedSound ? '42px' : '0px' };
+    const genresStyle = { paddingTop: '42px' };
 
     const settingsRoute = t(appRoutes.userSettings);
 
@@ -537,6 +543,8 @@ const Overview = ({ user, loading, location, history }) => {
                     <Show maxWidth="990px">
                         <Col>
                             <UserInfo user={user} />
+                            <Hr style={{ marginTop: 15, marginBottom: 15 }} />
+                            <ContactOptions permalink={permalink} />
                             <Hr style={{ marginTop: 15, marginBottom: 30 }} />
                         </Col>
                     </Show>
@@ -573,7 +581,7 @@ const Overview = ({ user, loading, location, history }) => {
                     ) : user.isOwn && user.isDj ? (
                         <AddBlockPlaceholder
                             to={userRoutes.reviews}
-                            label="Add Highlight"
+                            label="Highlighted Review"
                             directions="Select text with the cursor from a review or testimonial to highlight it here."
                         />
                     ) : null}
@@ -602,6 +610,11 @@ const Overview = ({ user, loading, location, history }) => {
                 </HalfColLeft>
                 {user.isDj && (
                     <HalfColRight>
+                        <Item style={{ paddingTop: 0, marginBottom: 42 }}>
+                            <Title style={{ marginBottom: 42 }}>Contact</Title>
+                            <ContactOptions permalink={permalink} />
+                        </Item>
+
                         {showSelectedSound && <HighlightedSound user={user} />}
                         <Genres
                             genres={genres}

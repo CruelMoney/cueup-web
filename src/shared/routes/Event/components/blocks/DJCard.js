@@ -38,7 +38,7 @@ export const PotentialDjCard = ({ dj, idx, theEvent, page }) => {
     const { translate } = useTranslate();
 
     const { id, userMetadata = {}, appMetadata = {}, artistName, email } = dj;
-    const { firstName } = userMetadata;
+    const { firstName, bio } = userMetadata;
     const { isPro } = appMetadata;
 
     const name = artistName || firstName;
@@ -85,9 +85,19 @@ export const PotentialDjCard = ({ dj, idx, theEvent, page }) => {
                                 )}
                             </SmallHeader>
 
-                            <SecondaryButton data-cy="dj-profile-button" small>
-                                See profile
-                            </SecondaryButton>
+                            <BodySmall numberOfLines={3} style={{ marginBottom: '9px' }}>
+                                {bio}
+                            </BodySmall>
+
+                            <Row>
+                                <TeritaryButton
+                                    style={{ padding: 0, minWidth: 0 }}
+                                    data-cy="dj-profile-button"
+                                    small
+                                >
+                                    View profile
+                                </TeritaryButton>
+                            </Row>
                         </ColLeft>
                         <div style={{ flex: 1 }} />
                         <Hr style={{ marginBottom: 20 }} />
@@ -114,7 +124,7 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
         return null;
     }
     const { userMetadata = {}, appMetadata = {}, artistName, email } = dj;
-    const { firstName, phone } = userMetadata;
+    const { firstName, phone, bio } = userMetadata;
     const { isPro } = appMetadata;
 
     const name = artistName || firstName;
@@ -228,13 +238,17 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
                                     )}
                                 </Row>
 
+                                <BodySmall numberOfLines={3} style={{ marginBottom: '9px' }}>
+                                    {bio}
+                                </BodySmall>
+
                                 <Row>
                                     <TeritaryButton
                                         style={{ padding: 0, minWidth: 0 }}
                                         data-cy="dj-profile-button"
                                         small
                                     >
-                                        See profile
+                                        View profile
                                     </TeritaryButton>
                                 </Row>
                             </ColLeft>
