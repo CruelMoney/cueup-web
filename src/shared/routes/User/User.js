@@ -350,6 +350,11 @@ const DataWrapper = (props) => {
         user = mergeObjects(user, me);
     }
 
+    const isOrganizer = user.appMetadata?.roles?.includes('ORGANIZER');
+    if (user.isOwn && isOrganizer && !user.isDj) {
+        return <Redirect to={'/u/events'} />;
+    }
+
     if (!user.userMetadata) {
         user.userMetadata = {};
     }
