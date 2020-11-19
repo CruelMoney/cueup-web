@@ -85,7 +85,7 @@ export const PotentialDjCard = ({ dj, idx, theEvent, page }) => {
                                 )}
                             </SmallHeader>
 
-                            <BodySmall numberOfLines={3} style={{ marginBottom: '9px' }}>
+                            <BodySmall numberOfLines={2} style={{ marginBottom: '9px' }}>
                                 {bio}
                             </BodySmall>
 
@@ -238,7 +238,7 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
                                     )}
                                 </Row>
 
-                                <BodySmall numberOfLines={3} style={{ marginBottom: '9px' }}>
+                                <BodySmall numberOfLines={2} style={{ marginBottom: '9px' }}>
                                     {bio}
                                 </BodySmall>
 
@@ -433,6 +433,7 @@ const ColLeft = styled(Col)`
 const ImageWrapper = styled.div`
     position: relative;
     min-width: 220px;
+    background-color: #f7f9fc;
     :before {
         content: '';
         display: block;

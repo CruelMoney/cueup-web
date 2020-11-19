@@ -143,6 +143,9 @@ export const typePolicies = {
             userSettings: {
                 merge: true,
             },
+            playingLocation: {
+                merge: true,
+            },
         },
     },
     Event: {
