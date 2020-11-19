@@ -147,7 +147,7 @@ const SidebarChatOrganizer = ({ notifications, activeChat, activeEvent, setActiv
     });
 
     const chats = data?.event?.gigs
-        .filter((g) => !!g.lastChatMessage || notifications[g.id] || activeChat === g.id)
+        .filter((g) => !!g.chatInitiated || notifications[g.id] || activeChat === g.id)
         .map((g) =>
             gigToChatConfig({
                 notifications,

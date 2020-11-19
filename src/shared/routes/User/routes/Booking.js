@@ -434,7 +434,7 @@ const EventForm = ({
                     <Input
                         v2
                         type="text-area"
-                        label={'Description'}
+                        label={'Message'}
                         name="description"
                         placeholder={translate('event-description-placeholder')}
                         style={{
@@ -475,8 +475,8 @@ const BookingSidebar = ({
 }) => {
     const { user } = props;
 
-    const ctaAction = isDirect ? 'BOOK' : 'CONTACT';
-    const ctaLabel = eventCreated ? 'DONE' : `${ctaAction} ${user.title}`.toUpperCase();
+    const ctaAction = isDirect ? `BOOK  ${user.title}` : 'CHECK AVAILABILITY';
+    const ctaLabel = eventCreated ? 'DONE' : ctaAction.toUpperCase();
 
     return (
         <>

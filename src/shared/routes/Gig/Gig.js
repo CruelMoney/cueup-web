@@ -58,6 +58,15 @@ const Index = () => {
     });
     const { loading: loadingMe, data: meData } = useQuery(ME);
     const { me } = meData || {};
+    const loading = loadingGig || loadingMe;
+
+    if (!loading && !me) {
+        return (
+            <Redirect
+                to={`/login?redirect=${encodeURIComponent(location.pathname + location.search)}`}
+            />
+        );
+    }
 
     if (error && error.message.includes('Not your gig')) {
         return <Redirect to={translate(appRoutes.notFound)} />;
@@ -75,20 +84,10 @@ const Index = () => {
 
     const { status, referred } = gig || {};
 
-    const loading = loadingGig || loadingMe;
-
     const title = event ? event.name : 'Gig · Cueup';
     const description = event ? event.description : null;
     if (gig) {
         gig.showInfo = status === gigStates.CONFIRMED || me?.appMetadata?.isPro || referred;
-    }
-
-    if (!loading && !me) {
-        return (
-            <Redirect
-                to={`/login?redirect=${encodeURIComponent(location.pathname + location.search)}`}
-            />
-        );
     }
 
     return (

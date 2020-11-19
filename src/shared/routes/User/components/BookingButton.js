@@ -86,7 +86,7 @@ const InnerBookingButton = ({
             }}
         >
             <CTAButton noIcon={noIcon} style={buttonStyle} data-cy="booking-button">
-                CONTACT
+                CHECK AVAILABILITY
             </CTAButton>
         </NavLink>
     );

@@ -351,7 +351,7 @@ export const FileInput = styled.input.attrs({ type: 'file' })`
     z-index: -1;
 `;
 
-const ButtonTextStyle = css`
+export const ButtonTextStyle = css`
     font-weight: 600;
     font-size: 15px;
     color: #4d6480;

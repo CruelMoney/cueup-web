@@ -101,14 +101,18 @@ const DropDownMenu = ({ user, isDJ, isOrganizer, isPro, totalNew, ...props }) =>
                         <UserMenuItem isInMenu {...{ user, ...props }} />
                     </NavLink>
                 </li>
-                <li>
-                    <NavLink to={t(appRoutes.userOverview).replace(':permalink', user.permalink)}>
-                        <NavMenuButton>
-                            <InlineIcon icon={personOutline} />
-                            Profile
-                        </NavMenuButton>
-                    </NavLink>
-                </li>
+                {isDJ && (
+                    <li>
+                        <NavLink
+                            to={t(appRoutes.userOverview).replace(':permalink', user.permalink)}
+                        >
+                            <NavMenuButton>
+                                <InlineIcon icon={personOutline} />
+                                Profile
+                            </NavMenuButton>
+                        </NavLink>
+                    </li>
+                )}
 
                 {isDJ && <GigsMenuItem totalNew={totalNew} t={t} />}
                 {isOrganizer && (

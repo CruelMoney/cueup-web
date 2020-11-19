@@ -104,6 +104,7 @@ const EVENT_GIGS = gql`
             gigs {
                 id
                 status
+                chatInitiated
                 lastChatMessage {
                     content
                     date

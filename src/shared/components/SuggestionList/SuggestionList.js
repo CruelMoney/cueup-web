@@ -81,7 +81,9 @@ const SuggestionList = forwardRef(
 
             if (isEnter) {
                 e.preventDefault();
-                handleChange(suggestions[Math.max(suggestionCursor, 0)], true);
+                if (suggestionCursor >= 0) {
+                    handleChange(suggestions[Math.max(suggestionCursor, 0)], true);
+                }
                 setFocused(false);
                 inputRef.current && inputRef.current.blur();
                 return false;

@@ -90,7 +90,6 @@ const Requirements = React.forwardRef(({ theEvent, history }, ref) => {
                     v2
                     label="Contact name"
                     defaultValue={contactName}
-                    placeholder="Keep it short"
                     type="text"
                     autoComplete="name"
                     name="name"
@@ -138,7 +137,6 @@ const Requirements = React.forwardRef(({ theEvent, history }, ref) => {
                     v2
                     label="Name"
                     defaultValue={name}
-                    placeholder="Keep it short"
                     type="text"
                     onSave={(name) => save({ name })}
                     validation={required('The event needs a name')}

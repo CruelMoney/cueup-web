@@ -228,12 +228,17 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
                                     )}
                                 </Row>
 
-                                <TeritaryButton data-cy="dj-profile-button" small>
-                                    See profile
-                                </TeritaryButton>
+                                <Row>
+                                    <TeritaryButton
+                                        style={{ padding: 0, minWidth: 0 }}
+                                        data-cy="dj-profile-button"
+                                        small
+                                    >
+                                        See profile
+                                    </TeritaryButton>
+                                </Row>
                             </ColLeft>
 
-                            <div style={{ flex: 1 }} />
                             <Hr />
 
                             <Offer
@@ -402,23 +407,12 @@ const OfferRow = styled(Row)`
 
 const ColLeft = styled(Col)`
     flex: 2;
-    margin-bottom: 24px;
+    margin-bottom: 12px;
     min-width: 297px;
     margin-right: 15px;
     @media only screen and (max-width: 375px) {
         margin-right: 0px;
         min-width: 100%;
-    }
-`;
-
-const RightCol = styled(Row)`
-    flex-wrap: wrap;
-    margin-right: -9px;
-    flex: 1;
-    margin-bottom: 15px;
-    justify-content: flex-end;
-    @media only screen and (max-width: 375px) {
-        justify-content: flex-start;
     }
 `;
 

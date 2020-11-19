@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { InlineIcon } from '@iconify/react';
 import pinIcon from '@iconify/icons-ion/location-sharp';
+import chatIcon from '@iconify/icons-ion/chatbubbles-outline';
 import { NavLink, useLocation } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import { Col, Hr, Pill, PrimaryButton, Row, RowWrap } from 'components/Blocks';
@@ -184,7 +185,8 @@ const Price = ({ loading }) => {
     }
     return (
         <BodyBold style={{ fontSize: 16, marginTop: 'auto', display: 'block' }}>
-            Request price
+            Contact for price
+            <InlineIcon icon={chatIcon} style={{ marginLeft: 6, marginBottom: -2 }} />
         </BodyBold>
     );
 };
