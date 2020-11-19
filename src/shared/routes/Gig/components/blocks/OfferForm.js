@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import debounce from 'lodash/debounce';
 import { useMutation } from '@apollo/client';
 import { InlineIcon } from '@iconify/react';
@@ -7,6 +7,7 @@ import RadioSelect from 'components/RadioSelect';
 import useTranslate from 'components/hooks/useTranslate';
 import Tooltip from 'components/Tooltip';
 import GreyBox from 'components/GreyBox';
+import { useForm, validators } from 'components/hooks/useForm';
 import { GET_OFFER, MAKE_OFFER, GIG } from '../../gql';
 import ErrorMessageApollo from '../../../../components/common/ErrorMessageApollo';
 import { gigStates, PAYOUT_TYPES } from '../../../../constants/constants';
@@ -64,6 +65,10 @@ const OfferForm = ({
     const [payoutMethods, setPayoutMethods] = useState(initPayoutMethods);
     const [pendingUpdate, setPendingUpdate] = useState(false);
 
+    const { registerValidation, unregisterValidation, runValidations, setValue } = useForm(null, {
+        amount: initOffer?.offer?.amount,
+    });
+
     const [getOffer] = useMutation(GET_OFFER);
     const [makeOffer] = useMutation(MAKE_OFFER, {
         refetchQueries: [
@@ -83,6 +88,11 @@ const OfferForm = ({
 
         if (!payoutTypes.length) {
             window.alert('Select at least 1 payout method');
+            return;
+        }
+
+        const errors = runValidations();
+        if (errors.length) {
             return;
         }
 
@@ -157,17 +167,16 @@ const OfferForm = ({
         }));
     };
 
-    const canSubmit =
-        (pendingUpdate ||
-            offer.offer.amount !== initOffer.offer.amount ||
-            currency !== initOffer.offer.currency) &&
-        parseInt(offer.offer.amount, 10) > 0 &&
-        !loading;
-
     const { payoutType } = offer;
 
     const canUpdatePrice =
         gig.isActionable && [gigStates.REQUESTED, gigStates.ACCEPTED].includes(gig.status);
+
+    const canSubmit =
+        (pendingUpdate ||
+            offer.offer.amount !== initOffer.offer.amount ||
+            currency !== initOffer.offer.currency) &&
+        !loading;
 
     return (
         <div data-cy="make-offer-section">
@@ -189,7 +198,18 @@ const OfferForm = ({
                                 placeholder="00,00"
                                 //onUpdatePipeFunc={(oldVal,val)=>moneyPipe(oldVal,val,"DKK")}
                                 type="text"
-                                onChange={(val) => getFees({ amount: parseInt(val, 10) * 100 })}
+                                validation={[
+                                    (v) => {
+                                        console.log({ v });
+                                        return !v || v <= 0 ? 'Enter your offer' : null;
+                                    },
+                                ]}
+                                registerValidation={registerValidation('amount')}
+                                unregisterValidation={unregisterValidation('amount')}
+                                onChange={(amount) => {
+                                    setValue({ amount });
+                                    getFees({ amount: parseInt(amount, 10) * 100 });
+                                }}
                                 defaultValue={
                                     initOffer.offer.amount && initOffer.offer.amount / 100
                                 }
@@ -270,9 +290,9 @@ const OfferForm = ({
 
                         {canUpdatePrice ? (
                             <SmartButton
-                                disabled={!canSubmit}
                                 loading={submitLoading}
                                 success={submitted}
+                                disabled={!canSubmit}
                                 onClick={updateOffer}
                                 data-cy="submit-offer-button"
                             >
