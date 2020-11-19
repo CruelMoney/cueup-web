@@ -168,6 +168,7 @@ const EVENT_GIGS = gql`
                     }
                     appMetadata {
                         isPro
+                        createdAt
                     }
                 }
                 availablePayoutMethods {
@@ -207,6 +208,7 @@ const EVENT_GIGS = gql`
                     }
                     appMetadata {
                         isPro
+                        createdAt
                     }
                 }
             }

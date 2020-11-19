@@ -334,7 +334,7 @@ const OtherGreatDJs = ({ theEvent, data, pagination, setPagination }) => {
     }
 
     return (
-        <Col style={{ marginTop: 60 }}>
+        <Col style={{ marginTop: 120 }}>
             <TitleClean small style={{ marginBottom: 0 }}>
                 {title}
             </TitleClean>

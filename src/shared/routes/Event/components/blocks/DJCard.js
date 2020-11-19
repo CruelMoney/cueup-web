@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { Icon } from '@iconify/react';
+import { Icon, InlineIcon } from '@iconify/react';
 import mailIcon from '@iconify/icons-ion/mail';
 import phoneIcon from '@iconify/icons-ion/call';
+import pinIcon from '@iconify/icons-ion/location-sharp';
+import membersinceIcon from '@iconify/icons-ion/md-contact';
 
 import { NavLink } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
@@ -37,9 +39,9 @@ const hiddenNumber = '45 12 34 56 78'.replace(/\w/g, '•');
 export const PotentialDjCard = ({ dj, idx, theEvent, page }) => {
     const { translate } = useTranslate();
 
-    const { id, userMetadata = {}, appMetadata = {}, artistName, email } = dj;
+    const { id, userMetadata = {}, appMetadata = {}, artistName, playingLocation } = dj;
     const { firstName, bio } = userMetadata;
-    const { isPro } = appMetadata;
+    const { isPro, createdAt } = appMetadata;
 
     const name = artistName || firstName;
 
@@ -76,22 +78,22 @@ export const PotentialDjCard = ({ dj, idx, theEvent, page }) => {
                     </ImageWrapper>
                     <Content>
                         <ColLeft>
-                            <SmallHeader style={{ marginBottom: 12 }}>
+                            <H3 small style={{ marginBottom: 12 }}>
                                 {name}{' '}
                                 {isPro && (
                                     <ProFeature disabled small>
                                         Pro
                                     </ProFeature>
                                 )}
-                            </SmallHeader>
-
+                            </H3>
+                            <SmallInfo createdAt={createdAt} playingLocation={playingLocation} />
                             <BodySmall numberOfLines={2} style={{ marginBottom: '9px' }}>
                                 {bio}
                             </BodySmall>
 
                             <Row>
                                 <TeritaryButton
-                                    style={{ padding: 0, minWidth: 0 }}
+                                    style={{ padding: 0, minWidth: 0, textAlign: 'left' }}
                                     data-cy="dj-profile-button"
                                     small
                                 >
@@ -116,6 +118,24 @@ export const PotentialDjCard = ({ dj, idx, theEvent, page }) => {
     );
 };
 
+const SmallInfo = ({ createdAt, playingLocation }) => {
+    const memberSince = new Date(createdAt).getFullYear();
+
+    return (
+        <Row style={{ marginBottom: 6 }}>
+            <BodySmall>
+                <InlineIcon icon={membersinceIcon} /> Member since {memberSince}
+            </BodySmall>
+
+            {playingLocation && (
+                <BodySmall style={{ marginLeft: 12 }}>
+                    <InlineIcon icon={pinIcon} /> {playingLocation.name}
+                </BodySmall>
+            )}
+        </Row>
+    );
+};
+
 const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateBooking }) => {
     const { translate } = useTranslate();
 
@@ -123,9 +143,9 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
     if (!dj) {
         return null;
     }
-    const { userMetadata = {}, appMetadata = {}, artistName, email } = dj;
+    const { userMetadata = {}, appMetadata = {}, artistName, email, playingLocation } = dj;
     const { firstName, phone, bio } = userMetadata;
-    const { isPro } = appMetadata;
+    const { isPro, createdAt } = appMetadata;
 
     const name = artistName || firstName;
     const showInfo = status === 'CONFIRMED' || isPro;
@@ -144,7 +164,7 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
             >
                 <Wrapper idx={idx} data-cy="event-dj" onMouseEnter={() => lazyUser.preload()}>
                     <Card style={style}>
-                        <ImageWrapper>
+                        <ImageWrapper style={{ minWidth: 270 }}>
                             <StyledImage src={dj.picture.path} />
                         </ImageWrapper>
                         <Content>
@@ -157,6 +177,10 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
                                         </ProFeature>
                                     )}
                                 </H3>
+                                <SmallInfo
+                                    createdAt={createdAt}
+                                    playingLocation={playingLocation}
+                                />
                                 <Row>
                                     {email && (
                                         <ConditionalWrap
@@ -244,7 +268,7 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
 
                                 <Row>
                                     <TeritaryButton
-                                        style={{ padding: 0, minWidth: 0 }}
+                                        style={{ padding: 0, minWidth: 0, textAlign: 'left' }}
                                         data-cy="dj-profile-button"
                                         small
                                     >
@@ -433,6 +457,8 @@ const ColLeft = styled(Col)`
 const ImageWrapper = styled.div`
     position: relative;
     min-width: 220px;
+    min-height: 220px;
+    flex-grow: 1;
     background-color: #f7f9fc;
     :before {
         content: '';

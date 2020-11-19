@@ -74,9 +74,7 @@ const Index = ({ location }) => {
             <Menu dark relative fullWidth />
             <Container fullWidth>
                 <Hr />
-                <RowMobileCol
-                    style={{ marginTop: 24, flexGrow: 1, flexWrap: 'nowrap', paddingBottom: 60 }}
-                >
+                <RowMobileCol style={{ marginTop: 24, flexGrow: 1, paddingBottom: 60 }}>
                     <Sidebar theEvent={theEvent} />
                     <Content
                         location={location}
@@ -101,7 +99,7 @@ const Content = React.memo((props) => {
     const history = useHistory();
 
     return (
-        <Col style={{ flexGrow: 1 }}>
+        <Col style={{ flex: 1, minWidth: 300 }}>
             <GigRoutes {...props} ssr={isSSR} style={props} match={match} eventProps={eventProps} />
             <Route path={'*/cancel'}>
                 <Popup
