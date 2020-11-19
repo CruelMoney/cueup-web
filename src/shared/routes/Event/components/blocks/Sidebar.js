@@ -6,6 +6,7 @@ import djOffersIcon from '@iconify/icons-ion/ios-person';
 import reviewIcon from '@iconify/icons-ion/ios-star';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { useLocation, useRouteMatch } from 'react-router';
 import GreyBox from 'components/GreyBox';
 import NavMenuButton from 'components/NavMenuButton';
 import { Col, Hr, NotificationBubble, SecondaryButton } from 'components/Blocks';
@@ -21,6 +22,8 @@ const CustomGreyBox = styled(GreyBox)`
 
 const Sidebar = ({ theEvent }) => {
     const { name, start, end, location } = theEvent || {};
+
+    const match = useRouteMatch();
 
     return (
         <CustomGreyBox>
@@ -42,7 +45,7 @@ const Sidebar = ({ theEvent }) => {
             <nav>
                 <ul style={{ margin: '0.5em 0' }}>
                     <li>
-                        <NavLink to="overview">
+                        <NavLink to={match.url + '/overview'}>
                             <NavMenuButton>
                                 <InlineIcon icon={djOffersIcon} />
                                 DJ offers
@@ -55,7 +58,7 @@ const Sidebar = ({ theEvent }) => {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="requirements">
+                        <NavLink to={match.url + '/requirements'}>
                             <NavMenuButton>
                                 <InlineIcon icon={detailsIcon} />
                                 Event details
@@ -64,7 +67,7 @@ const Sidebar = ({ theEvent }) => {
                     </li>
 
                     <li>
-                        <NavLink to="review">
+                        <NavLink to={match.url + '/review'}>
                             <NavMenuButton>
                                 <InlineIcon icon={reviewIcon} />
                                 Review DJ

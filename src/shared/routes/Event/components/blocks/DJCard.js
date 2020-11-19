@@ -337,7 +337,7 @@ const Offer = ({
 
     return (
         <OfferRow middle>
-            <OfferTextWrapper>
+            <Col>
                 {!confirmed && (
                     <OfferText data-cy="offer-price" greyed={!offer}>
                         {offer ? offer.formatted : 'No offer yet'}
@@ -355,7 +355,7 @@ const Offer = ({
                         ) : null}
                     </>
                 )}
-            </OfferTextWrapper>
+            </Col>
             <Filler />
             <ButtonsRow>
                 {['ACCEPTED', 'REQUESTED'].includes(status) && (
@@ -371,26 +371,6 @@ const Offer = ({
                         Remove DJ
                     </SmartButton>
                 )}
-                {accepted && (
-                    <PrimaryButton
-                        style={{
-                            pointerEvents: 'all',
-                        }}
-                        data-cy="book-dj-button"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            initiateBooking();
-                        }}
-                    >
-                        Book {name}
-                    </PrimaryButton>
-                )}
-                {['CONFIRMED', 'FINISHED'].includes(status) && (
-                    <NavLink to={eventRoutes.review}>
-                        <PrimaryButton>Review {name}</PrimaryButton>
-                    </NavLink>
-                )}
-
                 {!['FINISHED'].includes(status) && (
                     <SmartButton
                         level={accepted ? 'secondary' : 'primary'}
@@ -409,14 +389,29 @@ const Offer = ({
                         {hasMessage && <div className="notification-bubble">!</div>}
                     </SmartButton>
                 )}
+                {accepted && (
+                    <PrimaryButton
+                        style={{
+                            pointerEvents: 'all',
+                        }}
+                        data-cy="book-dj-button"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            initiateBooking();
+                        }}
+                    >
+                        Book {name}
+                    </PrimaryButton>
+                )}
+                {['FINISHED'].includes(status) && (
+                    <NavLink to={eventRoutes.review}>
+                        <PrimaryButton>Review {name}</PrimaryButton>
+                    </NavLink>
+                )}
             </ButtonsRow>
         </OfferRow>
     );
 };
-
-const OfferTextWrapper = styled(Col)`
-    margin-top: 24px;
-`;
 
 const Filler = styled.div`
     flex: 1;
@@ -427,9 +422,11 @@ const Filler = styled.div`
 `;
 
 const ButtonsRow = styled(Row)`
-    margin-top: 24px;
     flex-wrap: wrap-reverse;
     justify-content: center;
+    > * {
+        margin: 4px !important;
+    }
 `;
 
 const OfferText = styled(BodyBold)`
@@ -441,6 +438,7 @@ const OfferText = styled(BodyBold)`
 const OfferRow = styled(Row)`
     justify-content: center;
     flex-wrap: wrap;
+    padding-top: 24px;
 `;
 
 const ColLeft = styled(Col)`

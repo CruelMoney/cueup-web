@@ -304,7 +304,7 @@ const EventOverview = (props) => {
                 setPagination={setPagination}
             />
             <Route
-                path={match.path + '/' + eventRoutes.checkout}
+                path={match.path.replace('overview', '') + eventRoutes.checkout}
                 render={(props) => (
                     <PayForm
                         onClose={() => history.push(match.url + '/' + eventRoutes.overview)}
