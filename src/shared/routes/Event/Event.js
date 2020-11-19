@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { useRouteMatch, useHistory } from 'react-router';
+import styled from 'styled-components';
 import { appRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { useServerContext } from 'components/hooks/useServerContext';
@@ -10,6 +11,7 @@ import { useNotifications } from 'components/hooks/useNotifications';
 import { useAppState } from 'components/hooks/useAppState';
 import Popup from 'components/common/Popup';
 import Menu from 'components/Navigation';
+import { Media } from 'components/MediaContext';
 import { Container, Row, Col, Hr, RowMobileCol } from '../../components/Blocks';
 import EventProgress from './components/blocks/EventProgress';
 import { EVENT } from './gql.js';
@@ -74,8 +76,19 @@ const Index = ({ location }) => {
             <Menu dark relative fullWidth />
             <Container fullWidth>
                 <Hr />
-                <RowMobileCol style={{ marginTop: 24, flexGrow: 1, paddingBottom: 60 }}>
-                    <Sidebar theEvent={theEvent} />
+                <RowMobileCol
+                    style={{
+                        marginTop: 24,
+                        flexGrow: 1,
+                        paddingBottom: 60,
+                    }}
+                >
+                    <CustomCol style={{ marginRight: 30 }}>
+                        <Sidebar theEvent={theEvent} />
+                        <LeftSideProgress>
+                            <EventProgress theEvent={theEvent} />
+                        </LeftSideProgress>
+                    </CustomCol>
                     <Content
                         location={location}
                         match={match}
@@ -85,12 +98,61 @@ const Index = ({ location }) => {
                         notifications={notifications}
                         setActiveChat={setActiveChat}
                     />
-                    <EventProgress theEvent={theEvent} />
+                    <RightSideProgress>
+                        <EventProgress theEvent={theEvent} />
+                    </RightSideProgress>
+                    <BottomProgress>
+                        <EventProgress theEvent={theEvent} />
+                    </BottomProgress>
                 </RowMobileCol>
             </Container>
         </div>
     );
 };
+
+const CustomCol = styled(Col)`
+    position: sticky;
+    top: 15px;
+    min-width: 300px;
+
+    @media only screen and (max-width: 1400px) {
+        max-width: auto;
+        width: auto;
+    }
+    @media only screen and (max-width: 716px) {
+        position: relative;
+        max-width: 100%;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+`;
+
+const LeftSideProgress = styled.div`
+    display: none;
+    @media only screen and (max-width: 1400px) {
+        display: block;
+    }
+    @media only screen and (max-width: 716px) {
+        display: none;
+    }
+`;
+const BottomProgress = styled.div`
+    display: none;
+
+    @media only screen and (max-width: 716px) {
+        display: block;
+        width: 100%;
+        margin-top: 30px;
+    }
+`;
+
+const RightSideProgress = styled(CustomCol)`
+    display: block;
+    margin-left: 30px;
+    @media only screen and (max-width: 1400px) {
+        display: none;
+    }
+`;
 
 const Content = React.memo((props) => {
     const { match, ...eventProps } = props;

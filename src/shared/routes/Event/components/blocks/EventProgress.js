@@ -33,77 +33,56 @@ const EventProgress = ({ theEvent = {} }) => {
     let idx = 0;
 
     return (
-        <Sticky>
-            <Wrapper>
-                <GreyBox style={{ marginBottom: 15 }}>
-                    <H3 small dark style={{ marginBottom: 12 }}>
-                        What's next?
-                    </H3>
+        <Wrapper>
+            <GreyBox>
+                <H3 small dark style={{ marginBottom: 12 }}>
+                    What's next?
+                </H3>
 
-                    {!emailVerified && (
-                        <ProgressStep
-                            to={eventRoutes.requirements}
-                            label={++idx + '. Verify your email'}
-                        />
-                    )}
+                {!emailVerified && (
                     <ProgressStep
-                        active={!accepted && emailVerified}
-                        to={eventRoutes.overview}
-                        label={++idx + '. Wait for offers from DJs'}
-                        description={
-                            "Message the DJs to let them know you're interested and tell them more about your event."
-                        }
-                        completed={accepted}
+                        to={eventRoutes.requirements}
+                        label={++idx + '. Verify your email'}
                     />
-                    <ProgressStep
-                        active={accepted && theEvent?.status !== eventStates.CONFIRMED}
-                        label={++idx + '. Confirm booking'}
-                        description={
-                            'Pick and book a DJ to complete the booking. Remember you are covered by our money-back guarantee when paying on Cueup.'
-                        }
-                        completed={theEvent?.status === eventStates.CONFIRMED}
-                    />
-                    <ProgressStep
-                        active={theEvent?.status === eventStates.CONFIRMED}
-                        label={++idx + '. Review the DJ'}
-                        completed={theEvent && theEvent.review}
-                        to={eventRoutes.review}
-                    />
-                </GreyBox>
-                <GreyBox>
-                    <H3 small>How do I contact the DJs?</H3>
-                    <BodySmall>Before the event is...</BodySmall>
-                </GreyBox>
-            </Wrapper>
-        </Sticky>
+                )}
+                <ProgressStep
+                    active={!accepted && emailVerified}
+                    to={eventRoutes.overview}
+                    label={++idx + '. Wait for offers from DJs'}
+                    description={
+                        "Message the DJs to let them know you're interested and tell them more about your event."
+                    }
+                    completed={accepted}
+                />
+                <ProgressStep
+                    active={accepted && theEvent?.status !== eventStates.CONFIRMED}
+                    label={++idx + '. Confirm booking'}
+                    description={
+                        'Pick and book a DJ to complete the booking. Remember you are covered by our money-back guarantee when paying on Cueup.'
+                    }
+                    completed={theEvent?.status === eventStates.CONFIRMED}
+                />
+                <ProgressStep
+                    active={theEvent?.status === eventStates.CONFIRMED}
+                    label={++idx + '. Review the DJ'}
+                    completed={theEvent && theEvent.review}
+                    to={eventRoutes.review}
+                />
+            </GreyBox>
+            <GreyBox>
+                <H3 small>How do I contact the DJs?</H3>
+                <BodySmall>Before the event is...</BodySmall>
+            </GreyBox>
+        </Wrapper>
     );
 };
 
-const Sticky = styled.div`
-    position: sticky;
-    top: 15px;
-    margin-left: 30px;
-`;
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
 
     > * {
-        margin-bottom: 2.3em;
-        &:last-child > *:after {
-            display: none;
-        }
-    }
-    @media only screen and (max-width: 768px) {
-        flex-direction: row;
-        position: relative;
-        top: initial;
-        margin: 0;
-        justify-content: space-between;
-    }
-
-    @media only screen and (max-width: 420px) {
-        display: none;
+        margin-bottom: 15px;
     }
 `;
 
@@ -157,14 +136,6 @@ const Step = styled.div`
         float: none;
         top: 0.1em;
         color: #00d1ff;
-    }
-
-    @media only screen and (max-width: 768px) {
-        font-size: 12px;
-        width: 13em;
-        :after {
-            display: none;
-        }
     }
 `;
 
