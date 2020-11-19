@@ -134,11 +134,11 @@ const BookingButton = (props) => {
             event={event}
             hash={hash}
             offer={offer}
-            showPaymentForm={() =>
+            showPaymentForm={() => {
                 history.push(
                     match.url + '/' + userRoutes.checkout.replace(':gigId', gigId) + location.search
-                )
-            }
+                );
+            }}
         />
     );
 };

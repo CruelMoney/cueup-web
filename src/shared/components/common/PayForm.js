@@ -7,6 +7,7 @@ import checkmarkCircle from '@iconify/icons-ion/checkmark-circle';
 import styled from 'styled-components';
 import { captureException } from '@sentry/core';
 import { useParams, Route, useHistory, Switch, useRouteMatch, useLocation } from 'react-router';
+import Skeleton from 'react-loading-skeleton';
 import {
     LoadingIndicator,
     Col,
@@ -335,7 +336,7 @@ const WithProps = ({ currency, location, eventId, eventHash, onClose, ...props }
     const history = useHistory();
     const { gigId } = useParams();
     const match = useRouteMatch();
-    const { data, error } = useQuery(EVENT_GIGS, {
+    const { data, error, loading } = useQuery(EVENT_GIGS, {
         skip: !eventId || !eventHash,
         variables: { id: eventId, hash: eventHash, currency },
     });
@@ -364,7 +365,7 @@ const WithProps = ({ currency, location, eventId, eventHash, onClose, ...props }
     }, []);
 
     useEffect(() => {
-        if (status !== gigStates.ACCEPTED && status !== gigStates.CONFIRMED) {
+        if (!loading && status !== gigStates.ACCEPTED && status !== gigStates.CONFIRMED) {
             onClose();
             return;
         }
@@ -375,7 +376,15 @@ const WithProps = ({ currency, location, eventId, eventHash, onClose, ...props }
             const redirectUrl = match.url + '/payment?' + searchParams.toString();
             history.replace(redirectUrl);
         }
-    }, [canSelectPayment, initialMethod, history]);
+    }, [canSelectPayment, initialMethod, history, loading]);
+
+    if (loading) {
+        return (
+            <Popup showing>
+                <Skeleton count={3} width={400} height={80} />
+            </Popup>
+        );
+    }
 
     return (
         <Popup showing noPadding onClose={onClose}>
