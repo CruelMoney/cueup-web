@@ -33,8 +33,6 @@ import {
     TeritaryButton,
     Card,
     Avatar,
-    SecondaryButton,
-    RowMobileCol,
     Hr,
 } from '../../../components/Blocks';
 import ScrollToTop from '../../../components/common/ScrollToTop';
@@ -473,9 +471,12 @@ const BookingSidebar = ({
     isDirect,
     ...props
 }) => {
+    const { state } = useLocation();
     const { user } = props;
 
-    const ctaAction = isDirect ? `BOOK  ${user.title}` : 'CHECK AVAILABILITY';
+    const { buttonLabel } = state || {};
+
+    const ctaAction = buttonLabel || (isDirect ? `BOOK  ${user.title}` : 'CHECK AVAILABILITY');
     const ctaLabel = eventCreated ? 'DONE' : ctaAction.toUpperCase();
 
     return (

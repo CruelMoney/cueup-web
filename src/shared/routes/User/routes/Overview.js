@@ -1,15 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { Icon } from '@iconify/react';
+import { Link, NavLink } from 'react-router-dom';
+import { Icon, InlineIcon } from '@iconify/react';
 import addCircleIcon from '@iconify/icons-ion/add-circle';
+import chatIcon from '@iconify/icons-ion/chatbubbles';
+import phoneIcon from '@iconify/icons-ion/call';
 
+import { useLocation } from 'react-router';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import Rating from 'components/common/RatingNew';
 import useTranslate from 'components/hooks/useTranslate';
 import { Title, Citation, Cite, Body } from '../../../components/Text';
 import ReadMoreExpander from '../../../components/ReadMoreExpander';
-import { Col, Row, ReadMore, Show, InfoBox, Hr } from '../../../components/Blocks';
+import {
+    Col,
+    Row,
+    ReadMore,
+    Show,
+    InfoBox,
+    Hr,
+    RowMobileCol,
+    SecondaryButton,
+} from '../../../components/Blocks';
 import Map from '../../../components/common/Map';
 import QuotationMarkIcon from '../../../components/graphics/Quotes';
 import { PolicyDisplayer } from '../../Settings/components/CancelationPolicyPopup';
@@ -153,7 +165,10 @@ const EditButtonOverlay = ({ to, children }) => {
     );
 };
 
-const Bio = ({ bio, firstName, style, isOwn, to }) => {
+const Bio = ({ bio, firstName, style, isOwn, to, permalink }) => {
+    const { search } = useLocation();
+    const { translate } = useTranslate();
+
     return (
         <LeftItem style={{ paddingTop: 0, ...style }}>
             <Title>About {firstName}</Title>
@@ -163,6 +178,46 @@ const Bio = ({ bio, firstName, style, isOwn, to }) => {
                     Edit
                 </EditButton>
             )}
+
+            <RowMobileCol>
+                <NavLink
+                    to={{
+                        pathname: translate(appRoutes.userBook).replace(':permalink', permalink),
+                        search,
+                        state: {
+                            buttonLabel: 'Message',
+                        },
+                    }}
+                    style={{ flex: 1 }}
+                >
+                    <SecondaryButton style={{ width: '100%', minHeight: 40 }}>
+                        <InlineIcon
+                            icon={chatIcon}
+                            style={{ position: 'absolute', left: '1em', top: '0.75em' }}
+                        />
+                        Message
+                    </SecondaryButton>
+                </NavLink>
+                <NavLink
+                    style={{ flex: 1 }}
+                    to={{
+                        pathname: translate(appRoutes.userBook).replace(':permalink', permalink),
+                        search,
+                        state: {
+                            buttonLabel: 'Request call',
+                        },
+                    }}
+                >
+                    <SecondaryButton style={{ width: '100%', minHeight: 40 }}>
+                        <InlineIcon
+                            icon={phoneIcon}
+                            style={{ position: 'absolute', left: '1em', top: '0.75em' }}
+                        />
+                        Request a call
+                    </SecondaryButton>
+                </NavLink>
+            </RowMobileCol>
+
             <Show maxWidth="990px">
                 <Hr style={{ marginTop: 30 }} />
             </Show>
@@ -461,6 +516,7 @@ const Overview = ({ user, loading, location, history }) => {
         media,
         isOwn,
         sounds,
+        permalink,
     } = user;
     const { firstName, bio } = userMetadata || {};
     const { cancelationPolicy } = userSettings || {};
@@ -490,6 +546,7 @@ const Overview = ({ user, loading, location, history }) => {
                         bio={bio}
                         style={bioStyle}
                         to={settingsRoute + '?modal=bio'}
+                        permalink={permalink}
                     />
                     {showSelectedSound && (
                         <Show maxWidth="990px">
