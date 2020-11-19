@@ -71,7 +71,27 @@ const EventProgress = ({ theEvent = {} }) => {
             </GreyBox>
             <GreyBox>
                 <H3 small>How do I contact the DJs?</H3>
-                <BodySmall>Before the event is...</BodySmall>
+                <BodySmall>
+                    Press the <b>message</b> button to open a chat. After a DJ has sent an offer and
+                    you've confirmed it, you will see each other's contact details.
+                </BodySmall>
+            </GreyBox>
+            <GreyBox>
+                <H3 small>What is the money-back guarantee?</H3>
+                <BodySmall>
+                    When you pay the DJ through Cueup, we offer a refund if the DJ cancels or didn't
+                    do a good job.
+                    <br />
+                    <br />
+                    <a
+                        style={{ textDecoration: 'underline' }}
+                        target="_blank"
+                        href="https://cueup.zendesk.com/hc/en-us/articles/360017164300"
+                        rel="noopener noreferrer"
+                    >
+                        Read more about the guarantee
+                    </a>
+                </BodySmall>
             </GreyBox>
         </Wrapper>
     );
@@ -83,6 +103,9 @@ const Wrapper = styled.div`
 
     > * {
         margin-bottom: 15px;
+    }
+    p {
+        max-width: 300px;
     }
 `;
 
