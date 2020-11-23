@@ -6,6 +6,7 @@ import Icon from '@iconify/react';
 import starIcon from '@iconify/icons-ion/ios-star';
 import cancelledIcon from '@iconify/icons-ion/ios-close-circle';
 import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
 import useTranslate from 'components/hooks/useTranslate';
 import { InputRow } from 'components/FormComponents';
 import { eventRoutes } from 'constants/locales/appRoutes';
@@ -361,15 +362,17 @@ const OtherGreatDJs = ({ theEvent, data, pagination, setPagination }) => {
                 {title}
             </TitleClean>
             <Body>Send your event details to get in contact.</Body>
-            {edges.map((dj, idx) => (
-                <PotentialDjCard
-                    key={dj.id}
-                    idx={idx}
-                    dj={dj}
-                    theEvent={theEvent}
-                    page={pagination.page}
-                />
-            ))}
+            <SearchList>
+                {edges.map((dj, idx) => (
+                    <PotentialDjCard
+                        key={dj.id}
+                        idx={idx}
+                        dj={dj}
+                        theEvent={theEvent}
+                        page={pagination.page}
+                    />
+                ))}
+            </SearchList>
             {pageInfo && (
                 <Row style={{ marginTop: 30 }}>
                     <Pagination
@@ -385,5 +388,12 @@ const OtherGreatDJs = ({ theEvent, data, pagination, setPagination }) => {
         </Col>
     );
 };
+
+const SearchList = styled.ul`
+    padding: 0;
+    list-style: none;
+    > li {
+    }
+`;
 
 export default EventOverview;

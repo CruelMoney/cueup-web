@@ -194,6 +194,7 @@ const EVENT_GIGS = gql`
                     permalink
                     artistName
                     displayName @client
+                    genres
                     picture {
                         path
                     }

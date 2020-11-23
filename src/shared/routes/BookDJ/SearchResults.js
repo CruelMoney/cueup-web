@@ -36,7 +36,7 @@ const ImagePreviews = ({ appMetadata, media, id, picture, playingLocations, load
     }
 
     return (
-        <ImageGrid images={imagecount} large={appMetadata?.isPro}>
+        <ImageGrid images={imagecount} singleItem={!location} large={appMetadata?.isPro}>
             <li>
                 {loading ? (
                     <Skeleton style={loadingGraceStyle} />
@@ -44,7 +44,7 @@ const ImagePreviews = ({ appMetadata, media, id, picture, playingLocations, load
                     <GracefullImage src={picture.path} itemProp="image" />
                 )}
 
-                {!loading && (
+                {!loading && !!location && (
                     <Pill>
                         <InlineIcon icon={pinIcon} style={{ marginRight: 3, marginBottom: -1 }} />
                         {location?.name}
@@ -191,10 +191,13 @@ const Price = ({ loading }) => {
     );
 };
 
-export const DJSearchEntry = (props) => {
+export const DJSearchEntry = ({ children, hidePrice, ...props }) => {
     const { environment } = useServerContext();
     const { translate } = useTranslate();
-    const route = `${translate(appRoutes.user)}/${props.permalink}/overview`;
+    let { route } = props;
+    if (!route) {
+        route = `${translate(appRoutes.user)}/${props.permalink}/overview`;
+    }
     return (
         <li itemScope=" " itemType="https://schema.org/ListItem">
             <meta itemProp="position" content={props.idx + 1} />
@@ -216,7 +219,8 @@ export const DJSearchEntry = (props) => {
                     <SearchEntryRightSide>
                         <ArtistName {...props} />
                         <ArtistBio {...props} />
-                        <Price {...props} />
+                        {!hidePrice && <Price {...props} />}
+                        {children}
                     </SearchEntryRightSide>
                 </SearchEntryWrapper>
             </NavLink>
@@ -334,7 +338,17 @@ const ImageGrid = styled.ol`
     width: 366px;
     min-width: 366px;
 
-    ${({ images }) => {
+    ${({ images, singleItem }) => {
+        if (singleItem) {
+            return css`
+                width: 180px;
+                min-width: 180px;
+                grid-template:
+                    'a a'
+                    'a a';
+            `;
+        }
+
         switch (images) {
             case 1:
                 return css`

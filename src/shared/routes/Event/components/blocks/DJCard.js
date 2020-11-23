@@ -14,6 +14,7 @@ import { appRoutes, userRoutes, eventRoutes } from 'constants/locales/appRoutes'
 import { ProFeature } from 'components/FormComponents';
 import ErrorMessageApollo from 'components/common/ErrorMessageApollo';
 import Tooltip from 'components/Tooltip';
+import { DJSearchEntry } from 'routes/BookDJ/SearchResults';
 import {
     Col,
     keyframeFadeIn,
@@ -40,11 +41,7 @@ const hiddenNumber = '45 12 34 56 78'.replace(/\w/g, '•');
 export const PotentialDjCard = ({ dj, idx, theEvent, page }) => {
     const { translate } = useTranslate();
 
-    const { id, userMetadata = {}, appMetadata = {}, artistName, playingLocation } = dj;
-    const { firstName, bio } = userMetadata;
-    const { isPro, createdAt } = appMetadata;
-
-    const name = artistName || firstName;
+    const { id } = dj;
 
     const [sendEvent, { loading, error }] = useMutation(SEND_EVENT_TO_DJ, {
         variables: { eventId: theEvent.id, djId: id },
@@ -62,24 +59,22 @@ export const PotentialDjCard = ({ dj, idx, theEvent, page }) => {
     });
 
     return (
-        <NavLink
-            pointerEvents="auto"
-            target="_blank"
-            rel="noopener noreferrer"
-            to={{
-                pathname: `${translate(appRoutes.user)}/${dj.permalink}/${userRoutes.overview}`,
-                //  state: { gigId: gig.id, dj },
-                search: `?potentialDj=true&eventId=${theEvent.id}&hash=${theEvent.hash}`,
-            }}
+        <DJSearchEntry
+            route={`${translate(appRoutes.user)}/${dj.permalink}/${
+                userRoutes.overview
+            }?potentialDj=true&eventId=${theEvent.id}&hash=${theEvent.hash}`}
+            idx={idx}
+            key={dj?.id || idx}
+            filterGenres={theEvent.genres}
+            {...dj}
+            hidePrice
         >
-            <Wrapper idx={idx} data-cy="event-dj" onMouseEnter={() => lazyUser.preload()}>
-                <Card>
-                    <Header dj={dj} showInfo={false} />
-                </Card>
-
-                <Shadow />
-            </Wrapper>
-        </NavLink>
+            <div style={{ flex: 1 }} />
+            <SmartButton loading={loading} onClick={sendEvent}>
+                Send event details
+            </SmartButton>
+            <ErrorMessageApollo error={error} />
+        </DJSearchEntry>
     );
 };
 
@@ -109,7 +104,7 @@ const Header = ({ dj, showInfo }) => {
     const name = artistName || firstName;
 
     return (
-        <RowWrap middle style={{ padding: '0.75em' }}>
+        <RowWrap middle style={{ padding: '1.5em' }}>
             <ImageWrapper style={{ marginRight: '0.5em', marginBottom: '0.5em' }}>
                 <StyledImage src={dj.picture.path} />
             </ImageWrapper>
@@ -393,7 +388,7 @@ const OfferText = styled(BodyBold)`
 `;
 
 const OfferRow = styled(RowWrap)`
-    padding: 0.75em;
+    padding: 1.5em;
     margin: 0 -4px;
 `;
 
