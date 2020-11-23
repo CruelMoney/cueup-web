@@ -119,29 +119,35 @@ const OfferForm = ({
         }
     };
 
-    const getFeesDebounced = debounce(async ({ amount, newCurrency = currency }) => {
-        if (amount && amount > 0) {
-            setLoading(true);
-            setError(null);
-            try {
-                const {
-                    data: { getOffer: newOffer },
-                } = await getOffer({
-                    variables: {
-                        gigId: gig.id,
-                        amount,
-                        currency: newCurrency,
-                    },
-                });
-                setNewOffer(newOffer);
-            } catch (error) {
-                console.log({ error });
-                setError(error);
-            }
+    const getFeesDebounced = debounce(
+        async ({ amount, newCurrency = currency }) => {
+            if (amount && amount > 0) {
+                setLoading(true);
+                setError(null);
+                try {
+                    const {
+                        data: { getOffer: newOffer },
+                    } = await getOffer({
+                        variables: {
+                            gigId: gig.id,
+                            amount,
+                            currency: newCurrency,
+                        },
+                    });
+                    setNewOffer(newOffer);
+                } catch (error) {
+                    console.log({ error });
+                    setError(error);
+                }
 
-            setLoading(false);
+                setLoading(false);
+            }
+        },
+        1000,
+        {
+            trailing: true,
         }
-    }, 1000);
+    );
 
     const getFees = (data) => {
         setLoading(true);
@@ -197,10 +203,10 @@ const OfferForm = ({
                                 name="amount"
                                 placeholder="00,00"
                                 //onUpdatePipeFunc={(oldVal,val)=>moneyPipe(oldVal,val,"DKK")}
-                                type="text"
+                                type="number"
+                                maxLength="8"
                                 validation={[
                                     (v) => {
-                                        console.log({ v });
                                         return !v || v <= 0 ? 'Enter your offer' : null;
                                     },
                                 ]}
