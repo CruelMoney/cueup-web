@@ -102,16 +102,17 @@ const UserContainer = styled(Container)`
 
 const Content = React.memo(({ match, ...userProps }) => {
     const { user, loading, location } = userProps;
-    const bookingEnabled = user?.isDj;
     const history = useHistory();
 
     // check for event
     const queries = queryString.parse(location.search);
-    const { eventId, hash } = queries;
+    const { eventId, hash, potentialDj } = queries;
     let comingFromEvent = false;
     if (eventId && hash) {
         comingFromEvent = true;
     }
+
+    const bookingEnabled = user?.isDj && !potentialDj;
 
     return (
         <div>
@@ -119,7 +120,12 @@ const Content = React.memo(({ match, ...userProps }) => {
 
             {comingFromEvent && <BackToEvent eventId={eventId} hash={hash} />}
 
-            <Header user={user} loading={loading} pathname={match.url} />
+            <Header
+                user={user}
+                loading={loading}
+                pathname={match.url}
+                bookingEnabled={bookingEnabled}
+            />
 
             <UserContainer>
                 <Row style={{ alignItems: 'stretch' }}>
@@ -154,7 +160,7 @@ const Content = React.memo(({ match, ...userProps }) => {
 
                             <Redirect
                                 to={{
-                                    pathname: match.url + '/overview' + location.search,
+                                    pathname: match.url + '/overview',
                                     search: location.search,
                                     state: location.state,
                                 }}

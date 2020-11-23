@@ -67,8 +67,8 @@ export const PotentialDjCard = ({ dj, idx, theEvent, page }) => {
             rel="noopener noreferrer"
             to={{
                 pathname: `${translate(appRoutes.user)}/${dj.permalink}/${userRoutes.overview}`,
-                // state: { gigId: gig.id, dj },
-                // search: `?gigId=${gig.id}&eventId=${theEvent.id}&hash=${theEvent.hash}`,
+                //  state: { gigId: gig.id, dj },
+                search: `?potentialDj=true&eventId=${theEvent.id}&hash=${theEvent.hash}`,
             }}
         >
             <Wrapper idx={idx} data-cy="event-dj" onMouseEnter={() => lazyUser.preload()}>

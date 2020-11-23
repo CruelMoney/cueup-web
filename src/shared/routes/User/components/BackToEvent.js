@@ -1,17 +1,14 @@
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Container, Row, ReadMore } from '../../../components/Blocks';
 
 const BackToEvent = ({ eventId, hash }) => {
-    useEffect(() => {
-        document.body.classList.add('pre-header-content');
-        return () => {
-            document.body.classList.remove('pre-header-content');
-        };
-    }, []);
-
     return (
         <div style={{ backgroundColor: '#f6f9fc' }}>
+            <Helmet>
+                <body className="pre-header-content" />
+            </Helmet>
             <Container>
                 <Row middle style={{ height: '42px' }}>
                     <Link to={`/event/${eventId}/${hash}/overview`}>

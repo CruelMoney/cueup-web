@@ -18,7 +18,7 @@ const StatusButton = styled.button`
 `;
 
 const HeaderMobile = (props) => {
-    const { user, loading, children } = props;
+    const { user, loading, children, bookingEnabled } = props;
     const { artistName, userMetadata, appMetadata, reviews } = user;
     const { firstName } = userMetadata;
     const { rating, isPro } = appMetadata;
@@ -55,19 +55,26 @@ const HeaderMobile = (props) => {
                         </HeaderTitle>
                     </NavLink>
 
-                    <UserRating dark reviews={reviews} rating={rating} style={{ marginTop: 12 }} />
-
-                    <BookingButton
-                        user={user}
-                        noIcon
-                        buttonStyle={{
-                            margin: '15px 0 30px',
-                            width: '100%',
-                            height: 50,
-                            textAlign: 'center',
-                            paddingLeft: 0,
-                        }}
+                    <UserRating
+                        dark
+                        reviews={reviews}
+                        rating={rating}
+                        style={{ marginTop: 12, marginBottom: 15 }}
                     />
+
+                    {bookingEnabled && (
+                        <BookingButton
+                            user={user}
+                            noIcon
+                            buttonStyle={{
+                                margin: '0 0 30px',
+                                width: '100%',
+                                height: 50,
+                                textAlign: 'center',
+                                paddingLeft: 0,
+                            }}
+                        />
+                    )}
                     <Hr />
                 </Col>
             </Container>

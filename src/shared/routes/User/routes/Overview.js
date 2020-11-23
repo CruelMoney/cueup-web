@@ -6,7 +6,7 @@ import addCircleIcon from '@iconify/icons-ion/add-circle';
 import chatIcon from '@iconify/icons-ion/chatbubbles';
 import phoneIcon from '@iconify/icons-ion/call';
 
-import { useLocation } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import Rating from 'components/common/RatingNew';
 import useTranslate from 'components/hooks/useTranslate';
@@ -506,6 +506,8 @@ const Overview = ({ user, loading, location, history }) => {
     }
     const params = new URLSearchParams(location.search);
     const modal = params.get('modal');
+    const potentialDj = params.get('potentialDj');
+    const comingFromEvent = params.get('eventId');
     const appPopup = modal === 'app';
 
     const onModalClose = () => {
@@ -544,8 +546,12 @@ const Overview = ({ user, loading, location, history }) => {
                         <Col>
                             <UserInfo user={user} />
                             <Hr style={{ marginTop: 15, marginBottom: 15 }} />
-                            <ContactOptions permalink={permalink} />
-                            <Hr style={{ marginTop: 15, marginBottom: 30 }} />
+                            {!comingFromEvent ? (
+                                <>
+                                    <ContactOptions permalink={permalink} />
+                                    <Hr style={{ marginTop: 15, marginBottom: 30 }} />
+                                </>
+                            ) : null}
                         </Col>
                     </Show>
                     <Bio
@@ -610,10 +616,12 @@ const Overview = ({ user, loading, location, history }) => {
                 </HalfColLeft>
                 {user.isDj && (
                     <HalfColRight>
-                        <Item style={{ paddingTop: 0, marginBottom: 42 }}>
-                            <Title style={{ marginBottom: 42 }}>Contact</Title>
-                            <ContactOptions permalink={permalink} />
-                        </Item>
+                        {!comingFromEvent ? (
+                            <Item style={{ paddingTop: 0, marginBottom: 42 }}>
+                                <Title style={{ marginBottom: 42 }}>Contact</Title>
+                                <ContactOptions permalink={permalink} />
+                            </Item>
+                        ) : null}
 
                         {showSelectedSound && <HighlightedSound user={user} />}
                         <Genres
