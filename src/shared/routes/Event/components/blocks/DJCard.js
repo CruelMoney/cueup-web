@@ -74,43 +74,7 @@ export const PotentialDjCard = ({ dj, idx, theEvent, page }) => {
         >
             <Wrapper idx={idx} data-cy="event-dj" onMouseEnter={() => lazyUser.preload()}>
                 <Card>
-                    <ImageWrapper>
-                        <StyledImage src={dj.picture.path} />
-                    </ImageWrapper>
-                    <Content>
-                        <ColLeft>
-                            <H3 small style={{ marginBottom: 12 }}>
-                                {name}{' '}
-                                {isPro && (
-                                    <ProFeature disabled small>
-                                        Pro
-                                    </ProFeature>
-                                )}
-                            </H3>
-                            <SmallInfo createdAt={createdAt} playingLocation={playingLocation} />
-                            <BodySmall numberOfLines={2} style={{ marginBottom: '9px' }}>
-                                {bio}
-                            </BodySmall>
-
-                            <Row>
-                                <TeritaryButton
-                                    style={{ padding: 0, minWidth: 0, textAlign: 'left' }}
-                                    data-cy="dj-profile-button"
-                                    small
-                                >
-                                    View profile
-                                </TeritaryButton>
-                            </Row>
-                        </ColLeft>
-                        <div style={{ flex: 1 }} />
-                        <Hr style={{ marginBottom: 20 }} />
-                        <RowWrap>
-                            <SmartButton onClick={sendEvent} loading={loading}>
-                                Send event details
-                            </SmartButton>
-                        </RowWrap>
-                        <ErrorMessageApollo error={error} />
-                    </Content>
+                    <Header dj={dj} showInfo={false} />
                 </Card>
 
                 <Shadow />
@@ -123,7 +87,7 @@ const SmallInfo = ({ createdAt, playingLocation }) => {
     const memberSince = new Date(createdAt).getFullYear();
 
     return (
-        <Row style={{ marginBottom: 6 }}>
+        <Row>
             <BodySmall>
                 <InlineIcon icon={membersinceIcon} /> Member since {memberSince}
             </BodySmall>
@@ -133,6 +97,97 @@ const SmallInfo = ({ createdAt, playingLocation }) => {
                     <InlineIcon icon={pinIcon} /> {playingLocation.name}
                 </BodySmall>
             )}
+        </Row>
+    );
+};
+
+const Header = ({ dj, showInfo }) => {
+    const { userMetadata = {}, appMetadata = {}, artistName, email, playingLocation } = dj;
+    const { firstName, phone, bio } = userMetadata;
+    const { isPro, createdAt } = appMetadata;
+
+    const name = artistName || firstName;
+
+    return (
+        <Row middle style={{ padding: '0.75em' }}>
+            <ImageWrapper>
+                <StyledImage src={dj.picture.path} />
+            </ImageWrapper>
+            <Col style={{ marginLeft: '0.5em' }}>
+                <H3 small style={{ marginBottom: 4 }}>
+                    {name}{' '}
+                    {isPro && (
+                        <ProFeature disabled small>
+                            Pro
+                        </ProFeature>
+                    )}
+                </H3>
+                <SmallInfo createdAt={createdAt} playingLocation={playingLocation} />
+                <Row style={{ marginTop: 4 }}>
+                    {email && (
+                        <ConditionalWrap
+                            condition={showInfo}
+                            wrap={(children) => (
+                                <a
+                                    title={'Send an email to ' + firstName}
+                                    href={'mailto:' + email}
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    {children}
+                                </a>
+                            )}
+                            elseWrap={(children) => (
+                                <Tooltip content={'Email becomes visible if you book this DJ.'}>
+                                    {({ ref, close, open }) => (
+                                        <span ref={ref} onMouseEnter={open} onMouseLeave={close}>
+                                            {children}
+                                        </span>
+                                    )}
+                                </Tooltip>
+                            )}
+                        >
+                            <InfoPill active={showInfo}>
+                                <Icon icon={mailIcon} style={{ fontSize: '15px' }} />
+                                <span>{showInfo ? email : hiddenEmail}</span>
+                            </InfoPill>
+                        </ConditionalWrap>
+                    )}
+                    {phone && (
+                        <ConditionalWrap
+                            condition={showInfo}
+                            wrap={(children) => (
+                                <a
+                                    title={'Call ' + firstName}
+                                    href={'tel:' + phone}
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    {children}
+                                </a>
+                            )}
+                            elseWrap={(children) => (
+                                <Tooltip
+                                    content={'Phone number becomes visible if you book this DJ.'}
+                                >
+                                    {({ ref, close, open }) => (
+                                        <span ref={ref} onMouseEnter={open} onMouseLeave={close}>
+                                            {children}
+                                        </span>
+                                    )}
+                                </Tooltip>
+                            )}
+                        >
+                            <InfoPill active={showInfo}>
+                                <Icon icon={phoneIcon} style={{ fontSize: '15px' }} />
+                                <span>{showInfo ? phone : hiddenNumber}</span>
+                            </InfoPill>
+                        </ConditionalWrap>
+                    )}
+                </Row>
+            </Col>
+            <div style={{ flex: 1 }} />
+            <SecondaryButton data-cy="dj-profile-button" small>
+                View profile
+            </SecondaryButton>
         </Row>
     );
 };
@@ -165,132 +220,20 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
             >
                 <Wrapper idx={idx} data-cy="event-dj" onMouseEnter={() => lazyUser.preload()}>
                     <Card style={style}>
-                        <ImageWrapper style={{ minWidth: 270 }}>
-                            <StyledImage src={dj.picture.path} />
-                        </ImageWrapper>
-                        <Content>
-                            <ColLeft>
-                                <H3 small>
-                                    {name}{' '}
-                                    {isPro && (
-                                        <ProFeature disabled small>
-                                            Pro
-                                        </ProFeature>
-                                    )}
-                                </H3>
-                                <SmallInfo
-                                    createdAt={createdAt}
-                                    playingLocation={playingLocation}
-                                />
-                                <Row>
-                                    {email && (
-                                        <ConditionalWrap
-                                            condition={showInfo}
-                                            wrap={(children) => (
-                                                <a
-                                                    title={'Send an email to ' + firstName}
-                                                    href={'mailto:' + email}
-                                                    onClick={(e) => e.stopPropagation()}
-                                                >
-                                                    {children}
-                                                </a>
-                                            )}
-                                            elseWrap={(children) => (
-                                                <Tooltip
-                                                    content={
-                                                        'Email will be visible after the booking is confirmed.'
-                                                    }
-                                                >
-                                                    {({ ref, close, open }) => (
-                                                        <span
-                                                            ref={ref}
-                                                            onMouseEnter={open}
-                                                            onMouseLeave={close}
-                                                        >
-                                                            {children}
-                                                        </span>
-                                                    )}
-                                                </Tooltip>
-                                            )}
-                                        >
-                                            <InfoPill active={showInfo}>
-                                                <Icon
-                                                    icon={mailIcon}
-                                                    style={{ fontSize: '15px' }}
-                                                />
-                                                <span>{showInfo ? email : hiddenEmail}</span>
-                                            </InfoPill>
-                                        </ConditionalWrap>
-                                    )}
-                                    {phone && (
-                                        <ConditionalWrap
-                                            condition={showInfo}
-                                            wrap={(children) => (
-                                                <a
-                                                    title={'Call ' + firstName}
-                                                    href={'tel:' + phone}
-                                                    onClick={(e) => e.stopPropagation()}
-                                                >
-                                                    {children}
-                                                </a>
-                                            )}
-                                            elseWrap={(children) => (
-                                                <Tooltip
-                                                    content={
-                                                        'Phone number will be visible after the booking is confirmed.'
-                                                    }
-                                                >
-                                                    {({ ref, close, open }) => (
-                                                        <span
-                                                            ref={ref}
-                                                            onMouseEnter={open}
-                                                            onMouseLeave={close}
-                                                        >
-                                                            {children}
-                                                        </span>
-                                                    )}
-                                                </Tooltip>
-                                            )}
-                                        >
-                                            <InfoPill active={showInfo}>
-                                                <Icon
-                                                    icon={phoneIcon}
-                                                    style={{ fontSize: '15px' }}
-                                                />
-                                                <span>{showInfo ? phone : hiddenNumber}</span>
-                                            </InfoPill>
-                                        </ConditionalWrap>
-                                    )}
-                                </Row>
+                        <Header dj={dj} showInfo={showInfo} />
 
-                                <BodySmall numberOfLines={2} style={{ marginBottom: '9px' }}>
-                                    {bio}
-                                </BodySmall>
+                        <Hr />
 
-                                <Row>
-                                    <TeritaryButton
-                                        style={{ padding: 0, minWidth: 0, textAlign: 'left' }}
-                                        data-cy="dj-profile-button"
-                                        small
-                                    >
-                                        View profile
-                                    </TeritaryButton>
-                                </Row>
-                            </ColLeft>
-
-                            <Hr />
-
-                            <Offer
-                                {...offer}
-                                hasMessage={hasMessage}
-                                onOpenChat={onOpenChat}
-                                theEvent={theEvent}
-                                gig={gig}
-                                translate={translate}
-                                name={name}
-                                initiateBooking={onInitiateBooking}
-                            />
-                        </Content>
+                        <Offer
+                            {...offer}
+                            hasMessage={hasMessage}
+                            onOpenChat={onOpenChat}
+                            theEvent={theEvent}
+                            gig={gig}
+                            translate={translate}
+                            name={name}
+                            initiateBooking={onInitiateBooking}
+                        />
                     </Card>
 
                     <Shadow />
@@ -338,7 +281,7 @@ const Offer = ({
 
     return (
         <OfferRow middle>
-            <Col>
+            <Col style={{ marginLeft: 4 }}>
                 {!confirmed && (
                     <OfferText data-cy="offer-price" greyed={!offer}>
                         {offer ? offer.formatted : 'No offer yet'}
@@ -445,9 +388,8 @@ const OfferText = styled(BodyBold)`
 `;
 
 const OfferRow = styled(Row)`
-    justify-content: center;
-    flex-wrap: wrap;
-    padding-top: 24px;
+    padding: 0.75em;
+    margin: 0 -4px;
 `;
 
 const ColLeft = styled(Col)`
@@ -463,10 +405,13 @@ const ColLeft = styled(Col)`
 
 const ImageWrapper = styled.div`
     position: relative;
-    min-width: 220px;
-    min-height: 220px;
-    flex-grow: 1;
+    min-width: 80px;
+    min-height: 80px;
+    max-width: 80px;
+    border-radius: 50%;
+    overflow: hidden;
     background-color: #f7f9fc;
+    border: 0.5px solid #ebebeb;
     :before {
         content: '';
         display: block;
@@ -498,9 +443,8 @@ const Wrapper = styled(Col)`
 const Card = styled.div`
     display: flex;
     overflow: hidden;
-    flex-direction: row;
+    flex-direction: column;
     border-radius: 4px;
-    flex-wrap: wrap;
     background: #fff;
     z-index: 1;
     flex: 1;

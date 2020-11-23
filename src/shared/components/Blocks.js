@@ -729,8 +729,6 @@ export const InfoPill = styled.span`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 9px;
-    margin-bottom: 9px;
     font-weight: 500;
 
     span {

@@ -65,9 +65,7 @@ const EventProgress = ({ theEvent = {} }) => {
                     active={accepted && theEvent?.status !== eventStates.CONFIRMED}
                     label={++idx + '. Confirm booking'}
                     to={eventRoutes.overview}
-                    description={
-                        'Pick and book a DJ to confirm. Remember you are covered by our money-back guarantee when paying on Cueup.'
-                    }
+                    description={'Pick and book a DJ to confirm.'}
                     completed={theEvent?.status === eventStates.CONFIRMED}
                 />
                 <ProgressStep
