@@ -305,7 +305,13 @@ const EventOverview = (props) => {
     return (
         <>
             <PageTitle>DJ offers</PageTitle>
-            <Overview {...props} data={data} loadingGigs={loadingGigs} refetch={refetch} />
+            <Overview
+                {...props}
+                data={data}
+                emailVerified={emailVerified}
+                loadingGigs={loadingGigs}
+                refetch={refetch}
+            />
             {[
                 eventStates.ACCEPTED,
                 eventStates.NO_MATCHES,

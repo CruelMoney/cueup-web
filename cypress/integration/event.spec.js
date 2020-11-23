@@ -33,7 +33,7 @@ describe('Event', () => {
             fillOuteventForm();
 
             cy.url().should('include', '/event');
-            cy.get('h1').contains('Test event');
+            cy.get('h3').contains('Test event');
         });
 
         it('Post event from location page', () => {
@@ -44,7 +44,7 @@ describe('Event', () => {
             fillOuteventForm();
 
             cy.url().should('include', '/event');
-            cy.get('h1').contains('Test event');
+            cy.get('h3').contains('Test event');
         });
 
         it('Post from direct booking page', () => {
@@ -71,7 +71,7 @@ describe('Event', () => {
 
             cy.get('[data-cy=submit-event]').click();
             cy.url().should('include', '/event');
-            cy.get('h1').contains('Test event');
+            cy.get('h3').contains('Test event');
         });
     });
 
@@ -100,10 +100,6 @@ describe('Event', () => {
                 // cy.get('.message-wrapper.send').last().should('contain', message);
                 // cy.get('.message-wrapper.send').next().should('contain', 'Delivered');
                 // // cy.get('.card.popup.active *[data-cy=close-popup-button]').click();
-
-                // try visit profile
-                cy.get('[data-cy=dj-profile-button]').first().click();
-                cy.get('h1').should('contain', 'Dj lolbox');
             });
         });
     });

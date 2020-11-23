@@ -198,9 +198,9 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
     if (!dj) {
         return null;
     }
-    const { userMetadata = {}, appMetadata = {}, artistName, email, playingLocation } = dj;
-    const { firstName, phone, bio } = userMetadata;
-    const { isPro, createdAt } = appMetadata;
+    const { userMetadata = {}, appMetadata = {}, artistName } = dj;
+    const { firstName } = userMetadata;
+    const { isPro } = appMetadata;
 
     const name = artistName || firstName;
     const showInfo = status === 'CONFIRMED' || isPro;
