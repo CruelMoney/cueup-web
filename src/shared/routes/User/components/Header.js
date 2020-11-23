@@ -70,7 +70,6 @@ const Header = (props) => {
     const approvedKey = approved ? 'approved' : 'unapproved';
 
     const [cookies] = useCookies();
-
     const isTesting = cookies.testing;
 
     const [showing, setShowing] = useState(!isTesting && !approved && user.isOwn);

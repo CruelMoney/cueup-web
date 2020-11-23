@@ -9,6 +9,7 @@ import membersinceIcon from '@iconify/icons-ion/md-contact';
 
 import { NavLink } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
+import { useCookies } from 'react-cookie';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes, userRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import { ProFeature } from 'components/FormComponents';
@@ -193,6 +194,8 @@ const Header = ({ dj, showInfo }) => {
 
 const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateBooking }) => {
     const { translate } = useTranslate();
+    const [cookies] = useCookies();
+    const isTesting = cookies.testing;
 
     const { dj, offer, status } = gig;
     if (!dj) {
@@ -208,7 +211,7 @@ const DjCard = ({ style, idx, gig, theEvent, hasMessage, onOpenChat, onInitiateB
     return (
         <LogActivityInView type={ACTIVITY_TYPES.GIG_VIEWED_BY_ORGANIZER} subjectId={gig.id}>
             <NavLink
-                target="_blank"
+                target={isTesting ? '' : '_blank'}
                 rel="noopener noreferrer"
                 pointerEvents="auto"
                 to={{

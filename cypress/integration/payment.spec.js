@@ -7,6 +7,10 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 });
 
 describe('Payment', () => {
+    beforeEach(() => {
+        cy.setCookie('testing', 'true');
+    });
+
     const getIframeBody = (selector) => {
         // get the iframe > document > body
         // and retry until the body element is not empty
