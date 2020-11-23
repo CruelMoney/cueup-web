@@ -119,7 +119,7 @@ const CustomCol = styled(Col)`
         max-width: auto;
         width: auto;
     }
-    @media only screen and (max-width: 716px) {
+    @media only screen and (max-width: 1000px) {
         position: relative;
         max-width: 100%;
         width: 100%;
@@ -132,14 +132,14 @@ const LeftSideProgress = styled.div`
     @media only screen and (max-width: 1400px) {
         display: block;
     }
-    @media only screen and (max-width: 716px) {
+    @media only screen and (max-width: 1000px) {
         display: none;
     }
 `;
 const BottomProgress = styled.div`
     display: none;
 
-    @media only screen and (max-width: 716px) {
+    @media only screen and (max-width: 1000px) {
         display: block;
         width: 100%;
         margin-top: 30px;

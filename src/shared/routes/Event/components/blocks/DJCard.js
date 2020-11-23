@@ -93,7 +93,7 @@ const SmallInfo = ({ createdAt, playingLocation }) => {
             </BodySmall>
 
             {playingLocation && (
-                <BodySmall style={{ marginLeft: 12 }}>
+                <BodySmall style={{ marginLeft: 6 }}>
                     <InlineIcon icon={pinIcon} /> {playingLocation.name}
                 </BodySmall>
             )}
@@ -109,11 +109,11 @@ const Header = ({ dj, showInfo }) => {
     const name = artistName || firstName;
 
     return (
-        <Row middle style={{ padding: '0.75em' }}>
-            <ImageWrapper>
+        <RowWrap middle style={{ padding: '0.75em' }}>
+            <ImageWrapper style={{ marginRight: '0.5em', marginBottom: '0.5em' }}>
                 <StyledImage src={dj.picture.path} />
             </ImageWrapper>
-            <Col style={{ marginLeft: '0.5em' }}>
+            <Col style={{ marginBottom: '0.5em' }}>
                 <H3 small style={{ marginBottom: 4 }}>
                     {name}{' '}
                     {isPro && (
@@ -123,18 +123,20 @@ const Header = ({ dj, showInfo }) => {
                     )}
                 </H3>
                 <SmallInfo createdAt={createdAt} playingLocation={playingLocation} />
-                <Row style={{ marginTop: 4 }}>
+                <ContactRow style={{ marginTop: 4 }}>
                     {email && (
                         <ConditionalWrap
                             condition={showInfo}
                             wrap={(children) => (
-                                <a
-                                    title={'Send an email to ' + firstName}
-                                    href={'mailto:' + email}
-                                    onClick={(e) => e.stopPropagation()}
-                                >
-                                    {children}
-                                </a>
+                                <span>
+                                    <a
+                                        title={'Send an email to ' + firstName}
+                                        href={'mailto:' + email}
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        {children}
+                                    </a>
+                                </span>
                             )}
                             elseWrap={(children) => (
                                 <Tooltip content={'Email becomes visible if you book this DJ.'}>
@@ -156,13 +158,15 @@ const Header = ({ dj, showInfo }) => {
                         <ConditionalWrap
                             condition={showInfo}
                             wrap={(children) => (
-                                <a
-                                    title={'Call ' + firstName}
-                                    href={'tel:' + phone}
-                                    onClick={(e) => e.stopPropagation()}
-                                >
-                                    {children}
-                                </a>
+                                <span>
+                                    <a
+                                        title={'Call ' + firstName}
+                                        href={'tel:' + phone}
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        {children}
+                                    </a>
+                                </span>
                             )}
                             elseWrap={(children) => (
                                 <Tooltip
@@ -182,13 +186,13 @@ const Header = ({ dj, showInfo }) => {
                             </InfoPill>
                         </ConditionalWrap>
                     )}
-                </Row>
+                </ContactRow>
             </Col>
             <div style={{ flex: 1 }} />
-            <SecondaryButton data-cy="dj-profile-button" small>
+            <SecondaryButton style={{ margin: '0.75em 0' }} data-cy="dj-profile-button" small>
                 View profile
             </SecondaryButton>
-        </Row>
+        </RowWrap>
     );
 };
 
@@ -281,7 +285,7 @@ const Offer = ({
 
     return (
         <OfferRow middle>
-            <Col style={{ marginLeft: 4 }}>
+            <Col style={{ marginLeft: 4, flexGrow: 1 }}>
                 {!confirmed && (
                     <OfferText data-cy="offer-price" greyed={!offer}>
                         {offer ? offer.formatted : 'No offer yet'}
@@ -300,7 +304,6 @@ const Offer = ({
                     </>
                 )}
             </Col>
-            <Filler />
             <ButtonsRow>
                 {['ACCEPTED', 'REQUESTED'].includes(status) && (
                     <SmartButton
@@ -316,30 +319,28 @@ const Offer = ({
                     </SmartButton>
                 )}
                 {!['FINISHED'].includes(status) && (
-                    <div style={{ position: 'relative' }}>
-                        <SmartButton
-                            level={accepted ? 'secondary' : 'primary'}
-                            data-cy="message-dj-button"
-                            style={{
-                                overflow: 'visible',
-                                pointerEvents: 'all',
-                            }}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                onOpenChat();
-                            }}
-                        >
-                            Message
-                        </SmartButton>
+                    <SmartButton
+                        level={accepted ? 'secondary' : 'primary'}
+                        data-cy="message-dj-button"
+                        style={{
+                            overflow: 'visible',
+                            pointerEvents: 'all',
+                        }}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onOpenChat();
+                        }}
+                    >
                         {hasMessage && (
                             <NotificationBubble
                                 border
-                                style={{ position: 'absolute', top: -5, right: -5 }}
+                                style={{ marginLeft: 0, marginRight: '0.5em', top: -2 }}
                             >
                                 !
                             </NotificationBubble>
                         )}
-                    </div>
+                        Message
+                    </SmartButton>
                 )}
                 {accepted && (
                     <PrimaryButton
@@ -375,7 +376,8 @@ const Filler = styled.div`
 
 const ButtonsRow = styled(Row)`
     flex-wrap: wrap-reverse;
-    justify-content: center;
+    justify-content: flex-end;
+    flex-grow: 1;
     > * {
         margin: 4px !important;
     }
@@ -383,23 +385,21 @@ const ButtonsRow = styled(Row)`
 
 const OfferText = styled(BodyBold)`
     font-size: 18px;
-    margin: 0;
+    margin: 6px 0;
     color: ${({ muted }) => (muted ? '#98A4B3' : '#122b48')};
+    @media only screen and (max-width: 710px) {
+        text-align: center;
+    }
 `;
 
-const OfferRow = styled(Row)`
+const OfferRow = styled(RowWrap)`
     padding: 0.75em;
     margin: 0 -4px;
 `;
 
-const ColLeft = styled(Col)`
-    flex: 2;
-    margin-bottom: 12px;
-    min-width: 297px;
-    margin-right: 15px;
-    @media only screen and (max-width: 375px) {
-        margin-right: 0px;
-        min-width: 100%;
+const ContactRow = styled(Row)`
+    > * {
+        margin-right: 4px;
     }
 `;
 
@@ -424,11 +424,6 @@ const StyledImage = styled(GracefullImage)`
     width: 100%;
     height: 100%;
     position: absolute;
-`;
-
-const Content = styled(Col)`
-    padding: 24px;
-    flex: 2;
 `;
 
 const Wrapper = styled(Col)`
