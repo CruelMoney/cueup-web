@@ -2,6 +2,10 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { useHistory, Route, useRouteMatch } from 'react-router';
 import Skeleton from 'react-loading-skeleton';
+import Icon from '@iconify/react';
+import starIcon from '@iconify/icons-ion/ios-star';
+import cancelledIcon from '@iconify/icons-ion/ios-close-circle';
+import { NavLink } from 'react-router-dom';
 import useTranslate from 'components/hooks/useTranslate';
 import { InputRow } from 'components/FormComponents';
 import { eventRoutes } from 'constants/locales/appRoutes';
@@ -171,44 +175,45 @@ const getTitle = (status) => {
     }
 };
 
+const FinishedEvent = () => {
+    return (
+        <Col center middle style={{ marginTop: 100 }}>
+            <Icon icon={starIcon} style={{ fontSize: 30, marginBottom: 12, color: '#31DAFF' }} />
+            <H3 small style={{ textAlign: 'center' }}>
+                Event is finished
+            </H3>
+            <Body center>
+                The event is finished, we hope you had a blast.
+                <br />
+                Remember to review the DJ.
+            </Body>
+            <NavLink to="review">
+                <PrimaryButton style={{ marginTop: 15 }}>Review</PrimaryButton>
+            </NavLink>
+        </Col>
+    );
+};
+
+const CancelledEvent = () => {
+    return (
+        <Col center middle style={{ marginTop: 100 }}>
+            <Icon
+                icon={cancelledIcon}
+                style={{ fontSize: 30, marginBottom: 12, color: 'rgb(244, 67, 54)' }}
+            />
+            <H3 small style={{ textAlign: 'center' }}>
+                Event cancelled
+            </H3>
+            <Body center>You have cancelled the event.</Body>
+        </Col>
+    );
+};
+
 const Overview = (props) => {
-    const { translate, setActiveChat } = useTranslate();
-    const { theEvent, loading } = props;
+    const { loading } = props;
 
     if (loading) {
         return <LoadingPlaceholder2 />;
-    }
-    if (theEvent && theEvent.status === 'FINISHED') {
-        const { chosenGig } = theEvent;
-
-        return (
-            <Col>
-                <HeaderTitle style={{ color: '#122b48' }}>Event is finished</HeaderTitle>
-                <Body>
-                    The event is finished, we hope you had a blast.
-                    <br />
-                    Remember to review the DJ that played at the event.
-                </Body>
-                {chosenGig && (
-                    <DjCard
-                        key={chosenGig.id}
-                        idx={0}
-                        gig={chosenGig}
-                        translate={translate}
-                        theEvent={theEvent}
-                        onOpenChat={() => setActiveChat(chosenGig.id)}
-                    />
-                )}
-            </Col>
-        );
-    }
-    if (theEvent && theEvent.status === 'CANCELLED') {
-        return (
-            <Col>
-                <HeaderTitle style={{ color: '#122b48' }}>Event cancelled</HeaderTitle>
-                <Body>The event has been cancelled.</Body>
-            </Col>
-        );
     }
 
     return <EventGigs {...props} />;
@@ -290,6 +295,13 @@ const EventOverview = (props) => {
             page: pagination.page,
         },
     });
+
+    if (theEvent?.status === eventStates.CANCELLED) {
+        return <CancelledEvent />;
+    }
+    if (theEvent?.status === eventStates.FINISHED) {
+        return <FinishedEvent />;
+    }
 
     return (
         <>

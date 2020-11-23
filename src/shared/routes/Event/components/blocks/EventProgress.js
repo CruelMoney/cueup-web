@@ -14,7 +14,7 @@ import { EVENT_GIGS } from '../../gql';
 import ConditionalWrap from '../../../../components/ConditionalWrap';
 
 const EventProgress = ({ theEvent = {} }) => {
-    const { id, hash, organizer } = theEvent;
+    const { id, hash, organizer, status } = theEvent;
     const { data = {} } = useQuery(EVENT_GIGS, {
         skip: !id || !hash,
         variables: {
@@ -23,6 +23,13 @@ const EventProgress = ({ theEvent = {} }) => {
         },
     });
     if (!data?.event) {
+        return null;
+    }
+
+    if (status === eventStates.CANCELLED) {
+        return null;
+    }
+    if (status === eventStates.FINISHED) {
         return null;
     }
 
