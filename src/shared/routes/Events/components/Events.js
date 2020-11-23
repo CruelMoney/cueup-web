@@ -2,6 +2,7 @@ import React from 'react';
 import { Query } from '@apollo/client/react/components';
 import { useQuery } from '@apollo/client';
 import { Helmet } from 'react-helmet-async';
+import { Redirect, useLocation } from 'react-router';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes, eventRoutes } from 'constants/locales/appRoutes';
 import { ME } from 'components/gql';
@@ -76,11 +77,16 @@ const Events = () => {
 };
 
 const DataWrapper = () => {
+    const { pathname, search } = useLocation();
     const { data, loading } = useQuery(ME);
 
     const me = data?.me;
 
     const metaTitle = 'Events · Cueup';
+
+    if (!loading && !me) {
+        return <Redirect to={`/login?redirect=${encodeURIComponent(pathname + search)}`} />;
+    }
 
     return (
         <>

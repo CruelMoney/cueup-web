@@ -186,7 +186,7 @@ const ContactOptions = ({ permalink }) => {
                 >
                     <InlineIcon
                         icon={chatIcon}
-                        style={{ position: 'absolute', left: '1em', top: '0.75em' }}
+                        style={{ marginRight: '0.5em', marginBottom: -2 }}
                     />
                     Message
                 </SecondaryButton>
@@ -204,7 +204,7 @@ const ContactOptions = ({ permalink }) => {
                 <SecondaryButton style={{ width: '100%', maxWidth: '999px', minHeight: 40 }}>
                     <InlineIcon
                         icon={phoneIcon}
-                        style={{ position: 'absolute', left: '1em', top: '0.75em' }}
+                        style={{ marginRight: '0.5em', marginBottom: -2 }}
                     />
                     Request a call
                 </SecondaryButton>

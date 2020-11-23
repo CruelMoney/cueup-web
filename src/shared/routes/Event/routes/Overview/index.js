@@ -271,9 +271,12 @@ const NotificationButton = ({ organizer }) => {
     }
 
     return (
-        <PrimaryButton onClick={showPrompt} style={{ maxWidth: '100%', width: 250, marginTop: 30 }}>
+        <SecondaryButton
+            onClick={showPrompt}
+            style={{ maxWidth: '100%', width: 250, marginTop: 30 }}
+        >
             Get notified about new DJs
-        </PrimaryButton>
+        </SecondaryButton>
     );
 };
 
@@ -307,14 +310,21 @@ const EventOverview = (props) => {
         <>
             <PageTitle>DJ offers</PageTitle>
             <Overview {...props} data={data} loadingGigs={loadingGigs} refetch={refetch} />
-            <OtherGreatDJs
-                theEvent={theEvent}
-                data={data}
-                loadingGigs={loadingGigs}
-                refetch={refetch}
-                pagination={pagination}
-                setPagination={setPagination}
-            />
+            {[
+                eventStates.ACCEPTED,
+                eventStates.NO_MATCHES,
+                eventStates.INITIAL,
+                eventStates.OFFERING,
+            ].includes(theEvent?.status) && (
+                <OtherGreatDJs
+                    theEvent={theEvent}
+                    data={data}
+                    loadingGigs={loadingGigs}
+                    refetch={refetch}
+                    pagination={pagination}
+                    setPagination={setPagination}
+                />
+            )}
             <Route
                 path={match.path.replace('overview', '') + eventRoutes.checkout}
                 render={(props) => (
