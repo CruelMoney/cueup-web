@@ -26,7 +26,6 @@ import {
     PrimaryButton,
     SecondaryButton,
     SmartButton,
-    NotificationBubble,
     RowMobileCol,
 } from '../../../components/Blocks';
 import { SmallHeader, BodySmall, BodyBold, Body } from '../../../components/Text';
@@ -40,7 +39,6 @@ const GigCard = ({ loading, style, idx, gig, opportunity, ...props }) => {
     const { translate } = useTranslate();
     const [showDecline, setShowDecline] = useState(false);
     const [hasPassed, setHasPassed] = useState(false);
-    const { notifications } = useAppState();
 
     const [passOpportunity, { loading: passing }] = useMutation(PASS_OPPORTUNITY, {
         variables: {
@@ -75,12 +73,6 @@ const GigCard = ({ loading, style, idx, gig, opportunity, ...props }) => {
     }
 
     const createdTimeAgo = loading ? null : moment(createdAt?.UTC).fromNow();
-
-    const hasMessage =
-        gig &&
-        notifications &&
-        notifications[gig.id] &&
-        notifications[gig.id].read < notifications[gig.id].total;
 
     const linkTo = gig?.id
         ? `${translate(appRoutes.gig)}/${gig?.id}`
@@ -165,7 +157,6 @@ const GigCard = ({ loading, style, idx, gig, opportunity, ...props }) => {
                     <Offer
                         {...offer}
                         loading={loading}
-                        hasMessage={hasMessage}
                         gig={gig}
                         name={name}
                         opportunity={opportunity}
@@ -276,7 +267,6 @@ const actions = {
 const Offer = ({
     offer,
     gig,
-    hasMessage,
     loading,
     opportunity,
     showDecline,
@@ -316,18 +306,6 @@ const Offer = ({
                     undoDecline={undoDecline}
                     undoingDecline={undoingDecline}
                 />
-            )}
-            {hasMessage && (
-                <NotificationBubble
-                    border
-                    style={{
-                        position: 'absolute',
-                        right: -10,
-                        top: 10,
-                    }}
-                >
-                    <span>!</span>
-                </NotificationBubble>
             )}
         </RowMobileCol>
     );

@@ -25,6 +25,7 @@ import {
     SmartButton,
     RowWrap,
     InfoPill,
+    NotificationBubble,
 } from '../../../../components/Blocks';
 import GracefullImage from '../../../../components/GracefullImage';
 import { SmallHeader, BodySmall, BodyBold, Body, H3 } from '../../../../components/Text';
@@ -103,7 +104,7 @@ export const PotentialDjCard = ({ dj, idx, theEvent, page }) => {
                         </ColLeft>
                         <div style={{ flex: 1 }} />
                         <Hr style={{ marginBottom: 20 }} />
-                        <RowWrap right>
+                        <RowWrap>
                             <SmartButton onClick={sendEvent} loading={loading}>
                                 Send event details
                             </SmartButton>
@@ -372,22 +373,30 @@ const Offer = ({
                     </SmartButton>
                 )}
                 {!['FINISHED'].includes(status) && (
-                    <SmartButton
-                        level={accepted ? 'secondary' : 'primary'}
-                        data-cy="message-dj-button"
-                        style={{
-                            position: 'relative',
-                            overflow: 'visible',
-                            pointerEvents: 'all',
-                        }}
-                        onClick={(e) => {
-                            e.preventDefault();
-                            onOpenChat();
-                        }}
-                    >
-                        Message
-                        {hasMessage && <div className="notification-bubble">!</div>}
-                    </SmartButton>
+                    <div style={{ position: 'relative' }}>
+                        <SmartButton
+                            level={accepted ? 'secondary' : 'primary'}
+                            data-cy="message-dj-button"
+                            style={{
+                                overflow: 'visible',
+                                pointerEvents: 'all',
+                            }}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                onOpenChat();
+                            }}
+                        >
+                            Message
+                        </SmartButton>
+                        {hasMessage && (
+                            <NotificationBubble
+                                border
+                                style={{ position: 'absolute', top: -5, right: -5 }}
+                            >
+                                !
+                            </NotificationBubble>
+                        )}
+                    </div>
                 )}
                 {accepted && (
                     <PrimaryButton

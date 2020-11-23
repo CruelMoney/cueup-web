@@ -143,6 +143,7 @@ button {
     border: none;
     cursor: pointer;
     font-weight: 600;
+    margin: 0;
     outline: none;
     padding: 0;
 }
