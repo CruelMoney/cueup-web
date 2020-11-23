@@ -37,10 +37,9 @@ const EventGigs = React.forwardRef((props, ref) => {
         loading: loadingEvent,
         translate,
         match,
-
+        emailVerified,
         notifications,
         setActiveChat,
-
         data,
         loadingGigs,
         refetch,
@@ -93,7 +92,7 @@ const EventGigs = React.forwardRef((props, ref) => {
         }
     }, [refetchTries, refetch, gigs, status, potentialDjs]);
 
-    if (theEvent && !organizer?.appMetadata?.emailVerified) {
+    if (theEvent && !emailVerified) {
         return <EmailNotVerifiedSection gigs={gigs} organizer={organizer} />;
     }
 
@@ -237,15 +236,9 @@ const EmailNotVerifiedSection = ({ gigs, organizer }) => {
         });
     };
 
-    let text = `You
+    const text = `You
    need to verify your email <b>${organizer?.email}</b>, so you don't loose access to
    this page.`;
-
-    if (foundDjs > 0) {
-        text = `So far we've found ${foundDjs} ${foundDjs > 1 ? 'DJs' : 'DJ'} for you, but first you
-       need to verify your email <b>${organizer?.email}</b>, so you don't loose access to
-       this page.`;
-    }
 
     return (
         <Col style={{ maxWidth: 500 }}>
@@ -300,6 +293,8 @@ const EventOverview = (props) => {
         },
     });
 
+    const emailVerified = theEvent?.organizer?.appMetadata?.emailVerified;
+
     if (theEvent?.status === eventStates.CANCELLED) {
         return <CancelledEvent />;
     }
@@ -316,16 +311,17 @@ const EventOverview = (props) => {
                 eventStates.NO_MATCHES,
                 eventStates.INITIAL,
                 eventStates.OFFERING,
-            ].includes(theEvent?.status) && (
-                <OtherGreatDJs
-                    theEvent={theEvent}
-                    data={data}
-                    loadingGigs={loadingGigs}
-                    refetch={refetch}
-                    pagination={pagination}
-                    setPagination={setPagination}
-                />
-            )}
+            ].includes(theEvent?.status) &&
+                emailVerified && (
+                    <OtherGreatDJs
+                        theEvent={theEvent}
+                        data={data}
+                        loadingGigs={loadingGigs}
+                        refetch={refetch}
+                        pagination={pagination}
+                        setPagination={setPagination}
+                    />
+                )}
             <Route
                 path={match.path.replace('overview', '') + eventRoutes.checkout}
                 render={(props) => (
