@@ -305,7 +305,7 @@ const EventForm = ({
                 <SettingsSection
                     small
                     noBorder
-                    stickyTop={'15px'}
+                    sticky={false}
                     title={'Event Details'}
                     description={`Tell ${user.title} about your event.`}
                     style={{
