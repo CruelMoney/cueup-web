@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 import { Redirect } from 'react-router-dom';
 import { useLocation } from 'react-router';
+import { Helmet } from 'react-helmet-async';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 import { Media } from 'components/MediaContext';
 import { ME } from 'components/gql';
@@ -51,6 +52,15 @@ const Menu = ({ dark, relative, fullWidth, hideLogin }) => {
         >
             <EmailVerifier />
             <InstagramConnect />
+
+            <Helmet>
+                {isDJ && (
+                    <meta
+                        name="apple-itunes-app"
+                        content="app-id=1458267647, app-argument=userProfile"
+                    />
+                )}
+            </Helmet>
 
             <Container fullWidth={fullWidth} className="container">
                 <div className={'nav-container location_'}>

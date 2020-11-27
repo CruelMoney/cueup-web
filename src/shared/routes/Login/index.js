@@ -35,11 +35,6 @@ const LoginPage = () => {
                 <title>{metaTitle}</title>
                 <meta property="og:title" content={metaTitle} />
                 <meta name="twitter:title" content={metaTitle} />
-
-                <meta
-                    name="apple-itunes-app"
-                    content="app-id=1458267647, app-argument=userProfile"
-                />
             </Helmet>
 
             <Container>

@@ -220,13 +220,6 @@ const User = ({ match, location, user, error, loading, translate }) => {
                     <meta name="description" content={description} />
                     <meta name="twitter:description" content={description} />
                     <meta property="og:description" content={description} />
-
-                    {user.isOwn && (
-                        <meta
-                            name="apple-itunes-app"
-                            content="app-id=1458267647, app-argument=userProfile"
-                        />
-                    )}
                 </Helmet>
             )}
 
