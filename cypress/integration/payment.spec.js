@@ -66,7 +66,7 @@ describe('Payment', () => {
         cy.get('h3').should('contain', 'The DJ has been booked');
         cy.get('[data-cy=progress-step-complete]').contains('Confirm booking').should('exist');
 
-        cy.get('[data-cy=event-dj]').contains('Paid and confirmed');
+        cy.get('[data-cy=event-dj]', { timeout: 5000 }).contains('Paid and confirmed');
     });
 
     it('Works with only direct payout method', () => {
@@ -99,7 +99,7 @@ describe('Payment', () => {
             expect(theEvent).to.not.eq(null);
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
-            cy.get('[data-cy=event-dj]').should('exist');
+            cy.get('[data-cy=event-dj]', { timeout: 5000 }).should('exist');
             cy.get('[data-cy=progress-step-incomplete]')
                 .contains('Confirm booking')
                 .should('exist');
@@ -142,7 +142,7 @@ describe('Payment', () => {
             expect(theEvent).to.not.eq(null);
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
-            cy.get('[data-cy=event-dj]').should('exist');
+            cy.get('[data-cy=event-dj]', { timeout: 5000 }).should('exist');
             cy.get('[data-cy=progress-step-incomplete]')
                 .contains('Confirm booking')
                 .should('exist');
@@ -185,7 +185,7 @@ describe('Payment', () => {
             expect(theEvent).to.not.eq(null);
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
-            cy.get('[data-cy=event-dj]').should('exist');
+            cy.get('[data-cy=event-dj]', { timeout: 5000 }).should('exist');
             cy.get('[data-cy=progress-step-incomplete]')
                 .contains('Confirm booking')
                 .should('exist');
@@ -230,7 +230,7 @@ describe('Payment', () => {
             expect(theEvent).to.not.eq(null);
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
-            cy.get('[data-cy=event-dj]').should('exist');
+            cy.get('[data-cy=event-dj]', { timeout: 5000 }).should('exist');
             cy.get('[data-cy=progress-step-incomplete]')
                 .contains('Confirm booking')
                 .should('exist');
@@ -276,7 +276,7 @@ describe('Payment', () => {
             expect(theEvent).to.not.eq(null);
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
-            cy.get('[data-cy=event-dj]').should('exist');
+            cy.get('[data-cy=event-dj]', { timeout: 5000 }).should('exist');
             cy.get('[data-cy=progress-step-incomplete]')
                 .contains('Confirm booking')
                 .should('exist');
@@ -318,7 +318,7 @@ describe('Payment', () => {
             expect(theEvent).to.not.eq(null);
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
-            cy.get('[data-cy=event-dj]').should('exist');
+            cy.get('[data-cy=event-dj]', { timeout: 5000 }).should('exist');
             cy.get('[data-cy=progress-step-incomplete]')
                 .contains('Confirm booking')
                 .should('exist');
@@ -360,7 +360,7 @@ describe('Payment', () => {
             expect(theEvent).to.not.eq(null);
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
-            cy.get('[data-cy=event-dj]').should('exist');
+            cy.get('[data-cy=event-dj]', { timeout: 5000 }).should('exist');
             cy.get('[data-cy=progress-step-incomplete]')
                 .contains('Confirm booking')
                 .should('exist');
@@ -405,7 +405,7 @@ describe('Payment', () => {
             expect(theEvent).to.not.eq(null);
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
-            cy.get('[data-cy=event-dj]').should('exist');
+            cy.get('[data-cy=event-dj]', { timeout: 5000 }).should('exist');
             cy.get('[data-cy=progress-step-incomplete]')
                 .contains('Confirm booking')
                 .should('exist');
@@ -453,7 +453,7 @@ describe('Payment', () => {
             expect(theEvent).to.not.eq(null);
             cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
-            cy.get('[data-cy=event-dj]').should('exist');
+            cy.get('[data-cy=event-dj]', { timeout: 5000 }).should('exist');
             cy.get('[data-cy=progress-step-incomplete]')
                 .contains('Confirm booking')
                 .should('exist');

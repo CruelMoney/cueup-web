@@ -91,7 +91,7 @@ describe('Event', () => {
                 expect(theEvent).to.not.eq(null);
                 cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
-                cy.get('[data-cy=event-dj]').should('exist');
+                cy.get('[data-cy=event-dj]', { timeout: 5000 }).should('exist');
 
                 // // try chatting
                 // const message = 'Testing chat 🤓' + Math.random();
