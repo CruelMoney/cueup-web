@@ -175,23 +175,40 @@ const ArtistBio = ({ userMetadata, genres, loading, filterGenres }) => {
     );
 };
 
-const Price = ({ loading }) => {
+const Price = ({ loading, potential, pricing }) => {
     if (loading) {
         return (
-            <BodyBold style={{ fontSize: 16, marginTop: 'auto', display: 'block' }}>
+            <BodyBold style={{ fontSize: 16, display: 'block' }}>
                 <Skeleton width={80} />
             </BodyBold>
         );
     }
+    if (pricing) {
+        const formatter = new Intl.NumberFormat(undefined, {
+            style: 'currency',
+            currency: pricing.hourlyRate.currency,
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+        });
+
+        return (
+            <Body style={{ fontSize: 16, display: 'block', marginLeft: 15, minWidth: 100 }}>
+                <b>{formatter.format(pricing.hourlyRate.amount / 100)}</b> / hour
+            </Body>
+        );
+    }
+    if (potential) {
+        return null;
+    }
     return (
-        <BodyBold style={{ fontSize: 16, marginTop: 'auto', display: 'block' }}>
+        <BodyBold style={{ fontSize: 16, display: 'block' }}>
             Contact for price
             <InlineIcon icon={chatIcon} style={{ marginLeft: 6, marginBottom: -2 }} />
         </BodyBold>
     );
 };
 
-export const DJSearchEntry = ({ children, hidePrice, ...props }) => {
+export const DJSearchEntry = ({ children, ...props }) => {
     const { environment } = useServerContext();
     const { translate } = useTranslate();
     let { route } = props;
@@ -219,8 +236,10 @@ export const DJSearchEntry = ({ children, hidePrice, ...props }) => {
                     <SearchEntryRightSide>
                         <ArtistName {...props} />
                         <ArtistBio {...props} />
-                        {!hidePrice && <Price {...props} />}
-                        {children}
+                        <Row style={{ marginTop: 'auto', width: '100%' }} bottom between>
+                            {children}
+                            <Price {...props} />
+                        </Row>
                     </SearchEntryRightSide>
                 </SearchEntryWrapper>
             </NavLink>
@@ -304,6 +323,7 @@ const SearchList = styled.ul`
 const SearchEntryRightSide = styled(Col)`
     padding: 12px 15px;
     height: 180px;
+    width: 100%;
 `;
 
 const SearchEntryWrapper = styled(Row)`

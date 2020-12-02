@@ -68,12 +68,13 @@ export const PotentialDjCard = ({ dj, idx, theEvent, page }) => {
             key={dj?.id || idx}
             filterGenres={theEvent.genres}
             {...dj}
-            hidePrice
+            potential
         >
-            <div style={{ flex: 1 }} />
             <SmartButton loading={loading} onClick={sendEvent}>
                 Send event details
             </SmartButton>
+            <div style={{ flex: 1 }} />
+
             <ErrorMessageApollo error={error} />
         </DJSearchEntry>
     );

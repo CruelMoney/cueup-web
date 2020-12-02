@@ -74,7 +74,8 @@ export const Row = styled.div`
             : around
             ? 'space-around'
             : 'flex-start'};
-    align-items: ${({ middle }) => (middle ? 'center' : 'flex-start')};
+    align-items: ${({ middle, bottom }) =>
+        middle ? 'center' : bottom ? 'flex-end' : 'flex-start'};
     > button,
     > a {
         margin-left: 9px;

@@ -195,6 +195,12 @@ const EVENT_GIGS = gql`
                     artistName
                     displayName @client
                     genres
+                    pricing {
+                        hourlyRate {
+                            amount
+                            currency
+                        }
+                    }
                     picture {
                         path
                     }

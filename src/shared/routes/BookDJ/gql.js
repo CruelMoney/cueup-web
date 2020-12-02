@@ -11,6 +11,13 @@ export const SEARCH = gql`
                 picture {
                     path
                 }
+                pricing {
+                    hourlyRate {
+                        amount
+                        currency
+                        formatted
+                    }
+                }
                 userMetadata {
                     firstName
                 }
@@ -39,6 +46,13 @@ export const SEARCH_DEEP = gql`
                 artistName
                 permalink
                 genres
+                pricing {
+                    hourlyRate {
+                        amount
+                        currency
+                        formatted
+                    }
+                }
                 picture {
                     path
                 }
