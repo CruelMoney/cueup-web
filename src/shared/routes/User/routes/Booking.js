@@ -652,7 +652,7 @@ const Content = ({ user, values, createLoading, requestBooking, eventCreated, ct
                     <SimpleTableItem style={{ borderBottom: 'none', paddingBottom: 0 }}>
                         <span>Total</span>
                         <span style={{ textAlign: 'right', marginLeft: 12 }}>
-                            DJ will respond with price
+                            DJ responds with price
                         </span>
                     </SimpleTableItem>
                 )}
