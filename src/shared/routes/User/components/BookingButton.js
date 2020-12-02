@@ -63,7 +63,6 @@ const InnerBookingButton = ({
         (isChosenGig && ['CONFIRMED'].includes(event.status));
 
     if (canBeChatted) {
-        const { organizer } = event;
         return (
             <>
                 <CTAButton

@@ -80,8 +80,6 @@ const Booking = ({ user, loading }) => {
         isFromPrivateLink: isDirect,
     });
 
-    console.log({ form });
-
     const { registerValidation, unregisterValidation, runValidations } = useForm(form);
 
     const setValue = (data) => setForm((f) => ({ ...f, ...data }));
@@ -463,18 +461,18 @@ const EventForm = ({
 const BookingSidebar = ({
     loading,
     values,
-    requestBooking,
-    eventCreated,
+
     error,
-    createLoading,
+
     showLogin,
     isDirect,
     ...props
 }) => {
     const { state } = useLocation();
-    const { user } = props;
+    const { user, createLoading, requestBooking, eventCreated } = props;
 
     const { buttonLabel } = state || {};
+    const { pricing } = user || {};
 
     const ctaAction = buttonLabel || (isDirect ? `Book  ${user.title}` : 'Check availability');
     const ctaLabel = eventCreated ? 'Done' : ctaAction;
@@ -482,20 +480,14 @@ const BookingSidebar = ({
     return (
         <>
             <SideBar>
-                <Card style={{ minWidth: 300, maxWidth: 300 }}>
+                <Card style={{ minWidth: 300, maxWidth: 370, width: '100%' }}>
                     <div className="content">
-                        {loading ? <LoadingPlaceholder2 /> : <Content values={values} {...props} />}
+                        {loading ? (
+                            <LoadingPlaceholder2 />
+                        ) : (
+                            <Content values={values} ctaLabel={ctaLabel} {...props} />
+                        )}
                     </div>
-
-                    <CTAButton
-                        data-cy="book-button"
-                        disabled={createLoading || eventCreated}
-                        loading={createLoading}
-                        onClick={requestBooking}
-                        noIcon
-                    >
-                        {ctaLabel}
-                    </CTAButton>
                 </Card>
                 <ErrorMessageApollo
                     error={error}
@@ -509,18 +501,44 @@ const BookingSidebar = ({
             </SideBar>
 
             <MobileBookingButton>
-                <CTAButton
-                    type="submit"
-                    disabled={createLoading || eventCreated}
-                    loading={createLoading}
-                    onClick={requestBooking}
-                    noIcon
-                    style={{ margin: 0 }}
-                >
-                    {ctaLabel}
-                </CTAButton>
+                <Row middle>
+                    <MobilePricing pricing={pricing} />
+                    <CTAButton
+                        type="submit"
+                        disabled={createLoading || eventCreated}
+                        loading={createLoading}
+                        onClick={requestBooking}
+                        noIcon
+                        style={{ margin: 0, width: '100%' }}
+                    >
+                        {ctaLabel}
+                    </CTAButton>
+                </Row>
             </MobileBookingButton>
         </>
+    );
+};
+
+const MobilePricing = ({ pricing }) => {
+    if (!pricing) {
+        return null;
+    }
+
+    const { hourlyRate } = pricing;
+    const { amount, currency } = hourlyRate;
+
+    const formatter = new Intl.NumberFormat(undefined, {
+        style: 'currency',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+        currency,
+    });
+
+    return (
+        <Body style={{ width: '100%' }}>
+            <b>{formatter.format(amount / 100)}</b>
+            <span style={{ fontSize: '0.8em' }}> / hour</span>
+        </Body>
     );
 };
 
@@ -589,11 +607,16 @@ const PoweredBy = styled.div`
     }
 `;
 
-const Content = ({ user, values }) => {
-    const { artistName, userMetadata } = user;
+const Content = ({ user, values, createLoading, requestBooking, eventCreated, ctaLabel }) => {
+    const { artistName, userMetadata, pricing } = user;
     const { firstName } = userMetadata;
 
     const { guestsCount, date, equipment, startMinute, endMinute, name } = values;
+
+    const startMoment = moment(date).startOf('day').add(startMinute, 'minutes');
+    const endMoment = moment(date).startOf('day').add(endMinute, 'minutes');
+
+    const hours = endMoment.diff(startMoment, 'hours', true);
 
     return (
         <>
@@ -603,20 +626,68 @@ const Content = ({ user, values }) => {
             {name && <SidebarRow>{name}</SidebarRow>}
             <SidebarRow>{moment(date).format('dddd Do MMMM, YYYY')}</SidebarRow>
             <SidebarRow>
-                From {moment(date).startOf('day').add(startMinute, 'minutes').format('HH:mm')} to{' '}
-                {moment(date).startOf('day').add(endMinute, 'minutes').format('HH:mm')}
+                From {startMoment.format('HH:mm')} to{' '}
+                {endMoment.add(endMinute, 'minutes').format('HH:mm')}
             </SidebarRow>
             <SidebarRow>{guestsCount} guests</SidebarRow>
             {equipment?.speakers && <SidebarRow>Including speakers</SidebarRow>}
             {equipment?.lights && <SidebarRow>Including lights</SidebarRow>}
+            <CTAButton
+                style={{ width: '100%', margin: 0, marginTop: 24, height: 50 }}
+                data-cy="book-button"
+                disabled={createLoading || eventCreated}
+                loading={createLoading}
+                onClick={requestBooking}
+                noIcon
+            >
+                {ctaLabel}
+            </CTAButton>
+            <BodySmall style={{ textAlign: 'center', marginTop: 12 }}>
+                You won't be charged yet
+            </BodySmall>
             <div>
-                <SimpleTableItem>
-                    <span>Total</span>
-                    <span style={{ textAlign: 'right', marginLeft: 12 }}>
-                        DJ will respond with price
-                    </span>
-                </SimpleTableItem>
+                {pricing ? (
+                    <HourlyPricingTable pricing={pricing} hours={hours} />
+                ) : (
+                    <SimpleTableItem style={{ borderBottom: 'none', paddingBottom: 0 }}>
+                        <span>Total</span>
+                        <span style={{ textAlign: 'right', marginLeft: 12 }}>
+                            DJ will respond with price
+                        </span>
+                    </SimpleTableItem>
+                )}
             </div>
+        </>
+    );
+};
+
+const HourlyPricingTable = ({ pricing, hours }) => {
+    const { hourlyRate } = pricing;
+    const { amount, currency } = hourlyRate;
+
+    const formatter = new Intl.NumberFormat(undefined, {
+        style: 'currency',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+        currency,
+    });
+
+    return (
+        <>
+            <SimpleTableItem style={{ fontWeight: 400, borderTop: 'none', marginTop: 12 }}>
+                <span>
+                    {formatter.format(amount / 100)} x {hours} hours
+                </span>
+                <span style={{ textAlign: 'right', marginLeft: 12 }}>
+                    {formatter.format((amount / 100) * hours)}
+                </span>
+            </SimpleTableItem>
+            <SimpleTableItem style={{ borderBottom: 'none', paddingBottom: 0 }}>
+                <span>Estimated total</span>
+                <span style={{ textAlign: 'right', marginLeft: 12, color: '#122b48' }}>
+                    {formatter.format((amount / 100) * hours)}
+                </span>
+            </SimpleTableItem>
         </>
     );
 };

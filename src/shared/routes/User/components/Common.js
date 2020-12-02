@@ -47,6 +47,8 @@ const StickyBookingButtonWrapper = styled.div`
     padding: 15px;
     z-index: 90;
     margin-bottom: env(safe-area-inset-bottom);
+    background-color: #fff;
+    border-top: 1px solid #e9e9e9;
     > div,
     button {
         position: relative;
@@ -56,7 +58,7 @@ const StickyBookingButtonWrapper = styled.div`
 export const MobileBookingButton = ({ children, ...props }) => (
     <ShowBelow width={664}>
         <StickyBookingButtonWrapper>
-            <div>{children || <BookingButton {...props} />}</div>
+            <div>{children}</div>
         </StickyBookingButtonWrapper>
     </ShowBelow>
 );
