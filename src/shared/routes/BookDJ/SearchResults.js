@@ -192,7 +192,7 @@ const Price = ({ loading, potential, pricing }) => {
         });
 
         return (
-            <Body style={{ fontSize: 16, display: 'block', marginLeft: 15, minWidth: 100 }}>
+            <Body style={{ fontSize: 18, display: 'block', minWidth: 115 }}>
                 <b>{formatter.format(pricing.hourlyRate.amount / 100)}</b> / hour
             </Body>
         );

@@ -38,29 +38,18 @@ const InnerGradient = styled.span`
     background-position: calc((100 - var(--mouse-x, 0)) * 1%) calc((100 - var(--mouse-y, 0)) * 1%);
 `;
 
-const CTAIcon = styled.div`
-    position: absolute;
-    right: 24px;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform 250ms ease;
-    pointer-events: none;
-`;
-
 const CTA = styled.button`
-    width: calc(100% - 20px);
     height: 60px;
     box-sizing: border-box;
     background: linear-gradient(to right, #02abd0 0%, #00b5dd 50%, #31daff 100%) !important;
     border: none;
     outline: none;
-    font-weight: 700;
-    font-size: 15px;
+    font-weight: 600;
+    font-size: 16px;
     color: #ffffff !important;
-    letter-spacing: 0.05em;
     text-align: left;
-    padding-left: 24px;
     display: flex;
+    width: calc(100% - 20px);
     align-items: center;
     transition: all 250ms ease;
     position: relative;
@@ -77,12 +66,6 @@ const CTA = styled.button`
     &:disabled {
         cursor: default;
     }
-    ${({ noIcon }) =>
-        noIcon &&
-        css`
-            padding-left: 0;
-            width: 100%;
-        `}
 `;
 
 const useRelativeMousePosition = (ref) => {
@@ -108,29 +91,16 @@ const useRelativeMousePosition = (ref) => {
     }, [handleMouseMove, ref]);
 };
 
-export const CTAButton = ({ children, loading, noIcon, ...props }) => {
+export const CTAButton = ({ children, loading, ...props }) => {
     const ref = React.useRef(null);
     useRelativeMousePosition(ref);
     return (
-        <CTA {...props} noIcon={noIcon}>
+        <CTA {...props}>
             <GradientMouseAnimation>
                 <InnerGradient ref={ref} />
             </GradientMouseAnimation>
-            {(!loading || !noIcon) && (
-                <span style={{ pointerEvents: 'none', margin: noIcon ? 'auto' : 0 }}>
-                    {children}{' '}
-                </span>
-            )}
-            {!noIcon && (
-                <CTAIcon>
-                    {loading ? (
-                        <LoadingIndicator />
-                    ) : props.disabled ? null : (
-                        <Icon icon={arrowForward} style={{ fontSize: '1.5em' }} color="#fff" />
-                    )}
-                </CTAIcon>
-            )}
-            {noIcon && loading && <LoadingIndicator style={{ margin: 'auto' }} />}
+            {!loading && <span style={{ pointerEvents: 'none', margin: 'auto' }}>{children} </span>}
+            {loading && <LoadingIndicator style={{ margin: 'auto' }} />}
         </CTA>
     );
 };

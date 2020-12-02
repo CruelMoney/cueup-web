@@ -9,6 +9,12 @@ const USER = gql`
             permalink
             genres
             artistName
+            pricing {
+                hourlyRate {
+                    currency
+                    amount
+                }
+            }
             picture {
                 path
             }

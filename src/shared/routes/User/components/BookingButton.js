@@ -78,6 +78,19 @@ const InnerBookingButton = ({
         );
     }
 
+    const { pricing } = user;
+
+    let label = 'Check availability';
+    if (pricing) {
+        const formattedPrice = new Intl.NumberFormat(undefined, {
+            style: 'currency',
+            currency: pricing.hourlyRate.currency,
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+        }).format(pricing.hourlyRate.amount / 100);
+
+        label = `Book from ${formattedPrice} / hour`;
+    }
     return (
         <NavLink
             to={{
@@ -86,7 +99,7 @@ const InnerBookingButton = ({
             }}
         >
             <CTAButton noIcon={noIcon} style={buttonStyle} data-cy="booking-button">
-                CHECK AVAILABILITY
+                {label}
             </CTAButton>
         </NavLink>
     );

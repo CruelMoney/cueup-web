@@ -476,8 +476,8 @@ const BookingSidebar = ({
 
     const { buttonLabel } = state || {};
 
-    const ctaAction = buttonLabel || (isDirect ? `BOOK  ${user.title}` : 'CHECK AVAILABILITY');
-    const ctaLabel = eventCreated ? 'DONE' : ctaAction.toUpperCase();
+    const ctaAction = buttonLabel || (isDirect ? `Book  ${user.title}` : 'Check availability');
+    const ctaLabel = eventCreated ? 'Done' : ctaAction;
 
     return (
         <>
