@@ -87,9 +87,10 @@ describe('Event', () => {
 
             cy.request('POST', '/test/seed/event', eventData).then((response) => {
                 const theEvent = response.body.event;
-
                 expect(theEvent).to.not.eq(null);
                 cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
+
+                cy.wait(10000);
 
                 cy.get('[data-cy=event-dj]', { timeout: 5000 }).should('exist');
 
