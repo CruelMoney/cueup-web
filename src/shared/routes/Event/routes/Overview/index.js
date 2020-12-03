@@ -293,7 +293,7 @@ const EventOverview = (props) => {
             page: pagination.page,
         },
         onError: (error) => {
-            throw new Error(error);
+            throw error;
         },
     });
 

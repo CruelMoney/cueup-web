@@ -32,7 +32,7 @@ const ErrorFallBack = ({ error }) => {
                     >
                         Reload
                     </SecondaryButton>
-                    <ErrorMessageApollo error={error} />
+                    <ErrorMessageApollo style={{ marginTop: 24 }} error={error} />
                 </span>
             }
         />

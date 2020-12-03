@@ -28,6 +28,8 @@ export const getErrorMessage = (error) => {
         msgs = error.message;
     }
 
+    console.log({ error, networkError, graphQLErrors });
+
     if (networkError?.result?.errors?.length) {
         networkError.result.errors.map((e) => {
             msgs = e.message;
