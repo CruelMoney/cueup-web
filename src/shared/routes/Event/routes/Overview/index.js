@@ -14,6 +14,8 @@ import { REQUEST_EMAIL_VERIFICATION } from 'components/gql';
 import usePushNotifications from 'components/hooks/usePushNotifications';
 import PayForm from 'components/common/PayForm';
 import Pagination from 'components/Pagination';
+import ErrorMessage from 'components/common/ErrorMessage';
+import ErrorMessageApollo from 'components/common/ErrorMessageApollo';
 import {
     Title,
     Body,
@@ -282,14 +284,16 @@ const EventOverview = (props) => {
         page: 1,
     });
 
-    const { data = {}, loading: loadingGigs, refetch } = useQuery(EVENT_GIGS, {
-        skip: !theEvent.id,
+    const { data = {}, loading: loadingGigs, refetch, error } = useQuery(EVENT_GIGS, {
         fetchPolicy: 'cache-and-network',
         variables: {
             id: theEvent.id,
             hash: theEvent.hash,
             currency,
             page: pagination.page,
+        },
+        onError: (error) => {
+            throw new Error(error);
         },
     });
 
@@ -306,6 +310,7 @@ const EventOverview = (props) => {
         <>
             <PageTitle hideMobile>DJ offers</PageTitle>
             <Hr style={{ marginBottom: 30 }} />
+            <ErrorMessageApollo error={error} />
             <Overview
                 {...props}
                 data={data}
