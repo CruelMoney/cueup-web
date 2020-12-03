@@ -3,6 +3,7 @@ import * as Sentry from '@sentry/react';
 import { withRouter } from 'react-router';
 import { SecondaryButton } from 'components/Blocks';
 import EmptyPage from './EmptyPage';
+import ErrorMessageApollo from './ErrorMessageApollo';
 
 const ErrorPage = ({ children }) => {
     return (
@@ -12,7 +13,7 @@ const ErrorPage = ({ children }) => {
     );
 };
 
-const ErrorFallBack = () => {
+const ErrorFallBack = ({ error }) => {
     return (
         <EmptyPage
             style={{ height: '100vh' }}
@@ -31,6 +32,7 @@ const ErrorFallBack = () => {
                     >
                         Reload
                     </SecondaryButton>
+                    <ErrorMessageApollo error={error} />
                 </span>
             }
         />

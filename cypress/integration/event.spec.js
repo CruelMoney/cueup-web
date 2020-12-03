@@ -90,8 +90,6 @@ describe('Event', () => {
                 expect(theEvent).to.not.eq(null);
                 cy.visit('/event/' + theEvent.id + '/' + theEvent.hashKey + '/overview');
 
-                cy.wait(10000);
-
                 cy.get('[data-cy=event-dj]', { timeout: 5000 }).should('exist');
 
                 // // try chatting

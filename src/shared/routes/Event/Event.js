@@ -27,6 +27,7 @@ const Index = ({ location }) => {
     const { setAppState } = useAppState();
     const { translate } = useNamespaceContent(content, 'event');
     const { id, hash } = match.params;
+
     const { data, loading } = useQuery(EVENT, {
         skip: !id || !hash,
         variables: {
@@ -52,12 +53,12 @@ const Index = ({ location }) => {
         }
     }, [setAppState, theEvent]);
 
-    if (!loading && !theEvent) {
+    if (!loading && !theEvent?.id) {
         return <Redirect to={translate(appRoutes.notFound)} />;
     }
 
-    const title = theEvent ? theEvent.name : 'Cueup | Event';
-    const description = theEvent ? theEvent.description : null;
+    const title = theEvent?.name || 'Cueup | Event';
+    const description = theEvent?.description || null;
 
     return (
         <div>
@@ -73,7 +74,7 @@ const Index = ({ location }) => {
             </Helmet>
 
             <Menu dark relative fullWidth hideMenuItems />
-            {theEvent && (
+            {theEvent?.id && (
                 <Container fullWidth>
                     <Hr />
                     <RowMobileCol
