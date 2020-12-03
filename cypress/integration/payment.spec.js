@@ -411,7 +411,7 @@ describe('Payment', () => {
                 .should('exist');
             cy.get('[data-cy=offer-price]').should('contain', 'DKK5,000.00');
             cy.get('[data-cy=dj-profile-button]').first().click();
-            cy.get('.sidebar [data-cy=profile-cta]').should('contain', 'BOOK');
+            cy.get('.sidebar [data-cy=profile-cta]').should('contain', 'Book');
             cy.get('.sidebar [data-cy=profile-cta]').click();
 
             cy.completePayment();
@@ -421,7 +421,7 @@ describe('Payment', () => {
             );
             cy.get('[data-cy=close-popup-button]').click();
 
-            cy.get('.sidebar [data-cy=profile-cta]').should('contain', 'MESSAGE');
+            cy.get('.sidebar [data-cy=profile-cta]').should('contain', 'message');
         });
     });
 
@@ -459,7 +459,7 @@ describe('Payment', () => {
                 .should('exist');
             cy.get('[data-cy=offer-price]').should('contain', 'DKK5,000.00');
             cy.get('[data-cy=dj-profile-button]').first().click();
-            cy.get('.sidebar [data-cy=profile-cta]').should('contain', 'BOOK');
+            cy.get('.sidebar [data-cy=profile-cta]').should('contain', 'Book');
             cy.get('.sidebar [data-cy=profile-cta]').click();
 
             cy.completePayment();
@@ -469,7 +469,7 @@ describe('Payment', () => {
             );
             cy.get('[data-cy=close-popup-button]').click();
 
-            cy.get('.sidebar [data-cy=profile-cta]').should('contain', 'MESSAGE');
+            cy.get('.sidebar [data-cy=profile-cta]').should('contain', 'message');
         });
     });
 });
