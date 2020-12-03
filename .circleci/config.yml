@@ -27,9 +27,15 @@ commands:
       - run: ssh-keyscan github.com >>  ~/.ssh/known_hosts
       - run: git clone -b << pipeline.git.branch >> git@github.com:CruelMoney/gql-cueup.git  ~/backend
       - run: cd ~/backend; yarn --frozen-lockfile --production=false
+      - run:
+          name: Set mysql settings
+          command: |
+            sudo apt-get install default-mysql-client
+            mysql -h 127.0.0.1 -u root --execute="SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));"
       - run: 
           command: cd ~/backend; yarn test:run-server
           background: true
+
 
   yarn-install: 
     steps: 
