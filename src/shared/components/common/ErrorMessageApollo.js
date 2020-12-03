@@ -1,6 +1,7 @@
 import React from 'react';
 import { Mutation } from '@apollo/client/react/components';
 import { useServerContext } from 'components/hooks/useServerContext';
+import { getErrorMessage } from 'utils/errorHandler';
 import { REQUEST_EMAIL_VERIFICATION } from '../gql';
 
 export const handleError = (error) => {
@@ -11,31 +12,8 @@ export const handleError = (error) => {
     }
 };
 
-export const getErrorMessage = (error) => {
-    let msgs = 'There was an error';
-
-    if (!error) {
-        return null;
-    }
-    if (typeof error === 'string') {
-        msgs = error;
-    }
-
-    const { graphQLErrors } = error;
-
-    if (error.message && !graphQLErrors) {
-        return error.message;
-    }
-
-    if (graphQLErrors && graphQLErrors.length > 0) {
-        graphQLErrors.map((e) => (msgs = e.message));
-    }
-
-    return msgs;
-};
-
 const ErrorMessageApollo = ({ style, error, center, email, onFoundCode }) => {
-    let msgs = ['There was an error'];
+    let msgs = [];
     let showResend = false;
 
     if (!error) {
@@ -61,6 +39,10 @@ const ErrorMessageApollo = ({ style, error, center, email, onFoundCode }) => {
                 msgs = ['Email already in use'];
             }
         });
+    }
+
+    if (!msgs.length) {
+        msgs = [getErrorMessage(error)];
     }
 
     return (

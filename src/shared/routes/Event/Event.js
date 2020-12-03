@@ -61,51 +61,52 @@ const Index = ({ location }) => {
 
     return (
         <div>
-            {theEvent && (
-                <Helmet>
-                    <title>{title}</title>
-                    <meta property="og:title" content={title} />
-                    <meta name="twitter:title" content={title} />
+            <Helmet>
+                <title>{title}</title>
+                <meta property="og:title" content={title} />
+                <meta name="twitter:title" content={title} />
 
-                    <meta name="description" content={description} />
-                    <meta name="twitter:description" content={description} />
-                    <meta property="og:description" content={description} />
-                    <meta name="robots" content="noindex" />
-                </Helmet>
-            )}
+                <meta name="description" content={description} />
+                <meta name="twitter:description" content={description} />
+                <meta property="og:description" content={description} />
+                <meta name="robots" content="noindex" />
+            </Helmet>
+
             <Menu dark relative fullWidth hideMenuItems />
-            <Container fullWidth>
-                <Hr />
-                <RowMobileCol
-                    style={{
-                        marginTop: 24,
-                        flexGrow: 1,
-                        paddingBottom: 60,
-                    }}
-                >
-                    <CustomCol style={{ marginRight: 30 }}>
-                        <Sidebar theEvent={theEvent} />
-                        <LeftSideProgress>
+            {theEvent && (
+                <Container fullWidth>
+                    <Hr />
+                    <RowMobileCol
+                        style={{
+                            marginTop: 24,
+                            flexGrow: 1,
+                            paddingBottom: 60,
+                        }}
+                    >
+                        <CustomCol style={{ marginRight: 30 }}>
+                            <Sidebar theEvent={theEvent} />
+                            <LeftSideProgress>
+                                <EventProgress theEvent={theEvent} />
+                            </LeftSideProgress>
+                        </CustomCol>
+                        <Content
+                            location={location}
+                            match={match}
+                            theEvent={theEvent}
+                            loading={loading}
+                            translate={translate}
+                            notifications={notifications}
+                            setActiveChat={setActiveChat}
+                        />
+                        <RightSideProgress>
                             <EventProgress theEvent={theEvent} />
-                        </LeftSideProgress>
-                    </CustomCol>
-                    <Content
-                        location={location}
-                        match={match}
-                        theEvent={theEvent}
-                        loading={loading}
-                        translate={translate}
-                        notifications={notifications}
-                        setActiveChat={setActiveChat}
-                    />
-                    <RightSideProgress>
-                        <EventProgress theEvent={theEvent} />
-                    </RightSideProgress>
-                    <BottomProgress>
-                        <EventProgress theEvent={theEvent} />
-                    </BottomProgress>
-                </RowMobileCol>
-            </Container>
+                        </RightSideProgress>
+                        <BottomProgress>
+                            <EventProgress theEvent={theEvent} />
+                        </BottomProgress>
+                    </RowMobileCol>
+                </Container>
+            )}
         </div>
     );
 };
