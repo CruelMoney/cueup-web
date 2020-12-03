@@ -77,7 +77,7 @@ const Requirements = React.forwardRef(({ theEvent, history }, ref) => {
 
     return (
         <Col ref={ref}>
-            <PageTitle>Event details</PageTitle>
+            <PageTitle hideMobile>Event details</PageTitle>
             <Hr style={{ marginBottom: 30 }} />
             <SavingIndicator loading={loading} error={error} />
 

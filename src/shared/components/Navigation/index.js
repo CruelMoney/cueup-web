@@ -16,7 +16,7 @@ import InstagramConnect from '../InstagramConnect';
 import { LoadingIndicator, Container } from '../Blocks';
 import DesktopMenu from './DesktopMenu';
 
-const Menu = ({ dark, relative, fullWidth, hideLogin }) => {
+const Menu = ({ dark, relative, fullWidth, hideLogin, hideMenuItems }) => {
     const { t } = useTranslation();
 
     const { search } = useLocation();
@@ -72,37 +72,40 @@ const Menu = ({ dark, relative, fullWidth, hideLogin }) => {
                         </div>
 
                         <MainMenu className="main-menu">
-                            <Media greaterThan="sm">
-                                {loggedIn && !isPro && isDJ && (
-                                    <li>
-                                        <Navlink
-                                            label={'Go Pro'}
-                                            to={t(appRoutes.userSettings) + '/get-pro'}
-                                        />
-                                    </li>
-                                )}
-                            </Media>
+                            {!hideMenuItems && (
+                                <>
+                                    <Media greaterThan="sm">
+                                        {loggedIn && !isPro && isDJ && (
+                                            <li>
+                                                <Navlink
+                                                    label={'Go Pro'}
+                                                    to={t(appRoutes.userSettings) + '/get-pro'}
+                                                />
+                                            </li>
+                                        )}
+                                    </Media>
 
-                            {loggedIn ? null : (
-                                <li>
-                                    <Navlink
-                                        to={t(appRoutes.becomeDj)}
-                                        label={t('become-a-dj')}
-                                        important="true"
-                                    />
-                                </li>
+                                    {loggedIn ? null : (
+                                        <li>
+                                            <Navlink
+                                                to={t(appRoutes.becomeDj)}
+                                                label={t('become-a-dj')}
+                                                important="true"
+                                            />
+                                        </li>
+                                    )}
+
+                                    {!hideLogin && !loggedIn && !loading ? (
+                                        <li>
+                                            <Navlink
+                                                data-cy="login-button"
+                                                to={t(appRoutes.login)}
+                                                label={'Log In'}
+                                            />
+                                        </li>
+                                    ) : null}
+                                </>
                             )}
-
-                            {!hideLogin && !loggedIn && !loading ? (
-                                <li>
-                                    <Navlink
-                                        data-cy="login-button"
-                                        to={t(appRoutes.login)}
-                                        label={'Log In'}
-                                    />
-                                </li>
-                            ) : null}
-
                             {loggedIn ? (
                                 <li>
                                     <DesktopMenu user={user} />

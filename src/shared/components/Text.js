@@ -179,6 +179,15 @@ export const PageTitle = styled.h1`
         display: block;
         font-weight: 500;
     }
+
+    ${({ hideMobile }) =>
+        hideMobile
+            ? css`
+                  @media screen and (max-width: 1000px) {
+                      display: none;
+                  }
+              `
+            : ''}
 `;
 
 const BaseText = css`

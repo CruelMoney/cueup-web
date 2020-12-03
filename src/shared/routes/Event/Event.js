@@ -73,7 +73,7 @@ const Index = ({ location }) => {
                     <meta name="robots" content="noindex" />
                 </Helmet>
             )}
-            <Menu dark relative fullWidth />
+            <Menu dark relative fullWidth hideMenuItems />
             <Container fullWidth>
                 <Hr />
                 <RowMobileCol

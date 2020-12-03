@@ -38,7 +38,7 @@ const InnerBookingButton = ({
                     data-cy="profile-cta"
                     onClick={() => showPaymentForm(true)}
                 >
-                    BOOK {offer.offer.formatted}
+                    Book {offer.offer.formatted}
                 </CTAButton>
             </>
         );
@@ -52,7 +52,7 @@ const InnerBookingButton = ({
         return (
             <NavLink to={`${translate(appRoutes.event)}/${event.id}/${hash}/${eventRoutes.review}`}>
                 <CTAButton noIcon={noIcon} style={buttonStyle} data-cy="profile-cta">
-                    REVIEW
+                    Review
                 </CTAButton>
             </NavLink>
         );
@@ -71,7 +71,7 @@ const InnerBookingButton = ({
                     data-cy="profile-cta"
                     onClick={openChat}
                 >
-                    SEND MESSAGE
+                    Send message
                 </CTAButton>
             </>
         );

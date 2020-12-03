@@ -304,7 +304,8 @@ const EventOverview = (props) => {
 
     return (
         <>
-            <PageTitle>DJ offers</PageTitle>
+            <PageTitle hideMobile>DJ offers</PageTitle>
+            <Hr style={{ marginBottom: 30 }} />
             <Overview
                 {...props}
                 data={data}

@@ -87,7 +87,7 @@ const ReviewCol = styled(Col)`
 
 const Review = (props) => (
     <Col>
-        <PageTitle>Review</PageTitle>
+        <PageTitle hideMobile>Review</PageTitle>
         <Hr style={{ marginBottom: 30 }} />
         <Content {...props} />
     </Col>
