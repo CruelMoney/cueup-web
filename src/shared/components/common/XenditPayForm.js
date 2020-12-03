@@ -10,10 +10,11 @@ import { SmartButton, inputStyle, RowMobileCol, TeritaryButton } from 'component
 import { useForm, validators } from 'components/hooks/useForm';
 import { useServerContext } from 'components/hooks/useServerContext';
 import useTranslate from 'components/hooks/useTranslate';
+import { getErrorMessage } from 'utils/errorHandler';
 import { PAY_EVENT } from '../gql';
 import Popup from './Popup';
 import CountrySelector from './CountrySelector';
-import ErrorMessageApollo, { getErrorMessage } from './ErrorMessageApollo';
+import ErrorMessageApollo from './ErrorMessageApollo';
 
 const XenditForm = ({ paymentIntent, onPaymentConfirmed, goBack }) => {
     const { translate } = useTranslate();

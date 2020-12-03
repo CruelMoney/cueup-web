@@ -10,9 +10,10 @@ import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 import { useServerContext } from 'components/hooks/useServerContext';
 import useSocialLogin from 'components/hooks/useSocialLogin';
+import { getErrorMessage } from 'utils/errorHandler';
 import { LOGIN, REQUEST_PASSWORD_RESET } from '../../gql';
 import { Input } from '../../FormComponents';
-import ErrorMessageApollo, { getErrorMessage } from '../ErrorMessageApollo';
+import ErrorMessageApollo from '../ErrorMessageApollo';
 import fbLogo from '../../../assets/icons/fb.svg';
 import googleLogo from '../../../assets/icons/google.svg';
 

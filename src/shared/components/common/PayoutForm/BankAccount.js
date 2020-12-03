@@ -10,9 +10,10 @@ import { useForm } from 'components/hooks/useForm';
 import { ME } from 'components/gql';
 import { useServerContext } from 'components/hooks/useServerContext';
 import useTranslate from 'components/hooks/useTranslate';
+import { getErrorMessage } from 'utils/errorHandler';
 import { AllCurrencies, PAYMENT_PROVIDERS, PAYOUT_TYPES } from '../../../constants/constants';
 import CountrySelector, { BankSelector } from '../CountrySelector';
-import ErrorMessageApollo, { getErrorMessage } from '../ErrorMessageApollo';
+import ErrorMessageApollo from '../ErrorMessageApollo';
 import PhoneInput from '../PhoneInput';
 import {
     UPDATE_USER_PAYOUT,

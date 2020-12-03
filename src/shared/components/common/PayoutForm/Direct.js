@@ -6,8 +6,9 @@ import { SmartButton, Row, TeritaryButton, LoadingIndicator } from 'components/B
 import { useForm } from 'components/hooks/useForm';
 import { ME } from 'components/gql';
 import useTranslate from 'components/hooks/useTranslate';
+import { getErrorMessage } from 'utils/errorHandler';
 import { PAYMENT_PROVIDERS, PAYOUT_TYPES } from '../../../constants/constants';
-import ErrorMessageApollo, { getErrorMessage } from '../ErrorMessageApollo';
+import ErrorMessageApollo from '../ErrorMessageApollo';
 import PhoneInput from '../PhoneInput';
 import { UPDATE_USER_PAYOUT, USER_PAYOUT_METHOD, REMOVE_PAYOUT_METHOD } from './gql';
 

@@ -7,10 +7,10 @@ import removeCircle from '@iconify/icons-ion/remove-circle';
 
 import { useInView } from 'react-intersection-observer';
 import { Helmet } from 'react-helmet-async';
+import { getErrorMessage } from 'utils/errorHandler';
 import GracefullImage from '../../../components/GracefullImage';
 import { USER_PHOTOS, ADD_MEDIA, DELETE_MEDIA, UPDATE_PHOTOS_ORDER, USER } from '../gql';
 import EmptyPage from '../../../components/common/EmptyPage';
-import { getErrorMessage } from '../../../components/common/ErrorMessageApollo';
 import { Col, TeritaryButton } from '../../../components/Blocks';
 import { ButtonFileInput } from '../../../components/FormComponents';
 import { ImageCompressor } from '../../../utils/ImageCompressor';
