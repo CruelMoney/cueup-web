@@ -414,13 +414,15 @@ const EventForm = ({
                             initialValues={{
                                 speakers: form.equipment?.speakers,
                                 lights: form.equipment?.lights,
+                                microphone: form.equipment?.microphone,
                             }}
-                            onSave={({ speakers, lights }) => {
+                            onSave={({ speakers, lights, microphone }) => {
                                 setValue({
                                     equipment: {
                                         ...form.equipment,
                                         speakers,
                                         lights,
+                                        microphone,
                                     },
                                 });
                             }}
@@ -631,7 +633,8 @@ const Content = ({ user, values, createLoading, requestBooking, eventCreated, ct
             </SidebarRow>
             <SidebarRow>{guestsCount} guests</SidebarRow>
             {equipment?.speakers && <SidebarRow>Including speakers</SidebarRow>}
-            {equipment?.lights && <SidebarRow>Including lights</SidebarRow>}
+            {equipment?.lights && <SidebarRow>Including party lights</SidebarRow>}
+            {equipment?.microphone && <SidebarRow>Including microphone</SidebarRow>}
             <CTAButton
                 style={{ width: '100%', margin: 0, marginTop: 24, height: 50 }}
                 data-cy="book-button"

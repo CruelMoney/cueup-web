@@ -305,6 +305,7 @@ const DataWrapper = (props) => {
                 if (error) {
                     return;
                 }
+                setPagination({ page: 1 });
                 setValue({ location });
             }
         },

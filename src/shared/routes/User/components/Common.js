@@ -46,12 +46,13 @@ const StickyBookingButtonWrapper = styled.div`
     bottom: 0;
     padding: 15px;
     z-index: 90;
-    margin-bottom: env(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
     background-color: #fff;
     border-top: 1px solid #e9e9e9;
     > div,
     button {
         position: relative;
+        margin-bottom: 15px;
     }
 `;
 

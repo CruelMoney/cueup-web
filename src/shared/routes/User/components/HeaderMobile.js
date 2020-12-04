@@ -39,7 +39,7 @@ const HeaderMobile = (props) => {
             </GradientBg>
             <Container style={{ marginBottom: 30 }}>
                 <Col center>
-                    <NavLink to={'overview'} style={{ textAlign: 'center' }}>
+                    <NavLink to={'overview'} style={{ textAlign: 'center', marginBottom: 12 }}>
                         <HeaderTitle dark>
                             {artistName || firstName}
                             {isPro && (
@@ -59,7 +59,7 @@ const HeaderMobile = (props) => {
                         dark
                         reviews={reviews}
                         rating={rating}
-                        style={{ marginTop: 12, marginBottom: 15 }}
+                        style={{ marginBottom: 15 }}
                     />
 
                     {bookingEnabled && (

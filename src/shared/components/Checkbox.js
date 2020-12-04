@@ -59,6 +59,13 @@ const CheckboxContainer = styled.div`
     display: flex;
 `;
 
+const CheckboxLabel = styled.span`
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-left: 15px;
+`;
+
 const Checkbox = ({ defaultValue, onChange, ...props }) => {
     const [checked, setChecked] = useState(defaultValue || false);
 
@@ -107,9 +114,9 @@ export const DumbCheckbox = ({
                     </Icon>
                 </StyledCheckbox>
                 {label && (
-                    <span style={{ marginLeft: '15px', fontSize: small ? '16px' : '1em' }}>
+                    <CheckboxLabel style={{ fontSize: small ? '16px' : '1em' }}>
                         {label}
-                    </span>
+                    </CheckboxLabel>
                 )}
                 {children}
             </Label>
