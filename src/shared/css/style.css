@@ -948,8 +948,22 @@ ol.breadcrumbs a {
 #mobile-menu-portal {
     border: 0;
     left: 0;
-    position: absolute;
+
     right: 0;
     top: 0;
     z-index: 99;
+}
+
+#notification-portal {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    z-index: 99;
+}
+
+@media only screen and (max-width: 420px) {
+    #notification-portal {
+        display: none;
+    }
 }

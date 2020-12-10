@@ -9,7 +9,6 @@ import { showSupportChat } from '.';
 export const keyframeFadeIn = keyframes`
     from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: none; }
-
 `;
 
 const Wrapper = styled.div`
@@ -17,6 +16,8 @@ const Wrapper = styled.div`
     bottom: 80px;
     left: 24px;
     animation: ${keyframeFadeIn} 500ms ease;
+    max-width: 90vw;
+    z-index: 99;
 `;
 
 const Card = styled.div`
@@ -61,7 +62,7 @@ const SupportChatNudge = ({ message }) => {
                     <BodyBold style={{ fontSize: 14 }}>Message from Christopher</BodyBold>
                     <Body>{message}</Body>
                     <br />
-                    <Body style={{ fontSize: 14 }}>Chat now</Body>
+                    <Body style={{ fontSize: 14 }}>Chat with Cueup</Body>
                 </Card>
             </Row>
         </Wrapper>,
