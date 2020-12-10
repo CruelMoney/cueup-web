@@ -456,6 +456,7 @@ export const TeritaryButton = styled.button`
 			background: ${inverse ? '#fff' : '#f6f8f9'};
 		`}
     }
+    ${({ showBg }) => !!showBg && 'background: #f6f8f9;'}
 `;
 
 export const RoundButton = styled(TeritaryButton)`
@@ -816,7 +817,7 @@ const ClosePopupButtonWrapper = styled(TeritaryButton)`
 export const ClosePopupButton = (props) => {
     return (
         <ClosePopupButtonWrapper {...props}>
-            <svg height="26px" width="26px" viewBox="-4 -4 24 24">
+            <svg height="0.8em" width="0.8em" viewBox="-4 -4 24 24">
                 <line
                     stroke="#bec2c9"
                     strokeLinecap="round"

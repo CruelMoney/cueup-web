@@ -111,6 +111,7 @@ const HTML = ({
                 <div id="mobile-menu-portal" />
                 <div id="notification-portal" />
                 <div id="portal" />
+                <div id="support-chat-portal" />
             </body>
         </html>
     );

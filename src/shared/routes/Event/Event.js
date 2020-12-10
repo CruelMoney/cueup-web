@@ -1,4 +1,4 @@
-import React, { useEffect, forwardRef, useMemo } from 'react';
+import React, { useEffect, forwardRef, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
@@ -12,6 +12,7 @@ import { useAppState } from 'components/hooks/useAppState';
 import Popup from 'components/common/Popup';
 import Menu from 'components/Navigation';
 import { Media } from 'components/MediaContext';
+import SupportChatNudge from 'utils/supportChat/SupportChatNudge';
 import { Container, Row, Col, Hr, RowMobileCol } from '../../components/Blocks';
 import EventProgress from './components/blocks/EventProgress';
 import { EVENT } from './gql.js';
@@ -27,6 +28,13 @@ const Index = ({ location }) => {
     const { setAppState } = useAppState();
     const { translate } = useNamespaceContent(content, 'event');
     const { id, hash } = match.params;
+    const [showChatNudge, setShowChatNudge] = useState(false);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setShowChatNudge(true);
+        }, 3000);
+    }, []);
 
     const { data, loading } = useQuery(EVENT, {
         skip: !id || !hash,
@@ -73,6 +81,7 @@ const Index = ({ location }) => {
                 <meta name="robots" content="noindex" />
             </Helmet>
 
+            {showChatNudge && <SupportChatNudge message="Need help finding the right DJ?" />}
             <Menu dark relative fullWidth hideMenuItems />
             {theEvent?.id && (
                 <Container fullWidth>
