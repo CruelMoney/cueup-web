@@ -80,6 +80,7 @@ const HTML = ({
                     type="font/woff2"
                     crossOrigin="anonymous"
                 />
+                <script src="https://www.googleoptimize.com/optimize.js?id=OPT-KHGSR4C" />
 
                 {helmet.title.toComponent()}
                 {helmet.meta.toComponent()}
