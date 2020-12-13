@@ -125,10 +125,10 @@ const Signup = ({ name, history }) => {
     );
 };
 
-const SignupForm = ({ name }) => {
+const SignupForm = () => {
     const onLoggedIn = useOnLoggedIn();
     const { environment } = useServerContext();
-    const [form, setForm] = useState({ artistName: name });
+    const [form, setForm] = useState({});
     const updateForm = (data) => setForm((ff) => ({ ...ff, ...data }));
 
     const [loading, setLoading] = useState(false);
@@ -178,15 +178,6 @@ const SignupForm = ({ name }) => {
             <Input
                 v2
                 blurOnEnter={false}
-                label="DJ name"
-                placeholder="DJ Name Generator"
-                name="aristName"
-                value={form.artistName}
-                onChange={(artistName) => updateForm({ artistName })}
-            />
-            <Input
-                v2
-                blurOnEnter={false}
                 label="Email"
                 placeholder="mail@email.com"
                 type="email"
@@ -216,7 +207,7 @@ const SignupForm = ({ name }) => {
             />
             <div style={{ flex: 1 }} />
             <SmartButton loading={loading} onClick={signup} type="submit">
-                Continue
+                Continue with email
             </SmartButton>
         </form>
     );

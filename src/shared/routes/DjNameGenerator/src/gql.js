@@ -19,18 +19,8 @@ const GET_GENERATED_NAMES_COUNT = gql`
 `;
 
 const SLIM_SIGNUP = gql`
-    mutation CreateUser(
-        $email: EmailAddress!
-        $password: String!
-        $artistName: String
-        $redirectLink: String!
-    ) {
-        signUpToken(
-            email: $email
-            password: $password
-            redirectLink: $redirectLink
-            artistName: $artistName
-        ) {
+    mutation CreateUser($email: EmailAddress!, $password: String!, $redirectLink: String!) {
+        signUpToken(email: $email, password: $password, redirectLink: $redirectLink) {
             token
         }
     }

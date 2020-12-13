@@ -35,10 +35,12 @@ const install = (config) => {
     window.dataLayer = window.dataLayer || [];
 
     gtag('js', new Date());
-    gtag('config', config.trackingId);
+    gtag('config', config.trackingId, {
+        optimize_id: 'OPT-KHGSR4C',
+    });
 };
 
-const gtag = function () {
+export const gtag = function () {
     // Can't use arrow func + destructuring as Google expects
     // arguments objects in dataLayer (not an array of arguments).
     window.dataLayer.push(arguments);

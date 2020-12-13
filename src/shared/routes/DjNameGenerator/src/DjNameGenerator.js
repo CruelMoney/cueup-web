@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/client';
 import { useSpring, animated } from 'react-spring';
 import loadable from '@loadable/component';
 import { useServerContext } from 'components/hooks/useServerContext';
+import { useGoogleOptimize } from 'components/hooks/useGoogleOptimize';
 import useGenerateName, { TYPES } from './useGenerateName';
 import DraggableList from './DragableList';
 import ToggleSwitch from './ToggleSwitch';
@@ -20,6 +21,7 @@ import Counter from './Counter';
 import { NAME_GENERATED } from './gql';
 import RefreshButton, { RefreshButtonNaked } from './RefreshButton';
 import InstagramWidget from './InstagramWidget';
+import Signup from './Signup';
 
 const LazySignup = loadable(() => import('./Signup'));
 
@@ -187,10 +189,8 @@ function App({ match, history }) {
                             <AnimatedText content={name} onAnimated={setAnimated} />
                         </h1>
                         <div className="actions">
-                            <Sharing url={`/dj-name-generator?name=${encodeURIComponent(name)}`} />
-                            <ContinueButton show={hasGenerated && hasAnimated}>
-                                Become DJ
-                            </ContinueButton>
+                            {/* <Sharing url={`/dj-name-generator?name=${encodeURIComponent(name)}`} /> */}
+                            <SignupButton show={hasGenerated && hasAnimated} />
                         </div>
                     </div>
                 </div>
@@ -227,6 +227,15 @@ function App({ match, history }) {
         </>
     );
 }
+
+const SignupButton = ({ show }) => {
+    const label = useGoogleOptimize('0sRlfd5bTBiVaeOPPPXEmQ', [
+        'Become DJ',
+        'Are you an actual DJ?',
+    ]);
+
+    return <ContinueButton show={show}>{label}</ContinueButton>;
+};
 
 const Category = ({ enabled, c, toggleCategory, setName, hasGenerated, refreshCategory }) => {
     const withInput = c.key === TYPES.NAME;
