@@ -22,7 +22,6 @@ export const useGoogleOptimize = (experimentId, variants = []) => {
 
     // register the variation for this experiemnt
     useEffect(() => {
-        console.log('SETTING WINDOW GTAG', gtag);
         gtag('set', { exp: `${experimentId}.${variationId}` });
     }, [experimentId, variationId]);
 

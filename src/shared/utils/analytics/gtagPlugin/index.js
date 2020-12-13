@@ -32,8 +32,6 @@ const install = (config) => {
     script.src = `https://www.googletagmanager.com/gtag/js?id=${config.trackingId}`;
     head.insertBefore(script, head.firstChild);
 
-    window.dataLayer = window.dataLayer || [];
-
     gtag('js', new Date());
     gtag('config', config.trackingId, {
         optimize_id: 'OPT-KHGSR4C',
@@ -43,6 +41,7 @@ const install = (config) => {
 export const gtag = function () {
     // Can't use arrow func + destructuring as Google expects
     // arguments objects in dataLayer (not an array of arguments).
+    window.dataLayer = window.dataLayer || [];
     window.dataLayer.push(arguments);
 };
 
