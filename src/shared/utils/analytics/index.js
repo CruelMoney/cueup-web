@@ -46,7 +46,7 @@ export const useAnalytics = ({ disableTracking }) => {
                     disableTracking,
                 }),
                 googleAnalytics({
-                    trackingId: 'G-1YFGDM8MKZ',
+                    trackingId: 'UA-59876038-4', //'G-1YFGDM8MKZ',
                 }),
                 facebookPixelPlugin({
                     pixelId: '1461498583979582',
