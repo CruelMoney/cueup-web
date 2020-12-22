@@ -20,7 +20,6 @@ const getCountryResult = ({ db }) => async (countrySlug) => {
                     SELECT *
                     FROM cities
                     WHERE countrySlug = ${countrySlug}
-                    LIMIT 50
                 `
     );
     if (countryResult.length) {
