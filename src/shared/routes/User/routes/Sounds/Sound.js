@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useMutation } from '@apollo/client';
-import { Label } from 'components/FormComponents';
+import { NavLink } from 'react-router-dom';
 import { Title, BodySmall, SmallBold } from '../../../../components/Text';
 import { Row, Pill, SecondaryButton, SmartButton, Col } from '../../../../components/Blocks';
 import PlayIcon from '../../../../assets/icons/PlayIcon';
@@ -17,7 +16,7 @@ import useScanning from './useScanning';
 import SoundBars from './SoundBars';
 import RemoveSound from './RemoveSound';
 
-const Sound = ({
+export const SoundDumb = ({
     title,
     date,
     tags,
@@ -33,6 +32,7 @@ const Sound = ({
     image,
     demo,
     source,
+    isWidget,
 }) => {
     const isSoundcloud = source === 'soundcloud';
     const [showChildren, setShowChild] = useState(false);
@@ -73,10 +73,12 @@ const Sound = ({
     };
 
     return (
-        <Container small={small}>
+        <Container small={small} isWidget={isWidget}>
             <Row>
                 {!small && image && <AlbumCoverMobile src={image.path} />}
-                <Title style={{ marginBottom: '39px' }}>{small ? 'Latest Sound' : title}</Title>
+                {!isWidget && (
+                    <Title style={{ marginBottom: '39px' }}>{small ? 'Latest Sound' : title}</Title>
+                )}
             </Row>
             <Row>
                 {!small && image && <AlbumCover src={image.path} />}
@@ -88,11 +90,14 @@ const Sound = ({
                         }}
                     >
                         <PlayPauseButton state={player.state} onClick={togglePlay} />
-                        {small && (
-                            <SmallBold demi style={{ marginLeft: '12px', marginTop: '4px' }}>
-                                {title}
-                            </SmallBold>
-                        )}
+                        <Col style={{ marginLeft: '12px', alignItems: 'flex-start' }}>
+                            {(small || isWidget) && <BodySmall>{title}</BodySmall>}
+                            {isWidget && (
+                                <a href="/" target="_blank" rel="noopener noreferer">
+                                    <BodySmall style={{ fontSize: 14 }}>Artist</BodySmall>
+                                </a>
+                            )}
+                        </Col>
                         {player.error && (
                             <ErrorMessageApollo
                                 style={{ marginLeft: '15px' }}
@@ -100,7 +105,7 @@ const Sound = ({
                             />
                         )}
                         <div style={{ flex: 1 }} />
-                        <MonthYearDisplayer date={date} />
+                        {!isWidget && <MonthYearDisplayer date={date} />}
                         <Genres>
                             {tags.map((g) => (
                                 <Pill key={g}>{g}</Pill>
@@ -127,7 +132,7 @@ const Sound = ({
                     )}
                 </Col>
             </Row>
-            {!small && (
+            {!small && !isWidget && (
                 <Row right middle style={{ marginTop: '15px' }}>
                     <SimpleSharing shareUrl={link} label={null} />
                     {<div style={{ flex: 1 }} />}
@@ -174,9 +179,9 @@ const SoundCloudLogo = styled.div`
 `;
 
 const Container = styled.article`
-    margin-bottom: ${({ small }) => (small ? '15px' : '60px')};
-    padding-bottom: ${({ small }) => (small ? ' ' : '24px')};
-    border-bottom: ${({ small }) => (small ? ' ' : '1px solid #e9ecf0')};
+    margin-bottom: ${({ small, isWidget }) => (isWidget ? '' : small ? '15px' : '60px')};
+    padding-bottom: ${({ small, isWidget }) => (small || isWidget ? ' ' : '24px')};
+    border-bottom: ${({ small, isWidget }) => (small || isWidget ? ' ' : '1px solid #e9ecf0')};
 `;
 
 const Genres = styled(Row)`
@@ -193,13 +198,15 @@ const Genres = styled(Row)`
 
 const StyledStateButton = styled.button`
     display: flex;
-    height: 36px;
-    width: 36px;
-    min-width: 36px;
+    height: 45px;
+    width: 45px;
+    min-width: 45px;
     justify-content: center;
     align-items: center;
     border: 1px solid #50e3c2 !important;
-    border-radius: 18px;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
     svg {
         fill: #50e3c2;
         stroke: #50e3c2;
@@ -224,7 +231,7 @@ const PlayPauseButton = ({ state, ...props }) => {
     );
 };
 
-const Wrapper = (props) => {
+const Sound = (props) => {
     const { id, file, duration, userId, isOwn, title, description, tags } = props;
     const player = useSoundPlayer({
         src: file.path,
@@ -236,7 +243,7 @@ const Wrapper = (props) => {
 
     return (
         <>
-            <Sound
+            <SoundDumb
                 {...props}
                 player={player}
                 deleteSound={() => setShowRemove(true)}
@@ -310,4 +317,4 @@ const AlbumCoverMobile = styled(AlbumCover)`
     }
 `;
 
-export default Wrapper;
+export default Sound;

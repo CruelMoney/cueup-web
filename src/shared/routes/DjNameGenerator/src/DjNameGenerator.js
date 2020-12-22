@@ -21,7 +21,6 @@ import Counter from './Counter';
 import { NAME_GENERATED } from './gql';
 import RefreshButton, { RefreshButtonNaked } from './RefreshButton';
 import InstagramWidget from './InstagramWidget';
-import Signup from './Signup';
 
 const LazySignup = loadable(() => import('./Signup'));
 

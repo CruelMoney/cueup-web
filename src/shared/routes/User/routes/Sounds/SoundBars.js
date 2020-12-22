@@ -121,7 +121,7 @@ const SoundBarsRow = styled(Row)`
     cursor: pointer;
     touch-action: none;
     ${pulseLoad}
-    margin: 12px 0;
+    margin: 8px 0;
     @media only screen and (max-width: 768px) {
         height: 50px;
     }

@@ -10,6 +10,7 @@ import { useServerContext } from 'components/hooks/useServerContext.tsx';
 
 import { appRoutes } from 'constants/locales/appRoutes';
 import LazyDjNameGenerator from 'routes/DjNameGenerator';
+import LazySoundWidget from 'routes/SoundWidget';
 import { useAnalytics } from 'utils/analytics';
 import { OrganizationSeo } from 'components/SeoTags';
 import useAlternativePages from 'components/hooks/useAlternativePages';
@@ -96,6 +97,8 @@ const Setup = ({ location }) => {
             <Switch>
                 {/* Here we can add routes that are seperate from the rest of the site */}
                 <Route path={t(appRoutes.djNameGenerator)} component={LazyDjNameGenerator} />
+                <Route path={'/widget/player/:id'} component={LazySoundWidget} />
+
                 <Route component={LazyApp} />
             </Switch>
         </ErrorHandling>
