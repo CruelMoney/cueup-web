@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route, Switch, useHistory } from 'react-router';
+import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
@@ -295,6 +295,8 @@ const TopLocationsGrid = styled.ol`
 
 const TopLocations = ({ country, coords, radius, bounds, cities }) => {
     const { translate } = useTranslate();
+    const { pathname } = useLocation();
+
     const [ref, inView] = useInView({
         rootMargin: '200px',
         triggerOnce: true,
@@ -304,18 +306,41 @@ const TopLocations = ({ country, coords, radius, bounds, cities }) => {
         return null;
     }
 
+    const maxLength = pathname.includes('book-dj/all') ? cities.length : 50;
+    const showMore = cities.length > maxLength;
+
     return (
         <CustomSection style={{ marginBottom: 0 }}>
             <Container>
                 <H2 small>Top locations in {country}</H2>
                 <TopLocationsGrid>
-                    {cities.map(({ id, city, citySlug }) => (
-                        <li key={id}>
-                            <a href={translate(appRoutes.bookDj).replace(':location', citySlug)}>
-                                <BodySmall>{city}</BodySmall>
-                            </a>
-                        </li>
-                    ))}
+                    {cities.slice(0, maxLength).map(({ id, city, citySlug, countrySlug }, idx) =>
+                        idx === maxLength - 1 && showMore ? (
+                            <li key={'show-more'}>
+                                <a
+                                    href={
+                                        translate(appRoutes.bookDj).replace(
+                                            ':location',
+                                            countrySlug
+                                        ) + '/all'
+                                    }
+                                >
+                                    <BodySmall>Show all</BodySmall>
+                                </a>
+                            </li>
+                        ) : (
+                            <li key={id}>
+                                <a
+                                    href={translate(appRoutes.bookDj).replace(
+                                        ':location',
+                                        citySlug
+                                    )}
+                                >
+                                    <BodySmall>{city}</BodySmall>
+                                </a>
+                            </li>
+                        )
+                    )}
                 </TopLocationsGrid>
                 {coords && (
                     <MapWrapper ref={ref}>
