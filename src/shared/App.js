@@ -12,8 +12,7 @@ import LazySettings from 'routes/Settings';
 import LazyGigs from 'routes/Gigs';
 import LazyEvents from 'routes/Events';
 import ResetPassword from 'routes/ResetPassword';
-import LazyLocation, { LazySearch } from 'routes/BookDJ';
-import { LazyLocationsOverview } from 'routes/Location';
+import LazyLocation, { LazyCountriesOverview, LazySearch } from 'routes/BookDJ';
 import LazyGig from 'routes/Gig';
 import LazySideBarChat from 'components/SidebarChat';
 import LazyGetProfessional from 'routes/GetProfessional';
@@ -86,7 +85,7 @@ const RouteWrapper = () => {
                         component={LazyGig}
                     />
                     <Route path={t(appRoutes.bookDj)} component={LazyLocation} />
-                    <Route path={t(appRoutes.bookDjOverview)} component={LazyLocationsOverview} />
+                    <Route path={t(appRoutes.bookDjOverview)} component={LazyCountriesOverview} />
                     <Route path={t(appRoutes.djsNearMe)} component={LazyDjsNearMe} />
                     <Route path={t(appRoutes.search)} component={LazySearch} />
                     <Route path={t(appRoutes.resetPassword)} component={ResetPassword} />

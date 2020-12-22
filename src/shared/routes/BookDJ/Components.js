@@ -312,3 +312,19 @@ export const ResponsiveCell = styled.li`
             }
         `}
 `;
+
+export const TopLocationsGrid = styled.ol`
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 0;
+    list-style: none;
+    a:hover {
+        text-decoration: underline;
+    }
+    @media only screen and (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+        grid-row-gap: 30px;
+        grid-gap: 9px;
+    }
+`;

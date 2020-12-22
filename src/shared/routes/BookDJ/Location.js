@@ -29,6 +29,7 @@ import {
     MapWrapper,
     ResponsiveRow,
     ResponsiveRowFour,
+    TopLocationsGrid,
 } from './Components';
 
 import heroImg from './assets/hero_1.webp';
@@ -274,22 +275,6 @@ const FeaturedDjWrapper = styled.li`
         content: '';
         display: block;
         padding-top: 115%;
-    }
-`;
-
-const TopLocationsGrid = styled.ol`
-    display: grid;
-    grid-gap: 15px;
-    grid-template-columns: repeat(5, 1fr);
-    padding: 0;
-    list-style: none;
-    a:hover {
-        text-decoration: underline;
-    }
-    @media only screen and (max-width: 768px) {
-        grid-template-columns: repeat(2, 1fr);
-        grid-row-gap: 30px;
-        grid-gap: 9px;
     }
 `;
 
