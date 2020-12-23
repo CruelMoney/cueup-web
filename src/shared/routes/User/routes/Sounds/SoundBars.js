@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useMeasure } from '@softbind/hook-use-measure';
 import styled, { keyframes, css } from 'styled-components';
 import { Row } from '../../../../components/Blocks';
@@ -19,6 +19,12 @@ const SoundBars = ({
     jumpOrStart,
     style,
 }) => {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     if (!samples || samples.length === 0) {
         samples = demoSoundSamples;
     }
@@ -39,7 +45,7 @@ const SoundBars = ({
         }
     };
 
-    const resolution = bounds ? bounds.width / 6 : small ? 75 : 140;
+    const resolution = bounds ? bounds.width / 5 : small ? 75 : 140;
 
     const bars = useSamples({ resolution, samples });
     const position = progress / duration.totalSeconds;
@@ -66,16 +72,17 @@ const SoundBars = ({
             small={small}
             style={style}
         >
-            {bars.map((p, idx) => (
-                <SoundBar
-                    hovering={scanningPosition}
-                    key={idx}
-                    idx={idx}
-                    pressure={p}
-                    active={idx < activeIdx}
-                    halfActive={idx < halfActiveIdx}
-                />
-            ))}
+            {mounted &&
+                bars.map((p, idx) => (
+                    <SoundBar
+                        hovering={scanningPosition}
+                        key={idx}
+                        idx={idx}
+                        pressure={p}
+                        active={idx < activeIdx}
+                        halfActive={idx < halfActiveIdx}
+                    />
+                ))}
         </SoundBarsRow>
     );
 };
@@ -97,11 +104,22 @@ const pulseLoad = ({ dataLoading }) =>
           `
         : null;
 
-const SoundBarStyle = styled.span.attrs(({ pressure, active, halfActive, hovering }) => ({
+const growIn = keyframes`
+    from {
+        transform: scaleY(0);
+    }
+
+    to {
+        transform: scaleY(1);
+    }
+`;
+
+const SoundBarStyle = styled.span.attrs(({ idx, pressure, active, halfActive, hovering }) => ({
     style: {
         height: `${pressure}%`,
         background: active ? '#50e3c2' : halfActive ? '#50e3c299' : '#E9ECF0',
         transition: 'height 1000ms ease',
+        animationDelay: `${idx * 5}ms`,
     },
 }))`
     flex: 1;
@@ -109,6 +127,8 @@ const SoundBarStyle = styled.span.attrs(({ pressure, active, halfActive, hoverin
     border-radius: 10px;
     min-height: 4px;
     pointer-events: none;
+    transform: scaleY(0);
+    animation: ${growIn} 500ms forwards;
 `;
 
 const SoundBar = (props) => {
@@ -118,13 +138,12 @@ const SoundBar = (props) => {
 const SoundBarsRow = styled(Row)`
     height: ${({ small }) => (small ? '50px' : '80px')};
     align-items: center;
+    justify-content: flex-start;
     cursor: pointer;
     touch-action: none;
     ${pulseLoad}
-    margin: 8px 0;
-    @media only screen and (max-width: 768px) {
-        height: 50px;
-    }
+    margin-top: 6px;
+    margin-bottom: 0;
 `;
 
 export default SoundBars;

@@ -16,7 +16,11 @@ export const Style = createGlobalStyle`
     a{
         text-decoration: none
     }
+    h1,h2,h3,h4,h5,h6{
+        color: #122b48;
+    }
     article {
         padding: 1em;
     }
+ 
 `;

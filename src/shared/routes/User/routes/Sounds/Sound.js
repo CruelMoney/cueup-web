@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import { Title, BodySmall, SmallBold } from '../../../../components/Text';
+import { useMeasure } from '@softbind/hook-use-measure';
+import Logo from 'components/common/Logo';
+import { Title, BodySmall, SmallBold, H3 } from '../../../../components/Text';
 import { Row, Pill, SecondaryButton, SmartButton, Col } from '../../../../components/Blocks';
 import PlayIcon from '../../../../assets/icons/PlayIcon';
 import PauseIcon from '../../../../assets/icons/PauseIcon';
-import { SimpleSharing } from '../../../../components/common/Sharing-v2';
 import ErrorMessageApollo from '../../../../components/common/ErrorMessageApollo';
 import Popup from '../../../../components/common/Popup';
 import GracefullImage from '../../../../components/GracefullImage';
@@ -33,14 +34,14 @@ export const SoundDumb = ({
     demo,
     source,
     isWidget,
+    artist,
+    artistLink,
 }) => {
     const isSoundcloud = source === 'soundcloud';
-    const [showChildren, setShowChild] = useState(false);
+    const ref = useRef(null);
+    const { bounds } = useMeasure(ref, 'bounds');
 
-    // Wait until after client-side hydration to show
-    useEffect(() => {
-        setShowChild(true);
-    }, []);
+    const { width } = bounds || {};
 
     const {
         scanInSeconds,
@@ -73,15 +74,22 @@ export const SoundDumb = ({
     };
 
     return (
-        <Container small={small} isWidget={isWidget}>
+        <Container ref={ref} small={small} isWidget={isWidget}>
             <Row>
-                {!small && image && <AlbumCoverMobile src={image.path} />}
                 {!isWidget && (
-                    <Title style={{ marginBottom: '39px' }}>{small ? 'Latest Sound' : title}</Title>
+                    <a href={link} target="_blank" rel="noopener noreferrer">
+                        <Title style={{ marginBottom: '39px' }}>
+                            {small ? 'Latest Sound' : title}
+                        </Title>
+                    </a>
                 )}
             </Row>
             <Row>
-                {!small && image && <AlbumCover src={image.path} />}
+                {!small && image && width >= 500 && (
+                    <a href={link} target="_blank" rel="noopener noreferrer">
+                        <AlbumCover src={image.path} />
+                    </a>
+                )}
                 <Col style={{ flex: '1' }}>
                     <Row
                         between
@@ -90,14 +98,30 @@ export const SoundDumb = ({
                         }}
                     >
                         <PlayPauseButton state={player.state} onClick={togglePlay} />
-                        <Col style={{ marginLeft: '12px', alignItems: 'flex-start' }}>
-                            {(small || isWidget) && <BodySmall>{title}</BodySmall>}
-                            {isWidget && (
-                                <a href="/" target="_blank" rel="noopener noreferer">
-                                    <BodySmall style={{ fontSize: 14 }}>Artist</BodySmall>
+                        <Col
+                            center
+                            style={{ marginLeft: '12px', alignItems: 'flex-start', height: 45 }}
+                        >
+                            {(small || isWidget) && (
+                                <a href={link} target="_blank" rel="noopener noreferrer">
+                                    <H3
+                                        numberOfLines={1}
+                                        style={{
+                                            fontSize: 16,
+                                            margin: 0,
+                                        }}
+                                    >
+                                        {title}
+                                    </H3>
+                                </a>
+                            )}
+                            {isWidget && artist && (
+                                <a href={artistLink} target="_blank" rel="noopener noreferrer">
+                                    <BodySmall numberOfLines={1}>{artist}</BodySmall>
                                 </a>
                             )}
                         </Col>
+
                         {player.error && (
                             <ErrorMessageApollo
                                 style={{ marginLeft: '15px' }}
@@ -106,35 +130,55 @@ export const SoundDumb = ({
                         )}
                         <div style={{ flex: 1 }} />
                         {!isWidget && <MonthYearDisplayer date={date} />}
-                        <Genres>
-                            {tags.map((g) => (
-                                <Pill key={g}>{g}</Pill>
-                            ))}
-                        </Genres>
+                        {width >= 600 && (
+                            <Genres>
+                                {tags.map((g) => (
+                                    <Pill key={g}>{g}</Pill>
+                                ))}
+                            </Genres>
+                        )}
+                        {!small && image && width < 500 && (
+                            <a href={link} target="_blank" rel="noopener noreferrer">
+                                <AlbumCoverMobile src={image.path} />
+                            </a>
+                        )}
                     </Row>
-                    {showChildren && (
-                        <SoundBars
-                            loading={player.loading}
-                            progress={player.progress}
-                            samples={samples}
-                            duration={duration}
-                            setScanningPosition={setScanningPosition}
-                            small={small}
-                            scanningPosition={scanningPosition}
-                            jumpOrStart={jumpOrStart}
-                        />
-                    )}
-                    {!small && (
+                    <SoundBars
+                        loading={player.loading}
+                        progress={player.progress}
+                        samples={samples}
+                        duration={duration}
+                        setScanningPosition={setScanningPosition}
+                        small={small || width < 400}
+                        scanningPosition={scanningPosition}
+                        jumpOrStart={jumpOrStart}
+                    />
+
+                    {!small && !isWidget && (
                         <Row between>
-                            <BodySmall>{progressFormatted}</BodySmall>
-                            <BodySmall>{durationFormatted}</BodySmall>
+                            <BodySmall style={{ fontSize: 14 }}>{progressFormatted}</BodySmall>
+                            <BodySmall style={{ fontSize: 14 }}>{durationFormatted}</BodySmall>
+                        </Row>
+                    )}
+                    {isWidget && (
+                        <Row between middle>
+                            <Row>
+                                <BodySmall style={{ fontSize: 12 }}>{progressFormatted}</BodySmall>
+                                <BodySmall style={{ fontSize: 12, margin: '0 0.5em' }}>
+                                    {'/'}
+                                </BodySmall>
+                                <BodySmall style={{ fontSize: 12 }}>{durationFormatted}</BodySmall>
+                            </Row>
+                            <a href="https://cueup.io" target="_blank" rel="noopener noreferrer">
+                                <Logo height={16} width={38} />
+                            </a>
                         </Row>
                     )}
                 </Col>
             </Row>
             {!small && !isWidget && (
                 <Row right middle style={{ marginTop: '15px' }}>
-                    <SimpleSharing shareUrl={link} label={null} />
+                    {/* <SimpleSharing shareUrl={link} label={null} /> */}
                     {<div style={{ flex: 1 }} />}
                     {isSoundcloud && <SoundCloudLogo />}
 
@@ -201,10 +245,10 @@ const StyledStateButton = styled.button`
     height: 45px;
     width: 45px;
     min-width: 45px;
-    justify-content: center;
-    align-items: center;
     border: 1px solid #50e3c2 !important;
     border-radius: 50%;
+    justify-content: center;
+    align-items: center;
     background: transparent;
     cursor: pointer;
     svg {
@@ -301,20 +345,15 @@ const AlbumCover = styled(GracefullImage)`
     margin-right: 15px;
     object-fit: cover;
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.3);
-    @media only screen and (max-width: 768px) {
-        display: none !important;
-    }
 `;
 
 const AlbumCoverMobile = styled(AlbumCover)`
     width: 50px;
     min-width: 50px;
     height: 50px;
-    display: none !important;
     border-radius: 1px;
-    @media only screen and (max-width: 768px) {
-        display: block !important;
-    }
+    margin-right: 0px;
+    margin-left: 10px;
 `;
 
 export default Sound;

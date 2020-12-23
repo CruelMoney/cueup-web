@@ -193,6 +193,17 @@ export const PageTitle = styled.h1`
 const BaseText = css`
     color: ${({ white }) => (white ? '#fff' : '#122b48')};
     text-align: ${({ center }) => (center ? 'center' : 'left')};
+    ${({ numberOfLines }) =>
+        numberOfLines &&
+        css`
+            max-lines: ${numberOfLines};
+            display: -webkit-box;
+            -webkit-line-clamp: ${numberOfLines};
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            max-height: ${numberOfLines * 22.5}px;
+            word-wrap: anywhere;
+        `}
 `;
 
 export const H2 = styled.h2`
