@@ -6,6 +6,7 @@ const USER_SOUNDS = gql`
             edges {
                 id
                 title
+                url
                 description
                 date
                 samples

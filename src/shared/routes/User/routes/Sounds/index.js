@@ -93,7 +93,7 @@ const Sounds = ({ user, location, match, setShowPopup }) => {
                     link={location.pathname + '/' + sound.id}
                     isOwn={user.isOwn}
                     userId={user.id}
-                    artistName={user.title}
+                    user={user}
                     {...sound}
                 />
             ))}

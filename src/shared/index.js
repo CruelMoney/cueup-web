@@ -97,7 +97,7 @@ const Setup = ({ location }) => {
             <Switch>
                 {/* Here we can add routes that are seperate from the rest of the site */}
                 <Route path={t(appRoutes.djNameGenerator)} component={LazyDjNameGenerator} />
-                <Route path={'/widget/player/:id'} component={LazySoundWidget} />
+                <Route path={'/widget/player/:id/:userId?'} component={LazySoundWidget} />
 
                 <Route component={LazyApp} />
             </Switch>

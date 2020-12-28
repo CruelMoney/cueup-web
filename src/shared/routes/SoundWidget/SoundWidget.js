@@ -10,6 +10,7 @@ const SOUND = gql`
         sound(id: $id, userId: $userId) {
             id
             title
+            url
             description
             date
             samples
@@ -26,22 +27,32 @@ const SOUND = gql`
                 id
                 path
             }
+            user {
+                id
+                permalink
+                artistName
+                userMetadata {
+                    firstName
+                }
+            }
         }
     }
 `;
 
 const SoundWidget = () => {
-    const { id } = useParams();
+    const { id, userId } = useParams();
 
     const { data } = useQuery(SOUND, {
         variables: {
             id: id,
+            userId,
         },
     });
 
     if (!data) {
         return <p>Sound not found</p>;
     }
+
     return (
         <>
             <Helmet>

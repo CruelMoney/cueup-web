@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { useMeasure } from '@softbind/hook-use-measure';
 import Logo from 'components/common/Logo';
+import { useServerContext } from 'components/hooks/useServerContext';
 import { Title, BodySmall, SmallBold, H3 } from '../../../../components/Text';
 import { Row, Pill, SecondaryButton, SmartButton, Col } from '../../../../components/Blocks';
 import PlayIcon from '../../../../assets/icons/PlayIcon';
@@ -18,6 +19,7 @@ import SoundBars from './SoundBars';
 import RemoveSound from './RemoveSound';
 
 export const SoundDumb = ({
+    url,
     title,
     date,
     tags,
@@ -29,17 +31,16 @@ export const SoundDumb = ({
     deleteSound,
     onEdit,
     small,
-    link,
     image,
     demo,
     source,
     isWidget,
-    artist,
-    artistLink,
+    user,
 }) => {
     const isSoundcloud = source === 'soundcloud';
     const ref = useRef(null);
     const { bounds } = useMeasure(ref, 'bounds');
+    const { environment } = useServerContext();
 
     const { width } = bounds || {};
 
@@ -73,20 +74,15 @@ export const SoundDumb = ({
         player.state === playerStates.PLAYING ? player.pause() : player.play();
     };
 
+    const { artistName, permalink, userMetadata } = user || {};
+    const byName = artistName || userMetadata?.firstName;
+    const artistLink = permalink && `${environment.WEBSITE_URL}/user/${permalink}`;
+
     return (
         <Container ref={ref} small={small} isWidget={isWidget}>
             <Row>
-                {!isWidget && (
-                    <a href={link} target="_blank" rel="noopener noreferrer">
-                        <Title style={{ marginBottom: '39px' }}>
-                            {small ? 'Latest Sound' : title}
-                        </Title>
-                    </a>
-                )}
-            </Row>
-            <Row>
                 {!small && image && width >= 500 && (
-                    <a href={link} target="_blank" rel="noopener noreferrer">
+                    <a href={url} target="_blank" rel="noopener noreferrer">
                         <AlbumCover src={image.path} />
                     </a>
                 )}
@@ -102,24 +98,21 @@ export const SoundDumb = ({
                             center
                             style={{ marginLeft: '12px', alignItems: 'flex-start', height: 45 }}
                         >
-                            {(small || isWidget) && (
-                                <a href={link} target="_blank" rel="noopener noreferrer">
-                                    <H3
-                                        numberOfLines={1}
-                                        style={{
-                                            fontSize: 16,
-                                            margin: 0,
-                                        }}
-                                    >
-                                        {title}
-                                    </H3>
-                                </a>
-                            )}
-                            {isWidget && artist && (
-                                <a href={artistLink} target="_blank" rel="noopener noreferrer">
-                                    <BodySmall numberOfLines={1}>{artist}</BodySmall>
-                                </a>
-                            )}
+                            <a href={url} target="_blank" rel="noopener noreferrer">
+                                <H3
+                                    numberOfLines={1}
+                                    style={{
+                                        fontSize: 16,
+                                        margin: 0,
+                                    }}
+                                >
+                                    {title}
+                                </H3>
+                            </a>
+
+                            <a href={artistLink} target="_blank" rel="noopener noreferrer">
+                                <BodySmall numberOfLines={1}>{byName}</BodySmall>
+                            </a>
                         </Col>
 
                         {player.error && (
@@ -138,7 +131,7 @@ export const SoundDumb = ({
                             </Genres>
                         )}
                         {!small && image && width < 500 && (
-                            <a href={link} target="_blank" rel="noopener noreferrer">
+                            <a href={url} target="_blank" rel="noopener noreferrer">
                                 <AlbumCoverMobile src={image.path} />
                             </a>
                         )}
@@ -154,26 +147,18 @@ export const SoundDumb = ({
                         jumpOrStart={jumpOrStart}
                     />
 
-                    {!small && !isWidget && (
-                        <Row between>
+                    <Row between middle>
+                        <Row>
                             <BodySmall style={{ fontSize: 14 }}>{progressFormatted}</BodySmall>
+                            <BodySmall style={{ fontSize: 14, margin: '0 0.5em' }}>{'/'}</BodySmall>
                             <BodySmall style={{ fontSize: 14 }}>{durationFormatted}</BodySmall>
                         </Row>
-                    )}
-                    {isWidget && (
-                        <Row between middle>
-                            <Row>
-                                <BodySmall style={{ fontSize: 12 }}>{progressFormatted}</BodySmall>
-                                <BodySmall style={{ fontSize: 12, margin: '0 0.5em' }}>
-                                    {'/'}
-                                </BodySmall>
-                                <BodySmall style={{ fontSize: 12 }}>{durationFormatted}</BodySmall>
-                            </Row>
+                        {isWidget ? (
                             <a href="https://cueup.io" target="_blank" rel="noopener noreferrer">
                                 <Logo height={16} width={38} />
                             </a>
-                        </Row>
-                    )}
+                        ) : null}
+                    </Row>
                 </Col>
             </Row>
             {!small && !isWidget && (
