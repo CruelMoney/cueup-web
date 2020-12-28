@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { useMeasure } from '@softbind/hook-use-measure';
+import { InlineIcon } from '@iconify/react';
+import shareIcon from '@iconify/icons-ion/share';
 import Logo from 'components/common/Logo';
 import { useServerContext } from 'components/hooks/useServerContext';
 import { Title, BodySmall, SmallBold, H3 } from '../../../../components/Text';
@@ -17,6 +19,7 @@ import AddSound from './AddSound';
 import useScanning from './useScanning';
 import SoundBars from './SoundBars';
 import RemoveSound from './RemoveSound';
+import ShareSound from './ShareSound';
 
 export const SoundDumb = ({
     url,
@@ -36,6 +39,7 @@ export const SoundDumb = ({
     source,
     isWidget,
     user,
+    onShare,
 }) => {
     const isSoundcloud = source === 'soundcloud';
     const ref = useRef(null);
@@ -153,11 +157,20 @@ export const SoundDumb = ({
                             <BodySmall style={{ fontSize: 14, margin: '0 0.5em' }}>{'/'}</BodySmall>
                             <BodySmall style={{ fontSize: 14 }}>{durationFormatted}</BodySmall>
                         </Row>
-                        {isWidget ? (
+                        {isWidget && (
                             <a href="https://cueup.io" target="_blank" rel="noopener noreferrer">
                                 <Logo height={16} width={38} />
                             </a>
-                        ) : null}
+                        )}
+                        {onShare && !isWidget && (
+                            <SecondaryButton small style={{ minWidth: 0 }} onClick={onShare}>
+                                <InlineIcon
+                                    icon={shareIcon}
+                                    style={{ marginRight: '0.5em', marginBottom: '-2px' }}
+                                />
+                                Share
+                            </SecondaryButton>
+                        )}
                     </Row>
                 </Col>
             </Row>
@@ -268,6 +281,7 @@ const Sound = (props) => {
         track: props,
     });
     const [showPopup, setShowPopup] = useState(false);
+    const [share, setShare] = useState(false);
     const [removePopup, setShowRemove] = useState(false);
 
     return (
@@ -277,6 +291,7 @@ const Sound = (props) => {
                 player={player}
                 deleteSound={() => setShowRemove(true)}
                 onEdit={() => setShowPopup(true)}
+                onShare={() => setShare(true)}
             />
             {isOwn && (
                 <Popup
@@ -298,6 +313,7 @@ const Sound = (props) => {
                     />
                 </Popup>
             )}
+
             {isOwn && (
                 <Popup
                     showing={removePopup}
@@ -316,6 +332,11 @@ const Sound = (props) => {
                         onCancel={() => setShowRemove(false)}
                         closeModal={() => setShowRemove(false)}
                     />
+                </Popup>
+            )}
+            {share && (
+                <Popup showing width={'500px'} onClickOutside={() => setShare(false)}>
+                    <ShareSound {...props} />
                 </Popup>
             )}
         </>
