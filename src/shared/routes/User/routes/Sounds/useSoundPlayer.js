@@ -24,11 +24,23 @@ const setupPlayerJs = async (sound) => {
         receiver.emit('pause');
     });
 
+    receiver.on('getPaused', (callback) => {
+        callback(!sound.playing());
+    });
+
     receiver.on('getDuration', (callback) => callback(sound.duration));
 
     receiver.on('getVolume', (callback) => callback(sound.volume() * 100));
 
     receiver.on('setVolume', (value) => sound.volume(value / 100));
+
+    receiver.on('getCurrentTime', (callback) => {
+        callback(sound.progress());
+    });
+
+    receiver.on('setCurrentTime', (value) => {
+        sound.progress(value);
+    });
 
     receiver.on('mute', () => sound.mute(true));
 
@@ -41,6 +53,8 @@ const setupPlayerJs = async (sound) => {
     receiver.on('setLoop', (value) => sound.loop(value));
 
     sound.subscribeOnstop(() => receiver.emit('ended'));
+    sound.subscribeOnpause(() => receiver.emit('pause'));
+    sound.subscribeOnplay(() => receiver.emit('play'));
 
     sound.onTimeUpdate(() => {
         receiver.emit('timeupdate', {
