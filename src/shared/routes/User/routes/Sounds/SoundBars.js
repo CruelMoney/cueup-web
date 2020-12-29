@@ -143,7 +143,7 @@ const SoundBarsRow = styled(Row)`
     touch-action: none;
     ${pulseLoad}
     margin-top: 6px;
-    margin-bottom: 0;
+    margin-bottom: 4px;
 `;
 
 export default SoundBars;

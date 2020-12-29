@@ -21,7 +21,20 @@ import SoundBars from './SoundBars';
 import RemoveSound from './RemoveSound';
 import ShareSound from './ShareSound';
 
-export const SoundDumb = ({
+export const SoundDumb = (props) => {
+    const ref = useRef(null);
+    const { bounds } = useMeasure(ref, 'bounds');
+
+    const { width } = bounds || {};
+
+    return (
+        <Container ref={ref} small={props.small} isWidget={props.isWidget}>
+            {!width ? null : <SoundPlayer {...props} width={width} />}
+        </Container>
+    );
+};
+
+const SoundPlayer = ({
     url,
     title,
     date,
@@ -40,13 +53,11 @@ export const SoundDumb = ({
     isWidget,
     user,
     onShare,
+    width,
 }) => {
-    const isSoundcloud = source === 'soundcloud';
-    const ref = useRef(null);
-    const { bounds } = useMeasure(ref, 'bounds');
     const { environment } = useServerContext();
 
-    const { width } = bounds || {};
+    const isSoundcloud = source === 'soundcloud';
 
     const {
         scanInSeconds,
@@ -83,7 +94,7 @@ export const SoundDumb = ({
     const artistLink = permalink && `${environment.WEBSITE_URL}/user/${permalink}`;
 
     return (
-        <Container ref={ref} small={small} isWidget={isWidget}>
+        <>
             <Row>
                 {!small && image && width >= 500 && (
                     <a href={url} target="_blank" rel="noopener noreferrer">
@@ -157,11 +168,13 @@ export const SoundDumb = ({
                             <BodySmall style={{ fontSize: 14, margin: '0 0.5em' }}>{'/'}</BodySmall>
                             <BodySmall style={{ fontSize: 14 }}>{durationFormatted}</BodySmall>
                         </Row>
+                        <div style={{ flex: 1 }} />
                         {isWidget && (
                             <a href="https://cueup.io" target="_blank" rel="noopener noreferrer">
                                 <Logo height={16} width={38} />
                             </a>
                         )}
+                        {!isWidget && !small && isSoundcloud && <SoundCloudLogo />}
                         {onShare && !isWidget && !small && (
                             <SecondaryButton small style={{ minWidth: 0 }} onClick={onShare}>
                                 <InlineIcon
@@ -178,7 +191,6 @@ export const SoundDumb = ({
                 <Row right middle style={{ marginTop: '15px' }}>
                     {/* <SimpleSharing shareUrl={link} label={null} /> */}
                     {<div style={{ flex: 1 }} />}
-                    {isSoundcloud && <SoundCloudLogo />}
 
                     {isOwn && (
                         <SmartButton loading={loadingRemove} onClick={deleteSound} level="tertiary">
@@ -188,7 +200,7 @@ export const SoundDumb = ({
                     {isOwn && <SecondaryButton onClick={onEdit}>Edit</SecondaryButton>}
                 </Row>
             )}
-        </Container>
+        </>
     );
 };
 
