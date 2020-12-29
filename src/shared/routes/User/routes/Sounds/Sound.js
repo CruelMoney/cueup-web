@@ -145,7 +145,7 @@ const SoundPlayer = ({
                                 ))}
                             </Genres>
                         )}
-                        {!small && image && width < 500 && (
+                        {image && width < 500 && (
                             <a href={url} target="_blank" rel="noopener noreferrer">
                                 <AlbumCoverMobile src={image.path} />
                             </a>

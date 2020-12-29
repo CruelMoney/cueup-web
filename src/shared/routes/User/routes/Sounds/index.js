@@ -16,9 +16,9 @@ const Sounds = ({ user, location, match, setShowPopup }) => {
     const { isOwn } = user || {};
 
     const { data, loading } = useQuery(USER_SOUNDS, {
-        skip: !user,
+        skip: !user?.id,
         variables: {
-            userId: user && user.id,
+            userId: user?.id,
         },
     });
 
