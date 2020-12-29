@@ -3,7 +3,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Row, SecondaryButton, TextInput } from 'components/Blocks';
 
 import { useServerContext } from 'components/hooks/useServerContext';
-import { BodySmall, HeaderTitle, Title } from '../../../../components/Text';
+import { Title } from '../../../../components/Text';
 
 const getIframeCode = ({ websiteUrl, url, title, id, user, withFrame }) => {
     const { permalink, artistName, userMetadata } = user || {};

@@ -162,7 +162,7 @@ export const SoundDumb = ({
                                 <Logo height={16} width={38} />
                             </a>
                         )}
-                        {onShare && !isWidget && (
+                        {onShare && !isWidget && !small && (
                             <SecondaryButton small style={{ minWidth: 0 }} onClick={onShare}>
                                 <InlineIcon
                                     icon={shareIcon}
