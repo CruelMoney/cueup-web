@@ -335,7 +335,7 @@ const Sound = (props) => {
                 </Popup>
             )}
             {share && (
-                <Popup showing width={'500px'} onClickOutside={() => setShare(false)}>
+                <Popup showing width={'700px'} onClickOutside={() => setShare(false)}>
                     <ShareSound {...props} />
                 </Popup>
             )}

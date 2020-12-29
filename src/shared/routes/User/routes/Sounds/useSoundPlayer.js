@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { Howl } from 'howler';
 import { useAppState } from 'components/hooks/useAppState';
 import useLogActivity, { ACTIVITY_TYPES } from '../../../../components/hooks/useLogActivity';
@@ -9,6 +9,48 @@ export const playerStates = Object.freeze({
     STOPPED: 'STOPPED',
     LOADING: 'LOADING',
 });
+
+const setupPlayerJs = async (sound) => {
+    const playerjs = await import('player.js');
+    const receiver = new playerjs.Receiver();
+
+    receiver.on('play', () => {
+        sound.play();
+        receiver.emit('play');
+    });
+
+    receiver.on('pause', () => {
+        sound.pause();
+        receiver.emit('pause');
+    });
+
+    receiver.on('getDuration', (callback) => callback(sound.duration));
+
+    receiver.on('getVolume', (callback) => callback(sound.volume() * 100));
+
+    receiver.on('setVolume', (value) => sound.volume(value / 100));
+
+    receiver.on('mute', () => sound.mute(true));
+
+    receiver.on('unmute', () => sound.mute(false));
+
+    receiver.on('getMuted', (callback) => callback(sound.mute()));
+
+    receiver.on('getLoop', (callback) => callback(sound.loop()));
+
+    receiver.on('setLoop', (value) => sound.loop(value));
+
+    sound.subscribeOnstop(() => receiver.emit('ended'));
+
+    sound.onTimeUpdate(() => {
+        receiver.emit('timeupdate', {
+            seconds: sound.progress(),
+            duration: sound.duration,
+        });
+    });
+
+    receiver.ready();
+};
 
 //{id: howl}[]
 const tracks = [];
@@ -36,6 +78,8 @@ const useSoundPlayer = ({ track, src, duration }) => {
     const [progress, setProgress] = useState(initPos);
     const [error, setError] = useState();
 
+    const onTimeUpdateListener = useRef(() => {});
+
     useEffect(() => {
         console.log('init');
 
@@ -43,6 +87,7 @@ const useSoundPlayer = ({ track, src, duration }) => {
 
         const step = () => {
             setProgress(sound.progress());
+            onTimeUpdateListener.current();
         };
 
         const startInterval = () => {
@@ -91,7 +136,6 @@ const useSoundPlayer = ({ track, src, duration }) => {
         sound.subscribeOnend(onEnd);
         sound.subscribeOnload(onLoad);
         sound.subscribeOnloaderror(onLoadError);
-
         return () => {
             sound.unsubscribeOnplay(onPlay);
             sound.unsubscribeOnpause(onPause);
@@ -112,9 +156,19 @@ const useSoundPlayer = ({ track, src, duration }) => {
         setState(playerStates.LOADING);
         setAppState({ showBottomPlayer: true });
         globalUpdate(track);
-
         sound.play();
     }, [sound, setAppState, track]);
+
+    useEffect(() => {
+        setupPlayerJs({
+            ...sound,
+            play,
+            duration,
+            onTimeUpdate: (fun) => {
+                onTimeUpdateListener.current = fun;
+            },
+        });
+    }, [sound, play, duration]);
 
     return {
         play,
@@ -213,6 +267,9 @@ const useHowlWrapper = (src, soundId, data) => {
         howl,
         pause,
         play,
+        volume: howl.volume,
+        mute: howl.mute,
+        loop: howl.loop,
         progress: progress,
         playing: isPlaying,
         subscribeOnplay,

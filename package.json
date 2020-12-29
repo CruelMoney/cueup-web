@@ -94,6 +94,7 @@
     "music-metadata-browser": "^2.0.6",
     "node-fetch": "^2.6.0",
     "path-to-regexp": "^6.1.0",
+    "player.js": "^0.1.0",
     "puppeteer": "1.19.0",
     "query-string": "^6.13.5",
     "rc-slider": "^9.5.3",
