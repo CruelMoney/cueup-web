@@ -29,7 +29,7 @@ export const SoundDumb = (props) => {
 
     return (
         <Container ref={ref} small={props.small} isWidget={props.isWidget}>
-            {!width ? null : <SoundPlayer {...props} width={width} />}
+            <SoundPlayer {...props} width={width} />
         </Container>
     );
 };
@@ -96,7 +96,7 @@ const SoundPlayer = ({
     return (
         <>
             <Row>
-                {!small && image && width >= 500 && (
+                {!small && image && (!width || width >= 500) && (
                     <a href={url} target="_blank" rel="noopener noreferrer">
                         <AlbumCover src={image.path} />
                     </a>
@@ -174,7 +174,27 @@ const SoundPlayer = ({
                                 <Logo height={16} width={38} />
                             </a>
                         )}
-                        {!isWidget && !small && isSoundcloud && <SoundCloudLogo />}
+                        {!isWidget && !small && (
+                            <>
+                                {isSoundcloud && <SoundCloudLogo />}
+                                {isOwn && (
+                                    <SmartButton
+                                        loading={loadingRemove}
+                                        onClick={deleteSound}
+                                        level="tertiary"
+                                        small
+                                        style={{ minWidth: 0 }}
+                                    >
+                                        Remove
+                                    </SmartButton>
+                                )}
+                                {isOwn && (
+                                    <SecondaryButton small onClick={onEdit} style={{ minWidth: 0 }}>
+                                        Edit
+                                    </SecondaryButton>
+                                )}
+                            </>
+                        )}
                         {onShare && !isWidget && !small && (
                             <SecondaryButton small style={{ minWidth: 0 }} onClick={onShare}>
                                 <InlineIcon
@@ -187,19 +207,6 @@ const SoundPlayer = ({
                     </Row>
                 </Col>
             </Row>
-            {!small && !isWidget && (
-                <Row right middle style={{ marginTop: '15px' }}>
-                    {/* <SimpleSharing shareUrl={link} label={null} /> */}
-                    {<div style={{ flex: 1 }} />}
-
-                    {isOwn && (
-                        <SmartButton loading={loadingRemove} onClick={deleteSound} level="tertiary">
-                            Remove
-                        </SmartButton>
-                    )}
-                    {isOwn && <SecondaryButton onClick={onEdit}>Edit</SecondaryButton>}
-                </Row>
-            )}
         </>
     );
 };
