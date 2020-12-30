@@ -20,7 +20,6 @@ const Logos = styled.section`
     img {
         margin: auto;
         width: 100%;
-        height: 100%;
         opacity: 0.5;
         transition: opacity 500ms cubic-bezier(0.55, -0.01, 0.24, 1.01) 0s;
     }
