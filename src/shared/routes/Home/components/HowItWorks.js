@@ -3,12 +3,15 @@ import styled from 'styled-components';
 import HowItWorksCards from 'routes/HowItWorks/components/HowItWorksCards';
 import { Container, Col } from 'components/Blocks';
 import { H2, TextAccent } from 'components/Text';
+import TrustedBy from './TrustedBy';
 
 const HowitworksSection = () => {
     return (
         <Wrapper>
             <Container>
                 <Col center middle>
+                    <TrustedBy />
+
                     <TextAccent center>How it works</TextAccent>
                     <H2 center>
                         The easy way to
