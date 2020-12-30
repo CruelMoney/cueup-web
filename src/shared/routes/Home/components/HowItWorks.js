@@ -10,7 +10,7 @@ const HowitworksSection = () => {
         <Wrapper>
             <Container>
                 <Col center middle>
-                    <TrustedBy />
+                    <TrustedBy style={{ marginBottom: '60px', minHeight: 200 }} />
 
                     <TextAccent center>How it works</TextAccent>
                     <H2 center>

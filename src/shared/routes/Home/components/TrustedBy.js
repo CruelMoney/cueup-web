@@ -13,10 +13,9 @@ import tivoli from '../assets/tivoli.svg';
 const Logos = styled.section`
     display: grid;
     width: 100%;
-    min-height: 200px;
+    min-height: 115px;
     grid-template-columns: repeat(6, 1fr);
     column-gap: 4em;
-    margin-bottom: 60px;
 
     img {
         margin: auto;
@@ -42,12 +41,12 @@ const Logos = styled.section`
     }
 `;
 
-const TrustedBy = () => {
+const TrustedBy = ({ label = 'Trusted by', style }) => {
     return (
         <Col middle style={{ width: '100%' }}>
-            <TextAccent style={{ color: '#4d6480', opacity: 0.5 }}>Trusted by</TextAccent>
+            {label && <TextAccent style={{ color: '#4d6480', opacity: 0.5 }}>{label}</TextAccent>}
 
-            <Logos>
+            <Logos style={style}>
                 <GracefullImage src={microsoft} />
                 <GracefullImage src={hardRock} />
                 <GracefullImage src={hakkasan} />

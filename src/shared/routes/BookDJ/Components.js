@@ -275,7 +275,7 @@ export const ResponsiveRow = styled.ol`
     padding: 0;
     list-style: none;
 
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 767px) {
         grid-template-columns: 1fr;
         grid-row-gap: 30px;
     }
@@ -284,7 +284,11 @@ export const ResponsiveRow = styled.ol`
 export const ResponsiveRowFour = styled(ResponsiveRow)`
     grid-template-columns: repeat(4, 1fr);
     margin-bottom: 30px;
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 900px) {
+        grid-template-columns: repeat(3, 1fr);
+        grid-row-gap: 30px;
+    }
+    @media only screen and (max-width: 767px) {
         grid-template-columns: 1fr;
         grid-row-gap: 30px;
     }

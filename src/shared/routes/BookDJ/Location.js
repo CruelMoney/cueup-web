@@ -11,12 +11,13 @@ import { useServerContext } from 'components/hooks/useServerContext';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
 import SmartNavigation from 'components/Navigation';
-import { Container } from 'components/Blocks';
+import { Container, HideBelow } from 'components/Blocks';
 import { Body, BodySmall, H2, H3, PageTitle } from 'components/Text';
 import { GracefullPicture } from 'components/GracefullImage';
 import Footer from 'components/common/Footer';
 import LazyRequestForm from 'components/common/RequestForm';
 import FeaturedDJCard from 'components/FeaturedDJCard';
+import TrustedBy from 'routes/Home/components/TrustedBy';
 import defaultImage from '../../assets/images/default.png';
 import Map from '../../components/common/Map';
 import BookDJForm from './BookDJForm';
@@ -130,6 +131,11 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
                 siteDescription={siteDescription}
                 checkAvailability={checkAvailability}
             />
+            <HideBelow>
+                <Container>
+                    <TrustedBy style={{ marginBottom: 60 }} label={false} hideMobile />
+                </Container>
+            </HideBelow>
             {featuredDjs.length >= 3 && (
                 <FeaturedDjs djs={featuredDjs} activeLocation={activeLocation} />
             )}
