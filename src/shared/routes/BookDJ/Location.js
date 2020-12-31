@@ -11,7 +11,7 @@ import { useServerContext } from 'components/hooks/useServerContext';
 import useTranslate from 'components/hooks/useTranslate';
 import { appRoutes } from 'constants/locales/appRoutes';
 import SmartNavigation from 'components/Navigation';
-import { Container, HideBelow } from 'components/Blocks';
+import { Container, HideBelow, SecondaryButton } from 'components/Blocks';
 import { Body, BodySmall, H2, H3, PageTitle } from 'components/Text';
 import { GracefullPicture } from 'components/GracefullImage';
 import Footer from 'components/common/Footer';
@@ -164,19 +164,37 @@ const Location = ({ translate, activeLocation, environment, topDjs }) => {
     );
 };
 
-const DJsMapped = ({ djs }) => {
-    return djs.map((item, idx) => {
-        return (
-            <FeaturedDjWrapper
-                key={item.id}
-                ariaLabel={item.artistName || item.userMetadata?.firstName}
-                itemScope=" "
-                itemType="https://schema.org/ListItem"
-            >
-                <meta itemProp="position" content={idx + 1} />
+const DJsMapped = ({ djs, showBio }) => {
+    const { translate } = useTranslate();
 
-                <FeaturedDJCard border item={item} animate={false} lazyload />
-            </FeaturedDjWrapper>
+    return djs.map((item, idx) => {
+        const { bio, firstName } = item.userMetadata || {};
+        const displayName = item.artistName || firstName;
+        const route = `${translate(appRoutes.user)}/${item.permalink}/overview`;
+
+        return (
+            <li key={item.id}>
+                <FeaturedDjWrapper
+                    ariaLabel={displayName}
+                    itemScope=" "
+                    itemType="https://schema.org/ListItem"
+                >
+                    <meta itemProp="position" content={idx + 1} />
+                    <FeaturedDJCard border item={item} animate={false} lazyload />
+                </FeaturedDjWrapper>
+                {bio && showBio && (
+                    <>
+                        <Body itemProp="description" numberOfLines={4} style={{ marginTop: 12 }}>
+                            {bio}
+                        </Body>
+                        <Body style={{ fontWeight: 600, marginTop: '1em' }}>
+                            <NavLink to={route}>
+                                Book {displayName} <InlineIcon icon={forwardIcon} />
+                            </NavLink>
+                        </Body>
+                    </>
+                )}
+            </li>
         );
     });
 };
@@ -188,7 +206,7 @@ const FeaturedDjs = ({ djs, activeLocation }) => {
                 <H2 small>Featured DJs in {activeLocation.name}</H2>
                 <Body>Find and book the best DJs in {activeLocation.name}.</Body>
                 <ResponsiveRow>
-                    <DJsMapped djs={djs} />
+                    <DJsMapped djs={djs} showBio />
                 </ResponsiveRow>
             </Container>
         </CustomSection>
@@ -269,7 +287,7 @@ const Hero = ({ activeLocation, siteDescription, checkAvailability }) => {
     );
 };
 
-const FeaturedDjWrapper = styled.li`
+const FeaturedDjWrapper = styled.div`
     font-size: 100px;
     position: relative;
     > * {

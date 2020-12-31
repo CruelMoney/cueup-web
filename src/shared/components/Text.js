@@ -2,6 +2,22 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { Col } from './Blocks';
 
+const BaseText = css`
+    color: ${({ white }) => (white ? '#fff' : '#122b48')};
+    text-align: ${({ center }) => (center ? 'center' : 'left')};
+    ${({ numberOfLines }) =>
+        numberOfLines &&
+        css`
+            max-lines: ${numberOfLines};
+            display: -webkit-box;
+            -webkit-line-clamp: ${numberOfLines};
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            max-height: ${numberOfLines * 1.5}em;
+            word-wrap: anywhere;
+        `}
+`;
+
 export const StatUnit = styled.p`
     font-size: 15px;
     color: ${({ white }) => (white ? 'rgba(255,255,255,0.6)' : '#98a4b3')};
@@ -64,6 +80,7 @@ export const TitleClean = styled.h3`
 `;
 
 export const Body = styled.p`
+    ${BaseText}
     font-size: ${({ small }) => (small ? '16px' : '18px')};
     color: ${({ white }) => (white ? '#fff' : '#4d6480')};
     line-height: 27px;
@@ -80,20 +97,10 @@ export const BodyBold = styled(Body)`
 `;
 
 export const BodySmall = styled.p`
+    ${BaseText}
     font-size: 16px;
     color: #4d6480;
-    line-height: 22.5px;
-    ${({ numberOfLines }) =>
-        numberOfLines &&
-        css`
-            max-lines: ${numberOfLines};
-            display: -webkit-box;
-            -webkit-line-clamp: ${numberOfLines};
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            max-height: ${numberOfLines * 22.5}px;
-            word-wrap: anywhere;
-        `}
+    line-height: 1.5em;
 `;
 
 export const InlineLink = styled.a`
@@ -188,22 +195,6 @@ export const PageTitle = styled.h1`
                   }
               `
             : ''}
-`;
-
-const BaseText = css`
-    color: ${({ white }) => (white ? '#fff' : '#122b48')};
-    text-align: ${({ center }) => (center ? 'center' : 'left')};
-    ${({ numberOfLines }) =>
-        numberOfLines &&
-        css`
-            max-lines: ${numberOfLines};
-            display: -webkit-box;
-            -webkit-line-clamp: ${numberOfLines};
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            max-height: ${numberOfLines * 22.5}px;
-            word-wrap: anywhere;
-        `}
 `;
 
 export const H2 = styled.h2`

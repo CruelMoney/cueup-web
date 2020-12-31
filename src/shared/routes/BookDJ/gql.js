@@ -20,6 +20,7 @@ export const SEARCH = gql`
                 }
                 userMetadata {
                     firstName
+                    bio
                 }
                 appMetadata {
                     isPro

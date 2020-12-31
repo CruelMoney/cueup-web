@@ -21,6 +21,7 @@ const InnerContent = (user) => {
         genres,
         isNew,
         permalink,
+        pricing,
     } = user;
     const { translate } = useTranslate();
 
@@ -70,6 +71,7 @@ const InnerContent = (user) => {
                                 <InlineIcon icon={pinIcon} /> {location}
                             </Body>
                         )}
+                        {pricing && <Pricing pricing={pricing} />}
                     </Col>
                     {genres && (
                         <Col style={{ maxWidth: '40%' }}>
@@ -83,6 +85,21 @@ const InnerContent = (user) => {
                 </Row>
             </DjCardContent>
         </NavLink>
+    );
+};
+
+const Pricing = ({ pricing }) => {
+    const formatter = new Intl.NumberFormat(undefined, {
+        style: 'currency',
+        currency: pricing.hourlyRate.currency,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+    });
+
+    return (
+        <Body white>
+            <b>{formatter.format(pricing.hourlyRate.amount / 100)}</b> / hour
+        </Body>
     );
 };
 
