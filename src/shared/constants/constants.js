@@ -56,24 +56,6 @@ export const GENRES = [
     'Local',
     'Vinyl',
 ];
-export const WEEKDAYS = [
-    { name: 'Monday' },
-    { name: 'Tuesday' },
-    { name: 'Wednesday' },
-    { name: 'Thursday' },
-    { name: 'Friday' },
-    { name: 'Saturday' },
-    { name: 'Sunday' },
-];
-export const NOTIFICATIONS = [
-    { name: 'Gig request' },
-    { name: 'Gig reminder' },
-    { name: 'Gig paid' },
-    { name: 'Queup news' },
-    { name: 'New review' },
-];
-export const CUSTOMER_NOTIFICATIONS = [{ name: 'DJ offer' }, { name: 'Queup news' }];
-
 export const PAYOUT_TYPES = Object.freeze({
     BANK: 'BANK',
     DIRECT: 'DIRECT',
@@ -92,9 +74,6 @@ export const EDIT_STATUS = {
 
 const all = {
     Currencies,
-    CUSTOMER_NOTIFICATIONS,
-    NOTIFICATIONS,
-    WEEKDAYS,
     GENRES,
     OrganizerCurrencies,
 };

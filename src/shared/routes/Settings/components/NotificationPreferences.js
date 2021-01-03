@@ -38,6 +38,7 @@ const DJ_NOTIFICATION_TYPES = Object.freeze([
     'EVENT_UPDATED',
     'NEW_REVIEW',
     'NEW_MESSAGE',
+    'NEW_OPPORTUNITY',
 ]);
 const ORGANIZER_NOTIFICATION_TYPES = Object.freeze(['NEW_OFFER', 'DJ_CANCELLED', 'NEW_MESSAGE']);
 
