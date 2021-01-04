@@ -1,7 +1,32 @@
 import React, { memo } from 'react';
 import Modal from 'react-modal';
 import styled, { createGlobalStyle } from 'styled-components';
+import { Helmet } from 'react-helmet-async';
 import { ClosePopupButton, CardSimple } from 'components/Blocks';
+
+const baseStyle = {
+    overlay: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        padding: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        zIndex: 999,
+    },
+    content: {
+        position: 'absolute',
+        outline: 'none',
+        border: 'none',
+        background: 'none',
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        padding: 0,
+    },
+};
 
 const Popup = memo((props) => {
     const {
@@ -15,31 +40,9 @@ const Popup = memo((props) => {
         children,
         lazy = true,
         style,
+        ssr,
     } = props;
 
-    const baseStyle = {
-        overlay: {
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            padding: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            zIndex: 99,
-        },
-        content: {
-            position: 'absolute',
-            outline: 'none',
-            border: 'none',
-            background: 'none',
-            left: 0,
-            top: 0,
-            right: 0,
-            bottom: 0,
-            padding: 0,
-        },
-    };
     const handleClose = (_) => {
         if (onClose) {
             onClose();
@@ -48,10 +51,12 @@ const Popup = memo((props) => {
         onClickOutside && onClickOutside();
     };
 
+    const MElement = ssr ? ModalSSR : Modal;
+
     return (
         <>
             <GlobalStyle />
-            <Modal
+            <MElement
                 style={baseStyle}
                 isOpen={showing}
                 contentLabel="popup"
@@ -89,10 +94,24 @@ const Popup = memo((props) => {
                     ) : null}
                     {!lazy || showing ? children : null}
                 </PopupContent>
-            </Modal>
+            </MElement>
         </>
     );
 });
+
+const ModalSSR = ({ isOpen, style, children }) => {
+    if (!isOpen) {
+        return null;
+    }
+    return (
+        <div style={{ ...baseStyle.overlay, zIndex: 99999 }}>
+            <Helmet>
+                <body className="popup-open" />
+            </Helmet>
+            {children}
+        </div>
+    );
+};
 
 const GlobalStyle = createGlobalStyle`
     .popup-open{

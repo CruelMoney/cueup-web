@@ -13,6 +13,7 @@ import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { DJSeoTags } from 'components/SeoTags';
 import { Media } from 'components/MediaContext';
 import Menu from 'components/Navigation';
+import Popup from 'components/common/Popup';
 import Sidebar, { SidebarContent } from '../../components/Sidebar';
 import Footer from '../../components/common/Footer';
 import { Container, Row, Col, Divider } from '../../components/Blocks';
@@ -22,7 +23,7 @@ import { SimpleSharing } from '../../components/common/Sharing-v2';
 import { LoadingPlaceholder2 } from '../../components/common/LoadingPlaceholder';
 
 import GracefullImage from '../../components/GracefullImage';
-import { SmallHeader } from '../../components/Text';
+import { Body, SmallHeader } from '../../components/Text';
 import { ME } from '../../components/gql';
 import useLogActivity, { ACTIVITY_TYPES } from '../../components/hooks/useLogActivity';
 import BookingButton from './components/BookingButton';
@@ -127,6 +128,18 @@ const Content = React.memo(({ match, ...userProps }) => {
                 bookingEnabled={bookingEnabled}
             />
 
+            {user && (
+                <Popup
+                    ssr
+                    showing={location.pathname.includes('/description')}
+                    onClose={() => history.push('overview')}
+                >
+                    <Body style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+                        {user.userMetadata.bio}
+                    </Body>
+                </Popup>
+            )}
+
             <UserContainer>
                 <Row style={{ alignItems: 'stretch' }}>
                     <Media greaterThan={'sm'}>
@@ -142,7 +155,11 @@ const Content = React.memo(({ match, ...userProps }) => {
                     >
                         <Switch location={location}>
                             <Route
-                                path={[match.url + '/overview', match.url + '/checkout']}
+                                path={[
+                                    match.url + '/overview',
+                                    match.url + '/checkout',
+                                    match.url + '/description',
+                                ]}
                                 render={(props) => <Overview {...props} {...userProps} />}
                             />
                             <Route

@@ -1,15 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, Route } from 'react-router-dom';
 import { Icon, InlineIcon } from '@iconify/react';
 import addCircleIcon from '@iconify/icons-ion/add-circle';
 import chatIcon from '@iconify/icons-ion/chatbubbles';
 import phoneIcon from '@iconify/icons-ion/call';
 
 import { useLocation, useParams } from 'react-router';
+import { match } from 'path-to-regexp';
 import { appRoutes, userRoutes } from 'constants/locales/appRoutes';
 import Rating from 'components/common/RatingNew';
 import useTranslate from 'components/hooks/useTranslate';
+import Popup from 'components/common/Popup';
 import { Title, Citation, Cite, Body } from '../../../components/Text';
 import ReadMoreExpander from '../../../components/ReadMoreExpander';
 import {
@@ -217,7 +219,15 @@ const Bio = ({ bio, firstName, style, isOwn, to }) => {
     return (
         <LeftItem style={{ paddingTop: 0, ...style }}>
             <Title>About {firstName}</Title>
-            <ReadMoreExpander content={bio || '...'} />
+            <Body
+                numberOfLines={8}
+                style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word', marginBottom: 15 }}
+            >
+                {bio || '...'}
+            </Body>
+            <Link to={'description'}>
+                <ReadMore>Read more</ReadMore>
+            </Link>
             {isOwn && (
                 <EditButton title="Edit bio" to={to} style={{ marginTop: 0 }}>
                     Edit
@@ -540,6 +550,7 @@ const Overview = ({ user, loading, location, history }) => {
     return (
         <ColumnLayout>
             <DownloadAppPopup isActive={appPopup} close={onModalClose} />
+
             <Row>
                 <HalfColLeft>
                     <Show maxWidth="990px">
