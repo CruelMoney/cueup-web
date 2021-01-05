@@ -137,7 +137,7 @@ const SoundPlayer = ({
                             />
                         )}
                         <div style={{ flex: 1 }} />
-                        {!isWidget && <MonthYearDisplayer date={date} />}
+
                         {width >= 600 && (
                             <Genres>
                                 {tags.map((g) => (
