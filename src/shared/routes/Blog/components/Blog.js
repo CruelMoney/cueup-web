@@ -3,7 +3,7 @@ import { NavLink as Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { SmartButton, Row, Container } from 'components/Blocks.js';
 import { appRoutes } from 'constants/locales/appRoutes';
-import posts from '../posts.json';
+import posts from '../posts';
 import Popup from '../../../components/common/Popup';
 import NewsletterSignup from './NewsletterSignup';
 

@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import posts from 'routes/Blog/posts.json';
+import posts from 'routes/Blog/posts';
 import { getLocationUrls } from './addLocationData';
 
 const expressSitemapXml = require('express-sitemap-xml');

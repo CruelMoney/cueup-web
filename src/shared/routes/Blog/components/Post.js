@@ -4,7 +4,7 @@ import Disqus from 'disqus-react';
 import styled from 'styled-components';
 import { useServerContext } from 'components/hooks/useServerContext';
 import { Hr, Container, CardSimple, Row, Col, Card } from 'components/Blocks';
-import posts from '../posts.json';
+import posts from '../posts';
 import Sharing from '../../../components/common/Sharing-v2';
 import ButtonLink from '../../../components/common/ButtonLink';
 import OnlyClientSide from '../../../components/higher-order/onlyClientSide';
@@ -96,13 +96,6 @@ const Post = ({ match }) => {
                     </OnlyClientSide>
                 </Container>
             </main>
-            <footer className="newsletter-signup">
-                <Row center style={{ width: '100%' }}>
-                    <CardSimple shadow style={{ padding: '2em 4em' }}>
-                        <NewsletterSignup />
-                    </CardSimple>
-                </Row>
-            </footer>
         </article>
     );
 };

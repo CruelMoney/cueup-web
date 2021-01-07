@@ -184,7 +184,8 @@ button.subscribe-newsletter {
 }
 .blog-post ul {
     list-style: disc;
-    margin: -1.2em 0 1.5em;
+    margin: 0em 0 1.5em;
+    padding-left: 1.5em;
 }
 .blog-post li {
     margin-bottom: 0;
@@ -266,7 +267,7 @@ button.subscribe-newsletter {
 }
 .blog h3 {
     color: #32325d;
-    font-size: 35px;
+    font-size: 24px;
     line-height: 1.2em;
     margin-bottom: 0.2em;
 }
@@ -330,4 +331,26 @@ footer.newsletter-signup .card {
     .post-content > p:first-child {
         font-size: 1em;
     }
+}
+
+#toc_container {
+    background: #f9f9f9 none repeat scroll 0 0;
+    border: 1px solid #aaa;
+    display: table;
+    font-size: 95%;
+    margin-bottom: 1em;
+    padding: 20px;
+    width: auto;
+}
+
+.toc_title {
+    font-weight: 700;
+    text-align: center;
+}
+
+#toc_container li,
+#toc_container ol,
+#toc_container ol li {
+    list-style: outside none none !important;
+    padding-left: 0;
 }
