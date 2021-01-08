@@ -1,5 +1,6 @@
 /* eslint-disable security/detect-non-literal-regexp */
 /* eslint-disable camelcase */
+const fs = require('fs');
 const sqlite3 = require('sqlite3');
 const { open } = require('sqlite');
 const SQL = require('sql-template-strings');
@@ -23,10 +24,24 @@ const generatePosts = async () => {
                     FROM post 
                 `
     );
+    const data = [];
     for (const post of posts) {
-        const data = await generatePost(post);
-        console.log(data);
+        data.push(await generatePost(post));
     }
+
+    await new Promise((resolve, reject) => {
+        fs.writeFile(
+            './src/shared/routes/Blog/automated_posts.json',
+            JSON.stringify(data),
+            (err) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve();
+                }
+            }
+        );
+    });
 
     await db.close();
 };
