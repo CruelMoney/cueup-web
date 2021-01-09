@@ -1,14 +1,25 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Disqus from 'disqus-react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import { NavLink } from 'react-router-dom';
 import { useServerContext } from 'components/hooks/useServerContext';
-import { Hr, Container, CardSimple, Row, Col, Card, Avatar } from 'components/Blocks';
+import {
+    Hr,
+    Container,
+    CardSimple,
+    Row,
+    Col,
+    Card,
+    Avatar,
+    PrimaryButton,
+    ReadMore,
+} from 'components/Blocks';
+import { Body } from 'components/Text';
 import posts from '../posts';
 import Sharing from '../../../components/common/Sharing-v2';
-import ButtonLink from '../../../components/common/ButtonLink';
 import OnlyClientSide from '../../../components/higher-order/onlyClientSide';
-import NewsletterSignup from './NewsletterSignup';
+import swirlyArrow from '../../../assets/icons/swirly-scribbled-arrow.png';
 
 const Post = ({ match }) => {
     const { environment } = useServerContext();
@@ -98,8 +109,8 @@ const Post = ({ match }) => {
                         className="post-content"
                         dangerouslySetInnerHTML={{ __html: post.content }}
                     />
-                    <Sharing shareUrl={url} title={post.title} />
                     <CallToBlock category={post.category} />
+                    <Sharing shareUrl={url} title={post.title} />
                     <Hr />
                     <OnlyClientSide>
                         <Disqus.DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
@@ -110,53 +121,94 @@ const Post = ({ match }) => {
     );
 };
 
+const shakeAnimation = keyframes`
+  0% { transform: translate(-100%, 0%) rotate(135deg) }
+  100% { transform:  translate(-100%, 0%) rotate(145deg) }
+`;
+
+const ArrowIndicator = styled.div`
+    background: url('${swirlyArrow}');
+    height: 60px;
+    width: 60px;
+    display: block;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transform-origin: center right;
+    animation-name: ${shakeAnimation};
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: steps(2, start);
+    margin: auto;
+    margin-top: 60px;
+`;
+
 const CallToBlock = ({ category }) => {
     const title = {
-        organizer: 'Find a DJ',
-        dj: 'Become DJ at Cueup',
+        organizer: 'Find a DJ for you party',
+        dj: 'Get more DJ gigs',
     };
 
     const content = {
         organizer:
-            "Cueup makes it easier than ever to find a DJ. Enter a details about your event and we'll help you today.",
+            'Cueup makes it easier than ever to find a great DJ. Search DJs, check prices, and book a DJ near you.',
         dj:
-            'Cueup is one of the easiest ways to evolve your DJ career. Create a free profile and start getting gigs today.',
+            'Create a free DJ profile and check the gigs in your city. Cueup makes it easy to get booked. ',
     };
 
     const link = {
         dj: '/signup',
-        organizer: '/',
+        organizer: '/s',
     };
     const button = {
-        dj: 'Apply to become dj',
-        organizer: 'Find a DJ',
+        dj: 'Sign up as DJ',
+        organizer: 'Find a DJ now',
     };
     return (
-        <CTACard shadow className="signup">
-            <h3>{title[category] ?? title.dj}</h3>
-            <p>{content[category] ?? content.dj}</p>
-            <ButtonLink
-                active
-                glow
-                color={'rgb(37, 244, 210)'}
-                className="button"
-                to={link[category] ?? link.dj}
-            >
-                {button[category] ?? button.dj}
-            </ButtonLink>
-        </CTACard>
+        <NavLink to={link[category] ?? link.dj}>
+            <ArrowIndicator />
+            <CTACard shadow className="signup">
+                <h3>{title[category] ?? title.dj}</h3>
+                <Body center>{content[category] ?? content.dj}</Body>
+
+                <ReadMore size="18px" uppercase={false} white center style={{ marginTop: 24 }}>
+                    {button[category] ?? button.dj}
+                </ReadMore>
+            </CTACard>
+        </NavLink>
     );
 };
 
 const CTACard = styled(Card)`
-    padding: 2em 4em;
+    padding: 2em 0.5em;
     margin-bottom: 60px;
     text-align: center;
-
+    box-shadow: none;
+    background-color: #31daff;
+    transition: 200ms ease;
+    display: flex;
+    flex-direction: column;
     button,
     h3,
-    a {
-        margin: auto;
+    a,
+    p {
+        color: white !important;
+        margin: auto !important;
+        max-width: 500px;
+    }
+    p {
+        font-weight: 500;
+    }
+    h3 {
+        margin-bottom: 15px !important;
+    }
+    &:hover {
+        background-color: #00d1ff;
+        transition: 700ms ease;
+    }
+    button {
+        margin-top: 24px;
+        background: transparent !important;
     }
 `;
 

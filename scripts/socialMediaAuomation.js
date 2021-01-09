@@ -47,6 +47,8 @@ ${title}
 -
 ${excerpt}
 -
+Link in bio 🔗
+_
 ${getHashTags().join(' ')}
 `;
 

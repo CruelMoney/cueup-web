@@ -84,7 +84,7 @@ const Index = () => {
 
             <AvailableOn />
             <JoinThousands
-                title={'Be part of a \n global community'}
+                title={'Be part of a \n global DJ community'}
                 description={
                     'Cueup is a growing community of DJs. Joining Cueup also means you become part of a group of the most talented and passionate DJs around the world.'
                 }

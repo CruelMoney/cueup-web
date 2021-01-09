@@ -37,7 +37,7 @@ import GreyBox from 'components/GreyBox';
 import { gigStates } from 'constants/constants';
 import AddBookingLink from 'components/AddBookingLink';
 import Layout from '../components/Layout';
-import swirlyArrow from '../assets/swirly-scribbled-arrow.png';
+import swirlyArrow from '../../../assets/icons/swirly-scribbled-arrow.png';
 
 const DirectRequests = ({ user }) => {
     const [pagination, setPagination] = useState({

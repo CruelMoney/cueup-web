@@ -122,7 +122,6 @@ const tertiaryStyle = css`
     font-weight: 600;
     font-size: 12px;
     color: #4d6480;
-    letter-spacing: 1.04px;
 `;
 
 export const ReadMoreText = styled.span`
