@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import Disqus from 'disqus-react';
 import styled from 'styled-components';
 import { useServerContext } from 'components/hooks/useServerContext';
-import { Hr, Container, CardSimple, Row, Col, Card } from 'components/Blocks';
+import { Hr, Container, CardSimple, Row, Col, Card, Avatar } from 'components/Blocks';
 import posts from '../posts';
 import Sharing from '../../../components/common/Sharing-v2';
 import ButtonLink from '../../../components/common/ButtonLink';
@@ -28,6 +28,8 @@ const Post = ({ match }) => {
 
     const siteTitle = post.title + ' | Cueup Blog';
 
+    console.log(post);
+
     return (
         <article className="blog-post">
             <Helmet>
@@ -38,11 +40,11 @@ const Post = ({ match }) => {
                 <meta property="og:type" content="article" />
                 <meta property="og:title" content={siteTitle} />
                 <meta property="og:description" content={post.excerpt} />
-                <meta property="og:image" content={post.thumbnail_url} />
+                <meta property="og:image" content={post.og_image || post.thumbnail_url} />
 
                 <meta name="twitter:title" content={siteTitle} />
                 <meta name="twitter:description" content={post.excerpt} />
-                <meta name="twitter:image" content={post.thumbnail_url} />
+                <meta name="twitter:image" content={post.twitter_image || post.thumbnail_url} />
 
                 <meta property="article:content_tier" content="free" />
                 <meta property="article:published_time" content={post.published_date} />
@@ -55,6 +57,21 @@ const Post = ({ match }) => {
             </Helmet>
 
             <header className="title">
+                {post.author_image && (
+                    <Avatar
+                        size="large"
+                        style={{ margin: 'auto', marginBottom: 12 }}
+                        src={post.author_image}
+                    />
+                )}
+
+                {post.author_link ? (
+                    <a className="author-link" href={post.author_link}>
+                        By {post.author}
+                    </a>
+                ) : (
+                    <p>By {post.author}</p>
+                )}
                 <time
                     dateTime={`${publishedDate.getFullYear()}-${
                         publishedDate.getMonth() + 1
@@ -67,13 +84,6 @@ const Post = ({ match }) => {
                         day: 'numeric',
                     })}
                 </time>
-                {post.author_link ? (
-                    <a className="author-link" href={post.author_link}>
-                        Written by {post.author}
-                    </a>
-                ) : (
-                    <p>Written by {post.author}</p>
-                )}
 
                 <h1>{post.title}</h1>
             </header>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink as Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { SmartButton, Row, Container } from 'components/Blocks.js';
+import { SmartButton, Row, Container, Avatar } from 'components/Blocks.js';
 import { appRoutes } from 'constants/locales/appRoutes';
 import posts from '../posts';
 import Popup from '../../../components/common/Popup';
@@ -51,7 +51,15 @@ const Blog = () => {
                                             </header>
                                             <p className="post-card-excerpt">{post.excerpt}</p>
                                             <footer>
-                                                <p className="author">{post.author}</p>
+                                                <Row middle>
+                                                    {post.author_image && (
+                                                        <Avatar
+                                                            src={post.author_image}
+                                                            style={{ marginRight: 6 }}
+                                                        />
+                                                    )}
+                                                    <p className="author">{post.author}</p>
+                                                </Row>
                                             </footer>
                                         </section>
                                     </Link>

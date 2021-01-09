@@ -1,6 +1,6 @@
 import express from 'express';
 import { middleware as sanitize } from 'sanitize';
-import { getBlogPost } from 'routes/Blog/generateDJSoftwarePosts';
+import { getBlogPost } from '../../../scripts/blogDatabase';
 import renderSocialImage from '../socialImage/src';
 import defaultImage from '../../shared/assets/images/default.png';
 
@@ -188,7 +188,7 @@ const getPostImage = async (req, res) => {
 const addSocialImages = (app) => {
     router.use(sanitize);
     router.get('/dj-name-generator/*', djNameGenerator);
-    router.get('/post/:id/:height/:width', getPostImage);
+    router.get('/post/:id/:width/:height', getPostImage);
 
     app.use('/sharing-previews', router);
 };

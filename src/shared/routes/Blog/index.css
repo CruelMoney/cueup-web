@@ -11,6 +11,7 @@
 .blog h1 {
     font-size: 62px;
     margin: auto;
+    margin-top: 24px;
     max-width: 900px;
 }
 
@@ -177,7 +178,7 @@ button.subscribe-newsletter {
     color: #7e8186;
     font-size: 21px;
     line-height: 1.7;
-    margin: 0 0 1.5em;
+    margin: 0;
 }
 .blog-post .author-link {
     display: block;
@@ -209,6 +210,9 @@ button.subscribe-newsletter {
     font-size: 1em;
     line-height: 1.6em;
     text-transform: none;
+}
+.post-content > p {
+    margin-bottom: 1em;
 }
 .post-content > p:first-of-type {
     font-size: 27px;
