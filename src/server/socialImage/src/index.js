@@ -2,11 +2,6 @@ import path from 'path';
 import { compileTemplate } from './helpers';
 import compilePreview from './helpers/compile-preview';
 
-const sizeMap = {
-    facebook: { width: 1200, height: 630 },
-    twitter: { width: 1200, height: 630 },
-};
-
 let testMode = false;
 
 export const setTestMode = (val) => {
@@ -17,9 +12,9 @@ export const setTestMode = (val) => {
  * Renders the given HTML as an image via Puppeteer.
  */
 export default async ({
-    jpegQuality = 90,
+    jpegQuality = 100,
     output,
-    size = 'twitter',
+    size,
     template = 'basic',
     templateParams = {},
     templateBody,
@@ -31,8 +26,6 @@ export default async ({
     puppeteerArgs = {},
 }) => {
     // Resolve preferences
-    const _size = sizeMap[size];
-    const { width, height } = _size;
     const customTemplate = customTemplates[template];
     const ext = path.extname(output).slice(1).toLowerCase();
     const type = ext === 'jpg' || ext === 'jpeg' ? 'jpeg' : 'png';
@@ -57,10 +50,7 @@ export default async ({
     }
 
     const page = await browser.newPage();
-    await page.setViewport({
-        width,
-        height,
-    });
+    await page.setViewport(size);
     // Using template builders instead of handlebars templates allows
     // us to hide size, body and styles from the user template
 
@@ -71,7 +61,7 @@ export default async ({
         body: customBody,
         styles: customStyles,
         templateParams,
-        size: _size,
+        size,
         compileArgs: { testMode, ...compileArgs },
     });
 

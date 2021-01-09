@@ -15,6 +15,18 @@ const getDB = async () => {
     });
 };
 
+export const getBlogPost = async (id) => {
+    db = await getDB();
+
+    return await db.get(
+        SQL`
+                    SELECT *
+                    FROM post 
+                    WHERE id = ${id}
+                `
+    );
+};
+
 const generatePosts = async () => {
     db = await getDB();
 
