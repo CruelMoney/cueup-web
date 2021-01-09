@@ -18,6 +18,7 @@ import addSocialImages from 'middleware/addSocialImages';
 import { addRedirects } from 'middleware/addRedirects';
 import { addDisallowUnsupportedBrowsers } from 'middleware/addDisallowUnsupportedBrowsers';
 import paths from '../../config/paths';
+import { setupSocialMediaAutomation } from '../../scripts/socialMediaAuomation';
 import errorHandler from './middleware/errorHandler';
 import serverRenderer from './middleware/serverRenderer';
 import addLocationData from './middleware/addLocationData';
@@ -76,6 +77,10 @@ addLocationData(app);
 app.use(serverRenderer());
 
 app.use(errorHandler);
+
+if (isProduction) {
+    setupSocialMediaAutomation();
+}
 
 app.listen(process.env.PORT || 8500, () => {
     // invalidate redis
