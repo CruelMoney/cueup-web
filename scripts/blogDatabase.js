@@ -41,9 +41,9 @@ const getAllPosts = async () => {
 
     const posts = await db.all(
         SQL`
-                    SELECT *
-                    FROM post 
-                `
+            SELECT *
+            FROM post 
+        `
     );
 
     return posts;

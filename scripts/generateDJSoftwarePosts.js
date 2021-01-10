@@ -7,25 +7,37 @@ const { getAllPosts, searchPosts, closeDb, getDB } = require('./blogDatabase');
 
 /* eslint-disable camelcase */
 
+const postsFilePath = './src/shared/routes/Blog/automated_posts.json';
+
+const getGeneratedPosts = async () => {
+    const data = fs.readFileSync(postsFilePath);
+    return JSON.parse(data);
+};
+
 const generatePosts = async () => {
     const posts = await getAllPosts();
-    const data = [];
+    const data = await getGeneratedPosts();
+
     for (const post of posts) {
-        data.push(await generatePost(post));
+        if (!post.shared_to_buffer) {
+            const idx = data.findIndex((p) => p.slug === post.slug);
+            const newPost = await generatePost(post);
+            if (idx) {
+                data[idx] = newPost; // override old post
+            } else {
+                data.push(newPost);
+            }
+        }
     }
 
     await new Promise((resolve, reject) => {
-        fs.writeFile(
-            './src/shared/routes/Blog/automated_posts.json',
-            JSON.stringify(data),
-            (err) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve();
-                }
+        fs.writeFile(postsFilePath, JSON.stringify(data), (err) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve();
             }
-        );
+        });
     });
 
     await closeDb();
@@ -116,6 +128,10 @@ const getEntryHtmlMarkup = ({ num, display_columns_labels, display_columns, entr
     `;
 };
 
+const replaceTemplateVariables = (string, entries) => {
+    return string.replace(/{{list_count}}/g, entries.length);
+};
+
 const generatePost = async (entry) => {
     const {
         id,
@@ -129,9 +145,14 @@ const generatePost = async (entry) => {
     const entries = await searchPosts({ data_table, filter_column, filter_search });
 
     if (!entry.og_image || !entry.twitter_image || !entry.insta_image) {
+        const imageUrl = `http://localhost:8500/sharing-previews/post/${id}/1200/630`;
         const ogImageUrl = `http://localhost:8500/sharing-previews/post/${id}/1200/630?template=text`;
         const instagramImageUrl = `http://localhost:8500/sharing-previews/post/${id}/1080/1080`;
 
+        const { publicPath: image } = await processUpload({
+            url: imageUrl,
+            key: 'social_images/' + id + '_1200_630.jpeg',
+        });
         const { publicPath: og_image } = await processUpload({
             url: ogImageUrl,
             key: 'social_images/' + id + '_1200_630_text.jpeg',
@@ -141,12 +162,14 @@ const generatePost = async (entry) => {
             key: 'social_images/' + id + '_1080_1080.jpeg',
         });
 
+        entry.image = image;
         entry.og_image = og_image;
         entry.insta_image = insta_image;
         entry.twitter_image = og_image;
 
         const updateQuery = `
             UPDATE post SET 
+                image = "${entry.image}",
                 og_image = "${entry.og_image}",
                 insta_image = "${entry.insta_image}",
                 twitter_image = "${entry.twitter_image}"
@@ -157,7 +180,8 @@ const generatePost = async (entry) => {
     }
 
     return {
-        title: entry.title,
+        id: entry.id,
+        title: replaceTemplateVariables(entry.title, entries),
         slug: entry.slug,
         excerpt: entry.excerpt,
         published_date: entry.created_at,

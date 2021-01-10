@@ -1,7 +1,7 @@
 import automatedPosts from './automated_posts.json';
 
 export default [
-    ...automatedPosts,
+    ...automatedPosts.reverse(),
     {
         'medium-guid': 'https://medium.com/p/b778dda69fb7',
         'title': 'Gig opportunities, hourly rates, and DJ search',
