@@ -12,7 +12,7 @@ const uploadNewestBlogPosts = async (_job, done) => {
         `
             SELECT *
             FROM post
-            WHERE shared_to_buffer = false AND created_at < datetime('now','-1 day') AND created_at > datetime('now','-2 day')
+            WHERE shared_to_buffer = false AND created_at < datetime('now','-1 day') AND created_at > datetime('now','-3 day')
         `
     );
 
