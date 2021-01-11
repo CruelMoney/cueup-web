@@ -23,7 +23,7 @@ const generatePosts = async () => {
         if (!post.shared_to_buffer) {
             const idx = data.findIndex((p) => p.slug === post.slug);
             const newPost = await generatePost(post);
-            if (idx) {
+            if (idx !== -1) {
                 data[idx] = newPost; // override old post
             } else {
                 data.push(newPost);
@@ -34,6 +34,7 @@ const generatePosts = async () => {
     await new Promise((resolve, reject) => {
         fs.writeFile(postsFilePath, JSON.stringify(data), (err) => {
             if (err) {
+                console.log('WRITE ERROR:', err);
                 reject(err);
             } else {
                 resolve();

@@ -50,7 +50,11 @@ const getAllPosts = async () => {
 };
 
 const searchPosts = async ({ data_table, filter_column, filter_search }) => {
-    const search = `SELECT * FROM ${data_table} WHERE ${filter_column} LIKE '%${filter_search}%'`;
+    let where = '';
+    if (filter_column && filter_search) {
+        where = `WHERE ${filter_column} LIKE '%${filter_search}%'`;
+    }
+    const search = `SELECT * FROM ${data_table} ${where}`;
     const entries = await db.all(search);
     return entries;
 };

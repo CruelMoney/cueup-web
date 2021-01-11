@@ -13,15 +13,15 @@ const getEntryHtmlMarkup = ({ num, display_columns_labels, display_columns, entr
 
     return `
         <li id="${slug}">
-            <h4>
+            <p>
                 <a href="${
                     youtube_link ||
                     'https://www.youtube.com/results?search_query=' +
                         encodeURIComponent(title + ' ' + artist)
                 }" target="_blank" rel="noopener noreferrer">
-                    ${title} - <span>${artist}</span>
+                    ${title} - <span style="font-weight: 500;">${artist}</span>
                 </a>
-            </h4>
+            </p>
         </li>
     `;
 };
