@@ -39,6 +39,7 @@ const Blog = () => {
                                     <div className={'img-wrapper ' + (post.thumbnail_fit || '')}>
                                         <Link to={link}>
                                             <img
+                                                loading="lazy"
                                                 src={post.thumbnail_url}
                                                 alt={post.thumbnail_alt}
                                             />

@@ -101,7 +101,7 @@ const Post = ({ match }) => {
             <main>
                 {!post.hide_image && (
                     <div className={'img-wrapper ' + (post.thumbnail_fit || '')}>
-                        <img src={post.thumbnail_url} alt={post.thumbnail_alt} />
+                        <img src={post.thumbnail_url} alt={post.thumbnail_alt} loading="lazy" />
                     </div>
                 )}
                 <Container className="container">
