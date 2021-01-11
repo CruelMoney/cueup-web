@@ -358,3 +358,10 @@ footer.newsletter-signup .card {
     list-style: outside none none !important;
     padding-left: 0;
 }
+
+.post-content h1 span,
+.post-content h2 span,
+.post-content h3 span,
+.post-content h4 span {
+    font-weight: 500;
+}

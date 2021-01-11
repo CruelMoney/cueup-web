@@ -1,9 +1,10 @@
 /* eslint-disable security/detect-non-literal-regexp */
 
 const fs = require('fs');
-const slugify = require('slugify');
 const { processUpload } = require('./s3');
 const { getAllPosts, searchPosts, closeDb, getDB } = require('./blogDatabase');
+const defaultList = require('./blogPostTemplates/default_list');
+const songList = require('./blogPostTemplates/song_list');
 
 /* eslint-disable camelcase */
 
@@ -43,93 +44,13 @@ const generatePosts = async () => {
     await closeDb();
 };
 
-const getentrySlug = ({ num, title }) => {
-    return (
-        num +
-        '-' +
-        slugify(title, {
-            replacement: '-',
-            lower: true,
-        })
-    );
-};
-
-function isURL(str) {
-    const pattern = new RegExp(
-        '^(https?:\\/\\/)?' + // protocol
-            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-            '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-            '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-            '(\\#[-a-z\\d_]*)?$',
-        'i'
-    ); // fragment locator
-    return !!pattern.test(str);
-}
-
-const getValueHtml = (v) => {
-    let value = v;
-    try {
-        value = JSON.parse(v);
-    } catch (error) {}
-
-    if (isURL(value)) {
-        return `<a href="${value}" target="_blank" rel="noopener noreferrer">${value}</a>`;
-    }
-
-    if (typeof value === 'string') {
-        return `<b>${value}</b>`;
-    }
-
-    if (Array.isArray(value)) {
-        return getValueHtml(value.join(', '));
-    }
-
-    return '';
-};
-
-const getTOC = (entries, header) => {
-    return `     
-        <div id="toc_container">
-            ${header ? `<h3>${header}</h3>` : ''}
-            <ol class="toc_list">
-            ${entries
-                .map(
-                    (e, idx) =>
-                        `<li><a href="#${getentrySlug({ num: idx + 1, title: e.title })}">${
-                            idx + 1
-                        }. ${e.title}</a></li>`
-                )
-                .join('')}
-            </ol>
-        </div>
-    `;
-};
-
-const getEntryHtmlMarkup = ({ num, display_columns_labels, display_columns, entry }) => {
-    const { title } = entry;
-
-    const slug = getentrySlug({ num, title });
-
-    const columns = JSON.parse(display_columns);
-    const columnLabels = JSON.parse(display_columns_labels);
-
-    return `
-        <h2 id="${slug}">${num}. ${title}</h2>
-        <ul>
-            ${columns
-                .map(
-                    (c, idx) => `
-                    <li>${columnLabels[idx]}: ${getValueHtml(entry[c], title)}</li>
-                `
-                )
-                .join('')}
-        </ul>
-    `;
-};
-
 const replaceTemplateVariables = (string, entries) => {
     return string.replace(/{{list_count}}/g, entries.length);
+};
+
+const postTemplates = {
+    default: defaultList,
+    song_list: songList,
 };
 
 const generatePost = async (entry) => {
@@ -179,6 +100,8 @@ const generatePost = async (entry) => {
         await db.run(updateQuery);
     }
 
+    const templateRender = postTemplates[entry.content_type] || postTemplates.default;
+
     return {
         id: entry.id,
         title: replaceTemplateVariables(entry.title, entries),
@@ -195,23 +118,7 @@ const generatePost = async (entry) => {
         thumbnail_alt: entry.image_alt,
         tag: entry.tags,
         category: entry.category,
-        content: `
-            <p>
-            ${entry.excerpt}
-            </p>
-            ${getTOC(entries, entry.toc_header)}
-            ${entry.content}
-            ${entries
-                .map((entry, idx) =>
-                    getEntryHtmlMarkup({
-                        num: idx + 1,
-                        display_columns_labels,
-                        display_columns,
-                        entry,
-                    })
-                )
-                .join('')}
-        `,
+        content: templateRender(entry, entries),
     };
 };
 
