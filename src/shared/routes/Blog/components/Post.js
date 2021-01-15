@@ -1,45 +1,21 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import Disqus from 'disqus-react';
 import styled, { keyframes } from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import { useServerContext } from 'components/hooks/useServerContext';
-import {
-    Hr,
-    Container,
-    CardSimple,
-    Row,
-    Col,
-    Card,
-    Avatar,
-    PrimaryButton,
-    ReadMore,
-} from 'components/Blocks';
+import { Container, Card, Avatar, ReadMore } from 'components/Blocks';
 import { Body } from 'components/Text';
 import posts from '../posts';
 import Sharing from '../../../components/common/Sharing-v2';
-import OnlyClientSide from '../../../components/higher-order/onlyClientSide';
 import swirlyArrow from '../../../assets/icons/swirly-scribbled-arrow.png';
 
 const Post = ({ match }) => {
-    const { environment } = useServerContext();
-
     const { params, url } = match;
     const { postTitle } = params;
 
     const post = posts.find((p) => p.slug === postTitle);
     const publishedDate = new Date(post.updated_date.split(' ')[0]);
 
-    const disqusShortname = 'cueup';
-    const disqusConfig = {
-        url: String(environment.CALLBACK_DOMAIN) + String(url),
-        identifier: post.id,
-        title: post.title,
-    };
-
     const siteTitle = post.title + ' | Cueup Blog';
-
-    console.log(post);
 
     return (
         <article className="blog-post">
@@ -73,6 +49,7 @@ const Post = ({ match }) => {
                         size="large"
                         style={{ margin: 'auto', marginBottom: 12 }}
                         src={post.author_image}
+                        alt="Author image"
                     />
                 )}
 
@@ -111,10 +88,6 @@ const Post = ({ match }) => {
                     />
                     <CallToBlock category={post.category} />
                     <Sharing shareUrl={url} title={post.title} />
-                    <Hr />
-                    <OnlyClientSide>
-                        <Disqus.DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
-                    </OnlyClientSide>
                 </Container>
             </main>
         </article>
