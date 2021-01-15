@@ -83,7 +83,7 @@ export const Body = styled.p`
     ${BaseText}
     font-size: ${({ small }) => (small ? '16px' : '18px')};
     color: ${({ white }) => (white ? '#fff' : '#4d6480')};
-    line-height: 27px;
+    line-height: 1.5em;
     letter-spacing: 0;
     ${({ opacity }) => opacity && `opacity: ${opacity};`}
     ${({ center }) =>
@@ -182,6 +182,7 @@ export const PageTitle = styled.h1`
                   margin-bottom: 0.1em;
               `
             : ''}
+
     > span {
         display: block;
         font-weight: 500;

@@ -1,51 +1,88 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
-import { showSupportChat } from 'utils/supportChat';
-import { Container, Row, Col } from 'components/Blocks';
+import { Container, Row, Col, Card, Avatar } from 'components/Blocks';
+import { Body, PageTitle } from 'components/Text';
+import TrustedBy from 'routes/Home/components/TrustedBy';
 import Footer from '../../../components/common/Footer';
 
 export default () => {
     const themeColor = '#25F4D2';
     const { translate } = useTranslate();
+    const description =
+        ' We strive to help DJs grow and connect them across borders - all by making it easier for event organizers to find a DJ than ever before.';
     return (
         <div className="">
-            <Container className="about-content container">
+            <Helmet>
+                <title>{'About Us | Cueup'}</title>
+                <meta property="og:title" content={'About Us | Cueup'} />
+                <meta name="twitter:title" content={'About Us | Cueup'} />
+
+                <meta name="description" content={description} />
+                <meta property="og:description" content={description} />
+                <meta name="twitter:description" content={description} />
+            </Helmet>
+            <ContainerStyled>
                 <Row center style={{ marginBottom: '100px' }}>
                     <Col style={{ maxWidth: 600 }}>
-                        <h1>About Cueup</h1>
-                        <p style={{ marginBottom: '30px' }}>
-                            Cueup was founded in 2016 by Christopher Dengsø in Copenhagen, Denmark.
-                            Since then the company has grown to parts of Asia and America and
-                            continues to expand the community to new countries every day.
-                            <br />
-                            <br />
-                            We strive to help DJs get ahead in the world and connect them across
-                            borders - all meanwhile making it easier for event organizers to find a
-                            DJ than ever before.
-                        </p>
+                        <PageTitle style={{ textAlign: 'center', marginTop: 60 }}>
+                            Hello from <br />
+                            Cueup DJ Booking
+                        </PageTitle>
+                        <Body center style={{ marginBottom: '100px', fontSize: 22 }}>
+                            {description}
+                        </Body>
 
-                        <p className="terms_link">
-                            Have questions? Read the <a href={translate(appRoutes.faqDj)}>FAQ</a>
-                        </p>
-                        <p className="terms_link">
-                            Feel like chatting?{' '}
-                            <a
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    showSupportChat();
-                                }}
-                            >
-                                Send a message
-                            </a>
-                        </p>
-                        <p className="terms_link">
-                            By using Cueup, you agree to our{' '}
-                            <a href={translate(appRoutes.termsAgreements)}>terms and conditions</a>
-                        </p>
+                        <Avatar
+                            size="extraLarge"
+                            src="https://d1i5zrp3ng76nh.cloudfront.net/social_images/christopher_2.jpg"
+                            style={{ margin: 'auto', marginBottom: 15 }}
+                        />
+                        <PageTitle style={{ textAlign: 'center' }}>Meet the founder</PageTitle>
+                        <Card shadow style={{ padding: '2em', fontStyle: 'italic' }}>
+                            <Body>Hi, I'm Christopher. I'm a DJ, and founder of Cueup 👋</Body>
+
+                            <Body>
+                                <br />
+                                I'm Born and raised in Denmark but have been living a nomadic
+                                lifestyle since 2017. Most of the time, you'll see me working on
+                                Cueup, but I occasionally create small side projects for fun.
+                            </Body>
+                            <Body>
+                                <br />
+                                You can find me on{' '}
+                                <a
+                                    href="https://twitter.com/ChrisDengso"
+                                    target="_blank"
+                                    rel="noreferrer noopener"
+                                >
+                                    Twitter
+                                </a>{' '}
+                                or send me an email anytime on
+                                <a href="mailto:chris@cueup.io"> chris@cueup.io</a>. Also, check out
+                                my{' '}
+                                <NavLink
+                                    target="_blank"
+                                    rel="noreferrer noopener"
+                                    to="/user/spinso"
+                                >
+                                    Cueup profile
+                                </NavLink>
+                                .
+                            </Body>
+                        </Card>
                     </Col>
                 </Row>
-            </Container>
+
+                <TrustedBy
+                    style={{ marginBottom: 60 }}
+                    label={"From regular parties to the world's largest companies"}
+                />
+            </ContainerStyled>
+
             <Footer
                 noSkew
                 color={themeColor}
@@ -59,3 +96,10 @@ export default () => {
         </div>
     );
 };
+
+const ContainerStyled = styled(Container)`
+    a {
+        color: #00d1ff;
+        font-weight: 600;
+    }
+`;
