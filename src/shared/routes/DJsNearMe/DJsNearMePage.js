@@ -88,9 +88,9 @@ const DJsNearMePage = ({ topDjs, loading, totalFound, city }) => {
                     ))}
                 </SearchList>
 
-                <SecondaryButton style={{ margin: 'auto' }}>
-                    <NavLink to={translate(appRoutes.search)}>See more DJs</NavLink>
-                </SecondaryButton>
+                <NavLink to={translate(appRoutes.search)}>
+                    <SecondaryButton style={{ margin: 'auto' }}>See more DJs</SecondaryButton>
+                </NavLink>
             </Container>
 
             <div style={{ marginTop: 60 }}>
