@@ -35,7 +35,7 @@ const CountriesOverview = () => {
                 <meta name="twitter:title" content={title + ' | Cueup'} />
                 <meta name="twitter:description" content={description} />
             </Helmet>
-            <Menu relative dark />
+            <Menu relative dark withSearch />
             <Hr style={{ marginBottom: 60 }} />
 
             <Container>
