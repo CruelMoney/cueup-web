@@ -264,7 +264,7 @@ const Footer = ({
                                 </li>
                                 <li>
                                     <Link to={translate(appRoutes.search)}>
-                                        {translate('Search DJs')}
+                                        {translate('Find DJs')}
                                     </Link>
                                 </li>
                                 <li>
@@ -277,7 +277,7 @@ const Footer = ({
                                 </li>
                                 <li>
                                     <Link to={translate(appRoutes.djsNearMe)}>
-                                        {translate('DJs near me')}
+                                        {translate('DJs near you')}
                                     </Link>
                                 </li>
                             </ul>

@@ -1,10 +1,12 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import SuperEllipse from 'react-superellipse';
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useHistory, useLocation } from 'react-router';
 
-import { SmartButton } from 'components/Blocks';
+import { Icon } from '@iconify/react';
+import searchIcon from '@iconify/icons-ion/search';
+import { LoadingIndicator, SmartButton } from 'components/Blocks';
 import LocationSelector from 'components/common/LocationSelectorSimple';
 import { Label } from 'components/FormComponents';
 import DatePickerPopup from 'components/DatePickerPopup';
@@ -17,9 +19,8 @@ import LazyRequestForm from 'components/common/RequestForm';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 
-const DjSearch = ({ initialLocation }) => {
+const DjSearch = ({ initialLocation, small }) => {
     const { translate } = useTranslate();
-    const routeLocation = useLocation();
     const history = useHistory();
     const locationRef = useRef();
     const dateRef = useRef();
@@ -81,7 +82,7 @@ const DjSearch = ({ initialLocation }) => {
                 }
             }
         },
-        [check, form, history, routeLocation.pathname, runValidations, translate]
+        [check, form, history, runValidations, translate]
     );
 
     useEffect(() => {
@@ -89,6 +90,20 @@ const DjSearch = ({ initialLocation }) => {
             submit();
         }
     }, [runSubmit, submit]);
+
+    if (small) {
+        return (
+            <SmallSearch
+                locationRef={locationRef}
+                setValue={setValue}
+                form={form}
+                loading={loading}
+                submit={submit}
+                registerValidation={registerValidation}
+                unregisterValidation={unregisterValidation}
+            />
+        );
+    }
 
     return (
         <>
@@ -157,11 +172,89 @@ const DjSearch = ({ initialLocation }) => {
     );
 };
 
+const SmallSearch = ({ locationRef, setValue, form, loading, submit }) => {
+    const [focused, setFocused] = useState(false);
+
+    useEffect(() => {
+        if (form.locationName && !loading) {
+            submit();
+        }
+    }, [form.locationName, submit, loading]);
+
+    return (
+        <StyledSearchWrapperSmall focused={focused}>
+            <SearchWrapperBg />
+
+            <LocationSelector
+                data-cy={'location-input'}
+                ref={locationRef}
+                name="query"
+                placeholder={'City, venue, etc...'}
+                onFocus={() => setFocused(true)}
+                onBlur={() => setFocused(false)}
+                wrapperStyle={{
+                    flex: 1,
+                    height: '100%',
+                    display: 'flex',
+                    position: 'initial',
+                    marginBottom: 0,
+                }}
+                onSave={(locationName) => {
+                    setValue({ locationName });
+                }}
+                defaultValue={form.locationName}
+            />
+            {loading ? (
+                <LoadingIndicator style={{ marginRight: 9 }} />
+            ) : (
+                <FindDjsButton>
+                    <SmartButton
+                        primary
+                        type="submit"
+                        disabled={loading}
+                        style={{ minWidth: '0' }}
+                        onClick={submit}
+                    >
+                        Find DJs
+                    </SmartButton>
+                </FindDjsButton>
+            )}
+        </StyledSearchWrapperSmall>
+    );
+};
+
 const Divider = styled.div`
     height: 60%;
     width: 2px;
     background: #d8d8d8;
 `;
+
+const FallbackSuperllipsis = (props) => {
+    // if (typeof window === 'undefined' || !window?.ResizeObserver) {
+    //     return <div {...props} style={{ borderRadius: '10px', ...props.style }} />;
+    // }
+    return <SuperEllipse {...props} />;
+};
+
+const SearchWrapperBg = styled(FallbackSuperllipsis)`
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    z-index: -1;
+`;
+
+const FindDjsButton = styled(FallbackSuperllipsis)`
+    position: absolute;
+    right: 0.1em;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    background-color: #31daff;
+`;
+
 const StyledSearchWrapper = styled.div`
     position: relative;
     width: 100%;
@@ -233,30 +326,45 @@ const StyledSearchWrapper = styled.div`
     }
 `;
 
-const FallbackSuperllipsis = (props) => {
-    // if (typeof window === 'undefined' || !window?.ResizeObserver) {
-    //     return <div {...props} style={{ borderRadius: '10px', ...props.style }} />;
-    // }
-    return <SuperEllipse {...props} />;
-};
+const StyledSearchWrapperSmall = styled(StyledSearchWrapper)`
+    margin-top: 0;
+    width: 250px;
+    height: 40px;
+    transition: ease 250ms;
 
-const SearchWrapperBg = styled(FallbackSuperllipsis)`
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background: #fff;
-    z-index: -1;
-`;
+    ${({ focused }) =>
+        focused &&
+        css`
+            width: 350px;
+        `}
 
-const FindDjsButton = styled(FallbackSuperllipsis)`
-    position: absolute;
-    right: 0.1em;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 1;
-    background-color: #31daff;
+    ${SearchWrapperBg} {
+        border-radius: 20px;
+    }
+    label,
+    ${Label} {
+        padding-top: 0;
+        input {
+            height: 100%;
+            font-size: 17px;
+            padding-left: 14px;
+        }
+    }
+    ${FindDjsButton} {
+        height: calc(100% - 7px);
+        margin-right: 2px;
+        border-radius: 20px;
+        button {
+            height: 100%;
+        }
+    }
+
+    ul {
+        padding-top: 2em;
+    }
+    .powered-by-google {
+        display: none;
+    }
 `;
 
 export default DjSearch;

@@ -271,7 +271,7 @@ const UserRoutes = ({ match, user, loading, updateUser, location }) => {
             <Route
                 render={() => (
                     <>
-                        <Menu />
+                        <Menu withSearch />
                         <Content
                             match={match}
                             user={user}

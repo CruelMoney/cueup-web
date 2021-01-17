@@ -9,6 +9,7 @@ import { appRoutes } from 'constants/locales/appRoutes.ts';
 import { Media } from 'components/MediaContext';
 import { ME } from 'components/gql';
 import { identifyUser } from 'utils/analytics';
+import DjSearch from 'routes/Home/components/DJSearch';
 import Navlink from '../common/Navlink';
 import Logo from '../common/Logo';
 import EmailVerifier from '../EmailVerifier';
@@ -16,7 +17,7 @@ import InstagramConnect from '../InstagramConnect';
 import { LoadingIndicator, Container } from '../Blocks';
 import DesktopMenu from './DesktopMenu';
 
-const Menu = ({ dark, relative, fullWidth, hideLogin, hideMenuItems }) => {
+const Menu = ({ dark, relative, fullWidth, hideLogin, hideMenuItems, withSearch }) => {
     const { t } = useTranslation();
 
     const { search } = useLocation();
@@ -72,6 +73,13 @@ const Menu = ({ dark, relative, fullWidth, hideLogin, hideMenuItems }) => {
                         </div>
 
                         <MainMenu className="main-menu">
+                            {withSearch && (
+                                <Media greaterThan="sm">
+                                    <li>
+                                        <DjSearch small />
+                                    </li>
+                                </Media>
+                            )}
                             {!hideMenuItems && (
                                 <>
                                     <Media greaterThan="sm">
