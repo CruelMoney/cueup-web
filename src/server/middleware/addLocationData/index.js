@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 import SQL from 'sql-template-strings';
@@ -95,6 +96,7 @@ const addLocationData = async (app) => {
                     iso2,
                     countrySlug,
                     citySlug,
+                    admin_short,
                 } = result;
                 const radius = (Math.sqrt(population) / Math.log2(population)) * 500; // set based on population
 
@@ -107,6 +109,7 @@ const addLocationData = async (app) => {
                     country: countryName,
                     countrySlug,
                     countryResult,
+                    stateCode: admin_short,
                     coords: {
                         lat: parseFloat(lat),
                         lng: parseFloat(lng),

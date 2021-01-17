@@ -42,7 +42,10 @@ import PopularRequests from './PopularRequests';
 const Location = ({ translate, activeLocation, environment, topDjs, djsCounts }) => {
     const history = useHistory();
 
-    const title = activeLocation.name;
+    let title = activeLocation.name;
+    if (activeLocation.stateCode) {
+        title += ', ' + activeLocation.stateCode;
+    }
 
     const coordinates = activeLocation.coords;
 
@@ -50,7 +53,7 @@ const Location = ({ translate, activeLocation, environment, topDjs, djsCounts })
     const otherDjs = topDjs.slice(3, 11);
 
     const metaDescription = `Find and book the best DJs in ${title} on Cueup DJ booking. With Cueup it’s simple to post your event and we’ll quickly match you with great DJs in ${title} for your event.`;
-    const siteDescription = `Find and book the best DJs in ${title} on Cueup, the top DJ booking website trusted by thousands of event organizers. Just start searching to get started.`;
+    const siteDescription = `Find the best DJs in ${title} on Cueup, the top DJ booking website trusted by thousands of event organizers. Just search to get started.`;
 
     const siteTitle = `Book a DJ in ${title} (Found +${Math.max(
         djsCounts,
@@ -129,6 +132,7 @@ const Location = ({ translate, activeLocation, environment, topDjs, djsCounts })
             </Helmet>
             <SmartNavigation dark relative />
             <Hero
+                title={title}
                 activeLocation={activeLocation}
                 siteDescription={siteDescription}
                 checkAvailability={checkAvailability}
@@ -240,8 +244,7 @@ const OtherDjs = ({ djs, activeLocation, onClick }) => {
     );
 };
 
-const Hero = ({ activeLocation, siteDescription, checkAvailability }) => {
-    const { name, coords, city } = activeLocation;
+const Hero = ({ activeLocation, title, siteDescription, checkAvailability }) => {
     return (
         <Container>
             <HeroSection>
@@ -259,7 +262,7 @@ const Hero = ({ activeLocation, siteDescription, checkAvailability }) => {
                         <div>
                             <PageTitle small>
                                 <span>Book DJs in </span>
-                                {name}
+                                {title}
                             </PageTitle>
                             <BodySmall style={{ marginBottom: '0.7em' }}>
                                 {siteDescription}
