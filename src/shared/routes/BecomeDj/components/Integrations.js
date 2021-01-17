@@ -106,9 +106,7 @@ const Integrations = () => {
                         className="mobile-integrations"
                         alt="soundcloud mixcloud"
                     />
-                    <TextAccent margin="0 0 20px 0">
-                        {t('become-dj:integrations.integrations')}
-                    </TextAccent>
+                    <TextAccent margin="0 0 20px 0">SELL YOURSELF</TextAccent>
                     <TitleWrapper>
                         <Header mobileTextAlign="left" small white>
                             {t('become-dj:integrations.combine-content-&-sell-yourself')}

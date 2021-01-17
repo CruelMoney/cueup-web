@@ -59,7 +59,7 @@ const Index = () => {
             <Bg>
                 <Hero
                     firstTo={translate(appRoutes.signUp)}
-                    blueAccent="2020 UPDATE"
+                    blueAccent="BECOME DJ"
                     title={'The only profile\n a DJ needs.'}
                     subtitle="As a DJ you don't want to waste time promoting yourself when you could be out playing. Cueup makes it simple to get booked."
                     heroButtonText="Apply to become DJ"
@@ -68,7 +68,7 @@ const Index = () => {
                     text1Row1="Get"
                     text1Row2="Gigs"
                     text2Row1="Upload"
-                    text2Row2="Mixtapes"
+                    text2Row2="Mixes"
                     text3Row1="Showcase"
                     text3Row2="Photos"
                     text4Row1="Add"
@@ -84,7 +84,7 @@ const Index = () => {
 
             <AvailableOn />
             <JoinThousands
-                title={'Be part of a \n global DJ community'}
+                title={'Become part of a \n global DJ community'}
                 description={
                     'Cueup is a growing community of DJs. Joining Cueup also means you become part of a group of the most talented and passionate DJs around the world.'
                 }

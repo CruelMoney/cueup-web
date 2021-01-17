@@ -102,7 +102,7 @@ const CancelationPolicy = () => {
         <Bg>
             <CancelationContainer>
                 <TextAccent center style={{ marginTop: '50px' }}>
-                    {t('become-dj:cancelation-policy.feature')}
+                    FEEL SAFE
                 </TextAccent>
                 <TitleWrapper>
                     <Header white center largeMargin>

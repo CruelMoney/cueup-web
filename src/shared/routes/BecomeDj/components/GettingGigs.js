@@ -293,9 +293,7 @@ const GettingGigs = () => {
                 <GettingGigsWrapper>
                     <AnimatedCards />
                     <TextCol>
-                        <ResponsiveTextAccent>
-                            {t('become-dj:getting-gigs.get-gigs-feature.feature')}
-                        </ResponsiveTextAccent>
+                        <ResponsiveTextAccent>EARN MONEY</ResponsiveTextAccent>
                         <Header bigMobile>
                             {t('become-dj:getting-gigs.get-gigs-feature.get-gigs')}
                         </Header>

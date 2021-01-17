@@ -22,12 +22,12 @@ const Payments = () => {
             <Container>
                 <PaymentCards
                     link={t(appRoutes.blog) + '/new-direct-payout-method'}
-                    accent="RECEIVE PAYMENTS"
-                    header1={'Card payments'}
+                    accent="GET PAYMENTS EASIER"
+                    header1={'Get card payments'}
                     description1={
                         'Accept card payments from your customers through Cueup. We take care of charging the organizer, and transfer directly to your bank account.'
                     }
-                    header2={'Direct payments'}
+                    header2={'Get cash payments'}
                     description2={
                         'You can also be responsible for charging the organizer yourself, and ask for the payment however your like. Cash, invoice or another payment system.'
                     }

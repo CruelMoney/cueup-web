@@ -48,7 +48,7 @@ const PlayAnywhere = () => {
             <Bg>
                 <Container>
                     <div style={{ maxWidth: '500px', position: 'relative', zIndex: 2 }}>
-                        <TextAccent margin="0 0 15px 0">LOCATIONS</TextAccent>
+                        <TextAccent margin="0 0 15px 0">TRAVEL AND DJ</TextAccent>
                         <Header mobileTextAlign="left">Play anywhere</Header>
                         <GrayText
                             mobileTextAlign="left"

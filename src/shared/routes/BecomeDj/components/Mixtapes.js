@@ -900,10 +900,10 @@ const Mixtapes = () => {
             <Container>
                 <Card>
                     <TextAccent center margin="0 0 15px 0">
-                        MUSIC
+                        THE SOUND OF YOU
                     </TextAccent>
                     <Header center mobileTextAlign="center" small>
-                        Share your mixtapes
+                        Share your mixes
                     </Header>
                     <GrayText
                         style={{
@@ -913,7 +913,7 @@ const Mixtapes = () => {
                             marginBottom: 30,
                         }}
                     >
-                        Upload or share your mixtapes directly from SoundCloud.
+                        Upload or share your mixes directly from SoundCloud.
                     </GrayText>
                     <NavLink
                         to={
