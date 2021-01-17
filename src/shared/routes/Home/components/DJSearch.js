@@ -19,7 +19,7 @@ import LazyRequestForm from 'components/common/RequestForm';
 import { appRoutes } from 'constants/locales/appRoutes';
 import useTranslate from 'components/hooks/useTranslate';
 
-const DjSearch = ({ initialLocation, small }) => {
+const DjSearch = ({ initialLocation, small, dark }) => {
     const { translate } = useTranslate();
     const history = useHistory();
     const locationRef = useRef();
@@ -99,8 +99,7 @@ const DjSearch = ({ initialLocation, small }) => {
                 form={form}
                 loading={loading}
                 submit={submit}
-                registerValidation={registerValidation}
-                unregisterValidation={unregisterValidation}
+                dark={dark}
             />
         );
     }
@@ -172,7 +171,7 @@ const DjSearch = ({ initialLocation, small }) => {
     );
 };
 
-const SmallSearch = ({ locationRef, setValue, form, loading, submit }) => {
+const SmallSearch = ({ locationRef, setValue, form, loading, submit, dark }) => {
     const [focused, setFocused] = useState(false);
 
     useEffect(() => {
@@ -182,7 +181,7 @@ const SmallSearch = ({ locationRef, setValue, form, loading, submit }) => {
     }, [form.locationName, submit, loading]);
 
     return (
-        <StyledSearchWrapperSmall focused={focused}>
+        <StyledSearchWrapperSmall focused={focused} dark={dark}>
             <SearchWrapperBg />
 
             <LocationSelector
@@ -331,6 +330,8 @@ const StyledSearchWrapperSmall = styled(StyledSearchWrapper)`
     width: 250px;
     height: 40px;
     transition: ease 250ms;
+    background-color: #f7f9fc;
+    border: 0.5px solid #e1e5ea;
 
     ${({ focused }) =>
         focused &&

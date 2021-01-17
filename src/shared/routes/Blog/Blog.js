@@ -24,7 +24,7 @@ const Index = () => {
                 <meta name="twitter:title" content={title} />
                 <meta property="og:site_name" content="Cueup Blog" />
             </Helmet>
-            <Menu dark relative />
+            <Menu dark relative withSearch />
             <Switch>
                 <Route exact path={translate(appRoutes.blog)} component={Blog} />
                 <Route path={`${translate(appRoutes.blog)}/:postTitle`} component={Post} />

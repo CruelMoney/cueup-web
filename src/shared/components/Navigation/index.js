@@ -76,7 +76,7 @@ const Menu = ({ dark, relative, fullWidth, hideLogin, hideMenuItems, withSearch 
                             {withSearch && (
                                 <Media greaterThan="sm">
                                     <li>
-                                        <DjSearch small />
+                                        <DjSearch small dark={dark} />
                                     </li>
                                 </Media>
                             )}
