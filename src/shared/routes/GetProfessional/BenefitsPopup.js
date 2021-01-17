@@ -38,7 +38,7 @@ export const Testimonial = () => {
             <Avatar size="large" src={'https://i.vimeocdn.com/portrait/13325432_640x640'} />
             <BodySmall style={{ marginLeft: 12 }}>
                 "I like to dj and travel. As a pro member I’ve had a steady stream of gigs most
-                places I go. Best investment I’ve made in a while!"
+                places I go. Best investment I’ve made in a while."
                 <Quotee>- Oscar Bandersen, DJ & Producer</Quotee>
             </BodySmall>
         </TestimonialWrapper>

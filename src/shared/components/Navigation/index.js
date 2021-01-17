@@ -82,16 +82,14 @@ const Menu = ({ dark, relative, fullWidth, hideLogin, hideMenuItems, withSearch 
                             )}
                             {!hideMenuItems && (
                                 <>
-                                    <Media greaterThan="sm">
-                                        {loggedIn && !isPro && isDJ && (
-                                            <li>
-                                                <Navlink
-                                                    label={'Go Pro'}
-                                                    to={t(appRoutes.userSettings) + '/get-pro'}
-                                                />
-                                            </li>
-                                        )}
-                                    </Media>
+                                    {loggedIn && !isPro && isDJ && (
+                                        <li>
+                                            <Navlink
+                                                label={'Go Pro'}
+                                                to={t(appRoutes.userSettings) + '/get-pro'}
+                                            />
+                                        </li>
+                                    )}
 
                                     {loggedIn ? null : (
                                         <li>
