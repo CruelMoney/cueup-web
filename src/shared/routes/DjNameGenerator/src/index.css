@@ -295,41 +295,21 @@ a {
     position: absolute;
     right: 2em;
 }
-.bottom-right .ph-widget {
-    margin-left: 1em;
-}
-
-.created-by {
-    align-items: flex-end;
-    -webkit-box-align: end;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-align: end;
-    font-size: 16px;
-    height: 2.4em;
+.bottom-left {
+    bottom: 1em;
+    left: 2em;
+    position: absolute;
 }
 
 svg.logo {
-    bottom: -10px;
     fill: #32325d;
-    margin-left: 1em;
     position: relative;
     stroke: #32325d;
-    width: 4em;
+    width: 6em;
+    margin-left: 1em;
 }
 .logo-wrapper {
     position: relative;
-}
-.logo-wrapper:after {
-    bottom: -1em;
-    color: #32325d;
-    content: 'DJ BOOKING';
-    font-size: 0.6em;
-    font-weight: 700;
-    position: absolute;
-    right: 1em;
-    text-decoration: none !important;
 }
 
 .dj-name-wrapper {
@@ -523,15 +503,26 @@ svg.logo {
 }
 
 .menu {
-    align-items: center;
-    -webkit-box-align: center;
-    display: -webkit-box;
-    display: -ms-flexbox;
+    align-items: flex-start;
     display: flex;
-    -ms-flex-align: center;
     position: absolute;
     right: 0;
     top: 0;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0.5em !important;
+}
+.row {
+    display: flex;
+}
+
+.menu .row a {
+    margin: 0 1em;
+    font-size: 16px;
+    font-weight: 700;
+}
+.menu .row a:hover {
+    text-decoration: underline;
 }
 
 .counter {
@@ -554,6 +545,7 @@ svg.logo {
     border-radius: 15px;
     -webkit-box-align: center;
     -webkit-box-pack: center;
+    font-weight: 600;
     -webkit-box-shadow: 0 0.5px 2.7px rgba(0, 0, 0, 0.017), 0 1.3px 6.5px rgba(0, 0, 0, 0.024),
         0 2.4px 12.3px rgba(0, 0, 0, 0.03), 0 4.2px 21.9px rgba(0, 0, 0, 0.036),
         0 7.9px 40.9px rgba(0, 0, 0, 0.043), 0 19px 98px rgba(0, 0, 0, 0.06);
@@ -598,9 +590,8 @@ svg.logo {
     }
 
     .menu {
-        -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
         justify-content: space-between;
+        align-items: center;
         padding: 0.5em;
         padding-right: 0;
         width: 100%;
@@ -613,21 +604,10 @@ svg.logo {
         flex-direction: column;
         right: 0.5em;
     }
-    .created-by {
-        bottom: 0.6em;
-        -webkit-box-pack: end;
-        -ms-flex-pack: end;
-        justify-content: flex-end;
-        position: relative;
-        right: 0.9em;
+    .bottom-left {
+        display: none;
     }
-    .ph-widget {
-        bottom: -0.2em;
-        position: relative;
-        right: -0.8em;
-        -webkit-transform: scale(0.8);
-        transform: scale(0.8);
-    }
+
     .instructions {
         margin-bottom: 10px;
         margin-top: 10px;
@@ -640,7 +620,7 @@ svg.logo {
         width: 200vw;
     }
     .share-options {
-        margin-right: 1em;
+        display: none;
     }
     .card {
         background: transparent;
@@ -753,5 +733,8 @@ svg.logo {
     .continue-button {
         -webkit-transform: none;
         transform: none;
+    }
+    svg.logo {
+        margin-left: 0em;
     }
 }

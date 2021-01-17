@@ -12,7 +12,6 @@ import ToggleSwitch from './ToggleSwitch';
 import Button from './Button';
 import Logo from './Logo';
 import AnimatedText from './AnimatedName';
-import Sharing from './Sharing';
 import ContinueButton from './ContinueButton';
 import ShowOptionsButton from './ShowOptionsButton';
 import TextInput from './TextInput';
@@ -25,7 +24,7 @@ import InstagramWidget from './InstagramWidget';
 const LazySignup = loadable(() => import('./Signup'));
 
 const description =
-    "Are you even a real DJ if you don't have a name? Find your next DJ name by clicking generate. Toggle the categories to customize the name, best to only use 2 at a time, unless you like it wild. There's 19 billion possibilities - how much time do you have to waste?";
+    "Are you even a real DJ if you don't have a name? Find your next DJ name by clicking generate. Toggle the categories to customize the name, best to only use 2 at a time, unless you like it wild. Can be everything from HipHop to EDM - let's make your name!";
 
 const CATEGORIES = [
     {
@@ -171,12 +170,18 @@ function App({ match, history }) {
                 </div>
                 <div className="right-area">
                     <div className="menu">
-                        <Counter />
-                        <Sharing
-                            url={`/dj-name-generator${
-                                hasGenerated ? '?name=' + encodeURIComponent(name) : ''
-                            }`}
-                        />
+                        <a href={'https://cueup.io/?ref=dj-name-generator'}>
+                            <Logo />
+                        </a>
+
+                        <div className="row">
+                            <a href={'https://cueup.io/s/djs-near-me?ref=dj-name-generator'}>
+                                Find DJs
+                            </a>
+                            <a href={'https://cueup.io/become-dj?ref=dj-name-generator'}>
+                                Become DJ
+                            </a>
+                        </div>
                     </div>
 
                     <div
@@ -192,16 +197,12 @@ function App({ match, history }) {
                             <SignupButton show={hasGenerated && hasAnimated} />
                         </div>
                     </div>
+                    <div className="bottom-left">
+                        <Counter />
+                    </div>
                 </div>
 
                 <div className="bottom-right">
-                    <a href={'https://cueup.io/become-dj?ref=dj-name-generator'}>
-                        <div className="created-by">
-                            <h4>Created by</h4>
-                            <Logo />
-                        </div>
-                    </a>
-
                     <InstagramWidget />
                 </div>
 
@@ -228,10 +229,8 @@ function App({ match, history }) {
 }
 
 const SignupButton = ({ show }) => {
-    const label = useGoogleOptimize('0sRlfd5bTBiVaeOPPPXEmQ', [
-        'Become DJ',
-        'Are you an actual DJ?',
-    ]);
+    // RUNNING A / A Test
+    const label = useGoogleOptimize('ow_rk7n5SNK753sfUyWFbQ', ['Sign up as DJ', 'Sign up as DJ']);
 
     return <ContinueButton show={show}>{label}</ContinueButton>;
 };
