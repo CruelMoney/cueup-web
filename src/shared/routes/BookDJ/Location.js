@@ -39,22 +39,24 @@ import { SEARCH } from './gql';
 import Occasions from './Occassions';
 import PopularRequests from './PopularRequests';
 
-const Location = ({ translate, activeLocation, environment, topDjs }) => {
+const Location = ({ translate, activeLocation, environment, topDjs, djsCounts }) => {
     const history = useHistory();
 
     const title = activeLocation.name;
 
     const coordinates = activeLocation.coords;
 
-    const metaDescription = `Find and book the best DJs in ${title} on Cueup DJ booking. With Cueup it’s simple to post your event and we’ll quickly match you with great DJs in ${title} for your event.`;
-    const siteDescription =
-        'Hire the best DJs on Cueup - the top booking website trusted by 1000s of event organizers.';
-
-    const siteTitle = `Book a DJ in ${title} · Cueup DJ Booking`;
-    const thumb = environment.CALLBACK_DOMAIN + (activeLocation.image || defaultImage);
-
     const featuredDjs = topDjs.slice(0, 3);
     const otherDjs = topDjs.slice(3, 11);
+
+    const metaDescription = `Find and book the best DJs in ${title} on Cueup DJ booking. With Cueup it’s simple to post your event and we’ll quickly match you with great DJs in ${title} for your event.`;
+    const siteDescription = `Find and book the best DJs in ${title} on Cueup, the top DJ booking website trusted by thousands of event organizers. Just start searching to get started.`;
+
+    const siteTitle = `Book a DJ in ${title} (Found +${Math.max(
+        djsCounts,
+        11
+    )} DJs) · Cueup DJ Booking`;
+    const thumb = environment.CALLBACK_DOMAIN + (activeLocation.image || defaultImage);
 
     const checkAvailability = topDjs.length < 3;
 
@@ -407,6 +409,7 @@ const DataWrapper = (props) => {
     });
 
     const topDjs = searchData?.searchDjs?.edges || [];
+    const djsCounts = searchData?.searchDjs?.pageInfo.totalDocs;
 
     if (!activeLocation) {
         return <Redirect to={translate(appRoutes.notFound)} />;
@@ -419,6 +422,7 @@ const DataWrapper = (props) => {
             activeLocation={activeLocation}
             environment={environment}
             topDjs={topDjs}
+            djsCounts={djsCounts}
         />
     );
 };

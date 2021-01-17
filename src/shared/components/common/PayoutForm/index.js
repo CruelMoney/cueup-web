@@ -51,7 +51,7 @@ const PayoutComponent = (props) => {
                         checked: !!bankAccount,
                         title: 'Bank Account',
                         description:
-                            'We take care of charging the organizer and the money is transferred to you immediately after the event.',
+                            'We take care of charging the organizer and the money is transferred to your bank acccount immediately after the event.',
                     },
                     {
                         value: PAYOUT_TYPES.DIRECT,

@@ -34,7 +34,7 @@ const DJsNearMePage = ({ topDjs, loading, totalFound, city }) => {
     const metaTitle = `Best DJs Near Me (${totalFound}+ found)`;
     const title = 'Find a DJ near you';
     const description =
-        'Check prices from all DJs near you. See their photos and reviews, and listen to mixtapes. Contact the local DJs you like.';
+        'Check prices from all DJs near you. See their photos and reviews, and listen to mixes. Contact the local DJs you like.';
 
     const breadCrumbs = [
         {
