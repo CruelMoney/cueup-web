@@ -31,10 +31,10 @@ const DJsNearMePage = ({ topDjs, loading, totalFound, city }) => {
     const { translate } = useTranslate();
     const history = useHistory();
 
-    const metaTitle = `Best DJs Near Me (${totalFound}+ found)`;
+    const metaTitle = `Best DJs Near Me (${totalFound}+ found) - Cueup DJ Booking`;
     const title = 'Find a DJ near you';
     const description =
-        'Check prices from all DJs near you. See their photos and reviews, and listen to mixes. Contact the local DJs you like.';
+        'Check prices from all DJs near you. See their photos and reviews, and listen to mixes. Contact the local DJs to get a quote for your next event.';
 
     const breadCrumbs = [
         {
