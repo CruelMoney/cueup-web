@@ -25,6 +25,7 @@ import LazyBlog from 'routes/Blog';
 import LazyDjsNearMe from 'routes/DJsNearMe';
 import Login from 'routes/Login';
 import { MediaContextProvider } from 'components/MediaContext';
+import Jobs from 'routes/Jobs';
 import { ProvideAppState, useAppState } from './components/hooks/useAppState';
 import Home from './routes/Home';
 import About from './routes/About';
@@ -65,6 +66,7 @@ const RouteWrapper = () => {
                         component={Home}
                     />
                     <Route path={t(appRoutes.about)} component={About} />
+                    <Route path={t(appRoutes.jobs)} component={Jobs} />
                     <Route path={t(appRoutes.faq)} component={LazyFaq} />
                     <Route path={t(appRoutes.becomeDj)} component={LazyBecomeDj} />
                     <Route path={t(appRoutes.blog)} component={LazyBlog} />

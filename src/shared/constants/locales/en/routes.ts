@@ -3,6 +3,7 @@ import { RouteKeys } from '../appRoutes';
 const routes: RouteKeys = {
     home: '/',
     about: '/about',
+    jobs: '/jobs',
     howItWorks: '/how-it-works',
     becomeDj: '/become-dj',
     signUp: '/signup',

@@ -3,6 +3,7 @@
 export const routeKeys = Object.freeze({
     home: 'home',
     about: 'about',
+    jobs: 'jobs',
     howItWorks: 'howItWorks',
     becomeDj: 'becomeDj',
     signUp: 'signUp',

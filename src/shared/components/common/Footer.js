@@ -202,12 +202,7 @@ const Footer = ({
                                     </a>
                                 </li>
                                 <li>
-                                    <a
-                                        className="link-look"
-                                        href={'mailto:chris@cueup.io?subject=Job inquiry'}
-                                    >
-                                        {translate('Jobs')}
-                                    </a>
+                                    <Link to={translate(appRoutes.jobs)}>{translate('Jobs')}</Link>
                                 </li>
                                 <li>
                                     <a
