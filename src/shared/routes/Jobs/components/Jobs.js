@@ -38,8 +38,8 @@ export default () => {
                             </H2>
                             <Body center>
                                 Are you interested in becoming a DJ at Cueup? <br />
-                                To apply to become a DJ at Cueup you simply have to create a
-                                profile. <br />
+                                To apply to become DJ at Cueup you simply have to create a profile.{' '}
+                                <br />
                                 <br />
                                 We only approve serious application and might ask you to upload
                                 better photos or write a better description of yourself.

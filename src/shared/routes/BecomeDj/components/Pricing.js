@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router-dom';
-import checkmarkCircle from '@iconify/icons-ion/checkmark-circle';
-import { InlineIcon } from '@iconify/react';
 import { Col, Container, Hide, ReadMore, Row, RowMobileCol, Show } from 'components/Blocks';
 
 import { ComparisonTable } from 'components/common/ComparissonTable';
