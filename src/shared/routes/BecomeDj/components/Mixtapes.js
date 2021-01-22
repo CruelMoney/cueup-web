@@ -16,6 +16,7 @@ const Bg = styled.div`
     width: 100%;
     z-index: 2;
     position: relative;
+    margin-bottom: 30px;
 `;
 
 const SoundBarWrapper = styled.div`

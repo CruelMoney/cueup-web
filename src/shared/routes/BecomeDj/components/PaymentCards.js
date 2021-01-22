@@ -93,11 +93,11 @@ const CardsContainer = styled.div`
 `;
 
 export const PaymentCards = (props) => {
-    const { margin, header1, header2, description1, description2, accent, link } = props;
+    const { margin, header1, header2, description1, description2, accent1, accent2, link } = props;
     return (
         <CardsContainer margin={margin}>
             <CardItem
-                accent={accent}
+                accent={accent1}
                 header={header1}
                 description={description1}
                 imgSrc={paymentCard}
@@ -107,7 +107,7 @@ export const PaymentCards = (props) => {
             <div style={{ width: 30, height: 30 }} />
 
             <CardItem
-                accent={accent}
+                accent={accent2}
                 header={header2}
                 description={description2}
                 imgSrc={invoice}

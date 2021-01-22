@@ -21,6 +21,7 @@ import AvailableOn from './components/AvailableOn';
 import content from './content.json';
 import Mixtapes from './components/Mixtapes';
 import PlayAnywhere from './components/PlayAnywhere';
+import Pricing from './components/Pricing';
 
 const Bg = styled.div`
     background-image: radial-gradient(50% 58% at 50% 33%, #122b48 12%, #0b1b2d 90%);
@@ -81,6 +82,7 @@ const Index = () => {
             <CancelationPolicy />
             <Payments />
             <Mixtapes />
+            <Pricing />
 
             <AvailableOn />
             <JoinThousands
