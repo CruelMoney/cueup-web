@@ -12,7 +12,6 @@ import Signup from '../Signup';
 import Hero from './components/Hero';
 import JoinThousands from './components/JoinThousands';
 import HighlightsLaptop from './components/HighlightsLaptop';
-import thumbSrc from './assets/become-dj.png';
 import Integrations from './components/Integrations';
 import GettingGigs from './components/GettingGigs';
 import Payments from './components/Payments';
@@ -29,11 +28,9 @@ const Bg = styled.div`
 `;
 
 const Index = () => {
-    const { environment } = useServerContext();
     const { translate } = useNamespaceContent(content, 'become-dj');
 
     const title = translate('become-dj:title') + ' | Cueup';
-    const thumb = environment.CALLBACK_DOMAIN + thumbSrc;
     const themeColor = '#00d1ff';
 
     // preload signup page
@@ -48,8 +45,6 @@ const Index = () => {
                 <meta property="og:title" content={title} />
                 <meta name="twitter:title" content={title} />
 
-                <meta property="og:image" content={thumb} />
-                <meta name="twitter:image" content={thumb} />
                 <meta
                     name="apple-itunes-app"
                     content="app-id=1458267647, app-argument=userProfile"
@@ -61,7 +56,7 @@ const Index = () => {
                 <Hero
                     firstTo={translate(appRoutes.signUp)}
                     blueAccent="BECOME DJ"
-                    title={'The only profile\n a DJ needs.'}
+                    title={'Get out and play.'}
                     subtitle="As a DJ you don't want to waste time promoting yourself when you could be out playing. Cueup makes it simple to get booked."
                     heroButtonText="Apply to become DJ"
                 />
