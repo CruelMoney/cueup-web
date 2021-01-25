@@ -7,6 +7,7 @@ import useNamespaceContent from 'components/hooks/useNamespaceContent';
 import { appRoutes } from 'constants/locales/appRoutes';
 import { useServerContext } from 'components/hooks/useServerContext';
 import Menu from 'components/Navigation';
+import { useGoogleOptimize } from 'components/hooks/useGoogleOptimize';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import Signup from '../Signup';
 import Hero from './components/Hero';
@@ -33,6 +34,12 @@ const Index = () => {
     const title = translate('become-dj:title') + ' | Cueup';
     const themeColor = '#00d1ff';
 
+    // A/A TEST
+    const label = useGoogleOptimize('HHzsMQCqRjasY91FDDYFiw', [
+        'Get out and play.',
+        'Get out and play.',
+    ]);
+
     // preload signup page
     useEffect(() => {
         Signup.preload();
@@ -56,7 +63,7 @@ const Index = () => {
                 <Hero
                     firstTo={translate(appRoutes.signUp)}
                     blueAccent="BECOME DJ"
-                    title={'Get out and play.'}
+                    title={label}
                     subtitle="As a DJ you don't want to waste time promoting yourself when you could be out playing. Cueup makes it simple to get booked."
                     heroButtonText="Apply to become DJ"
                 />
