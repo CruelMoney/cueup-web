@@ -24,7 +24,7 @@ const Hero = () => {
         <HeroContainer>
             <Container>
                 <LeftSide>
-                    <Accent>1892+ successful events</Accent>
+                    <Accent>1000s of successful events</Accent>
                     <Title>
                         Find DJs for parties <br />
                         and events
