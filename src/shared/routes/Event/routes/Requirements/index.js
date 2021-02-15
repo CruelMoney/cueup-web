@@ -210,7 +210,12 @@ const Requirements = React.forwardRef(({ theEvent, history }, ref) => {
                     label="Speakers"
                     onClick={() => {
                         save({
-                            speakers: !rider?.speakers,
+                            rider: {
+                                lights: !!rider?.lights,
+                                microphone: !!rider?.microphone,
+                                smokeMachine: !!rider?.smokeMachine,
+                                speakers: !rider?.speakers,
+                            },
                         });
                     }}
                     buttonText={rider?.speakers ? 'Required' : 'Not required'}
@@ -222,7 +227,12 @@ const Requirements = React.forwardRef(({ theEvent, history }, ref) => {
                     label="Lights"
                     onClick={() =>
                         save({
-                            lights: !rider?.lights,
+                            rider: {
+                                lights: !rider?.lights,
+                                microphone: !!rider?.microphone,
+                                smokeMachine: !!rider?.smokeMachine,
+                                speakers: !!rider?.speakers,
+                            },
                         })
                     }
                     buttonText={rider?.lights ? 'Required' : 'Not required'}

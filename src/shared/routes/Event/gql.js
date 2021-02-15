@@ -329,8 +329,7 @@ const UPDATE_EVENT = gql`
         $contactEmail: String
         $contactName: String
         $contactPhone: String
-        $speakers: Boolean
-        $lights: Boolean
+        $rider: RiderInput
         $genres: [String!]
         $guestsCount: Int
         $locale: String
@@ -347,8 +346,7 @@ const UPDATE_EVENT = gql`
             contactEmail: $contactEmail
             contactName: $contactName
             contactPhone: $contactPhone
-            speakers: $speakers
-            lights: $lights
+            rider: $rider
             genres: $genres
             guestsCount: $guestsCount
             address: $address
