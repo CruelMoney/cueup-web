@@ -24,6 +24,7 @@ export const SEARCH = gql`
                 }
                 appMetadata {
                     isPro
+                    rating
                 }
             }
             pageInfo {
@@ -63,6 +64,7 @@ export const SEARCH_DEEP = gql`
                 }
                 appMetadata {
                     isPro
+                    rating
                 }
                 playingLocations {
                     name
