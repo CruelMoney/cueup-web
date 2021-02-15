@@ -24,10 +24,11 @@ import { DJSearchEntry } from 'routes/BookDJ/SearchResults';
 import Occasions from 'routes/BookDJ/Occassions';
 import ScrollToTop from 'components/common/ScrollToTop';
 import PopularRequests from 'routes/BookDJ/PopularRequests';
-import { FAQSeoTag } from 'components/SeoTags';
+import { FAQSeoTag, LocationPageSeo } from 'components/SeoTags';
 import { DJS_IN_LOCATION } from './gql';
 
-const DJsNearMePage = ({ topDjs, loading, totalFound, city }) => {
+const DJsNearMePage = ({ reviewCount, ratingValue, topDjs, loading, totalFound, city }) => {
+    const { environment } = useServerContext();
     const { translate } = useTranslate();
     const history = useHistory();
 
@@ -68,6 +69,11 @@ const DJsNearMePage = ({ topDjs, loading, totalFound, city }) => {
                 <meta property="og:description" content={description} />
             </Helmet>
             <ScrollToTop />
+            <LocationPageSeo
+                reviewCount={reviewCount}
+                ratingValue={ratingValue}
+                url={environment.WEBSITE_URL + breadCrumbs[breadCrumbs.length - 1]?.url}
+            />
             <Menu />
             <HeroContainer id="top">
                 <Container>
@@ -318,7 +324,16 @@ const DataWrapper = () => {
         setTotalFound(searchData?.searchDjs?.pageInfo?.totalDocs);
     }, [searchData]);
 
-    return <DJsNearMePage topDjs={topDjs} loading={loading} totalFound={totalFound} city={city} />;
+    return (
+        <DJsNearMePage
+            reviewCount={data.reviewCount}
+            ratingValue={data.ratingValue}
+            topDjs={topDjs}
+            loading={loading}
+            totalFound={totalFound}
+            city={city}
+        />
+    );
 };
 
 export default DataWrapper;

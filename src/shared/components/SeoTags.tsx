@@ -111,7 +111,8 @@ export const LocationPageSeo = ({ url, ratingValue, reviewCount, image }) => {
                     'paymentAccepted': 'Credit Card, Debit Card, Cash',
                     'openingHours': 'Mo-Su',
                     'logo': 'https://cueup.io/images/logo_dark.png',
-                    'image': image,
+                    'image':
+                        image || 'https://cueup.io/static/assets/hero_1_compressed.ccf1a5ab.jpg',
                     ...extraFields,
                 }),
             ]}

@@ -48,6 +48,8 @@ const serverRenderer = () => async (req, res) => {
         topCities: res.locals.top_cities,
         countries: res.locals.countries,
         activeLocation: res.locals.activeLocation,
+        reviewCount: 1861,
+        ratingValue: 4.91375,
     };
 
     const Content = (

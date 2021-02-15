@@ -60,7 +60,7 @@ const Location = ({ translate, activeLocation, environment, topDjs, djsCounts })
         djsCounts,
         11
     )} DJs) · Cueup DJ Booking`;
-    const thumb = environment.CALLBACK_DOMAIN + (activeLocation.image || defaultImage);
+    const thumb = environment.WEBSITE_URL + (activeLocation.image || defaultImage);
 
     const checkAvailability = topDjs.length < 3;
 
@@ -148,7 +148,7 @@ const Location = ({ translate, activeLocation, environment, topDjs, djsCounts })
             <LocationPageSeo
                 ratingValue={ratingValue}
                 reviewCount={topDjs.length}
-                url={breadCrumbs[breadCrumbs.length - 1]}
+                url={environment.WEBSITE_URL + breadCrumbs[breadCrumbs.length - 1]?.url}
                 image={heroImgJPG}
             />
             <SmartNavigation dark relative />
