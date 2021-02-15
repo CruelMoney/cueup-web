@@ -1,10 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { helmetJsonLdProp } from 'react-schemaorg';
-import { EntertainmentBusiness, FAQPage, Organization, WebSite } from 'schema-dts';
+import { FAQPage, LocalBusiness, Organization, WebSite } from 'schema-dts';
 import { appRoutes } from 'constants/locales/appRoutes';
-// @ts-ignore
-import logoUrl from '../assets/logo_black.png';
 import useTranslate from './hooks/useTranslate';
 import { useServerContext } from './hooks/useServerContext';
 
@@ -63,10 +61,10 @@ export const DJSeoTags: React.FC<DJSeoProps> = ({
     return (
         <Helmet
             script={[
-                helmetJsonLdProp<EntertainmentBusiness>({
+                helmetJsonLdProp<LocalBusiness>({
                     '@id': id,
                     '@context': 'https://schema.org',
-                    '@type': 'EntertainmentBusiness',
+                    '@type': 'LocalBusiness',
                     'name': artistName,
                     'description': bio,
                     'address': name,
@@ -78,6 +76,42 @@ export const DJSeoTags: React.FC<DJSeoProps> = ({
                     'image': picture?.path,
                     'url': url,
                     'priceRange': '$$',
+                    'openingHours': 'Mo-Su',
+                    'paymentAccepted': 'Credit Card, Debit Card',
+                    ...extraFields,
+                }),
+            ]}
+        />
+    );
+};
+
+export const LocationPageSeo = ({ url, ratingValue, reviewCount, image }) => {
+    const extraFields = {};
+
+    if (ratingValue) {
+        // @ts-ignore
+        extraFields.aggregateRating = {
+            '@type': 'AggregateRating',
+            'ratingValue': parseFloat(ratingValue).toFixed(2),
+            'reviewCount': reviewCount,
+            'worstRating': 1,
+            'bestRating': 5,
+        };
+    }
+
+    return (
+        <Helmet
+            script={[
+                helmetJsonLdProp<LocalBusiness>({
+                    '@context': 'https://schema.org',
+                    '@type': 'LocalBusiness',
+                    'name': ['DJ'],
+                    'url': url,
+                    'currenciesAccepted': 'USD',
+                    'paymentAccepted': 'Credit Card, Debit Card, Cash',
+                    'openingHours': 'Mo-Su',
+                    'logo': 'https://cueup.io/images/logo_dark.png',
+                    'image': image,
                     ...extraFields,
                 }),
             ]}
@@ -97,7 +131,7 @@ export const OrganizationSeo = () => {
                     '@type': 'Organization',
                     'name': 'Cueup DJ Booking',
                     'url': 'https://cueup.io/',
-                    'logo': logoUrl,
+                    'logo': 'https://cueup.io/images/logo_dark.png',
                     'foundingDate': '2016',
                     'sameAs': [
                         'https://www.facebook.com/cueup.dj.booking',

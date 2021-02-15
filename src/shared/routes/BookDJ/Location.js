@@ -18,6 +18,7 @@ import Footer from 'components/common/Footer';
 import LazyRequestForm from 'components/common/RequestForm';
 import FeaturedDJCard from 'components/FeaturedDJCard';
 import TrustedBy from 'routes/Home/components/TrustedBy';
+import { LocationPageSeo } from 'components/SeoTags';
 import defaultImage from '../../assets/images/default.png';
 import Map from '../../components/common/Map';
 import BookDJForm from './BookDJForm';
@@ -109,6 +110,20 @@ const Location = ({ translate, activeLocation, environment, topDjs, djsCounts })
         });
     }
 
+    const { ratingValue } = topDjs.reduce(
+        (acc, dj) => {
+            if (dj.appMetadata?.rating) {
+                acc.total += dj.appMetadata?.rating;
+                acc.reviewCount += 1;
+            }
+
+            acc.ratingValue = acc.total / acc.reviewCount;
+
+            return acc;
+        },
+        { total: 0, reviewCount: 0, ratingValue: 0 }
+    );
+
     return (
         <>
             <Helmet>
@@ -130,6 +145,12 @@ const Location = ({ translate, activeLocation, environment, topDjs, djsCounts })
                 <meta name="geo.placename" content={title} />
                 <meta name="geo.region" content={title} />
             </Helmet>
+            <LocationPageSeo
+                ratingValue={ratingValue}
+                reviewCount={topDjs.length}
+                url={breadCrumbs[breadCrumbs.length - 1]}
+                image={heroImgJPG}
+            />
             <SmartNavigation dark relative />
             <Hero
                 title={title}
