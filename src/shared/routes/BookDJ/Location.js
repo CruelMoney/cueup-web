@@ -78,6 +78,11 @@ const Location = ({ translate, activeLocation, environment, topDjs, djsCounts })
                 search: '?locationName=' + encodeURIComponent(activeLocation.name),
                 state: {
                     locationName: activeLocation.name,
+                    location: {
+                        name: activeLocation.name,
+                        latitude: coordinates?.lat,
+                        longitude: coordinates?.lng,
+                    },
                     ...state,
                 },
             });
