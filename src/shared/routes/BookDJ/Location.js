@@ -75,6 +75,7 @@ const Location = ({ translate, activeLocation, environment, topDjs, djsCounts })
         } else {
             history.push({
                 pathname: translate(appRoutes.search),
+                search: '?locationName=' + encodeURIComponent(activeLocation.name),
                 state: {
                     locationName: activeLocation.name,
                     ...state,
