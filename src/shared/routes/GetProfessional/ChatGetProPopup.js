@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { Col, PrimaryButton, TeritaryButton } from 'components/Blocks';
 import { Body } from 'components/Text';
-import { Testimonial, CustomCheckBox } from './BenefitsPopup';
+import { CustomCheckBox } from './BenefitsPopup';
 import GenericPopup from './GenericPopup';
 
 export const ChatGoProPopup = () => {
@@ -29,7 +29,6 @@ export const ChatGoProPopup = () => {
                     <CustomCheckBox checked label="Unlimited sound uploads." />
                     <CustomCheckBox checked label={'Pro DJ badge.'} />
                     <CustomCheckBox checked label="And much more..." />
-                    <Testimonial />
                 </Col>
             ) : (
                 <Col style={{ maxWidth: 450, textAlign: 'center', alignItems: 'center' }}>

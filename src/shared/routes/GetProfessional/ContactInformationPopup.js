@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Col } from 'components/Blocks';
 
 import { ProFeature } from 'components/FormComponents';
-import { Testimonial, CustomCheckBox } from './BenefitsPopup';
+import { CustomCheckBox } from './BenefitsPopup';
 
 import GenericPopup from './GenericPopup';
 
@@ -32,7 +32,6 @@ export const BenefitsPopup = () => {
                     <ProFeature disabled>{'Pro'} </ProFeature>
                 </CustomCheckBox>
                 <CustomCheckBox checked label="And much more..." />
-                <Testimonial />
             </Col>
         </GenericPopup>
     );
