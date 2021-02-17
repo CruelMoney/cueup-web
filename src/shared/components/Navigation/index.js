@@ -64,7 +64,7 @@ const Menu = ({ dark, relative, fullWidth, hideLogin, hideMenuItems, withSearch 
                 )}
             </Helmet>
 
-            {isDJ && !user?.hasAcceptedTerms && <CompanyInformationPopup userId={user.id} />}
+            {isDJ && <CompanyInformationPopup userId={user?.id} />}
 
             <Container fullWidth={fullWidth} className="container">
                 <div className={'nav-container location_'}>

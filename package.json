@@ -138,6 +138,7 @@
     "universal-cookie-express": "^4.0.3",
     "url-search-params-polyfill": "^8.1.0",
     "use-analytics": "^0.0.3",
+    "use-persisted-state": "^0.3.3",
     "wnumb": "^1.0.4"
   },
   "devDependencies": {

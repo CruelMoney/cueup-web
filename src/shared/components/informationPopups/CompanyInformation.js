@@ -1,9 +1,11 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
 import styled from 'styled-components';
+import createPersistedState from 'use-persisted-state';
 import Popup from 'components/common/Popup';
 import { Body, H2 } from 'components/Text';
 import { Avatar, Col, PrimaryButton, RowMobileCol, SmartButton } from 'components/Blocks';
+const useCompanyInfoPopup = createPersistedState('company-info-popup-2');
 
 const DELETE_USER = gql`
     mutation DeleteUser($id: ID!) {
@@ -19,6 +21,8 @@ const Wrapper = styled.div`
 `;
 
 const CompanyInformationPopup = ({ userId }) => {
+    const [showing, setShowing] = useCompanyInfoPopup(true);
+
     const [mutate, { loading }] = useMutation(DELETE_USER, {
         variables: {
             userId,
@@ -36,7 +40,7 @@ const CompanyInformationPopup = ({ userId }) => {
     };
 
     return (
-        <Popup hideClose width={600}>
+        <Popup showing={showing} hideClose width={600}>
             <Wrapper>
                 <RowMobileCol reverse middle>
                     <H2
@@ -70,7 +74,10 @@ const CompanyInformationPopup = ({ userId }) => {
                     chris@cueup.io or use the support chat.
                 </Body>
                 <Col>
-                    <PrimaryButton style={{ maxWidth: '100%', marginTop: '42px' }}>
+                    <PrimaryButton
+                        onClick={() => setShowing(false)}
+                        style={{ maxWidth: '100%', marginTop: '42px' }}
+                    >
                         I understand, let's do this!
                     </PrimaryButton>
                     <SmartButton

@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import { useQuery } from '@apollo/client';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { useLocation } from 'react-router';
+import createPersistedState from 'use-persisted-state';
+import { truncate } from 'lodash';
 import Footer from 'components/common/Footer';
 import Menu from 'components/Navigation';
 import ScrollToTop from 'components/common/ScrollToTop';
@@ -20,13 +22,14 @@ import Unconfirmed from '../routes/Unconfirmed';
 import Opportunities from '../routes/Opportunities';
 import Upcoming from '../routes/Upcoming';
 import Sidebar from './Sidebar';
+const useGigsInfoPopup = createPersistedState('gigs-info-popup');
 
 const DataWrapper = () => {
     const { data, loading } = useQuery(ME);
     const { pathname, search } = useLocation();
     const { setAppState } = useAppState();
 
-    const [showPopup, setShowPopup] = useState(false);
+    const [showPopup, setShowPopup] = useGigsInfoPopup(true);
 
     const me = data?.me;
 

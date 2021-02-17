@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Popup from 'components/common/Popup';
 import { Body, H2 } from 'components/Text';
-import { Col, PrimaryButton, RowMobileCol, SmartButton } from 'components/Blocks';
+import { Col, PrimaryButton } from 'components/Blocks';
 
 const Wrapper = styled.div`
     padding: 1em;
