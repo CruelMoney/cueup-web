@@ -39,7 +39,7 @@ import AddBookingLink from 'components/AddBookingLink';
 import Layout from '../components/Layout';
 import swirlyArrow from '../../../assets/icons/swirly-scribbled-arrow.png';
 
-const DirectRequests = ({ user }) => {
+const DirectRequests = ({ user, showExplanation }) => {
     const [pagination, setPagination] = useState({
         page: 1,
         limit: 8,
@@ -72,7 +72,9 @@ const DirectRequests = ({ user }) => {
             }}
             setPagination={setPagination}
             emptyChildren={<EmptyChildren />}
-            rightSideChildren={<RightSide user={user} gigs={gigs} />}
+            rightSideChildren={
+                <RightSide user={user} gigs={gigs} showExplanation={showExplanation} />
+            }
         />
     );
 };
@@ -95,7 +97,7 @@ const EmptyChildren = () => {
     );
 };
 
-const RightSide = ({ user, gigs }) => {
+const RightSide = ({ user, gigs, showExplanation }) => {
     return (
         <>
             <GreyBox>
@@ -103,6 +105,16 @@ const RightSide = ({ user, gigs }) => {
                 <BodySmall>
                     Direct requests are gigs where you've been picked to send an offer. Direct
                     requests are your best chance of getting booked.
+                </BodySmall>
+                <BodySmall
+                    style={{
+                        marginTop: '1em',
+                        textDecoration: 'underline',
+                        cursor: 'pointer',
+                    }}
+                    onClick={showExplanation}
+                >
+                    Direct requests vs. opportunities?
                 </BodySmall>
             </GreyBox>
             <GreyBox>

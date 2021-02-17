@@ -9,6 +9,7 @@ import ScrollToTop from 'components/common/ScrollToTop';
 
 import { useAppState } from 'components/hooks/useAppState';
 import { useNotifications } from 'components/hooks/useNotifications';
+import GigsInformationPopup from 'components/informationPopups/GigsInformation';
 import { ME } from '../../../components/gql';
 import { Row, Hr, Container, RowMobileCol } from '../../../components/Blocks';
 
@@ -24,6 +25,9 @@ const DataWrapper = () => {
     const { data, loading } = useQuery(ME);
     const { pathname, search } = useLocation();
     const { setAppState } = useAppState();
+
+    const [showPopup, setShowPopup] = useState(false);
+
     const me = data?.me;
 
     const metaTitle = 'Gigs · Cueup';
@@ -55,6 +59,9 @@ const DataWrapper = () => {
             </Helmet>
             <ScrollToTop />
             <Menu dark relative fullWidth />
+
+            {showPopup && <GigsInformationPopup onConfirm={() => setShowPopup(false)} />}
+
             <Container
                 style={{ minHeight: '80vh', display: 'flex', flexDirection: 'column' }}
                 fullWidth
@@ -65,7 +72,12 @@ const DataWrapper = () => {
                     <Switch>
                         <Route
                             path={'/u/gigs/direct-requests'}
-                            render={() => <DirectRequests user={me} />}
+                            render={() => (
+                                <DirectRequests
+                                    user={me}
+                                    showExplanation={() => setShowPopup(true)}
+                                />
+                            )}
                         />
                         <Route path={'/u/gigs/archived'} render={() => <Archived user={me} />} />
                         <Route path={'/u/gigs/completed'} render={() => <Completed user={me} />} />
@@ -75,7 +87,12 @@ const DataWrapper = () => {
                         />
                         <Route
                             path={'/u/gigs/opportunities'}
-                            render={() => <Opportunities user={me} />}
+                            render={() => (
+                                <Opportunities
+                                    user={me}
+                                    showExplanation={() => setShowPopup(true)}
+                                />
+                            )}
                         />
                         <Route path={'/u/gigs/upcoming'} render={() => <Upcoming user={me} />} />
                         <Redirect to={'/u/gigs/direct-requests'} />

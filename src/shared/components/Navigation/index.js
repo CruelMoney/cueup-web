@@ -10,6 +10,7 @@ import { Media } from 'components/MediaContext';
 import { ME } from 'components/gql';
 import { identifyUser } from 'utils/analytics';
 import DjSearch from 'routes/Home/components/DJSearch';
+import CompanyInformationPopup from 'components/informationPopups/CompanyInformation';
 import Navlink from '../common/Navlink';
 import Logo from '../common/Logo';
 import EmailVerifier from '../EmailVerifier';
@@ -62,6 +63,8 @@ const Menu = ({ dark, relative, fullWidth, hideLogin, hideMenuItems, withSearch 
                     />
                 )}
             </Helmet>
+
+            {isDJ && !user?.hasAcceptedTerms && <CompanyInformationPopup userId={user.id} />}
 
             <Container fullWidth={fullWidth} className="container">
                 <div className={'nav-container location_'}>

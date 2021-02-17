@@ -11,7 +11,7 @@ import { ProFeature } from 'components/FormComponents';
 import Layout from '../components/Layout';
 import { MY_OPPORTUNITIES } from '../gql';
 
-const Opportunities = () => {
+const Opportunities = ({ showExplanation }) => {
     const [pagination, setPagination] = useState({
         page: 1,
         limit: 8,
@@ -54,7 +54,7 @@ const Opportunities = () => {
             }}
             setPagination={setPagination}
             emptyChildren={<EmptyChildren />}
-            rightSideChildren={<RightSide />}
+            rightSideChildren={<RightSide showExplanation={showExplanation} />}
         />
     );
 };
@@ -76,14 +76,25 @@ const EmptyChildren = () => {
     );
 };
 
-const RightSide = () => {
+const RightSide = ({ showExplanation }) => {
     return (
         <>
             <GreyBox>
                 <H3 small>What are opportunities?</H3>
                 <BodySmall>
-                    Opportunities are events in your area without a DJ. An opportunity is your
-                    chance to connect with the organizer and get a gig.
+                    These are people that have requested another DJ, but haven’t completed the
+                    booking. It is your “opportunity” to reach out and get a gig.
+                </BodySmall>
+
+                <BodySmall
+                    style={{
+                        marginTop: '1em',
+                        textDecoration: 'underline',
+                        cursor: 'pointer',
+                    }}
+                    onClick={showExplanation}
+                >
+                    Direct requests vs. opportunities?
                 </BodySmall>
             </GreyBox>
             <GreyBox>

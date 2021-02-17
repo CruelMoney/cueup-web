@@ -48,9 +48,7 @@ const SystemSection = ({ user, saveData }) => {
             >
                 {(deleteUser) => {
                     const doMutate = () => {
-                        const confirmed = window.confirm(
-                            translate('user:preferences.delete-warning')
-                        );
+                        const confirmed = window.confirm('This cannot be undone.');
                         if (!confirmed) {
                             return;
                         }
@@ -61,7 +59,7 @@ const SystemSection = ({ user, saveData }) => {
                         <Input
                             half
                             type="button"
-                            label="Delete user"
+                            label="Delete profile"
                             warning={true}
                             onClick={() => doMutate()}
                             buttonText="Delete"

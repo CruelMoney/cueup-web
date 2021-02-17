@@ -27,21 +27,7 @@ export const BenefitsPopup = () => {
             <CustomCheckBox checked label="Unlimited sound uploads." />
             <CustomCheckBox checked label={'Pro DJ badge.'} />
             <CustomCheckBox checked label="And much more..." />
-            <Testimonial />
         </GenericPopup>
-    );
-};
-
-export const Testimonial = () => {
-    return (
-        <TestimonialWrapper>
-            <Avatar size="large" src={'https://i.vimeocdn.com/portrait/13325432_640x640'} />
-            <BodySmall style={{ marginLeft: 12 }}>
-                "I like to dj and travel. As a pro member I’ve had a steady stream of gigs most
-                places I go. Best investment I’ve made in a while."
-                <Quotee>- Oscar Bandersen, DJ & Producer</Quotee>
-            </BodySmall>
-        </TestimonialWrapper>
     );
 };
 
@@ -50,19 +36,6 @@ export const CustomCheckBox = styled(DumbCheckbox)`
     div {
         cursor: default !important;
     }
-`;
-
-const TestimonialWrapper = styled(Row)`
-    margin-top: 1em;
-    img {
-        transform: scale(1.8);
-    }
-`;
-
-const Quotee = styled.span`
-    display: block;
-    font-weight: 500;
-    color: #98a4b3;
 `;
 
 export default BenefitsPopup;
