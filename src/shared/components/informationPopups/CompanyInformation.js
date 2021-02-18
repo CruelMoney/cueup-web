@@ -5,7 +5,7 @@ import createPersistedState from 'use-persisted-state';
 import Popup from 'components/common/Popup';
 import { Body, H2 } from 'components/Text';
 import { Avatar, Col, PrimaryButton, RowMobileCol, SmartButton } from 'components/Blocks';
-const useCompanyInfoPopup = createPersistedState('company-info-popup-2');
+const useCompanyInfoPopup = createPersistedState('company-info-popup');
 
 const DELETE_USER = gql`
     mutation DeleteUser($id: ID!) {
@@ -47,7 +47,7 @@ const CompanyInformationPopup = ({ userId }) => {
                         small
                         style={{ marginTop: '20px', marginBottom: '1em', fontWeight: 700, flex: 1 }}
                     >
-                        I do my best, but can't guarantee that you get jobs
+                        We get a lot of events, but can't guarantee jobs for every member
                     </H2>
                     <Avatar
                         size="extraLarge"
@@ -57,16 +57,16 @@ const CompanyInformationPopup = ({ userId }) => {
                 </RowMobileCol>
 
                 <Body>
-                    Hi, I’m Christopher, and I’m the founder and only person working on Cueup. I’m
-                    doing everything in my power to get you gigs, but I can’t guarantee jobs for
-                    every member.
+                    Hi, I’m Christopher, and I’m the founder and only employee at Cueup. I’m doing
+                    everything in my power to get you gigs, but I can’t guarantee jobs for every
+                    member.
                 </Body>
                 <br />
                 <Body>
                     <b>Cueup is not like a booking agency</b>. Cueup is a free-to-use platform that
-                    connects you to event organisers, facilitates payments, and handles cancelation
-                    policies - <b>your job is to sell your service and contact the organiser</b> -
-                    we just make it easier.
+                    connects you to event organizers, facilitates payments, and handles cancelation
+                    policies - <b>your job is to contact the organizer and sell your service</b> -
+                    we just make it much easier.
                 </Body>
                 <br />
                 <Body>

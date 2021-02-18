@@ -17,35 +17,50 @@ export default () => {
     return (
         <div className="">
             <Helmet>
-                <title>{'About Us | Cueup'}</title>
-                <meta property="og:title" content={'About Us | Cueup'} />
-                <meta name="twitter:title" content={'About Us | Cueup'} />
+                <title>{'About | Cueup'}</title>
+                <meta property="og:title" content={'About | Cueup'} />
+                <meta name="twitter:title" content={'About | Cueup'} />
 
                 <meta name="description" content={description} />
                 <meta property="og:description" content={description} />
                 <meta name="twitter:description" content={description} />
             </Helmet>
+
             <ContainerStyled>
                 <Row center style={{ marginBottom: '100px' }}>
                     <Col style={{ maxWidth: 600 }}>
                         <PageTitle style={{ textAlign: 'center', marginTop: 60 }}>
-                            Hello from <br />
-                            Cueup DJ Booking
+                            Cueup is not like a<span> booking agency</span>
                         </PageTitle>
                         <Body center style={{ marginBottom: '100px', fontSize: 22 }}>
+                            Cueup is a free-to-use platform that connects DJs to event organizers,
+                            facilitates payments, and handles cancelation policies - it is the DJs
+                            job to contact the organizer and sell their service - we just make it
+                            much easier.
+                            <br />
+                            <br />
                             {description}
                         </Body>
 
-                        <Avatar
-                            size="extraLarge"
-                            src="https://d1i5zrp3ng76nh.cloudfront.net/social_images/christopher_2.jpg"
-                            style={{ margin: 'auto', marginBottom: 15 }}
-                        />
-                        <PageTitle style={{ textAlign: 'center' }}>Meet the founder</PageTitle>
                         <Card shadow style={{ padding: '2em', fontStyle: 'italic' }}>
-                            <Body>Hi, I'm Christopher. I'm a DJ, and founder of Cueup 👋</Body>
+                            <div style={{ width: '100%', marginBottom: 24 }}>
+                                <Avatar
+                                    size="extraLarge"
+                                    src="https://d1i5zrp3ng76nh.cloudfront.net/social_images/christopher_2.jpg"
+                                    style={{ margin: 'auto' }}
+                                />
+                            </div>
+                            <Body>
+                                Hi, I'm Christopher 👋
+                                <br />
+                                I'm a DJ, the founder and only employee at Cueup.
+                            </Body>
 
                             <Body>
+                                <br />
+                                I’m doing everything in my power to get the members gigs, but I
+                                can’t guarantee jobs for every member.
+                                <br />
                                 <br />
                                 I'm Born and raised in Denmark but have been living a nomadic
                                 lifestyle since 2017. Most of the time, you'll see me working on
@@ -53,7 +68,8 @@ export default () => {
                             </Body>
                             <Body>
                                 <br />
-                                You can find me on{' '}
+                                If you have questions, critique, or suggestions, please message me
+                                on{' '}
                                 <a
                                     href="https://twitter.com/ChrisDengso"
                                     target="_blank"
@@ -61,17 +77,11 @@ export default () => {
                                 >
                                     Twitter
                                 </a>{' '}
-                                or send me an email anytime on
-                                <a href="mailto:chris@cueup.io"> chris@cueup.io</a>. Also, check out
-                                my{' '}
-                                <NavLink
-                                    target="_blank"
-                                    rel="noreferrer noopener"
-                                    to="/user/spinso"
-                                >
-                                    Cueup profile
-                                </NavLink>
-                                .
+                                or at
+                                <a href="mailto:chris@cueup.io"> chris@cueup.io</a>.
+                                <br />
+                                <br />
+                                All the best, Christopher
                             </Body>
                         </Card>
                     </Col>
@@ -82,7 +92,6 @@ export default () => {
                     label={"From regular parties to the world's largest companies"}
                 />
             </ContainerStyled>
-
             <Footer
                 noSkew
                 color={themeColor}
