@@ -8,6 +8,8 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 
 describe('Login', () => {
     it('Logs in with email', () => {
+        cy.setCookie('testing', 'true');
+
         const user = {
             email: 'test@email.com',
             password: 't5e3s4t5i8n18g12',

@@ -8,6 +8,10 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 });
 
 describe('Signup', () => {
+    beforeEach(() => {
+        cy.setCookie('testing', 'true');
+    });
+
     const user = {
         email: 'test@email.com',
         password: 't5e3s4t5i8n18g12',

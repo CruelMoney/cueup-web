@@ -7,6 +7,10 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 });
 
 describe('Subscription', () => {
+    beforeEach(() => {
+        cy.setCookie('testing', 'true');
+    });
+
     it('Can be paid', () => {
         const user = {
             email: 'test@email.com',

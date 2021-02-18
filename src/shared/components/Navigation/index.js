@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/client';
 import { Redirect } from 'react-router-dom';
 import { useLocation } from 'react-router';
 import { Helmet } from 'react-helmet-async';
+import { useCookies } from 'react-cookie';
 import { appRoutes } from 'constants/locales/appRoutes.ts';
 import { Media } from 'components/MediaContext';
 import { ME } from 'components/gql';
@@ -20,6 +21,8 @@ import DesktopMenu from './DesktopMenu';
 
 const Menu = ({ dark, relative, fullWidth, hideLogin, hideMenuItems, withSearch }) => {
     const { t } = useTranslation();
+    const [cookies] = useCookies();
+    const isTesting = cookies.testing;
 
     const { search } = useLocation();
 
@@ -64,7 +67,7 @@ const Menu = ({ dark, relative, fullWidth, hideLogin, hideMenuItems, withSearch 
                 )}
             </Helmet>
 
-            {isDJ && <CompanyInformationPopup userId={user?.id} />}
+            {isDJ && !isTesting && <CompanyInformationPopup userId={user?.id} />}
 
             <Container fullWidth={fullWidth} className="container">
                 <div className={'nav-container location_'}>

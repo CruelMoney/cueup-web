@@ -7,6 +7,10 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 });
 
 describe('Update User', () => {
+    beforeEach(() => {
+        cy.setCookie('testing', 'true');
+    });
+
     it('Updates permalink', () => {
         const user = {
             email: 'test@email.com',

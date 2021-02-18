@@ -5,6 +5,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { useLocation } from 'react-router';
 import createPersistedState from 'use-persisted-state';
 import { truncate } from 'lodash';
+import { useCookies } from 'react-cookie';
 import Footer from 'components/common/Footer';
 import Menu from 'components/Navigation';
 import ScrollToTop from 'components/common/ScrollToTop';
@@ -25,11 +26,14 @@ import Sidebar from './Sidebar';
 const useGigsInfoPopup = createPersistedState('gigs-info-popup');
 
 const DataWrapper = () => {
+    const [cookies] = useCookies();
+    const isTesting = cookies.testing;
+
     const { data, loading } = useQuery(ME);
     const { pathname, search } = useLocation();
     const { setAppState } = useAppState();
 
-    const [showPopup, setShowPopup] = useGigsInfoPopup(true);
+    const [showPopup, setShowPopup] = useGigsInfoPopup(!isTesting);
 
     const me = data?.me;
 
