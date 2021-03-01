@@ -134,7 +134,7 @@
     "sqlite3": "^5.0.0",
     "styled-components": "^5.2.1",
     "subscriptions-transport-ws": "^0.9.18",
-    "three": "^0.121.1",
+    "three": "^0.125.0",
     "universal-cookie-express": "^4.0.3",
     "url-search-params-polyfill": "^8.1.0",
     "use-analytics": "^0.0.3",
